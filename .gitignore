@@ -1,0 +1,74 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Node / frontend
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.vite/
+.next/
+out/
+
+# Rust / Tauri
+target/
+src-tauri/target/
+
+# IDE / OS
+.vscode/
+.idea/
+*.suo
+*.user
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.cache/
+tmp/
+temp/
+
+# Local databases and ad-hoc runtime output
+*.db-journal
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+runtime/
+local-output/
+
+# Do not globally ignore data/, results/, artifacts/, logs, PDFs, DOCX, or CSV.
+# Research evidence is governed by provenance rules and may be committed intentionally.
