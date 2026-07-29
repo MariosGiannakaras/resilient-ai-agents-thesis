@@ -53,24 +53,31 @@
 
 Η επίσημη αίτηση υπάρχει στο `thesis/source-material/GiannakarasMariosThesisApplication.pdf`. Ο χρήστης επιβεβαίωσε ότι είναι το ίδιο επίσημο αρχείο που δόθηκε για ανάλυση. Το Codex πρέπει να υπολογίσει και να καταγράψει το SHA-256 μετά το clone.
 
-## Συνιστώμενη σειρά ανάγνωσης
+## Ανάγνωση από agents
+
+Πριν από κάθε ουσιαστική εργασία διαβάζονται μόνο:
 
 1. `AGENTS.md`
-2. `docs/context/SCOPE_REFINEMENT.md`
-3. `docs/context/PROJECT_CONTEXT.md`
-4. `docs/context/CONFIRMED_REQUIREMENTS.md`
-5. `docs/context/USER_DECISIONS.md`
-6. `docs/context/CONSTRAINTS.md`
-7. `docs/context/OPEN_QUESTIONS.md`
-8. `docs/context/FINAL_BOOTSTRAP_AUDIT.md`
-9. `docs/research/RESEARCH_BRIEF.md`
-10. `docs/research/GRIDWORLD_SPEC.md`
-11. `docs/research/MODEL_CANDIDATES.md`
-12. `docs/experiments/EXPERIMENTAL_REQUIREMENTS.md`
-13. `docs/architecture/APPLICATION_REQUIREMENTS.md`
-14. `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`
-15. `docs/context/IMPLEMENTATION_ROADMAP.md`
-16. `docs/decisions/DECISION_LOG.md`
+2. `README.md`
+3. `docs/context/SCOPE_REFINEMENT.md`
+4. `docs/context/PROJECT_CONTEXT.md`
+5. `docs/context/CONFIRMED_REQUIREMENTS.md`
+
+Έπειτα διαβάζονται μόνο τα task-specific αρχεία που ορίζει το `AGENTS.md`. Πλήρης επανέλεγχος ολόκληρου του repository γίνεται μόνο σε bootstrap, repository-wide audit ή μεγάλη διατομεακή αλλαγή.
+
+## Βιβλιογραφική έρευνα και παρόμοιες μελέτες
+
+- Το αρχικό evidence seed βρίσκεται στο `docs/research/RELATED_WORK_EVIDENCE_MATRIX.md`.
+- Η νόμιμη συλλογή και τεκμηρίωση πηγών ορίζεται στο `bibliography/SOURCE_ACQUISITION_WORKFLOW.md`.
+- Τα επαληθευμένα open-access PDFs μπορούν να ληφθούν μετά το clone με:
+
+```bash
+python scripts/download_open_access_bibliography.py
+```
+
+Το script αποθηκεύει τα PDFs στο `bibliography/original/related-work/` και δημιουργεί `bibliography/source_manifest.json` με URLs, SHA-256 και acquisition status. Δεν παρακάμπτει paywalls. Για μη διαθέσιμη νόμιμη open-access έκδοση, το Codex καταγράφει DOI και ζητά από τον χρήστη να αποκτήσει το paper μέσω Πανεπιστημίου ή συγγραφέα.
+
+Η βιβλιογραφική αναζήτηση επαναλαμβάνεται πριν από το protocol freeze, πριν από τη συγγραφή Related Work/Methodology/Discussion και πριν από την τελική υποβολή.
 
 ## Χάρτης φακέλων
 
@@ -111,12 +118,12 @@ docs/decisions/         Decision log και ADRs
 
 ## Τι πρέπει να προστεθεί αργότερα από τον χρήστη
 
-- Η πραγματική συγκεντρωμένη βιβλιογραφία στο `bibliography/original/`.
+- Η προσωπική ή επιβλέποντα βιβλιογραφία που δεν είναι διαθέσιμη νόμιμα ως open access.
 - Τυχόν ειδικές οδηγίες του επιβλέποντα.
 - Η ισχύουσα έκδοση του επίσημου Word template, όταν βρεθεί ή δοθεί.
 - Η προθεσμία και η διαδικασία υποβολής/παρουσίασης, όταν γίνουν γνωστές.
 
-Το system inventory, η επαλήθευση SHA-256 και η GridWorld landscape research είναι εργασίες του Codex.
+Το system inventory, η επαλήθευση SHA-256, η GridWorld landscape research και η αρχική νόμιμη open-access βιβλιογραφική συλλογή είναι εργασίες του Codex.
 
 ## Επιστημονική ακεραιότητα
 
