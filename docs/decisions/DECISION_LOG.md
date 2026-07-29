@@ -100,6 +100,21 @@ Use this file for project-wide research and architecture decisions. Detailed alt
 - **Consequences:** The first research package remains comprehensive but reviewable. The written thesis must use refreshed, fully read sources. Primary UI workflows remain clean while detailed evidence remains available.
 - **Files:** `AGENTS.md`, `README.md`, `CODEX_BOOTSTRAP_PROMPT.md`, `IMPLEMENTATION_ROADMAP.md`, `SOURCE_REGISTER.md`, `docs/architecture/`, `docs/research/RELATED_WORK_EVIDENCE_MATRIX.md`, `bibliography/SOURCE_ACQUISITION_WORKFLOW.md`, `scripts/download_open_access_bibliography.py`.
 
+## DEC-015 — Automated technical execution and review without routine user GitHub approval
+- **Date:** 2026-07-29
+- **Status:** Accepted by user
+- **Context:** The user wants to provide goals, results and supervisor feedback without managing commits, Pull Requests, tests or merges. Codex must not own research, implementation, testing, review and approval simultaneously.
+- **Decision:**
+  - The user supplies goals, observed results and genuinely academic/product decisions, but is not the routine GitHub approver.
+  - ChatGPT scopes tasks, reviews research and repository evidence, addresses or delegates corrections and decides technical merge readiness.
+  - Codex executes bounded tasks and produces branches, tests, documentation, commits and Pull Requests; it never self-approves or silently broadens scope.
+  - GitHub Actions executes repeatable checks on relevant Pull Requests. CI is necessary but not sufficient; test quality and scientific correctness receive human/ChatGPT review.
+  - Every substantial change uses descriptive naming, reasoned comments, structured commit bodies and the repository Pull Request template.
+- **Rationale:** Separate execution from review, reduce user overhead, improve consistency and catch defects before they affect experiments or thesis evidence.
+- **Alternatives rejected:** user-managed Git approvals; Codex self-review and self-merge; direct-to-main implementation; test-passing as the sole acceptance criterion; production-grade CI/CD.
+- **Consequences:** Routine technical GitHub work is automatic between Codex, GitHub and ChatGPT. The user is interrupted only for meaningful thesis-direction decisions or required private material.
+- **Files:** `AGENTS.md`, `README.md`, `docs/context/EXECUTION_WORKFLOW.md`, `.github/pull_request_template.md`, `.github/workflows/repository-checks.yml`, tests and relevant scripts.
+
 ## Pending decisions
 
 Future entries are required for:
