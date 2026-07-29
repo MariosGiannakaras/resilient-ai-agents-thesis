@@ -1,0 +1,50 @@
+name: Repository checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  sanity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Reject unresolved merge markers
+        shell: bash
+        run: |
+          if git grep -nE '^(<<<<<<<|>>>>>>>)( |$)' -- .; then
+            echo "Unresolved merge markers found."
+            exit 1
+          fi
+
+      - name: Compile Python sources
+        run: python -m compileall -q scripts tests
+
+      - name: Run tests
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Validate committed JSON files
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          for path in Path('.').rglob('*.json'):
+              if '.git' in path.parts:
+                  continue
+              with path.open(encoding='utf-8') as handle:
+                  json.load(handle)
+              print(f'valid: {path}')
+          PY
