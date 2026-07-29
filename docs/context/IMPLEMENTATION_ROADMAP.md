@@ -2,6 +2,23 @@
 
 The roadmap is phase-gated and optimized for thesis completion, scientific adequacy and bounded engineering complexity.
 
+## How to use this roadmap
+
+The fourteen numbered phases are **checkpoints**, not fourteen mandatory separate prompts, branches, PRs or approval meetings. Combine adjacent phases when one bounded task can complete them safely.
+
+Operationally, the work can be managed as eight larger blocks:
+
+1. Research definition, sources and bibliography.
+2. GridWorld decision and environment specification.
+3. Models, metrics and experimental protocol.
+4. Independent core and validation.
+5. Pilots and final protocol freeze.
+6. Minimal experiment management and polished dashboard.
+7. Final experiments, analysis and artifacts.
+8. Thesis writing and final validation.
+
+Use separate review gates only for decisions that materially affect scientific validity, feasibility, architecture or final evidence.
+
 ## Phase 1 — Context and system validation
 
 - **Goal:** Establish trusted sources, current scope and actual machine capabilities.
@@ -11,7 +28,8 @@ The roadmap is phase-gated and optimized for thesis completion, scientific adequ
 ## Phase 2 — Bibliography and research framing
 
 - **Goal:** Convert the official topic into a clear and bounded research problem.
-- **Deliverables:** Verified bibliography inventory, main research question, minimal secondary questions and candidate hypotheses.
+- **Deliverables:** Verified bibliography inventory, related-work evidence matrix, main research question, minimal secondary questions and candidate hypotheses.
+- **Source action:** Download lawful open-access/author-provided copies; record DOI, access status and SHA-256. Ask the user to acquire paywalled papers legally when necessary.
 - **Gate:** Every question maps to measurable evidence and remains feasible.
 
 ## Phase 3 — GridWorld landscape and decision
@@ -36,6 +54,7 @@ The roadmap is phase-gated and optimized for thesis completion, scientific adequ
 
 - **Goal:** Define training/tuning/evaluation separation and pilot work.
 - **Deliverables:** Pilot configs, stopping/failure rules, preliminary statistical plan and compute estimate.
+- **Literature refresh:** Recheck recent directly relevant work before approving the pilot protocol.
 - **Gate:** Protocol can be executed without hidden manual choices.
 
 ## Phase 7 — Independent research core
@@ -55,6 +74,7 @@ The roadmap is phase-gated and optimized for thesis completion, scientific adequ
 
 - **Goal:** Set a feasible and scientifically fair final experiment matrix.
 - **Deliverables:** Frozen models, scenarios, seeds/repetitions, budgets, metrics, statistical plan and exclusions.
+- **Literature refresh:** Confirm that no recent primary study materially changes the design or required comparisons.
 - **Gate:** Any later change requires explicit amendment.
 
 ## Phase 10 — Minimal experiment management
@@ -69,6 +89,7 @@ The roadmap is phase-gated and optimized for thesis completion, scientific adequ
 - **Required workflows:** Dashboard, New Experiment, Runs, Compare and Artifacts.
 - **Required quality:** Modern, consistent, responsive, screenshot-ready and based on real data.
 - **Deliverables:** Configuration/launch, truthful monitoring, GridWorld view, history/details, comparison charts/tables and export.
+- **Scope note:** Telemetry is a lightweight current snapshot. Detailed checksums/provenance use expandable details and exports.
 - **Gate:** Every screen and feature maps to a real thesis workflow. Advanced features remain deferred.
 
 ## Phase 12 — Final runs
@@ -86,7 +107,9 @@ The roadmap is phase-gated and optimized for thesis completion, scientific adequ
 ## Phase 14 — Thesis writing and final validation
 
 - **Goal:** Complete the Greek Microsoft Word thesis and repository package.
-- **Deliverables:** Background, methods, implementation, results, discussion, limitations, conclusions, Word formatting and reproduction guide.
+- **Deliverables:** Background, related work, methods, implementation, results, discussion, limitations, conclusions, Word formatting and reproduction guide.
+- **Writing literature review:** Before drafting Related Work, Methodology and Discussion, repeat a focused literature search, fully read the decision-driving papers and update the evidence matrix. Distinguish peer-reviewed work, preprints and benchmark/tool papers.
+- **Submission freshness check:** Recheck recent sources, official Word template and submission guidance shortly before final delivery.
 - **Gate:** Claims, citations, figures, cross-references, privacy and provenance audits pass.
 
 ## Completion rule
