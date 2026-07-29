@@ -1,28 +1,70 @@
-# Bibliography Markdown Conversions
+# Bibliography Markdown Archive
 
-This folder contains searchable derivatives of original sources.
+Αυτός ο φάκελος περιέχει τις πλήρεις, αναζητήσιμες Markdown μετατροπές των αρχικών πηγών.
+
+Τα Markdown είναι το default full-text working format. Δεν είναι περιλήψεις και δεν περιορίζονται μόνο στις πληροφορίες που χρησιμοποιούνται τελικά στη διπλωματική.
+
+## Δομή και ονοματοδοσία
+
+```text
+markdown/related-work/   Complete paper/report Markdown copies
+markdown/theses/         Complete thesis/dissertation Markdown copies
+```
+
+Κάθε αρχείο χρησιμοποιεί ακριβώς το ίδιο basename με το αντίστοιχο PDF:
+
+```text
+../original/related-work/balloch_2022_novgrid.pdf
+./related-work/balloch_2022_novgrid.md
+```
 
 ## Conversion requirements
 
-- Link each Markdown file to the exact original file and checksum.
-- Preserve title, authors, year, sections and page boundaries where possible.
-- Preserve tables, equations, captions and references accurately.
-- Mark extraction/OCR uncertainty explicitly.
-- Do not silently “correct” source content.
-- Keep figure/table placeholders with original page references.
-- Include conversion tool/version and date.
-- Use the original PDF/page for exact quotations and citations; Markdown does not replace the authoritative source.
+- Link each Markdown file to the exact PDF path and checksum.
+- Preserve title, complete authors, year, headings and section order.
+- Preserve page boundaries with explicit markers whenever reliable.
+- Preserve tables, equations, captions, references and footnotes accurately.
+- Add placeholders with page references when figures/tables/equations cannot be represented faithfully.
+- Mark OCR, extraction or layout uncertainty explicitly.
+- Do not silently rewrite, summarize or “correct” source content inside the archive copy.
+- Record conversion tool/version and date.
+- Calculate a Markdown SHA-256 after conversion.
 
-Suggested front matter:
+## Suggested front matter
 
 ```yaml
-source_file:
-source_sha256:
+source_id:
+source_pdf_path:
+source_pdf_sha256:
+markdown_sha256:
 title:
 authors:
 year:
-doi:
+doi_or_url:
+version_status:
 conversion_tool:
-conversion_date:
+conversion_date_utc:
+conversion_status: generated-unverified  # generated-unverified | verified
 quality_notes:
 ```
+
+## Verification
+
+Before marking `conversion_status: verified`, compare representative sections against the PDF, including:
+
+- title/author metadata,
+- page markers,
+- at least one normal text section,
+- every table/equation/figure used by the thesis,
+- reported numerical results that will be cited,
+- references needed for follow-up research.
+
+After verification, treat the complete Markdown as stable. Edit it only to fix documented conversion errors; do not turn it into a curated summary.
+
+## Usage
+
+Agents use complete Markdown when the structured note or thematic excerpt is not enough. They do not read every full source for unrelated tasks.
+
+Exact quotations, disputed page references and conversion-sensitive content are checked against the original PDF in `../original/`.
+
+Source analysis belongs in `../notes/`; useful cross-source material belongs in `../excerpts/`.
