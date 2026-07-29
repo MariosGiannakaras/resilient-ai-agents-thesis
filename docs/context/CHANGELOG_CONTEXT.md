@@ -62,3 +62,14 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Added regression tests for bibliography-manifest provenance behavior.
 - Corrected automated-review findings so manual source records, acquisition timestamps and full-text review status are preserved safely by checksum.
 - Added DEC-015.
+
+## 2026-07-29 — Archived PDFs and Markdown-first bibliography workflow
+
+- Added `bibliography/README.md` as the authoritative source-storage and usage policy.
+- Retained original PDFs as immutable archival/verification copies rather than routine agent input.
+- Established complete searchable Markdown with matching basenames as the default full-text working archive.
+- Strengthened per-source notes with checksums, conversion/review states, topics and decision relevance.
+- Added `bibliography/excerpts/` for small, topic-centric, verified evidence used in research, writing and slides.
+- Added immediate processing rules for user-uploaded PDF/Markdown/NotebookLM source batches.
+- Defined canonical renaming, duplicate/version detection, semantic classification and coverage-gap analysis.
+- Added bibliography transient-file ignore rules and DEC-016.
