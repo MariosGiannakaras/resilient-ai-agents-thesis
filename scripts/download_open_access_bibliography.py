@@ -123,6 +123,46 @@ SOURCES: Final[tuple[Source, ...]] = (
         "https://arxiv.org/pdf/2601.20714",
         "Public author preprint",
     ),
+    Source(
+        "SRC-RW-010",
+        "alami_2023_change_point_detection.pdf",
+        "Restarted Bayesian Online Change-point Detection for Non-Stationary Markov Decision Processes",
+        "Reda Alami, Mohammed Mahfoud, Eric Moulines",
+        2023,
+        "CoLLAs / PMLR conference paper",
+        "https://proceedings.mlr.press/v232/alami23a/alami23a.pdf",
+        "Official PMLR PDF",
+    ),
+    Source(
+        "SRC-RW-011",
+        "tessler_2019_action_robust_rl.pdf",
+        "Action Robust Reinforcement Learning and Applications in Continuous Control",
+        "Chen Tessler, Yonathan Efroni, Shie Mannor",
+        2019,
+        "Research paper / arXiv preprint",
+        "https://arxiv.org/pdf/1901.09184",
+        "Public author preprint",
+    ),
+    Source(
+        "SRC-RW-012",
+        "zhang_2020_state_adversarial_mdp.pdf",
+        "Robust Deep Reinforcement Learning against Adversarial Perturbations on State Observations",
+        "Huan Zhang et al.",
+        2020,
+        "Research paper / arXiv preprint",
+        "https://arxiv.org/pdf/2003.08938",
+        "Public author preprint",
+    ),
+    Source(
+        "SRC-RW-013",
+        "peng_2024_complexity_nonstationary_rl.pdf",
+        "The Complexity of Non-Stationary Reinforcement Learning",
+        "Binghui Peng, Christos Papadimitriou",
+        2024,
+        "ALT / PMLR conference paper",
+        "https://proceedings.mlr.press/v237/peng24a/peng24a.pdf",
+        "Official PMLR PDF",
+    ),
 )
 
 
@@ -147,6 +187,7 @@ def download(source: Source, destination: Path) -> None:
     last_error: Exception | None = None
 
     for attempt in range(1, MAX_ATTEMPTS + 1):
+        temporary_path: Path | None = None
         try:
             with urlopen(request, timeout=TIMEOUT_SECONDS) as response:  # noqa: S310
                 with tempfile.NamedTemporaryFile(
@@ -161,7 +202,7 @@ def download(source: Source, destination: Path) -> None:
         except (HTTPError, URLError, TimeoutError, ValueError, OSError) as error:
             last_error = error
             try:
-                if "temporary_path" in locals() and temporary_path.exists():
+                if temporary_path is not None and temporary_path.exists():
                     temporary_path.unlink()
             except OSError:
                 pass
