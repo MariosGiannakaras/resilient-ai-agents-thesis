@@ -42,6 +42,20 @@
 6. Μοντέρνο και πλήρες UI για εκτέλεση, παρακολούθηση και κατανόηση.
 7. Προηγμένες λειτουργίες μόνο με πραγματική ανάγκη και χαμηλό κίνδυνο για την ολοκλήρωση.
 
+## Μοντέλο λειτουργίας και ευθύνες
+
+Η πλήρης διαδικασία ορίζεται στο `docs/context/EXECUTION_WORKFLOW.md`.
+
+- Ο χρήστης δίνει στόχους, πραγματικό feedback, υλικό και οδηγίες επιβλέποντα. Δεν χρειάζεται να εγκρίνει branches, commits, tests, Pull Requests ή merges.
+- Το ChatGPT οργανώνει bounded tasks, ελέγχει έρευνα, diffs, naming, tests, αποτελέσματα και review findings και αποφασίζει τεχνική έγκριση ή διορθώσεις.
+- Το Codex εκτελεί μόνο τη συγκεκριμένη εργασία: branch, κώδικας/έρευνα, tests, documentation, commits και Pull Request. Δεν αυτοεγκρίνεται και δεν αλλάζει σιωπηρά scope ή frozen protocol.
+- Το GitHub εκτελεί τους αυτοματοποιημένους ελέγχους. Passing CI δεν αρκεί μόνο του· ελέγχεται και η ουσία των tests και των αλλαγών.
+- Ο χρήστης ερωτάται μόνο για πραγματική ακαδημαϊκή, προϊόντική ή προσωπική απόφαση που δεν λύνεται αντικειμενικά από evidence.
+
+Η κανονική ροή είναι:
+
+> Συζήτηση στόχου → bounded task → Codex branch/PR → GitHub checks → ChatGPT review → διορθώσεις → merge → σύντομη ενημέρωση χρήστη.
+
 ## Πολιτική ανάγνωσης
 
 ### Μόνιμη βασική ανάγνωση
@@ -61,6 +75,7 @@
 - **Models, metrics και experiments:** τα αντίστοιχα candidate files και μόνο τα σχετικά αρχεία του `docs/experiments/`.
 - **Architecture ή UI:** μόνο τα σχετικά αρχεία του `docs/architecture/` και οι αποφάσεις που τα αφορούν.
 - **Συγγραφή διπλωματικής:** `docs/thesis/`, `docs/university/`, source registers, verified bibliography notes και το related-work evidence matrix.
+- **Git/GitHub workflow:** `docs/context/EXECUTION_WORKFLOW.md` και `.github/pull_request_template.md`.
 - **Αλλαγή project-wide απόφασης:** `docs/decisions/DECISION_LOG.md`, `CHANGELOG_CONTEXT.md`, `OPEN_QUESTIONS.md` και `CONTRADICTIONS.md`.
 
 Μην ξαναδιαβάζεις ολόκληρο το repository για μικρή ή σαφώς οριοθετημένη εργασία. Πλήρης επανέλεγχος απαιτείται μόνο σε bootstrap, repository-wide audit ή μεγάλη διατομεακή αλλαγή.
@@ -173,10 +188,17 @@
 
 Synthetic fixtures επιτρέπονται μόνο σε clearly labeled tests.
 
+Οι αυτοματοποιημένοι έλεγχοι πρέπει να εκτελούνται σε κάθε σχετικό Pull Request. Το CI επεκτείνεται όταν επιλεγεί το stack, χωρίς να μετατρέπεται σε production deployment pipeline.
+
 ## Git and documentation
 
-- Κάνε μικρά, λογικά commits με σύντομο τίτλο και body που εξηγεί **τι** άλλαξε και **γιατί**.
-- Για research, architecture, protocol ή implementation αλλαγές χρησιμοποίησε branch και Pull Request με summary, rationale, validation, exclusions και open decisions.
+- Κάνε μικρά, λογικά commits με σύντομο conventional title και body που εξηγεί **τι** άλλαξε, **γιατί**, **πώς ελέγχθηκε** και τι έμεινε εκτός.
+- Χρησιμοποίησε descriptive lowercase kebab-case branches με prefixes `research/`, `feat/`, `fix/`, `test/`, `docs/` ή `chore/`.
+- Για research, architecture, protocol ή implementation αλλαγές χρησιμοποίησε branch και Pull Request με summary, rationale, validation, scientific impact, exclusions και deferred work.
+- Ακολούθησε το `.github/pull_request_template.md` και αντιμετώπισε όλα τα automated review findings πριν από merge.
+- Μην ζητάς από τον χρήστη routine GitHub approval. Το ChatGPT reviewer αποφασίζει merge ή διορθώσεις, εκτός αν απαιτείται πραγματική ακαδημαϊκή απόφαση.
+- Χρησιμοποίησε σαφή ονοματοδοσία. Απόφυγε ονόματα όπως `test2`, `final_new`, `best_model` ή ανεξήγητες συντομογραφίες.
+- Τα σχόλια εξηγούν μη προφανή reasoning, invariants, scientific constraints ή workarounds και δεν επαναλαμβάνουν απλώς τον κώδικα.
 - Μην αποθηκεύεις secrets, credentials, caches ή αδικαιολόγητα binaries.
 - Ενημέρωνε context, decisions και changelog όταν αλλάζει ουσιώδης απαίτηση.
 - Μην αλλάζεις σιωπηρά frozen protocol ή raw/final evidence.
