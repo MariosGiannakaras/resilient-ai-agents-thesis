@@ -1,0 +1,141 @@
+# Bibliography Workspace
+
+Αυτός ο φάκελος οργανώνει τις πηγές της διπλωματικής σε τέσσερα διαφορετικά επίπεδα. Τα επίπεδα δεν είναι εναλλακτικά· το καθένα έχει ξεχωριστό ρόλο.
+
+## Ιεραρχία υλικού
+
+1. **Αρχικό PDF — αρχειακό αντίγραφο επαλήθευσης**
+   - Αποθηκεύεται αμετάβλητο στο `bibliography/original/`.
+   - Δεν αποτελεί το καθημερινό working format και δεν διαβάζεται από agents χωρίς συγκεκριμένο λόγο.
+   - Χρησιμοποιείται μόνο για έλεγχο ακριβούς σελίδας, quotation, πίνακα, figure, equation ή προβληματικής μετατροπής Markdown.
+
+2. **Πλήρες Markdown — αναζητήσιμο αρχειακό αντίγραφο**
+   - Αποθηκεύεται στο `bibliography/markdown/` με το ίδιο basename με το PDF.
+   - Περιέχει ολόκληρη την πηγή, όχι μόνο όσα ενδιαφέρουν τη διπλωματική.
+   - Μετά την επαλήθευση της μετατροπής παραμένει σταθερό· διορθώνεται μόνο όταν υπάρχει πραγματικό extraction/conversion error.
+
+3. **Structured note — ανάλυση ανά πηγή**
+   - Αποθηκεύεται στο `bibliography/notes/`.
+   - Καταγράφει method, experimental setup, models, metrics, results, limitations και συγκεκριμένη χρήση στη διπλωματική.
+   - Είναι το βασικό αρχείο για source-by-source αξιολόγηση και citation planning.
+
+4. **Thematic excerpts — υλικό που χρησιμοποιείται ενεργά**
+   - Αποθηκεύεται στο `bibliography/excerpts/`.
+   - Συγκεντρώνει μόνο χρήσιμα, επαληθευμένα στοιχεία ανά θέμα.
+   - Χρησιμοποιείται για research decisions, συγγραφή, comparison with prior work, slides και presentation preparation.
+
+Το `bibliography/source_manifest.json` καταγράφει την επίσημη πηγή, την αποκτημένη PDF έκδοση, access/rights status, retrieval metadata και PDF checksum. Η σύνδεση με το πλήρες Markdown, το conversion status, τα topics και τα excerpts καταγράφεται στο structured note, ώστε να μην καταστρέφεται από ασφαλή ανανέωση του acquisition manifest.
+
+## Δομή
+
+```text
+bibliography/
+├── original/
+│   ├── related-work/        Immutable paper/report PDF archive
+│   └── theses/              Immutable thesis/dissertation PDF archive
+├── markdown/
+│   ├── related-work/        Complete searchable Markdown copies
+│   └── theses/              Complete searchable thesis Markdown copies
+├── notes/                   One structured note per source
+├── excerpts/                Curated thematic evidence
+├── source_manifest.json     Source, PDF version, rights and checksum register
+└── SOURCE_ACQUISITION_WORKFLOW.md
+```
+
+## Ονοματοδοσία
+
+Τα PDF και τα πλήρη Markdown χρησιμοποιούν το ίδιο collision-safe basename:
+
+```text
+<first_author>_<year>_<short_descriptive_title>[__<version_token>].pdf
+<first_author>_<year>_<short_descriptive_title>[__<version_token>].md
+```
+
+Κανόνες:
+
+- lowercase ASCII,
+- `snake_case` για τον κύριο τίτλο,
+- `__` πριν από προαιρετικό version token,
+- σύντομος αλλά σαφής τίτλος,
+- πραγματικό publication year της συγκεκριμένης έκδοσης,
+- χωρίς ονόματα όπως `paper1`, `new_final`, `source2` ή τυχαίες συντομογραφίες.
+
+Όταν υπάρχει μόνο μία αποκτημένη έκδοση, επιτρέπεται το απλό basename:
+
+```text
+balloch_2022_novgrid.pdf
+balloch_2022_novgrid.md
+```
+
+Όταν υπάρχουν preprint, accepted manuscript, version of record ή περισσότερες same-year revisions, κάθε retained έκδοση λαμβάνει σταθερό version token και καμία δεν αντικαθιστά άλλη:
+
+```text
+example_2024_robust_agent__arxiv-v2.pdf
+example_2024_robust_agent__accepted.pdf
+example_2024_robust_agent__vor.pdf
+```
+
+Επιτρεπτά tokens περιλαμβάνουν `arxiv-v1`, `arxiv-v2`, `accepted`, `vor` ή τεκμηριωμένο `rev-YYYYMMDD`. Αν εμφανιστεί δεύτερη έκδοση, η προηγούμενη μετονομάζεται επίσης με explicit token ώστε όλες οι διαδρομές να είναι version-specific.
+
+Το note χρησιμοποιεί το exact version-specific basename:
+
+```text
+src-rw-001__balloch_2022_novgrid.md
+src-rw-014__example_2024_robust_agent__vor.md
+```
+
+## Κατηγοριοποίηση
+
+Η φυσική αποθήκευση χωρίζει κυρίως papers/reports από theses/dissertations για σταθερές διαδρομές. Η ουσιαστική κατηγοριοποίηση γίνεται με πολλαπλά `topics` στο structured note, επειδή μία πηγή μπορεί να καλύπτει περισσότερα από ένα θέματα.
+
+Ενδεικτικά topics:
+
+- `gridworld-environments`
+- `nonstationarity-adaptation`
+- `models-baselines`
+- `uncertainty-disturbances`
+- `metrics-statistics`
+- `experimental-protocol`
+- `robustness-resilience`
+- `thesis-writing-structure`
+- `presentation-visuals`
+
+Δεν δημιουργούνται duplicate copies του ίδιου source για διαφορετικές θεματικές κατηγορίες. Διαφορετικές πραγματικές source versions δεν είναι duplicates και διατηρούνται ως ξεχωριστά versioned records.
+
+## Διαδικασία εισαγωγής νέου υλικού
+
+Όταν δοθούν PDF, Markdown exports ή υλικό από NotebookLM:
+
+1. Αναγνωρίζεται το πραγματικό source και επαληθεύονται title, authors, year, DOI/URL και publication/version status.
+2. Εντοπίζονται duplicates ή διαφορετικές revisions του ίδιου έργου.
+3. Τα αρχεία μετονομάζονται με τη συμφωνημένη collision-safe ονοματοδοσία χωρίς overwrite προηγούμενης έκδοσης.
+4. Το PDF αποθηκεύεται αμετάβλητο και υπολογίζεται SHA-256.
+5. Το acquisition manifest ενημερώνεται με την επίσημη πηγή και το ακριβές version-specific PDF archive record.
+6. Το πλήρες Markdown αποθηκεύεται με το ίδιο basename και συνδέεται με το PDF checksum μέσα στο structured note/front matter.
+7. Ελέγχονται page markers, headings, tables, figures, equations, references και extraction gaps.
+8. Δημιουργείται ή ενημερώνεται structured note με topics, conversion state και relevance.
+9. Τα πραγματικά χρήσιμα στοιχεία προστίθενται στα thematic excerpts με source ID και page/section reference.
+10. Ενημερώνονται evidence matrix και coverage/gap analysis όπου χρειάζεται.
+
+## Καθημερινή χρήση
+
+Η κανονική σειρά ανάγνωσης είναι:
+
+> thematic excerpts → structured note → πλήρες Markdown → αρχικό PDF μόνο για επαλήθευση
+
+Οι agents δεν διαβάζουν όλα τα PDFs ούτε όλα τα πλήρη Markdown σε κάθε εργασία. Επιλέγουν μόνο τα σχετικά notes/excerpts και ανοίγουν το πλήρες Markdown όταν χρειάζεται περισσότερο context.
+
+## Retention και διαγραφή
+
+- Τα νόμιμα, σωστά ταυτοποιημένα PDFs κρατούνται ως archival backup όταν το μέγεθος και τα rights το επιτρέπουν.
+- Τα πλήρη Markdown κρατούνται ακόμη και όταν μόνο μικρό μέρος της πηγής είναι χρήσιμο.
+- Άσχετο υλικό δεν μπαίνει στα excerpts, αλλά δεν χαρακτηρίζεται αυτομάτως ως απορριφθέν source.
+- Οριστική διαγραφή γίνεται μόνο για πραγματικό duplicate, corrupted file ή λάθος source. Μία νεότερη έκδοση δεν διαγράφει αυτομάτως την προηγούμενη.
+- Μεγάλα binaries ελέγχονται πριν από commit για GitHub limits, rights και πιθανή ανάγκη Git LFS.
+
+## Επιστημονική ακεραιότητα
+
+- Το NotebookLM και άλλα AI εργαλεία βοηθούν στην ανακάλυψη και συσχέτιση· δεν αντικαθιστούν την πρωτογενή πηγή.
+- Claims, αριθμητικά αποτελέσματα και quotations επαληθεύονται στο πλήρες Markdown και, όταν χρειάζεται, στο PDF.
+- Δεν αφαιρείται context ώστε ένα αποτέλεσμα να φαίνεται ισχυρότερο ή πιο σχετικό από όσο είναι.
+- Οι περιλήψεις γράφονται με δικά μας λόγια και τα άμεσα quotations παραμένουν σύντομα, ακριβή και με page reference.
