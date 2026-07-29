@@ -51,3 +51,14 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Added `SOURCE_ACQUISITION_WORKFLOW.md` and `scripts/download_open_access_bibliography.py` for lawful open-access paper/thesis acquisition, PDF validation, SHA-256 and a source manifest.
 - Established user-assisted lawful acquisition for paywalled or non-direct sources; no unofficial or paywall-bypassing sources.
 - Added DEC-014.
+
+## 2026-07-29 — Automated execution, review and merge workflow
+
+- Established the user/ChatGPT/Codex/GitHub responsibility split in `EXECUTION_WORKFLOW.md` and `AGENTS.md`.
+- Removed routine GitHub approval and merge work from the user; ChatGPT reviews and decides technical readiness.
+- Added branch, commit, naming, comment and Pull Request conventions.
+- Added a Pull Request template with validation, scientific-impact, artifact and scope sections.
+- Added lightweight GitHub Actions checks for merge markers, Python compilation, tests and JSON validity.
+- Added regression tests for bibliography-manifest provenance behavior.
+- Corrected automated-review findings so manual source records, acquisition timestamps and full-text review status are preserved safely by checksum.
+- Added DEC-015.
