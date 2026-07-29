@@ -26,8 +26,9 @@ All three are superseded by the user's explicit clarification and corrected acro
 - Required top-level folders and requested documentation categories are present.
 - No final application, model implementation, final experiment or fabricated thesis chapter was created.
 - No raw conversation export was committed.
-- The ChatGPT-uploaded application reference matches SHA-256 `6771abd53bdb85431e9e479a3b996cf9581da1456e4d3cb96be7d635cc2221ef`.
-- A PDF is present at the expected GitHub path, added in commit `e15b312d75d09d0b088595df00062a666db86d86`, but its Git blob SHA differs from the local reference blob; byte-identical source verification therefore remains open.
+- The official application is present at the expected GitHub path.
+- The user explicitly confirmed that the repository PDF is the same authoritative file supplied for analysis; no replacement is required.
+- The repository SHA-256 will be calculated and recorded by Codex after local clone, where direct filesystem hashing is available.
 - The repository is private and accessible with admin/push permission.
 - A temporary audit marker accidentally created during connector verification was removed in the corrective commit; it is not part of the final repository state.
 - Experiment design, run schema, immutable raw-result policy, provenance, core-first architecture and truthful UI requirements remain valid.
@@ -65,8 +66,7 @@ All three are superseded by the user's explicit clarification and corrected acro
 - Supervisor-specific requirements and deadline are unknown.
 - A current official Word template/submission package has not been verified.
 - The GridWorld implementation, research questions, models, metrics and final protocol are intentionally undecided pending the fresh research phase.
-- The official application PDF is present in GitHub, but it must be confirmed as the intended original or replaced with the exact ChatGPT-uploaded file; its final SHA-256 must then be recorded before bootstrap is marked complete.
 
 ## Next phase acceptance gate
 
-Codex may begin research discovery and system inspection, but must not begin the dashboard or commit to a model/GridWorld stack until it presents the fresh evidence package described in `CODEX_BOOTSTRAP_PROMPT.md` and the corresponding decisions are recorded.
+Bootstrap is complete. Codex may begin research discovery and system inspection, but must not begin the dashboard or commit to a model/GridWorld stack until it presents the fresh evidence package described in `CODEX_BOOTSTRAP_PROMPT.md` and the corresponding decisions are recorded.

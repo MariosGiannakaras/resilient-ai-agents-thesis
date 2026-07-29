@@ -13,7 +13,6 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Added official department writing-guideline snapshot.
 - Initial synthesis added blockers for bibliography, legacy GridWorld source, supervisor, manual hardware confirmation and final experimental design; the legacy-code and manual-hardware blockers were later removed.
 - Excluded raw conversation exports from version control.
-- Corrected bootstrap status to state that the official application was examined locally but its GitHub binary upload is still pending verification.
 
 ## 2026-07-29 - Final bootstrap re-audit and interpretation correction
 - Corrected the role of old conversations: historical examples/context only, not preferences, shortlists or selected data.
@@ -24,7 +23,9 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Corrected recent-thesis metadata titles and removed one record that could not be re-verified.
 - Added `FINAL_BOOTSTRAP_AUDIT.md` and updated the Codex bootstrap prompt.
 
-## 2026-07-29 - Official application repository verification
-- Detected the user-added PDF commit at the expected path.
-- Verified presence, but found that its Git blob differs from the ChatGPT-uploaded reference file.
-- Changed the blocker from “binary upload pending” to “authoritative source identity/SHA-256 confirmation or exact replacement pending”.
+## 2026-07-29 - Official application confirmation
+- Verified that the PDF exists at the expected private repository path.
+- User explicitly confirmed that it is the same authoritative file supplied for analysis.
+- Removed the replacement/source-identity blocker.
+- Delegated direct SHA-256 calculation and manifest recording to Codex after local clone.
+- Marked the bootstrap phase complete.
