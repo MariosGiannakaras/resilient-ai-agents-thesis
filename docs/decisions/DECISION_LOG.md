@@ -115,6 +115,22 @@ Use this file for project-wide research and architecture decisions. Detailed alt
 - **Consequences:** Routine technical GitHub work is automatic between Codex, GitHub and ChatGPT. The user is interrupted only for meaningful thesis-direction decisions or required private material.
 - **Files:** `AGENTS.md`, `README.md`, `docs/context/EXECUTION_WORKFLOW.md`, `.github/pull_request_template.md`, `.github/workflows/repository-checks.yml`, tests and relevant scripts.
 
+## DEC-016 — Original PDF archive with Markdown-first bibliography workflow
+- **Date:** 2026-07-29
+- **Status:** Accepted by user
+- **Context:** The user wants original source PDFs retained for safety, while routine research and writing should use searchable full Markdown, structured source notes and only the useful thematic evidence.
+- **Decision:**
+  - Retain lawfully acquired original PDFs unchanged under `bibliography/original/` when rights and repository limits permit.
+  - Treat PDFs as archival verification copies, not routine agent input.
+  - Store complete searchable Markdown under `bibliography/markdown/` with the same basename and explicit linkage to the PDF checksum.
+  - Store one structured source-centric note per relevant source and topic-centric useful excerpts separately.
+  - Classify sources semantically with multiple topics rather than duplicating files in many folders.
+  - Process user-uploaded PDF/Markdown/NotebookLM batches immediately: inspect content, resolve metadata, rename, classify, detect duplicates, create notes/excerpts and identify evidence gaps.
+- **Rationale:** Preserve the original evidence while keeping daily research, writing and presentation preparation fast, searchable and free of unnecessary repeated reading.
+- **Alternatives rejected:** discard PDFs after conversion; use PDFs as the normal working corpus; keep only summaries; duplicate one source across topic folders; trust NotebookLM/AI summaries without source verification.
+- **Consequences:** The repository may contain justified bibliography binaries, but they are excluded from routine reading. Exact quotations, page references, figures, tables and conversion-sensitive claims remain verifiable against the PDF.
+- **Files:** `bibliography/README.md`, `bibliography/original/`, `bibliography/markdown/`, `bibliography/notes/`, `bibliography/excerpts/`, `bibliography/SOURCE_ACQUISITION_WORKFLOW.md`, `README.md`, `docs/context/EXECUTION_WORKFLOW.md`.
+
 ## Pending decisions
 
 Future entries are required for:
