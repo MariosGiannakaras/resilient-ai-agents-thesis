@@ -7,8 +7,11 @@
     "sha256": "6771abd53bdb85431e9e479a3b996cf9581da1456e4d3cb96be7d635cc2221ef",
     "local_uploaded_source_examined": true,
     "approved_for_unchanged_private_storage": true,
-    "github_file_present": false,
-    "github_checksum_verified": false
+    "github_file_present": true,
+    "github_checksum_verified": false,
+    "github_blob_sha": "d9bd052c6f4cb8a42c7a95f092d0bd2602aeccbf",
+    "local_reference_blob_sha": "3151f2c73fd598703b1285644ff331c62eb283e4",
+    "byte_identical_to_local_reference": false
   },
   "raw_chat_exports_committed": false,
   "implementation_started": false,
@@ -17,7 +20,7 @@
   "visibility_verified": "private",
   "documentation_push_complete": true,
   "bootstrap_complete": false,
-  "status": "documentation_reaudited_and_pushed_official_application_binary_upload_pending",
+  "status": "documentation_reaudited_and_pushed_official_application_source_confirmation_pending",
   "final_reaudit_date": "2026-07-29",
   "old_conversations_role": "historical_context_only_not_decision_input",
   "gridworld_strategy": "fresh_landscape_review_then_reuse_adapt_or_custom_decision",

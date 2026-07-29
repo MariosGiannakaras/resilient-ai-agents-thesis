@@ -23,3 +23,8 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Replaced the fixed third-party GridWorld reference with a current landscape-review requirement.
 - Corrected recent-thesis metadata titles and removed one record that could not be re-verified.
 - Added `FINAL_BOOTSTRAP_AUDIT.md` and updated the Codex bootstrap prompt.
+
+## 2026-07-29 - Official application repository verification
+- Detected the user-added PDF commit at the expected path.
+- Verified presence, but found that its Git blob differs from the ChatGPT-uploaded reference file.
+- Changed the blocker from “binary upload pending” to “authoritative source identity/SHA-256 confirmation or exact replacement pending”.

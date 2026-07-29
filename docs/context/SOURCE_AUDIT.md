@@ -14,7 +14,7 @@
 
 | Source | Type | Use | Trust / limitations | Repository treatment |
 |---|---|---|---|---|
-| `GiannakarasMariosThesisApplication.pdf` | Official primary document | Academic identity, exact titles, official broad objective and examples | High trust for visible content; scanned one-page document | Approved for unchanged private storage; local SHA-256 recorded; GitHub binary upload pending verification |
+| `GiannakarasMariosThesisApplication.pdf` | Official primary document | Academic identity, exact titles, official broad objective and examples | High trust for visible content; scanned one-page document | Private GitHub file present; local reference SHA-256 recorded; repository copy is not byte-identical to the ChatGPT-uploaded reference and needs confirmation/replacement |
 | `Pasted text(15).txt` | Current user task specification | Repository structure, explicit confirmed constraints, required files and definition of done | High trust as explicit current instruction | Synthesized; original task file not committed |
 | Current clarification dated 2026-07-29 | Explicit user instruction | Old chats are examples only; decisions from scratch; no legacy-code requirement; Codex inspects hardware | Highest priority for these issues | Incorporated across context/research/Codex files |
 | `OldConvo.zip` containing 10 Markdown exports | Historical conversational context | Understand prior explorations and detect possible topics/risks to re-check | Not authoritative; includes AI proposals, repetition, obsolete assumptions and apparent “final” language | Not committed; not used as shortlist or decision source |

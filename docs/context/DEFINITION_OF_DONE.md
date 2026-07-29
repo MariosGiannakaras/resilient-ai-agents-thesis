@@ -9,14 +9,15 @@
 - [x] README, AGENTS, contributing rules and citation metadata prepared.
 - [x] Research, experimental, architecture, thesis, university and decision files prepared.
 - [x] Source/bibliography placeholders prepared.
-- [ ] Official application uploaded unchanged to the GitHub repository and its checksum verified. The local uploaded source was examined and its expected SHA-256 is recorded.
+- [x] A PDF exists at the expected official-application path in the private GitHub repository.
+- [ ] Confirm that the repository PDF is the intended authoritative original, or replace it with the exact ChatGPT-uploaded reference; then verify and record its SHA-256.
 - [x] Codex bootstrap prompt prepared.
 - [x] Final bootstrap re-audit corrected old-chat, GridWorld and hardware responsibilities.
 - [x] Raw chat exports excluded.
 - [x] No application, dashboard, model, final experiment or fabricated thesis result implemented.
 - [x] All prepared text/documentation files pushed to the private GitHub repository.
 - [x] Logical commit history verified.
-- [ ] Final repository content/privacy audit passed after the official application binary is uploaded and verified.
+- [ ] Final repository content/privacy audit passed after the official application source identity/checksum is verified.
 
 ## Research-core phase
 - [ ] Fresh GridWorld landscape review completed and build/reuse/adapt decision accepted.

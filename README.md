@@ -30,7 +30,7 @@
 
 Δεν απαιτείται να δοθεί παλιός κώδικας. Το project προορίζεται να αναπτυχθεί εκ νέου. Εξωτερικός GridWorld κώδικας θα κατέβει και θα ενσωματωθεί μόνο εφόσον, μετά από σύγχρονη έρευνα, code/license/maintenance/suitability audit και μικρό prototype, αποδειχθεί καλύτερη επιλογή από custom implementation.
 
-Η επίσημη αίτηση έχει εξεταστεί και έχει εγκριθεί για αυτούσια αποθήκευση. Η μεταφορά του binary PDF στο GitHub παραμένει εκκρεμής και καταγράφεται στο `thesis/source-material/SOURCE_MANIFEST.md`.
+Η επίσημη αίτηση υπάρχει στο `thesis/source-material/GiannakarasMariosThesisApplication.pdf`. Η παρουσία της επαληθεύτηκε, αλλά το repository blob δεν είναι byte-identical με το αντίγραφο που αναλύθηκε στο ChatGPT project· η τελική αποδοχή του source παραμένει εκκρεμής μέχρι να επιβεβαιωθεί ή να αντικατασταθεί με το ακριβές πρωτότυπο και να καταγραφεί SHA-256.
 
 ## Συνιστώμενη σειρά ανάγνωσης
 
