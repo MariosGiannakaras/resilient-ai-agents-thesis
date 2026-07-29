@@ -33,6 +33,17 @@ Do not cite a row from this matrix without reading and checking the full paper. 
 | RW-012 | Wei and Luo (2021), *Non-stationary Reinforcement Learning without Prior Knowledge: an Optimal Black-box Approach* | Black-box reduction for optimal dynamic regret without prior knowledge of change count/amount. | Supports careful distinction between stationary return and adaptation under changing MDPs. | Not a practical small-thesis implementation target. `https://proceedings.mlr.press/v134/wei21b.html` |
 | RW-013 | Peng and Papadimitriou (2024), *The Complexity of Non-Stationary Reinforcement Learning* | Shows a worst-case result: updating after changing the reward or transition probability of one state-action pair can require time almost proportional to the number of states under the paper's complexity assumptions. | Strong justification for a bounded state space, explicit change classes and cautious claims about adaptation scalability. | Worst-case theoretical result; it does not predict runtime for the planned small GridWorld. `https://proceedings.mlr.press/v237/peng24a.html` |
 
+## Comparable theses and dissertations
+
+These are useful both for scientific context and for understanding how a complete long-form work connects background, methods, experiments, results and limitations. They are not templates to copy.
+
+| ID | Thesis | Scope and reported findings | What to learn from its structure | Limits / source |
+|---|---|---|---|---|
+| TH-RW-001 | Balloch (2024), *Efficient Adaptation of Reinforcement Learning Agents to Sudden Environmental Change*, Georgia Tech PhD | Introduces the broader online test-time adaptation framework around NovGrid, then studies exploration/sampling, model-based adaptation, knowledge preservation and interpretable world models. Reports that stochastic/diversity-focused exploration is effective across novelty types and that DOPS/structured world models improve sample-efficient adaptation. | Strong example of progressing from benchmark and metrics to several solution families, with each contribution tied to the same core adaptation problem. For this thesis, retain the unified question but drastically reduce the number and complexity of methods. | Much larger doctoral scope and deep-model budget. Institutional repository: `https://hdl.handle.net/1853/76967`; open manuscript: `https://arxiv.org/abs/2505.10330` |
+| TH-RW-002 | Liu (2024), *Deep Reinforcement Learning in Non-Stationary Environments*, University of Technology Sydney PhD | Treats change detection and adaptation as two linked processes under sudden unknown change points; reports four proposed methods outperforming several current algorithms. | Useful example of formally defining non-stationarity, separating detection from adaptation and organizing multiple experiments around a common pipeline. | Doctoral/deep-RL scope far beyond the intended implementation. Open institutional thesis: `http://hdl.handle.net/10453/186408` |
+| TH-RW-003 | Nasereddin (2020), *Reinforcement Learning Approach for Inspect/Correct Tasks*, LSU PhD | Studies GridWorld task variability and complexity; reports that higher stochastic variability reduces performance and that a chain-of-Q-tables method outperformed SARSA and double SARSA in high-variability cases across efficiency, reward, steps and computation time. | Useful for designing controlled variability levels, reporting multiple performance dimensions and discussing how environmental variability affects hyperparameter choice. | Domain-specific inspect/correct formulation and doctoral breadth. Institutional repository and DOI: `https://doi.org/10.31390/gradschool_dissertations.5431` |
+| TH-RW-004 | Grooten (2026), *Adaptive Reinforcement Learning: Lean and Dynamic Agents for Robust Generalization*, Eindhoven University of Technology PhD | Covers noisy inputs, robust generalization and adaptive network structures; reports dynamic sparse training outperforming dense networks when irrelevant noisy inputs must be ignored. | Recent example of structuring a thesis around distinct uncertainty/generalization challenges and clearly separating contributions. | Very recent PhD, visual/deep RL and sparse-network focus; not a direct GridWorld protocol template. Official TU/e repository record. |
+
 ## Preliminary synthesis — implications, not decisions
 
 The literature supports the following design principles:
@@ -46,6 +57,7 @@ The literature supports the following design principles:
 7. **Report distributions and repeated runs.** Adaptation trajectories can be noisy and algorithm rankings can depend on exploration and change type.
 8. **Report clean-condition cost as well as disturbed-condition robustness.** Robust or adaptive methods may improve, preserve or degrade nominal performance; the trade-off must be visible.
 9. **Bounded environment complexity is a validity choice, not merely convenience.** It enables controlled causal comparisons and avoids confounding algorithm behavior with an unmanageably large state space.
+10. **A coherent thesis does not need many unrelated contributions.** Comparable doctoral theses use a stable problem definition across chapters; this project should apply the same coherence with a much smaller method set.
 
 ## Candidate evidence gaps for the first Codex mission
 
@@ -53,7 +65,7 @@ The literature supports the following design principles:
 - Verify whether NovGrid code remains maintained and compatible with current Gymnasium/MiniGrid before considering it technically.
 - Find validated operational definitions for recovery time, cumulative post-change loss, resilience and post-change asymptote.
 - Check whether a small model set can answer the official topic without deep/meta-RL.
-- Identify recent theses or dissertations with a comparable theory–experiment–dashboard structure; use them only as structural examples, not as authoritative methods.
+- Fully inspect the comparable theses for chapter organization, experimental tables, limitations reporting and citation practice before using them as structural examples.
 
 ## Required refresh during writing
 
@@ -63,6 +75,6 @@ Before writing Related Work, Methodology or Discussion:
 - read full text of all decision-driving sources,
 - add exact experimental details, sample counts/seeds and limitations,
 - verify every DOI and publication status,
-- distinguish peer-reviewed sources, workshop papers, preprints and software/benchmark papers,
+- distinguish peer-reviewed sources, workshop papers, preprints, software/benchmark papers and theses,
 - compare the project's final findings with relevant prior reported outcomes without claiming direct equivalence where protocols differ,
 - connect each thesis claim to a source or to the project’s own frozen evidence.
