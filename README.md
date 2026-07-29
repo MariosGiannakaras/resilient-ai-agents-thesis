@@ -69,51 +69,52 @@
 
 - Το αρχικό evidence seed βρίσκεται στο `docs/research/RELATED_WORK_EVIDENCE_MATRIX.md`.
 - Η νόμιμη συλλογή και τεκμηρίωση πηγών ορίζεται στο `bibliography/SOURCE_ACQUISITION_WORKFLOW.md`.
-- Τα επαληθευμένα open-access PDFs μπορούν να ληφθούν μετά το clone με:
+- Τα επαληθευμένα open-access papers και comparable theses μπορούν να ληφθούν μετά το clone με:
 
 ```bash
 python scripts/download_open_access_bibliography.py
 ```
 
-Το script αποθηκεύει τα PDFs στο `bibliography/original/related-work/` και δημιουργεί `bibliography/source_manifest.json` με URLs, SHA-256 και acquisition status. Δεν παρακάμπτει paywalls. Για μη διαθέσιμη νόμιμη open-access έκδοση, το Codex καταγράφει DOI και ζητά από τον χρήστη να αποκτήσει το paper μέσω Πανεπιστημίου ή συγγραφέα.
+Το script αποθηκεύει papers στο `bibliography/original/related-work/`, comparable theses στο `bibliography/original/theses/` και δημιουργεί `bibliography/source_manifest.json` με URLs, source type, SHA-256 και acquisition status. Δεν παρακάμπτει paywalls. Για μη διαθέσιμη νόμιμη open-access ή direct-download έκδοση, το Codex καταγράφει DOI/handle και ζητά από τον χρήστη να αποκτήσει το source μέσω Πανεπιστημίου, επίσημου repository ή συγγραφέα.
 
-Η βιβλιογραφική αναζήτηση επαναλαμβάνεται πριν από το protocol freeze, πριν από τη συγγραφή Related Work/Methodology/Discussion και πριν από την τελική υποβολή.
+Πριν γίνει commit μεγάλης διατριβής ή συλλογής PDFs, ελέγχονται μέγεθος, license και ανάγκη Git LFS. Η βιβλιογραφική αναζήτηση επαναλαμβάνεται πριν από το protocol freeze, πριν από τη συγγραφή Related Work/Methodology/Discussion και πριν από την τελική υποβολή.
 
 ## Χάρτης φακέλων
 
 ```text
-app/                    Polished local dashboard/control layer
-core/                   Ανεξάρτητος ερευνητικός και πειραματικός πυρήνας
-experiments/            Experiment definitions, runners και manifests
-configs/                Version-controlled configurations
-notebooks/              Ελεγχόμενα exploratory notebooks, όχι source of truth
-scripts/                Reproducibility, processing και maintenance scripts
-tests/                  Unit, integration, statistical και reproducibility tests
+app/                              Polished local dashboard/control layer
+core/                             Ανεξάρτητος ερευνητικός και πειραματικός πυρήνας
+experiments/                      Experiment definitions, runners και manifests
+configs/                          Version-controlled configurations
+notebooks/                        Ελεγχόμενα exploratory notebooks, όχι source of truth
+scripts/                          Reproducibility, processing και maintenance scripts
+tests/                            Unit, integration, statistical και reproducibility tests
 
-data/raw/               Πρωτογενή δεδομένα και immutable run outputs
-data/processed/         Παράγωγα δεδομένα με provenance
-results/runs/           Run outputs και manifests
-results/summaries/      Aggregated analysis outputs
-results/thesis-final/   Frozen evidence set
-artifacts/figures/      Reproducible figures
-artifacts/tables/       Reproducible tables
-artifacts/exports/      CSV/JSON/report exports
+data/raw/                         Πρωτογενή δεδομένα και immutable run outputs
+data/processed/                   Παράγωγα δεδομένα με provenance
+results/runs/                     Run outputs και manifests
+results/summaries/                Aggregated analysis outputs
+results/thesis-final/             Frozen evidence set
+artifacts/figures/                Reproducible figures
+artifacts/tables/                 Reproducible tables
+artifacts/exports/                CSV/JSON/report exports
 
-bibliography/original/  Πρωτότυπες πηγές
-bibliography/markdown/  Searchable conversions
-bibliography/notes/     Structured reading notes
+bibliography/original/related-work/  Original lawful paper copies
+bibliography/original/theses/        Comparable lawful thesis/dissertation copies
+bibliography/markdown/               Searchable conversions
+bibliography/notes/                  Structured reading notes
 
-thesis/source-material/ Επίσημη αίτηση και πρωτογενές υλικό
-thesis/chapters/        Drafts ανά κεφάλαιο
-thesis/final/           Τελικό Word και συνοδευτικά παραδοτέα
+thesis/source-material/           Επίσημη αίτηση και πρωτογενές υλικό
+thesis/chapters/                  Drafts ανά κεφάλαιο
+thesis/final/                     Τελικό Word και συνοδευτικά παραδοτέα
 
-docs/context/           Source of truth, scope, requirements και blockers
-docs/research/          Research framing και selection workspaces
-docs/experiments/       Protocol, schemas και provenance
-docs/architecture/      Bounded application και UI requirements
-docs/thesis/            Writing και formatting requirements
-docs/university/        Official UniWA/department requirements
-docs/decisions/         Decision log και ADRs
+docs/context/                     Source of truth, scope, requirements και blockers
+docs/research/                    Research framing και selection workspaces
+docs/experiments/                 Protocol, schemas και provenance
+docs/architecture/                Bounded application και UI requirements
+docs/thesis/                      Writing και formatting requirements
+docs/university/                  Official UniWA/department requirements
+docs/decisions/                   Decision log και ADRs
 ```
 
 ## Τι πρέπει να προστεθεί αργότερα από τον χρήστη
