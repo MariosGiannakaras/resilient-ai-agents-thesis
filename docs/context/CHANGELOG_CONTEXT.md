@@ -47,7 +47,7 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Moved complete checksums, manifests, runtime details and provenance chains behind expandable details or export metadata.
 - Clarified that the fourteen roadmap phases are checkpoints and can be operated as eight larger work blocks.
 - Added literature refresh gates for initial framing, protocol freeze, thesis writing and final submission.
-- Added `RELATED_WORK_EVIDENCE_MATRIX.md` with initial comparable studies, reported results, limitations and implications.
-- Added `SOURCE_ACQUISITION_WORKFLOW.md` and `scripts/download_open_access_bibliography.py` for lawful open-access acquisition, PDF validation, SHA-256 and a source manifest.
-- Established user-assisted lawful acquisition for paywalled sources; no unofficial or paywall-bypassing sources.
+- Added `RELATED_WORK_EVIDENCE_MATRIX.md` with comparable papers and institutional theses, reported results, limitations, implications and writing-structure lessons.
+- Added `SOURCE_ACQUISITION_WORKFLOW.md` and `scripts/download_open_access_bibliography.py` for lawful open-access paper/thesis acquisition, PDF validation, SHA-256 and a source manifest.
+- Established user-assisted lawful acquisition for paywalled or non-direct sources; no unofficial or paywall-bypassing sources.
 - Added DEC-014.
