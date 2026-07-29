@@ -4,22 +4,24 @@
 
 1. Newer explicit user instruction.
 2. Official approved application or formal thesis description.
-3. Current official University/Department guidance.
-4. User decisions reconstructed from conversation exports, ordered by recency/specificity.
-5. Real bibliography and primary technical documentation.
-6. AI-generated historical suggestions, only as non-binding candidates.
+3. Current official University/Department/supervisor guidance.
+4. Verified primary scientific literature.
+5. Official technical documentation, source code, release history, license and reproducible benchmarks.
+6. Actual system inventory and pilot measurements.
+7. Conversation exports only as historical context and examples of questions previously discussed; they do not establish decisions, preferences or candidate shortlists.
 
 ## Sources reviewed for bootstrap
 
 | Source | Type | Use | Trust / limitations | Repository treatment |
 |---|---|---|---|---|
-| `GiannakarasMariosThesisApplication.pdf` | Official primary document | Academic identity, exact titles, official broad objective and examples | High trust for visible content; scanned one-page document | Approved for unchanged private storage; local SHA-256 recorded; GitHub binary upload still pending verification |
-| `Pasted text(15).txt` | User task specification | Repository structure, required files, definition of done | High trust as current explicit instruction | Synthesized; original task file not committed |
-| `OldConvo.zip` containing 10 Markdown conversation exports | Historical conversational source | Prior ideas, user preferences, contradictions and legacy references | Mixed trust; contains AI proposals, repetition and obsolete decisions | Not committed; only verified synthesis retained |
-| Official Department writing-guidelines PDF | Official institutional source | Structure, methodology, formatting, citations | Authoritative unless superseded by newer official guidance | Source URL and dated snapshot recorded |
-| Connected GitHub inventory | Direct system source | New repository verification and search for existing user repos | High trust for accessible account state; may not include local/unconnected code | Results summarized; no unsupported inference |
-| Public `prasenjit52282/GridWorld` repository | Third-party technical reference | Possible historical repository candidate/reference | Not confirmed as the user's existing code; license and commit must be reviewed before reuse | URL recorded only; no code copied |
-| AMD ROCm compatibility documentation | Primary vendor documentation | Hardware feasibility check | Version/platform-specific; must be rechecked at implementation time | Used only for CPU-first constraint rationale |
+| `GiannakarasMariosThesisApplication.pdf` | Official primary document | Academic identity, exact titles, official broad objective and examples | High trust for visible content; scanned one-page document | Approved for unchanged private storage; local SHA-256 recorded; GitHub binary upload pending verification |
+| `Pasted text(15).txt` | Current user task specification | Repository structure, explicit confirmed constraints, required files and definition of done | High trust as explicit current instruction | Synthesized; original task file not committed |
+| Current clarification dated 2026-07-29 | Explicit user instruction | Old chats are examples only; decisions from scratch; no legacy-code requirement; Codex inspects hardware | Highest priority for these issues | Incorporated across context/research/Codex files |
+| `OldConvo.zip` containing 10 Markdown exports | Historical conversational context | Understand prior explorations and detect possible topics/risks to re-check | Not authoritative; includes AI proposals, repetition, obsolete assumptions and apparent “final” language | Not committed; not used as shortlist or decision source |
+| Official Department writing-guidelines PDF | Official institutional source | Structure, methodology, formatting and citation guidance | Official available document; must still be checked for a newer revision near submission | URL and dated snapshot recorded |
+| Department/OpenArchives thesis metadata | Supporting public metadata | Verify that recent Department theses exist and identify examples | Not formatting authority; metadata is not full-methodology review | Exact verified titles/URLs recorded |
+| Connected GitHub repository inventory | Direct system source | Repository privacy/access and content operations | High trust for accessible account state | Repository metadata and commits verified |
+| Public GridWorld ecosystem search | Discovery input | Demonstrates that multiple current alternatives exist and a fresh comparison is required | Not a selection decision | No specific library is frozen or copied |
 
 ## Conversation export inventory
 
@@ -36,10 +38,12 @@ The following files were inspected from the private export and were not committe
 - `THESIS_-_Translate_to_Greek_AI_agents.md`
 - `Thesis_Experimental_Design.md`
 
-## Provenance caveats
+## Provenance rules
 
-- A statement repeated by an assistant is not automatically a user decision.
-- “Locked”, “final” or “completed” wording in an old AI response has no authority without user confirmation or observable artifact.
-- Repository/code claims remain unverified until the exact URL/path and commit are inspected.
-- Literature references from old chats must be verified against the original publication before use.
+- A statement or recommendation in a chat is not a user decision unless independently confirmed in the current task/context.
+- “Locked”, “final” or “completed” wording in an old AI response has no authority.
+- No historical model, metric, stack, GridWorld repository, budget or hyperparameter is carried into the new design merely because it appeared in an export.
+- Literature references from chats must be rediscovered and verified against original publications.
+- Repository/package claims require direct inspection of current source, license, releases and code.
+- Hardware claims require automated inspection of the actual execution system.
 - Current official guidance must be rechecked near submission.

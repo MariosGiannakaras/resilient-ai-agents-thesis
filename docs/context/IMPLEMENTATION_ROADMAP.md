@@ -9,19 +9,26 @@
 - **Done when:** Required files exist, contradictions are resolved or open, no raw chats committed.
 - **Gate:** User reviews critical factual errors/blockers.
 
+## Phase 1.5 - Automated system inventory
+- **Goal:** Codex records actual CPU/RAM/GPU/OS/drivers/runtimes/storage and capability baselines.
+- **Inputs:** Local system access.
+- **Deliverables:** Versioned inventory and benchmark notes.
+- **Done when:** Compute-dependent decisions no longer rely on historical hardware claims.
+- **Gate:** No acceleration or final batch-budget decision before completion.
+
 ## Phase 2 — Add and inventory primary material
 - **Goal:** Collect real bibliography and remaining source material.
-- **Inputs:** PDFs, references, supervisor material, existing code.
+- **Inputs:** PDFs, references and supervisor material.
 - **Deliverables:** Source manifests, checksums, bibliography inventory.
 - **Done when:** Every source has provenance and status.
 - **Gate:** No final research decision without relevant primary material.
 
-## Phase 3 — Existing GridWorld audit
-- **Goal:** Determine what existing code can be reused.
-- **Inputs:** Exact repository/path and commit.
-- **Deliverables:** Code/behavior audit, license review, bug list, reuse decision.
-- **Done when:** Environment behavior is reproduced by tests or rejected.
-- **Gate:** GridWorld baseline provenance known.
+## Phase 3 — Fresh GridWorld landscape review and prototype decision
+- **Goal:** Compare current reuse, adapt/wrap and minimal custom implementation strategies without assuming any legacy repository.
+- **Inputs:** Official topic, current technical sources, literature needs and measured execution environment.
+- **Deliverables:** Candidate matrix, license/maintenance/API audit, small compatibility prototypes and ADR recommendation.
+- **Done when:** The selected strategy is justified by current evidence, pinned where third-party code is used, and suitable for deterministic research tests.
+- **Gate:** No external GridWorld code is downloaded/integrated into the main project before the audit, prototype and decision.
 
 ## Phase 4 — Research-question clarification
 - **Goal:** Convert official broad objective into precise, answerable questions.

@@ -1,18 +1,19 @@
 # Contradictions and Superseded Context
 
-Οι παλιές συνομιλίες περιέχουν AI-generated προτάσεις και μεταβαλλόμενες κατευθύνσεις. Το αρχείο δεν τις εξισώνει με αποφάσεις του χρήστη.
+Οι παλιές συνομιλίες δεν θεωρούνται σύνολο αποφάσεων προς συγχώνευση. Είναι ιστορικό/context. Όπου περιέχουν διαφορετικές προτάσεις, η σωστή επίλυση δεν είναι να επιλεγεί η «νεότερη» ή πιο συχνή, αλλά να γίνει νέα έρευνα και νέα απόφαση.
 
-| ID | Older / conflicting statement | Newer or authoritative statement | Resolution | Rationale | Confirmation needed? |
-|---|---|---|---|---|---|
-| CON-001 | Η εργασία περιγράφηκε σε παλιές απαντήσεις ως “Master’s thesis”. | Η επίσημη αίτηση είναι διπλωματική του Τμήματος Μηχανικών Πληροφορικής και Υπολογιστών, Σχολή Μηχανικών. | **Official application prevails.** | Primary academic source. | Όχι. |
-| CON-002 | Εμφανίστηκαν διαφορετικοί ελληνικοί/αγγλικοί τίτλοι. | Η αίτηση δίνει ακριβείς επίσημους τίτλους. | **Official title locked until formal change.** | Primary source. | Όχι. |
-| CON-003 | Κάποιες παλιές προτάσεις περιόρισαν την εργασία σε θεωρητική σύγκριση. | Ο χρήστης επιβεβαίωσε πειραματικό core και τοπική εφαρμογή ως μέρος της εργασίας. | **Full experimental project with supportive app.** | Newer explicit scope. | Όχι. |
-| CON-004 | Διαφορετικές συνομιλίες “κλείδωσαν” διαφορετικά model sets: Q-learning/SARSA/Dyna-Q, PPO variants, MCTS, Dreamer, ReAct κ.ά. | Η τελική επιλογή πρέπει να γίνει μετά bibliography, GridWorld, pilots και hardware review. | **No model is final.** | Newer explicit decision and scientific necessity. | Ναι, αργότερα ως research decision. |
-| CON-005 | ReAct/LLM προτάθηκε ως κεντρικός agent. | AI/LLM είναι προαιρετικό και μόνο με πραγματική αξία· δεν αντικαθιστά statistics ή experimental agents αυθαίρετα. | **Not a core model unless literature/RQ justify it.** | Scope and hardware constraints. | Ναι μόνο αν επανεξεταστεί. |
-| CON-006 | Προτάθηκαν FastAPI+React local web app και Tauri+React+Python desktop app ως final stacks. | Δεν έχει κλειδωθεί stack. | **Both remain candidates.** | No validated core or compatibility prototype yet. | Ναι, με ADR. |
-| CON-007 | Παλιές απαντήσεις πρότειναν fixed seeds, run counts, budgets και hyperparameters. | Όλα πρέπει να επιλεγούν βάσει literature, pilots, GridWorld και resources. | **Historical values are non-binding.** | Newer explicit user instruction. | Ναι, μετά pilots. |
-| CON-008 | Παλιό scaffold `THESISnew` παρουσιάστηκε ως ολοκληρωμένο foundation. | Δεν είναι διαθέσιμο για audit και αναφέρθηκαν proxy/placeholder outputs. | **Unverified legacy artifact, not source of truth.** | No accessible code/evidence. | Ναι, αν ανακτηθεί. |
-| CON-009 | Υπονοήθηκε ότι υπάρχει συγκεκριμένο user GridWorld GitHub repo. | Δεν εντοπίστηκε dedicated repo στους διαθέσιμους user-owned repositories· βρέθηκε μόνο δημόσιο third-party candidate/reference. | **Existing source remains unresolved.** | Direct GitHub inventory. | Ναι. |
-| CON-010 | Κάποιες ροές σχεδίαζαν πρώτα dashboard/UI. | Ο χρήστης όρισε core-first και απαγόρευση dashboard πριν validation. | **Core-first is mandatory.** | Newer explicit priority. | Όχι. |
-| CON-011 | Ιστορικά mock/proxy metrics θεωρήθηκαν χρήσιμα για demo. | Η τελική εφαρμογή απαγορεύεται να εμφανίζει fake progress/logs/metrics. | **Mocks only in isolated tests/dev fixtures, clearly labeled.** | Scientific integrity. | Όχι. |
-| CON-012 | GPU-heavy approaches προτάθηκαν χωρίς hardware validation. | Δεν υποτίθεται NVIDIA/CUDA· σχεδιασμός CPU-first μέχρι inventory/test. | **Hardware-constrained selection.** | Newer explicit constraint. | Ναι, μετά inventory. |
+| ID | Older / mistaken interpretation | Current authoritative rule | Resolution | Confirmation needed? |
+|---|---|---|---|---|
+| CON-001 | Η εργασία περιγράφηκε σε παλιές απαντήσεις ως “Master's thesis”. | Η επίσημη αίτηση ορίζει διπλωματική του Τμήματος Μηχανικών Πληροφορικής και Υπολογιστών. | Official application prevails. | Όχι. |
+| CON-002 | Εμφανίστηκαν διαφορετικοί τίτλοι. | Χρησιμοποιούνται οι ακριβείς τίτλοι της αίτησης μέχρι formal change. | Superseded. | Όχι. |
+| CON-003 | Οι παλιές συνομιλίες αντιμετωπίστηκαν ως πηγή user preferences και candidate shortlist. | Δόθηκαν μόνο ως examples/context· όλες οι decisions γίνονται εκ νέου. | Historical content removed from decision authority and selection workspaces. | Όχι. |
+| CON-004 | Διαφορετικά chats «κλείδωσαν» διαφορετικά model sets. | Δεν υπάρχει model shortlist. | Fresh literature/environment/feasibility/pilot selection required. | Αργότερα ως formal research decision. |
+| CON-005 | Ένα συγκεκριμένο LLM/ReAct ή άλλο advanced model παρουσιάστηκε ως central agent. | Κανένα model δεν έχει προτεραιότητα λόγω ιστορικής αναφοράς. | Re-evaluate from zero. | Αργότερα. |
+| CON-006 | FastAPI/React, Tauri/React/Python ή άλλο stack παρουσιάστηκε ως final. | Stack selection γίνεται μετά core requirements και prototypes. | No preferred stack. | Αργότερα με ADR. |
+| CON-007 | Παλιές απαντήσεις πρότειναν fixed seeds, run counts, budgets και hyperparameters. | Όλα επιλέγονται από literature, pilots, desired precision και measured resources. | Historical values discarded as defaults/candidates. | Αργότερα. |
+| CON-008 | Θεωρήθηκε ότι πρέπει να ανακτηθεί παλιός φάκελος ή existing user-owned GridWorld code. | Η εφαρμογή χτίζεται εκ νέου και δεν απαιτείται παλιός κώδικας. | Remove legacy-code blocker. | Όχι. |
+| CON-009 | Καταγράφηκε συγκεκριμένο public GridWorld repository ως historical candidate. | Το Codex θα κάνει νέα landscape search και θα κατεβάσει/ενσωματώσει μόνο κατάλληλη επιλογή. | Remove repository-specific preference/reference from current plan. | Όχι. |
+| CON-010 | Το hardware θεωρήθηκε πληροφορία που πρέπει να προσθέσει ο χρήστης. | Το Codex θα το επιθεωρήσει αυτόματα στο πραγματικό σύστημα. | Owner changed to Codex automated inventory. | Όχι. |
+| CON-011 | Κάποιες ροές σχεδίαζαν dashboard-first. | Core-first και validated pilots πριν dashboard. | Core-first mandatory. | Όχι. |
+| CON-012 | Mock/proxy metrics θεωρήθηκαν χρήσιμα για demo. | Final application απαγορεύεται να εμφανίζει fake progress/logs/metrics. | Mocks only in isolated, labeled tests/dev fixtures. | Όχι. |
+| CON-013 | GPU-heavy approaches προτάθηκαν χωρίς system inspection. | No NVIDIA/CUDA assumption; capability decisions after automated inventory/benchmark. | Hardware-aware selection. | Μετά inventory. |

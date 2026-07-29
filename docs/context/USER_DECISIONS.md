@@ -1,71 +1,56 @@
 # User Decisions
 
-## Application and operation
+Το αρχείο περιέχει μόνο ρητές τρέχουσες αποφάσεις του χρήστη ή αποφάσεις που επαναλαμβάνονται στο αρχικό task specification. Οι παλιές συνομιλίες δεν δημιουργούν από μόνες τους αποφάσεις.
 
-- Η εφαρμογή θα χρησιμοποιείται κυρίως τοπικά.
-- Υπάρχει ένας χρήστης.
-- Δεν απαιτούνται authentication, accounts, roles ή multi-user behavior.
-- Δεν απαιτείται δημόσιο deployment, cloud infrastructure, mobile app ή online live demo.
-- Το dashboard πρέπει να επιτρέπει χρήση χωρίς συνεχή χειροκίνητη εκτέλεση scripts/console commands.
-- Η εφαρμογή θα παρουσιαστεί ως μέρος της εργασίας και θα παρέχει screenshots/visual evidence.
-- Η εμφάνιση πρέπει να είναι σύγχρονη, αλλά είναι κατώτερη προτεραιότητα από science/correctness/reproducibility.
+## Application scope
 
-## Priority order
+- Τοπική εφαρμογή για έναν χρήστη.
+- Χωρίς authentication και multi-user λειτουργία.
+- Χωρίς δημόσιο deployment, υποχρεωτικό cloud, mobile application ή web live demo.
+- Το dashboard μειώνει την ανάγκη χειροκίνητων scripts/console commands.
+- Screenshots και πραγματικά αποτελέσματα θα χρησιμοποιηθούν στη διπλωματική και παρουσίαση.
+- Η εφαρμογή παρουσιάζεται ως μέρος της εργασίας, αλλά η επιστημονική ορθότητα προηγείται της εμφάνισης.
+- Το dashboard ξεκινά μόνο μετά από λειτουργικό και validated independent core.
 
-1. Επιστημονική εγκυρότητα.
-2. Ορθότητα υλοποίησης.
-3. Αναπαραγωγιμότητα.
-4. Αξιοπιστία.
-5. Χρηστικότητα.
-6. Καθαρή οπτικοποίηση.
-7. Animations και αισθητικές λεπτομέρειες.
+## Research and experiments
 
-## Research and runs
+- Όλες οι επιλογές models, baselines, metrics, GridWorld rules, stack, hyperparameters, ranges, seeds, repetitions και budgets θα γίνουν εκ νέου.
+- Τα παλιά chats δόθηκαν ως παραδείγματα και γενική εικόνα της κατάστασης, όχι ως επιλεγμένα δεδομένα ή προτιμήσεις.
+- Κανένα model ή technical stack δεν θεωρείται preferred επειδή αναφέρθηκε παλιότερα.
+- Απαιτούνται διαφορετικά runs/settings ανά model όπου είναι επιστημονικά δικαιολογημένο.
+- Δεν επιτρέπεται single-run comparison.
+- Απαιτούνται pilot, exploratory και final runs.
+- Καταγράφονται failed, cancelled, interrupted, incomplete και excluded runs.
+- Pause, resume, stop, cancel, restart και rerun υποστηρίζονται όπου είναι τεχνικά ασφαλές και πραγματικό.
+- Τα resolved parameters κάθε run αποθηκεύονται.
+- Figures και tables παράγονται από πραγματικά αποθηκευμένα δεδομένα.
 
-- Θα υπάρχουν διαφορετικά runs και settings ανά μοντέλο.
-- Θα χρησιμοποιούνται πολλαπλά seeds και ανεξάρτητες επαναλήψεις· ο αριθμός δεν έχει οριστικοποιηθεί.
-- Θα υπάρχουν pilot, exploratory και final runs.
-- Θα καταγράφονται failures, cancellations, interruptions και incomplete runs.
-- Θα υποστηρίζονται pause, resume, stop, cancel και restart όπου είναι τεχνικά εφικτό.
-- Θα μπορεί να επανεκτελείται συγκεκριμένο run.
-- Θα αποθηκεύονται οι πραγματικές παράμετροι κάθε run.
-- Τα τελικά figures/tables θα παράγονται από πραγματικά δεδομένα, όχι mock values.
-- Η επιλογή μοντέλων, hyperparameters, ranges, seeds και repetitions θα γίνει μετά από βιβλιογραφία, GridWorld review, pilots και resource assessment.
+## GridWorld
 
-## Architecture
+- Η εφαρμογή και ο ερευνητικός πυρήνας θα αναπτυχθούν εκ νέου· δεν απαιτείται να δοθεί ή να ανακτηθεί παλιός κώδικας.
+- Το Codex πρέπει πρώτα να κάνει σύγχρονη έρευνα για GridWorld libraries/frameworks και την επιλογή custom implementation.
+- Μόνο αν μια επιλογή αποδειχθεί κατάλληλη μετά από code, license, maintenance, compatibility και prototype audit, θα τη κατεβάσει και θα την ενσωματώσει.
+- Δεν υπάρχει προκαθορισμένο third-party GridWorld repository.
 
-- Ο ερευνητικός πυρήνας θα είναι ανεξάρτητος από το UI.
-- Το dashboard δεν θα ξεκινήσει πριν επαληθευτεί ο πυρήνας.
-- Δεν θα υιοθετηθεί περίπλοκη υποδομή χωρίς πραγματική ανάγκη.
-- Δεν έχει κλειδωθεί τεχνολογικό stack.
+## Hardware and tooling
 
-## Thesis
+- Το Codex θα έχει πρόσβαση στο πραγματικό σύστημα και πρέπει να συλλέξει μόνο του CPU, RAM, GPU, VRAM, OS, drivers, runtimes και storage.
+- Ο χρήστης δεν χρειάζεται να αντιγράψει χειροκίνητα system inventory.
+- Δεν υποτίθεται NVIDIA ή CUDA.
+- Compute-dependent αποφάσεις λαμβάνονται μετά την αυτόματη απογραφή και μικρά capability benchmarks.
 
-- Η συγγραφή θα γίνει στα ελληνικά.
-- Το τελικό παραδοτέο θα είναι Microsoft Word.
-- Θα ερευνηθούν οι επίσημες οδηγίες του Τμήματος και πρόσφατες εγκεκριμένες εργασίες.
-- Οι επίσημες οδηγίες υπερισχύουν των παραδειγμάτων παλιών εργασιών.
-- Δεν υπάρχει γνωστή προθεσμία.
-- Η συγγραφή θα προχωρά παράλληλα, αλλά conclusions/results μόνο από πραγματικά δεδομένα.
-- Απαγορεύεται η επινόηση πηγών, DOI, measurements, results και conclusions.
+## Thesis and repository
 
-## Repository and privacy
+- Η διπλωματική γράφεται στα ελληνικά.
+- Το τελικό παραδοτέο είναι Microsoft Word.
+- Οι επίσημες τρέχουσες οδηγίες υπερισχύουν παλιών παραδειγμάτων.
+- Το repository παραμένει private και είναι η μόνιμη source of truth.
+- Η επίσημη αίτηση αποθηκεύεται αυτούσια στο private repository.
+- Τα raw chat exports δεν γίνονται commit.
+- Η πραγματική βιβλιογραφία μπορεί να αποθηκευτεί στο private repository.
+- Απαγορεύεται η επινόηση citations, δεδομένων, αποτελεσμάτων ή συμπερασμάτων.
 
-- Το repository είναι ιδιωτικό και ανήκει στον προσωπικό GitHub λογαριασμό.
-- Η επίσημη αίτηση αποθηκεύεται αυτούσια παρότι περιέχει προσωπικά στοιχεία.
-- Η πραγματική βιβλιογραφία μπορεί να αποθηκευτεί στο ιδιωτικό repository.
-- Τα raw chat exports χρησιμοποιούνται μόνο για extraction και δεν γίνονται commit.
-- Όλο το project context πρέπει να βρίσκεται σε version-controlled αρχεία ώστε το Codex να μην χρειάζεται πρόσβαση στα chats.
+## Optional AI
 
-## Hardware
-
-- Έχει αναφερθεί περίπου AMD Ryzen 5 2600X και MSI Radeon RX 570 8 GB.
-- Το πραγματικό inventory θα επιβεβαιωθεί από το σύστημα.
-- Δεν θα υποτεθεί NVIDIA/CUDA ή απεριόριστο compute.
-- Προτιμάται CPU-compatible path όταν η AMD GPU δεν έχει τεκμηριωμένη υποστήριξη/ωφέλεια.
-
-## Optional AI in the dashboard
-
-- Επιτρέπεται μόνο αν προσφέρει πραγματική αξία, όπως descriptive summary, anomaly flagging ή run triage.
-- Δεν δημιουργεί/αλλάζει δεδομένα, δεν αντικαθιστά statistics και δεν παράγει ανεξέλεγκτο τελικό επιστημονικό κείμενο.
-- Αν δεν υπάρχει σαφές benefit, δεν ενσωματώνεται.
+- Μικρό AI model ενσωματώνεται μόνο αν αποδειχθεί πραγματική και αξιολογήσιμη χρησιμότητα.
+- Δεν δημιουργεί ή αλλάζει experimental data, δεν αντικαθιστά statistics και δεν παρουσιάζει hypotheses ως facts.

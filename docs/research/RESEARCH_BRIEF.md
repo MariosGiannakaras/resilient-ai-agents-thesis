@@ -1,6 +1,8 @@
 # Research Brief
 
-Every item is labeled `CONFIRMED`, `PROVISIONAL`, `PROPOSED`, or `OPEN`.
+**Status:** `RESEARCH_REQUIRED` except where explicitly marked `CONFIRMED`.
+
+This file defines the research problem and the process for deriving the final questions. It does not preserve model, metric, GridWorld-rule or experimental preferences from old conversations.
 
 ## Identity
 
@@ -8,108 +10,136 @@ Every item is labeled `CONFIRMED`, `PROVISIONAL`, `PROPOSED`, or `OPEN`.
 - **English title — CONFIRMED:** Comparison and Evaluation of Resilient AI Agents in Uncertain Environments.
 - **Institution — CONFIRMED:** Πανεπιστήμιο Δυτικής Αττικής, Σχολή Μηχανικών, Τμήμα Μηχανικών Πληροφορικής και Υπολογιστών.
 
-## Subject and problem
+## Official subject and problem
 
-- **CONFIRMED:** Study and comparative evaluation of resilient AI decision agents under uncertainty and dynamic changes.
-- **CONFIRMED:** Use of a simple simulated environment; GridWorld is the chosen project direction.
-- **CONFIRMED:** Official examples of disruptions include data/observation noise, rule changes and failed action execution.
+- **CONFIRMED:** Study and comparative evaluation of resilient AI decision agents under uncertainty and dynamic environmental changes.
+- **CONFIRMED:** Use of a simple simulated environment; GridWorld is the current project direction.
+- **CONFIRMED:** Official examples include data/observation noise, rule changes and failed action execution.
 - **CONFIRMED:** Evaluation must address resilience and recovery speed.
-- **OPEN:** Exact operational definition of “resilient agent” for this thesis.
+- **RESEARCH_REQUIRED:** Operational definitions of agent, resilience, adaptation, uncertainty, dynamic change and recovery for this thesis.
 
-## Provisional main research question
+## Research-question generation
 
-- **PROVISIONAL:** How do selected decision-making agents differ in task performance, degradation and recovery when exposed to controlled uncertainty and dynamic changes in a common GridWorld environment, under comparable evaluation conditions and feasible local compute budgets?
+The final main and secondary research questions are **not yet written**. They must be generated after:
 
-This wording is not final until literature, supervisor input and environment/model scope are reviewed.
+1. analysis of the official application,
+2. review of the user's real bibliography,
+3. fresh primary/peer-reviewed literature search,
+4. current GridWorld landscape review and environment-class decision,
+5. automated system inventory and feasibility measurements,
+6. supervisor/user review where required.
 
-## Provisional secondary questions
+A valid main research question must specify:
 
-1. **PROPOSED:** How does each uncertainty type and severity affect immediate performance degradation?
-2. **PROPOSED:** Which agents recover faster and to what fraction of their pre-disruption performance?
-3. **PROPOSED:** Do rankings remain stable across GridWorld layouts and disturbance schedules?
-4. **PROPOSED:** What trade-offs exist between resilience, sample efficiency, runtime and implementation complexity?
-5. **PROPOSED:** Does access to memory, planning or an environment model provide measurable benefit only under specific uncertainty classes?
-6. **PROPOSED:** How sensitive are conclusions to seeds, metric definition and evaluation budget?
+- the exact class of decision agents being compared,
+- the environment and information assumptions,
+- the uncertainty/change conditions,
+- the adaptation/evaluation regime,
+- the primary outcome constructs,
+- the scope within which conclusions are valid.
 
-## Hypotheses
+Secondary questions may be added only when they estimate a distinct effect, test a validity threat or explain a relevant trade-off. They must not be added merely to justify a preferred model or feature.
 
-- **OPEN:** No directional hypothesis is confirmed.
-- **PROPOSED FOR LATER TESTING:** Planning/model-based or memory-enabled methods may recover more effectively under certain non-stationary or partially observable conditions, but may cost more compute or data.
-- **PROPOSED FOR LATER TESTING:** Simple tabular baselines may remain competitive in small fully observable environments and provide essential calibration.
-- These proposals must not appear as findings before testing.
+## Hypothesis policy
+
+- **OPEN:** No directional or model-specific hypothesis is confirmed.
+- Hypotheses must follow from verified theory or prior evidence, not from model names mentioned in old chats.
+- Every hypothesis must identify independent/dependent variables, expected direction or equivalence/non-inferiority claim where appropriate, unit of analysis and falsification criterion.
+- Exploratory questions must remain labeled exploratory rather than being rewritten post hoc as hypotheses.
 
 ## Expected contribution
 
-- **PROVISIONAL:** A reproducible benchmark protocol for controlled resilience evaluation in a compact GridWorld.
-- **PROVISIONAL:** An explicit taxonomy and parameterization of uncertainty/dynamic changes.
-- **PROVISIONAL:** A comparative empirical analysis with multiple runs, effect estimates and recovery-focused metrics.
-- **PROVISIONAL:** A local dashboard that exposes real experiment state and generates traceable artifacts.
-- **OPEN:** Whether a novel algorithm is required. The official topic permits comparative evaluation; novelty can arise from the experimental framing, benchmark, metrics, analysis or implementation, subject to supervisor expectations.
+The exact contribution is **RESEARCH_REQUIRED**. The official topic is compatible with a comparative empirical contribution; it does not require invention of a new algorithm.
 
-## Role of components
+Possible contribution categories to evaluate, without selecting them in advance, include:
 
-- **GridWorld — CONFIRMED:** Controlled test environment and disturbance generator.
-- **Models — CONFIRMED:** Objects of comparison; final set open.
-- **Experiments — CONFIRMED:** Primary evidence production mechanism.
-- **Dashboard — CONFIRMED:** Supporting control/visualization/export tool, not the scientific core.
-- **Thesis — CONFIRMED:** Greek Microsoft Word synthesis of verified sources, methodology and real results.
+- a validated controlled evaluation environment,
+- a reproducible uncertainty/disturbance protocol,
+- operational definitions and measurements of resilience/recovery,
+- a scientifically fair comparative study,
+- transparent software/provenance infrastructure supporting the study,
+- negative or boundary-condition findings that clarify where methods do or do not work.
 
-## Variables
+The final contribution statement must be supported by literature-gap analysis and actual results.
 
-### Candidate independent variables
-- Agent/model family and version.
-- GridWorld layout/configuration.
-- Uncertainty/disturbance type.
-- Disturbance severity.
-- Disturbance onset, duration and schedule.
-- Observation level/full vs partial observability, if included.
-- Training/evaluation budget.
-- Seed/repetition.
-- Hyperparameters within a documented tuning policy.
+## Role of project components
 
-### Candidate dependent variables
-- Success rate, return and episode length.
-- Immediate performance drop.
-- Recovery time and recovered-performance ratio.
-- Area of performance loss after disruption.
-- Failure/collision/invalid-action rates.
-- Sample efficiency and generalization gap.
-- Wall-clock, CPU/RAM and supported GPU/VRAM use.
+- **GridWorld — CONFIRMED:** Controlled simulated environment; implementation and exact specification remain open.
+- **Models/agents — CONFIRMED:** Objects of comparison; no shortlist exists.
+- **Experiments — CONFIRMED:** Primary evidence-production mechanism.
+- **Dashboard — CONFIRMED:** Supporting control, observation, comparison and export tool; not the scientific core.
+- **Thesis — CONFIRMED:** Greek Microsoft Word synthesis of verified sources, methodology, implementation and real results.
 
-### Controlled or blocked variables
-- Common environment version and evaluation scenarios.
-- Comparable evaluation episodes and disturbance schedules.
-- Software/hardware versions.
-- Tuning data separated from final evaluation data.
-- Logging and metric computation version.
+## Variable-definition workspace
 
-## Threats to validity
+No final variable list is frozen. The research phase must define and justify:
 
-### Internal
-- Implementation bugs in transitions, rewards or metrics.
-- Unequal tuning effort or compute budget.
-- Leakage from final scenarios into model selection.
-- Seed dependence and selective run exclusion.
-- UI or logging overhead changing timing results.
+### Independent/explanatory factors
+- agent identity/capability dimension,
+- environment/scenario identity,
+- uncertainty/change type and severity,
+- timing and duration of change,
+- information/observability assumptions,
+- training, adaptation and evaluation regime,
+- controlled resource/tuning conditions.
 
-### Construct
-- A resilience metric may not represent the intended concept.
-- Average return may hide failure/recovery dynamics.
-- GridWorld simplification may omit real-world properties.
-- “Recovery” may be ambiguous for agents that do or do not learn online during evaluation.
+### Outcomes
+- nominal task performance,
+- immediate impact of disruption,
+- recovery behavior and post-change performance,
+- reliability/variability across independent runs,
+- resource cost where scientifically relevant.
 
-### External
-- Findings from a small GridWorld may not generalize to complex environments.
-- Results may depend on specific disturbance taxonomy/layouts.
-- Hardware constraints may exclude larger methods.
+### Blocking/nuisance factors
+- seed and repetition,
+- layout/scenario,
+- implementation/software version,
+- hardware/load for timing measurements,
+- tuning effort and checkpoint-selection rule.
 
-### Statistical conclusion
-- Too few repetitions.
-- Multiple comparisons and post-hoc metric selection.
-- Non-normal/heavy-tailed run distributions.
-- Dependence between repeated observations.
+Exact variables and measurement formulas require literature and protocol decisions.
+
+## Threats to validity to address
+
+### Internal validity
+- implementation errors,
+- unequal tuning or information access,
+- leakage from final evaluation into selection,
+- selective run exclusion,
+- inconsistent adaptation regimes.
+
+### Construct validity
+- ambiguous definitions of resilience or recovery,
+- metrics that do not represent the intended construct,
+- reward changes that break comparability,
+- conflating training performance with evaluation resilience.
+
+### External validity
+- conclusions limited to the selected environment, layouts, disturbances and compute regime,
+- simplified GridWorld properties not representing broader domains,
+- model selection constrained by feasible local resources.
+
+### Statistical conclusion validity
+- insufficient independent repetitions,
+- dependence between nested observations,
+- post-hoc outcome selection,
+- multiple comparisons,
+- censored/non-recovered runs and heavy-tailed results.
 
 ### Reproducibility
-- Uncontrolled nondeterminism.
-- Missing dependency, hardware or configuration metadata.
-- Mutable raw results or manually edited thesis values.
+- uncontrolled randomness,
+- missing source/config/environment metadata,
+- mutable raw results,
+- manually edited final values,
+- third-party source/version/license ambiguity.
+
+## Research freeze gate
+
+The research brief may be marked frozen only when:
+
+- the source review is documented,
+- the main and secondary questions are approved,
+- hypotheses/exploratory questions are clearly separated,
+- every question maps to environment factors, agents, metrics and analysis,
+- the proposed scope is feasible on the measured system,
+- the decision log records important alternatives and exclusions.

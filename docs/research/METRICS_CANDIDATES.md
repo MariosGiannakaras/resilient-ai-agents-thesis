@@ -1,92 +1,74 @@
-# Metrics Candidates
+# Metrics Selection Workspace
 
-No primary metric is final. A metric becomes final only after its construct validity, formula, aggregation and analysis role are recorded.
+**Status:** `RESEARCH_REQUIRED`. There is no metric shortlist.
 
-## Notation candidate
+The official application requires evaluation of **resilience** and **recovery speed**, but it does not define formulas, thresholds, windows, units or aggregation. No metric receives candidate or preferred status merely because it appeared in an old conversation.
 
-Let:
-- `P_pre` = reference performance before disruption.
-- `P_t` = performance at time/window `t` after disruption.
-- `P_post` = stable post-recovery performance estimate.
-- Higher-is-better metrics should be normalized or direction-adjusted before resilience calculations.
-- Windowing, smoothing and baseline estimation must be fixed before final analysis.
+## Selection process
 
-## Task-performance metrics
+1. Define the research questions and the exact evaluation/adaptation regime.
+2. Review primary and peer-reviewed literature on task performance, robustness, resilience, recovery and sequential-decision evaluation.
+3. Identify outcome constructs before choosing formulas.
+4. Define the unit of analysis and nesting structure: episode, run, independent seed/repetition, layout, scenario or another justified unit.
+5. Specify formula, direction, units, horizon, windows, thresholds, censoring and missing/failure handling.
+6. Test construct validity and known-answer behavior on controlled fixtures.
+7. Check comparability across reward/rule changes and model families.
+8. Define aggregation, interval/effect-size procedure and sensitivity analyses before final runs.
+9. Record primary, secondary and diagnostic roles in the decision log/protocol.
 
-| Metric | Status | What it measures | Computation | Scope / limits | Use |
-|---|---|---|---|---|---|
-| Success rate | PROPOSED | Fraction of evaluation episodes reaching goal | successes / episodes | Needs consistent truncation and impossible-case policy | Evaluation |
-| Episodic return | PROPOSED | Total reward under defined reward function | sum of rewards per episode | Not comparable if reward scales/rules differ without normalization | Training/evaluation |
-| Episode length / steps to goal | PROPOSED | Navigation efficiency | transitions until terminal/truncated | Condition on success or report failures separately | Evaluation |
-| Collision/invalid-action rate | PROPOSED | Safety/constraint violations | events / steps or episodes | Semantics must be explicit | Diagnostic |
-| Catastrophic failure rate | NEEDS DEFINITION | Unrecoverable or severe failure | predefined event count / episodes | Cannot be used before “catastrophic” is operationalized | Evaluation |
-| Goal-regret / path inefficiency | PROPOSED | Extra cost vs valid reference path | agent cost − oracle/reference cost | Requires comparable oracle under changed map | Evaluation |
+## Constructs that must be operationalized
 
-## Resilience and recovery metrics
+These constructs come from the official topic or general experimental necessity; they are not preselected formulas:
 
-| Metric | Status | What it measures | Candidate computation | Limits | Use |
-|---|---|---|---|---|---|
-| Immediate relative degradation | PROPOSED | Initial shock | `(P_pre - P_early) / max(|P_pre|, ε)` after direction normalization | Sensitive to window and near-zero baseline | Primary/secondary candidate |
-| Minimum performance after disturbance | PROPOSED | Worst observed drop | `min_t P_t` in fixed horizon | Multiple-testing/noise sensitive | Diagnostic |
-| Recovery time | OFFICIAL CONCEPT, FORMULA OPEN | Time/interactions to return to threshold | first sustained `t` where `P_t ≥ α P_pre` | Threshold `α`, sustain window and censoring must be fixed | Primary candidate |
-| Recovered-performance ratio | PROPOSED | Extent of recovery | `P_post / P_pre` or bounded normalized variant | Baseline instability; >1 improvement possible | Primary/secondary candidate |
-| Area of performance loss | PROPOSED | Magnitude × duration of degradation | integral/sum of `max(0, P_pre - P_t)` over fixed horizon | Requires common time axis and horizon | Strong summary candidate |
-| Unrecovered/censored rate | PROPOSED | Fraction not recovering within horizon | censored recoveries / runs | Should accompany recovery-time estimates | Evaluation |
-| Robustness curve over severity | PROPOSED | Graceful degradation | metric versus severity, optionally area/profile | Severity must have meaningful scale | Evaluation |
-| Adaptation gain | PROPOSED | Benefit of online adaptation | adapted regime − frozen regime | Requires paired/common scenarios | Evaluation |
-| Change-detection delay | PROPOSED | Time to identify disturbance | declared detection − true onset | Only for agents with explicit detector | Diagnostic |
+| Construct | Why required | Questions the literature/protocol must resolve |
+|---|---|---|
+| Nominal task performance | A disruption effect needs a meaningful reference | Which task outcome is valid and comparable? At what level is it aggregated? |
+| Immediate disruption impact | Resilience includes response to an adverse change | What is the baseline, onset window and direction-adjusted scale? |
+| Recovery speed | Explicitly requested by the official application | What counts as recovery, how is sustained recovery defined, and how are non-recoveries censored? |
+| Degree/quality of recovery | Returning quickly to a poor level is not sufficient | Is recovery relative to pre-change performance, a new optimum, or another justified reference? |
+| Reliability across independent runs | Single-run conclusions are forbidden | What distributional summaries and uncertainty intervals are appropriate? |
+| Resource use/fairness | Comparisons may differ in internal computation | Which resources are controlled, equalized or only reported? |
+| Failure/safety behavior | Some disturbances may cause invalid or unrecoverable behavior | Which events are meaningful and how are they distinguished from software faults? |
 
-## Learning/generalization metrics
+Additional constructs such as generalization, retention, detection delay or sample efficiency are included only when a research question and literature justify them.
 
-| Metric | Status | Relevance | Limits | Use |
-|---|---|---|---|---|
-| Sample efficiency | PROPOSED | Performance per environment interaction | Requires aligned budgets and learning curves | Training |
-| Learning-curve area | PROPOSED | Aggregate learning progress | Window/horizon dependent | Training |
-| Generalization gap | PROPOSED | Seen vs unseen layout/disturbance performance | Requires held-out scenario design | Evaluation |
-| Retention / forgetting | PROPOSED | Performance on old regime after adapting | Requires return-to-old-regime protocol | Evaluation |
-| Stability across seeds | CONFIRMED REQUIREMENT | Variability/reliability | Report distribution and intervals, not only SD | Training/evaluation |
+## Metric evidence matrix to populate
 
-## System-performance metrics
+| Metric ID | Construct | Exact definition/formula | Unit and direction | Analysis level | Window/horizon/threshold | Failure/censoring rule | Literature support | Validation fixture | Protocol role | Status |
+|---|---|---|---|---|---|---|---|---|---|---|
+| TBD |  |  |  |  |  |  |  |  |  | RESEARCH_REQUIRED |
 
-| Metric | Status | Computation/collection | Limits | Use |
-|---|---|---|---|---|
-| Wall-clock training/evaluation time | PROPOSED | Monotonic timer per phase | Hardware/load dependent | Resource report |
-| Environment interactions | PROPOSED | Exact counter | Does not capture planning/internal compute | Budget/fairness |
-| CPU time/utilization | PROPOSED | OS process/system metrics | Sampling overhead/platform differences | System performance |
-| Peak/mean RAM | PROPOSED | Process measurements | Platform/tool dependent | Feasibility |
-| GPU/VRAM usage | CONDITIONAL | Vendor/platform-supported telemetry | May be unavailable on RX 570/software stack | Feasibility |
-| Checkpoint size/startup time | OPTIONAL | File size and timed restore | Only relevant to recovery/application | Engineering |
+## Statistical reporting decisions to make
 
-## Statistical summaries
+The statistical plan must justify rather than assume:
 
-Candidate reporting:
-- individual run values and distributions,
-- median and mean where each is informative,
-- interquartile mean (IQM) or robust aggregate when justified,
-- bootstrap confidence intervals,
-- effect sizes with intervals,
-- paired estimates when scenarios/seeds are legitimately paired,
-- performance profiles or probability-of-improvement summaries when multiple tasks/configurations exist.
+- descriptive summaries appropriate to the observed distributions,
+- uncertainty intervals and effect-size estimands,
+- paired/blocking structure where scenarios legitimately match,
+- aggregation across episodes, repetitions, layouts and severities,
+- treatment of censored recovery and failed/invalid runs,
+- correction or hierarchical strategy for multiple comparisons,
+- sensitivity analyses for thresholds, windows and exclusions,
+- whether formal hypothesis tests are needed at all.
 
-Formal hypothesis tests are not automatically required and must not replace effect estimation.
+## Non-acceptable practices
 
-## Unsuitable or incomplete historical metrics
+- Single best-run reporting.
+- Choosing primary outcomes after inspecting final results.
+- Using training reward as a universal cross-condition measure when reward definitions differ.
+- Hiding failed, cancelled, invalid, excluded or non-recovered runs.
+- Treating dashboard smoothness or visual appeal as scientific resilience outcomes.
+- Using an opaque AI-generated composite score.
+- Reporting a formula without source, operational rationale and known-answer tests.
+- Treating episodes from the same run as independent experimental replications.
 
-- **“Survival error limit” — NOT DEFINED:** Historical wording without an accepted formula; do not use.
-- **Single best run — NOT SUITABLE:** Encourages cherry-picking.
-- **Only average reward — INSUFFICIENT:** Does not directly characterize degradation/recovery.
-- **Training reward across different reward functions — NOT COMPARABLE:** Needs common scale or separate reporting.
-- **Dashboard FPS/animation smoothness as research outcome — NOT SUITABLE:** Engineering metric only.
-- **Unverified AI-generated resilience score — NOT SUITABLE:** Composite index requires transparent formula and validation.
+## Metric freeze gate
 
-## Metric decision checklist
+Metrics may be frozen for final experiments only when:
 
-1. What construct does it represent?
-2. Is higher/lower better and is direction consistent?
-3. What unit, horizon, window and threshold are used?
-4. How are failures and censored recoveries handled?
-5. Is the metric per episode, run, seed, layout or model?
-6. Is aggregation pre-specified?
-7. Does it remain comparable when rules/rewards change?
-8. Which RQ and thesis figure/table use it?
-9. Can it be verified with a known-answer fixture?
+- every metric maps to a research question or predefined diagnostic purpose,
+- definitions and code are versioned,
+- formulas pass known-answer tests,
+- aggregation and statistical roles are pre-specified,
+- comparability and limitations are documented,
+- primary/secondary/diagnostic labels are recorded before final result inspection.

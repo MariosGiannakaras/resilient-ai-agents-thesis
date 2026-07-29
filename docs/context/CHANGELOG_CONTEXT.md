@@ -8,9 +8,18 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Established source hierarchy and repository-as-source-of-truth policy.
 - Consolidated confirmed local/single-user/no-auth/no-cloud scope.
 - Established core-first architecture and dashboard gate.
-- Marked all historical model sets, metrics, seeds, budgets and stacks as candidates rather than final decisions.
+- Initial synthesis preserved historical model/metric/stack mentions as candidate context; this interpretation was later removed by the final re-audit.
 - Recorded approximate hardware and CPU-first constraint.
 - Added official department writing-guideline snapshot.
-- Added open blockers for bibliography, existing GridWorld source, supervisor, hardware and final experimental design.
+- Initial synthesis added blockers for bibliography, legacy GridWorld source, supervisor, manual hardware confirmation and final experimental design; the legacy-code and manual-hardware blockers were later removed.
 - Excluded raw conversation exports from version control.
 - Corrected bootstrap status to state that the official application was examined locally but its GitHub binary upload is still pending verification.
+
+## 2026-07-29 - Final bootstrap re-audit and interpretation correction
+- Corrected the role of old conversations: historical examples/context only, not preferences, shortlists or selected data.
+- Reset model selection and GridWorld implementation to fresh-research workspaces.
+- Removed legacy-code and existing-GridWorld retrieval blockers.
+- Assigned hardware/software inventory to Codex automated inspection.
+- Replaced the fixed third-party GridWorld reference with a current landscape-review requirement.
+- Corrected recent-thesis metadata titles and removed one record that could not be re-verified.
+- Added `FINAL_BOOTSTRAP_AUDIT.md` and updated the Codex bootstrap prompt.

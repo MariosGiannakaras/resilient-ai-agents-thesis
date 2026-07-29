@@ -17,5 +17,12 @@
   "visibility_verified": "private",
   "documentation_push_complete": true,
   "bootstrap_complete": false,
-  "status": "complete_except_official_application_binary_upload"
+  "status": "documentation_reaudited_and_pushed_official_application_binary_upload_pending",
+  "final_reaudit_date": "2026-07-29",
+  "old_conversations_role": "historical_context_only_not_decision_input",
+  "gridworld_strategy": "fresh_landscape_review_then_reuse_adapt_or_custom_decision",
+  "legacy_code_required": false,
+  "hardware_inventory_owner": "codex_automated_system_inspection",
+  "final_reaudit_verified": true,
+  "accidental_audit_marker_present": false
 }

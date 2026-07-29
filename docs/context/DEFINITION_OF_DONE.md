@@ -3,7 +3,7 @@
 ## Bootstrap phase
 
 - [x] Official application examined and exact titles recorded.
-- [x] Relevant exported conversations inventoried and synthesized.
+- [x] Relevant exported conversations inventoried strictly as historical examples/context, not as decision inputs or candidate shortlists.
 - [x] Confirmed requirements, decisions, constraints, contradictions and open questions documented.
 - [x] Private repository structure prepared.
 - [x] README, AGENTS, contributing rules and citation metadata prepared.
@@ -11,6 +11,7 @@
 - [x] Source/bibliography placeholders prepared.
 - [ ] Official application uploaded unchanged to the GitHub repository and its checksum verified. The local uploaded source was examined and its expected SHA-256 is recorded.
 - [x] Codex bootstrap prompt prepared.
+- [x] Final bootstrap re-audit corrected old-chat, GridWorld and hardware responsibilities.
 - [x] Raw chat exports excluded.
 - [x] No application, dashboard, model, final experiment or fabricated thesis result implemented.
 - [x] All prepared text/documentation files pushed to the private GitHub repository.
@@ -18,7 +19,7 @@
 - [ ] Final repository content/privacy audit passed after the official application binary is uploaded and verified.
 
 ## Research-core phase
-- [ ] Exact existing GridWorld source audited.
+- [ ] Fresh GridWorld landscape review completed and build/reuse/adapt decision accepted.
 - [ ] Research questions and hypotheses approved.
 - [ ] GridWorld and uncertainty schema frozen for pilots.
 - [ ] Models/baselines and metrics justified by literature.

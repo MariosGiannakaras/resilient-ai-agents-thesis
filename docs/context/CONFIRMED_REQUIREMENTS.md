@@ -22,8 +22,10 @@
 | REQ-RES-002 | Η μελέτη πρέπει να χρησιμοποιεί απλό προσομοιωμένο περιβάλλον, με το GridWorld ως τρέχουσα επιβεβαιωμένη κατεύθυνση. | Επίσημη αίτηση και νεότερες αποφάσεις. | CONFIRMED | Υπάρχει versioned, validated GridWorld specification. |
 | REQ-RES-003 | Η αξιολόγηση πρέπει να εξετάζει προσαρμογή σε απρόβλεπτες αλλαγές, ανθεκτικότητα και ταχύτητα ανάκαμψης. | Επίσημη αίτηση. | CONFIRMED | Τουλάχιστον μία έγκυρη operational definition και metric για degradation/recovery. |
 | REQ-RES-004 | Οι μορφές αβεβαιότητας πρέπει να οριστούν ρητά, να παραμετροποιούνται και να ελέγχονται πειραματικά. | Αναγκαιότητα δίκαιης αξιολόγησης· επίσημα παραδείγματα: noise, rule changes, action failures. | CONFIRMED | Κάθε disturbance έχει schema, severity levels, seed behavior και validation tests. |
-| REQ-RES-005 | Η τελική λίστα μοντέλων δεν παγώνει πριν εξεταστούν αίτηση, βιβλιογραφία, GridWorld, pilots και resources. | Ρητή απόφαση χρήστη. | CONFIRMED | Decision log με inclusion/exclusion rationale. |
+| REQ-RES-005 | Η τελική λίστα μοντέλων επιλέγεται από μηδενική βάση μετά από αίτηση, fresh literature review, τελική GridWorld κατηγορία, system inventory, feasibility prototypes και pilots. | Ρητή τρέχουσα απόφαση χρήστη. | CONFIRMED | Decision log με verified sources και inclusion/exclusion rationale. |
 | REQ-RES-006 | Το dashboard είναι υποστηρικτικό εργαλείο και όχι υποκατάστατο της ερευνητικής συνεισφοράς. | Ρητή απόφαση χρήστη. | CONFIRMED | Το contribution statement βασίζεται σε environment/protocol/results, όχι μόνο UI. |
+| REQ-RES-007 | Οι παλιές συνομιλίες δεν αποτελούν model/metric/GridWorld/stack shortlist· όλες οι επιλογές γίνονται εκ νέου. | Ρητή τρέχουσα διευκρίνιση χρήστη. | CONFIRMED | Candidate/decision files βασίζονται σε fresh evidence και όχι σε historical mentions. |
+| REQ-RES-008 | Το GridWorld implementation επιλέγεται μετά από σύγχρονη research comparison reuse/adapt/custom· δεν απαιτείται legacy code. | Ρητή τρέχουσα διευκρίνιση χρήστη. | CONFIRMED | Landscape review, prototype και ADR πριν download/integration. |
 
 ## Experimental
 
@@ -60,8 +62,8 @@
 | REQ-ARCH-003 | Η αποθήκευση των runs/results δεν εξαρτάται από lifecycle του UI. | Reliability/reproducibility. | CONFIRMED | UI crash/close δεν καταστρέφει manifest και partial outputs. |
 | REQ-ARCH-004 | Αποφεύγονται microservices, Kubernetes, cloud και πολύπλοκο authentication χωρίς πραγματική ανάγκη. | Τοπικό single-user scope. | CONFIRMED | Architecture decision καταγράφει την απλούστερη επαρκή λύση. |
 | REQ-ARCH-005 | Δεν επιλέγεται final stack πριν compatibility/prototyping review. | Ιστορικά αντικρουόμενα stacks. | CONFIRMED | ADR με alternatives, constraints και proof-of-concept evidence. |
-| REQ-TECH-001 | Η υλοποίηση σχεδιάζεται CPU-first μέχρι να επιβεβαιωθεί αξιοποιήσιμη GPU διαδρομή. | Αναφερόμενη RX 570, χωρίς υπόθεση CUDA. | CONFIRMED | Default configuration λειτουργεί χωρίς GPU. |
-| REQ-TECH-002 | Το πραγματικό hardware/software inventory επιβεβαιώνεται πριν compute-dependent αποφάσεις. | Ρητή απόφαση χρήστη. | BLOCKED_BY_DECISION | Versioned system inventory και benchmark report. |
+| REQ-TECH-001 | Δεν υποτίθεται NVIDIA/CUDA ή usable GPU acceleration πριν από αυτόματο inventory και capability benchmark. | Ρητή τρέχουσα απόφαση χρήστη. | CONFIRMED | Capability report πριν από compute-dependent επιλογές. |
+| REQ-TECH-002 | Το Codex συλλέγει αυτόματα CPU, RAM, GPU/VRAM, OS, drivers, runtimes και storage από το πραγματικό σύστημα πριν compute-dependent αποφάσεις. | Ρητή τρέχουσα απόφαση χρήστη. | CONFIRMED | Versioned system inventory και benchmark report χωρίς manual user transcription. |
 
 ## UI/UX
 

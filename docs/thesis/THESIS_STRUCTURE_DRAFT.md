@@ -23,7 +23,7 @@
 
 ## 2. Theoretical background
 - Intelligent agents and decision-making.
-- Reinforcement learning/planning concepts needed by the selected methods.
+- Decision-making, learning, planning or other concepts required by the methods ultimately selected.
 - Uncertainty, non-stationarity, partial observability and resilience definitions.
 - Evaluation and reproducibility concepts.
 
@@ -35,7 +35,7 @@
 - Identified gap and thesis positioning.
 
 ## 4. GridWorld environment and uncertainty model
-- Existing-code audit and provenance.
+- GridWorld landscape review, build/reuse/adapt decision and source/license provenance.
 - Nominal state/action/transition/reward specification.
 - Disturbance taxonomy and severity.
 - Scenario/configuration generation.
@@ -43,7 +43,7 @@
 
 ## 5. Compared models and algorithms
 - Baselines.
-- Selected learning/planning agents.
+- Selected agent/method families.
 - Information/adaptation assumptions.
 - Implementation sources and versions.
 - Inclusion/exclusion rationale.
