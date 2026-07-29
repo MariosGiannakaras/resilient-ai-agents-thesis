@@ -44,32 +44,44 @@ bibliography/
 
 ## Ονοματοδοσία
 
-Τα PDF και τα πλήρη Markdown χρησιμοποιούν το ίδιο basename:
+Τα PDF και τα πλήρη Markdown χρησιμοποιούν το ίδιο collision-safe basename:
 
 ```text
-<first_author>_<year>_<short_descriptive_title>.pdf
-<first_author>_<year>_<short_descriptive_title>.md
+<first_author>_<year>_<short_descriptive_title>[__<version_token>].pdf
+<first_author>_<year>_<short_descriptive_title>[__<version_token>].md
 ```
 
 Κανόνες:
 
 - lowercase ASCII,
-- `snake_case`,
+- `snake_case` για τον κύριο τίτλο,
+- `__` πριν από προαιρετικό version token,
 - σύντομος αλλά σαφής τίτλος,
 - πραγματικό publication year της συγκεκριμένης έκδοσης,
 - χωρίς ονόματα όπως `paper1`, `new_final`, `source2` ή τυχαίες συντομογραφίες.
 
-Παράδειγμα:
+Όταν υπάρχει μόνο μία αποκτημένη έκδοση, επιτρέπεται το απλό basename:
 
 ```text
 balloch_2022_novgrid.pdf
 balloch_2022_novgrid.md
 ```
 
-Το note μπορεί να χρησιμοποιεί:
+Όταν υπάρχουν preprint, accepted manuscript, version of record ή περισσότερες same-year revisions, κάθε retained έκδοση λαμβάνει σταθερό version token και καμία δεν αντικαθιστά άλλη:
+
+```text
+example_2024_robust_agent__arxiv-v2.pdf
+example_2024_robust_agent__accepted.pdf
+example_2024_robust_agent__vor.pdf
+```
+
+Επιτρεπτά tokens περιλαμβάνουν `arxiv-v1`, `arxiv-v2`, `accepted`, `vor` ή τεκμηριωμένο `rev-YYYYMMDD`. Αν εμφανιστεί δεύτερη έκδοση, η προηγούμενη μετονομάζεται επίσης με explicit token ώστε όλες οι διαδρομές να είναι version-specific.
+
+Το note χρησιμοποιεί το exact version-specific basename:
 
 ```text
 src-rw-001__balloch_2022_novgrid.md
+src-rw-014__example_2024_robust_agent__vor.md
 ```
 
 ## Κατηγοριοποίηση
@@ -88,7 +100,7 @@ src-rw-001__balloch_2022_novgrid.md
 - `thesis-writing-structure`
 - `presentation-visuals`
 
-Δεν δημιουργούνται duplicate copies του ίδιου source για διαφορετικές θεματικές κατηγορίες.
+Δεν δημιουργούνται duplicate copies του ίδιου source για διαφορετικές θεματικές κατηγορίες. Διαφορετικές πραγματικές source versions δεν είναι duplicates και διατηρούνται ως ξεχωριστά versioned records.
 
 ## Διαδικασία εισαγωγής νέου υλικού
 
@@ -96,9 +108,9 @@ src-rw-001__balloch_2022_novgrid.md
 
 1. Αναγνωρίζεται το πραγματικό source και επαληθεύονται title, authors, year, DOI/URL και publication/version status.
 2. Εντοπίζονται duplicates ή διαφορετικές revisions του ίδιου έργου.
-3. Τα αρχεία μετονομάζονται με τη συμφωνημένη ονοματοδοσία.
+3. Τα αρχεία μετονομάζονται με τη συμφωνημένη collision-safe ονοματοδοσία χωρίς overwrite προηγούμενης έκδοσης.
 4. Το PDF αποθηκεύεται αμετάβλητο και υπολογίζεται SHA-256.
-5. Το acquisition manifest ενημερώνεται με την επίσημη πηγή και το ακριβές PDF archive record.
+5. Το acquisition manifest ενημερώνεται με την επίσημη πηγή και το ακριβές version-specific PDF archive record.
 6. Το πλήρες Markdown αποθηκεύεται με το ίδιο basename και συνδέεται με το PDF checksum μέσα στο structured note/front matter.
 7. Ελέγχονται page markers, headings, tables, figures, equations, references και extraction gaps.
 8. Δημιουργείται ή ενημερώνεται structured note με topics, conversion state και relevance.
@@ -118,7 +130,7 @@ src-rw-001__balloch_2022_novgrid.md
 - Τα νόμιμα, σωστά ταυτοποιημένα PDFs κρατούνται ως archival backup όταν το μέγεθος και τα rights το επιτρέπουν.
 - Τα πλήρη Markdown κρατούνται ακόμη και όταν μόνο μικρό μέρος της πηγής είναι χρήσιμο.
 - Άσχετο υλικό δεν μπαίνει στα excerpts, αλλά δεν χαρακτηρίζεται αυτομάτως ως απορριφθέν source.
-- Οριστική διαγραφή γίνεται μόνο για πραγματικό duplicate, corrupted file, λάθος source ή έκδοση που αντικαταστάθηκε με τεκμηριωμένο superseding record.
+- Οριστική διαγραφή γίνεται μόνο για πραγματικό duplicate, corrupted file ή λάθος source. Μία νεότερη έκδοση δεν διαγράφει αυτομάτως την προηγούμενη.
 - Μεγάλα binaries ελέγχονται πριν από commit για GitHub limits, rights και πιθανή ανάγκη Git LFS.
 
 ## Επιστημονική ακεραιότητα
