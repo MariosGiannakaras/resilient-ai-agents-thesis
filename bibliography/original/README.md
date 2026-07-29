@@ -14,12 +14,13 @@ original/theses/         Comparable theses and dissertations
 ## Κανόνες
 
 - Preserve every accepted PDF unchanged after acquisition.
-- Use lowercase `snake_case` filenames: `<first_author>_<year>_<short_title>.pdf`.
+- Use collision-safe lowercase filenames: `<first_author>_<year>_<short_title>[__<version_token>].pdf`.
+- A version token is required when multiple preprint/revision/publication forms of the same work are retained.
+- Never overwrite a retained PDF with another revision. Use tokens such as `arxiv-v2`, `accepted`, `vor` or `rev-YYYYMMDD` and keep each version separately traceable.
 - Record official URL/DOI/handle, retrieval date, version, access provenance, rights/license status and SHA-256.
 - Commit only lawfully acquired files whose repository storage is permitted.
 - Review file size and GitHub/Git LFS limits before committing large theses or collections.
-- Do not silently replace a PDF with a newer revision. Record the new checksum/version and revalidate dependent Markdown, notes and excerpts.
-- Store the complete searchable conversion under `../markdown/` with the same basename.
+- Store the complete searchable conversion under `../markdown/` with the exact same version-specific basename.
 - Store source analysis under `../notes/` and active thematic evidence under `../excerpts/`.
 
 ## Usage policy
@@ -39,6 +40,6 @@ Do not include this folder in routine whole-bibliography agent reading.
 
 ## Retention
 
-Keep valid source PDFs even when only part of their content is useful. Delete only documented duplicates, corrupted files, wrong sources or superseded revisions whose provenance is preserved elsewhere.
+Keep valid source PDFs even when only part of their content is useful. Delete only documented duplicates, corrupted files or wrong sources. A newer legitimate revision does not automatically replace or delete an earlier retained version.
 
 The authoritative bibliography policy is in `../README.md` and acquisition details are in `../SOURCE_ACQUISITION_WORKFLOW.md`.
