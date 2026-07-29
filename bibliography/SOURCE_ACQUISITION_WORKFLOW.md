@@ -64,6 +64,10 @@ These sources are relevant enough to download and read during the first research
 | SRC-RW-007 | `wei_luo_2021_nonstationary_blackbox.pdf` | `https://proceedings.mlr.press/v134/wei21b/wei21b.pdf` | Auto-download official PMLR PDF |
 | SRC-RW-008 | `de_la_rosa_2025_morphin.pdf` | `https://arxiv.org/pdf/2601.20714` | Auto-download author preprint; record conference status |
 | SRC-RW-009 | `luo_2022_escp.pdf` | `https://doi.org/10.1609/aaai.v36i7.20730` | Prefer official AAAI PDF; if automated retrieval fails, ask user to download from the official page |
+| SRC-RW-010 | `alami_2023_change_point_detection.pdf` | `https://proceedings.mlr.press/v232/alami23a/alami23a.pdf` | Auto-download official PMLR PDF |
+| SRC-RW-011 | `tessler_2019_action_robust_rl.pdf` | `https://arxiv.org/pdf/1901.09184` | Auto-download open preprint |
+| SRC-RW-012 | `zhang_2020_state_adversarial_mdp.pdf` | `https://arxiv.org/pdf/2003.08938` | Auto-download open preprint |
+| SRC-RW-013 | `peng_2024_complexity_nonstationary_rl.pdf` | `https://proceedings.mlr.press/v237/peng24a/peng24a.pdf` | Auto-download official PMLR PDF |
 
 Run `scripts/download_open_access_bibliography.py` after cloning to acquire the entries with verified direct PDF URLs and generate/update the local manifest.
 
