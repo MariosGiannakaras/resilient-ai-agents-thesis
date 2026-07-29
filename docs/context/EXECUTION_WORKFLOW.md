@@ -48,6 +48,24 @@ Keep the thesis process simple, controlled and largely automatic. The user sets 
 
 The user is not asked to perform routine GitHub approval or merge work.
 
+## Bibliography upload flow
+
+When the user supplies a batch of PDFs, Markdown exports, NotebookLM source lists or related thesis material, treat it immediately as one bounded source-intake task without asking for a separate routine GitHub approval.
+
+ChatGPT/Codex must:
+
+1. inspect the real content rather than trust filenames,
+2. resolve canonical metadata and source versions,
+3. detect duplicates and contradictory records,
+4. rename and classify files using `bibliography/README.md`,
+5. preserve original PDFs and complete Markdown separately,
+6. create structured notes and useful thematic excerpts,
+7. identify missing coverage such as unsupported models, metrics or uncertainty types,
+8. update source provenance, evidence matrices and relevant documentation,
+9. run checks and merge after review.
+
+The user is contacted only when lawful acquisition, private access, an unreadable file or a genuine research-direction choice requires input.
+
 ## Git conventions
 
 ### Branches
