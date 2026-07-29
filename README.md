@@ -13,8 +13,6 @@
 
 Η βασική επιτυχία του project είναι μια σωστή, επιστημονικά επαρκής και ολοκληρώσιμη διπλωματική. Η εφαρμογή είναι σημαντικό παραδοτέο, αλλά όχι production-grade προϊόν ούτε το κύριο ερευνητικό αντικείμενο.
 
-Η αρχή σχεδιασμού είναι:
-
 > **Polished outside, bounded inside.**
 
 Η αρχιτεκτονική και το engineering παραμένουν απλά και αναλογικά προς τις ανάγκες ενός τοπικού single-user research tool. Το UI, όμως, πρέπει να είναι σύγχρονο, συνεπές, εύχρηστο, κατάλληλο για screenshots και αρκετά πλήρες ώστε ο χρήστης να εκτελεί, να παρακολουθεί, να συγκρίνει και να εξάγει τα απαραίτητα πειράματα χωρίς κώδικα ή console commands.
@@ -52,6 +50,22 @@
 Δεν απαιτείται παλιός κώδικας. Εξωτερικός GridWorld κώδικας ενσωματώνεται μόνο μετά από code, license, maintenance, compatibility και prototype audit.
 
 Η επίσημη αίτηση υπάρχει στο `thesis/source-material/GiannakarasMariosThesisApplication.pdf`. Ο χρήστης επιβεβαίωσε ότι είναι το ίδιο επίσημο αρχείο που δόθηκε για ανάλυση. Το Codex πρέπει να υπολογίσει και να καταγράψει το SHA-256 μετά το clone.
+
+## Τρόπος λειτουργίας
+
+Η πρακτική σειρά είναι απλή:
+
+1. Βρίσκονται και αξιολογούνται παρόμοιες έρευνες, αλγόριθμοι, repositories και διπλωματικές.
+2. Κατασκευάζεται μικρός λειτουργικός πυρήνας και πρώιμο visual/debug UI.
+3. Προστίθενται μόνο χρήσιμα settings, logs, charts, history, comparison και exports.
+4. Γίνονται validation και pilots, παγώνει το final protocol και εκτελούνται τα τελικά πειράματα.
+5. Συλλέγονται ταυτόχρονα results, screenshots, figures, tables, videos και writing notes.
+6. Γράφεται η διπλωματική από verified bibliography και frozen evidence.
+7. Δημιουργούνται PowerPoint, visuals, key points και presentation script από τα ίδια εγκεκριμένα στοιχεία.
+
+Το Codex εκτελεί bounded tasks. Το GitHub τρέχει automated checks. Το ChatGPT ελέγχει research, diffs, naming, comments, tests, results και merges. Ο χρήστης δεν χρειάζεται να εγκρίνει routine GitHub operations· συμμετέχει στις πραγματικές ακαδημαϊκές ή προϊόντικές αποφάσεις και παρέχει feedback από το σύστημα και τον επιβλέποντα.
+
+Η αναλυτική διαδικασία βρίσκεται στο `docs/context/EXECUTION_WORKFLOW.md`.
 
 ## Ανάγνωση από agents
 
