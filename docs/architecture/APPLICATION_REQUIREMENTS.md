@@ -9,7 +9,7 @@ The application is an important thesis deliverable, but not a production-grade p
 ### 1. Project overview
 
 - Show active, recent and failed runs.
-- Show critical warnings and storage/system status.
+- Show critical warnings and basic storage/system status.
 - Provide direct actions to create a run, continue monitoring or open results.
 - Keep the overview visually clean and useful for screenshots.
 
@@ -32,15 +32,18 @@ The UI must not expose an uncontrolled research sandbox containing every interna
 - Visualize agent, goal, obstacles, actions, rewards and disturbance events.
 - Clearly identify training, evaluation and adaptation state.
 - Allow visualization speed/pause independent of the scientific runner where feasible.
-- Show CPU/RAM and supported GPU/VRAM telemetry from real sources.
+- Show a lightweight current resource snapshot: CPU, RAM, disk and supported GPU/VRAM from real sources.
 - Provide only lifecycle controls supported safely by the runner.
+
+Resource visibility is informational, not an observability subsystem. Historical telemetry charts, monitoring agents, alerting infrastructure and a telemetry database are not required unless measured workflow evidence later justifies them.
 
 ### 4. Run history and details
 
 - Search and filter runs by model, scenario, status, run type, date and experiment.
 - Keep completed, failed, cancelled, interrupted and excluded runs visible.
-- Show resolved config, status history, logs, metrics and provenance.
-- Show source Git commit, software environment and hardware snapshot.
+- Show resolved config, status history, logs, metrics and essential provenance.
+- Show friendly provenance essentials in the main view: experiment/run IDs, protocol version, model/environment version and source commit.
+- Place full software environment, hardware snapshot, checksums and manifests in expandable details or export metadata.
 - Support clone/rerun and export without overwriting previous evidence.
 
 ### 5. Comparison and results
@@ -58,6 +61,7 @@ The UI must not expose an uncontrolled research sandbox containing every interna
 - Export Word-ready figures and reproducible tables.
 - Generate artifact manifests with source runs, configs, versions and checksums.
 - Preview approved/frozen thesis artifacts.
+- Keep detailed manifest/checksum data available in artifact details and export bundles rather than forcing it into primary result views.
 - Never export mock values as scientific results.
 
 ## UI quality requirements
@@ -68,8 +72,9 @@ The UI must not expose an uncontrolled research sandbox containing every interna
 - Responsive layouts for common desktop and laptop resolutions.
 - Keyboard-accessible essential workflows.
 - Actionable errors and visible recovery guidance.
-- Screenshot-ready views without hiding scientific labels or provenance.
+- Screenshot-ready views without hiding scientific meaning.
 - Consistent loading, empty, warning, failure and unsupported states.
+- Progressive disclosure for advanced technical metadata.
 
 ## Scientific information integrity
 
@@ -115,6 +120,7 @@ Synthetic fixtures are allowed only in isolated tests or clearly labeled UI deve
 - remote/distributed workers,
 - complex orchestration,
 - production incident tooling,
+- production observability infrastructure,
 - plugin marketplaces,
 - mobile application.
 

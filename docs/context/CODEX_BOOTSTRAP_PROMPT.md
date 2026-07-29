@@ -1,66 +1,92 @@
 # Codex Bootstrap Prompt
 
-Ανάλαβε την ερευνητική αποσαφήνιση του private repository `MariosGiannakaras/resilient-ai-agents-thesis` και σταμάτα πριν από κύρια implementation.
+Ανάλαβε την ερευνητική αποσαφήνιση του private repository `MariosGiannakaras/resilient-ai-agents-thesis` και σταμάτα πριν από prototype ή κύρια implementation.
 
-Το repository είναι η source of truth. Διάβασε πρώτα:
+## Ανάγνωση
+
+Διάβασε πρώτα:
 
 1. `AGENTS.md`
 2. `README.md`
 3. `docs/context/SCOPE_REFINEMENT.md`
-4. όλα τα σχετικά context, research, experiment, architecture, thesis, university και decision files.
+4. `docs/context/PROJECT_CONTEXT.md`
+5. `docs/context/CONFIRMED_REQUIREMENTS.md`
 
-Οι παλιές συνομιλίες είναι μόνο context. Δεν αποτελούν model shortlist, GridWorld specification, stack preference, metric selection, feature backlog ή experimental design.
+Έπειτα διάβασε μόνο τα task-specific αρχεία που ορίζει το `AGENTS.md`. Μην επαναλάβεις πλήρη repository audit χωρίς συγκεκριμένη ανάγκη.
+
+Οι παλιές συνομιλίες είναι μόνο ιστορικό/context. Δεν αποτελούν model shortlist, GridWorld specification, stack preference, metric selection, feature backlog ή experimental design.
 
 ## Project direction
 
 Ο βασικός στόχος είναι μια σωστή, επιστημονικά επαρκής και ολοκληρώσιμη διπλωματική.
 
-Η εφαρμογή:
-
-- δεν είναι production-grade platform,
-- παραμένει σημαντικό deliverable,
-- πρέπει τελικά να είναι polished, modern και εύχρηστο research dashboard,
-- πρέπει να επιτρέπει configuration, execution, monitoring, GridWorld observation, history, comparison και export χωρίς code/console,
-- πρέπει να έχει περιορισμένη εσωτερική πολυπλοκότητα και μόνο justified features.
-
-Μην ερμηνεύσεις την απλοποίηση ως rough ή outdated UI. Μην ερμηνεύσεις το polished UI ως άδεια για cloud, microservices, multi-user, complex orchestration ή speculative features.
+Η εφαρμογή δεν είναι production-grade platform. Παραμένει σημαντικό παραδοτέο και πρέπει τελικά να είναι polished, modern και εύχρηστο research dashboard για configuration, execution, monitoring, GridWorld observation, history, comparison και export χωρίς code/console. Κράτησε περιορισμένη εσωτερική πολυπλοκότητα και μόνο justified features.
 
 ## Πριν από οποιαδήποτε implementation
 
-1. Εξέτασε την official application και κατέγραψε το repository SHA-256.
-2. Εξέτασε την πραγματική bibliography όταν προστεθεί και συμπλήρωσε μόνο με verified primary/peer-reviewed sources και official documentation.
-3. Κάνε automated inventory: CPU, cores, RAM, GPU/VRAM, OS, drivers, runtimes, storage, tools και supported acceleration.
-4. Κάνε fresh GridWorld landscape review και σύγκρινε reuse, adapt/wrap και minimal custom implementation.
-5. Μην κατεβάσεις ή ενσωματώσεις third-party GridWorld code πριν από source/license/maintenance/suitability audit, small prototype και ADR.
+- Εξέτασε την official application και κατέγραψε το SHA-256 του repository copy.
+- Κάνε automated inventory: CPU, cores, RAM, GPU/VRAM, OS, drivers, runtimes, storage, tools και supported acceleration.
+- Εξέτασε την πραγματική bibliography όταν προστεθεί.
+- Κάνε στοχευμένη έρευνα σε verified primary/peer-reviewed sources και official documentation.
+- Κάνε fresh GridWorld landscape review και σύγκρινε reuse, adapt/wrap και minimal custom implementation.
+- Μην κατεβάσεις ή ενσωματώσεις third-party GridWorld code πριν από source/license/maintenance/suitability audit, small prototype και ADR.
 
-## Πρώτη αποστολή
+## Πρώτη αποστολή — τέσσερα συνολικά outputs
 
-Μην ξεκινήσεις GridWorld implementation, model implementation, experiment runner, core ή dashboard. Παρουσίασε και αποθήκευσε πρώτα:
+Μην ξεκινήσεις GridWorld implementation, model implementation, experiment runner, core ή dashboard. Παράδωσε ένα ενιαίο, σύντομο και reviewable evidence package με τα ακόλουθα:
 
-1. Primary-source and bibliography audit.
-2. Automated system inventory και capability benchmark plan.
-3. Fresh GridWorld landscape review με build/reuse/adapt matrix και prototype recommendation.
-4. Ένα σαφές, bounded main research question και μόνο τα απαραίτητα secondary questions/hypotheses.
-5. Minimal uncertainty taxonomy και environment direction.
-6. Μικρό scientifically useful model/baseline shortlist με inclusion/exclusion rationale.
-7. Primary/secondary/diagnostic metrics με operational definitions.
-8. Pilot protocol για correctness, runtime, variance και metric sensitivity.
-9. Προτεινόμενο feature budget για το dashboard, χωρισμένο σε required, justified-later και out-of-scope.
-10. Phase plan με deliverables, gates, blockers και decisions που χρειάζονται έγκριση.
-11. Updates στα context, research, architecture, decision και changelog files.
+### 1. Source και system validation
 
-## Evaluation criteria for your proposal
+- Κατάσταση official application και repository SHA-256.
+- Κατάσταση πραγματικής bibliography και ελλείψεις.
+- Automated hardware/software inventory.
+- Μικρό capability benchmark plan μόνο για αποφάσεις που εξαρτώνται από compute.
+
+### 2. Bounded research design
+
+Πρότεινε ως ένα συνεκτικό design:
+
+- ένα σαφές main research question και μόνο τα απαραίτητα secondary questions/hypotheses,
+- minimal uncertainty taxonomy και environment direction,
+- μικρό scientifically useful model/baseline set με inclusion/exclusion rationale,
+- primary/secondary/diagnostic metrics με operational definitions,
+- pilot outline για correctness, runtime, variance και metric sensitivity,
+- μικρό dashboard feature budget: required, justified-later, out-of-scope.
+
+Μην δημιουργήσεις ξεχωριστές εκτενείς αναφορές για κάθε υποενότητα. Δείξε τις εξαρτήσεις και τα trade-offs μέσα σε μία συνοπτική πρόταση.
+
+### 3. GridWorld και related-work recommendation
+
+- Fresh build/reuse/adapt matrix με maintenance, license, API, determinism, extensibility, testability, dependencies και integration cost.
+- Recommendation μόνο για το ποια μία ή δύο επιλογές αξίζουν small prototype· όχι integration.
+- Structured review 6–10 άμεσα σχετικών πρωτογενών μελετών. Για καθεμία κατέγραψε setting, method, experimental design, main results, limitations και συγκεκριμένη relevance για τη διπλωματική.
+- Ενημέρωσε `docs/research/RELATED_WORK_EVIDENCE_MATRIX.md`.
+- Κατέβασε μόνο νόμιμα open-access/author-provided papers σύμφωνα με `bibliography/SOURCE_ACQUISITION_WORKFLOW.md`. Για paywalled πηγές κατέγραψε DOI και ζήτησε από τον χρήστη νόμιμη λήψη.
+
+### 4. Approval pack
+
+Παρουσίασε:
+
+- τις προτεινόμενες αποφάσεις,
+- τις σημαντικές εναλλακτικές που απορρίφθηκαν και γιατί,
+- blockers και assumptions,
+- τα αρχεία που άλλαξαν,
+- το ακριβές επόμενο bounded prompt μετά την έγκριση.
+
+Ενημέρωσε μόνο τα σχετικά context, research, architecture, decision και changelog files.
+
+## Κριτήρια αξιολόγησης
 
 Η πρόταση πρέπει να είναι:
 
 - μικρή αρκετά ώστε να ολοκληρωθεί και να εξηγηθεί,
 - scientifically adequate για το official topic,
-- feasible στο measured hardware και διαθέσιμο χρόνο,
+- feasible στο measured hardware και στον διαθέσιμο χρόνο,
 - reproducible και testable,
-- capable of producing clear comparable results,
-- compatible with a polished but bounded dashboard.
+- ικανή να παράγει καθαρά συγκρίσιμα αποτελέσματα,
+- συμβατή με polished αλλά bounded dashboard.
 
-Reject alternatives that add models, uncertainty types, parameters, screens or infrastructure without distinct research or thesis value.
+Απόρριψε εναλλακτικές που προσθέτουν models, uncertainty types, parameters, screens ή infrastructure χωρίς διακριτή ερευνητική ή thesis-delivery αξία.
 
 ## Mandatory rules
 
@@ -71,7 +97,9 @@ Reject alternatives that add models, uncertainty types, parameters, screens or i
 - Clear separation of pilot, exploratory and final runs.
 - Failures, cancellations, interruptions and exclusions remain visible.
 - No fake progress, logs, metrics, data or results.
-- Raw results immutable with full provenance.
+- Raw results immutable with full backend provenance.
+- Telemetry remains a lightweight current snapshot, not a monitoring subsystem.
+- Checksums, manifests and detailed provenance use progressive disclosure or exports rather than cluttering primary views.
 - No fabricated bibliography, DOI, measurements or conclusions.
 - No historical-chat preference inheritance.
 - No production infrastructure or advanced feature without documented need.

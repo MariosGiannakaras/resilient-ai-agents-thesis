@@ -37,3 +37,28 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Explicitly deferred cloud, multi-user/auth, distributed orchestration, enterprise infrastructure and non-essential AI.
 - Updated Codex bootstrap criteria to require a small completable research design and a dashboard feature budget before implementation.
 - Added DEC-013 and new confirmed requirements for scope, UI quality and architectural restraint.
+
+## 2026-07-29 — Lean agent workflow and staged literature evidence
+
+- Replaced universal whole-repository rereading with five permanent core files plus task-specific reading.
+- Compressed the first Codex mission from eleven standalone deliverables into four reviewable outputs without removing the required evidence.
+- Corrected `SOURCE_REGISTER.md`: the official PDF identity is user-confirmed; only local repository SHA-256 calculation remains pending.
+- Clarified that UI resource telemetry is a lightweight current snapshot, not a monitoring/observability subsystem.
+- Moved complete checksums, manifests, runtime details and provenance chains behind expandable details or export metadata.
+- Clarified that the fourteen roadmap phases are checkpoints and can be operated as eight larger work blocks.
+- Added literature refresh gates for initial framing, protocol freeze, thesis writing and final submission.
+- Added `RELATED_WORK_EVIDENCE_MATRIX.md` with comparable papers and institutional theses, reported results, limitations, implications and writing-structure lessons.
+- Added `SOURCE_ACQUISITION_WORKFLOW.md` and `scripts/download_open_access_bibliography.py` for lawful open-access paper/thesis acquisition, PDF validation, SHA-256 and a source manifest.
+- Established user-assisted lawful acquisition for paywalled or non-direct sources; no unofficial or paywall-bypassing sources.
+- Added DEC-014.
+
+## 2026-07-29 — Automated execution, review and merge workflow
+
+- Established the user/ChatGPT/Codex/GitHub responsibility split in `EXECUTION_WORKFLOW.md` and `AGENTS.md`.
+- Removed routine GitHub approval and merge work from the user; ChatGPT reviews and decides technical readiness.
+- Added branch, commit, naming, comment and Pull Request conventions.
+- Added a Pull Request template with validation, scientific-impact, artifact and scope sections.
+- Added lightweight GitHub Actions checks for merge markers, Python compilation, tests and JSON validity.
+- Added regression tests for bibliography-manifest provenance behavior.
+- Corrected automated-review findings so manual source records, acquisition timestamps and full-text review status are preserved safely by checksum.
+- Added DEC-015.
