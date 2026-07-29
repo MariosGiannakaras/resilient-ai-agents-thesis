@@ -1,103 +1,113 @@
 # UI Information Architecture
 
-This is a requirements-level page map, not a final visual design.
+This is a bounded page map for a polished local research dashboard. It intentionally consolidates related workflows to avoid unnecessary screens and navigation complexity.
 
-## 1. Overview
-- Project/repository/environment version.
-- Active and queued runs.
-- Recent completions/failures.
-- System status.
-- Frozen experiment/artifact summary.
-- Critical warnings and blockers.
+## Primary navigation
 
-## 2. Experiment configuration
-- Research/experiment context.
-- Model and environment selection.
-- Disturbance configuration.
-- Hyperparameters and seed/repetition plan.
-- Validation issues and estimated cost.
-- Resolved-config preview.
-- Save, launch, batch or sweep.
+1. Dashboard
+2. New Experiment
+3. Runs
+4. Compare
+5. Artifacts
 
-## 3. Live GridWorld
-- Environment viewport.
-- Current state/observation distinction.
-- Agent action and reward.
-- Disturbance event timeline.
-- Episode/step controls and visualization speed.
-- Live provisional metrics/logs.
+System information, metric definitions and advanced settings should use drawers, tabs or contextual panels rather than separate top-level products unless later evidence justifies them.
 
-## 4. Active runs
-- Run cards/table with real status.
-- Progress mode and heartbeat.
-- Lifecycle controls based on capability.
-- Resource use and warnings.
+## 1. Dashboard
 
-## 5. Queue
-- Ordered pending runs.
-- Priority/order controls only if runner supports them.
-- Batch/experiment grouping.
-- Estimated—not guaranteed—work remaining, clearly labeled.
+Purpose: immediate project status and next actions.
 
-## 6. Run details
-- Identity, lineage and status history.
-- Resolved config.
-- Model/environment/protocol metadata.
-- Metrics, logs, errors and checkpoints.
-- Raw/processed outputs and artifacts.
-- Clone/rerun/restart/export.
+- Active and recent runs.
+- Recent failures and warnings.
+- Current experiment/protocol version.
+- Basic CPU/RAM/disk and supported GPU status.
+- Quick actions: create experiment, open active run, compare results, export artifact.
+- Summary of frozen thesis evidence where available.
 
-## 7. Run history
-- Search, filtering, saved views.
-- Completed/failed/cancelled/interrupted/excluded visibility.
-- Bulk selection for valid comparison/export.
+The dashboard must remain readable and screenshot-ready, not overloaded with every available metric.
 
-## 8. Comparison
-- Compatibility checks.
-- Distribution and uncertainty views.
-- Performance, degradation and recovery.
-- Breakdown by severity/layout/scenario.
-- Resource/efficiency trade-offs.
-- Export and artifact-generation action.
+## 2. New Experiment
 
-## 9. Metrics
-- Definitions, units, versions and formulas.
-- Run/experiment aggregation hierarchy.
-- Diagnostic and sensitivity views.
-- No unlabeled composite scores.
+Purpose: configure and launch scientifically valid work without code.
 
-## 10. Logs
-- Cross-run or single-run structured log viewer.
-- Filters by level/component/event.
-- Link events to lifecycle transitions and artifacts.
+- Select validated model and environment version.
+- Select uncertainty scenario and severity allowed by the protocol.
+- Set seed/repetition plan and approved parameters.
+- Show defaults, units, validation and explanations.
+- Use progressive disclosure for genuinely advanced parameters.
+- Preview resolved configuration, run count and estimated resources.
+- Launch single or approved batch run.
+- Save/clone a versioned configuration.
 
-## 11. Results explorer
-- Raw/processed/summary dataset hierarchy.
-- Read-only raw-data browsing.
-- Provenance and checksum display.
-- Processing history.
+The page must prevent incompatible model/environment/metric combinations and must not expose every internal implementation option.
 
-## 12. Artifact viewer
-- Figures/tables/exports.
-- Source runs and generation manifest.
-- Approved/frozen status.
-- Word-ready preview.
+## 3. Runs
 
-## 13. System status
-- Runner/service health.
-- CPU/RAM/disk and supported GPU telemetry.
-- Dependency/runtime/Git details.
-- Storage retention warnings.
+A unified section with three views:
 
-## 14. Export
-- Dataset/artifact selection.
-- Format/options.
-- Complete bundle manifest.
-- Destination and checksum verification.
+### Active
 
-## Navigation principles
-- Stable experiment/run/artifact IDs visible and copyable.
-- Execution controls separated from analysis/frozen-results views.
-- “Final” status reserved for protocol/frozen-evidence meaning, not UI decoration.
-- Warnings shown near the action they affect.
-- Scientific metadata not hidden behind aesthetic simplification.
+- Run cards or table with truthful status and progress.
+- Essential lifecycle actions when supported.
+- Warnings, errors, heartbeat and resource use.
+
+### Run detail
+
+- Live GridWorld visualization and event timeline.
+- Current action, reward, episode/step and disturbance state.
+- Structured logs and provisional live metrics.
+- Resolved config, versions and provenance.
+- Final outputs, warnings, failures and artifacts after completion.
+
+### History
+
+- Search/filter by model, scenario, status, run type, date and experiment.
+- Completed, failed, cancelled, interrupted and excluded runs remain visible.
+- Clone/rerun/export actions.
+
+A separate queue page is unnecessary unless the implemented runner proves that queue management needs more than the Active view.
+
+## 4. Compare
+
+Purpose: understand scientifically compatible results.
+
+- Select runs, experiments or model groups.
+- Compatibility checks and visible warnings.
+- Performance, degradation, recovery and variability views.
+- Distribution plots, confidence/uncertainty views and repetition counts.
+- Breakdown by seed, severity, scenario or environment where approved.
+- Clear tables with metric definitions and aggregation level.
+- Export comparison data and artifact manifest.
+
+No best-run-only view and no unlabeled composite score.
+
+## 5. Artifacts
+
+Purpose: prepare material for the thesis.
+
+- Figures, tables, CSV/JSON exports and manifests.
+- Preview Word-ready output.
+- Source runs, generation script, metric version and checksums.
+- Approved/frozen status without deleting prior versions.
+- Download/export complete evidence bundles.
+
+## Contextual panels
+
+Use contextual panels instead of top-level pages for:
+
+- metric definitions and formulas,
+- system/runtime/Git details,
+- raw/processed data file metadata,
+- advanced config explanations,
+- storage warnings,
+- application settings.
+
+## Navigation and visual principles
+
+- Keep the main navigation small and stable.
+- Hide internal architecture, not scientific meaning.
+- Make run, experiment and artifact IDs visible and copyable where useful.
+- Place warnings next to the affected action or comparison.
+- Separate execution controls from frozen-result interpretation.
+- Use consistent cards, charts, filters, tables, empty states and error states.
+- Responsive desktop/laptop layouts are required; mobile application parity is not.
+- Every visible scientific value must come from real data and a versioned definition.

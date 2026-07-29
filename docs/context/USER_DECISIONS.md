@@ -1,56 +1,84 @@
 # User Decisions
 
-Το αρχείο περιέχει μόνο ρητές τρέχουσες αποφάσεις του χρήστη ή αποφάσεις που επαναλαμβάνονται στο αρχικό task specification. Οι παλιές συνομιλίες δεν δημιουργούν από μόνες τους αποφάσεις.
+Το αρχείο περιέχει μόνο ρητές τρέχουσες αποφάσεις του χρήστη. Οι παλιές συνομιλίες δεν δημιουργούν από μόνες τους αποφάσεις.
+
+## Overall project direction
+
+- Βασικός στόχος είναι μια σωστή, ολοκληρώσιμη και επιστημονικά επαρκής διπλωματική.
+- Η εφαρμογή δεν είναι το κύριο research contribution και δεν πρέπει να γίνει production-grade platform.
+- Η εφαρμογή παραμένει σημαντικό deliverable και πρέπει να είναι polished, modern, consistent και εύχρηστη.
+- Η απλοποίηση αφορά architecture, feature count και unnecessary engineering· δεν σημαίνει rough, outdated ή scientifically incomplete UI.
+- Το UI πρέπει να κρύβει irrelevant technical complexity χωρίς να κρύβει scientifically important information.
+
+## Priority order
+
+1. Σαφές και περιορισμένο research question.
+2. Απλό και σωστά validated GridWorld.
+3. Μικρός, scientifically justified αριθμός models και uncertainty types.
+4. Fair και reproducible experimental protocol.
+5. Reliable και comparable results.
+6. Modern complete UI για execution, monitoring και understanding.
+7. Advanced features μόνο με real need και χαμηλό completion risk.
 
 ## Application scope
 
-- Τοπική εφαρμογή για έναν χρήστη.
-- Χωρίς authentication και multi-user λειτουργία.
-- Χωρίς δημόσιο deployment, υποχρεωτικό cloud, mobile application ή web live demo.
-- Το dashboard μειώνει την ανάγκη χειροκίνητων scripts/console commands.
-- Screenshots και πραγματικά αποτελέσματα θα χρησιμοποιηθούν στη διπλωματική και παρουσίαση.
-- Η εφαρμογή παρουσιάζεται ως μέρος της εργασίας, αλλά η επιστημονική ορθότητα προηγείται της εμφάνισης.
-- Το dashboard ξεκινά μόνο μετά από λειτουργικό και validated independent core.
+- Local single-user application.
+- Χωρίς authentication, roles ή multi-user support.
+- Χωρίς public deployment, mandatory cloud, mobile application ή live public demo.
+- Ο χρήστης εκτελεί τα απαραίτητα experiments χωρίς code ή console commands.
+- Το dashboard πρέπει να υποστηρίζει πραγματικά: configuration, execution, progress, logs, GridWorld visualization, history, comparison, metrics, charts, tables και export.
+- Screenshots και real results θα χρησιμοποιηθούν στη διπλωματική και παρουσίαση.
+- Το dashboard ξεκινά μόνο μετά από functional and validated independent core.
+- Το τελικό interface δεν είναι minimal demo· είναι polished bounded research dashboard.
+
+## Scope restraint
+
+- Δεν υλοποιούνται production infrastructure, microservices, Kubernetes, distributed workers, complex permissions ή enterprise observability.
+- Queue priorities, plugin systems, remote execution, complex checkpoint UX, advanced orchestration και AI assistance παραμένουν optional/deferred μέχρι να αποδειχθεί ανάγκη.
+- Κάθε feature πρέπει να συνδέεται με research, reproducibility, usability ή thesis-delivery requirement.
+- Προτιμώνται consolidated workflows και μικρότερος αριθμός screens αντί για representation της εσωτερικής architecture στο UI.
 
 ## Research and experiments
 
-- Όλες οι επιλογές models, baselines, metrics, GridWorld rules, stack, hyperparameters, ranges, seeds, repetitions και budgets θα γίνουν εκ νέου.
-- Τα παλιά chats δόθηκαν ως παραδείγματα και γενική εικόνα της κατάστασης, όχι ως επιλεγμένα δεδομένα ή προτιμήσεις.
-- Κανένα model ή technical stack δεν θεωρείται preferred επειδή αναφέρθηκε παλιότερα.
-- Απαιτούνται διαφορετικά runs/settings ανά model όπου είναι επιστημονικά δικαιολογημένο.
-- Δεν επιτρέπεται single-run comparison.
-- Απαιτούνται pilot, exploratory και final runs.
-- Καταγράφονται failed, cancelled, interrupted, incomplete και excluded runs.
-- Pause, resume, stop, cancel, restart και rerun υποστηρίζονται όπου είναι τεχνικά ασφαλές και πραγματικό.
-- Τα resolved parameters κάθε run αποθηκεύονται.
-- Figures και tables παράγονται από πραγματικά αποθηκευμένα δεδομένα.
+- Models, baselines, metrics, GridWorld rules, stack, hyperparameters, seeds, repetitions και budgets επιλέγονται από μηδενική βάση.
+- Old chats είναι context, όχι preferences ή shortlist.
+- Το experimental design πρέπει να είναι μικρό, κατανοητό, εκτελέσιμο και εύκολο να εξηγηθεί.
+- Το UI δεν πρέπει να εκθέτει αδικαιολόγητα πολλά models ή settings.
+- Απαιτούνται multiple runs/settings όπου είναι scientifically justified.
+- Single-run comparison απαγορεύεται.
+- Pilot, exploratory και final runs παραμένουν διακριτά.
+- Failed, cancelled, interrupted, incomplete και excluded runs καταγράφονται.
+- Pause, resume, stop, cancel, restart και rerun υποστηρίζονται μόνο όπου είναι πραγματικά χρήσιμα και technically safe.
+- Resolved parameters αποθηκεύονται ανά run.
+- Figures και tables παράγονται από real stored data.
 
 ## GridWorld
 
-- Η εφαρμογή και ο ερευνητικός πυρήνας θα αναπτυχθούν εκ νέου· δεν απαιτείται να δοθεί ή να ανακτηθεί παλιός κώδικας.
-- Το Codex πρέπει πρώτα να κάνει σύγχρονη έρευνα για GridWorld libraries/frameworks και την επιλογή custom implementation.
-- Μόνο αν μια επιλογή αποδειχθεί κατάλληλη μετά από code, license, maintenance, compatibility και prototype audit, θα τη κατεβάσει και θα την ενσωματώσει.
-- Δεν υπάρχει προκαθορισμένο third-party GridWorld repository.
+- Το project χτίζεται εκ νέου· δεν απαιτεί legacy code.
+- Το Codex κάνει fresh research σε libraries/frameworks και custom implementation.
+- Third-party code ενσωματώνεται μόνο μετά από source, license, maintenance, compatibility και prototype audit.
+- Δεν υπάρχει προκαθορισμένο GridWorld repository.
+- Η τελική λύση πρέπει να είναι η απλούστερη που καλύπτει πλήρως το approved research design.
 
 ## Hardware and tooling
 
-- Το Codex θα έχει πρόσβαση στο πραγματικό σύστημα και πρέπει να συλλέξει μόνο του CPU, RAM, GPU, VRAM, OS, drivers, runtimes και storage.
-- Ο χρήστης δεν χρειάζεται να αντιγράψει χειροκίνητα system inventory.
+- Το Codex συλλέγει αυτόματα CPU, RAM, GPU/VRAM, OS, drivers, runtimes και storage.
+- Ο χρήστης δεν δίνει manual inventory όταν το σύστημα μπορεί να το εξαγάγει.
 - Δεν υποτίθεται NVIDIA ή CUDA.
-- Compute-dependent αποφάσεις λαμβάνονται μετά την αυτόματη απογραφή και μικρά capability benchmarks.
+- Compute-dependent decisions ακολουθούν inventory και capability benchmarks.
 
 ## Thesis and repository
 
 - Η διπλωματική γράφεται στα ελληνικά.
-- Το τελικό παραδοτέο είναι Microsoft Word.
-- Οι επίσημες τρέχουσες οδηγίες υπερισχύουν παλιών παραδειγμάτων.
-- Το repository παραμένει private και είναι η μόνιμη source of truth.
-- Η επίσημη αίτηση αποθηκεύεται αυτούσια στο private repository.
-- Τα raw chat exports δεν γίνονται commit.
-- Η πραγματική βιβλιογραφία μπορεί να αποθηκευτεί στο private repository.
-- Απαγορεύεται η επινόηση citations, δεδομένων, αποτελεσμάτων ή συμπερασμάτων.
+- Το final deliverable είναι Microsoft Word.
+- Current official instructions υπερισχύουν historical examples.
+- Το repository παραμένει private και source of truth.
+- Η official application αποθηκεύεται unchanged στο private repository.
+- Raw chat exports δεν γίνονται commit.
+- Real bibliography μπορεί να αποθηκευτεί στο private repository.
+- Fabricated citations, data, results και conclusions απαγορεύονται.
 
 ## Optional AI
 
-- Μικρό AI model ενσωματώνεται μόνο αν αποδειχθεί πραγματική και αξιολογήσιμη χρησιμότητα.
-- Δεν δημιουργεί ή αλλάζει experimental data, δεν αντικαθιστά statistics και δεν παρουσιάζει hypotheses ως facts.
+- AI feature προστίθεται μόνο αν αποδειχθεί measurable practical value.
+- Δεν αλλάζει experimental data, δεν αντικαθιστά statistics και δεν παρουσιάζει hypotheses ως facts.

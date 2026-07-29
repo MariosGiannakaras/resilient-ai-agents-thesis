@@ -1,150 +1,94 @@
 # Implementation Roadmap
 
-Το roadmap είναι phase-gated. Δεν δεσμεύει πρόωρα το project σε συγκεκριμένη βιβλιοθήκη ή UI stack.
+The roadmap is phase-gated and optimized for thesis completion, scientific adequacy and bounded engineering complexity.
 
-## Phase 1 — Context transfer and validation
-- **Goal:** Repository source of truth, source hierarchy, requirements, blockers.
-- **Inputs:** Official application, chat exports, explicit user decisions.
-- **Deliverables:** Context/research/experiment/architecture/thesis docs, source audit.
-- **Done when:** Required files exist, contradictions are resolved or open, no raw chats committed.
-- **Gate:** User reviews critical factual errors/blockers.
+## Phase 1 — Context and system validation
 
-## Phase 1.5 - Automated system inventory
-- **Goal:** Codex records actual CPU/RAM/GPU/OS/drivers/runtimes/storage and capability baselines.
-- **Inputs:** Local system access.
-- **Deliverables:** Versioned inventory and benchmark notes.
-- **Done when:** Compute-dependent decisions no longer rely on historical hardware claims.
-- **Gate:** No acceleration or final batch-budget decision before completion.
+- **Goal:** Establish trusted sources, current scope and actual machine capabilities.
+- **Deliverables:** Source audit, SHA-256 verification, automated hardware/software inventory.
+- **Gate:** No compute-dependent or stack decision before completion.
 
-## Phase 2 — Add and inventory primary material
-- **Goal:** Collect real bibliography and remaining source material.
-- **Inputs:** PDFs, references and supervisor material.
-- **Deliverables:** Source manifests, checksums, bibliography inventory.
-- **Done when:** Every source has provenance and status.
-- **Gate:** No final research decision without relevant primary material.
+## Phase 2 — Bibliography and research framing
 
-## Phase 3 — Fresh GridWorld landscape review and prototype decision
-- **Goal:** Compare current reuse, adapt/wrap and minimal custom implementation strategies without assuming any legacy repository.
-- **Inputs:** Official topic, current technical sources, literature needs and measured execution environment.
-- **Deliverables:** Candidate matrix, license/maintenance/API audit, small compatibility prototypes and ADR recommendation.
-- **Done when:** The selected strategy is justified by current evidence, pinned where third-party code is used, and suitable for deterministic research tests.
-- **Gate:** No external GridWorld code is downloaded/integrated into the main project before the audit, prototype and decision.
+- **Goal:** Convert the official topic into a clear and bounded research problem.
+- **Deliverables:** Verified bibliography inventory, main research question, minimal secondary questions and candidate hypotheses.
+- **Gate:** Every question maps to measurable evidence and remains feasible.
 
-## Phase 4 — Research-question clarification
-- **Goal:** Convert official broad objective into precise, answerable questions.
-- **Inputs:** Application, literature, GridWorld audit, constraints.
-- **Deliverables:** Main/secondary RQs, scope boundaries, candidate hypotheses.
-- **Done when:** Each RQ maps to variables, comparisons and evidence.
-- **Gate:** Supervisor/user approval where required.
+## Phase 3 — GridWorld landscape and decision
 
-## Phase 5 — Focused literature review
-- **Goal:** Establish definitions, methods, metrics and related work.
-- **Inputs:** Real bibliography plus targeted current research.
-- **Deliverables:** Structured notes, evidence matrix, gap analysis.
-- **Done when:** Model/metric/protocol choices can be justified by sources.
-- **Gate:** Citation verification complete for decision-driving claims.
+- **Goal:** Compare reuse, adapt/wrap and minimal custom implementation.
+- **Deliverables:** Candidate matrix, license/maintenance/API audit, small prototypes and ADR.
+- **Gate:** No third-party integration before documented decision.
 
-## Phase 6 — Finalize GridWorld specification
-- **Goal:** Define deterministic base environment and uncertainty mechanisms.
-- **Inputs:** Audit, RQs, literature.
-- **Deliverables:** Versioned schema, transition/reward rules, severity taxonomy, examples.
-- **Done when:** Reference traces and invariant tests pass.
-- **Gate:** Environment version frozen for pilot phase.
+## Phase 4 — Environment and uncertainty specification
 
-## Phase 7 — Select models and baselines
-- **Goal:** Choose minimal scientifically informative comparison set.
-- **Inputs:** RQs, environment properties, literature, hardware.
-- **Deliverables:** Inclusion/exclusion table, common agent interface, ADR.
-- **Done when:** Each model has a role and feasible implementation/evaluation plan.
-- **Gate:** No redundant model without added evidence value.
+- **Goal:** Define the simplest environment that adequately answers the research question.
+- **Deliverables:** Versioned state/action/reward/termination rules, minimal uncertainty taxonomy, severity design and validation fixtures.
+- **Gate:** Environment reference traces and invariant tests pass.
 
-## Phase 8 — Select metrics and estimands
-- **Goal:** Operationalize performance, robustness, degradation and recovery.
-- **Inputs:** RQs, literature, environment.
-- **Deliverables:** Primary/secondary metrics, formulas, aggregation rules.
-- **Done when:** Metrics have unit tests and unambiguous interpretation.
-- **Gate:** Primary outcome(s) frozen before final runs.
+## Phase 5 — Minimal model and metric selection
 
-## Phase 9 — Experimental protocol
-- **Goal:** Define tuning, evaluation, seeds, repetitions, budgets and analysis.
-- **Inputs:** Models, metrics, hardware benchmarks.
-- **Deliverables:** Experiment matrix, statistical plan, exclusions, run schema.
-- **Done when:** Protocol can be executed without hidden manual choices.
-- **Gate:** Final conditions isolated from exploratory tuning.
+- **Goal:** Select only scientifically distinct and feasible models/baselines and outcomes.
+- **Deliverables:** Inclusion/exclusion matrix, common agent contract, metric definitions and estimands.
+- **Gate:** No model, uncertainty type or metric without a distinct research role.
 
-## Phase 10 — Independent research core
-- **Goal:** Implement environment, agent adapters, runner, persistence and CLI.
-- **Inputs:** Frozen pilot specifications.
-- **Deliverables:** Minimal core and reproducible CLI workflow.
-- **Done when:** A complete run executes without UI and emits valid manifest/results.
+## Phase 6 — Pilot experimental protocol
+
+- **Goal:** Define training/tuning/evaluation separation and pilot work.
+- **Deliverables:** Pilot configs, stopping/failure rules, preliminary statistical plan and compute estimate.
+- **Gate:** Protocol can be executed without hidden manual choices.
+
+## Phase 7 — Independent research core
+
+- **Goal:** Implement only environment, selected agent adapters, runner, persistence, manifests and CLI.
+- **Deliverables:** Minimal reproducible headless workflow.
+- **Done when:** A full run completes without UI and produces valid real outputs.
 - **Gate:** Architecture and contract tests pass.
 
-## Phase 11 — Validation and tests
-- **Goal:** Verify scientific and software correctness.
-- **Inputs:** Core implementation.
-- **Deliverables:** Unit, property, integration, recovery and known-answer tests.
-- **Done when:** Transition/reward/metric/run-lifecycle evidence is documented.
-- **Gate:** No unresolved correctness defect affecting pilots.
+## Phase 8 — Validation and pilots
 
-## Phase 12 — Pilot runs
-- **Goal:** Measure variance, runtime, failure modes and metric behavior.
-- **Inputs:** Validated core, small configurations.
-- **Deliverables:** Pilot registry, timing/variance report, anomalies.
-- **Done when:** Pilots answer protocol-design questions, not thesis RQs.
-- **Gate:** Pilot findings reviewed; no pilot result presented as final.
+- **Goal:** Verify correctness and estimate runtime, variance, failures and metric behavior.
+- **Deliverables:** Unit/integration/recovery tests, pilot registry and pilot report.
+- **Gate:** Pilots answer protocol-design questions; no pilot result is treated as final evidence.
 
-## Phase 13 — Freeze experiment matrix
-- **Goal:** Set feasible final configurations.
-- **Inputs:** Pilot evidence and compute budget.
-- **Deliverables:** Versioned/frozen protocol, seeds/repetitions, resource estimate.
-- **Done when:** Changes require explicit protocol amendment.
-- **Gate:** Analysis plan and artifact IDs reserved.
+## Phase 9 — Freeze final protocol
 
-## Phase 14 — Experiment management
-- **Goal:** Reliable queues, checkpoints, pause/resume/cancel/restart and provenance.
-- **Inputs:** Frozen runner semantics.
-- **Deliverables:** Run registry, recovery logic, lifecycle events.
-- **Done when:** Interruption/recovery integration tests pass.
-- **Gate:** Real state is observable without UI fabrication.
+- **Goal:** Set a feasible and scientifically fair final experiment matrix.
+- **Deliverables:** Frozen models, scenarios, seeds/repetitions, budgets, metrics, statistical plan and exclusions.
+- **Gate:** Any later change requires explicit amendment.
 
-## Phase 15 — Dashboard
-- **Goal:** Local control, monitoring, comparison and export.
-- **Inputs:** Validated core and experiment-management API.
-- **Deliverables:** Essential pages and real backend integrations.
-- **Done when:** Main workflows work end-to-end with truthful status.
-- **Gate:** UI cannot alter scientific results silently.
+## Phase 10 — Minimal experiment management
 
-## Phase 16 — Final runs
-- **Goal:** Produce frozen thesis evidence.
-- **Inputs:** Frozen protocol, stable code, available compute.
-- **Deliverables:** Complete run set, checksums, failure/exclusion registry.
-- **Done when:** Completeness and provenance audits pass.
-- **Gate:** No silent reruns or cherry-picking.
+- **Goal:** Provide reliable run registry, lifecycle state and recovery required by the frozen protocol.
+- **Deliverables:** Real status/events, safe interruption handling, provenance and essential batch support.
+- **Gate:** Do not implement queue priorities, remote workers or advanced orchestration unless required by measured workflow.
 
-## Phase 17 — Statistical analysis
-- **Goal:** Estimate effects and uncertainty according to plan.
-- **Inputs:** Frozen final data.
-- **Deliverables:** Analysis outputs, effect sizes, intervals, diagnostics.
-- **Done when:** Scripts reproduce all reported values.
-- **Gate:** Deviations labeled and justified.
+## Phase 11 — Polished bounded dashboard
 
-## Phase 18 — Figures and tables
-- **Goal:** Produce publication/thesis-ready evidence.
-- **Inputs:** Analysis outputs.
-- **Deliverables:** Versioned figures/tables with provenance manifests.
-- **Done when:** Every item maps to runs, scripts, config and commit.
-- **Gate:** Captions do not overclaim.
+- **Goal:** Enable the user to execute and understand the thesis experiments without code or console commands.
+- **Required workflows:** Dashboard, New Experiment, Runs, Compare and Artifacts.
+- **Required quality:** Modern, consistent, responsive, screenshot-ready and based on real data.
+- **Deliverables:** Configuration/launch, truthful monitoring, GridWorld view, history/details, comparison charts/tables and export.
+- **Gate:** Every screen and feature maps to a real thesis workflow. Advanced features remain deferred.
 
-## Phase 19 — Complete thesis writing
-- **Goal:** Integrate verified background, methods, implementation and results.
-- **Inputs:** Sources, decision log, frozen artifacts.
-- **Deliverables:** Greek chapter drafts and complete Word document.
-- **Done when:** Claims/citations/cross-references/terminology are audited.
-- **Gate:** Supervisor review and required revisions.
+## Phase 12 — Final runs
 
-## Phase 20 — Final Word and repository validation
-- **Goal:** Submit a consistent, reproducible package.
-- **Inputs:** Final Word, code, data/artifacts, official checklist.
-- **Deliverables:** Final `.docx`, release manifest, reproduction guide, archived result set.
-- **Done when:** Formatting, privacy, citation, provenance, build and repository checks pass.
-- **Gate:** Submission/presentation package approved.
+- **Goal:** Produce the frozen thesis evidence set.
+- **Deliverables:** Complete run set, checksums, failures/exclusions registry and immutable raw outputs.
+- **Gate:** Completeness and provenance audits pass; no cherry-picking.
+
+## Phase 13 — Statistical analysis and artifacts
+
+- **Goal:** Produce reproducible estimates, figures, tables and exports.
+- **Deliverables:** Versioned scripts, intervals/effect sizes where appropriate, diagnostics and artifact manifests.
+- **Gate:** Every reported value traces to source runs, configs and code.
+
+## Phase 14 — Thesis writing and final validation
+
+- **Goal:** Complete the Greek Microsoft Word thesis and repository package.
+- **Deliverables:** Background, methods, implementation, results, discussion, limitations, conclusions, Word formatting and reproduction guide.
+- **Gate:** Claims, citations, figures, cross-references, privacy and provenance audits pass.
+
+## Completion rule
+
+The project is complete when the research question is answered with reliable evidence and the polished local dashboard supports the required experiment workflow. It is not necessary to reach production-platform scope.

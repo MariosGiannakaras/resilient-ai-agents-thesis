@@ -2,163 +2,171 @@
 
 ## Αποστολή
 
-Ανάπτυξη και τεκμηρίωση μιας επιστημονικά έγκυρης, αναπαραγώγιμης διπλωματικής εργασίας με επίσημο τίτλο:
+Ανάπτυξη και τεκμηρίωση μιας επιστημονικά έγκυρης, αναπαραγώγιμης και ολοκληρώσιμης διπλωματικής εργασίας με επίσημο τίτλο:
 
 > Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα
 
-Το project μελετά και συγκρίνει πράκτορες/αλγορίθμους λήψης αποφάσεων σε ελεγχόμενο προσομοιωμένο περιβάλλον με αβεβαιότητα και δυναμικές μεταβολές. Η εφαρμογή είναι εργαλείο ελέγχου, παρατήρησης και παρουσίασης της έρευνας· δεν είναι το κύριο ερευνητικό αντικείμενο.
+Το project συγκρίνει decision agents σε ελεγχόμενο προσομοιωμένο περιβάλλον με αβεβαιότητα και δυναμικές μεταβολές. Η εφαρμογή είναι σημαντικό research deliverable και εργαλείο ελέγχου, παρατήρησης, κατανόησης και παρουσίασης· δεν είναι το κύριο ερευνητικό αντικείμενο και δεν πρέπει να εξελιχθεί σε production-grade πλατφόρμα.
 
-Το repository είναι η μόνιμη, version-controlled πηγή αλήθειας.
+Το repository είναι η μόνιμη source of truth.
+
+## Κεντρική αρχή scope
+
+Διάβασε και εφάρμοσε το `docs/context/SCOPE_REFINEMENT.md`.
+
+Η αρχιτεκτονική πρέπει να έχει περιορισμένη εσωτερική πολυπλοκότητα, ενώ το τελικό dashboard πρέπει να είναι polished, μοντέρνο και επαρκές για όλες τις πραγματικές ροές της διπλωματικής.
+
+**Polished outside, bounded inside.**
+
+Η απλότητα δεν δικαιολογεί πρόχειρο ή παρωχημένο UI. Η αισθητική, όμως, δεν δικαιολογεί production infrastructure, υπερβολικό orchestration ή περιττές λειτουργίες.
 
 ## Μηδενική βάση αποφάσεων
 
-Οι παλιές συνομιλίες είναι μόνο ιστορικό/context και παραδείγματα θεμάτων που συζητήθηκαν. Δεν αποτελούν:
+Οι παλιές συνομιλίες είναι μόνο context. Δεν αποτελούν:
 
-- επιλεγμένη λίστα μοντέλων,
-- εγκεκριμένο GridWorld specification,
-- προτίμηση stack,
-- εγκεκριμένες μετρικές,
-- εγκεκριμένα hyperparameters, seeds, repetitions ή budgets,
-- υποχρέωση ανάκτησης ή επαναχρησιμοποίησης παλιού κώδικα.
+- model shortlist,
+- GridWorld specification,
+- stack preference,
+- metric selection,
+- approved hyperparameters, seeds, repetitions ή budgets,
+- feature backlog,
+- υποχρέωση ανάκτησης παλιού κώδικα.
 
-Κάθε ερευνητική και τεχνική απόφαση λαμβάνεται εκ νέου με βάση την επίσημη αίτηση, την τρέχουσα βιβλιογραφία, την τρέχουσα τεχνική τεκμηρίωση, την πραγματική κατάσταση του οικοσυστήματος λογισμικού, το αυτόματα επιβεβαιωμένο hardware/software και τα pilot evidence.
+Κάθε απόφαση λαμβάνεται εκ νέου από την επίσημη αίτηση, τη σύγχρονη βιβλιογραφία, την τεχνική τεκμηρίωση, το πραγματικό hardware/software, τα prototypes και τα pilots.
 
 ## Σειρά προτεραιοτήτων
 
-1. Επιστημονική εγκυρότητα.
-2. Ορθότητα υλοποίησης.
-3. Αναπαραγωγιμότητα.
-4. Αξιοπιστία.
-5. Χρηστικότητα.
-6. Καθαρή οπτικοποίηση.
-7. Animations και αισθητικές λεπτομέρειες.
+1. Σαφές και περιορισμένο research question.
+2. Απλό και validated GridWorld.
+3. Μικρός, επιστημονικά αιτιολογημένος αριθμός models και uncertainty types.
+4. Fair και reproducible experimental protocol.
+5. Αξιόπιστα και συγκρίσιμα results.
+6. Μοντέρνο και πλήρες UI για execution, monitoring και understanding.
+7. Advanced features μόνο με πραγματική ανάγκη και χαμηλό completion risk.
 
-Καμία επιλογή UI, stack ή convenience feature δεν υπερισχύει της επιστημονικής ορθότητας.
-
-## Υποχρεωτική ανάγνωση πριν από αλλαγές
+## Υποχρεωτική ανάγνωση
 
 1. `README.md`
-2. `docs/context/PROJECT_CONTEXT.md`
-3. `docs/context/CONFIRMED_REQUIREMENTS.md`
-4. `docs/context/USER_DECISIONS.md`
-5. `docs/context/CONSTRAINTS.md`
-6. `docs/context/OPEN_QUESTIONS.md`
-7. `docs/context/CONTRADICTIONS.md`
-8. `docs/context/FINAL_BOOTSTRAP_AUDIT.md`
-9. `docs/research/RESEARCH_BRIEF.md`
-10. `docs/research/GRIDWORLD_SPEC.md`
-11. `docs/research/MODEL_CANDIDATES.md`
-12. `docs/research/METRICS_CANDIDATES.md`
-13. `docs/experiments/`
-14. `docs/architecture/`
-15. `docs/thesis/`
-16. `docs/university/`
-17. `docs/decisions/DECISION_LOG.md`
+2. `docs/context/SCOPE_REFINEMENT.md`
+3. `docs/context/PROJECT_CONTEXT.md`
+4. `docs/context/CONFIRMED_REQUIREMENTS.md`
+5. `docs/context/USER_DECISIONS.md`
+6. `docs/context/CONSTRAINTS.md`
+7. `docs/context/OPEN_QUESTIONS.md`
+8. `docs/context/CONTRADICTIONS.md`
+9. `docs/context/FINAL_BOOTSTRAP_AUDIT.md`
+10. `docs/research/RESEARCH_BRIEF.md`
+11. `docs/research/GRIDWORLD_SPEC.md`
+12. `docs/research/MODEL_CANDIDATES.md`
+13. `docs/research/METRICS_CANDIDATES.md`
+14. `docs/experiments/`
+15. `docs/architecture/`
+16. `docs/thesis/`
+17. `docs/university/`
+18. `docs/decisions/DECISION_LOG.md`
 
-Μην ζητάς πληροφορίες που μπορείς να συλλέξεις από το repository, το τοπικό σύστημα ή επίσημες δημόσιες πηγές.
+Μην ζητάς πληροφορίες που μπορούν να συλλεχθούν από το repository, το τοπικό σύστημα ή επίσημες πηγές.
 
 ## Ιεράρχηση πηγών
 
-1. Νεότερη ρητή οδηγία του χρήστη.
-2. Επίσημη εγκεκριμένη αίτηση/περιγραφή της διπλωματικής.
-3. Ισχύουσες επίσημες οδηγίες Πανεπιστημίου/Τμήματος και επιβλέποντα.
-4. Πρωτογενής ή υψηλής ποιότητας επιστημονική βιβλιογραφία.
-5. Επίσημη τεχνική τεκμηρίωση, source code, release history, license και reproducible benchmarks.
-6. Μετρήσεις και pilots στο πραγματικό σύστημα.
-7. Παλιές συνομιλίες μόνο ως μη δεσμευτικό ιστορικό και λίστα πιθανών ερωτημάτων προς επανεξέταση - ποτέ ως απόφαση ή shortlist.
-
-Αν η σύγκρουση δεν λύνεται, ενημέρωσε `OPEN_QUESTIONS.md` και `CONTRADICTIONS.md`. Μην μαντεύεις.
+1. Νεότερη ρητή οδηγία χρήστη.
+2. Επίσημη αίτηση ή formal thesis description.
+3. Επίσημες οδηγίες Πανεπιστημίου, Τμήματος και επιβλέποντα.
+4. Verified primary ή υψηλής ποιότητας scientific literature.
+5. Official technical docs, source code, releases, licenses και reproducible benchmarks.
+6. Actual system inventory, prototypes και pilots.
+7. Old chats μόνο ως historical context.
 
 ## Υποχρεωτική σειρά φάσεων
 
-1. Επικύρωση context και πρωτογενών πηγών.
-2. Αυτόματη απογραφή hardware, OS, drivers, runtimes, storage και διαθέσιμων εργαλείων.
-3. Ανάλυση επίσημης αίτησης και πραγματικής βιβλιογραφίας.
-4. Σύγχρονη έρευνα GridWorld επιλογών και τεκμηριωμένη σύγκριση reuse/adapt/build-from-scratch.
-5. Οριστικοποίηση research questions και hypotheses.
-6. Οριστικοποίηση GridWorld, uncertainty taxonomy και experimental factors.
-7. Επιλογή μοντέλων, baselines και μετρικών με βιβλιογραφική και πρακτική αιτιολόγηση.
-8. Σχεδιασμός πειραματικού πρωτοκόλλου και statistical analysis plan.
-9. Υλοποίηση ανεξάρτητου core και CLI.
-10. Tests, environment validation και deterministic smoke tests.
-11. Μικρά pilot runs.
-12. Αναθεώρηση experiment matrix με βάση τα pilot δεδομένα.
-13. Experiment management, recovery και provenance.
-14. Dashboard/control layer.
+1. Context και primary-source validation.
+2. Automated system inventory.
+3. Literature and official-topic analysis.
+4. Fresh GridWorld landscape review.
+5. Bounded research questions και hypotheses.
+6. GridWorld, uncertainty taxonomy και factors.
+7. Small model/baseline and metric selection.
+8. Pilot protocol και statistical plan.
+9. Independent core και CLI.
+10. Validation tests και deterministic smoke tests.
+11. Pilot runs.
+12. Final matrix review and freeze.
+13. Minimal experiment management and provenance.
+14. Polished bounded dashboard.
 15. Final frozen runs.
 16. Statistical analysis, figures και tables.
-17. Ολοκλήρωση και τελικός έλεγχος της διπλωματικής.
+17. Greek Word thesis and final validation.
 
-**Απαγορεύεται η έναρξη του dashboard πριν λειτουργεί και έχει ελεγχθεί ο ανεξάρτητος ερευνητικός πυρήνας.**
+**Dashboard implementation ξεκινά μόνο μετά από validated independent core και pilot evidence.**
 
-## GridWorld discovery και integration
+## GridWorld discovery
 
-- Μην υποθέσεις ότι υπάρχει user-owned GridWorld code που πρέπει να ανακτηθεί.
-- Κάνε νέα έρευνα σε τρέχοντα frameworks/libraries και στην επιλογή custom implementation.
-- Αξιολόγησε ενεργή συντήρηση, license, Gymnasium/API compatibility, determinism/seeding, παραμετροποίηση disturbances, testability, performance, dependency cost και δυνατότητα ανεξάρτητου core.
-- Μην κατεβάσεις ή ενσωματώσεις κώδικα μόνο επειδή αναφέρθηκε σε παλιό chat.
-- Pin source, version/commit και license για οτιδήποτε επαναχρησιμοποιηθεί.
-- Κάνε μικρό compatibility prototype πριν από τελική απόφαση.
-- Αν καμία επιλογή δεν καλύπτει τις απαιτήσεις καθαρά, υλοποίησε minimal custom GridWorld.
+- Μην υποθέσεις existing user-owned code.
+- Σύγκρινε current reuse, adapt/wrap και minimal custom implementation.
+- Έλεγξε maintenance, license, API compatibility, determinism, seeding, disturbance extensibility, testability, performance και dependency cost.
+- Μην ενσωματώσεις third-party code πριν από documented audit, prototype και ADR.
+- Προτίμησε την απλούστερη λύση που υποστηρίζει πλήρως το frozen research design.
 
 ## Hardware discovery
 
-- Το Codex πρέπει να συλλέξει μόνο του το πραγματικό CPU, RAM, GPU, VRAM, OS, drivers, Python/runtime versions, διαθέσιμο storage και capability information.
-- Μην ζητήσεις από τον χρήστη να αντιγράψει χειροκίνητα πληροφορίες που μπορούν να εξαχθούν αξιόπιστα από το σύστημα.
-- Μην υποθέσεις NVIDIA ή CUDA.
-- Μέχρι να ολοκληρωθεί η απογραφή και ένα μικρό capability benchmark, το ασφαλές default είναι CPU-compatible execution.
+- Συλλέγεται αυτόματα CPU, RAM, GPU/VRAM, OS, drivers, runtimes, storage και supported acceleration.
+- Μην ζητάς manual transcription από τον χρήστη.
+- Μην υποθέτεις NVIDIA, CUDA ή usable GPU acceleration.
+- Μέχρι το capability report, κράτησε CPU-compatible design.
 
-## Κανόνες έρευνας και πειραμάτων
+## Research and experiment rules
 
-- Κάθε model, baseline και metric χρειάζεται σαφή σύνδεση με research question ή validity check.
-- Δεν επιλέγονται αυθαίρετα models, hyperparameters, ranges, seeds, repetitions ή budgets.
-- Δεν συγκρίνεται model από μία μόνο εκτέλεση.
+- Κάθε model, uncertainty type και metric συνδέεται με approved research question ή validity check.
+- Κράτησε το design μικρό, κατανοητό και εκτελέσιμο.
+- Μην εκθέτεις στον χρήστη αδικαιολόγητα πολλές models ή parameters.
+- Δεν επιλέγονται αυθαίρετα hyperparameters, seeds, repetitions ή budgets.
+- Δεν επιτρέπεται single-run comparison.
 - Διαχώρισε pilot, exploratory και final runs.
-- Μην χρησιμοποιείς final test conditions για επιλογή hyperparameters.
 - Κατέγραψε failed, cancelled, interrupted, invalid και excluded runs.
-- Κατέγραψε το exclusion rule πριν εξεταστούν τα final αποτελέσματα.
-- Κάθε run αποθηκεύει resolved configuration, seeds, software environment, hardware snapshot και Git commit.
-- Τα raw results είναι immutable.
-- Όλα τα thesis figures/tables παράγονται από version-controlled scripts και πραγματικά αποθηκευμένα δεδομένα.
+- Κάθε run αποθηκεύει resolved config, seeds, software/hardware snapshot και Git commit.
+- Raw results immutable. Figures και tables από version-controlled scripts και πραγματικά data.
 - Μην κάνεις cherry-picking.
-- Χρησιμοποίησε intervals, effect sizes και robust aggregate statistics μόνο όταν είναι κατάλληλα και τεκμηριωμένα.
-- Η δίκαιη σύγκριση δεν σημαίνει πάντα ίδιες hyperparameters· σημαίνει προκαθορισμένο, αιτιολογημένο και συγκρίσιμο protocol.
 
-## Κανόνες λογισμικού
+## Software and UI rules
 
-- Ο `core/` λειτουργεί χωρίς UI και εκτελείται από CLI ή programmatic API.
-- Το UI δεν περιέχει ερευνητική λογική και δεν είναι η μοναδική οδός εκτέλεσης.
+- Ο `core/` λειτουργεί χωρίς UI.
+- Το UI χρησιμοποιεί τον ίδιο validated config path και δεν επανυλοποιεί scientific logic.
 - Η αποθήκευση runs/results δεν εξαρτάται από το UI.
-- Προτίμησε την απλούστερη αρχιτεκτονική που καλύπτει πραγματικές ανάγκες.
-- Μην εισάγεις microservices, Kubernetes, cloud infrastructure, multi-user authentication ή distributed orchestration χωρίς καταγεγραμμένη ανάγκη.
-- Μην κλειδώνεις stack πριν ολοκληρωθεί η φάση επιλογής αρχιτεκτονικής.
-- Μην προσθέτεις feature επειδή είναι εντυπωσιακό. Σύνδεσέ το με requirement ή αφαίρεσέ το.
+- Προτίμησε modular monolith ή αντίστοιχα απλή local architecture.
+- Μην εισάγεις microservices, Kubernetes, cloud, multi-user auth, distributed workers ή production observability.
+- Μην προσθέτεις feature χωρίς πραγματικό thesis workflow ή documented requirement.
+- Consolidate screens and controls rather than exposing internal architecture.
+- Το final UI πρέπει να είναι polished, consistent, responsive και screenshot-ready.
+- Essential workflows: configure, run, monitor, inspect GridWorld, review history, compare results και export artifacts.
+- Scientific metadata δεν κρύβεται για αισθητικούς λόγους.
+- Fake progress, mock scientific metrics, fabricated logs και backend-inconsistent state απαγορεύονται.
+- Queue priorities, plugins, remote execution, advanced checkpoint UX και optional AI παραμένουν deferred μέχρι να αποδειχθεί ανάγκη.
 
-## Tests και validation
+## Tests and validation
 
-Κάθε αλλαγή που επηρεάζει core ή experiments πρέπει να συνοδεύεται από κατάλληλα tests:
+Κάθε αλλαγή που επηρεάζει core ή experiments χρειάζεται κατάλληλα tests:
 
 - environment invariants,
 - transition/reward/termination behavior,
-- seeding και deterministic replay όπου αναμένεται,
+- seeding και deterministic replay,
 - config validation,
 - run lifecycle και recovery,
 - serialization/schema compatibility,
 - metric correctness σε known-answer fixtures,
-- statistical processing σε synthetic fixtures μόνο για test logic,
+- statistical processing fixtures,
 - provenance linkage,
-- regression tests για επιβεβαιωμένα bugs.
+- regression tests.
 
-Synthetic fixtures επιτρέπονται αποκλειστικά στα tests και σημειώνονται καθαρά ως μη πειραματικά δεδομένα.
+Synthetic fixtures επιτρέπονται μόνο σε clearly labeled tests.
 
-## Git και τεκμηρίωση
+## Git and documentation
 
-- Κάνε μικρά, λογικά, ελεγχόμενα commits.
+- Κάνε μικρά, λογικά commits.
 - Μην αποθηκεύεις secrets, credentials, caches ή αδικαιολόγητα binaries.
-- Ενημέρωνε context files, decision log και context changelog όταν αλλάζει ουσιώδης απαίτηση ή απόφαση.
-- Μην αλλάζεις σιωπηρά frozen protocol, raw results ή final evidence set.
-- Κάθε σημαντική επιλογή GridWorld/model/metric/stack/storage/runner καταγράφεται με evidence και alternatives.
+- Ενημέρωνε context, decisions και changelog όταν αλλάζει ουσιώδης απαίτηση.
+- Μην αλλάζεις σιωπηρά frozen protocol ή raw/final evidence.
+- Σημαντικές επιλογές GridWorld, models, metrics, stack, storage, runner και UI scope καταγράφονται με evidence και alternatives.
 
-## Επιστημονική ακεραιότητα
+## Scientific integrity
 
-Απαγορεύεται η επινόηση πηγών, DOI, citations, runs, metrics, progress, logs, δεδομένων, figures, tables, αποτελεσμάτων ή συμπερασμάτων.
+Απαγορεύεται η επινόηση πηγών, DOI, citations, runs, metrics, progress, logs, data, figures, tables, results ή conclusions.

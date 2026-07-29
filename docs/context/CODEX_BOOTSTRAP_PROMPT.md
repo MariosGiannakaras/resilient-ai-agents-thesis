@@ -1,47 +1,81 @@
 # Codex Bootstrap Prompt
 
-Ανάλαβε την ερευνητική αποσαφήνιση και, μόνο μετά από έγκριση των επόμενων αποφάσεων, την υλοποίηση του private repository `MariosGiannakaras/resilient-ai-agents-thesis`.
+Ανάλαβε την ερευνητική αποσαφήνιση του private repository `MariosGiannakaras/resilient-ai-agents-thesis` και σταμάτα πριν από κύρια implementation.
 
-Το repository είναι η κύρια πηγή αλήθειας. Οι παλιές συνομιλίες ήταν μόνο examples/context και **δεν** αποτελούν model shortlist, GridWorld specification, stack preference, experimental design ή user decision. Όλες οι ερευνητικές και τεχνικές επιλογές πρέπει να γίνουν εκ νέου.
+Το repository είναι η source of truth. Διάβασε πρώτα:
+
+1. `AGENTS.md`
+2. `README.md`
+3. `docs/context/SCOPE_REFINEMENT.md`
+4. όλα τα σχετικά context, research, experiment, architecture, thesis, university και decision files.
+
+Οι παλιές συνομιλίες είναι μόνο context. Δεν αποτελούν model shortlist, GridWorld specification, stack preference, metric selection, feature backlog ή experimental design.
+
+## Project direction
+
+Ο βασικός στόχος είναι μια σωστή, επιστημονικά επαρκής και ολοκληρώσιμη διπλωματική.
+
+Η εφαρμογή:
+
+- δεν είναι production-grade platform,
+- παραμένει σημαντικό deliverable,
+- πρέπει τελικά να είναι polished, modern και εύχρηστο research dashboard,
+- πρέπει να επιτρέπει configuration, execution, monitoring, GridWorld observation, history, comparison και export χωρίς code/console,
+- πρέπει να έχει περιορισμένη εσωτερική πολυπλοκότητα και μόνο justified features.
+
+Μην ερμηνεύσεις την απλοποίηση ως rough ή outdated UI. Μην ερμηνεύσεις το polished UI ως άδεια για cloud, microservices, multi-user, complex orchestration ή speculative features.
 
 ## Πριν από οποιαδήποτε implementation
 
-1. Διάβασε ολόκληρα `AGENTS.md`, `README.md` και `docs/context/FINAL_BOOTSTRAP_AUDIT.md`.
-2. Διάβασε όλα τα σχετικά αρχεία στα `docs/context/`, `docs/research/`, `docs/experiments/`, `docs/architecture/`, `docs/thesis/`, `docs/university/` και `docs/decisions/`.
-3. Εξέτασε την επίσημη αίτηση στο `thesis/source-material/`. Αν λείπει το PDF ή δεν ταιριάζει με το checksum του manifest, κατέγραψέ το και μην ισχυριστείς ότι επαληθεύτηκε μέσα στο repository.
-4. Εξέτασε την πραγματική βιβλιογραφία στο `bibliography/original/` όταν προστεθεί. Συμπλήρωσε με νέα έρευνα σε πρωτογενείς/peer-reviewed πηγές και επίσημη τεκμηρίωση. Μην εμπιστευτείς citations από παλιά chats χωρίς verification.
-5. Κάνε αυτόματη απογραφή του πραγματικού συστήματος: CPU, cores, RAM, GPU/VRAM, OS, drivers, Python/runtimes, storage, διαθέσιμα tools και supported acceleration. Μην ζητήσεις από τον χρήστη πληροφορίες που μπορείς να συλλέξεις αξιόπιστα μόνος σου. Μην υποθέσεις NVIDIA/CUDA.
-6. Κάνε νέα, σύγχρονη έρευνα για GridWorld frameworks/libraries και σύγκρινέ τα με minimal custom implementation. Αξιολόγησε maintenance, license, source quality, Gymnasium/API compatibility, seeded determinism, disturbance extensibility, testability, performance, dependencies και integration cost. Μην θεωρήσεις κανένα παλιότερα αναφερθέν repository preferred. Κατέβασε/ενσωμάτωσε κώδικα μόνο μετά από documented shortlist, prototype και ADR.
+1. Εξέτασε την official application και κατέγραψε το repository SHA-256.
+2. Εξέτασε την πραγματική bibliography όταν προστεθεί και συμπλήρωσε μόνο με verified primary/peer-reviewed sources και official documentation.
+3. Κάνε automated inventory: CPU, cores, RAM, GPU/VRAM, OS, drivers, runtimes, storage, tools και supported acceleration.
+4. Κάνε fresh GridWorld landscape review και σύγκρινε reuse, adapt/wrap και minimal custom implementation.
+5. Μην κατεβάσεις ή ενσωματώσεις third-party GridWorld code πριν από source/license/maintenance/suitability audit, small prototype και ADR.
 
 ## Πρώτη αποστολή
 
-Μην ξεκινήσεις dashboard ή model implementation. Παρουσίασε και αποθήκευσε πρώτα:
+Μην ξεκινήσεις GridWorld implementation, model implementation, experiment runner, core ή dashboard. Παρουσίασε και αποθήκευσε πρώτα:
 
-1. Audit των primary sources και της διαθέσιμης βιβλιογραφίας.
-2. Automated system/hardware/software inventory και μικρό capability benchmark plan.
-3. Fresh GridWorld landscape review με build-vs-reuse-vs-adapt matrix, licenses, maintenance evidence και recommendation για prototype - όχι άμεση ενσωμάτωση.
-4. Fresh literature-derived research questions και testable hypotheses.
-5. Proposed uncertainty taxonomy και environment specification βασισμένα στο official topic και literature, όχι στα old chats.
-6. Minimal, scientifically useful model/baseline shortlist με inclusion/exclusion rationale και feasibility evidence.
-7. Primary/secondary/diagnostic metrics με operational definitions και source support.
-8. Pilot protocol για runtime, variance, metric sensitivity και implementation validation.
-9. Phase plan με blockers, deliverables, acceptance criteria και decisions που χρειάζονται user/supervisor approval.
-10. Updates στα context files, `OPEN_QUESTIONS.md`, `DECISION_LOG.md` και `CHANGELOG_CONTEXT.md`.
+1. Primary-source and bibliography audit.
+2. Automated system inventory και capability benchmark plan.
+3. Fresh GridWorld landscape review με build/reuse/adapt matrix και prototype recommendation.
+4. Ένα σαφές, bounded main research question και μόνο τα απαραίτητα secondary questions/hypotheses.
+5. Minimal uncertainty taxonomy και environment direction.
+6. Μικρό scientifically useful model/baseline shortlist με inclusion/exclusion rationale.
+7. Primary/secondary/diagnostic metrics με operational definitions.
+8. Pilot protocol για correctness, runtime, variance και metric sensitivity.
+9. Προτεινόμενο feature budget για το dashboard, χωρισμένο σε required, justified-later και out-of-scope.
+10. Phase plan με deliverables, gates, blockers και decisions που χρειάζονται έγκριση.
+11. Updates στα context, research, architecture, decision και changelog files.
 
-## Υποχρεωτικοί κανόνες
+## Evaluation criteria for your proposal
 
-- Ο επίσημος τίτλος παραμένει ακριβώς αυτός της αίτησης.
-- Το core λειτουργεί και ελέγχεται χωρίς UI.
-- Dashboard μόνο μετά από validated core και pilot runs.
-- Multiple runs/settings/seeds/repetitions με documented fairness.
-- Clear separation pilot/exploratory/final.
-- Failures, cancellations, interruptions και exclusions παραμένουν ορατά.
-- No fake progress, logs, metrics, data ή results.
-- Raw results immutable και πλήρες provenance για figures/tables/claims.
-- No fabricated bibliography, DOI, measurements ή conclusions.
+Η πρόταση πρέπει να είναι:
+
+- μικρή αρκετά ώστε να ολοκληρωθεί και να εξηγηθεί,
+- scientifically adequate για το official topic,
+- feasible στο measured hardware και διαθέσιμο χρόνο,
+- reproducible και testable,
+- capable of producing clear comparable results,
+- compatible with a polished but bounded dashboard.
+
+Reject alternatives that add models, uncertainty types, parameters, screens or infrastructure without distinct research or thesis value.
+
+## Mandatory rules
+
+- Official title unchanged.
+- Core works without UI.
+- Dashboard only after validated core and pilot evidence.
+- Multiple seeds/repetitions; no single-run comparison.
+- Clear separation of pilot, exploratory and final runs.
+- Failures, cancellations, interruptions and exclusions remain visible.
+- No fake progress, logs, metrics, data or results.
+- Raw results immutable with full provenance.
+- No fabricated bibliography, DOI, measurements or conclusions.
 - No historical-chat preference inheritance.
-- No third-party code download/integration before license/source/suitability audit και explicit decision.
-- Small, controlled, documented commits· no overengineering, microservices ή cloud χωρίς ανάγκη.
-- Η διπλωματική γράφεται στα ελληνικά και το final deliverable είναι Microsoft Word σύμφωνα με τις ισχύουσες επίσημες οδηγίες.
+- No production infrastructure or advanced feature without documented need.
+- Small controlled commits; no overengineering.
+- Final thesis in Greek Microsoft Word under current official guidance.
 
-Μην προχωρήσεις στην κύρια υλοποίηση πριν ολοκληρωθεί και αξιολογηθεί η παραπάνω πρώτη αποστολή.
+Σταμάτα μετά την παρουσίαση της πρώτης αποστολής και περίμενε έγκριση πριν από prototype ή implementation.

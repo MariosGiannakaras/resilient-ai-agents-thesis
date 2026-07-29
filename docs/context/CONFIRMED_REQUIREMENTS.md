@@ -1,6 +1,6 @@
 # Confirmed Requirements
 
-Το παρόν αρχείο περιλαμβάνει μόνο απαιτήσεις που επιβεβαιώνονται από τη νεότερη ρητή οδηγία του χρήστη, την επίσημη αίτηση ή επαληθευμένη επίσημη οδηγία. Οι υποψήφιες τεχνικές ή ερευνητικές επιλογές βρίσκονται στα αντίστοιχα candidate files.
+Το παρόν αρχείο περιλαμβάνει μόνο απαιτήσεις που επιβεβαιώνονται από τη νεότερη ρητή οδηγία του χρήστη, την επίσημη αίτηση ή επαληθευμένη επίσημη οδηγία.
 
 **Status values:** `CONFIRMED`, `PARTIALLY_CONFIRMED`, `BLOCKED_BY_DECISION`, `DEFERRED`.
 
@@ -8,102 +8,112 @@
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
-| REQ-ACA-001 | Η εργασία είναι διπλωματική του Τμήματος Μηχανικών Πληροφορικής και Υπολογιστών, Σχολή Μηχανικών, Πανεπιστήμιο Δυτικής Αττικής. | Επίσημη αίτηση. | CONFIRMED | Τα στοιχεία εμφανίζονται συνεπώς σε README, metadata και τελικό Word. |
-| REQ-ACA-002 | Ο επίσημος ελληνικός τίτλος είναι «Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα». | Επίσημη αίτηση. | CONFIRMED | Χρήση ακριβούς τίτλου μέχρι επίσημη τροποποίηση. |
-| REQ-ACA-003 | Ο επίσημος αγγλικός τίτλος είναι “Comparison and Evaluation of Resilient AI Agents in Uncertain Environments”. | Επίσημη αίτηση. | CONFIRMED | Χρήση ακριβούς τίτλου μέχρι επίσημη τροποποίηση. |
-| REQ-ACA-004 | Ο επιβλέπων και τυχόν ειδικές απαιτήσεις του πρέπει να καταγραφούν πριν παγώσει η μεθοδολογία. | Λείπει από τα διαθέσιμα στοιχεία. | BLOCKED_BY_DECISION | Ενημερωμένα context files και decision entry. |
-| REQ-ACA-005 | Οι ισχύουσες επίσημες οδηγίες του Τμήματος υπερισχύουν παραδειγμάτων από παλιές εργασίες. | Ρητή απόφαση χρήστη. | CONFIRMED | Formatting checklist συνδεδεμένο με επαληθευμένες επίσημες πηγές. |
+| REQ-ACA-001 | Η εργασία είναι διπλωματική του Τμήματος Μηχανικών Πληροφορικής και Υπολογιστών, Σχολή Μηχανικών, Πανεπιστήμιο Δυτικής Αττικής. | Επίσημη αίτηση. | CONFIRMED | Συνεπής χρήση σε repository και Word. |
+| REQ-ACA-002 | Ο επίσημος ελληνικός τίτλος είναι «Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα». | Επίσημη αίτηση. | CONFIRMED | Ακριβής χρήση μέχρι formal change. |
+| REQ-ACA-003 | Ο επίσημος αγγλικός τίτλος είναι “Comparison and Evaluation of Resilient AI Agents in Uncertain Environments”. | Επίσημη αίτηση. | CONFIRMED | Ακριβής χρήση μέχρι formal change. |
+| REQ-ACA-004 | Ο επιβλέπων και οι ειδικές απαιτήσεις του πρέπει να καταγραφούν πριν παγώσει η μεθοδολογία. | Δεν έχουν δοθεί. | BLOCKED_BY_DECISION | Updated context and decision entry. |
+| REQ-ACA-005 | Οι ισχύουσες official Department instructions υπερισχύουν historical examples. | User decision. | CONFIRMED | Formatting checklist από verified sources. |
 
 ## Research
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
-| REQ-RES-001 | Η έρευνα συγκρίνει και αξιολογεί ανθεκτικούς πράκτορες/αλγορίθμους λήψης αποφάσεων σε περιβάλλοντα αβεβαιότητας και δυναμικών μεταβολών. | Επίσημη αίτηση. | CONFIRMED | Research questions και experiment matrix συνδέονται άμεσα με αυτή την αποστολή. |
-| REQ-RES-002 | Η μελέτη πρέπει να χρησιμοποιεί απλό προσομοιωμένο περιβάλλον, με το GridWorld ως τρέχουσα επιβεβαιωμένη κατεύθυνση. | Επίσημη αίτηση και νεότερες αποφάσεις. | CONFIRMED | Υπάρχει versioned, validated GridWorld specification. |
-| REQ-RES-003 | Η αξιολόγηση πρέπει να εξετάζει προσαρμογή σε απρόβλεπτες αλλαγές, ανθεκτικότητα και ταχύτητα ανάκαμψης. | Επίσημη αίτηση. | CONFIRMED | Τουλάχιστον μία έγκυρη operational definition και metric για degradation/recovery. |
-| REQ-RES-004 | Οι μορφές αβεβαιότητας πρέπει να οριστούν ρητά, να παραμετροποιούνται και να ελέγχονται πειραματικά. | Αναγκαιότητα δίκαιης αξιολόγησης· επίσημα παραδείγματα: noise, rule changes, action failures. | CONFIRMED | Κάθε disturbance έχει schema, severity levels, seed behavior και validation tests. |
-| REQ-RES-005 | Η τελική λίστα μοντέλων επιλέγεται από μηδενική βάση μετά από αίτηση, fresh literature review, τελική GridWorld κατηγορία, system inventory, feasibility prototypes και pilots. | Ρητή τρέχουσα απόφαση χρήστη. | CONFIRMED | Decision log με verified sources και inclusion/exclusion rationale. |
-| REQ-RES-006 | Το dashboard είναι υποστηρικτικό εργαλείο και όχι υποκατάστατο της ερευνητικής συνεισφοράς. | Ρητή απόφαση χρήστη. | CONFIRMED | Το contribution statement βασίζεται σε environment/protocol/results, όχι μόνο UI. |
-| REQ-RES-007 | Οι παλιές συνομιλίες δεν αποτελούν model/metric/GridWorld/stack shortlist· όλες οι επιλογές γίνονται εκ νέου. | Ρητή τρέχουσα διευκρίνιση χρήστη. | CONFIRMED | Candidate/decision files βασίζονται σε fresh evidence και όχι σε historical mentions. |
-| REQ-RES-008 | Το GridWorld implementation επιλέγεται μετά από σύγχρονη research comparison reuse/adapt/custom· δεν απαιτείται legacy code. | Ρητή τρέχουσα διευκρίνιση χρήστη. | CONFIRMED | Landscape review, prototype και ADR πριν download/integration. |
+| REQ-RES-001 | Η έρευνα συγκρίνει ανθεκτικούς decision agents υπό uncertainty και dynamic change. | Official application. | CONFIRMED | RQs και matrix συνδέονται άμεσα με το official topic. |
+| REQ-RES-002 | Χρησιμοποιείται απλό simulated environment, με GridWorld ως confirmed direction. | Application and user direction. | CONFIRMED | Versioned validated GridWorld specification. |
+| REQ-RES-003 | Η αξιολόγηση εξετάζει adaptation, resilience και recovery speed. | Official application. | CONFIRMED | Valid operational definitions and metrics. |
+| REQ-RES-004 | Οι uncertainty mechanisms ορίζονται, παραμετροποιούνται και ελέγχονται. | Scientific validity. | CONFIRMED | Schema, severity, seeding and tests. |
+| REQ-RES-005 | Models επιλέγονται από μηδενική βάση μετά από literature, environment, inventory, prototypes και pilots. | User decision. | CONFIRMED | Verified inclusion/exclusion decision. |
+| REQ-RES-006 | Το dashboard υποστηρίζει και δεν υποκαθιστά το research contribution. | User decision. | CONFIRMED | Contribution statement βασίζεται σε protocol/results. |
+| REQ-RES-007 | Old chats δεν αποτελούν shortlist ή preference. | User clarification. | CONFIRMED | Fresh evidence drives selections. |
+| REQ-RES-008 | GridWorld implementation επιλέγεται με current reuse/adapt/custom comparison. | User clarification. | CONFIRMED | Landscape review, prototype and ADR. |
+| REQ-RES-009 | Το research question και το experimental design πρέπει να είναι σαφή, bounded και realistically completable. | Latest user scope refinement. | CONFIRMED | Small explainable matrix within measured resources. |
+| REQ-RES-010 | Ο αριθμός models και uncertainty types παραμένει ο ελάχιστος scientifically sufficient. | Latest user scope refinement. | CONFIRMED | Every included factor has distinct RQ value; redundant options rejected. |
 
 ## Experimental
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
-| REQ-EXP-001 | Δεν επιτρέπεται σύγκριση μοντέλων από μία μόνο εκτέλεση. | Ρητή απόφαση χρήστη. | CONFIRMED | Κάθε final condition έχει πολλαπλά προδηλωμένα seeds/repetitions. |
-| REQ-EXP-002 | Πρέπει να υπάρχουν διακριτά pilot, exploratory και final runs. | Ρητή απόφαση χρήστη. | CONFIRMED | Run metadata περιέχει `run_type`; final set είναι frozen. |
-| REQ-EXP-003 | Διαφορετικά μοντέλα μπορούν να έχουν διαφορετικές κατάλληλες ρυθμίσεις, αλλά η αξιολόγηση πρέπει να παραμένει δίκαιη και τεκμηριωμένη. | Ρητή απόφαση χρήστη. | CONFIRMED | Tuning policy, common evaluation protocol και budget accounting καταγράφονται πριν final runs. |
-| REQ-EXP-004 | Πρέπει να καταγράφονται failed, cancelled, interrupted, incomplete και excluded runs. | Ρητή απόφαση χρήστη. | CONFIRMED | Κανένα run δεν εξαφανίζεται από το registry· υπάρχει reason field. |
-| REQ-EXP-005 | Πρέπει να αποθηκεύονται οι πραγματικά resolved παράμετροι κάθε run. | Ρητή απόφαση χρήστη. | CONFIRMED | Run manifest αποθηκεύεται κατά την έναρξη και κλειδώνει κατά την ολοκλήρωση. |
-| REQ-EXP-006 | Τα final figures και tables παράγονται από πραγματικά αποθηκευμένα δεδομένα. | Ρητή απόφαση χρήστη. | CONFIRMED | Κάθε artifact έχει provenance manifest και reproducible generation command. |
-| REQ-EXP-007 | Seeds, repetitions, ranges, stopping criteria και budgets επιλέγονται βάσει βιβλιογραφίας, pilots και πραγματικών resources. | Ρητή απόφαση χρήστη. | CONFIRMED | Pre-final protocol decision entry και budget estimate. |
-| REQ-EXP-008 | Πρέπει να υπάρχει σαφές statistical analysis plan πριν εξεταστούν τα final αποτελέσματα. | Αποφυγή cherry-picking και post-hoc bias. | CONFIRMED | Frozen analysis config/plan με estimands, intervals, effect sizes και exclusions. |
+| REQ-EXP-001 | Δεν επιτρέπεται single-run model comparison. | User decision. | CONFIRMED | Multiple predefined independent seeds/repetitions. |
+| REQ-EXP-002 | Pilot, exploratory and final runs παραμένουν διακριτά. | User decision. | CONFIRMED | `run_type` and frozen final set. |
+| REQ-EXP-003 | Model-specific settings επιτρέπονται με fair documented protocol. | User decision. | CONFIRMED | Tuning policy and common evaluation. |
+| REQ-EXP-004 | Failed, cancelled, interrupted, incomplete and excluded runs καταγράφονται. | User decision. | CONFIRMED | No run disappears; reason recorded. |
+| REQ-EXP-005 | Resolved parameters αποθηκεύονται ανά run. | User decision. | CONFIRMED | Immutable run manifest. |
+| REQ-EXP-006 | Final figures/tables προκύπτουν από real stored data. | User decision. | CONFIRMED | Reproducible artifact manifest. |
+| REQ-EXP-007 | Seeds, repetitions, ranges and budgets βασίζονται σε literature, pilots and resources. | User decision. | CONFIRMED | Frozen protocol and estimate. |
+| REQ-EXP-008 | Statistical analysis plan παγώνει πριν εξεταστούν final results. | Bias control. | CONFIRMED | Frozen estimands, intervals, exclusions and sensitivity plan. |
+| REQ-EXP-009 | Το UI εκθέτει μόνο approved ή scientifically justified settings και όχι ανεξέλεγκτο parameter space. | Latest user scope refinement. | CONFIRMED | Validated forms and progressive disclosure. |
 
 ## Functional application
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
-| REQ-APP-001 | Η εφαρμογή λειτουργεί τοπικά για έναν χρήστη. | Ρητή απόφαση χρήστη. | CONFIRMED | Core και dashboard εκκινούν τοπικά χωρίς account service. |
-| REQ-APP-002 | Δεν απαιτούνται authentication, roles, multi-user ή public deployment. | Ρητή απόφαση χρήστη. | CONFIRMED | Δεν υπάρχουν auth flows ή cloud-only dependencies. |
-| REQ-APP-003 | Ο χρήστης πρέπει να μπορεί να δημιουργεί και να επανεκτελεί runs χωρίς συνεχή χειροκίνητη χρήση console/scripts. | Ρητή απόφαση χρήστη. | CONFIRMED | UI workflow δημιουργεί validated config και εκκινεί πραγματικό runner. |
-| REQ-APP-004 | Πρέπει να υποστηρίζονται pause, resume, stop, cancel και restart όπου είναι τεχνικά εφικτό. | Ρητή απόφαση χρήστη. | PARTIALLY_CONFIRMED | Capability matrix ανά runner/model· unsupported operations εμφανίζονται ρητά. |
-| REQ-APP-005 | Η εφαρμογή πρέπει να εμφανίζει πραγματικό status, progress, logs, warnings, errors και metrics. | Ρητή απαίτηση και scientific integrity. | CONFIRMED | Κάθε UI state προέρχεται από backend state/event, όχι timer simulation. |
-| REQ-APP-006 | Πρέπει να υπάρχουν run history, comparison, result exploration και export. | Ρητή απαίτηση χρήστη. | CONFIRMED | End-to-end workflow από run registry σε comparison/export. |
-| REQ-APP-007 | Πρέπει να παρέχεται live GridWorld visualization όπου δεν επηρεάζει την πειραματική εκτέλεση. | Ρητή απαίτηση dashboard. | CONFIRMED | Visualization καταναλώνει trace/events και μπορεί να απενεργοποιηθεί. |
-| REQ-APP-008 | CPU/RAM και, όπου υποστηρίζεται, GPU/VRAM usage πρέπει να εμφανίζονται ως πραγματικές μετρήσεις. | Ρητή απαίτηση dashboard. | CONFIRMED | Metrics source και unsupported states είναι εμφανή. |
+| REQ-APP-001 | Local single-user operation. | User decision. | CONFIRMED | No account service. |
+| REQ-APP-002 | No authentication, roles, multi-user or public deployment. | User decision. | CONFIRMED | No auth/cloud-only flows. |
+| REQ-APP-003 | Ο χρήστης δημιουργεί και εκτελεί required runs χωρίς code/console. | User decision. | CONFIRMED | End-to-end validated UI launch. |
+| REQ-APP-004 | Pause/resume/stop/cancel/restart μόνο όπου technically safe and useful. | User decision and scope restraint. | PARTIALLY_CONFIRMED | Capability-based controls; unsupported states explicit. |
+| REQ-APP-005 | Real status, progress, logs, warnings, errors and metrics. | Integrity requirement. | CONFIRMED | UI derives from backend state/events. |
+| REQ-APP-006 | Run history, comparison, result exploration and export. | User decision. | CONFIRMED | End-to-end history-to-export workflow. |
+| REQ-APP-007 | GridWorld and agent visualization without altering experiments. | User decision. | CONFIRMED | Trace/event-based optional visualization. |
+| REQ-APP-008 | Real CPU/RAM and supported GPU/VRAM telemetry. | User decision. | CONFIRMED | Source and unsupported states visible. |
+| REQ-APP-009 | Το final application είναι polished research dashboard, όχι rough minimal demo. | Latest user scope refinement. | CONFIRMED | Modern coherent screenshot-ready UI across essential workflows. |
+| REQ-APP-010 | Η feature set περιορίζεται στις πραγματικές ανάγκες της διπλωματικής. | Latest user scope refinement. | CONFIRMED | Required/optional/out-of-scope feature budget approved before UI implementation. |
+| REQ-APP-011 | Models, seeds, settings and uncertainty conditions συγκρίνονται καθαρά με charts and tables. | Latest user scope refinement. | CONFIRMED | Compatible comparison view with distributions and counts. |
 
 ## Architecture and technical
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
-| REQ-ARCH-001 | Ο ερευνητικός πυρήνας λειτουργεί ανεξάρτητα από το UI. | Ρητή απόφαση χρήστη. | CONFIRMED | CLI/API smoke test ολοκληρώνει run με το dashboard κλειστό. |
-| REQ-ARCH-002 | Το dashboard δεν υλοποιείται πριν επαληθευτεί ο core. | Ρητή προτεραιότητα χρήστη. | CONFIRMED | Roadmap gate απαιτεί core tests και pilot evidence. |
-| REQ-ARCH-003 | Η αποθήκευση των runs/results δεν εξαρτάται από lifecycle του UI. | Reliability/reproducibility. | CONFIRMED | UI crash/close δεν καταστρέφει manifest και partial outputs. |
-| REQ-ARCH-004 | Αποφεύγονται microservices, Kubernetes, cloud και πολύπλοκο authentication χωρίς πραγματική ανάγκη. | Τοπικό single-user scope. | CONFIRMED | Architecture decision καταγράφει την απλούστερη επαρκή λύση. |
-| REQ-ARCH-005 | Δεν επιλέγεται final stack πριν compatibility/prototyping review. | Ιστορικά αντικρουόμενα stacks. | CONFIRMED | ADR με alternatives, constraints και proof-of-concept evidence. |
-| REQ-TECH-001 | Δεν υποτίθεται NVIDIA/CUDA ή usable GPU acceleration πριν από αυτόματο inventory και capability benchmark. | Ρητή τρέχουσα απόφαση χρήστη. | CONFIRMED | Capability report πριν από compute-dependent επιλογές. |
-| REQ-TECH-002 | Το Codex συλλέγει αυτόματα CPU, RAM, GPU/VRAM, OS, drivers, runtimes και storage από το πραγματικό σύστημα πριν compute-dependent αποφάσεις. | Ρητή τρέχουσα απόφαση χρήστη. | CONFIRMED | Versioned system inventory και benchmark report χωρίς manual user transcription. |
+| REQ-ARCH-001 | Research core works independently from UI. | User decision. | CONFIRMED | Headless run smoke test. |
+| REQ-ARCH-002 | Dashboard starts after validated core and pilot evidence. | User priority. | CONFIRMED | Roadmap gate enforced. |
+| REQ-ARCH-003 | Run/result storage does not depend on UI lifecycle. | Reliability. | CONFIRMED | UI close does not corrupt evidence. |
+| REQ-ARCH-004 | Avoid microservices, Kubernetes, cloud and complex auth. | Local scope. | CONFIRMED | Bounded local architecture. |
+| REQ-ARCH-005 | Final stack follows compatibility/prototype review. | Conflicting historical proposals. | CONFIRMED | ADR with evidence. |
+| REQ-ARCH-006 | Production infrastructure, distributed orchestration and enterprise observability are out of scope. | Latest user scope refinement. | CONFIRMED | No such components without formal scope change. |
+| REQ-ARCH-007 | The architecture must support a polished UI without exposing internal complexity to the user. | Latest user scope refinement. | CONFIRMED | Small top-level navigation and unified validated workflows. |
+| REQ-TECH-001 | No NVIDIA/CUDA or GPU assumption before inventory. | User decision. | CONFIRMED | Capability report first. |
+| REQ-TECH-002 | Codex automatically collects actual hardware/software/storage. | User decision. | CONFIRMED | Versioned inventory without manual transcription. |
 
 ## UI/UX
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
-| REQ-UI-001 | Η εμφάνιση πρέπει να είναι σύγχρονη και καθαρή. | Ρητή προτίμηση χρήστη. | CONFIRMED | Συνεπές design system και readable research views. |
-| REQ-UI-002 | Η αισθητική δεν υπερισχύει correctness, reliability ή usability. | Ρητή σειρά προτεραιοτήτων. | CONFIRMED | No animation blocks execution or hides scientific state. |
-| REQ-UI-003 | Δεν επιτρέπονται fake progress bars, mock final metrics, εικονικά logs ή backend-inconsistent states. | Ρητή απαγόρευση. | CONFIRMED | UI integration tests against real runner states. |
-| REQ-UI-004 | Screenshots της εφαρμογής πρέπει να είναι κατάλληλα για παρουσίαση και διπλωματική. | Ρητή χρήση εφαρμογής. | CONFIRMED | Exportable, legible views με stable labels και timestamps/IDs όπου χρειάζεται. |
+| REQ-UI-001 | Modern, clean and visually polished appearance. | User decision. | CONFIRMED | Consistent design system and research views. |
+| REQ-UI-002 | Aesthetics do not override correctness, reliability or usability. | Priority rule. | CONFIRMED | No decorative behavior hides scientific state. |
+| REQ-UI-003 | No fake progress, mock final metrics, fabricated logs or inconsistent states. | Integrity rule. | CONFIRMED | Integration tests against real runner state. |
+| REQ-UI-004 | Views must be suitable for screenshots and presentation. | User decision. | CONFIRMED | Legible stable labels and export-ready layouts. |
+| REQ-UI-005 | Responsive desktop/laptop layouts, consistent cards/charts/filters/tables and clear loading/error/empty states. | Latest user scope refinement. | CONFIRMED | UX review of all essential workflows. |
+| REQ-UI-006 | Scientific metadata remains accessible even when complexity is hidden with progressive disclosure. | Latest user scope refinement. | CONFIRMED | Definitions, parameters and provenance reachable from context. |
 
 ## Repository and provenance
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
-| REQ-REPO-001 | Το repository είναι ιδιωτικό και αποτελεί τη μόνιμη source of truth. | Ρητή απόφαση χρήστη. | CONFIRMED | Context/decisions/configs/results metadata version-controlled. |
-| REQ-REPO-002 | Η επίσημη αίτηση αποθηκεύεται αυτούσια στο private repository. | Ρητή απόφαση χρήστη. | CONFIRMED | SHA-256 ισούται με το uploaded original. |
-| REQ-REPO-003 | Τα raw chat exports δεν γίνονται commit. | Ρητή απόφαση χρήστη. | CONFIRMED | Secret/content scan δεν βρίσκει transcript archive/names. |
-| REQ-REPO-004 | Δεν αποθηκεύονται secrets, tokens, passwords, credentials, virtual environments, caches ή άχρηστα build artifacts. | Security requirement. | CONFIRMED | `.gitignore`, review και automated secret scanning πριν release. |
-| REQ-REPO-005 | Μεγάλα binaries/datasets/checkpoints αξιολογούνται πριν Git/LFS commit. | Repository maintainability. | CONFIRMED | Size/retention/LFS decision για κάθε artifact class. |
-| REQ-PROV-001 | Κάθε αποτέλεσμα συνδέεται με run ID, source files, config, processing code και Git commit. | Ρητή provenance απαίτηση. | CONFIRMED | Machine-readable provenance manifest ανά artifact. |
-| REQ-PROV-002 | Τα raw results είναι immutable. | Ρητή reproducibility αρχή. | CONFIRMED | Checksums και append-only policy· corrections ως νέα version. |
+| REQ-REPO-001 | Private repository is permanent source of truth. | User decision. | CONFIRMED | Context, decisions and configs versioned. |
+| REQ-REPO-002 | Official application stored unchanged. | User decision. | CONFIRMED | Repository SHA-256 recorded. |
+| REQ-REPO-003 | Raw chat exports are not committed. | User decision. | CONFIRMED | Content scan passes. |
+| REQ-REPO-004 | No secrets, credentials, venvs, caches or useless artifacts. | Security. | CONFIRMED | Ignore/scan/review. |
+| REQ-REPO-005 | Large binaries/datasets/checkpoints reviewed before commit. | Maintainability. | CONFIRMED | Storage/LFS policy. |
+| REQ-PROV-001 | Every result maps to run ID, config, source files, processing code and commit. | Provenance. | CONFIRMED | Machine-readable manifest. |
+| REQ-PROV-002 | Raw results are immutable. | Reproducibility. | CONFIRMED | Checksums and append-only corrections. |
 
 ## Tests
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
-| REQ-TEST-001 | Το GridWorld χρειάζεται deterministic unit tests για transitions, rewards, termination και disturbance behavior. | Scientific validity. | CONFIRMED | Reference cases και property/invariant tests περνούν. |
-| REQ-TEST-002 | Κάθε model adapter χρειάζεται contract tests. | Fair common interface. | CONFIRMED | Reset/act/train/evaluate/checkpoint contracts verified. |
-| REQ-TEST-003 | Το experiment runner χρειάζεται integration tests για lifecycle, persistence, recovery και failure capture. | Reliability requirement. | CONFIRMED | Simulated interruption/restart tests preserve valid state. |
-| REQ-TEST-004 | Processing/aggregation code χρειάζεται tests με known synthetic fixtures. | Statistical correctness. | CONFIRMED | Hand-calculated expected metrics match implementation. |
-| REQ-TEST-005 | Reproducibility smoke tests πρέπει να διακρίνουν deterministic replay από statistical repeatability. | Honest reproducibility. | CONFIRMED | Documented test modes and tolerances. |
+| REQ-TEST-001 | Deterministic GridWorld tests for transitions, rewards, termination and disturbances. | Scientific validity. | CONFIRMED | Reference and invariant tests pass. |
+| REQ-TEST-002 | Model adapters need contract tests. | Fair interface. | CONFIRMED | Agent contract verified. |
+| REQ-TEST-003 | Runner needs lifecycle, persistence, recovery and failure tests. | Reliability. | CONFIRMED | Interruption tests preserve valid state. |
+| REQ-TEST-004 | Processing/aggregation code uses known synthetic fixtures. | Statistical correctness. | CONFIRMED | Hand-calculated values match. |
+| REQ-TEST-005 | Reproducibility tests distinguish deterministic replay and statistical repeatability. | Honest reporting. | CONFIRMED | Modes and tolerances documented. |
 
 ## Thesis and deliverables
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
-| REQ-THESIS-001 | Η διπλωματική γράφεται στα ελληνικά. | Ρητή απόφαση χρήστη. | CONFIRMED | Main text in Greek with consistent bilingual terminology. |
-| REQ-THESIS-002 | Το τελικό παραδοτέο είναι Microsoft Word. | Ρητή απόφαση χρήστη. | CONFIRMED | Validated `.docx` with styles, fields and cross-references. |
-| REQ-THESIS-003 | Η συγγραφή προχωρά παράλληλα, αλλά final results/conclusions βασίζονται αποκλειστικά σε πραγματικά frozen data. | Ρητή απόφαση χρήστη. | CONFIRMED | Claims map to run/artifact IDs. |
-| REQ-THESIS-004 | Απαγορεύονται επινοημένες πηγές, DOI, μετρήσεις, αποτελέσματα και συμπεράσματα. | Academic integrity. | CONFIRMED | Citation audit and result provenance audit pass. |
-| REQ-THESIS-005 | Figures και tables παράγονται αυτόματα από πραγματικά δεδομένα. | Ρητή απόφαση χρήστη. | CONFIRMED | Rebuild command reproduces thesis artifacts. |
-| REQ-THESIS-006 | Απαιτούνται ελληνική περίληψη/λέξεις-κλειδιά και αγγλικό abstract/keywords σύμφωνα με την επαληθευμένη οδηγία του Τμήματος. | Επίσημη οδηγία Τμήματος. | CONFIRMED | Και οι δύο ενότητες εμφανίζονται στο τελικό document. |
-| REQ-DELIV-001 | Το τελικό repository περιλαμβάνει code, configs, tests, literature, thesis material, raw/processed results, figures/tables/exports και reproduction scripts. | Ρητή απαίτηση χρήστη. | DEFERRED | Final repository checklist ολοκληρωμένο. |
+| REQ-THESIS-001 | Thesis main language is Greek. | User decision. | CONFIRMED | Greek main text. |
+| REQ-THESIS-002 | Final deliverable is Microsoft Word. | User decision. | CONFIRMED | Validated `.docx`. |
+| REQ-THESIS-003 | Final results/conclusions use only frozen real data. | User decision. | CONFIRMED | Claims map to artifacts. |
+| REQ-THESIS-004 | No fabricated sources, DOI, measurements or conclusions. | Integrity. | CONFIRMED | Citation and provenance audit. |
+| REQ-THESIS-005 | Figures and tables generated automatically from real data. | User decision. | CONFIRMED | Rebuild command reproduces artifacts. |
+| REQ-THESIS-006 | Greek summary/keywords and English abstract/keywords. | Department guidance. | CONFIRMED | Both present. |
+| REQ-DELIV-001 | Final repository includes code, configs, tests, literature, thesis material, results, figures/tables/exports and reproduction scripts. | User requirement. | DEFERRED | Final checklist complete. |
