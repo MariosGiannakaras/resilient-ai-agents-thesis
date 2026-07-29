@@ -103,6 +103,12 @@ artifacts/exports/**
 !artifacts/exports/README.md
 !artifacts/exports/.gitkeep
 
+# Bibliography acquisition/conversion transient files.
+bibliography/**/*.partial
+bibliography/**/*.quarantine
+bibliography/**/.source_manifest.json.*.tmp
+bibliography/**/*~
+
 # Office temporary files
 ~$*.doc*
 ~$*.xls*
