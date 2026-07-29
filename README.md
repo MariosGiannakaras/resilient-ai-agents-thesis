@@ -35,7 +35,7 @@
 3. επιβεβαιωθεί το πραγματικό hardware και software environment,
 4. οριστικοποιηθούν ερευνητικά ερωτήματα, υποθέσεις, μοντέλα, μετρικές και πειραματικό πρωτόκολλο.
 
-Η επίσημη αίτηση της διπλωματικής έχει ήδη προστεθεί αυτούσια στο `thesis/source-material/`.
+Η επίσημη αίτηση έχει εξεταστεί και έχει εγκριθεί για αυτούσια αποθήκευση. Η μεταφορά του binary PDF στο GitHub παραμένει εκκρεμής και καταγράφεται στο `thesis/source-material/SOURCE_MANIFEST.md`; το repository δεν πρέπει να θεωρεί ότι το αρχείο υπάρχει μέχρι να επαληθευτεί το path και το checksum.
 
 ## Συνιστώμενη σειρά ανάγνωσης
 
@@ -112,6 +112,7 @@ docs/decisions/         Decision log and ADRs
 
 ## Τι πρέπει να προστεθεί αργότερα
 
+- Το αρχικό PDF της επίσημης αίτησης στο `thesis/source-material/GiannakarasMariosThesisApplication.pdf`, με επαλήθευση του καταγεγραμμένου SHA-256.
 - Η πραγματική συγκεντρωμένη βιβλιογραφία στο `bibliography/original/`.
 - Ο πραγματικός υπάρχων GridWorld κώδικας ή το ακριβές repository/path.
 - Επιβεβαιωμένο hardware/software inventory.

@@ -1,0 +1,21 @@
+{
+  "repository": "MariosGiannakaras/resilient-ai-agents-thesis",
+  "visibility_expected": "private",
+  "bootstrap_date": "2026-07-29",
+  "official_application": {
+    "expected_path": "thesis/source-material/GiannakarasMariosThesisApplication.pdf",
+    "sha256": "6771abd53bdb85431e9e479a3b996cf9581da1456e4d3cb96be7d635cc2221ef",
+    "local_uploaded_source_examined": true,
+    "approved_for_unchanged_private_storage": true,
+    "github_file_present": false,
+    "github_checksum_verified": false
+  },
+  "raw_chat_exports_committed": false,
+  "implementation_started": false,
+  "final_experiments_started": false,
+  "fabricated_bibliography_or_results": false,
+  "visibility_verified": "private",
+  "documentation_push_complete": true,
+  "bootstrap_complete": false,
+  "status": "complete_except_official_application_binary_upload"
+}
