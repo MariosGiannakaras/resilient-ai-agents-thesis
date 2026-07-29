@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use material from this private thesis project, cite the final thesis and the exact archived software release."
+title: "Comparison and Evaluation of Resilient AI Agents in Uncertain Environments"
+type: software
+authors:
+  - family-names: "Giannakaras"
+    given-names: "Marios"
+repository-code: "https://github.com/MariosGiannakaras/resilient-ai-agents-thesis"
+version: "0.1.0"
+date-released: "2026-07-29"

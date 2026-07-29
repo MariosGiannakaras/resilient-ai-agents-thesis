@@ -1,4 +1,4 @@
-# Secrets and local environment
+# Secrets and local configuration
 .env
 .env.*
 !.env.example
@@ -12,63 +12,105 @@ credentials/
 # Python
 __pycache__/
 *.py[cod]
-*.pyd
 *.so
+.Python
 .venv/
 venv/
 env/
+ENV/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 .coverage
+coverage.xml
 htmlcov/
-dist/
-build/
-*.egg-info/
-
-# Jupyter
 .ipynb_checkpoints/
 
 # Node / frontend
 node_modules/
+dist/
+build/
+.next/
+.vite/
+*.tsbuildinfo
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
 pnpm-debug.log*
-.vite/
-.next/
-out/
 
 # Rust / Tauri
-target/
-src-tauri/target/
+/target/
+**/target/
 
 # IDE / OS
 .vscode/
 .idea/
 *.suo
 *.user
+*.userosscache
+*.sln.docstates
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Temporary files
-*.tmp
-*.temp
-*.swp
-*.swo
-*~
-.cache/
-tmp/
-temp/
-
-# Local databases and ad-hoc runtime output
+# Logs, databases and transient runtime state
+*.log
+*.pid
+*.sqlite
+*.sqlite3
+*.db
 *.db-journal
-*.sqlite-journal
-*.sqlite-wal
-*.sqlite-shm
-runtime/
-local-output/
+*.db-wal
+*.db-shm
 
-# Do not globally ignore data/, results/, artifacts/, logs, PDFs, DOCX, or CSV.
-# Research evidence is governed by provenance rules and may be committed intentionally.
+# Models/checkpoints/caches
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.safetensors
+checkpoints/
+models/cache/
+wandb/
+mlruns/
+
+# Generated run outputs; keep reviewed placeholders.
+results/runs/**
+!results/runs/README.md
+!results/runs/.gitkeep
+results/summaries/**
+!results/summaries/README.md
+!results/summaries/.gitkeep
+
+# Generated data; add reviewed files explicitly when provenance is ready.
+data/raw/**
+!data/raw/README.md
+!data/raw/.gitkeep
+data/processed/**
+!data/processed/README.md
+!data/processed/.gitkeep
+data/external/**
+!data/external/README.md
+!data/external/.gitkeep
+
+# Generated artifacts; final selected artifacts may be added after review.
+artifacts/figures/**
+!artifacts/figures/README.md
+!artifacts/figures/.gitkeep
+artifacts/tables/**
+!artifacts/tables/README.md
+!artifacts/tables/.gitkeep
+artifacts/exports/**
+!artifacts/exports/README.md
+!artifacts/exports/.gitkeep
+
+# Office temporary files
+~$*.doc*
+~$*.xls*
+~$*.ppt*
+*.tmp
+*.bak
+
+# Raw conversation exports
+OldConvo.*
+chat-export*/
+conversation-export*/
