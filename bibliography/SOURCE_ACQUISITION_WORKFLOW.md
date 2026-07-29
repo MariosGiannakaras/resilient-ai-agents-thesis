@@ -29,17 +29,22 @@ Codex may download a source when at least one of the following is true:
 - the publisher page explicitly marks the source open access,
 - an institutional repository provides a lawful author manuscript or thesis.
 
+**Access is not the same as redistribution permission.** Until an applicable license or repository policy is verified, downloaded files are treated as local-research-use-only and are not committed or redistributed.
+
 For every downloaded file record:
 
-- title and authors,
+- title and complete verified author list,
 - publication year and venue/institution,
 - DOI, handle or stable URL,
 - version type: version of record, accepted manuscript, preprint or thesis,
-- access/license note,
+- access provenance,
+- separate rights/license status, including `unknown/local-use-only` when not verified,
 - retrieval date,
 - local path,
 - SHA-256,
-- whether full-text review is complete.
+- whether full-text review is complete for that exact checksum.
+
+The manifest is updated atomically. Existing user-acquired records are preserved. A full-text review flag is retained only when the file checksum is unchanged.
 
 ### User-assisted download
 
@@ -48,7 +53,7 @@ When only a paywalled or non-direct version is available:
 1. Record the DOI/handle and official publisher or institutional page.
 2. Search for a lawful author manuscript or institutional repository copy.
 3. If none is found or direct automated download is unreliable, ask the user to obtain it through the university library, official repository, author or another lawful route.
-4. After the user adds the file, calculate SHA-256 and update the manifest.
+4. After the user adds the file, calculate SHA-256, record rights status and update the manifest.
 
 Do not use Sci-Hub, unofficial mirrors or links whose legality/provenance cannot be established.
 
@@ -81,7 +86,15 @@ These sources are relevant enough to download and read during the first research
 | SRC-THESIS-003 | `nasereddin_2020_gridworld_variability_dissertation.pdf` | `https://doi.org/10.31390/gradschool_dissertations.5431` | Official LSU repository; user/Codex follows the official download page if direct retrieval is unavailable |
 | SRC-THESIS-004 | `grooten_2026_adaptive_rl_dissertation.pdf` | Official TU/e research portal record | User/Codex follows the official open-access document link and records license/version |
 
-Run `scripts/download_open_access_bibliography.py` after cloning to acquire entries with verified direct PDF URLs and generate/update the local manifest.
+## Running the downloader
+
+Python 3.9 or newer is required and verified in GitHub Actions.
+
+```bash
+python scripts/download_open_access_bibliography.py
+```
+
+The script acquires entries with verified direct PDF URLs and generates or safely refreshes the local manifest. A mismatched/untracked cached PDF is quarantined before a fresh authoritative download is attempted.
 
 ## Reading-note template
 
@@ -91,6 +104,12 @@ Create one note per decision-driving paper or thesis under `bibliography/notes/`
 # Citation
 
 ## Publication status and source
+
+## Exact acquired version and SHA-256
+
+## Access provenance and rights/license status
+
+## Review level
 
 ## Research question
 
