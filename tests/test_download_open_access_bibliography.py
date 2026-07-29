@@ -9,7 +9,11 @@ from pathlib import Path
 from unittest.mock import patch
 
 
-SCRIPT_PATH = Path(__file__).resolve().parents[1] / "scripts" / "download_open_access_bibliography.py"
+SCRIPT_PATH = (
+    Path(__file__).resolve().parents[1]
+    / "scripts"
+    / "download_open_access_bibliography.py"
+)
 SPEC = importlib.util.spec_from_file_location("bibliography_downloader", SCRIPT_PATH)
 assert SPEC is not None and SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)
@@ -83,8 +87,11 @@ class BibliographyDownloaderTests(unittest.TestCase):
             self.assertEqual(MODULE.main(), 0)
         download_mock.assert_not_called()
         record = self.load_output()["sources"][0]
-        self.assertEqual(record["retrieved_at_utc"], "2026-01-01T00:00:00+00:00")
+        self.assertEqual(
+            record["retrieved_at_utc"], "2026-01-01T00:00:00+00:00"
+        )
         self.assertTrue(record["full_text_review_complete"])
+        self.assertIn("rights_status", record)
 
     def test_checksum_change_quarantines_redownloads_and_resets_review(self) -> None:
         pdf = self.original / "related-work" / "test.pdf"
@@ -115,8 +122,12 @@ class BibliographyDownloaderTests(unittest.TestCase):
             self.assertEqual(MODULE.main(), 0)
         record = self.load_output()["sources"][0]
         self.assertFalse(record["full_text_review_complete"])
-        self.assertNotEqual(record["retrieved_at_utc"], "2026-01-01T00:00:00+00:00")
-        self.assertTrue(list(pdf.parent.glob("test.pdf.checksum-mismatch.*.quarantine")))
+        self.assertNotEqual(
+            record["retrieved_at_utc"], "2026-01-01T00:00:00+00:00"
+        )
+        self.assertTrue(
+            list(pdf.parent.glob("test.pdf.checksum-mismatch.*.quarantine"))
+        )
 
     def test_manual_source_records_survive_manifest_refresh(self) -> None:
         manual_record = {
@@ -153,8 +164,24 @@ class BibliographyDownloaderTests(unittest.TestCase):
         output = self.load_output()
         records = {record["source_id"]: record for record in output["sources"]}
         self.assertEqual(records["SRC-MANUAL-001"], manual_record)
-        manual_entries = {record["source_id"]: record for record in output["manual_acquisition"]}
+        manual_entries = {
+            record["source_id"]: record for record in output["manual_acquisition"]
+        }
         self.assertIn("SRC-MANUAL-001", manual_entries)
+
+    def test_atomic_write_preserves_previous_manifest_when_replace_fails(self) -> None:
+        self.manifest.parent.mkdir(parents=True, exist_ok=True)
+        original = '{"schema_version": 1, "sentinel": "keep"}\n'
+        self.manifest.write_text(original, encoding="utf-8")
+
+        with patch.object(MODULE.os, "replace", side_effect=OSError("simulated")):
+            with self.assertRaises(OSError):
+                MODULE.write_manifest_atomic(
+                    {"schema_version": 1, "sentinel": "replacement"}
+                )
+
+        self.assertEqual(self.manifest.read_text(encoding="utf-8"), original)
+        self.assertFalse(list(self.manifest.parent.glob(".source_manifest.json.*.tmp")))
 
 
 if __name__ == "__main__":
