@@ -15,7 +15,7 @@ bibliography/markdown/related-work/   Complete searchable paper Markdown copies
 bibliography/markdown/theses/         Complete searchable thesis Markdown copies
 bibliography/notes/                   Source-centric structured analysis
 bibliography/excerpts/                Topic-centric useful evidence
-bibliography/source_manifest.json     Source/version/checksum register
+bibliography/source_manifest.json     Acquired PDF/version/checksum register
 ```
 
 The working hierarchy is:
@@ -37,7 +37,7 @@ Codex may download a source when at least one of the following is true:
 
 **Access is not the same as redistribution permission.** Until an applicable license or repository policy is verified, downloaded files are treated as local-research-use-only and are not committed or redistributed.
 
-For every acquired file record:
+For every acquired PDF, the acquisition manifest records:
 
 - stable source ID,
 - title and complete verified author list,
@@ -49,10 +49,11 @@ For every acquired file record:
 - retrieval date,
 - local PDF path,
 - PDF SHA-256,
-- expected/matching Markdown path,
-- conversion and full-text review status for the exact checksums.
+- full-text review status for that exact PDF revision.
 
-The manifest is updated atomically. Existing user-acquired records are preserved. A full-text review flag is retained only when the underlying source revision is unchanged.
+The manifest is updated atomically. Existing user-acquired records are preserved. A full-text review flag is retained only when the PDF checksum is unchanged.
+
+Markdown path/checksum, conversion status, semantic topics, note path and excerpt usage are stored in the structured note/front matter rather than in downloader-managed manifest fields. This prevents later acquisition refreshes from silently discarding analysis metadata.
 
 ### User-assisted or NotebookLM-discovered sources
 
@@ -64,10 +65,12 @@ When the user uploads PDFs, Markdown exports, citation lists or NotebookLM-disco
 4. Identify which research topics are covered and which evidence gaps remain.
 5. Rename and classify files immediately according to `bibliography/README.md`.
 6. Preserve the original PDF unchanged and compute SHA-256.
-7. Preserve the complete Markdown as a separate searchable archive copy with the same basename.
-8. Validate page markers, headings, tables, figures, equations, references and reported values.
-9. Create/update the structured note and thematic excerpts.
-10. Update manifest, related-work matrix and coverage/gap analysis where relevant.
+7. Update the acquisition manifest with the exact PDF archive record.
+8. Preserve the complete Markdown as a separate searchable archive copy with the same basename.
+9. Link the Markdown to the PDF checksum in the structured note/front matter.
+10. Validate page markers, headings, tables, figures, equations, references and reported values.
+11. Create/update the structured note and thematic excerpts.
+12. Update the related-work matrix and coverage/gap analysis where relevant.
 
 NotebookLM may help discover sources, summarize relationships and reveal missing coverage, but it is not treated as the primary evidence source. Claims are verified against the acquired full text.
 
@@ -157,9 +160,9 @@ Python 3.9 or newer is required and verified in GitHub Actions.
 python scripts/download_open_access_bibliography.py
 ```
 
-The script acquires entries with verified direct PDF URLs into `bibliography/original/`, validates them and generates or safely refreshes the local manifest. A mismatched/untracked cached PDF is quarantined before a fresh authoritative download is attempted.
+The script acquires entries with verified direct PDF URLs into `bibliography/original/`, validates them and generates or safely refreshes the local acquisition manifest. A mismatched/untracked cached PDF is quarantined before a fresh authoritative download is attempted.
 
-The downloader does not convert PDFs to Markdown and does not mark a source as fully reviewed.
+The downloader does not convert PDFs to Markdown, assign semantic topics or mark a source as fully reviewed without checksum-bound evidence.
 
 ## Literature refresh gates
 
