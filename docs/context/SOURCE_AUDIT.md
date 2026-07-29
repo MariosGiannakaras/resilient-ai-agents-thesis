@@ -13,7 +13,7 @@
 
 | Source | Type | Use | Trust / limitations | Repository treatment |
 |---|---|---|---|---|
-| `GiannakarasMariosThesisApplication.pdf` | Official primary document | Academic identity, exact titles, official broad objective and examples | High trust for visible content; scanned one-page document | Stored unchanged in `thesis/source-material/` with SHA-256 |
+| `GiannakarasMariosThesisApplication.pdf` | Official primary document | Academic identity, exact titles, official broad objective and examples | High trust for visible content; scanned one-page document | Approved for unchanged private storage; local SHA-256 recorded; GitHub binary upload still pending verification |
 | `Pasted text(15).txt` | User task specification | Repository structure, required files, definition of done | High trust as current explicit instruction | Synthesized; original task file not committed |
 | `OldConvo.zip` containing 10 Markdown conversation exports | Historical conversational source | Prior ideas, user preferences, contradictions and legacy references | Mixed trust; contains AI proposals, repetition and obsolete decisions | Not committed; only verified synthesis retained |
 | Official Department writing-guidelines PDF | Official institutional source | Structure, methodology, formatting, citations | Authoritative unless superseded by newer official guidance | Source URL and dated snapshot recorded |

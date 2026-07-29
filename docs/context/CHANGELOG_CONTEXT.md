@@ -13,3 +13,4 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Added official department writing-guideline snapshot.
 - Added open blockers for bibliography, existing GridWorld source, supervisor, hardware and final experimental design.
 - Excluded raw conversation exports from version control.
+- Corrected bootstrap status to state that the official application was examined locally but its GitHub binary upload is still pending verification.
