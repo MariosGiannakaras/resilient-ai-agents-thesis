@@ -24,7 +24,7 @@
    - Συγκεντρώνει μόνο χρήσιμα, επαληθευμένα στοιχεία ανά θέμα.
    - Χρησιμοποιείται για research decisions, συγγραφή, comparison with prior work, slides και presentation preparation.
 
-Το `bibliography/source_manifest.json` συνδέει τα αρχεία με την επίσημη πηγή, checksums, version/access status και review state.
+Το `bibliography/source_manifest.json` καταγράφει την επίσημη πηγή, την αποκτημένη PDF έκδοση, access/rights status, retrieval metadata και PDF checksum. Η σύνδεση με το πλήρες Markdown, το conversion status, τα topics και τα excerpts καταγράφεται στο structured note, ώστε να μην καταστρέφεται από ασφαλή ανανέωση του acquisition manifest.
 
 ## Δομή
 
@@ -38,7 +38,7 @@ bibliography/
 │   └── theses/              Complete searchable thesis Markdown copies
 ├── notes/                   One structured note per source
 ├── excerpts/                Curated thematic evidence
-├── source_manifest.json     Source, version, checksum and status register
+├── source_manifest.json     Source, PDF version, rights and checksum register
 └── SOURCE_ACQUISITION_WORKFLOW.md
 ```
 
@@ -98,11 +98,12 @@ src-rw-001__balloch_2022_novgrid.md
 2. Εντοπίζονται duplicates ή διαφορετικές revisions του ίδιου έργου.
 3. Τα αρχεία μετονομάζονται με τη συμφωνημένη ονοματοδοσία.
 4. Το PDF αποθηκεύεται αμετάβλητο και υπολογίζεται SHA-256.
-5. Το πλήρες Markdown αποθηκεύεται με το ίδιο basename και συνδέεται με το ακριβές PDF checksum.
-6. Ελέγχονται page markers, headings, tables, figures, equations, references και extraction gaps.
-7. Δημιουργείται ή ενημερώνεται structured note με topics και relevance.
-8. Τα πραγματικά χρήσιμα στοιχεία προστίθενται στα thematic excerpts με source ID και page/section reference.
-9. Ενημερώνονται manifest, evidence matrix και coverage/gap analysis όπου χρειάζεται.
+5. Το acquisition manifest ενημερώνεται με την επίσημη πηγή και το ακριβές PDF archive record.
+6. Το πλήρες Markdown αποθηκεύεται με το ίδιο basename και συνδέεται με το PDF checksum μέσα στο structured note/front matter.
+7. Ελέγχονται page markers, headings, tables, figures, equations, references και extraction gaps.
+8. Δημιουργείται ή ενημερώνεται structured note με topics, conversion state και relevance.
+9. Τα πραγματικά χρήσιμα στοιχεία προστίθενται στα thematic excerpts με source ID και page/section reference.
+10. Ενημερώνονται evidence matrix και coverage/gap analysis όπου χρειάζεται.
 
 ## Καθημερινή χρήση
 
