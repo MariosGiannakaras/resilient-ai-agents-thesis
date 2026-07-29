@@ -28,6 +28,8 @@
 | REQ-RES-008 | GridWorld implementation επιλέγεται με current reuse/adapt/custom comparison. | User clarification. | CONFIRMED | Landscape review, prototype and ADR. |
 | REQ-RES-009 | Το research question και το experimental design πρέπει να είναι σαφή, bounded και realistically completable. | Latest user scope refinement. | CONFIRMED | Small explainable matrix within measured resources. |
 | REQ-RES-010 | Ο αριθμός models και uncertainty types παραμένει ο ελάχιστος scientifically sufficient. | Latest user scope refinement. | CONFIRMED | Every included factor has distinct RQ value; redundant options rejected. |
+| REQ-RES-011 | Παρόμοιες πρωτογενείς μελέτες εξετάζονται ως προς research question, method, experimental design, results και limitations πριν επιλεγούν GridWorld, models, metrics ή protocol. | Latest user research direction. | CONFIRMED | Updated related-work evidence matrix with full-text status and explicit relevance. |
+| REQ-RES-012 | Η literature search επαναλαμβάνεται πριν από protocol freeze, πριν από Related Work/Methodology/Discussion και πριν από submission. | Latest user research direction and freshness control. | CONFIRMED | Dated refresh entries and citation audit at each gate. |
 
 ## Experimental
 
@@ -58,6 +60,7 @@
 | REQ-APP-009 | Το final application είναι polished research dashboard, όχι rough minimal demo. | Latest user scope refinement. | CONFIRMED | Modern coherent screenshot-ready UI across essential workflows. |
 | REQ-APP-010 | Η feature set περιορίζεται στις πραγματικές ανάγκες της διπλωματικής. | Latest user scope refinement. | CONFIRMED | Required/optional/out-of-scope feature budget approved before UI implementation. |
 | REQ-APP-011 | Models, seeds, settings and uncertainty conditions συγκρίνονται καθαρά με charts and tables. | Latest user scope refinement. | CONFIRMED | Compatible comparison view with distributions and counts. |
+| REQ-APP-012 | Το resource telemetry παραμένει lightweight current snapshot και όχι observability subsystem. | Accepted audit remediation under user authorization. | CONFIRMED | CPU/RAM/disk and optional GPU current values only; no telemetry database, agents or alerting platform. |
 
 ## Architecture and technical
 
@@ -83,6 +86,7 @@
 | REQ-UI-004 | Views must be suitable for screenshots and presentation. | User decision. | CONFIRMED | Legible stable labels and export-ready layouts. |
 | REQ-UI-005 | Responsive desktop/laptop layouts, consistent cards/charts/filters/tables and clear loading/error/empty states. | Latest user scope refinement. | CONFIRMED | UX review of all essential workflows. |
 | REQ-UI-006 | Scientific metadata remains accessible even when complexity is hidden with progressive disclosure. | Latest user scope refinement. | CONFIRMED | Definitions, parameters and provenance reachable from context. |
+| REQ-UI-007 | Full checksums, manifests, software/hardware details and provenance chains do not clutter primary views. | Accepted audit remediation. | CONFIRMED | Essential provenance in main view; full technical details in expandable panels or exports. |
 
 ## Repository and provenance
 
@@ -93,6 +97,7 @@
 | REQ-REPO-003 | Raw chat exports are not committed. | User decision. | CONFIRMED | Content scan passes. |
 | REQ-REPO-004 | No secrets, credentials, venvs, caches or useless artifacts. | Security. | CONFIRMED | Ignore/scan/review. |
 | REQ-REPO-005 | Large binaries/datasets/checkpoints reviewed before commit. | Maintainability. | CONFIRMED | Storage/LFS policy. |
+| REQ-REPO-006 | Research papers are acquired lawfully with stable source metadata and SHA-256; paywalls are not bypassed. | Latest user acquisition request and copyright/provenance requirement. | CONFIRMED | Source manifest records access/version/checksum; unavailable sources are requested from the user through lawful channels. |
 | REQ-PROV-001 | Every result maps to run ID, config, source files, processing code and commit. | Provenance. | CONFIRMED | Machine-readable manifest. |
 | REQ-PROV-002 | Raw results are immutable. | Reproducibility. | CONFIRMED | Checksums and append-only corrections. |
 
@@ -116,4 +121,5 @@
 | REQ-THESIS-004 | No fabricated sources, DOI, measurements or conclusions. | Integrity. | CONFIRMED | Citation and provenance audit. |
 | REQ-THESIS-005 | Figures and tables generated automatically from real data. | User decision. | CONFIRMED | Rebuild command reproduces artifacts. |
 | REQ-THESIS-006 | Greek summary/keywords and English abstract/keywords. | Department guidance. | CONFIRMED | Both present. |
+| REQ-THESIS-007 | Related Work, Methodology and Discussion are drafted only after focused literature refresh and full-text review of decision-driving papers. | Latest user direction. | CONFIRMED | Evidence matrix and notes include exact methods/results/limitations and writing-use mapping. |
 | REQ-DELIV-001 | Final repository includes code, configs, tests, literature, thesis material, results, figures/tables/exports and reproduction scripts. | User requirement. | DEFERRED | Final checklist complete. |
