@@ -23,7 +23,7 @@ from urllib.request import Request, urlopen
 
 
 REPOSITORY_ROOT: Final[Path] = Path(__file__).resolve().parents[1]
-TARGET_DIR: Final[Path] = REPOSITORY_ROOT / "bibliography" / "original" / "related-work"
+ORIGINAL_DIR: Final[Path] = REPOSITORY_ROOT / "bibliography" / "original"
 MANIFEST_PATH: Final[Path] = REPOSITORY_ROOT / "bibliography" / "source_manifest.json"
 USER_AGENT: Final[str] = "resilient-ai-agents-thesis/1.0 literature-acquisition"
 TIMEOUT_SECONDS: Final[int] = 60
@@ -33,6 +33,7 @@ MAX_ATTEMPTS: Final[int] = 3
 @dataclass(frozen=True)
 class Source:
     source_id: str
+    local_subdir: str
     filename: str
     title: str
     authors: str
@@ -45,6 +46,7 @@ class Source:
 SOURCES: Final[tuple[Source, ...]] = (
     Source(
         "SRC-RW-001",
+        "related-work",
         "balloch_2022_novgrid.pdf",
         "NovGrid: A Flexible Grid World for Evaluating Agent Response to Novelty",
         "Jonathan Balloch et al.",
@@ -55,6 +57,7 @@ SOURCES: Final[tuple[Source, ...]] = (
     ),
     Source(
         "SRC-RW-002",
+        "related-work",
         "leike_2017_ai_safety_gridworlds.pdf",
         "AI Safety Gridworlds",
         "Jan Leike et al.",
@@ -65,6 +68,7 @@ SOURCES: Final[tuple[Source, ...]] = (
     ),
     Source(
         "SRC-RW-003",
+        "related-work",
         "benjamins_2021_carl.pdf",
         "CARL: A Benchmark for Contextual and Adaptive Reinforcement Learning",
         "Carolin Benjamins et al.",
@@ -75,6 +79,7 @@ SOURCES: Final[tuple[Source, ...]] = (
     ),
     Source(
         "SRC-RW-004",
+        "related-work",
         "sutton_1990_dyna.pdf",
         "Integrated Modeling and Control Based on Reinforcement Learning and Dynamic Programming",
         "Richard S. Sutton",
@@ -85,6 +90,7 @@ SOURCES: Final[tuple[Source, ...]] = (
     ),
     Source(
         "SRC-RW-005",
+        "related-work",
         "steinparz_2022_reactive_exploration.pdf",
         "Reactive Exploration to Cope With Non-Stationarity in Lifelong Reinforcement Learning",
         "Christian Alexander Steinparz et al.",
@@ -95,6 +101,7 @@ SOURCES: Final[tuple[Source, ...]] = (
     ),
     Source(
         "SRC-RW-006",
+        "related-work",
         "cheung_2020_nonstationary_mdp.pdf",
         "Reinforcement Learning for Non-Stationary Markov Decision Processes: The Blessing of (More) Optimism",
         "Wang Chi Cheung, David Simchi-Levi, Ruihao Zhu",
@@ -105,6 +112,7 @@ SOURCES: Final[tuple[Source, ...]] = (
     ),
     Source(
         "SRC-RW-007",
+        "related-work",
         "wei_luo_2021_nonstationary_blackbox.pdf",
         "Non-stationary Reinforcement Learning without Prior Knowledge: an Optimal Black-box Approach",
         "Chen-Yu Wei, Haipeng Luo",
@@ -115,6 +123,7 @@ SOURCES: Final[tuple[Source, ...]] = (
     ),
     Source(
         "SRC-RW-008",
+        "related-work",
         "de_la_rosa_2025_morphin.pdf",
         "Adapting the Behavior of Reinforcement Learning Agents to Changing Action Spaces and Reward Functions",
         "Raul de la Rosa, Ivana Dusparic, Nicolas Cardozo",
@@ -125,6 +134,7 @@ SOURCES: Final[tuple[Source, ...]] = (
     ),
     Source(
         "SRC-RW-010",
+        "related-work",
         "alami_2023_change_point_detection.pdf",
         "Restarted Bayesian Online Change-point Detection for Non-Stationary Markov Decision Processes",
         "Reda Alami, Mohammed Mahfoud, Eric Moulines",
@@ -135,6 +145,7 @@ SOURCES: Final[tuple[Source, ...]] = (
     ),
     Source(
         "SRC-RW-011",
+        "related-work",
         "tessler_2019_action_robust_rl.pdf",
         "Action Robust Reinforcement Learning and Applications in Continuous Control",
         "Chen Tessler, Yonathan Efroni, Shie Mannor",
@@ -145,6 +156,7 @@ SOURCES: Final[tuple[Source, ...]] = (
     ),
     Source(
         "SRC-RW-012",
+        "related-work",
         "zhang_2020_state_adversarial_mdp.pdf",
         "Robust Deep Reinforcement Learning against Adversarial Perturbations on State Observations",
         "Huan Zhang et al.",
@@ -155,6 +167,7 @@ SOURCES: Final[tuple[Source, ...]] = (
     ),
     Source(
         "SRC-RW-013",
+        "related-work",
         "peng_2024_complexity_nonstationary_rl.pdf",
         "The Complexity of Non-Stationary Reinforcement Learning",
         "Binghui Peng, Christos Papadimitriou",
@@ -162,6 +175,28 @@ SOURCES: Final[tuple[Source, ...]] = (
         "ALT / PMLR conference paper",
         "https://proceedings.mlr.press/v237/peng24a/peng24a.pdf",
         "Official PMLR PDF",
+    ),
+    Source(
+        "SRC-THESIS-001",
+        "theses",
+        "balloch_2024_sudden_environmental_change_dissertation.pdf",
+        "Efficient Adaptation of Reinforcement Learning Agents to Sudden Environmental Change",
+        "Jonathan Clifford Balloch",
+        2024,
+        "Georgia Tech PhD dissertation / open manuscript",
+        "https://arxiv.org/pdf/2505.10330",
+        "Public manuscript; verify against institutional record https://hdl.handle.net/1853/76967",
+    ),
+    Source(
+        "SRC-THESIS-002",
+        "theses",
+        "liu_2024_nonstationary_rl_thesis.pdf",
+        "Deep Reinforcement Learning in Non-Stationary Environments",
+        "Zihe Liu",
+        2024,
+        "University of Technology Sydney thesis",
+        "https://opus.lib.uts.edu.au/bitstream/10453/186408/1/thesis.pdf",
+        "Official open institutional thesis",
     ),
 )
 
@@ -222,7 +257,7 @@ def load_manifest() -> dict[str, object]:
 
 
 def main() -> int:
-    TARGET_DIR.mkdir(parents=True, exist_ok=True)
+    ORIGINAL_DIR.mkdir(parents=True, exist_ok=True)
     manifest = load_manifest()
     existing_records = {
         record.get("source_id"): record
@@ -234,7 +269,9 @@ def main() -> int:
     records: list[dict[str, object]] = []
 
     for source in SOURCES:
-        destination = TARGET_DIR / source.filename
+        destination_dir = ORIGINAL_DIR / source.local_subdir
+        destination_dir.mkdir(parents=True, exist_ok=True)
+        destination = destination_dir / source.filename
         print(f"[{source.source_id}] {source.title}")
         try:
             if destination.exists():
@@ -266,7 +303,7 @@ def main() -> int:
     output = {
         "schema_version": 1,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "policy": "Lawful open-access or author-provided sources only; no paywall bypass.",
+        "policy": "Lawful open-access, author-provided or institutional sources only; no paywall bypass.",
         "sources": records,
         "failures": failures,
         "manual_acquisition": [
@@ -275,7 +312,19 @@ def main() -> int:
                 "title": "Adapt to Environment Sudden Changes by Learning a Context Sensitive Policy",
                 "official_url": "https://doi.org/10.1609/aaai.v36i7.20730",
                 "instruction": "Download from the official AAAI page or a lawful author copy if automated retrieval is unavailable.",
-            }
+            },
+            {
+                "source_id": "SRC-THESIS-003",
+                "title": "Reinforcement Learning Approach for Inspect/Correct Tasks",
+                "official_url": "https://doi.org/10.31390/gradschool_dissertations.5431",
+                "instruction": "Use the official LSU repository download and record its license/version.",
+            },
+            {
+                "source_id": "SRC-THESIS-004",
+                "title": "Adaptive Reinforcement Learning: Lean and Dynamic Agents for Robust Generalization",
+                "official_url": "https://research.tue.nl/en/publications/adaptive-reinforcement-learning-lean-and-dynamic-agents-for-robus/",
+                "instruction": "Follow the official TU/e open-access document link and record its license/version.",
+            },
         ],
     }
     MANIFEST_PATH.write_text(
