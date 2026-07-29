@@ -87,16 +87,20 @@ Do not use Sci-Hub, unofficial mirrors or links whose legality/provenance cannot
 
 ## Naming and classification
 
-PDF and complete Markdown use the same lowercase `snake_case` basename:
+PDF and complete Markdown use the same collision-safe basename:
 
 ```text
-<first_author>_<year>_<short_descriptive_title>.pdf
-<first_author>_<year>_<short_descriptive_title>.md
+<first_author>_<year>_<short_descriptive_title>[__<version_token>].pdf
+<first_author>_<year>_<short_descriptive_title>[__<version_token>].md
 ```
+
+A simple basename is allowed when only one acquired version exists. If multiple revisions or publication forms are retained, every version receives an explicit token such as `arxiv-v2`, `accepted`, `vor` or `rev-YYYYMMDD`. Never overwrite one retained version with another.
+
+The curated downloader manages one selected acquisition version per source ID. A second intentionally retained version must use a distinct source/version record and a versioned filename rather than sharing the same managed path.
 
 Physical archive folders separate papers/reports from theses/dissertations. Content classification uses multiple `topics` in the structured note, because a source may support several areas such as models, uncertainty, metrics and GridWorld design.
 
-Do not create duplicate source files for multiple topics.
+Do not create duplicate source files for multiple topics. Different source revisions are not topical duplicates and remain separately traceable.
 
 ## Complete Markdown conversion
 
@@ -110,7 +114,7 @@ Required properties:
 - tables/equations/captions/references preserved or clearly marked when conversion is incomplete,
 - explicit OCR/extraction warnings,
 - conversion tool/version/date,
-- Markdown SHA-256,
+- Markdown SHA-256 stored in the structured note after the Markdown file is finalized,
 - conversion state `generated-unverified` or `verified`.
 
 Before marking a conversion verified, compare representative sections and every figure/table/equation/result that may be used in the thesis against the PDF.
@@ -160,9 +164,9 @@ Python 3.9 or newer is required and verified in GitHub Actions.
 python scripts/download_open_access_bibliography.py
 ```
 
-The script acquires entries with verified direct PDF URLs into `bibliography/original/`, validates them and generates or safely refreshes the local acquisition manifest. A mismatched/untracked cached PDF is quarantined before a fresh authoritative download is attempted.
+The script acquires one configured PDF version per curated source ID into `bibliography/original/`, validates it and generates or safely refreshes the local acquisition manifest. A mismatched/untracked cached PDF is quarantined before a fresh authoritative download is attempted.
 
-The downloader does not convert PDFs to Markdown, assign semantic topics or mark a source as fully reviewed without checksum-bound evidence.
+The downloader does not convert PDFs to Markdown, assign semantic topics or mark a source as fully reviewed without checksum-bound evidence. Additional retained versions are registered separately and are not placed over the downloader-managed path.
 
 ## Literature refresh gates
 
