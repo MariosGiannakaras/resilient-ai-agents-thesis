@@ -1,3 +1,3 @@
 # Result summaries
 
-Aggregated outputs που παράγονται μόνο από immutable run data και version-controlled scripts.
+Aggregated outputs generated only from immutable run data through version-controlled scripts.

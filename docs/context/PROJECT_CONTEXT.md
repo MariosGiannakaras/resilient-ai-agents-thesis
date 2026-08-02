@@ -2,108 +2,108 @@
 
 ## Status taxonomy
 
-- **CONFIRMED:** προκύπτει από επίσημη αίτηση ή ρητή τρέχουσα οδηγία χρήστη.
-- **RESEARCH_REQUIRED:** πρέπει να αξιολογηθεί εκ νέου με σύγχρονη έρευνα πριν γίνει πρόταση ή απόφαση.
-- **PROPOSED:** τεκμηριωμένη πρόταση που δεν έχει εγκριθεί ακόμη.
-- **OPEN:** λείπει κρίσιμη πληροφορία ή απόφαση.
-- **UNVERIFIED:** έχει αναφερθεί αλλά δεν έχει ελεγχθεί σε πρωτογενή πηγή, κώδικα ή πραγματικό σύστημα.
-- **HISTORICAL_CONTEXT_ONLY:** εμφανίστηκε σε παλιά συνομιλία και διατηρείται μόνο για ιστορική κατανόηση· δεν είναι candidate ή preference από μόνο του.
+- **CONFIRMED:** established by the official application or an explicit current user instruction.
+- **RESEARCH_REQUIRED:** must be evaluated again with current research before a proposal or decision is made.
+- **PROPOSED:** evidence-backed proposal that has not yet been approved.
+- **OPEN:** critical information or a decision is still missing.
+- **UNVERIFIED:** mentioned but not yet checked against a primary source, code, or the real system.
+- **HISTORICAL_CONTEXT_ONLY:** appeared in an old conversation and is retained only for historical understanding; it is not a candidate or preference by itself.
 
-## Τι είναι το project
+## What the project is
 
-Το project είναι η πλήρης ερευνητική, πειραματική, τεχνική και συγγραφική υποδομή της διπλωματικής εργασίας:
+This project is the complete research, experimental, technical, and writing infrastructure for the thesis:
 
 > **Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα**
 
-Ακαδημαϊκό πλαίσιο - **CONFIRMED**:
+Academic context — **CONFIRMED**:
 
-- Πανεπιστήμιο Δυτικής Αττικής.
-- Σχολή Μηχανικών.
-- Τμήμα Μηχανικών Πληροφορικής και Υπολογιστών.
-- Διπλωματική εργασία του Τμήματος, σύμφωνα με την επίσημη αίτηση.
-- Συγγραφή στα ελληνικά και τελικό παραδοτέο Microsoft Word.
+- University of West Attica.
+- School of Engineering.
+- Department of Informatics and Computer Engineering.
+- Department thesis, according to the official application.
+- Main thesis text in Greek and final deliverable in Microsoft Word.
 
-Το όνομα του επιβλέποντα, οι ειδικές απαιτήσεις του και η προθεσμία παραμένουν **OPEN**.
+The supervisor's name, supervisor-specific requirements, and deadline remain **OPEN**.
 
-## Επίσημος ακαδημαϊκός σκοπός
+## Official academic purpose
 
-Η επίσημη αίτηση ορίζει ως σκοπό τη μελέτη και συγκριτική αξιολόγηση ανθεκτικών πρακτόρων AI σε περιβάλλοντα αβεβαιότητας και δυναμικών μεταβολών. Μέσω απλού προσομοιωμένου περιβάλλοντος πρέπει να συγκριθούν αλγόριθμοι λήψης αποφάσεων ως προς την ικανότητά τους να προσαρμόζονται σε απρόβλεπτες αλλαγές. Η αίτηση δίνει ως παραδείγματα:
+The official application defines the objective as the study and comparative evaluation of resilient AI agents in environments with uncertainty and dynamic change. Using a simple simulated environment, decision-making algorithms must be compared with respect to their ability to adapt to unexpected changes. The application gives examples including:
 
-- θόρυβο δεδομένων,
-- μεταβολή κανόνων,
-- αποτυχίες εκτέλεσης ενεργειών.
+- data/observation noise,
+- rule changes,
+- action-execution failures.
 
-Η αξιολόγηση πρέπει να εξετάζει την ανθεκτικότητα και την ταχύτητα ανάκαμψης.
+Evaluation must address resilience and recovery speed.
 
-## Βιβλιογραφία και επιστημονικό evidence
+## Bibliography and scientific evidence
 
-Η βιβλιογραφία δεν διαχειρίζεται πλέον πρωτογενώς σε αυτό το repository.
+Primary bibliography management no longer occurs in this repository.
 
-Το ιδιωτικό `MariosGiannakaras/ThesisBibliography` είναι η ανεξάρτητη canonical πηγή αλήθειας για source discovery, metadata, originals, Markdown/OCR, επιστημονική ανάλυση, verified evidence, inclusion/exclusion decisions και controlled thesis export.
+The private repository `MariosGiannakaras/ThesisBibliography` is the independent canonical source of truth for source discovery, metadata, originals, Markdown/OCR, scientific analysis, verified evidence, inclusion/exclusion decisions, and controlled thesis export.
 
-Η πρώτη πλήρης επιστημονική διαλογή έχει ολοκληρωθεί εκεί για **486/486 ενεργές πηγές**. Το canonical status καταγράφει **104 επιλεγμένες/επαληθευμένες πηγές**, **381 απορρίψεις**, **1 theory-only/non-citation source**, **0 εκκρεμείς αποφάσεις** και **104/104 verified evidence sets**.
+The first complete scientific selection has been completed there for **486/486 active sources**. Canonical status records **104 selected/verified sources**, **381 exclusions**, **1 theory-only/non-citation source**, **0 pending decisions**, and **104/104 verified evidence sets**.
 
-Το παρόν repository καταναλώνει μόνο το verified generated package στο `research/bibliography/`, δεμένο με ακριβές `SOURCE_COMMIT`. Δεν αντιγράφει όλο το bibliography repository, PDFs ή raw conversion material και δεν συγχωνεύει τα histories.
+This repository consumes only the verified generated package under `research/bibliography/`, bound to an exact `SOURCE_COMMIT`. It does not copy the full bibliography repository, PDFs, raw conversion material, or repository history.
 
-Η σύνδεση είναι pull-based και μέσω Pull Request. Η δεσμευτική αρχιτεκτονική βρίσκεται στα `docs/context/BIBLIOGRAPHY_INTEGRATION.md` και `bibliography/README.md`.
+Synchronization is pull-based and performed through a Pull Request. The binding architecture is defined in `docs/context/BIBLIOGRAPHY_INTEGRATION.md` and `bibliography/README.md`.
 
-Τα source-derived scientific δεδομένα και citation-ready evidence παραμένουν στην αυθεντική γλώσσα της πηγής. Μετάφραση για το ελληνικό τελικό κείμενο γίνεται μόνο στο writing stage και δεν αντικαθιστά το original-language evidence record.
+Source-derived scientific text and citation-ready evidence remain in the original language of the source. Translation for the final Greek thesis occurs only during writing and does not replace the original-language evidence record.
 
-Οι literature refresh gates παραμένουν ενεργοί πριν από protocol freeze, βασικά writing gates και τελική υποβολή. Οι νέες αναζητήσεις και επαληθεύσεις γίνονται στο `ThesisBibliography` και εισάγονται εδώ μόνο μετά από νέο verified export.
+Literature freshness gates remain active before protocol freeze, major writing gates, and final submission. New searches and verification occur in `ThesisBibliography` and enter this repository only through a new verified export.
 
-## Ρόλος του GridWorld
+## Role of GridWorld
 
-Το GridWorld είναι η τρέχουσα επιβεβαιωμένη κατεύθυνση για το απλό ελεγχόμενο περιβάλλον. Η τελική υλοποίηση δεν έχει επιλεγεί.
+GridWorld is the currently confirmed direction for the simple controlled environment. The final implementation has not been selected.
 
-Η επιλογή θα γίνει από μηδενική βάση μεταξύ:
+The choice starts from zero and compares:
 
-1. σύγχρονης βιβλιοθήκης/framework που θα υιοθετηθεί ή προσαρμοστεί,
-2. μικρού custom implementation,
-3. συνδυασμού βιβλιοθήκης και project-specific wrappers/extensions.
+1. a current library/framework that can be reused or adapted,
+2. a small custom implementation,
+3. a library plus project-specific wrappers/extensions.
 
-Δεν υπάρχει απαίτηση ανάκτησης παλιού user-owned code. Οποιοδήποτε τρίτο repository ή package πρέπει να βρεθεί μέσω νέας έρευνας και να περάσει license, maintenance, API, determinism, testability και suitability audit πριν ληφθεί ή ενσωματωθεί.
+There is no requirement to recover old user-owned code. Any third-party repository or package must be discovered through fresh research and pass license, maintenance, API, determinism, testability, and suitability review before download or integration.
 
-Το τελικό περιβάλλον πρέπει να επιτρέπει:
+The final environment must support:
 
-- σαφείς states, actions, goals, obstacles, rewards και termination semantics,
-- παραμετροποιημένες μορφές uncertainty/change,
-- seeded και επαναλήψιμα experiments,
+- explicit states, actions, goals, obstacles, rewards, and termination semantics,
+- parameterized uncertainty/change mechanisms,
+- seeded and repeatable experiments,
 - trace/metric/artifact production,
-- εκτέλεση ανεξάρτητα από το dashboard.
+- execution independently from the dashboard.
 
-## Ρόλος των μοντέλων
+## Role of models
 
-Τα μοντέλα/αλγόριθμοι είναι οι συγκρινόμενοι πράκτορες ή baselines. **Δεν υπάρχει shortlist από τις παλιές συνομιλίες.** Η επιλογή θα γίνει από το verified bibliography evidence, το τελικό GridWorld/observability framing, το hardware/software inventory, feasibility prototypes και pilots.
+Models/algorithms are the compared agents or baselines. **There is no shortlist inherited from old conversations.** Selection will use verified bibliography evidence, final GridWorld/observability framing, the hardware/software inventory, feasibility prototypes, and pilots.
 
-Το `MODEL_CANDIDATES.md` είναι διαδικασία επιλογής και evidence matrix, όχι κατάλογος προεπιλεγμένων μοντέλων.
+`MODEL_CANDIDATES.md` is a selection process and evidence matrix, not a preselected model catalog.
 
-## Ρόλος των experiments
+## Role of experiments
 
-Τα experiments είναι το κύριο μέσο παραγωγής επιστημονικών ευρημάτων. Πρέπει να:
+Experiments are the primary mechanism for producing scientific findings. They must:
 
-- χρησιμοποιούν προκαθορισμένο protocol,
-- περιλαμβάνουν πολλαπλά seeds/repetitions,
-- διαχωρίζουν pilot, exploratory και final runs,
-- αποθηκεύουν πλήρες run provenance,
-- καταγράφουν failures/cancellations/exclusions,
-- επιτρέπουν δίκαιη στατιστική σύγκριση,
-- παράγουν πραγματικά figures και tables.
+- follow a predefined protocol,
+- include multiple seeds/repetitions,
+- keep pilot, exploratory, and final runs distinct,
+- store complete run provenance,
+- retain failures/cancellations/exclusions,
+- support fair statistical comparison,
+- produce real figures and tables.
 
-Κανένας ιστορικός αριθμός runs, seeds, budget ή hyperparameter δεν μεταφέρεται ως default ή candidate χωρίς νέα αιτιολόγηση.
+No historical run count, seed count, budget, or hyperparameter is carried forward as a default or candidate without new justification.
 
-## Ρόλος του dashboard
+## Role of the dashboard
 
-Το dashboard είναι υποστηρικτικό εργαλείο για έναν τοπικό χρήστη. Πρέπει να μειώνει την ανάγκη χειροκίνητων scripts/console commands και να προσφέρει configuration, run control, πραγματικά status/progress/logs/metrics, GridWorld visualization, history/comparison, exports και screenshots.
+The dashboard is a supporting tool for one local user. It should reduce reliance on manual scripts/console commands and provide configuration, run control, truthful status/progress/logs/metrics, GridWorld visualization, history/comparison, exports, and screenshot-ready views.
 
-Δεν είναι το κύριο research contribution και δεν προηγείται του core.
+It is not the main research contribution. A lightweight debug/visualization surface may support core validation, but the polished final dashboard follows validated core work and pilot evidence.
 
-## Ρόλος της συγγραφής
+## Role of thesis writing
 
-Η συγγραφή εξελίσσεται παράλληλα με την υλοποίηση, αλλά κάθε κεφάλαιο διαχωρίζει verified facts/citations, proposed methodology, frozen protocol, πραγματικά results, interpretation και limitations. Τα τελικά συμπεράσματα γράφονται μόνο από το frozen final result set.
+Writing develops alongside implementation, but every chapter distinguishes verified facts/citations, proposed methodology, frozen protocol, real results, interpretation, and limitations. Final conclusions are written only from the frozen final result set.
 
-Οι βιβλιογραφικοί ισχυρισμοί συνδέονται με canonical `SRC-XXXXXXXXXX` identifiers που υπάρχουν στο imported manifest και με verified evidence από το αντίστοιχο `SOURCE_COMMIT`.
+Bibliographic claims connect to canonical `SRC-XXXXXXXXXX` identifiers present in the imported manifest and to verified evidence from the corresponding `SOURCE_COMMIT`.
 
-## Σύνδεση εφαρμογής, αποτελεσμάτων και κειμένου
+## Connection between application, results, and thesis text
 
 ```text
 Official topic + verified bibliography + system inventory
@@ -125,12 +125,12 @@ Dashboard exploration + thesis evidence
 Greek Microsoft Word thesis
 ```
 
-## Τι λείπει
+## What is still missing
 
-- Πραγματικό automated hardware/software inventory και capability benchmark.
-- Νέα GridWorld landscape review και build/reuse/integration απόφαση, χρησιμοποιώντας το verified bibliography evidence ως βάση.
-- Επιβλέπων και ειδικές ακαδημαϊκές οδηγίες.
-- Τελικά research questions/hypotheses.
-- Final environment variants, models, metrics και statistical protocol.
-- Τρέχον επίσημο Word template/submission package.
-- Πρώτος συγχρονισμός του verified `ThesisBibliography` package στο `research/bibliography/` μετά την ενεργοποίηση του read-only sync credential.
+- Actual automated hardware/software inventory and capability benchmark.
+- Fresh GridWorld landscape review and build/reuse/integration decision, using verified bibliography evidence as the basis.
+- Supervisor identity and supervisor-specific academic instructions.
+- Final research questions/hypotheses.
+- Final environment variants, models, metrics, and statistical protocol.
+- Current official Word template/submission package.
+- First synchronization of the verified `ThesisBibliography` package into `research/bibliography/` after the read-only synchronization credential is enabled.

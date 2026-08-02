@@ -1,3 +1,3 @@
 # Appendices
 
-Υλικό παραρτημάτων, extended tables, protocol details και επιλεγμένα code listings.
+Appendix material, extended tables, protocol details, and selected code listings.

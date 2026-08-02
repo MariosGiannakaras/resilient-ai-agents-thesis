@@ -1,3 +1,3 @@
 # Research core
 
-Μελλοντικό ανεξάρτητο environment/model/evaluation core με CLI/API. Πρέπει να λειτουργεί χωρίς dashboard.
+Future independent environment/model/evaluation core with CLI/API. It must work without the dashboard.

@@ -1,3 +1,3 @@
 # Notebooks
 
-Exploratory analysis μόνο. Κάθε κρίσιμη ανάλυση μεταφέρεται σε επαναλήψιμο script πριν χρησιμοποιηθεί στη διπλωματική.
+Exploratory analysis only. Any critical analysis must be moved into a repeatable version-controlled script before it is used as thesis evidence.

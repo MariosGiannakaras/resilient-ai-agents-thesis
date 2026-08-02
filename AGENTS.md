@@ -1,66 +1,87 @@
 # AGENTS.md
 
-## Αποστολή
+## Mission
 
-Ανάπτυξη και τεκμηρίωση μιας επιστημονικά έγκυρης, αναπαραγώγιμης και ολοκληρώσιμης διπλωματικής εργασίας με επίσημο τίτλο:
+Develop and document a scientifically valid, reproducible, and realistically completable thesis with the official titles:
 
-> Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα
+> **Greek:** Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα
+>
+> **English:** Comparison and Evaluation of Resilient AI Agents in Uncertain Environments
 
-Το project συγκρίνει πράκτορες λήψης αποφάσεων σε ελεγχόμενο προσομοιωμένο περιβάλλον με αβεβαιότητα και δυναμικές μεταβολές. Η εφαρμογή είναι σημαντικό ερευνητικό παραδοτέο και εργαλείο εκτέλεσης, παρατήρησης, κατανόησης και παρουσίασης· δεν είναι το κύριο ερευνητικό αντικείμενο και δεν πρέπει να εξελιχθεί σε production-grade πλατφόρμα.
+The project compares decision-making agents in a controlled simulated environment under uncertainty and dynamic change. The application is an important research deliverable and a tool for execution, observation, interpretation, and presentation; it is not the main research contribution and must not become a production-grade platform.
 
-Το repository είναι η μόνιμη πηγή αλήθειας για το thesis project, με μία ρητή εξαίρεση: η πλήρης βιβλιογραφική συλλογή και επεξεργασία έχει canonical source of truth το ανεξάρτητο `MariosGiannakaras/ThesisBibliography`. Το παρόν repository καταναλώνει μόνο το verified generated export του.
+This repository is the permanent source of truth for the thesis project, with one explicit boundary: the complete bibliography lifecycle has its canonical source of truth in the separate private repository `MariosGiannakaras/ThesisBibliography`. This repository consumes only its verified generated export.
 
-## Κεντρική αρχή scope
+## Language policy
 
-Διάβασε και εφάρμοσε το `docs/context/SCOPE_REFINEMENT.md`.
+Repository-authored operational and technical material is written in **English** so Codex, code, tests, APIs, and documentation use one consistent technical language.
+
+This includes:
+
+- agent instructions and prompts,
+- repository READMEs and technical/context documentation,
+- architecture, protocol, schema, and testing instructions,
+- code comments, identifiers, configuration names, branches, commits, and Pull Request text.
+
+Exceptions:
+
+- preserve the exact official Greek thesis title and other official Greek text when it must be quoted faithfully,
+- scientific source text and citation-ready evidence remain in the **original language of the source**,
+- the final thesis remains a Greek Microsoft Word deliverable unless an official requirement changes.
+
+Do not translate canonical scientific evidence merely to make repository documentation linguistically uniform. Translation for the final Greek thesis is a writing-stage operation.
+
+## Core scope principle
+
+Read and apply `docs/context/SCOPE_REFINEMENT.md`.
 
 **Polished outside, bounded inside.**
 
-Η αρχιτεκτονική και το πλήθος λειτουργιών παραμένουν περιορισμένα. Το τελικό dashboard, όμως, πρέπει να είναι μοντέρνο, προσεγμένο και επαρκές για όλες τις πραγματικές ροές της διπλωματικής. Η απλότητα δεν δικαιολογεί πρόχειρο UI και η αισθητική δεν δικαιολογεί production infrastructure ή περιττό engineering.
+Architecture and feature count remain deliberately bounded. The final dashboard must still be modern, polished, coherent, and sufficient for all real thesis workflows. Simplicity does not justify a rough interface, and visual quality does not justify production infrastructure or unnecessary engineering.
 
-## Μηδενική βάση αποφάσεων
+## Zero-base decisions
 
-Οι παλιές συνομιλίες είναι μόνο ιστορικό/context. Δεν αποτελούν:
+Old conversations are historical context only. They do not establish:
 
-- επιλεγμένη λίστα μοντέλων,
-- εγκεκριμένο GridWorld specification,
-- προτίμηση τεχνικού stack,
-- εγκεκριμένες μετρικές,
-- εγκεκριμένα hyperparameters, seeds, repetitions ή budgets,
-- feature backlog,
-- υποχρέωση ανάκτησης παλιού κώδικα.
+- a selected model list,
+- an approved GridWorld specification,
+- a preferred technical stack,
+- approved metrics,
+- approved hyperparameters, seeds, repetitions, or budgets,
+- a feature backlog,
+- a requirement to recover old code.
 
-Κάθε απόφαση λαμβάνεται εκ νέου από την επίσημη αίτηση, το verified bibliography evidence, την επίσημη τεχνική τεκμηρίωση, το πραγματικό hardware/software, τα prototypes και τα pilots.
+Every research or technical selection is made from the official application, verified bibliography evidence, official technical documentation, actual hardware/software, prototypes, and pilots.
 
-## Σειρά προτεραιοτήτων
+## Priority order
 
-1. Σαφές και περιορισμένο ερευνητικό ερώτημα.
-2. Απλό και επαληθευμένο GridWorld.
-3. Μικρός, επιστημονικά αιτιολογημένος αριθμός μοντέλων και μορφών αβεβαιότητας.
-4. Δίκαιο και αναπαραγώγιμο πειραματικό πρωτόκολλο.
-5. Αξιόπιστα και συγκρίσιμα αποτελέσματα.
-6. Μοντέρνο και πλήρες UI για εκτέλεση, παρακολούθηση και κατανόηση.
-7. Προηγμένες λειτουργίες μόνο με πραγματική ανάγκη και χαμηλό κίνδυνο για την ολοκλήρωση.
+1. Clear and bounded research question.
+2. Simple and validated GridWorld.
+3. Small, scientifically justified set of models and uncertainty types.
+4. Fair and reproducible experimental protocol.
+5. Reliable and comparable results.
+6. Modern and complete UI for execution, monitoring, and interpretation.
+7. Advanced features only when they solve a real need without threatening thesis completion.
 
-## Μοντέλο λειτουργίας και ευθύνες
+## Operating model and responsibilities
 
-Η πλήρης διαδικασία ορίζεται στο `docs/context/EXECUTION_WORKFLOW.md`.
+The full process is defined in `docs/context/EXECUTION_WORKFLOW.md`.
 
-- Ο χρήστης δίνει στόχους, πραγματικό feedback, υλικό και οδηγίες επιβλέποντα. Δεν χρειάζεται να εγκρίνει branches, commits, tests, Pull Requests ή merges.
-- Το ChatGPT οργανώνει bounded tasks, ελέγχει έρευνα, diffs, naming, tests, αποτελέσματα και review findings και αποφασίζει τεχνική έγκριση ή διορθώσεις.
-- Το Codex εκτελεί μόνο τη συγκεκριμένη εργασία: branch, κώδικας/έρευνα, tests, documentation, commits και Pull Request. Δεν αυτοεγκρίνεται και δεν αλλάζει σιωπηρά scope ή frozen protocol.
-- Το GitHub εκτελεί τους αυτοματοποιημένους ελέγχους. Passing CI δεν αρκεί μόνο του· ελέγχεται και η ουσία των tests και των αλλαγών.
-- Ο χρήστης ερωτάται μόνο για πραγματική ακαδημαϊκή, προϊόντική ή προσωπική απόφαση που δεν λύνεται αντικειμενικά από evidence.
+- **User:** provides goals, real feedback, source material when needed, and supervisor instructions. The user does not need to approve routine branches, commits, tests, Pull Requests, or merges.
+- **ChatGPT:** scopes bounded tasks, reviews research, diffs, naming, comments, tests, experiment evidence, results, and review findings, and decides technical readiness or required corrections.
+- **Codex:** executes only the assigned bounded task: branch, code/research, tests, documentation, commits, and Pull Request. Codex does not self-approve, silently broaden scope, or change a frozen protocol.
+- **GitHub:** runs repeatable automated checks. Passing CI is necessary but not sufficient; test quality and scientific correctness are also reviewed.
+- **User consultation:** required only for genuinely academic, product, supervisor-facing, or personal choices that cannot be resolved objectively from evidence.
 
-Η κανονική ροή είναι:
+Normal flow:
 
-> Συζήτηση στόχου → bounded task → Codex branch/PR → GitHub checks → ChatGPT review → διορθώσεις → merge → σύντομη ενημέρωση χρήστη.
+> Discuss goal → bounded task → Codex branch/PR → GitHub checks → ChatGPT review → corrections → merge → brief user report
 
-## Πολιτική ανάγνωσης
+## Reading policy
 
-### Μόνιμη βασική ανάγνωση
+### Permanent core reading
 
-Πριν από κάθε ουσιαστική εργασία διάβασε μόνο:
+Before substantial work, read only:
 
 1. `AGENTS.md`
 2. `README.md`
@@ -68,146 +89,141 @@
 4. `docs/context/PROJECT_CONTEXT.md`
 5. `docs/context/CONFIRMED_REQUIREMENTS.md`
 
-### Ανάγνωση ανάλογα με την εργασία
+### Task-specific reading
 
-- **Research framing / βιβλιογραφία:** `docs/context/BIBLIOGRAPHY_INTEGRATION.md`, `bibliography/README.md`, το imported `research/bibliography/manifest.csv` και μόνο τις σχετικές `research/bibliography/analyses/` / `research/bibliography/evidence/` εγγραφές. Τα `USER_DECISIONS.md`, `CONSTRAINTS.md`, `OPEN_QUESTIONS.md`, `SOURCE_AUDIT.md` και `docs/research/RESEARCH_BRIEF.md` διαβάζονται μόνο όταν σχετίζονται άμεσα. Το `docs/research/RELATED_WORK_EVIDENCE_MATRIX.md` είναι historical seed και όχι current evidence.
-- **GridWorld:** `docs/research/GRIDWORLD_SPEC.md`, σχετικό imported bibliography evidence και σχετικές αποφάσεις/ADRs.
-- **Models, metrics και experiments:** τα αντίστοιχα candidate files, το σχετικό imported bibliography evidence και μόνο τα σχετικά αρχεία του `docs/experiments/`.
-- **Architecture ή UI:** μόνο τα σχετικά αρχεία του `docs/architecture/` και οι αποφάσεις που τα αφορούν.
-- **Συγγραφή διπλωματικής:** `docs/thesis/`, `docs/university/`, `research/bibliography/manifest.csv` και μόνο τα citation-relevant imported analyses/evidence.
-- **Git/GitHub workflow:** `docs/context/EXECUTION_WORKFLOW.md` και `.github/pull_request_template.md`.
-- **Αλλαγή project-wide απόφασης:** `docs/decisions/DECISION_LOG.md`, `CHANGELOG_CONTEXT.md`, `OPEN_QUESTIONS.md` και `CONTRADICTIONS.md`.
+- **Research framing / bibliography:** `docs/context/BIBLIOGRAPHY_INTEGRATION.md`, `bibliography/README.md`, the imported `research/bibliography/manifest.csv`, and only relevant entries under `research/bibliography/analyses/` and `research/bibliography/evidence/`. Read `USER_DECISIONS.md`, `CONSTRAINTS.md`, `OPEN_QUESTIONS.md`, `SOURCE_AUDIT.md`, and `docs/research/RESEARCH_BRIEF.md` only when directly relevant. `docs/research/RELATED_WORK_EVIDENCE_MATRIX.md` is a historical seed, not the current evidence source.
+- **GridWorld:** `docs/research/GRIDWORLD_SPEC.md`, relevant imported bibliography evidence, and related decisions/ADRs.
+- **Models, metrics, and experiments:** the corresponding candidate files, relevant imported bibliography evidence, and only the relevant files under `docs/experiments/`.
+- **Architecture or UI:** only the relevant `docs/architecture/` files and decisions.
+- **Thesis writing:** `docs/thesis/`, `docs/university/`, `research/bibliography/manifest.csv`, and only citation-relevant imported analyses/evidence.
+- **Git/GitHub workflow:** `docs/context/EXECUTION_WORKFLOW.md` and `.github/pull_request_template.md`.
+- **Project-wide decision change:** `docs/decisions/DECISION_LOG.md`, `docs/context/CHANGELOG_CONTEXT.md`, `docs/context/OPEN_QUESTIONS.md`, and `docs/context/CONTRADICTIONS.md`.
 
-Μην ξαναδιαβάζεις ολόκληρο το repository για μικρή ή σαφώς οριοθετημένη εργασία. Πλήρης επανέλεγχος απαιτείται μόνο σε bootstrap, repository-wide audit ή μεγάλη διατομεακή αλλαγή.
+Do not reread the entire repository for a small or clearly bounded task. A full reread is reserved for bootstrap, repository-wide audits, or major cross-cutting changes.
 
-Μην ζητάς από τον χρήστη πληροφορίες που μπορούν να συλλεχθούν αξιόπιστα από το repository, το `ThesisBibliography`, το τοπικό σύστημα ή επίσημες πηγές.
+Do not ask the user for information that can be collected reliably from this repository, `ThesisBibliography`, the local execution system, or authoritative public sources.
 
-## Ιεράρχηση πηγών
+## Source hierarchy
 
-1. Νεότερη ρητή οδηγία χρήστη.
-2. Επίσημη αίτηση ή formal thesis description.
-3. Επίσημες οδηγίες Πανεπιστημίου, Τμήματος και επιβλέποντα.
-4. Επαληθευμένη πρωτογενής ή υψηλής ποιότητας επιστημονική βιβλιογραφία από το canonical `ThesisBibliography` evidence chain.
-5. Επίσημη τεχνική τεκμηρίωση, source code, releases, licenses και reproducible benchmarks.
-6. Πραγματικό system inventory, prototypes και pilots.
-7. Παλιές συνομιλίες μόνο ως ιστορικό.
+1. Newer explicit user instruction.
+2. Official approved application or formal thesis description.
+3. Current official University/Department/supervisor guidance.
+4. Verified primary or high-quality scientific literature through the canonical `ThesisBibliography` evidence chain.
+5. Official technical documentation, source code, releases, licenses, and reproducible benchmarks.
+6. Actual system inventory, prototypes, and pilots.
+7. Old conversations only as historical context.
 
-## Κύκλος βιβλιογραφικής έρευνας
+## Bibliography research cycle
 
-Η βιβλιογραφική έρευνα δεν είναι μία εφάπαξ ενέργεια. Επαναλαμβάνεται στα ακόλουθα gates:
+Bibliography work is not a one-time action. It is refreshed at these gates:
 
-1. **Αρχικό research framing:** αξιοποίηση του ολοκληρωμένου verified bibliography corpus για παρόμοιες μελέτες, benchmark designs, μοντέλα, μορφές αβεβαιότητας και μετρικές.
-2. **Πριν παγώσει το pilot/final protocol:** αναζήτηση στο `ThesisBibliography` για νεότερες ή πιο άμεσα σχετικές εργασίες που μπορεί να αλλάζουν τις επιλογές.
-3. **Πριν γραφτούν Related Work, Methodology και Discussion:** επιβεβαίωση στο `ThesisBibliography` ότι οι decision-driving πηγές και claims έχουν πλήρες verified evidence και σωστά limitations.
-4. **Πριν την τελική υποβολή:** σύντομος freshness και citation audit στο `ThesisBibliography`, ακολουθούμενος από νέο controlled export/sync.
+1. **Initial research framing:** use the completed verified bibliography corpus for related studies, benchmark designs, models, uncertainty mechanisms, and metrics.
+2. **Before pilot/final protocol freeze:** search in `ThesisBibliography` for newer or more directly relevant work that could change the design.
+3. **Before Related Work, Methodology, and Discussion:** confirm in `ThesisBibliography` that decision-driving sources and claims have complete verified evidence and correctly recorded limitations.
+4. **Before final submission:** perform a short freshness and citation audit in `ThesisBibliography`, then create a new controlled export/synchronization.
 
-Η πλήρης βιβλιογραφική ταυτότητα, stable URL/DOI, publication status, πρόσβαση/license, μέθοδος, experimental setup, αποτελέσματα, limitations και συγκεκριμένη χρήση στη διπλωματική καταγράφονται στο `ThesisBibliography`, όχι διπλά εδώ.
+Full bibliographic identity, stable URL/DOI, publication status, access/license information, method, experimental setup, results, limitations, and thesis relevance are recorded in `ThesisBibliography`, not duplicated here.
 
-Μην κατεβάζεις ή αποθηκεύεις νέα papers/PDFs/Markdown source copies σε αυτό το repository. Νέες πηγές, NotebookLM discoveries και user-provided source files εισάγονται στο `ThesisBibliography`. Το scientific source text και το citation-ready evidence παραμένουν στην αυθεντική γλώσσα της πηγής.
+Do **not** download or store new papers, PDFs, Markdown source copies, source notes, or excerpts in this repository. New sources, NotebookLM discoveries, and user-provided bibliography files are ingested into `ThesisBibliography`. Scientific source text and citation-ready evidence remain in the source's original language.
 
-Το `research/bibliography/` είναι generated και αντικαθίσταται μόνο μέσω του PR-based synchronization workflow. Μην το επεξεργάζεσαι χειροκίνητα και μην τροποποιείς το `SOURCE_COMMIT` ή το `IMPORT_INTEGRITY.json`.
+`research/bibliography/` is generated and replaced only through the PR-based synchronization workflow. Do not edit it manually and do not alter `SOURCE_COMMIT` or `IMPORT_INTEGRITY.json` by hand.
 
-## Υποχρεωτική σειρά φάσεων
+## Phase order
 
-1. Context, official primary-source validation και verified bibliography import.
-2. Automated system inventory.
-3. Literature/official-topic synthesis από το imported verified evidence.
-4. Fresh GridWorld landscape review.
-5. Bounded research questions και hypotheses.
-6. GridWorld, uncertainty taxonomy και factors.
-7. Small model/baseline and metric selection.
-8. Pilot protocol και statistical plan.
-9. Independent core και CLI.
-10. Validation tests και deterministic smoke tests.
-11. Pilot runs.
-12. Final matrix review and freeze.
-13. Minimal experiment management and provenance.
-14. Polished bounded dashboard.
-15. Final frozen runs.
-16. Statistical analysis, figures και tables.
-17. Greek Word thesis and final validation.
+`docs/context/IMPLEMENTATION_ROADMAP.md` is the canonical phase/checkpoint definition. Do not maintain a second competing phase numbering in this file.
 
-**Dashboard implementation ξεκινά μόνο μετά από validated independent core και pilot evidence.**
+The practical sequence is:
+
+1. Validate context, official sources, bibliography import, and actual system capabilities.
+2. Define a bounded research question and research design from verified evidence.
+3. Select and validate the GridWorld, uncertainty taxonomy, models, metrics, and pilot protocol.
+4. Implement and validate the independent research core.
+5. Run pilots and freeze the final protocol.
+6. Add only the experiment-management and polished-dashboard functionality required by the frozen workflow.
+7. Execute final runs, statistical analysis, and artifact generation.
+8. Complete the Greek Word thesis, presentation material, and final validation.
+
+A lightweight debug/visualization surface may be used during core development when it helps verify behavior and does not duplicate scientific logic. The **polished final dashboard** remains gated behind a validated independent core and pilot evidence.
 
 ## GridWorld discovery
 
-- Μην υποθέσεις υπάρχον user-owned code.
-- Σύγκρινε current reuse, adapt/wrap και minimal custom implementation.
-- Έλεγξε maintenance, license, API compatibility, determinism, seeding, disturbance extensibility, testability, performance και dependency cost.
-- Μην ενσωματώσεις third-party code πριν από documented audit, prototype και ADR.
-- Προτίμησε την απλούστερη λύση που υποστηρίζει πλήρως το frozen research design.
+- Do not assume existing user-owned code.
+- Compare current reuse, adapt/wrap, and minimal custom implementation.
+- Check maintenance, license, API compatibility, determinism, seeding, disturbance extensibility, testability, performance, and dependency cost.
+- Do not integrate third-party code before a documented audit, prototype, and ADR.
+- Prefer the simplest solution that fully supports the frozen research design.
 
 ## Hardware discovery
 
-- Συλλέγεται αυτόματα CPU, RAM, GPU/VRAM, OS, drivers, runtimes, storage και supported acceleration.
-- Μην ζητάς manual transcription από τον χρήστη.
-- Μην υποθέτεις NVIDIA, CUDA ή usable GPU acceleration.
-- Μέχρι το capability report, κράτησε CPU-compatible design.
+- Collect CPU, RAM, GPU/VRAM, OS, drivers, runtimes, storage, and supported acceleration automatically.
+- Do not ask the user to transcribe information the system can inspect directly.
+- Do not assume NVIDIA, CUDA, or usable GPU acceleration.
+- Until the capability report exists, keep the design CPU-compatible.
 
 ## Research and experiment rules
 
-- Κάθε model, uncertainty type και metric συνδέεται με approved research question ή validity check.
-- Κράτησε το design μικρό, κατανοητό και εκτελέσιμο.
-- Μην εκθέτεις στον χρήστη αδικαιολόγητα πολλά models ή parameters.
-- Δεν επιλέγονται αυθαίρετα hyperparameters, seeds, repetitions ή budgets.
-- Δεν επιτρέπεται single-run comparison.
-- Διαχώρισε pilot, exploratory και final runs.
-- Κατέγραψε failed, cancelled, interrupted, invalid και excluded runs.
-- Κάθε run αποθηκεύει resolved config, seeds, software/hardware snapshot και Git commit.
-- Raw results immutable. Figures και tables παράγονται από version-controlled scripts και πραγματικά δεδομένα.
-- Μην κάνεις cherry-picking.
+- Every model, uncertainty type, and metric must map to an approved research question or validity check.
+- Keep the design small, understandable, and executable.
+- Do not expose unjustifiably many models or parameters to the user.
+- Do not choose hyperparameters, seeds, repetitions, or budgets arbitrarily.
+- Single-run model comparison is not allowed.
+- Keep pilot, exploratory, and final runs distinct.
+- Retain failed, cancelled, interrupted, invalid, and excluded runs with reasons.
+- Every run stores resolved configuration, seeds, software/hardware snapshot, and Git commit.
+- Raw results are immutable. Figures and tables are generated from version-controlled scripts and real stored data.
+- Do not cherry-pick runs or results.
 
 ## Software and UI rules
 
-- Ο `core/` λειτουργεί χωρίς UI.
-- Το UI χρησιμοποιεί τον ίδιο validated config path και δεν επανυλοποιεί scientific logic.
-- Η αποθήκευση runs/results δεν εξαρτάται από το UI.
-- Προτίμησε modular monolith ή αντίστοιχα απλή local architecture.
-- Μην εισάγεις microservices, Kubernetes, cloud, multi-user auth, distributed workers ή production observability.
-- Μην προσθέτεις feature χωρίς πραγματικό thesis workflow ή documented requirement.
-- Consolidate screens and controls rather than exposing internal architecture.
-- Το final UI πρέπει να είναι polished, consistent, responsive και screenshot-ready.
-- Essential workflows: configure, run, monitor, inspect GridWorld, review history, compare results και export artifacts.
-- Η κύρια οθόνη εμφανίζει μόνο την επιστημονικά και λειτουργικά χρήσιμη πληροφορία. Checksums, full manifests, Git/runtime details και πλήρη provenance chains παραμένουν διαθέσιμα σε expandable details ή exports.
-- Το resource telemetry είναι ελαφρύ current snapshot: CPU, RAM, disk και GPU/VRAM μόνο όταν υποστηρίζονται εύκολα και αξιόπιστα. Δεν απαιτούνται historical charts, monitoring agents, alerting subsystem ή telemetry database.
-- Fake progress, mock scientific metrics, fabricated logs και backend-inconsistent state απαγορεύονται.
-- Queue priorities, plugins, remote execution, advanced checkpoint UX και optional AI παραμένουν deferred μέχρι να αποδειχθεί ανάγκη.
+- `core/` must work without the UI.
+- The UI must use the same validated configuration path and must not reimplement scientific logic.
+- Run/result storage must not depend on the UI lifecycle.
+- Prefer a modular monolith or equivalently simple local architecture.
+- Do not introduce microservices, Kubernetes, cloud infrastructure, multi-user authentication, distributed workers, or production observability.
+- Do not add a feature without a real thesis workflow or documented requirement.
+- Consolidate screens and controls instead of exposing internal architecture.
+- The final UI must be polished, consistent, responsive, and screenshot-ready.
+- Essential workflows are configure, run, monitor, inspect GridWorld, review history, compare results, and export artifacts.
+- Primary views show only scientifically and operationally useful information. Full checksums, manifests, Git/runtime details, and provenance chains remain available through expandable details or exports.
+- Resource telemetry is a lightweight current snapshot: CPU, RAM, disk, and GPU/VRAM only when easy and reliable to support. No historical telemetry charts, monitoring agents, alerting subsystem, or telemetry database are required.
+- Fake progress, mock scientific metrics, fabricated logs, and backend-inconsistent state are forbidden.
+- Queue priorities, plugins, remote execution, advanced checkpoint UX, and optional AI remain deferred until a real need is demonstrated.
 
 ## Tests and validation
 
-Κάθε αλλαγή που επηρεάζει core ή experiments χρειάζεται κατάλληλα tests:
+Every change that affects the core or experiments needs appropriate tests, including as applicable:
 
 - environment invariants,
 - transition/reward/termination behavior,
-- seeding και deterministic replay,
-- config validation,
-- run lifecycle και recovery,
+- seeding and deterministic replay,
+- configuration validation,
+- run lifecycle and recovery,
 - serialization/schema compatibility,
-- metric correctness σε known-answer fixtures,
-- statistical processing fixtures,
+- metric correctness on known-answer fixtures,
+- statistical-processing fixtures,
 - provenance linkage,
 - regression tests.
 
-Bibliography import changes χρειάζονται επιπλέον package/source-commit consistency, forbidden-artifact checks, generated-file integrity και validation ότι κάθε canonical `SRC-*` reference υπάρχει στο imported manifest.
+Bibliography-import changes additionally require package/source-commit consistency, forbidden-artifact checks, generated-file integrity, and validation that every canonical `SRC-*` reference exists in the imported manifest.
 
-Synthetic fixtures επιτρέπονται μόνο σε clearly labeled tests.
+Synthetic fixtures are allowed only in clearly labelled tests.
 
-Οι αυτοματοποιημένοι έλεγχοι πρέπει να εκτελούνται σε κάθε σχετικό Pull Request. Το CI επεκτείνεται όταν επιλεγεί το stack, χωρίς να μετατρέπεται σε production deployment pipeline.
+Automated checks run on every relevant Pull Request. CI may expand after the stack is selected, but must not become a production deployment pipeline.
 
 ## Git and documentation
 
-- Κάνε μικρά, λογικά commits με σύντομο conventional title και body που εξηγεί **τι** άλλαξε, **γιατί**, **πώς ελέγχθηκε** και τι έμεινε εκτός.
-- Χρησιμοποίησε descriptive lowercase kebab-case branches με prefixes `research/`, `feat/`, `fix/`, `test/`, `docs/` ή `chore/`.
-- Για research, architecture, protocol ή implementation αλλαγές χρησιμοποίησε branch και Pull Request με summary, rationale, validation, scientific impact, exclusions και deferred work.
-- Ακολούθησε το `.github/pull_request_template.md` και αντιμετώπισε όλα τα automated review findings πριν από merge.
-- Μην ζητάς από τον χρήστη routine GitHub approval. Το ChatGPT reviewer αποφασίζει merge ή διορθώσεις, εκτός αν απαιτείται πραγματική ακαδημαϊκή απόφαση.
-- Χρησιμοποίησε σαφή ονοματοδοσία. Απόφυγε ονόματα όπως `test2`, `final_new`, `best_model` ή ανεξήγητες συντομογραφίες.
-- Τα σχόλια εξηγούν μη προφανή reasoning, invariants, scientific constraints ή workarounds και δεν επαναλαμβάνουν απλώς τον κώδικα.
-- Μην αποθηκεύεις secrets, credentials, caches ή αδικαιολόγητα binaries.
-- Ενημέρωνε context, decisions και changelog όταν αλλάζει ουσιώδης απαίτηση.
-- Μην αλλάζεις σιωπηρά frozen protocol ή raw/final evidence.
-- Σημαντικές επιλογές GridWorld, models, metrics, stack, storage, runner και UI scope καταγράφονται με evidence και alternatives.
+- Use small logical commits with a concise conventional title and a body that explains **what** changed, **why**, **how it was validated**, and important exclusions.
+- Use descriptive lowercase kebab-case branches with prefixes such as `research/`, `feat/`, `fix/`, `test/`, `docs/`, or `chore/`.
+- Research, architecture, protocol, or implementation changes use a branch and Pull Request with summary, rationale, validation, scientific impact, exclusions, and deferred work.
+- Follow `.github/pull_request_template.md` and address all automated review findings before merge.
+- Do not request routine GitHub approval from the user. ChatGPT decides merge readiness or required corrections unless a genuine academic decision is needed.
+- Use clear English naming. Avoid names such as `test2`, `final_new`, `best_model`, or unexplained abbreviations.
+- Comments explain non-obvious reasoning, invariants, scientific constraints, or workarounds; they do not restate obvious code.
+- Do not store secrets, credentials, caches, or unjustified binaries.
+- Update context, decisions, and changelog when a material requirement changes.
+- Do not silently change a frozen protocol or raw/final evidence.
+- Significant GridWorld, model, metric, stack, storage, runner, and UI-scope decisions must record evidence and alternatives.
 
 ## Scientific integrity
 
-Απαγορεύεται η επινόηση πηγών, DOI, citations, runs, metrics, progress, logs, data, figures, tables, results ή conclusions.
+Do not fabricate sources, DOI values, citations, runs, metrics, progress, logs, data, figures, tables, results, or conclusions.

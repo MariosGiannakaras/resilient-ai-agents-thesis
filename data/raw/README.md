@@ -1,3 +1,3 @@
 # Raw data
 
-Immutable πρωτογενή δεδομένα. Κάθε dataset χρειάζεται source, license, hash και acquisition date.
+Immutable primary data. Every dataset requires a documented source, license/access status, checksum, and acquisition date.

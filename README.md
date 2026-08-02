@@ -1,79 +1,85 @@
 # resilient-ai-agents-thesis
 
-**Επίσημος ελληνικός τίτλος:** Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα  
+**Official Greek title:** Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα  
 **Official English title:** Comparison and Evaluation of Resilient AI Agents in Uncertain Environments
 
-Ιδιωτικό, version-controlled repository για ολόκληρο το project της διπλωματικής εργασίας του Τμήματος Μηχανικών Πληροφορικής και Υπολογιστών, Σχολή Μηχανικών, Πανεπιστήμιο Δυτικής Αττικής.
+Private, version-controlled repository for the full thesis project of the Department of Informatics and Computer Engineering, School of Engineering, University of West Attica.
 
-## Ρόλος του repository
+## Repository role
 
-Το repository αποτελεί τη μόνιμη πηγή αλήθειας για το ακαδημαϊκό και ερευνητικό πλαίσιο, τις απαιτήσεις και αποφάσεις, το GridWorld, τον πειραματικό πυρήνα, το τοπικό dashboard, τα δεδομένα και αποτελέσματα, τη συγγραφή και το τελικό Microsoft Word παραδοτέο.
+This repository is the permanent source of truth for the thesis academic/research context, requirements and decisions, GridWorld, experimental core, local dashboard, data and results, writing, and final Microsoft Word deliverable.
 
-Η πλήρης βιβλιογραφική συλλογή και επιστημονική επεξεργασία έχουν ανεξάρτητη canonical πηγή αλήθειας στο `MariosGiannakaras/ThesisBibliography`. Το παρόν repository καταναλώνει μόνο το ελεγχόμενο verified export της.
+The complete bibliography lifecycle has a separate canonical source of truth in `MariosGiannakaras/ThesisBibliography`. This repository consumes only its controlled verified export.
 
-## Αναθεωρημένος στόχος
+## Language policy
 
-Η βασική επιτυχία του project είναι μια σωστή, επιστημονικά επαρκής και ολοκληρώσιμη διπλωματική. Η εφαρμογή είναι σημαντικό παραδοτέο, αλλά όχι production-grade προϊόν ούτε το κύριο ερευνητικό αντικείμενο.
+Repository-authored operational and technical documentation is written in English. Code identifiers, comments, filenames, branches, commits, Pull Requests, schemas, and agent prompts also use English.
+
+The exact official Greek thesis title is preserved where required. Scientific source text and citation-ready evidence remain in the original language of each source. The final thesis remains a Greek Microsoft Word deliverable unless an official requirement changes.
+
+## Refined objective
+
+The primary success criterion is a correct, scientifically adequate, and realistically completable thesis. The application is an important deliverable, but it is neither a production-grade product nor the main research contribution.
 
 > **Polished outside, bounded inside.**
 
-Η αρχιτεκτονική και το engineering παραμένουν απλά και αναλογικά προς τις ανάγκες ενός τοπικού single-user research tool. Το UI, όμως, πρέπει να είναι σύγχρονο, συνεπές, εύχρηστο, κατάλληλο για screenshots και αρκετά πλήρες ώστε ο χρήστης να εκτελεί, να παρακολουθεί, να συγκρίνει και να εξάγει τα απαραίτητα πειράματα χωρίς κώδικα ή console commands.
+Architecture and engineering remain simple and proportional to a local single-user research tool. The UI must still be modern, coherent, usable, screenshot-ready, and complete enough for the user to execute, monitor, compare, and export the required experiments without writing code or using console commands.
 
-Η αναλυτική δεσμευτική κατεύθυνση βρίσκεται στο `docs/context/SCOPE_REFINEMENT.md`.
+The binding scope direction is defined in `docs/context/SCOPE_REFINEMENT.md`.
 
-## Σειρά προτεραιοτήτων
+## Priority order
 
-1. Σαφές και περιορισμένο research question.
-2. Απλό και σωστά ελεγμένο GridWorld.
-3. Μικρός, αιτιολογημένος αριθμός models και uncertainty types.
-4. Δίκαιο και reproducible protocol.
-5. Αξιόπιστα και συγκρίσιμα results.
-6. Polished research dashboard για execution, monitoring και interpretation.
-7. Advanced features μόνο όταν υπάρχει πραγματική ανάγκη.
+1. Clear and bounded research question.
+2. Simple and properly validated GridWorld.
+3. Small, justified set of models and uncertainty types.
+4. Fair and reproducible protocol.
+5. Reliable and comparable results.
+6. Polished research dashboard for execution, monitoring, and interpretation.
+7. Advanced features only when they solve a real need.
 
-## Κανόνας για τις παλιές συνομιλίες
+## Old-conversation rule
 
-Τα exports των παλιών συνομιλιών χρησιμοποιήθηκαν μόνο για ιστορικό και context. Δεν αποτελούν επιλεγμένα δεδομένα, shortlist, specification ή απόδειξη προτίμησης. Models, GridWorld implementation, metrics, stack, hyperparameters και experimental design αξιολογούνται εκ νέου με σύγχρονη έρευνα και πραγματικά στοιχεία.
+Old conversation exports were used only for historical context. They do not establish selected data, a shortlist, a specification, or evidence of preference. Models, GridWorld implementation, metrics, stack, hyperparameters, and experimental design are evaluated again using current research and real evidence.
 
-## Τρέχουσα φάση
+## Current phase
 
-Το bootstrap έχει ολοκληρωθεί. Η πρώτη πλήρης βιβλιογραφική επιστημονική διαλογή έχει επίσης ολοκληρωθεί στο `ThesisBibliography`: 486/486 ενεργές πηγές έχουν τελική απόφαση και 104 επιλεγμένες πηγές διαθέτουν verified citation-ready evidence.
+Bootstrap is complete. The first complete scientific bibliography selection is also complete in `ThesisBibliography`: **486/486 active sources** have a final decision and **104 selected sources** have verified citation-ready evidence.
 
-Δεν έχει ξεκινήσει η κύρια εφαρμογή, η υλοποίηση models, τα final experiments ή η κανονική συγγραφή αποτελεσμάτων.
+The main application, model implementation, final experiments, and normal results writing have not started.
 
-Η επόμενη φάση ξεκινά με:
+The next phase begins with:
 
-1. εισαγωγή του verified bibliography package και αξιοποίηση των αναλύσεων/evidence για research framing,
-2. αυτόματη απογραφή του πραγματικού hardware/software,
-3. fresh GridWorld landscape review και σύγκριση reuse/adapt/custom,
-4. νέα διαμόρφωση research questions, hypotheses, uncertainty taxonomy, models και metrics,
-5. μικρό και διαχειρίσιμο pilot protocol,
-6. independent core πριν από dashboard,
-7. dashboard feature set περιορισμένο στις πραγματικές ανάγκες της διπλωματικής.
+1. synchronizing/importing the verified bibliography package and using its analyses/evidence for research framing,
+2. automatically inventorying the actual hardware/software environment,
+3. performing a fresh GridWorld landscape review and comparing reuse/adapt/custom options,
+4. defining the research questions, hypotheses, uncertainty taxonomy, models, and metrics from current evidence,
+5. defining a small and manageable pilot protocol,
+6. building an independent research core, with a lightweight debug/visualization surface only when useful for validation,
+7. limiting the final polished dashboard feature set to the real needs of the thesis.
 
-Δεν απαιτείται παλιός κώδικας. Εξωτερικός GridWorld κώδικας ενσωματώνεται μόνο μετά από code, license, maintenance, compatibility και prototype audit.
+Old code is not required. External GridWorld code is integrated only after code, license, maintenance, compatibility, and prototype review.
 
-Η επίσημη αίτηση υπάρχει στο `thesis/source-material/GiannakarasMariosThesisApplication.pdf`. Ο χρήστης επιβεβαίωσε ότι είναι το ίδιο επίσημο αρχείο που δόθηκε για ανάλυση. Το Codex πρέπει να υπολογίσει και να καταγράψει το SHA-256 μετά το clone.
+The official application is stored at `thesis/source-material/GiannakarasMariosThesisApplication.pdf`. The user confirmed that it is the authoritative file provided for analysis. Codex must calculate and record the repository copy's SHA-256 after clone/system access.
 
-## Τρόπος λειτουργίας
+## Operating model
 
-Η πρακτική σειρά είναι απλή:
+The practical sequence is intentionally simple:
 
-1. Χρησιμοποιούνται οι verified βιβλιογραφικές αναλύσεις και, στα καθορισμένα freshness gates, επαναλαμβάνεται στο `ThesisBibliography` η αναζήτηση για νεότερη σχετική έρευνα.
-2. Κατασκευάζεται μικρός λειτουργικός πυρήνας και πρώιμο visual/debug UI.
-3. Προστίθενται μόνο χρήσιμα settings, logs, charts, history, comparison και exports.
-4. Γίνονται validation και pilots, παγώνει το final protocol και εκτελούνται τα τελικά πειράματα.
-5. Συλλέγονται ταυτόχρονα results, screenshots, figures, tables, videos και writing notes.
-6. Γράφεται η διπλωματική από verified bibliography και frozen evidence.
-7. Δημιουργούνται PowerPoint, visuals, key points και presentation script από τα ίδια εγκεκριμένα στοιχεία.
+1. Use the verified bibliography analyses and repeat freshness searches in `ThesisBibliography` at the defined literature gates.
+2. Build a small working research core and, when useful, an early visual/debug surface for validation.
+3. Add only useful settings, logs, charts, history, comparison, and exports.
+4. Validate the system, run pilots, freeze the final protocol, and execute final experiments.
+5. Collect results, screenshots, figures, tables, videos, and writing notes while the work is being performed.
+6. Write the thesis from verified bibliography and frozen evidence.
+7. Create the PowerPoint, visuals, key points, and presentation script from the same verified evidence.
 
-Το Codex εκτελεί bounded tasks. Το GitHub τρέχει automated checks. Το ChatGPT ελέγχει research, diffs, naming, comments, tests, results και merges. Ο χρήστης δεν χρειάζεται να εγκρίνει routine GitHub operations· συμμετέχει στις πραγματικές ακαδημαϊκές ή προϊόντικές αποφάσεις και παρέχει feedback από το σύστημα και τον επιβλέποντα.
+Codex executes bounded tasks. GitHub runs automated checks. ChatGPT reviews research, diffs, naming, comments, tests, results, and merges. The user does not need to approve routine GitHub operations; the user is involved in genuinely academic/product decisions and provides feedback from the system and supervisor.
 
-Η αναλυτική διαδικασία βρίσκεται στο `docs/context/EXECUTION_WORKFLOW.md`.
+The detailed process is defined in `docs/context/EXECUTION_WORKFLOW.md`.
 
-## Ανάγνωση από agents
+## Agent reading policy
 
-Πριν από κάθε ουσιαστική εργασία διαβάζονται μόνο:
+Before substantial work, read only:
 
 1. `AGENTS.md`
 2. `README.md`
@@ -81,49 +87,49 @@
 4. `docs/context/PROJECT_CONTEXT.md`
 5. `docs/context/CONFIRMED_REQUIREMENTS.md`
 
-Έπειτα διαβάζονται μόνο τα task-specific αρχεία που ορίζει το `AGENTS.md`. Πλήρης επανέλεγχος ολόκληρου του repository γίνεται μόνο σε bootstrap, repository-wide audit ή μεγάλη διατομεακή αλλαγή.
+Then read only the task-specific files defined by `AGENTS.md`. A full repository reread is reserved for bootstrap, repository-wide audits, or major cross-cutting changes.
 
-## Βιβλιογραφική έρευνα και παρόμοιες μελέτες
+## Bibliography research and related work
 
-Η ενεργή πολιτική βρίσκεται στα:
+The active policy is defined in:
 
 - `bibliography/README.md`
 - `docs/context/BIBLIOGRAPHY_INTEGRATION.md`
 
-Το `MariosGiannakaras/ThesisBibliography` είναι η μοναδική canonical πηγή για acquisition, original PDFs, conversion/OCR, full source Markdown, scientific analysis, citation-ready evidence και source selection.
+`MariosGiannakaras/ThesisBibliography` is the only canonical repository for source acquisition, original PDFs, conversion/OCR, full-source Markdown, scientific analysis, citation-ready evidence, and source selection.
 
-Το παρόν repository εισάγει μόνο το verified generated package στο:
+This repository imports only the verified generated package into:
 
 ```text
 research/bibliography/
 ```
 
-Η εισαγωγή είναι δεμένη με ακριβές `SOURCE_COMMIT`, αποκλείει PDF/LFS/raw/unverified material, ελέγχεται με SHA-256 integrity manifest και γίνεται μέσω Pull Request. Canonical citations χρησιμοποιούν `SRC-XXXXXXXXXX` identifiers που πρέπει να υπάρχουν στο imported manifest.
+The import is bound to an exact `SOURCE_COMMIT`, excludes PDFs/LFS/raw/unverified material, is protected by a SHA-256 integrity manifest, and is synchronized through a Pull Request. Canonical citations use `SRC-XXXXXXXXXX` identifiers that must exist in the imported manifest.
 
-Η κανονική σειρά ανάγνωσης εδώ είναι:
+The normal reading order in this repository is:
 
-> imported evidence → imported analysis → canonical source στο `ThesisBibliography` όταν απαιτείται επιπλέον context ή πρωτογενής επαλήθευση
+> imported evidence → imported analysis → canonical source in `ThesisBibliography` when additional context or primary-text verification is required
 
-Το scientific source text και το citation-ready evidence παραμένουν στην αυθεντική γλώσσα της πηγής. Μετάφραση για το ελληνικό τελικό κείμενο γίνεται μόνο κατά τη συγγραφή και δεν αντικαθιστά το canonical evidence.
+Scientific source text and citation-ready evidence remain in the original source language. Translation for the final Greek thesis occurs only during writing and does not replace canonical evidence.
 
-Οι literature refresh gates πριν από protocol freeze, Related Work/Methodology/Discussion και τελική υποβολή παραμένουν υποχρεωτικοί, αλλά εκτελούνται στο `ThesisBibliography` και εισάγονται εδώ μόνο με νέο verified export.
+Literature refresh gates before protocol freeze, Related Work/Methodology/Discussion, and final submission remain mandatory. They are executed in `ThesisBibliography` and enter this repository only through a new verified export/synchronization.
 
-## Χάρτης φακέλων
+## Repository map
 
 ```text
 app/                                  Polished local dashboard/control layer
-core/                                 Ανεξάρτητος ερευνητικός και πειραματικός πυρήνας
-experiments/                          Experiment definitions, runners και manifests
-configs/                              Version-controlled configurations
-notebooks/                            Ελεγχόμενα exploratory notebooks, όχι source of truth
-scripts/                              Reproducibility, processing και maintenance scripts
-tests/                                Unit, integration, statistical και reproducibility tests
+core/                                 Independent research and experimental core
+experiments/                          Experiment definitions, runners, and manifests
+configs/                              Version-controlled validated configurations
+notebooks/                            Controlled exploratory notebooks; not source of truth
+scripts/                              Reproducibility, processing, and maintenance scripts
+tests/                                Unit, integration, statistical, and reproducibility tests
 
-data/raw/                             Πρωτογενή δεδομένα και immutable run outputs
-data/processed/                       Παράγωγα δεδομένα με provenance
-results/runs/                         Run outputs και manifests
+data/raw/                             Primary data and immutable run inputs/outputs
+data/processed/                       Derived data with provenance
+results/runs/                         Run outputs and manifests
 results/summaries/                    Aggregated analysis outputs
-results/thesis-final/                 Frozen evidence set
+results/thesis-final/                 Frozen thesis evidence set
 artifacts/figures/                    Reproducible figures
 artifacts/tables/                     Reproducible tables
 artifacts/exports/                    CSV/JSON/report exports
@@ -131,29 +137,29 @@ artifacts/exports/                    CSV/JSON/report exports
 research/bibliography/                Generated verified export from ThesisBibliography
 bibliography/                         Integration policy and retired compatibility markers only
 
-thesis/source-material/               Επίσημη αίτηση και πρωτογενές υλικό
-thesis/chapters/                      Drafts ανά κεφάλαιο
-thesis/final/                         Τελικό Word και συνοδευτικά παραδοτέα
+thesis/source-material/               Official application and primary thesis material
+thesis/chapters/                      Chapter drafts
+thesis/final/                         Final Word document and accompanying deliverables
 
-docs/context/                         Source of truth, scope, requirements και blockers
-docs/research/                        Research framing και selection workspaces
-docs/experiments/                     Protocol, schemas και provenance
-docs/architecture/                    Bounded application και UI requirements
-docs/thesis/                          Writing και formatting requirements
-docs/university/                      Official UniWA/department requirements
-docs/decisions/                       Decision log και ADRs
+docs/context/                         Source of truth, scope, requirements, and blockers
+docs/research/                        Research framing and selection workspaces
+docs/experiments/                     Protocol, schemas, and provenance
+docs/architecture/                    Bounded application and UI requirements
+docs/thesis/                          Writing and formatting requirements
+docs/university/                      Official UniWA/Department requirements
+docs/decisions/                       Decision log and ADRs
 ```
 
-## Τι πρέπει να προστεθεί αργότερα από τον χρήστη
+## User-provided material still needed later
 
-- Τυχόν ειδικές οδηγίες του επιβλέποντα.
-- Η ισχύουσα έκδοση του επίσημου Word template, όταν βρεθεί ή δοθεί.
-- Η προθεσμία και η διαδικασία υποβολής/παρουσίασης, όταν γίνουν γνωστές.
+- Any specific supervisor instructions.
+- The current official Word template when located or provided.
+- Submission/presentation deadline and procedure when known.
 
-Νέες βιβλιογραφικές πηγές ή αρχεία προστίθενται στο `ThesisBibliography`, όχι σε αυτό το repository.
+New bibliography sources or files are added to `ThesisBibliography`, not to this repository.
 
-Το system inventory, η επαλήθευση SHA-256 της επίσημης αίτησης και η GridWorld landscape research είναι εργασίες του Codex.
+System inventory, SHA-256 verification of the official application, and the GridWorld landscape review are Codex tasks.
 
-## Επιστημονική ακεραιότητα
+## Scientific integrity
 
-Απαγορεύεται η επινόηση βιβλιογραφίας, DOI, data, runs, metrics, progress, logs, figures, results ή conclusions. Κάθε τελικό αποτέλεσμα συνδέεται με πραγματικό run, configuration, source data, processing code και Git commit.
+Do not fabricate bibliography entries, DOI values, data, runs, metrics, progress, logs, figures, results, or conclusions. Every final result must trace to a real run, configuration, source data, processing code, and Git commit.

@@ -4,10 +4,10 @@ Use this file for project-wide research and architecture decisions. Detailed alt
 
 ## DEC-001 — Private repository as source of truth
 - **Date:** 2026-07-29
-- **Status:** Accepted
-- **Decision:** `MariosGiannakaras/resilient-ai-agents-thesis` is the permanent version-controlled source of truth.
+- **Status:** Accepted; bibliography boundary clarified by DEC-017
+- **Decision:** `MariosGiannakaras/resilient-ai-agents-thesis` is the permanent version-controlled source of truth for thesis context, implementation, experiments, results, writing, and presentation.
 - **Rationale:** Decisions and evidence must remain available independently of chat history.
-- **Consequences:** Context files must be maintained; raw chats remain excluded.
+- **Consequences:** Context files must be maintained; raw chats remain excluded. The complete bibliography lifecycle is the explicit source-of-truth exception defined by DEC-017.
 
 ## DEC-002 — Official application controls academic identity
 - **Date:** 2026-07-29
@@ -22,11 +22,12 @@ Use this file for project-wide research and architecture decisions. Detailed alt
 - **Decision:** Store the original application unchanged in the private repository.
 - **Consequences:** Repository remains private; public release would require redaction.
 
-## DEC-004 — Research core precedes dashboard
+## DEC-004 — Research core precedes the polished dashboard
 - **Date:** 2026-07-29
-- **Status:** Accepted
-- **Decision:** Validate independent core/CLI and pilot runs before dashboard implementation.
-- **Rationale:** Scientific correctness and reproducibility precede presentation.
+- **Status:** Accepted; clarified by DEC-019
+- **Decision:** Validate the independent core/CLI and pilot evidence before implementing the polished final dashboard.
+- **Rationale:** Scientific correctness and reproducibility precede presentation-layer expansion.
+- **Clarification:** DEC-019 permits a lightweight debug/visualization surface during core development when it helps validate behavior and does not duplicate scientific logic.
 
 ## DEC-005 — No final model, metric or experimental matrix yet
 - **Date:** 2026-07-29
@@ -86,19 +87,18 @@ Use this file for project-wide research and architecture decisions. Detailed alt
 
 ## DEC-014 — Lean agent workflow, staged literature refresh and progressive disclosure
 - **Date:** 2026-07-29
-- **Status:** Accepted implementation of the user's audit/remediation request
+- **Status:** Accepted; local acquisition clause superseded by DEC-017
 - **Context:** An external audit correctly identified risks of repeated whole-repository analysis, an oversized first Codex output, stale PDF wording and possible UI drift toward telemetry/provenance-heavy platform behavior. The user also required systematic research of comparable studies and repetition of that research during thesis writing.
 - **Decision:**
   - Agents always read a five-file core and add only task-specific files.
   - The first Codex mission produces four integrated outputs rather than eleven separate reports.
   - The fourteen roadmap phases are checkpoints and may be executed as eight bounded work blocks.
   - Literature search is repeated during initial framing, before protocol freeze, before Related Work/Methodology/Discussion, and before submission.
-  - Lawful open-access or author-provided papers may be downloaded automatically with source metadata and SHA-256; paywalled papers require lawful user acquisition.
   - UI telemetry is a lightweight current snapshot. Full checksums, manifests, Git/runtime details and provenance chains use progressive disclosure or exports.
+  - Bibliography acquisition and verification follow the canonical architecture in DEC-017; the earlier local-download implementation is no longer active.
 - **Rationale:** Preserve scientific rigor and source traceability while reducing repeated analysis, process overhead, UI clutter and production-platform scope.
-- **Alternatives rejected:** whole-repository reread before every task; one large report per subtopic; one-time literature search; hidden provenance; full observability dashboard; unverified or paywall-bypassing downloads.
-- **Consequences:** The first research package remains comprehensive but reviewable. The written thesis must use refreshed, fully read sources. Primary UI workflows remain clean while detailed evidence remains available.
-- **Files:** `AGENTS.md`, `README.md`, `CODEX_BOOTSTRAP_PROMPT.md`, `IMPLEMENTATION_ROADMAP.md`, `SOURCE_REGISTER.md`, `docs/architecture/`, `docs/research/RELATED_WORK_EVIDENCE_MATRIX.md`, `bibliography/SOURCE_ACQUISITION_WORKFLOW.md`, `scripts/download_open_access_bibliography.py`.
+- **Alternatives rejected:** whole-repository reread before every task; one large report per subtopic; one-time literature search; hidden provenance; full observability dashboard; unverified or paywall-bypassing sources.
+- **Consequences:** The first research package remains comprehensive but reviewable. The written thesis must use refreshed, verified sources. Primary UI workflows remain clean while detailed evidence remains available.
 
 ## DEC-015 — Automated technical execution and review without routine user GitHub approval
 - **Date:** 2026-07-29
@@ -108,7 +108,7 @@ Use this file for project-wide research and architecture decisions. Detailed alt
   - The user supplies goals, observed results and genuinely academic/product decisions, but is not the routine GitHub approver.
   - ChatGPT scopes tasks, reviews research and repository evidence, addresses or delegates corrections and decides technical merge readiness.
   - Codex executes bounded tasks and produces branches, tests, documentation, commits and Pull Requests; it never self-approves or silently broadens scope.
-  - GitHub Actions executes repeatable checks on relevant Pull Requests. CI is necessary but not sufficient; test quality and scientific correctness receive human/ChatGPT review.
+  - GitHub Actions executes repeatable checks on relevant Pull Requests. CI is necessary but not sufficient; test quality and scientific correctness receive ChatGPT review.
   - Every substantial change uses descriptive naming, reasoned comments, structured commit bodies and the repository Pull Request template.
 - **Rationale:** Separate execution from review, reduce user overhead, improve consistency and catch defects before they affect experiments or thesis evidence.
 - **Alternatives rejected:** user-managed Git approvals; Codex self-review and self-merge; direct-to-main implementation; test-passing as the sole acceptance criterion; production-grade CI/CD.
@@ -117,19 +117,52 @@ Use this file for project-wide research and architecture decisions. Detailed alt
 
 ## DEC-016 — Original PDF archive with Markdown-first bibliography workflow
 - **Date:** 2026-07-29
-- **Status:** Accepted by user
-- **Context:** The user wants original source PDFs retained for safety, while routine research and writing should use searchable full Markdown, structured source notes and only the useful thematic evidence.
+- **Status:** **SUPERSEDED by DEC-017**
+- **Historical context:** This decision established local PDF archival copies, complete Markdown, source-centric notes and thematic excerpts inside this thesis repository.
+- **Supersession:** The retention and Markdown-first principles were moved into the dedicated canonical bibliography repository. The thesis repository must no longer ingest or curate primary bibliography material directly.
+- **Historical alternatives rejected:** discard PDFs after conversion; use PDFs as the normal working corpus; keep only summaries; trust AI summaries without source verification.
+- **Current rule:** Follow DEC-017 and `docs/context/BIBLIOGRAPHY_INTEGRATION.md`.
+
+## DEC-017 — Dedicated canonical ThesisBibliography repository and controlled import
+- **Date recorded:** 2026-08-02
+- **Status:** Accepted / current architecture
+- **Context:** Bibliography acquisition, preservation, conversion, analysis and evidence extraction form a substantial lifecycle that should remain complete and independently auditable without bloating or duplicating the thesis implementation repository.
 - **Decision:**
-  - Retain lawfully acquired original PDFs unchanged under `bibliography/original/` when rights and repository limits permit.
-  - Treat PDFs as archival verification copies, not routine agent input.
-  - Store complete searchable Markdown under `bibliography/markdown/` with the same basename and explicit linkage to the PDF checksum.
-  - Store one structured source-centric note per relevant source and topic-centric useful excerpts separately.
-  - Classify sources semantically with multiple topics rather than duplicating files in many folders.
-  - Process user-uploaded PDF/Markdown/NotebookLM batches immediately: inspect content, resolve metadata, rename, classify, detect duplicates, create notes/excerpts and identify evidence gaps.
-- **Rationale:** Preserve the original evidence while keeping daily research, writing and presentation preparation fast, searchable and free of unnecessary repeated reading.
-- **Alternatives rejected:** discard PDFs after conversion; use PDFs as the normal working corpus; keep only summaries; duplicate one source across topic folders; trust NotebookLM/AI summaries without source verification.
-- **Consequences:** The repository may contain justified bibliography binaries, but they are excluded from routine reading. Exact quotations, page references, figures, tables and conversion-sensitive claims remain verifiable against the PDF.
-- **Files:** `bibliography/README.md`, `bibliography/original/`, `bibliography/markdown/`, `bibliography/notes/`, `bibliography/excerpts/`, `bibliography/SOURCE_ACQUISITION_WORKFLOW.md`, `README.md`, `docs/context/EXECUTION_WORKFLOW.md`.
+  - `MariosGiannakaras/ThesisBibliography` is the canonical source of truth for source discovery, metadata, original PDFs, conversion/OCR, full-source Markdown, scientific analysis, verified citation-ready evidence, inclusion/exclusion decisions and controlled export.
+  - `MariosGiannakaras/resilient-ai-agents-thesis` consumes only the verified generated package under `research/bibliography/`.
+  - The import is bound to an exact `SOURCE_COMMIT` and `IMPORT_INTEGRITY.json`; canonical source references use exported `SRC-XXXXXXXXXX` identifiers.
+  - Synchronization is pull-based and reviewable through a Pull Request. There is no submodule and no write path from the thesis repository into `ThesisBibliography`.
+  - PDFs, raw originals, conversion workspaces, unverified analyses and unverified evidence are not imported into the thesis repository.
+  - New user-provided PDF/Markdown/NotebookLM bibliography material is processed in `ThesisBibliography`, not here.
+  - Source-derived scientific evidence remains in the original source language.
+- **Rationale:** Preserve complete source provenance and reusable bibliography analysis while keeping the thesis repository bounded, deterministic and focused on research design, implementation, experiments, results and writing.
+- **Alternatives rejected:** duplicated bibliography lifecycle in both repositories; Git submodule coupling; thesis-repository write access into the bibliography repository; manual copying of selected evidence; translation of canonical source evidence.
+- **Consequences:** Legacy `bibliography/original/`, `bibliography/markdown/`, `bibliography/notes/`, `bibliography/excerpts/` and local acquisition instructions are compatibility/history markers only. Freshness gates execute in `ThesisBibliography` and enter this repository through a new verified export/sync.
+- **Files:** `docs/context/BIBLIOGRAPHY_INTEGRATION.md`, `bibliography/README.md`, `research/bibliography/`, synchronization/validation scripts and workflows, `AGENTS.md`, `README.md`.
+
+## DEC-018 — English operational and technical repository documentation
+- **Date:** 2026-08-02
+- **Status:** Accepted by user
+- **Context:** The user does not require repository documentation to be in Greek and prefers Codex-facing material to use the language most consistent with code, APIs, tests and technical documentation.
+- **Decision:**
+  - Repository-authored operational and technical documentation is written in English.
+  - Agent prompts/instructions, architecture/protocol/test documentation, code comments, identifiers, filenames, branches, commits and Pull Request text use English.
+  - Exact official Greek text is preserved where it identifies or quotes an authoritative source, including the official Greek thesis title.
+  - Scientific source-derived text and citation-ready evidence remain in the original language of the source and are not translated merely for repository uniformity.
+  - The final thesis remains a Greek Microsoft Word deliverable unless official guidance changes.
+- **Rationale:** Use a single technical language for clearer agent execution and lower terminology ambiguity without altering primary evidence or official academic wording.
+- **Consequences:** Existing mixed-language operational files are normalized progressively; source material and generated canonical bibliography evidence are excluded from translation.
+
+## DEC-019 — Early debug visualization allowed; polished dashboard remains gated
+- **Date:** 2026-08-02
+- **Status:** Accepted by user
+- **Context:** A basic visual surface is useful early for observing GridWorld and agent behavior, debugging, and understanding whether the system works, while a polished application before scientific validation would be premature.
+- **Decision:**
+  - A lightweight debug/visualization surface may be implemented alongside the research core when it directly assists validation.
+  - It must consume the same core state/trace interfaces and must not duplicate scientific logic or become a second execution path.
+  - The polished bounded dashboard and final user workflows remain gated behind a validated independent core and pilot evidence.
+- **Rationale:** Improve development observability and reduce debugging friction without making UI work drive the scientific architecture.
+- **Consequences:** DEC-004 is interpreted as a gate on the polished final dashboard, not a ban on small validation-oriented visualization.
 
 ## Pending decisions
 
