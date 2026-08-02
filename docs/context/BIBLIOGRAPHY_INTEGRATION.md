@@ -43,17 +43,21 @@ Every canonical `SRC-*` identifier used in thesis repository text must exist in 
 
 ## Synchronization
 
-Synchronization is intentionally pull-based:
+Synchronization is intentionally pull-based. It can start in either of two controlled ways:
 
-1. A human or authorized automation dispatches `.github/workflows/sync-bibliography.yml` with a bibliography ref.
-2. The workflow checks out `ThesisBibliography` using the read-only `BIBLIOGRAPHY_SYNC_TOKEN` secret.
-3. The canonical exporter runs in that exact checkout.
-4. `scripts/bibliography_import.py` validates the exported package and transactionally replaces only `research/bibliography/`.
-5. `scripts/validate_bibliography_usage.py` verifies package integrity and source-ID references.
-6. The workflow opens a Pull Request to this repository.
-7. Normal CI/review applies before merge.
+- **Pinned/manual:** dispatch `.github/workflows/sync-bibliography.yml` with a specific bibliography branch, tag, or commit.
+- **Latest-main automation:** change `.bibliography-sync-trigger` on `main`; this synchronizes the current `ThesisBibliography/main` head.
 
-A bibliography synchronization never merges directly to `main`.
+After either trigger:
+
+1. The workflow checks out `ThesisBibliography` using the read-only `BIBLIOGRAPHY_SYNC_TOKEN` secret.
+2. The canonical exporter runs in that exact checkout.
+3. `scripts/bibliography_import.py` validates the exported package and transactionally replaces only `research/bibliography/`.
+4. `scripts/validate_bibliography_usage.py` verifies package integrity and source-ID references.
+5. The workflow opens a Pull Request to this repository.
+6. Normal CI/review applies before merge.
+
+A bibliography synchronization never merges directly to `main`. The trigger file contains no bibliography data and exists only to request a latest-main synchronization when manual workflow dispatch is not available to the automation client.
 
 ## Freshness gates
 
