@@ -1,10 +1,10 @@
-# Codex Bootstrap Prompt
+# Codex Research Bootstrap Prompt
 
-Ανάλαβε την ερευνητική αποσαφήνιση του private repository `MariosGiannakaras/resilient-ai-agents-thesis` και σταμάτα πριν από prototype ή κύρια implementation.
+Perform the research clarification for the private repository `MariosGiannakaras/resilient-ai-agents-thesis` and stop before prototype or main implementation.
 
-## Ανάγνωση
+## Required reading
 
-Διάβασε πρώτα:
+Read first:
 
 1. `AGENTS.md`
 2. `README.md`
@@ -12,98 +12,120 @@
 4. `docs/context/PROJECT_CONTEXT.md`
 5. `docs/context/CONFIRMED_REQUIREMENTS.md`
 
-Έπειτα διάβασε μόνο τα task-specific αρχεία που ορίζει το `AGENTS.md`. Μην επαναλάβεις πλήρη repository audit χωρίς συγκεκριμένη ανάγκη.
+Then read only the task-specific files defined by `AGENTS.md`. Do not repeat a full repository audit without a specific reason.
 
-Οι παλιές συνομιλίες είναι μόνο ιστορικό/context. Δεν αποτελούν model shortlist, GridWorld specification, stack preference, metric selection, feature backlog ή experimental design.
+Old conversations are historical context only. They do not define a model shortlist, GridWorld specification, stack preference, metric selection, feature backlog, or experimental design.
 
 ## Project direction
 
-Ο βασικός στόχος είναι μια σωστή, επιστημονικά επαρκής και ολοκληρώσιμη διπλωματική.
+The primary objective is a correct, scientifically adequate, and realistically completable thesis.
 
-Η εφαρμογή δεν είναι production-grade platform. Παραμένει σημαντικό παραδοτέο και πρέπει τελικά να είναι polished, modern και εύχρηστο research dashboard για configuration, execution, monitoring, GridWorld observation, history, comparison και export χωρίς code/console. Κράτησε περιορισμένη εσωτερική πολυπλοκότητα και μόνο justified features.
+The application is not a production-grade platform. It remains an important deliverable and must eventually provide a polished, modern, easy-to-use research dashboard for configuration, execution, monitoring, GridWorld observation, history, comparison, and export without code/console commands. Keep internal complexity bounded and add only justified features.
 
-## Πριν από οποιαδήποτε implementation
+A lightweight debug/visualization surface may be used later during core development if it helps validate behavior. Do not build the polished dashboard before validated core work and pilot evidence.
 
-- Εξέτασε την official application και κατέγραψε το SHA-256 του repository copy.
-- Κάνε automated inventory: CPU, cores, RAM, GPU/VRAM, OS, drivers, runtimes, storage, tools και supported acceleration.
-- Εξέτασε την πραγματική bibliography όταν προστεθεί.
-- Κάνε στοχευμένη έρευνα σε verified primary/peer-reviewed sources και official documentation.
-- Κάνε fresh GridWorld landscape review και σύγκρινε reuse, adapt/wrap και minimal custom implementation.
-- Μην κατεβάσεις ή ενσωματώσεις third-party GridWorld code πριν από source/license/maintenance/suitability audit, small prototype και ADR.
+## Bibliography boundary
 
-## Πρώτη αποστολή — τέσσερα συνολικά outputs
+`MariosGiannakaras/ThesisBibliography` is the canonical source of truth for source discovery, PDFs, conversion/OCR, scientific analysis, verified evidence, and source selection.
 
-Μην ξεκινήσεις GridWorld implementation, model implementation, experiment runner, core ή dashboard. Παράδωσε ένα ενιαίο, σύντομο και reviewable evidence package με τα ακόλουθα:
+This repository must not download or curate new bibliography sources locally.
 
-### 1. Source και system validation
+Use only the verified generated import under `research/bibliography/` and verify:
 
-- Κατάσταση official application και repository SHA-256.
-- Κατάσταση πραγματικής bibliography και ελλείψεις.
+- `SOURCE_COMMIT`,
+- `IMPORT_INTEGRITY.json`,
+- `manifest.csv`,
+- the relevant imported analyses and evidence,
+- canonical `SRC-XXXXXXXXXX` references.
+
+If the import is missing or stale, report the exact synchronization state and use the controlled workflow defined in `docs/context/BIBLIOGRAPHY_INTEGRATION.md`. Do not work around the boundary by copying papers into this repository.
+
+If fresh literature research identifies a real gap, record it as a `ThesisBibliography` freshness/acquisition task. Source-derived scientific text and citation-ready evidence remain in the original language of the source.
+
+## Before any implementation
+
+- Inspect the official application and record the SHA-256 of the repository copy.
+- Perform automated inventory of CPU, cores, RAM, GPU/VRAM, OS, drivers, runtimes, storage, tools, and supported acceleration.
+- Validate the current bibliography import and exact `SOURCE_COMMIT`.
+- Synthesize the directly relevant verified bibliography evidence instead of repeating broad source discovery from scratch.
+- Perform a fresh GridWorld technical landscape review and compare reuse, adapt/wrap, and minimal custom implementation.
+- Do not integrate third-party GridWorld code before source/license/maintenance/suitability review, a small prototype, and an ADR.
+
+## First mission — four integrated outputs
+
+Do not start GridWorld implementation, model implementation, experiment runner, research core, or polished dashboard. Produce one concise, reviewable evidence package with the following sections.
+
+### 1. Source and system validation
+
+- Official application status and repository SHA-256.
+- Bibliography import status, exact `SOURCE_COMMIT`, integrity status, and any synchronization blocker.
 - Automated hardware/software inventory.
-- Μικρό capability benchmark plan μόνο για αποφάσεις που εξαρτώνται από compute.
+- Small capability-benchmark plan only for decisions that actually depend on compute.
 
 ### 2. Bounded research design
 
-Πρότεινε ως ένα συνεκτικό design:
+Propose one coherent design containing:
 
-- ένα σαφές main research question και μόνο τα απαραίτητα secondary questions/hypotheses,
-- minimal uncertainty taxonomy και environment direction,
-- μικρό scientifically useful model/baseline set με inclusion/exclusion rationale,
-- primary/secondary/diagnostic metrics με operational definitions,
-- pilot outline για correctness, runtime, variance και metric sensitivity,
-- μικρό dashboard feature budget: required, justified-later, out-of-scope.
+- one clear main research question and only necessary secondary questions/hypotheses,
+- minimal uncertainty taxonomy and environment direction,
+- small scientifically useful model/baseline set with inclusion/exclusion rationale,
+- primary/secondary/diagnostic metrics with operational definitions,
+- pilot outline for correctness, runtime, variance, and metric sensitivity,
+- small dashboard feature budget: required, justified-later, out-of-scope.
 
-Μην δημιουργήσεις ξεχωριστές εκτενείς αναφορές για κάθε υποενότητα. Δείξε τις εξαρτήσεις και τα trade-offs μέσα σε μία συνοπτική πρόταση.
+Ground each decision-driving claim in imported verified `SRC-*` evidence where applicable. Do not create separate long reports for every subsection; show dependencies and trade-offs in one integrated proposal.
 
-### 3. GridWorld και related-work recommendation
+### 3. GridWorld and related-work recommendation
 
-- Fresh build/reuse/adapt matrix με maintenance, license, API, determinism, extensibility, testability, dependencies και integration cost.
-- Recommendation μόνο για το ποια μία ή δύο επιλογές αξίζουν small prototype· όχι integration.
-- Structured review 6–10 άμεσα σχετικών πρωτογενών μελετών. Για καθεμία κατέγραψε setting, method, experimental design, main results, limitations και συγκεκριμένη relevance για τη διπλωματική.
-- Ενημέρωσε `docs/research/RELATED_WORK_EVIDENCE_MATRIX.md`.
-- Κατέβασε μόνο νόμιμα open-access/author-provided papers σύμφωνα με `bibliography/SOURCE_ACQUISITION_WORKFLOW.md`. Για paywalled πηγές κατέγραψε DOI και ζήτησε από τον χρήστη νόμιμη λήψη.
+- Fresh build/reuse/adapt matrix covering maintenance, license, API, determinism, extensibility, testability, dependencies, and integration cost.
+- Recommend only one or two options worth a small prototype; do not integrate them yet.
+- Review a focused set of directly relevant verified studies from the imported bibliography. For each study, record setting, method, experimental design, main results, limitations, and specific relevance to this thesis.
+- Use the current imported bibliography analyses/evidence as the authoritative related-work basis. Do not update the historical `RELATED_WORK_EVIDENCE_MATRIX.md` as if it were canonical evidence.
+- If a material literature gap is discovered, record the exact gap for follow-up in `ThesisBibliography` rather than acquiring sources here.
 
-### 4. Approval pack
+### 4. Decision/review package
 
-Παρουσίασε:
+Present:
 
-- τις προτεινόμενες αποφάσεις,
-- τις σημαντικές εναλλακτικές που απορρίφθηκαν και γιατί,
-- blockers και assumptions,
-- τα αρχεία που άλλαξαν,
-- το ακριβές επόμενο bounded prompt μετά την έγκριση.
+- proposed decisions,
+- important rejected alternatives and why,
+- blockers and assumptions,
+- files changed,
+- the exact next bounded implementation/research task after review.
 
-Ενημέρωσε μόνο τα σχετικά context, research, architecture, decision και changelog files.
+Update only relevant context, research, architecture, decision, and changelog files.
 
-## Κριτήρια αξιολόγησης
+## Evaluation criteria
 
-Η πρόταση πρέπει να είναι:
+The proposed design must be:
 
-- μικρή αρκετά ώστε να ολοκληρωθεί και να εξηγηθεί,
-- scientifically adequate για το official topic,
-- feasible στο measured hardware και στον διαθέσιμο χρόνο,
-- reproducible και testable,
-- ικανή να παράγει καθαρά συγκρίσιμα αποτελέσματα,
-- συμβατή με polished αλλά bounded dashboard.
+- small enough to complete and explain,
+- scientifically adequate for the official topic,
+- feasible on measured hardware and available time,
+- reproducible and testable,
+- capable of producing clear comparable results,
+- compatible with a polished but bounded dashboard.
 
-Απόρριψε εναλλακτικές που προσθέτουν models, uncertainty types, parameters, screens ή infrastructure χωρίς διακριτή ερευνητική ή thesis-delivery αξία.
+Reject alternatives that add models, uncertainty types, parameters, screens, or infrastructure without distinct research or thesis-delivery value.
 
 ## Mandatory rules
 
-- Official title unchanged.
-- Core works without UI.
-- Dashboard only after validated core and pilot evidence.
-- Multiple seeds/repetitions; no single-run comparison.
-- Clear separation of pilot, exploratory and final runs.
-- Failures, cancellations, interruptions and exclusions remain visible.
-- No fake progress, logs, metrics, data or results.
-- Raw results immutable with full backend provenance.
+- Keep official titles unchanged.
+- Keep repository-authored operational/technical documentation in English.
+- Keep scientific source-derived evidence in the original source language.
+- The research core must work without the UI.
+- A lightweight debug visualization is allowed later for validation; the polished dashboard remains gated behind validated core and pilot evidence.
+- Use multiple seeds/repetitions; no single-run comparison.
+- Keep pilot, exploratory, and final runs distinct.
+- Retain failures, cancellations, interruptions, and exclusions.
+- No fake progress, logs, metrics, data, or results.
+- Raw results are immutable and have complete backend provenance.
 - Telemetry remains a lightweight current snapshot, not a monitoring subsystem.
-- Checksums, manifests and detailed provenance use progressive disclosure or exports rather than cluttering primary views.
-- No fabricated bibliography, DOI, measurements or conclusions.
-- No historical-chat preference inheritance.
-- No production infrastructure or advanced feature without documented need.
-- Small controlled commits; no overengineering.
-- Final thesis in Greek Microsoft Word under current official guidance.
+- Checksums, manifests, and detailed provenance use progressive disclosure or exports rather than cluttering primary views.
+- Do not fabricate bibliography entries, DOI values, measurements, or conclusions.
+- Do not inherit preferences from historical chats.
+- Do not add production infrastructure or advanced features without documented need.
+- Use small controlled commits and avoid overengineering.
+- The final thesis is a Greek Microsoft Word deliverable under current official guidance.
 
-Σταμάτα μετά την παρουσίαση της πρώτης αποστολής και περίμενε έγκριση πριν από prototype ή implementation.
+Stop after presenting the first mission package. Do not start prototype or implementation until the research-direction decisions have been reviewed.
