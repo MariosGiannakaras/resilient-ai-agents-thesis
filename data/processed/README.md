@@ -1,3 +1,3 @@
 # Processed data
 
-Παράγωγα δεδομένα με σύνδεση σε raw sources, processing script, parameters και commit.
+Derived data with explicit links to raw sources, processing script, parameters, and Git commit.
