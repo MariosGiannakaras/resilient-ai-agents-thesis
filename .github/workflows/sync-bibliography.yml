@@ -12,6 +12,10 @@ on:
     branches: [main]
     paths:
       - ".bibliography-sync-trigger"
+  pull_request:
+    branches: [main]
+    paths:
+      - ".bibliography-sync-trigger"
 
 permissions:
   contents: write
@@ -23,6 +27,7 @@ concurrency:
 
 jobs:
   sync:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     env:
       BIBLIOGRAPHY_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.bibliography_ref || 'main' }}
