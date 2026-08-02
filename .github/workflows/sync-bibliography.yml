@@ -94,7 +94,7 @@ jobs:
           SOURCE_SHORT: ${{ steps.source.outputs.short }}
         shell: bash
         run: |
-          if git diff --quiet -- research/bibliography; then
+          if [ -z "$(git status --porcelain -- research/bibliography)" ]; then
             echo "research/bibliography is already synchronized to the generated package."
             exit 0
           fi
