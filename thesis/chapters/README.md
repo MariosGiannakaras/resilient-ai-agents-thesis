@@ -1,3 +1,3 @@
 # Chapter sources
 
-Κείμενα κεφαλαίων σε επεξεργάσιμη μορφή. Δεν επιτρέπονται fabricated citations ή placeholder results που μοιάζουν πραγματικά.
+Editable chapter source text. Fabricated citations and placeholder results that could be mistaken for real evidence are forbidden.
