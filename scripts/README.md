@@ -1,3 +1,3 @@
 # Scripts
 
-Reproducibility, data processing, figure/table generation και repository maintenance scripts.
+Reproducibility, data-processing, figure/table-generation, and repository-maintenance scripts.
