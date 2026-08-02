@@ -1,75 +1,18 @@
-# Bibliography Markdown Archive
+# Legacy Bibliography Markdown Directory
 
-Αυτός ο φάκελος περιέχει τις πλήρεις, αναζητήσιμες Markdown μετατροπές των αρχικών πηγών.
+This path is retained only as a compatibility/history marker for the superseded in-repository bibliography workflow.
 
-Τα Markdown είναι το default full-text working format. Δεν είναι περιλήψεις και δεν περιορίζονται μόνο στις πληροφορίες που χρησιμοποιούνται τελικά στη διπλωματική.
+Do **not** add or generate full-source Markdown, OCR output, conversion metadata, or source-derived canonical text here.
 
-## Δομή και ονοματοδοσία
+Full source conversion and OCR are owned by:
 
-```text
-markdown/related-work/   Complete paper/report Markdown copies
-markdown/theses/         Complete thesis/dissertation Markdown copies
-```
+`MariosGiannakaras/ThesisBibliography`
 
-Κάθε αρχείο χρησιμοποιεί ακριβώς το ίδιο basename με το αντίστοιχο PDF, συμπεριλαμβανομένου τυχόν version token:
+The thesis repository receives only verified generated analyses/evidence through `research/bibliography/`. Source-derived scientific text remains in the original language of the source.
 
-```text
-../original/related-work/balloch_2022_novgrid.pdf
-./related-work/balloch_2022_novgrid.md
+See:
 
-../original/related-work/example_2024_method__arxiv-v2.pdf
-./related-work/example_2024_method__arxiv-v2.md
-```
+- `bibliography/README.md`
+- `docs/context/BIBLIOGRAPHY_INTEGRATION.md`
 
-## Conversion requirements
-
-- Link each Markdown file to the exact PDF path and checksum.
-- Preserve title, complete authors, year, headings and section order.
-- Preserve page boundaries with explicit markers whenever reliable.
-- Preserve tables, equations, captions, references and footnotes accurately.
-- Add placeholders with page references when figures/tables/equations cannot be represented faithfully.
-- Mark OCR, extraction or layout uncertainty explicitly.
-- Do not silently rewrite, summarize or “correct” source content inside the archive copy.
-- Record conversion tool/version and date.
-- Calculate a Markdown SHA-256 only after the file content is final for that conversion revision.
-- Store the Markdown SHA-256 in the structured note, not inside the hashed Markdown file itself.
-
-## Suggested front matter
-
-```yaml
-source_id:
-source_pdf_path:
-source_pdf_sha256:
-title:
-authors:
-year:
-doi_or_url:
-version_status:
-conversion_tool:
-conversion_date_utc:
-conversion_status: generated-unverified  # generated-unverified | verified
-quality_notes:
-```
-
-The structured note stores `markdown_path` and `markdown_sha256` after hashing the completed Markdown file.
-
-## Verification
-
-Before marking `conversion_status: verified`, compare representative sections against the PDF, including:
-
-- title/author metadata,
-- page markers,
-- at least one normal text section,
-- every table/equation/figure used by the thesis,
-- reported numerical results that will be cited,
-- references needed for follow-up research.
-
-After verification, treat the complete Markdown as stable. Edit it only to fix documented conversion errors; do not turn it into a curated summary. Recalculate and update the checksum in the structured note after any correction.
-
-## Usage
-
-Agents use complete Markdown when the structured note or thematic excerpt is not enough. They do not read every full source for unrelated tasks.
-
-Exact quotations, disputed page references and conversion-sensitive content are checked against the original PDF in `../original/`.
-
-Source analysis and Markdown checksum provenance belong in `../notes/`; useful cross-source material belongs in `../excerpts/`.
+Historical files under this path are not an active evidence surface and must not be used instead of the controlled verified import.
