@@ -1,3 +1,3 @@
 # Run outputs
 
-Run directories που ακολουθούν το `docs/experiments/RUN_SCHEMA.md`. Τα μεγάλα outputs δεν γίνονται αυτόματα commit.
+Run directories follow `docs/experiments/RUN_SCHEMA.md`. Large outputs are not committed automatically.
