@@ -8,7 +8,7 @@
 
 Το project συγκρίνει πράκτορες λήψης αποφάσεων σε ελεγχόμενο προσομοιωμένο περιβάλλον με αβεβαιότητα και δυναμικές μεταβολές. Η εφαρμογή είναι σημαντικό ερευνητικό παραδοτέο και εργαλείο εκτέλεσης, παρατήρησης, κατανόησης και παρουσίασης· δεν είναι το κύριο ερευνητικό αντικείμενο και δεν πρέπει να εξελιχθεί σε production-grade πλατφόρμα.
 
-Το repository είναι η μόνιμη πηγή αλήθειας.
+Το repository είναι η μόνιμη πηγή αλήθειας για το thesis project, με μία ρητή εξαίρεση: η πλήρης βιβλιογραφική συλλογή και επεξεργασία έχει canonical source of truth το ανεξάρτητο `MariosGiannakaras/ThesisBibliography`. Το παρόν repository καταναλώνει μόνο το verified generated export του.
 
 ## Κεντρική αρχή scope
 
@@ -30,7 +30,7 @@
 - feature backlog,
 - υποχρέωση ανάκτησης παλιού κώδικα.
 
-Κάθε απόφαση λαμβάνεται εκ νέου από την επίσημη αίτηση, τη σύγχρονη βιβλιογραφία, την επίσημη τεχνική τεκμηρίωση, το πραγματικό hardware/software, τα prototypes και τα pilots.
+Κάθε απόφαση λαμβάνεται εκ νέου από την επίσημη αίτηση, το verified bibliography evidence, την επίσημη τεχνική τεκμηρίωση, το πραγματικό hardware/software, τα prototypes και τα pilots.
 
 ## Σειρά προτεραιοτήτων
 
@@ -70,24 +70,24 @@
 
 ### Ανάγνωση ανάλογα με την εργασία
 
-- **Research framing / βιβλιογραφία:** `USER_DECISIONS.md`, `CONSTRAINTS.md`, `OPEN_QUESTIONS.md`, `SOURCE_AUDIT.md`, `docs/research/RESEARCH_BRIEF.md`, `docs/research/RELATED_WORK_EVIDENCE_MATRIX.md` και `bibliography/SOURCE_ACQUISITION_WORKFLOW.md`.
-- **GridWorld:** `docs/research/GRIDWORLD_SPEC.md`, σχετικές πηγές και σχετικές αποφάσεις/ADRs.
-- **Models, metrics και experiments:** τα αντίστοιχα candidate files και μόνο τα σχετικά αρχεία του `docs/experiments/`.
+- **Research framing / βιβλιογραφία:** `docs/context/BIBLIOGRAPHY_INTEGRATION.md`, `bibliography/README.md`, το imported `research/bibliography/manifest.csv` και μόνο τις σχετικές `research/bibliography/analyses/` / `research/bibliography/evidence/` εγγραφές. Τα `USER_DECISIONS.md`, `CONSTRAINTS.md`, `OPEN_QUESTIONS.md`, `SOURCE_AUDIT.md` και `docs/research/RESEARCH_BRIEF.md` διαβάζονται μόνο όταν σχετίζονται άμεσα. Το `docs/research/RELATED_WORK_EVIDENCE_MATRIX.md` είναι historical seed και όχι current evidence.
+- **GridWorld:** `docs/research/GRIDWORLD_SPEC.md`, σχετικό imported bibliography evidence και σχετικές αποφάσεις/ADRs.
+- **Models, metrics και experiments:** τα αντίστοιχα candidate files, το σχετικό imported bibliography evidence και μόνο τα σχετικά αρχεία του `docs/experiments/`.
 - **Architecture ή UI:** μόνο τα σχετικά αρχεία του `docs/architecture/` και οι αποφάσεις που τα αφορούν.
-- **Συγγραφή διπλωματικής:** `docs/thesis/`, `docs/university/`, source registers, verified bibliography notes και το related-work evidence matrix.
+- **Συγγραφή διπλωματικής:** `docs/thesis/`, `docs/university/`, `research/bibliography/manifest.csv` και μόνο τα citation-relevant imported analyses/evidence.
 - **Git/GitHub workflow:** `docs/context/EXECUTION_WORKFLOW.md` και `.github/pull_request_template.md`.
 - **Αλλαγή project-wide απόφασης:** `docs/decisions/DECISION_LOG.md`, `CHANGELOG_CONTEXT.md`, `OPEN_QUESTIONS.md` και `CONTRADICTIONS.md`.
 
 Μην ξαναδιαβάζεις ολόκληρο το repository για μικρή ή σαφώς οριοθετημένη εργασία. Πλήρης επανέλεγχος απαιτείται μόνο σε bootstrap, repository-wide audit ή μεγάλη διατομεακή αλλαγή.
 
-Μην ζητάς από τον χρήστη πληροφορίες που μπορούν να συλλεχθούν αξιόπιστα από το repository, το τοπικό σύστημα ή επίσημες πηγές.
+Μην ζητάς από τον χρήστη πληροφορίες που μπορούν να συλλεχθούν αξιόπιστα από το repository, το `ThesisBibliography`, το τοπικό σύστημα ή επίσημες πηγές.
 
 ## Ιεράρχηση πηγών
 
 1. Νεότερη ρητή οδηγία χρήστη.
 2. Επίσημη αίτηση ή formal thesis description.
 3. Επίσημες οδηγίες Πανεπιστημίου, Τμήματος και επιβλέποντα.
-4. Επαληθευμένη πρωτογενής ή υψηλής ποιότητας επιστημονική βιβλιογραφία.
+4. Επαληθευμένη πρωτογενής ή υψηλής ποιότητας επιστημονική βιβλιογραφία από το canonical `ThesisBibliography` evidence chain.
 5. Επίσημη τεχνική τεκμηρίωση, source code, releases, licenses και reproducible benchmarks.
 6. Πραγματικό system inventory, prototypes και pilots.
 7. Παλιές συνομιλίες μόνο ως ιστορικό.
@@ -96,20 +96,22 @@
 
 Η βιβλιογραφική έρευνα δεν είναι μία εφάπαξ ενέργεια. Επαναλαμβάνεται στα ακόλουθα gates:
 
-1. **Αρχικό research framing:** εντοπισμός παρόμοιων μελετών, benchmark designs, μοντέλων, μορφών αβεβαιότητας και μετρικών.
-2. **Πριν παγώσει το pilot/final protocol:** αναζήτηση νεότερων ή πιο άμεσα σχετικών εργασιών που μπορεί να αλλάζουν τις επιλογές.
-3. **Πριν γραφτούν Related Work, Methodology και Discussion:** επιβεβαίωση ότι οι πηγές διαβάστηκαν πλήρως και ότι τα claims αντιστοιχούν στα πραγματικά methods/results/limitations.
-4. **Πριν την τελική υποβολή:** σύντομος freshness και citation audit.
+1. **Αρχικό research framing:** αξιοποίηση του ολοκληρωμένου verified bibliography corpus για παρόμοιες μελέτες, benchmark designs, μοντέλα, μορφές αβεβαιότητας και μετρικές.
+2. **Πριν παγώσει το pilot/final protocol:** αναζήτηση στο `ThesisBibliography` για νεότερες ή πιο άμεσα σχετικές εργασίες που μπορεί να αλλάζουν τις επιλογές.
+3. **Πριν γραφτούν Related Work, Methodology και Discussion:** επιβεβαίωση στο `ThesisBibliography` ότι οι decision-driving πηγές και claims έχουν πλήρες verified evidence και σωστά limitations.
+4. **Πριν την τελική υποβολή:** σύντομος freshness και citation audit στο `ThesisBibliography`, ακολουθούμενος από νέο controlled export/sync.
 
-Για κάθε σημαντική πηγή κατέγραψε: πλήρη βιβλιογραφικά στοιχεία, stable URL/DOI, publication status, πρόσβαση/license, ερευνητικό ερώτημα, μέθοδο, experimental setup, βασικά αποτελέσματα, limitations και συγκεκριμένη χρήση στη διπλωματική.
+Η πλήρης βιβλιογραφική ταυτότητα, stable URL/DOI, publication status, πρόσβαση/license, μέθοδος, experimental setup, αποτελέσματα, limitations και συγκεκριμένη χρήση στη διπλωματική καταγράφονται στο `ThesisBibliography`, όχι διπλά εδώ.
 
-Κατέβασε αυτόματα μόνο νόμιμα διαθέσιμα open-access ή author-provided αντίγραφα. Αποθήκευσε SHA-256 και provenance. Για paywalled πηγή κατέγραψε DOI και ζήτησε από τον χρήστη να την αποκτήσει νόμιμα μέσω ιδρύματος ή συγγραφέα. Μην χρησιμοποιείς ανεπίσημες πειρατικές πηγές.
+Μην κατεβάζεις ή αποθηκεύεις νέα papers/PDFs/Markdown source copies σε αυτό το repository. Νέες πηγές, NotebookLM discoveries και user-provided source files εισάγονται στο `ThesisBibliography`. Το scientific source text και το citation-ready evidence παραμένουν στην αυθεντική γλώσσα της πηγής.
+
+Το `research/bibliography/` είναι generated και αντικαθίσταται μόνο μέσω του PR-based synchronization workflow. Μην το επεξεργάζεσαι χειροκίνητα και μην τροποποιείς το `SOURCE_COMMIT` ή το `IMPORT_INTEGRITY.json`.
 
 ## Υποχρεωτική σειρά φάσεων
 
-1. Context και primary-source validation.
+1. Context, official primary-source validation και verified bibliography import.
 2. Automated system inventory.
-3. Literature και official-topic analysis.
+3. Literature/official-topic synthesis από το imported verified evidence.
 4. Fresh GridWorld landscape review.
 5. Bounded research questions και hypotheses.
 6. GridWorld, uncertainty taxonomy και factors.
@@ -185,6 +187,8 @@
 - statistical processing fixtures,
 - provenance linkage,
 - regression tests.
+
+Bibliography import changes χρειάζονται επιπλέον package/source-commit consistency, forbidden-artifact checks, generated-file integrity και validation ότι κάθε canonical `SRC-*` reference υπάρχει στο imported manifest.
 
 Synthetic fixtures επιτρέπονται μόνο σε clearly labeled tests.
 

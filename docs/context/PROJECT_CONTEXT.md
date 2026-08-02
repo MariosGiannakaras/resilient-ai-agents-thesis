@@ -35,6 +35,22 @@
 
 Η αξιολόγηση πρέπει να εξετάζει την ανθεκτικότητα και την ταχύτητα ανάκαμψης.
 
+## Βιβλιογραφία και επιστημονικό evidence
+
+Η βιβλιογραφία δεν διαχειρίζεται πλέον πρωτογενώς σε αυτό το repository.
+
+Το ιδιωτικό `MariosGiannakaras/ThesisBibliography` είναι η ανεξάρτητη canonical πηγή αλήθειας για source discovery, metadata, originals, Markdown/OCR, επιστημονική ανάλυση, verified evidence, inclusion/exclusion decisions και controlled thesis export.
+
+Η πρώτη πλήρης επιστημονική διαλογή έχει ολοκληρωθεί εκεί για **486/486 ενεργές πηγές**. Το canonical status καταγράφει **104 επιλεγμένες/επαληθευμένες πηγές**, **381 απορρίψεις**, **1 theory-only/non-citation source**, **0 εκκρεμείς αποφάσεις** και **104/104 verified evidence sets**.
+
+Το παρόν repository καταναλώνει μόνο το verified generated package στο `research/bibliography/`, δεμένο με ακριβές `SOURCE_COMMIT`. Δεν αντιγράφει όλο το bibliography repository, PDFs ή raw conversion material και δεν συγχωνεύει τα histories.
+
+Η σύνδεση είναι pull-based και μέσω Pull Request. Η δεσμευτική αρχιτεκτονική βρίσκεται στα `docs/context/BIBLIOGRAPHY_INTEGRATION.md` και `bibliography/README.md`.
+
+Τα source-derived scientific δεδομένα και citation-ready evidence παραμένουν στην αυθεντική γλώσσα της πηγής. Μετάφραση για το ελληνικό τελικό κείμενο γίνεται μόνο στο writing stage και δεν αντικαθιστά το original-language evidence record.
+
+Οι literature refresh gates παραμένουν ενεργοί πριν από protocol freeze, βασικά writing gates και τελική υποβολή. Οι νέες αναζητήσεις και επαληθεύσεις γίνονται στο `ThesisBibliography` και εισάγονται εδώ μόνο μετά από νέο verified export.
+
 ## Ρόλος του GridWorld
 
 Το GridWorld είναι η τρέχουσα επιβεβαιωμένη κατεύθυνση για το απλό ελεγχόμενο περιβάλλον. Η τελική υλοποίηση δεν έχει επιλεγεί.
@@ -57,14 +73,7 @@
 
 ## Ρόλος των μοντέλων
 
-Τα μοντέλα/αλγόριθμοι είναι οι συγκρινόμενοι πράκτορες ή baselines. **Δεν υπάρχει shortlist από τις παλιές συνομιλίες.** Η επιλογή θα γίνει εκ νέου μετά από:
-
-- research-question framing,
-- systematic/scoped literature review,
-- τελική κατηγορία GridWorld και observability assumptions,
-- hardware/software inventory,
-- feasibility prototypes,
-- pilot evidence.
+Τα μοντέλα/αλγόριθμοι είναι οι συγκρινόμενοι πράκτορες ή baselines. **Δεν υπάρχει shortlist από τις παλιές συνομιλίες.** Η επιλογή θα γίνει από το verified bibliography evidence, το τελικό GridWorld/observability framing, το hardware/software inventory, feasibility prototypes και pilots.
 
 Το `MODEL_CANDIDATES.md` είναι διαδικασία επιλογής και evidence matrix, όχι κατάλογος προεπιλεγμένων μοντέλων.
 
@@ -92,10 +101,12 @@
 
 Η συγγραφή εξελίσσεται παράλληλα με την υλοποίηση, αλλά κάθε κεφάλαιο διαχωρίζει verified facts/citations, proposed methodology, frozen protocol, πραγματικά results, interpretation και limitations. Τα τελικά συμπεράσματα γράφονται μόνο από το frozen final result set.
 
+Οι βιβλιογραφικοί ισχυρισμοί συνδέονται με canonical `SRC-XXXXXXXXXX` identifiers που υπάρχουν στο imported manifest και με verified evidence από το αντίστοιχο `SOURCE_COMMIT`.
+
 ## Σύνδεση εφαρμογής, αποτελεσμάτων και κειμένου
 
 ```text
-Official topic + current literature + system inventory
+Official topic + verified bibliography + system inventory
           ↓
 Research questions / hypotheses
           ↓
@@ -116,10 +127,10 @@ Greek Microsoft Word thesis
 
 ## Τι λείπει
 
-- Πραγματική βιβλιογραφία.
-- Νέα GridWorld landscape review και build/reuse/integration απόφαση.
-- Αυτόματα συλλεγμένο hardware/software inventory και capability benchmark.
+- Πραγματικό automated hardware/software inventory και capability benchmark.
+- Νέα GridWorld landscape review και build/reuse/integration απόφαση, χρησιμοποιώντας το verified bibliography evidence ως βάση.
 - Επιβλέπων και ειδικές ακαδημαϊκές οδηγίες.
 - Τελικά research questions/hypotheses.
 - Final environment variants, models, metrics και statistical protocol.
 - Τρέχον επίσημο Word template/submission package.
+- Πρώτος συγχρονισμός του verified `ThesisBibliography` package στο `research/bibliography/` μετά την ενεργοποίηση του read-only sync credential.

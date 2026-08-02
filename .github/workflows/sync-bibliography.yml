@@ -1,0 +1,114 @@
+name: Sync verified thesis bibliography
+
+on:
+  workflow_dispatch:
+    inputs:
+      bibliography_ref:
+        description: ThesisBibliography branch, tag, or commit to export
+        required: false
+        default: main
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: bibliography-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require read-only bibliography credential
+        env:
+          BIBLIOGRAPHY_SYNC_TOKEN: ${{ secrets.BIBLIOGRAPHY_SYNC_TOKEN }}
+        run: |
+          if [ -z "$BIBLIOGRAPHY_SYNC_TOKEN" ]; then
+            echo "Missing repository secret BIBLIOGRAPHY_SYNC_TOKEN with read access to MariosGiannakaras/ThesisBibliography." >&2
+            exit 1
+          fi
+
+      - name: Checkout thesis repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Checkout bibliography source read-only
+        uses: actions/checkout@v4
+        with:
+          repository: MariosGiannakaras/ThesisBibliography
+          ref: ${{ inputs.bibliography_ref }}
+          path: .bibliography-source
+          token: ${{ secrets.BIBLIOGRAPHY_SYNC_TOKEN }}
+          persist-credentials: false
+          fetch-depth: 1
+          lfs: false
+
+      - name: Resolve exact bibliography commit
+        id: source
+        shell: bash
+        run: |
+          commit="$(git -C .bibliography-source rev-parse HEAD)"
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+          echo "short=${commit:0:12}" >> "$GITHUB_OUTPUT"
+
+      - name: Export verified package from ThesisBibliography
+        shell: bash
+        run: |
+          output="$RUNNER_TEMP/thesis-bibliography-package"
+          rm -rf "$output"
+          if [ -f .bibliography-source/tools/export_thesis.py ]; then
+            python .bibliography-source/tools/export_thesis.py --output "$output"
+          elif [ -f .bibliography-source/εργαλεία/εξαγωγή-διπλωματικής.py ]; then
+            python .bibliography-source/εργαλεία/εξαγωγή-διπλωματικής.py --output "$output"
+          else
+            echo "Cannot locate ThesisBibliography exporter at the requested ref." >&2
+            exit 1
+          fi
+
+      - name: Install package transactionally
+        run: >-
+          python scripts/bibliography_import.py
+          --package "$RUNNER_TEMP/thesis-bibliography-package"
+          --source-commit "${{ steps.source.outputs.commit }}"
+
+      - name: Validate imported package and source references
+        run: |
+          python scripts/bibliography_import.py \
+            --package "$RUNNER_TEMP/thesis-bibliography-package" \
+            --source-commit "${{ steps.source.outputs.commit }}" \
+            --validate-only
+          python scripts/validate_bibliography_usage.py
+          python -m unittest tests.test_bibliography_import -v
+
+      - name: Remove source checkout before diff
+        run: rm -rf .bibliography-source
+
+      - name: Open bibliography sync pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_COMMIT: ${{ steps.source.outputs.commit }}
+          SOURCE_SHORT: ${{ steps.source.outputs.short }}
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain -- research/bibliography)" ]; then
+            echo "research/bibliography is already synchronized to the generated package."
+            exit 0
+          fi
+
+          branch="automation/bibliography-sync-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add research/bibliography
+          git commit -m "chore: sync verified bibliography ${SOURCE_SHORT}"
+          git push origin "HEAD:$branch"
+
+          gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "chore: sync verified bibliography ${SOURCE_SHORT}" \
+            --body "Imports only the verified generated thesis package from MariosGiannakaras/ThesisBibliography at commit \`${SOURCE_COMMIT}\`. The sync excludes PDFs, LFS objects, raw originals, unverified analyses, and unverified evidence. Generated-file integrity and canonical SRC-* reference checks run before this PR is opened."
