@@ -48,8 +48,7 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Clarified that the fourteen roadmap phases are checkpoints and can be operated as eight larger work blocks.
 - Added literature refresh gates for initial framing, protocol freeze, thesis writing and final submission.
 - Added `RELATED_WORK_EVIDENCE_MATRIX.md` with comparable papers and institutional theses, reported results, limitations, implications and writing-structure lessons.
-- Added `SOURCE_ACQUISITION_WORKFLOW.md` and `scripts/download_open_access_bibliography.py` for lawful open-access paper/thesis acquisition, PDF validation, SHA-256 and a source manifest.
-- Established user-assisted lawful acquisition for paywalled or non-direct sources; no unofficial or paywall-bypassing sources.
+- Added the initial local bibliography acquisition workflow. Its acquisition/storage implementation was later superseded by the dedicated canonical bibliography architecture recorded on 2026-08-02.
 - Added DEC-014.
 
 ## 2026-07-29 — Automated execution, review and merge workflow
@@ -59,17 +58,24 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Added branch, commit, naming, comment and Pull Request conventions.
 - Added a Pull Request template with validation, scientific-impact, artifact and scope sections.
 - Added lightweight GitHub Actions checks for merge markers, Python compilation, tests and JSON validity.
-- Added regression tests for bibliography-manifest provenance behavior.
-- Corrected automated-review findings so manual source records, acquisition timestamps and full-text review status are preserved safely by checksum.
+- Added regression tests for the then-active local bibliography-manifest provenance behavior.
 - Added DEC-015.
 
 ## 2026-07-29 — Archived PDFs and Markdown-first bibliography workflow
 
-- Added `bibliography/README.md` as the authoritative source-storage and usage policy.
-- Retained original PDFs as immutable archival/verification copies rather than routine agent input.
-- Established complete searchable Markdown with matching basenames as the default full-text working archive.
-- Strengthened per-source notes with checksums, conversion/review states, topics and decision relevance.
-- Added `bibliography/excerpts/` for small, topic-centric, verified evidence used in research, writing and slides.
-- Added immediate processing rules for user-uploaded PDF/Markdown/NotebookLM source batches.
-- Defined canonical renaming, duplicate/version detection, semantic classification and coverage-gap analysis.
-- Added bibliography transient-file ignore rules and DEC-016.
+- Established the original in-repository PDF/Markdown/note/excerpt workflow and DEC-016.
+- **This workflow is historical and has been superseded by DEC-017.** The underlying preservation and Markdown-first principles now live in the dedicated `ThesisBibliography` repository rather than this thesis repository.
+
+## 2026-08-02 — Canonical ThesisBibliography integration and documentation normalization
+
+- Established `MariosGiannakaras/ThesisBibliography` as the canonical source of truth for source discovery, metadata, original PDFs, OCR/Markdown conversion, scientific analysis, verified citation-ready evidence, source selection and controlled export.
+- Limited this repository to the verified generated package under `research/bibliography/`, bound to exact `SOURCE_COMMIT` and SHA-256 import integrity.
+- Kept the repositories independent: no submodule and no write path from the thesis repository to `ThesisBibliography`; synchronization remains pull-based and Pull-Request-reviewed.
+- Retired local bibliography acquisition/archive/Markdown/note/excerpt paths as compatibility/history markers so older instructions cannot reactivate the superseded workflow.
+- Reconciled the Codex bootstrap prompt and implementation roadmap with the verified bibliography import instead of local paper downloads.
+- Removed the stale open question that treated the bibliography corpus as missing.
+- Recorded the user's language policy: repository-authored operational/technical documentation, prompts, Git/GitHub text, naming and code comments use English.
+- Preserved the exact official Greek thesis title and exact official Greek source/work titles where they identify authoritative material.
+- Preserved scientific source-derived text and citation-ready evidence in each source's original language; the final thesis remains Greek Microsoft Word.
+- Clarified that a lightweight visual/debug surface may support core validation, while the polished final dashboard remains gated behind validated core and pilot evidence.
+- Added DEC-017, DEC-018 and DEC-019 and marked DEC-016 as superseded.
