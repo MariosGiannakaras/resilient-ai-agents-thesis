@@ -1,3 +1,3 @@
 # Experiment definitions
 
-Μελλοντικά experiment manifests, runners και frozen protocol definitions. Τα raw outputs αποθηκεύονται στο `results/runs/`.
+Future experiment manifests, runners, and frozen protocol definitions. Raw outputs are stored under `results/runs/`.
