@@ -1,3 +1,3 @@
 # Thesis drafts
 
-Συνθετικές εκδόσεις της διπλωματικής. Οι draft εκδόσεις δεν αντικαθιστούν τα canonical research/results files.
+Synthetic/integrated thesis draft versions. Drafts do not replace canonical research, evidence, or results files.
