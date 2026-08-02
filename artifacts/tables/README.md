@@ -1,3 +1,3 @@
 # Tables
 
-Reproducible tables με table ID, source run IDs και processing provenance.
+Reproducible tables with table ID, source run IDs, and processing provenance.
