@@ -7,7 +7,9 @@
 
 ## Ρόλος του repository
 
-Το repository αποτελεί τη μόνιμη πηγή αλήθειας για το ακαδημαϊκό και ερευνητικό πλαίσιο, τις απαιτήσεις και αποφάσεις, το GridWorld, τον πειραματικό πυρήνα, το τοπικό dashboard, τα δεδομένα και αποτελέσματα, τη βιβλιογραφία και το τελικό Microsoft Word παραδοτέο.
+Το repository αποτελεί τη μόνιμη πηγή αλήθειας για το ακαδημαϊκό και ερευνητικό πλαίσιο, τις απαιτήσεις και αποφάσεις, το GridWorld, τον πειραματικό πυρήνα, το τοπικό dashboard, τα δεδομένα και αποτελέσματα, τη συγγραφή και το τελικό Microsoft Word παραδοτέο.
+
+Η πλήρης βιβλιογραφική συλλογή και επιστημονική επεξεργασία έχουν ανεξάρτητη canonical πηγή αλήθειας στο `MariosGiannakaras/ThesisBibliography`. Το παρόν repository καταναλώνει μόνο το ελεγχόμενο verified export της.
 
 ## Αναθεωρημένος στόχος
 
@@ -35,11 +37,13 @@
 
 ## Τρέχουσα φάση
 
-Το bootstrap έχει ολοκληρωθεί. Δεν έχει ξεκινήσει η κύρια εφαρμογή, η υλοποίηση models, τα final experiments ή η κανονική συγγραφή αποτελεσμάτων.
+Το bootstrap έχει ολοκληρωθεί. Η πρώτη πλήρης βιβλιογραφική επιστημονική διαλογή έχει επίσης ολοκληρωθεί στο `ThesisBibliography`: 486/486 ενεργές πηγές έχουν τελική απόφαση και 104 επιλεγμένες πηγές διαθέτουν verified citation-ready evidence.
+
+Δεν έχει ξεκινήσει η κύρια εφαρμογή, η υλοποίηση models, τα final experiments ή η κανονική συγγραφή αποτελεσμάτων.
 
 Η επόμενη φάση ξεκινά με:
 
-1. εξέταση της επίσημης αίτησης και της πραγματικής βιβλιογραφίας,
+1. εισαγωγή του verified bibliography package και αξιοποίηση των αναλύσεων/evidence για research framing,
 2. αυτόματη απογραφή του πραγματικού hardware/software,
 3. fresh GridWorld landscape review και σύγκριση reuse/adapt/custom,
 4. νέα διαμόρφωση research questions, hypotheses, uncertainty taxonomy, models και metrics,
@@ -55,7 +59,7 @@
 
 Η πρακτική σειρά είναι απλή:
 
-1. Βρίσκονται και αξιολογούνται παρόμοιες έρευνες, αλγόριθμοι, repositories και διπλωματικές.
+1. Χρησιμοποιούνται οι verified βιβλιογραφικές αναλύσεις και, στα καθορισμένα freshness gates, επαναλαμβάνεται στο `ThesisBibliography` η αναζήτηση για νεότερη σχετική έρευνα.
 2. Κατασκευάζεται μικρός λειτουργικός πυρήνας και πρώιμο visual/debug UI.
 3. Προστίθενται μόνο χρήσιμα settings, logs, charts, history, comparison και exports.
 4. Γίνονται validation και pilots, παγώνει το final protocol και εκτελούνται τα τελικά πειράματα.
@@ -81,36 +85,28 @@
 
 ## Βιβλιογραφική έρευνα και παρόμοιες μελέτες
 
-Η κεντρική πολιτική βιβλιογραφίας βρίσκεται στο `bibliography/README.md` και η διαδικασία απόκτησης στο `bibliography/SOURCE_ACQUISITION_WORKFLOW.md`.
+Η ενεργή πολιτική βρίσκεται στα:
 
-Η βιβλιογραφία οργανώνεται σε τέσσερα επίπεδα:
+- `bibliography/README.md`
+- `docs/context/BIBLIOGRAPHY_INTEGRATION.md`
 
-1. αρχικά PDF ως immutable archival/verification copies,
-2. πλήρη Markdown ως searchable full-text working archive,
-3. structured notes ανά source,
-4. thematic excerpts με μόνο το ενεργό, επαληθευμένο υλικό.
+Το `MariosGiannakaras/ThesisBibliography` είναι η μοναδική canonical πηγή για acquisition, original PDFs, conversion/OCR, full source Markdown, scientific analysis, citation-ready evidence και source selection.
 
-Η κανονική σειρά ανάγνωσης είναι:
+Το παρόν repository εισάγει μόνο το verified generated package στο:
 
-> excerpts → note → complete Markdown → PDF μόνο για επαλήθευση
-
-Τα PDF αποθηκεύονται στο `bibliography/original/`, αλλά δεν περιλαμβάνονται στο routine reading των agents. Τα πλήρη Markdown χρησιμοποιούν το ίδιο basename και αποθηκεύονται στο `bibliography/markdown/`.
-
-Όταν ο χρήστης ανεβάζει PDF, Markdown exports ή NotebookLM source material, γίνεται άμεσα content inspection, canonical renaming, duplicate/version detection, classification, note/excerpt creation και gap analysis. Δεν απαιτείται ξεχωριστή routine GitHub έγκριση από τον χρήστη.
-
-Το αρχικό evidence seed βρίσκεται στο `docs/research/RELATED_WORK_EVIDENCE_MATRIX.md`.
-
-Τα επαληθευμένα open-access papers και comparable theses μπορούν να ληφθούν μετά το clone με:
-
-```bash
-python scripts/download_open_access_bibliography.py
+```text
+research/bibliography/
 ```
 
-Το script αποθηκεύει papers στο `bibliography/original/related-work/`, comparable theses στο `bibliography/original/theses/` και δημιουργεί `bibliography/source_manifest.json` με URLs, source type, SHA-256 και acquisition status. Δεν παρακάμπτει paywalls και δεν μετατρέπει αυτόματα τα PDFs σε Markdown.
+Η εισαγωγή είναι δεμένη με ακριβές `SOURCE_COMMIT`, αποκλείει PDF/LFS/raw/unverified material, ελέγχεται με SHA-256 integrity manifest και γίνεται μέσω Pull Request. Canonical citations χρησιμοποιούν `SRC-XXXXXXXXXX` identifiers που πρέπει να υπάρχουν στο imported manifest.
 
-Για μη διαθέσιμη νόμιμη open-access ή direct-download έκδοση, το Codex καταγράφει DOI/handle και ζητά από τον χρήστη να αποκτήσει το source μέσω Πανεπιστημίου, επίσημου repository ή συγγραφέα.
+Η κανονική σειρά ανάγνωσης εδώ είναι:
 
-Πριν γίνει commit μεγάλης διατριβής ή συλλογής PDFs, ελέγχονται μέγεθος, rights/license και ανάγκη Git LFS. Η βιβλιογραφική αναζήτηση επαναλαμβάνεται πριν από το protocol freeze, πριν από τη συγγραφή Related Work/Methodology/Discussion και πριν από την τελική υποβολή.
+> imported evidence → imported analysis → canonical source στο `ThesisBibliography` όταν απαιτείται επιπλέον context ή πρωτογενής επαλήθευση
+
+Το scientific source text και το citation-ready evidence παραμένουν στην αυθεντική γλώσσα της πηγής. Μετάφραση για το ελληνικό τελικό κείμενο γίνεται μόνο κατά τη συγγραφή και δεν αντικαθιστά το canonical evidence.
+
+Οι literature refresh gates πριν από protocol freeze, Related Work/Methodology/Discussion και τελική υποβολή παραμένουν υποχρεωτικοί, αλλά εκτελούνται στο `ThesisBibliography` και εισάγονται εδώ μόνο με νέο verified export.
 
 ## Χάρτης φακέλων
 
@@ -132,12 +128,8 @@ artifacts/figures/                    Reproducible figures
 artifacts/tables/                     Reproducible tables
 artifacts/exports/                    CSV/JSON/report exports
 
-bibliography/original/related-work/   Immutable lawful paper/report PDFs
-bibliography/original/theses/         Immutable lawful thesis/dissertation PDFs
-bibliography/markdown/related-work/   Complete searchable paper Markdown copies
-bibliography/markdown/theses/         Complete searchable thesis Markdown copies
-bibliography/notes/                   Structured source-centric reading notes
-bibliography/excerpts/                Curated topic-centric evidence
+research/bibliography/                Generated verified export from ThesisBibliography
+bibliography/                         Integration policy and retired compatibility markers only
 
 thesis/source-material/               Επίσημη αίτηση και πρωτογενές υλικό
 thesis/chapters/                      Drafts ανά κεφάλαιο
@@ -154,12 +146,13 @@ docs/decisions/                       Decision log και ADRs
 
 ## Τι πρέπει να προστεθεί αργότερα από τον χρήστη
 
-- Η προσωπική ή επιβλέποντα βιβλιογραφία που δεν είναι διαθέσιμη νόμιμα ως open access.
 - Τυχόν ειδικές οδηγίες του επιβλέποντα.
 - Η ισχύουσα έκδοση του επίσημου Word template, όταν βρεθεί ή δοθεί.
 - Η προθεσμία και η διαδικασία υποβολής/παρουσίασης, όταν γίνουν γνωστές.
 
-Το system inventory, η επαλήθευση SHA-256, η GridWorld landscape research και η αρχική νόμιμη open-access βιβλιογραφική συλλογή είναι εργασίες του Codex.
+Νέες βιβλιογραφικές πηγές ή αρχεία προστίθενται στο `ThesisBibliography`, όχι σε αυτό το repository.
+
+Το system inventory, η επαλήθευση SHA-256 της επίσημης αίτησης και η GridWorld landscape research είναι εργασίες του Codex.
 
 ## Επιστημονική ακεραιότητα
 
