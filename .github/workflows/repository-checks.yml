@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -33,10 +35,22 @@ jobs:
           fi
 
       - name: Compile Python sources
-        run: python -m compileall -q scripts tests
+        run: python -m compileall -q scripts tests core
 
       - name: Run tests
         run: python -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Validate installed bibliography when present
+        shell: bash
+        run: |
+          if [ -f research/bibliography/IMPORT_INTEGRITY.json ]; then
+            python scripts/bibliography_import.py --validate-only
+            python scripts/validate_bibliography_usage.py
+            (cd research/bibliography && sha256sum -c catalog/SHA256SUMS)
+            (cd research/bibliography/citation-ready && sha256sum -c catalog/SHA256SUMS)
+          else
+            echo "No generated bibliography import is committed yet."
+          fi
 
       - name: Validate committed JSON files
         shell: bash
@@ -44,9 +58,8 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-
           for path in Path('.').rglob('*.json'):
-              if '.git' in path.parts:
+              if '.git' in path.parts or '.cache' in path.parts:
                   continue
               with path.open(encoding='utf-8') as handle:
                   json.load(handle)

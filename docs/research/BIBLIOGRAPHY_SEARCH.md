@@ -1,0 +1,18 @@
+# Trust-aware bibliography search
+
+After a generated import exists, search the complete corpus with:
+
+```bash
+python scripts/search_bibliography.py "change detection"
+python scripts/search_bibliography.py "recovery" --citation-ready
+python scripts/search_bibliography.py --id SRC-95C9DAEE68
+python scripts/search_bibliography.py --id MAT-13CFB90F59
+python scripts/search_bibliography.py "gridworld" --layer analyses --include-rejected
+python scripts/search_bibliography.py "robust" --topic "robust MDP" --json
+```
+
+Results expose the identifier, title when available, content layer, canonical role/status, citation-ready state, material confidence/relevance, relative path, and a matching snippet. Free-text search omits rejected sources unless `--include-rejected` is explicit; exact ID lookup still returns the canonical record with its trust label.
+
+The standard-library index is deterministic and rebuilt automatically when imported integrity changes. It lives under ignored `.cache/bibliography/` and is never a source of truth. Use `--rebuild-index` to force reconstruction.
+
+Formal thesis claims must still use citation-ready `SRC-*` evidence. Search results from rejected/theory-only sources, `MAT-*` materials, notes, or other non-citation layers are research context, not automatic citation authority.

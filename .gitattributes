@@ -10,5 +10,7 @@
 *.jpeg binary
 *.gif binary
 
-# Git LFS is intentionally not enabled yet. Add LFS patterns only after a
-# recorded decision and repository-level setup.
+research/bibliography/** linguist-generated=true
+
+# Git LFS is intentionally not enabled in this repository. Bibliography PDFs
+# and LFS objects remain in MariosGiannakaras/ThesisBibliography.
