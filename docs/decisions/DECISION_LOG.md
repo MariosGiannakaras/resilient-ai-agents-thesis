@@ -125,19 +125,19 @@ Use this file for project-wide research and architecture decisions. Detailed alt
 
 ## DEC-017 — Dedicated canonical ThesisBibliography repository and controlled import
 - **Date recorded:** 2026-08-02
-- **Status:** Accepted / current architecture
+- **Status:** Accepted / current repository boundary; imported-surface details require complete-corpus migration
 - **Context:** Bibliography acquisition, preservation, conversion, analysis and evidence extraction form a substantial lifecycle that should remain complete and independently auditable without bloating or duplicating the thesis implementation repository.
 - **Decision:**
   - `MariosGiannakaras/ThesisBibliography` is the canonical source of truth for source discovery, metadata, original PDFs, conversion/OCR, full-source Markdown, scientific analysis, verified citation-ready evidence, inclusion/exclusion decisions and controlled export.
-  - `MariosGiannakaras/resilient-ai-agents-thesis` consumes only the verified generated package under `research/bibliography/`.
-  - The import is bound to an exact `SOURCE_COMMIT` and `IMPORT_INTEGRITY.json`; canonical source references use exported `SRC-XXXXXXXXXX` identifiers.
+  - `MariosGiannakaras/resilient-ai-agents-thesis` consumes generated bibliography content under `research/bibliography/`.
+  - The import is integrity-bound; canonical source references use stable `SRC-XXXXXXXXXX` identifiers.
   - Synchronization is pull-based and reviewable through a Pull Request. There is no submodule and no write path from the thesis repository into `ThesisBibliography`.
-  - PDFs, raw originals, conversion workspaces, unverified analyses and unverified evidence are not imported into the thesis repository.
+  - PDFs, raw originals, conversion workspaces and Git LFS objects are not imported into the thesis repository.
   - New user-provided PDF/Markdown/NotebookLM bibliography material is processed in `ThesisBibliography`, not here.
   - Source-derived scientific evidence remains in the original source language.
 - **Rationale:** Preserve complete source provenance and reusable bibliography analysis while keeping the thesis repository bounded, deterministic and focused on research design, implementation, experiments, results and writing.
 - **Alternatives rejected:** duplicated bibliography lifecycle in both repositories; Git submodule coupling; thesis-repository write access into the bibliography repository; manual copying of selected evidence; translation of canonical source evidence.
-- **Consequences:** Legacy `bibliography/original/`, `bibliography/markdown/`, `bibliography/notes/`, `bibliography/excerpts/` and local acquisition instructions are compatibility/history markers only. Freshness gates execute in `ThesisBibliography` and enter this repository through a new verified export/sync.
+- **Consequences:** Legacy `bibliography/original/`, `bibliography/markdown/`, `bibliography/notes/`, `bibliography/excerpts/` and local acquisition instructions are compatibility/history markers only. Freshness gates execute in `ThesisBibliography` and enter this repository through a new controlled sync. The earlier citation-only imported-surface wording must be superseded by the complete research-corpus consumer migration.
 - **Files:** `docs/context/BIBLIOGRAPHY_INTEGRATION.md`, `bibliography/README.md`, `research/bibliography/`, synchronization/validation scripts and workflows, `AGENTS.md`, `README.md`.
 
 ## DEC-018 — English operational and technical repository documentation
@@ -164,10 +164,29 @@ Use this file for project-wide research and architecture decisions. Detailed alt
 - **Rationale:** Improve development observability and reduce debugging friction without making UI work drive the scientific architecture.
 - **Consequences:** DEC-004 is interpreted as a gate on the polished final dashboard, not a ban on small validation-oriented visualization.
 
+## DEC-020 — Implementation-first priority and deferred writing-stage inputs
+- **Date:** 2026-08-04
+- **Status:** Accepted by user
+- **Context:** The proposed thesis topic has been approved. The supervisor has not provided additional requirements or deadlines and is expected to review and request corrections after the implementation, experiments, or draft exists. The user wants the immediate effort focused on the program and scientific research of the models rather than on final writing preparation.
+- **Decision:**
+  - Supervisor identity and supervisor-specific details are not required repository inputs for the current phase.
+  - No absent supervisor instruction, deadline, submission procedure, or Word template blocks bibliography integration, model research, GridWorld decisions, program implementation, pilots, or experiments.
+  - Later supervisor corrections are recorded and incorporated when actually received; the project does not invent or pre-empt them.
+  - The immediate order of work is complete bibliography-corpus integration, target-system inventory, source-traceable model/agent research, bounded GridWorld prototypes and ADR, protocol design, independent research-core implementation, pilots, and evidence-producing experiments.
+  - Normal chapter drafting and final Word formatting are deferred until the research system and evidence are mature.
+  - Structured writing notes, evidence mappings, method records, captions, figures, and provenance are still collected continuously so later writing is not a reconstruction exercise.
+  - Two or three completed theses supplied by the user near the writing phase may be used as contextual presentation/structure examples only. They are not scientific sources, official templates, or authority over verified Department guidance.
+  - The user created a fine-grained access token and replaced the `BIBLIOGRAPHY_SYNC_TOKEN` repository secret. The token value remains secret, and effective read permission is tested by the migrated synchronization workflow before import.
+- **Rationale:** The missing academic-administration details are not needed to answer the current research questions or build the evidence-producing system. Treating them as blockers would delay the highest-value work without improving scientific validity.
+- **Alternatives rejected:** waiting for unspecified supervisor instructions; inventing a deadline; formatting the final Word document before the protocol and evidence exist; treating friends' theses as binding templates.
+- **Consequences:** Current context and requirements distinguish real research/implementation gates from deferred writing/delivery inputs. Future supervisor or Department guidance can still override lower-level project decisions when actually supplied.
+- **Related requirements:** REQ-ACA-004..007, REQ-RES-013, REQ-THESIS-008..009.
+
 ## Pending decisions
 
 Future entries are required for:
 
+- complete research-corpus consumer integration details,
 - final research questions and hypotheses,
 - GridWorld reuse/adapt/custom selection,
 - final uncertainty taxonomy,
@@ -177,4 +196,4 @@ Future entries are required for:
 - final application stack/storage/runner,
 - exact required versus optional dashboard features after pilots,
 - optional AI,
-- citation style and final Word template.
+- citation style and final Word template near the writing/submission phase.
