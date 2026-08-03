@@ -77,6 +77,24 @@ class BibliographySearchTests(unittest.TestCase):
             self.assertEqual(results[0][0].text_encoding, "cesu-8")
             self.assertIn("𝑢", results[0][0].text)
 
+    def test_full_text_controls_are_normalized_only_in_search_view(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture = CorpusFixture(root)
+            material = fixture.package / "materials" / f"{MATERIAL_ID}.md"
+            original = b"# Material\nrecovery\x00latency\x14metric\n"
+            material.write_bytes(original)
+            fixture.refresh()
+            import_dir = root / "research" / "bibliography"
+            install_package(fixture.package, import_dir, "tag", CHECKOUT_COMMIT, ancestry_checker=ancestry)
+            documents = build_index(import_dir, root / "index.json")
+            results = search_documents(documents, "recovery latency metric", identifier=MATERIAL_ID)
+            self.assertTrue(results)
+            document = results[0][0]
+            self.assertNotIn("\x00", document.text)
+            self.assertNotIn("\x14", document.text)
+            self.assertEqual((import_dir / "materials" / f"{MATERIAL_ID}.md").read_bytes(), original)
+
     def test_rebuilding_search_index_is_deterministic(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
