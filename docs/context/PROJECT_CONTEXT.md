@@ -47,23 +47,39 @@ This repository consumes only the verified generated package under `research/bib
 
 Synchronization is pull-based and performed through a Pull Request. The binding architecture is defined in `docs/context/BIBLIOGRAPHY_INTEGRATION.md` and `bibliography/README.md`.
 
-The first controlled synchronization is currently **BLOCKED** at cross-repository authentication. A real synchronization run on 2026-08-03 confirmed that the `BIBLIOGRAPHY_SYNC_TOKEN` repository secret is non-empty, but `actions/checkout` cannot authenticate a read-only fetch of the private `MariosGiannakaras/ThesisBibliography` repository. The failed run stopped before export/import, so `research/bibliography/` has not been populated and no bibliography content was partially installed. The secret must be replaced with a valid credential that has read access to `ThesisBibliography`, after which a fresh controlled trigger can be used without changing the integration design.
+The first controlled synchronization is currently **BLOCKED** at cross-repository authentication. The hardened credential probe was rerun on 2026-08-03 and the configured `BIBLIOGRAPHY_SYNC_TOKEN` produced **HTTP 401 Bad credentials** when requesting canonical content from the private `MariosGiannakaras/ThesisBibliography` repository. The workflow therefore stopped before checkout, export, or import. `research/bibliography/` has not been populated and no bibliography content was partially installed. The secret must be replaced with a valid credential that has read access to `ThesisBibliography`; the existing integration architecture does not need redesign.
 
 Source-derived scientific text and citation-ready evidence remain in the original language of the source. Translation for the final Greek thesis occurs only during writing and does not replace the original-language evidence record.
 
 Literature freshness gates remain active before protocol freeze, major writing gates, and final submission. New searches and verification occur in `ThesisBibliography` and enter this repository only through a new verified export.
 
+## Current research proposal — not frozen
+
+Direct inspection of decision-driving canonical analyses has produced a deliberately non-binding pre-import framing workspace under `docs/research/`.
+
+The current **PROPOSED** direction is:
+
+- treat robustness without post-change learning separately from adaptation/recovery;
+- use persistent environment/rule/dynamics change as the primary resilience/recovery axis;
+- retain observation noise and action-execution failure as supporting robustness diagnostics rather than three symmetric full recovery experiments;
+- preserve nominal utility, immediate degradation, failure/recovery profiles, recovery speed, post-change performance, non-recovery, and across-run uncertainty instead of relying on one opaque resilience score;
+- keep recurring-context recall conditional rather than mandatory;
+- select exact algorithms only after controlled bibliography import, target-system inventory, environment prototypes, and feasibility checks.
+
+This proposal is documented in `docs/research/PREIMPORT_RESEARCH_FRAMING.md` and `docs/research/PREIMPORT_SCOPE_REVIEW.md`. It must not be treated as final methodology or citation-ready thesis evidence.
+
 ## Role of GridWorld
 
 GridWorld is the currently confirmed direction for the simple controlled environment. The final implementation has not been selected.
 
-The choice starts from zero and compares:
+The fresh 2026-08-03 technical landscape pre-screen is complete. It retained two bounded prototype candidates:
 
-1. a current library/framework that can be reused or adapted,
-2. a small custom implementation,
-3. a library plus project-specific wrappers/extensions.
+1. a small project-owned environment implementing the Gymnasium API;
+2. a thin MiniGrid adaptation if the required semantics remain transparent and the inherited action/observation conventions do not introduce confounds.
 
-There is no requirement to recover old user-owned code. Any third-party repository or package must be discovered through fresh research and pass license, maintenance, API, determinism, testability, and suitability review before download or integration.
+Gymnasium Toy Text environments remain reference fixtures only, and Griddly is not retained for initial prototyping because its engine/dependency surface is disproportionate to the current scope.
+
+The final choice still requires bounded prototypes and an ADR. There is no requirement to recover old user-owned code. Any third-party repository or package must pass license, maintenance, API, determinism, testability, and suitability review before integration.
 
 The final environment must support:
 
@@ -75,9 +91,9 @@ The final environment must support:
 
 ## Role of models
 
-Models/algorithms are the compared agents or baselines. **There is no shortlist inherited from old conversations.** Selection will use verified bibliography evidence, final GridWorld/observability framing, the hardware/software inventory, feasibility prototypes, and pilots.
+Models/algorithms are the compared agents or baselines. **There is no algorithm shortlist inherited from old conversations or created by the pre-import framing work.** Selection will use verified imported bibliography evidence, final GridWorld/observability framing, the target-system hardware/software inventory, feasibility prototypes, and pilots.
 
-`MODEL_CANDIDATES.md` is a selection process and evidence matrix, not a preselected model catalog.
+`MODEL_CANDIDATES.md` is a selection process and evidence matrix, not a preselected model catalog. The current workspace uses capability roles only: nominal reference, robustness-oriented comparator, online-adaptive comparator, and optional context-recall capability.
 
 ## Role of experiments
 
@@ -129,11 +145,11 @@ Greek Microsoft Word thesis
 
 ## What is still missing
 
-- Valid cross-repository read credential for the first controlled `ThesisBibliography` synchronization.
-- Actual automated hardware/software inventory and capability benchmark.
-- Fresh GridWorld landscape review and build/reuse/integration decision, using verified bibliography evidence as the basis.
+- A valid cross-repository read credential for the first controlled `ThesisBibliography` synchronization.
+- Execution and acceptance of the automated hardware/software inventory on the actual target system; the collector itself is implemented and tested.
+- Bounded custom-Gymnasium versus MiniGrid prototypes and the final GridWorld ADR; the fresh landscape pre-screen is complete.
 - Supervisor identity and supervisor-specific academic instructions.
-- Final research questions/hypotheses.
-- Final environment variants, models, metrics, and statistical protocol.
+- Final research questions/hypotheses; pre-import candidates exist but are not frozen.
+- Final uncertainty mechanisms/severities, environment variants, models, metrics, and statistical protocol.
 - Current official Word template/submission package.
 - First successful synchronization of the verified `ThesisBibliography` package into `research/bibliography/`.
