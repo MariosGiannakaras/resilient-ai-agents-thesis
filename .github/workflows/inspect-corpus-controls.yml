@@ -1,0 +1,90 @@
+name: Inspect immutable corpus control characters
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/inspect-corpus-controls.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout immutable bibliography corpus
+        uses: actions/checkout@v4
+        with:
+          repository: MariosGiannakaras/ThesisBibliography
+          ref: bibliography-integration-v2
+          token: ${{ secrets.BIBLIOGRAPHY_SYNC_TOKEN }}
+          persist-credentials: false
+          fetch-depth: 1
+          lfs: false
+
+      - name: Report low control characters in text files
+        shell: bash
+        run: |
+          python - <<'PY'
+          from collections import Counter, defaultdict
+          from pathlib import Path
+
+          root = Path('research-corpus')
+          extensions = {'.md', '.txt', '.csv', '.json', '.yaml', '.yml', '.rst', '.tex'}
+          names = {'SOURCE_COMMIT', 'SHA256SUMS'}
+
+          def decode_text(data: bytes, rel: str) -> str:
+              try:
+                  return data.decode('utf-8')
+              except UnicodeDecodeError:
+                  if not (rel.startswith('sources/') and rel.endswith('.md')):
+                      raise
+                  surrogate_text = data.decode('utf-8', errors='surrogatepass')
+                  chars = []
+                  index = 0
+                  while index < len(surrogate_text):
+                      codepoint = ord(surrogate_text[index])
+                      if 0xD800 <= codepoint <= 0xDBFF:
+                          if index + 1 >= len(surrogate_text):
+                              raise ValueError(f'unpaired high surrogate in {rel}')
+                          low = ord(surrogate_text[index + 1])
+                          if not 0xDC00 <= low <= 0xDFFF:
+                              raise ValueError(f'unpaired high surrogate in {rel}')
+                          chars.append(chr(0x10000 + ((codepoint - 0xD800) << 10) + (low - 0xDC00)))
+                          index += 2
+                          continue
+                      if 0xDC00 <= codepoint <= 0xDFFF:
+                          raise ValueError(f'unpaired low surrogate in {rel}')
+                      chars.append(surrogate_text[index])
+                      index += 1
+                  return ''.join(chars)
+
+          by_path = defaultdict(Counter)
+          examples = defaultdict(list)
+          for path in sorted(root.rglob('*')):
+              if not path.is_file() or (path.suffix.lower() not in extensions and path.name not in names):
+                  continue
+              rel = path.relative_to(root).as_posix()
+              text = decode_text(path.read_bytes(), rel)
+              for index, char in enumerate(text):
+                  codepoint = ord(char)
+                  if codepoint < 32 and char not in '\n\r\t\f':
+                      by_path[rel][codepoint] += 1
+                      if len(examples[(rel, codepoint)]) < 3:
+                          before = text[max(0, index - 20):index]
+                          after = text[index + 1:index + 21]
+                          examples[(rel, codepoint)].append((index, repr(before), repr(after)))
+
+          print(f'paths_with_disallowed_controls={len(by_path)}')
+          aggregate = Counter()
+          for rel in sorted(by_path):
+              counts = dict(sorted(by_path[rel].items()))
+              aggregate.update(by_path[rel])
+              print(f'{rel}: {counts}')
+              for codepoint in sorted(by_path[rel]):
+                  print(f'  U+{codepoint:04X} examples={examples[(rel, codepoint)]}')
+          print(f'aggregate={dict(sorted(aggregate.items()))}')
+          if not by_path:
+              raise SystemExit('Expected at least one control-character path for diagnostic run')
+          PY
