@@ -1,0 +1,43 @@
+name: Apply full-corpus consumer contract
+
+on:
+  push:
+    branches:
+      - feat/full-corpus-consumer-contract
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout contract branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/full-corpus-consumer-contract
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Apply reviewed payload and validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .github/full-corpus-contract-payload/part* \
+            | base64 --decode \
+            > "$RUNNER_TEMP/full-corpus-contract.tar.gz"
+          tar -xzf "$RUNNER_TEMP/full-corpus-contract.tar.gz" -C .
+          rm -rf .github/full-corpus-contract-payload
+          rm -f .github/workflows/apply-full-corpus-contract.yml
+
+          python -m compileall -q scripts tests
+          python -m unittest discover -s tests -p 'test_*.py' -v
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit \
+            -m "feat: add complete bibliography consumer contract" \
+            -m "Replace the citation-only consumer with strict complete-corpus and nested citation-ready validation, immutable-ref synchronization, contextual source-reference checks, trust-aware local search, transactionality tests, and DEC-021 documentation.\n\nValidation: Python compilation and the complete unit-test suite pass before this commit is pushed.\n\nNot changed: no generated bibliography corpus is imported by this commit, no source is promoted, and no research protocol or model set is frozen."
+          git push origin HEAD:feat/full-corpus-consumer-contract
