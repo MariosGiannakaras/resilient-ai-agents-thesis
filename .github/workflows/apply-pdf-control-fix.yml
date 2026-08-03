@@ -23,6 +23,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # The payload is split into deterministic bounded chunks solely for
+          # connector transport; it expands to the reviewed seven-file diff.
           cat .github/control-fix-payload/part* | base64 --decode > "$RUNNER_TEMP/fix.tar.gz"
           tar -xzf "$RUNNER_TEMP/fix.tar.gz" -C .
           rm -rf .github/control-fix-payload
