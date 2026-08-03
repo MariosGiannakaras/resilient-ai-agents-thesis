@@ -48,14 +48,28 @@ Synchronization is intentionally pull-based. It can start in either of two contr
 - **Pinned/manual:** dispatch `.github/workflows/sync-bibliography.yml` with a specific bibliography branch, tag, or commit.
 - **Latest-main automation:** change `.bibliography-sync-trigger` on `main`; this synchronizes the current `ThesisBibliography/main` head.
 
+### Credential contract
+
+The repository secret `BIBLIOGRAPHY_SYNC_TOKEN` must authenticate read-only access to the private `MariosGiannakaras/ThesisBibliography` repository.
+
+Preferred configuration is a fine-grained personal access token with:
+
+- repository access limited to `MariosGiannakaras/ThesisBibliography`,
+- **Repository permissions → Contents: Read-only**.
+
+The token must never be committed, pasted into logs, Pull Requests, documentation, or chat. The workflow first performs a content-read probe against the requested bibliography ref; a merely non-empty, expired, revoked, or incorrectly scoped token fails before checkout with a targeted diagnostic.
+
+The thesis repository's normal `GITHUB_TOKEN` is intentionally not used as a substitute because it is repository-scoped and does not provide cross-repository read access to the separate private bibliography source of truth.
+
 After either trigger:
 
-1. The workflow checks out `ThesisBibliography` using the read-only `BIBLIOGRAPHY_SYNC_TOKEN` secret.
-2. The canonical exporter runs in that exact checkout.
-3. `scripts/bibliography_import.py` validates the exported package and transactionally replaces only `research/bibliography/`.
-4. `scripts/validate_bibliography_usage.py` verifies package integrity and source-ID references.
-5. The workflow opens a Pull Request to this repository.
-6. Normal CI/review applies before merge.
+1. The workflow verifies that `BIBLIOGRAPHY_SYNC_TOKEN` can read canonical `ThesisBibliography` content at the requested ref.
+2. The workflow checks out `ThesisBibliography` using that read-only credential.
+3. The canonical exporter runs in that exact checkout.
+4. `scripts/bibliography_import.py` validates the exported package and transactionally replaces only `research/bibliography/`.
+5. `scripts/validate_bibliography_usage.py` verifies package integrity and source-ID references.
+6. The workflow opens a Pull Request to this repository.
+7. Normal CI/review applies before merge.
 
 A bibliography synchronization never merges directly to `main`. The trigger file contains no bibliography data and exists only to request a latest-main synchronization when manual workflow dispatch is not available to the automation client.
 
