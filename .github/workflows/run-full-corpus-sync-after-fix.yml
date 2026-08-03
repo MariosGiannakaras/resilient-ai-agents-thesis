@@ -1,0 +1,119 @@
+name: Run immutable full-corpus sync after encoding fix
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/run-full-corpus-sync-after-fix.yml"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current thesis main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Verify private read access at immutable tag
+        env:
+          GH_TOKEN: ${{ secrets.BIBLIOGRAPHY_SYNC_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh api --method GET \
+            repos/MariosGiannakaras/ThesisBibliography/contents/research-corpus/catalog/package-metadata.json \
+            -f ref=bibliography-integration-v2 --silent
+
+      - name: Checkout immutable bibliography baseline
+        uses: actions/checkout@v4
+        with:
+          repository: MariosGiannakaras/ThesisBibliography
+          ref: bibliography-integration-v2
+          path: .bibliography-source
+          token: ${{ secrets.BIBLIOGRAPHY_SYNC_TOKEN }}
+          persist-credentials: false
+          fetch-depth: 0
+          lfs: false
+
+      - name: Resolve tag and validate ancestry inputs
+        id: source
+        shell: bash
+        run: |
+          set -euo pipefail
+          checkout_commit="$(git -C .bibliography-source rev-parse HEAD)"
+          test "$checkout_commit" = "27e325a74722b8f80643e6d1902e4bf3847036f5"
+          test "$(git -C .bibliography-source rev-list -n 1 refs/tags/bibliography-integration-v2)" = "$checkout_commit"
+          echo "commit=$checkout_commit" >> "$GITHUB_OUTPUT"
+          echo "short=${checkout_commit:0:12}" >> "$GITHUB_OUTPUT"
+
+      - name: Run upstream validators
+        working-directory: .bibliography-source
+        run: |
+          python tools/package_integrity.py validate thesis-package
+          python tools/validate_thesis_package.py
+          python tools/research_materials.py validate
+          python tools/validate_research_material_review.py
+          python tools/export_research_corpus.py validate
+
+      - name: Install and validate complete corpus
+        run: |
+          set -euo pipefail
+          python scripts/bibliography_import.py \
+            --package .bibliography-source/research-corpus \
+            --requested-ref bibliography-integration-v2 \
+            --checkout-commit "${{ steps.source.outputs.commit }}" \
+            --source-repository .bibliography-source \
+            --expect-source-count 583 \
+            --expect-selected-source-count 112 \
+            --expect-research-material-count 19 \
+            --expect-original-pdf-count 280 \
+            --expect-schema-version 1
+          (cd research/bibliography && sha256sum -c catalog/SHA256SUMS)
+          (cd research/bibliography/citation-ready && sha256sum -c catalog/SHA256SUMS)
+          python scripts/bibliography_import.py --validate-only
+          python scripts/validate_bibliography_usage.py
+          python -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Publish generated-only branch and PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .bibliography-source
+          branch="automation/full-corpus-sync-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add research/bibliography
+          git commit -m "chore: sync complete bibliography corpus ${{ steps.source.outputs.short }}"
+          git push origin "HEAD:$branch"
+          python - <<'PY' > "$RUNNER_TEMP/pr.md"
+          import json
+          from pathlib import Path
+          p = json.loads(Path('research/bibliography/IMPORT_INTEGRITY.json').read_text(encoding='utf-8'))
+          print('## Generated complete-corpus synchronization')
+          print()
+          for label, key in (
+              ('requested ref', 'requested_ref'),
+              ('checkout commit', 'checkout_commit'),
+              ('complete-corpus source commit', 'corpus_source_commit'),
+              ('citation-ready source commit', 'citation_source_commit'),
+              ('canonical sources', 'source_count'),
+              ('citation-ready sources', 'selected_source_count'),
+              ('research materials', 'research_material_count'),
+              ('indexed originals', 'original_pdf_count'),
+          ):
+              print(f'- {label}: `{p[key]}`')
+          print(f"- byte-preserved CESU-8 source files: {len(p.get('legacy_text_encodings', {}))}")
+          print()
+          print('Generated-only import. Both upstream checksum manifests, consumer integrity validation, source-reference validation, and the full test suite passed. No PDFs or LFS objects are imported.')
+          PY
+          gh pr create --base main --head "$branch" \
+            --title "chore: sync complete bibliography corpus ${{ steps.source.outputs.short }}" \
+            --body-file "$RUNNER_TEMP/pr.md"
