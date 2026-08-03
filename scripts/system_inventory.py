@@ -45,8 +45,7 @@ def run_command(command: Sequence[str], timeout: int = 5) -> Optional[str]:
         return None
     if result.returncode != 0:
         return None
-    value = result.stdout.strip() or result.stderr.strip()
-    return value or None
+    return result.stdout.strip() or result.stderr.strip()
 
 
 def detect_cpu_model() -> Optional[str]:
