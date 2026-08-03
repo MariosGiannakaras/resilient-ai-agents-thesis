@@ -16,3 +16,6 @@ Results expose the identifier, title when available, content layer, canonical ro
 The standard-library index is deterministic and rebuilt automatically when imported integrity changes. It lives under ignored `.cache/bibliography/` and is never a source of truth. Use `--rebuild-index` to force reconstruction.
 
 Formal thesis claims must still use citation-ready `SRC-*` evidence. Search results from rejected/theory-only sources, `MAT-*` materials, notes, or other non-citation layers are research context, not automatic citation authority.
+
+
+The index builder reads the consumer-owned `legacy_text_encodings` map. Byte-preserved CESU-8 source Markdown is normalized only in the ignored search index; the imported generated files and upstream checksums remain unchanged.

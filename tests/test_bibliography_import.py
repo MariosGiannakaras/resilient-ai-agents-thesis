@@ -301,6 +301,35 @@ class BibliographyImportTests(unittest.TestCase):
                 with self.assertRaises(BibliographyImportError):
                     validate_package(fixture.package, "tag", CHECKOUT_COMMIT, ancestry_checker=ancestry)
 
+
+    def test_well_formed_cesu8_source_markdown_is_recorded_without_rewriting(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture = CorpusFixture(root)
+            source = fixture.package / "sources" / f"{SOURCE_ID}.md"
+            original = b"# Legacy source\n\nEquation: \xed\xa0\xb5\xed\xb1\xa2\n"
+            source.write_bytes(original)
+            fixture.refresh()
+            destination = root / "bibliography"
+            summary = install_package(
+                fixture.package, destination, "tag", CHECKOUT_COMMIT, ancestry_checker=ancestry
+            )
+            relative = f"sources/{SOURCE_ID}.md"
+            self.assertEqual(summary.legacy_text_encodings, {relative: "cesu-8"})
+            self.assertEqual((destination / relative).read_bytes(), original)
+            integrity = json.loads((destination / "IMPORT_INTEGRITY.json").read_text(encoding="utf-8"))
+            self.assertEqual(integrity["legacy_text_encodings"], {relative: "cesu-8"})
+            self.assertEqual(validate_installed_package(destination).legacy_text_encodings, {relative: "cesu-8"})
+
+    def test_cesu8_is_rejected_outside_canonical_source_markdown(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = CorpusFixture(Path(directory))
+            path = fixture.package / "analyses" / f"{SOURCE_ID}.md"
+            path.write_bytes(b"# Analysis\n\xed\xa0\xb5\xed\xb1\xa2\n")
+            fixture.refresh()
+            with self.assertRaises(BibliographyImportError):
+                validate_package(fixture.package, "tag", CHECKOUT_COMMIT, ancestry_checker=ancestry)
+
     def test_manual_post_import_modification_is_detected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

@@ -11,6 +11,7 @@ from pathlib import Path
 
 from bibliography_catalog import CatalogIndex, load_catalog
 from bibliography_import import BibliographyImportError, validate_installed_package
+from bibliography_text import BibliographyTextError, read_corpus_text
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_IMPORT_DIR = ROOT / "research" / "bibliography"
@@ -33,11 +34,12 @@ class SearchDocument:
     topics: str
     relative_path: str
     content_sha256: str
+    text_encoding: str
     text: str
 
 
-def _sha256_text(text: str) -> str:
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+def _sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def _heading(text: str) -> str:
@@ -48,8 +50,20 @@ def _heading(text: str) -> str:
     return ""
 
 
-def _document_for(path: Path, import_dir: Path, layer: str, catalog: CatalogIndex) -> SearchDocument:
-    text = path.read_text(encoding="utf-8")
+def _document_for(
+    path: Path,
+    import_dir: Path,
+    layer: str,
+    catalog: CatalogIndex,
+    legacy_text_encodings: dict[str, str],
+) -> SearchDocument:
+    relative = path.relative_to(import_dir)
+    try:
+        text, encoding = read_corpus_text(
+            path, relative, expected_encoding=legacy_text_encodings.get(relative.as_posix())
+        )
+    except BibliographyTextError as exc:
+        raise BibliographyImportError(str(exc)) from exc
     stem = path.stem
     identifier = stem if ID_RE.fullmatch(stem) else ""
     title = _heading(text)
@@ -93,8 +107,9 @@ def _document_for(path: Path, import_dir: Path, layer: str, catalog: CatalogInde
         confidence=confidence,
         relevance=relevance,
         topics=topics,
-        relative_path=path.relative_to(import_dir).as_posix(),
-        content_sha256=_sha256_text(text),
+        relative_path=relative.as_posix(),
+        content_sha256=_sha256_file(path),
+        text_encoding=encoding,
         text=text,
     )
 
@@ -102,6 +117,11 @@ def _document_for(path: Path, import_dir: Path, layer: str, catalog: CatalogInde
 def build_index(import_dir: Path, index_path: Path) -> list[SearchDocument]:
     import_dir = import_dir.resolve()
     validate_installed_package(import_dir)
+    integrity = json.loads((import_dir / "IMPORT_INTEGRITY.json").read_text(encoding="utf-8"))
+    recorded = integrity.get("legacy_text_encodings", {})
+    if not isinstance(recorded, dict):
+        raise BibliographyImportError("IMPORT_INTEGRITY.json has invalid legacy_text_encodings")
+    legacy_text_encodings = {str(key): str(value) for key, value in recorded.items()}
     catalog = load_catalog(import_dir)
     documents: list[SearchDocument] = []
     for layer in SEARCH_LAYERS:
@@ -109,11 +129,11 @@ def build_index(import_dir: Path, index_path: Path) -> list[SearchDocument]:
         if not root.exists():
             continue
         for path in sorted(root.rglob("*.md"), key=lambda item: item.relative_to(import_dir).as_posix()):
-            documents.append(_document_for(path, import_dir, layer, catalog))
+            documents.append(_document_for(path, import_dir, layer, catalog, legacy_text_encodings))
     documents.sort(key=lambda item: (item.relative_path, item.identifier, item.title))
     index_path.parent.mkdir(parents=True, exist_ok=True)
     payload = {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_commit": validate_installed_package(import_dir).corpus_source_commit,
         "documents": [asdict(document) for document in documents],
     }
@@ -131,7 +151,7 @@ def load_index(import_dir: Path, index_path: Path, rebuild: bool = False) -> lis
         payload = json.loads(index_path.read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError):
         return build_index(import_dir, index_path)
-    if payload.get("schema_version") != 1 or not isinstance(payload.get("documents"), list):
+    if payload.get("schema_version") != 2 or not isinstance(payload.get("documents"), list):
         return build_index(import_dir, index_path)
     current = validate_installed_package(import_dir)
     if payload.get("source_commit") != current.corpus_source_commit:
