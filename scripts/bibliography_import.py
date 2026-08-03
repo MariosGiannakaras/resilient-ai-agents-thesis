@@ -15,6 +15,8 @@ from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 from typing import Callable, Iterable
 
+from bibliography_text import BibliographyTextError, read_corpus_text
+
 SOURCE_ID_RE = re.compile(r"^SRC-[A-F0-9]{10}$")
 MATERIAL_ID_RE = re.compile(r"^MAT-[A-F0-9]{10}$")
 COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
@@ -80,6 +82,7 @@ class PackageSummary:
     corpus_checksums_sha256: str
     citation_metadata_sha256: str
     citation_checksums_sha256: str
+    legacy_text_encodings: dict[str, str]
 
     @property
     def source_count(self) -> int:
@@ -166,16 +169,22 @@ def _parse_checksums(root: Path, relative: Path) -> dict[str, str]:
     return checksums
 
 
-def _validate_utf8(path: Path, relative: Path) -> None:
+def _validate_text(path: Path, relative: Path) -> str:
     if path.suffix.casefold() not in TEXT_EXTENSIONS and path.name not in TEXT_FILENAMES:
         raise BibliographyImportError(f"Unexpected non-text file in research corpus: {relative}")
     try:
-        path.read_text(encoding="utf-8")
-    except UnicodeDecodeError as exc:
-        raise BibliographyImportError(f"Invalid UTF-8 text file: {relative}") from exc
+        _, encoding = read_corpus_text(path, relative)
+    except BibliographyTextError as exc:
+        raise BibliographyImportError(str(exc)) from exc
+    return encoding
 
 
-def _walk_files(root: Path, *, ignore_consumer_integrity: bool = False) -> dict[str, Path]:
+def _walk_files(
+    root: Path,
+    *,
+    ignore_consumer_integrity: bool = False,
+    legacy_text_encodings: dict[str, str] | None = None,
+) -> dict[str, Path]:
     files: dict[str, Path] = {}
     resolved_root = root.resolve()
     for path in sorted(root.rglob("*"), key=lambda item: item.relative_to(root).as_posix()):
@@ -205,7 +214,9 @@ def _walk_files(root: Path, *, ignore_consumer_integrity: bool = False) -> dict[
             prefix = handle.read(max(len(LFS_PREFIX), 256))
         if prefix.startswith(LFS_PREFIX):
             raise BibliographyImportError(f"Git LFS pointer is not permitted: {rel_posix}")
-        _validate_utf8(path, relative)
+        encoding = _validate_text(path, relative)
+        if encoding != "utf-8" and legacy_text_encodings is not None:
+            legacy_text_encodings[rel_posix] = encoding
         files[rel_posix] = path
     return files
 
@@ -560,7 +571,12 @@ def validate_package(
         raise BibliographyImportError("requested_ref must not be empty")
     checkout = _require_commit(checkout_commit, "checkout_commit")
     _validate_structure(package)
-    corpus_files = _walk_files(package, ignore_consumer_integrity=installed)
+    legacy_text_encodings: dict[str, str] = {}
+    corpus_files = _walk_files(
+        package,
+        ignore_consumer_integrity=installed,
+        legacy_text_encodings=legacy_text_encodings,
+    )
     citation_root = package / CITATION_ROOT
     citation_files = _walk_files(citation_root)
     _validate_checksum_scope(package, corpus_files, CORPUS_CHECKSUMS)
@@ -599,6 +615,7 @@ def validate_package(
         corpus_checksums_sha256=sha256(package / CORPUS_CHECKSUMS),
         citation_metadata_sha256=sha256(package / CITATION_METADATA),
         citation_checksums_sha256=sha256(package / CITATION_CHECKSUMS),
+        legacy_text_encodings=legacy_text_encodings,
     )
 
 
@@ -624,6 +641,7 @@ def _integrity_payload(summary: PackageSummary) -> dict[str, object]:
         "citation_metadata_sha256": summary.citation_metadata_sha256,
         "citation_checksum_manifest_sha256": summary.citation_checksums_sha256,
         "ancestry_validated": True,
+        "legacy_text_encodings": summary.legacy_text_encodings,
         "files": summary.file_hashes,
     }
 
@@ -655,6 +673,14 @@ def _summary_from_integrity(destination: Path, integrity: dict[str, object]) -> 
     )
     if summary.corpus_source_commit != corpus or summary.citation_source_commit != citation:
         raise BibliographyImportError("IMPORT_INTEGRITY.json source commits differ from installed package")
+    recorded_encodings = integrity.get("legacy_text_encodings", {})
+    if not isinstance(recorded_encodings, dict):
+        raise BibliographyImportError("IMPORT_INTEGRITY.json has invalid legacy_text_encodings")
+    normalized_encodings = {str(key): str(value) for key, value in recorded_encodings.items()}
+    if normalized_encodings != summary.legacy_text_encodings:
+        raise BibliographyImportError(
+            "IMPORT_INTEGRITY.json legacy text encoding map differs from installed package"
+        )
     return summary
 
 

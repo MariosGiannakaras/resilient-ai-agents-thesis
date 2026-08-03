@@ -62,3 +62,8 @@ The initial baseline acceptance check is 583 canonical sources, 112 citation-rea
 `scripts/validate_bibliography_usage.py` applies context-sensitive rules: final thesis/frozen scientific documents permit only citation-ready `SRC-*`; internal research documents may reference any canonical `SRC-*` and registered `MAT-*`, but unknown IDs always fail.
 
 Freshness searches and any source/material promotion occur only in `ThesisBibliography`, followed by a new immutable synchronization.
+
+
+## Byte-preserved legacy source text
+
+All metadata, manifests, analyses, evidence, materials, notes, aggregates, and the complete citation-ready layer must be strict UTF-8. The immutable `bibliography-integration-v2` baseline contains four canonical full-source Markdown files under `sources/` with otherwise valid UTF-8 text plus well-formed CESU-8 surrogate pairs produced by historical PDF conversion. The consumer preserves those upstream bytes unchanged, validates that every surrogate is paired, records the exact paths as `cesu-8` in `IMPORT_INTEGRITY.json`, and converts only the in-memory search representation to canonical Unicode. No other invalid UTF-8 or binary-like text is accepted.

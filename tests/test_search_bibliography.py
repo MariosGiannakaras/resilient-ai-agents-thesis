@@ -61,6 +61,22 @@ class BibliographySearchTests(unittest.TestCase):
             self.assertTrue(material)
             self.assertEqual({item[0].trust for item in material}, {"research-material"})
 
+
+    def test_cesu8_source_is_searchable_with_recorded_encoding(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture = CorpusFixture(root)
+            source = fixture.package / "sources" / f"{SOURCE_ID}.md"
+            source.write_bytes(b"# Legacy source\n\nEquation marker \xed\xa0\xb5\xed\xb1\xa2\n")
+            fixture.refresh()
+            import_dir = root / "research" / "bibliography"
+            install_package(fixture.package, import_dir, "tag", CHECKOUT_COMMIT, ancestry_checker=ancestry)
+            documents = build_index(import_dir, root / "index.json")
+            results = search_documents(documents, "Equation marker", identifier=SOURCE_ID)
+            self.assertTrue(results)
+            self.assertEqual(results[0][0].text_encoding, "cesu-8")
+            self.assertIn("𝑢", results[0][0].text)
+
     def test_rebuilding_search_index_is_deterministic(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
