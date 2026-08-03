@@ -79,3 +79,14 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Preserved scientific source-derived text and citation-ready evidence in each source's original language; the final thesis remains Greek Microsoft Word.
 - Clarified that a lightweight visual/debug surface may support core validation, while the polished final dashboard remains gated behind validated core and pilot evidence.
 - Added DEC-017, DEC-018 and DEC-019 and marked DEC-016 as superseded.
+
+## 2026-08-04 — Implementation-first priority and deferred writing-stage inputs
+
+- Recorded that the proposed thesis topic has been approved and that no current supervisor-specific instructions or deadlines exist.
+- Removed supervisor identity, supervisor requirements, submission dates, and Word-template availability as current blockers for bibliography integration, model research, GridWorld selection, implementation, pilots, and experiments.
+- Established that later supervisor corrections are incorporated when actually received rather than anticipated in advance.
+- Prioritized complete bibliography-corpus integration, target-system inventory, model/agent research, GridWorld prototypes, the independent research program, pilots, and experiments before normal chapter drafting.
+- Preserved structured writing notes, evidence mappings, method records, captions, and reproducible artifacts during implementation so later writing is not a separate reconstruction exercise.
+- Recorded that two or three completed theses may be supplied near the writing phase as contextual examples only; they do not override official Department guidance or become scientific sources.
+- Recorded that the user created a fine-grained token and replaced the `BIBLIOGRAPHY_SYNC_TOKEN` Actions secret. Effective access remains to be verified by the migrated complete-corpus synchronization workflow without exposing the token value.
+- Added DEC-020 and updated the active requirements and open-question taxonomy.
