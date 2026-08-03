@@ -41,13 +41,13 @@ Primary bibliography management no longer occurs in this repository.
 
 The private repository `MariosGiannakaras/ThesisBibliography` is the independent canonical source of truth for source discovery, metadata, originals, Markdown/OCR, scientific analysis, verified evidence, inclusion/exclusion decisions, and controlled thesis export.
 
-The current complete scientific selection has been completed there for **580/580 active sources**. Canonical status records **109 selected/verified sources**, **470 exclusions**, **1 theory-only/non-citation source**, **0 pending decisions**, and **109 verified evidence sets**.
+The current complete scientific selection has been completed there for **583/583 active sources**. Canonical status records **112 selected/verified sources**, **470 exclusions**, **1 theory-only/non-citation source**, **0 pending decisions**, and **112 verified evidence sets**.
 
 This repository consumes only the verified generated package under `research/bibliography/`, bound to an exact `SOURCE_COMMIT`. It does not copy the full bibliography repository, PDFs, raw conversion material, or repository history.
 
 Synchronization is pull-based and performed through a Pull Request. The binding architecture is defined in `docs/context/BIBLIOGRAPHY_INTEGRATION.md` and `bibliography/README.md`.
 
-The first controlled synchronization is currently **BLOCKED** at cross-repository authentication. The hardened credential probe was rerun on 2026-08-03 and the configured `BIBLIOGRAPHY_SYNC_TOKEN` produced **HTTP 401 Bad credentials** when requesting canonical content from the private `MariosGiannakaras/ThesisBibliography` repository. The workflow therefore stopped before checkout, export, or import. `research/bibliography/` has not been populated and no bibliography content was partially installed. The secret must be replaced with a valid credential that has read access to `ThesisBibliography`; the existing integration architecture does not need redesign.
+The first controlled synchronization is currently **BLOCKED** at cross-repository authentication. The hardened credential probe was rerun again on 2026-08-03 against the fully reviewed 583-source upstream state and the configured `BIBLIOGRAPHY_SYNC_TOKEN` produced **HTTP 401 Bad credentials** when requesting canonical content from the private `MariosGiannakaras/ThesisBibliography` repository. The workflow therefore stopped before checkout, export, or import. `research/bibliography/` has not been populated and no bibliography content was partially installed. The secret must be replaced with a valid credential that has read access to `ThesisBibliography`; the existing integration architecture does not need redesign.
 
 Source-derived scientific text and citation-ready evidence remain in the original language of the source. Translation for the final Greek thesis occurs only during writing and does not replace the original-language evidence record.
 
@@ -55,7 +55,7 @@ Literature freshness gates remain active before protocol freeze, major writing g
 
 ## Current research proposal — not frozen
 
-Direct inspection of decision-driving canonical analyses has produced a deliberately non-binding pre-import framing workspace under `docs/research/`.
+Direct inspection of decision-driving canonical analyses has produced deliberately non-binding pre-import research workspaces under `docs/research/`.
 
 The current **PROPOSED** direction is:
 
@@ -64,9 +64,16 @@ The current **PROPOSED** direction is:
 - retain observation noise and action-execution failure as supporting robustness diagnostics rather than three symmetric full recovery experiments;
 - preserve nominal utility, immediate degradation, failure/recovery profiles, recovery speed, post-change performance, non-recovery, and across-run uncertainty instead of relying on one opaque resilience score;
 - keep recurring-context recall conditional rather than mandatory;
+- compare capability roles rather than building an algorithm catalogue, with CPU-friendly tabular prototypes preferred until evidence or environment complexity requires function approximation;
 - select exact algorithms only after controlled bibliography import, target-system inventory, environment prototypes, and feasibility checks.
 
-This proposal is documented in `docs/research/PREIMPORT_RESEARCH_FRAMING.md` and `docs/research/PREIMPORT_SCOPE_REVIEW.md`. It must not be treated as final methodology or citation-ready thesis evidence.
+The August 2026 freshness pass tightened three methodological points without freezing them as final protocol:
+
+1. ordinary tabular Q-learning should not be described as intrinsically incapable under every form of non-stationarity; recent structured Markov-switching theory gives convergence under explicit assumptions, so the thesis must define and test its specific changepoint/recovery regime empirically;
+2. detector-based methods need practical-horizon activation/delay/error validation rather than relying only on asymptotic non-stationary guarantees; recent empirical evidence motivating quickest-change-detection restart methods is bandit-specific and must not be generalized directly to GridWorld MDPs;
+3. final non-stationary trajectories should not be reused as an unrestricted hyperparameter-tuning surface; the tuning/pilot/final-evaluation boundary must be fixed before final evidence is inspected, without copying a universal tuning fraction from another study.
+
+These proposals are documented in `docs/research/PREIMPORT_RESEARCH_FRAMING.md`, `docs/research/PREIMPORT_SCOPE_REVIEW.md`, `docs/research/PREIMPORT_AGENT_FAMILY_REVIEW.md`, and `docs/research/PREIMPORT_FRESHNESS_IMPLICATIONS.md`. They must not be treated as final methodology or citation-ready thesis evidence until the controlled bibliography import provides canonical source-ID traceability.
 
 ## Role of GridWorld
 
@@ -91,9 +98,9 @@ The final environment must support:
 
 ## Role of models
 
-Models/algorithms are the compared agents or baselines. **There is no algorithm shortlist inherited from old conversations or created by the pre-import framing work.** Selection will use verified imported bibliography evidence, final GridWorld/observability framing, the target-system hardware/software inventory, feasibility prototypes, and pilots.
+Models/algorithms are the compared agents or baselines. **There is no final algorithm shortlist inherited from old conversations or created by the pre-import framing work.** Selection will use verified imported bibliography evidence, final GridWorld/observability framing, the target-system hardware/software inventory, feasibility prototypes, and pilots.
 
-`MODEL_CANDIDATES.md` is a selection process and evidence matrix, not a preselected model catalog. The current workspace uses capability roles only: nominal reference, robustness-oriented comparator, online-adaptive comparator, and optional context-recall capability.
+`MODEL_CANDIDATES.md` remains the formal selection process and evidence matrix. The current pre-import agent-family review uses capability roles only: frozen nominal reference, naive continual learner, robustness-oriented comparator, explicit change/context-aware comparator, and an optional detector-reset decomposition if pilots show that it is scientifically necessary.
 
 ## Role of experiments
 
@@ -107,7 +114,7 @@ Experiments are the primary mechanism for producing scientific findings. They mu
 - support fair statistical comparison,
 - produce real figures and tables.
 
-No historical run count, seed count, budget, or hyperparameter is carried forward as a default or candidate without new justification.
+No historical run count, seed count, budget, hyperparameter, detector threshold, or tuning fraction is carried forward as a default or candidate without new justification.
 
 ## Role of the dashboard
 
@@ -149,7 +156,7 @@ Greek Microsoft Word thesis
 - Execution and acceptance of the automated hardware/software inventory on the actual target system; the collector itself is implemented and tested.
 - Bounded custom-Gymnasium versus MiniGrid prototypes and the final GridWorld ADR; the fresh landscape pre-screen is complete.
 - Supervisor identity and supervisor-specific academic instructions.
-- Final research questions/hypotheses; pre-import candidates exist but are not frozen.
-- Final uncertainty mechanisms/severities, environment variants, models, metrics, and statistical protocol.
+- Final research questions/hypotheses; pre-import candidates and freshness implications exist but are not frozen.
+- Final uncertainty mechanisms/severities, environment variants, models, metrics, tuning boundary, and statistical protocol.
 - Current official Word template/submission package.
 - First successful synchronization of the verified `ThesisBibliography` package into `research/bibliography/`.
