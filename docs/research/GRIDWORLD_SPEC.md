@@ -2,6 +2,8 @@
 
 **Status:** `RESEARCH_REQUIRED`. No implementation has been selected and there is no legacy-code requirement.
 
+**Current technical pre-screen:** `docs/research/GRIDWORLD_LANDSCAPE_REVIEW.md`. It narrows the prototype candidates but does not constitute a final environment decision or ADR.
+
 ## Confirmed purpose
 
 The environment must be simple, controlled, and suitable for comparative evaluation of decision agents under uncertainty and dynamic change. It must support repeatable episodes, explicit disturbance parameters, trace capture, metric validation, and execution without the dashboard.
