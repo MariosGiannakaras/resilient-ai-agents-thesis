@@ -83,6 +83,7 @@ class PackageSummary:
     citation_metadata_sha256: str
     citation_checksums_sha256: str
     legacy_text_encodings: dict[str, str]
+    legacy_text_controls: dict[str, dict[str, int]]
 
     @property
     def source_count(self) -> int:
@@ -169,14 +170,14 @@ def _parse_checksums(root: Path, relative: Path) -> dict[str, str]:
     return checksums
 
 
-def _validate_text(path: Path, relative: Path) -> str:
+def _validate_text(path: Path, relative: Path) -> tuple[str, dict[str, int]]:
     if path.suffix.casefold() not in TEXT_EXTENSIONS and path.name not in TEXT_FILENAMES:
         raise BibliographyImportError(f"Unexpected non-text file in research corpus: {relative}")
     try:
-        _, encoding = read_corpus_text(path, relative)
+        _, encoding, controls = read_corpus_text(path, relative)
     except BibliographyTextError as exc:
         raise BibliographyImportError(str(exc)) from exc
-    return encoding
+    return encoding, controls
 
 
 def _walk_files(
@@ -184,6 +185,7 @@ def _walk_files(
     *,
     ignore_consumer_integrity: bool = False,
     legacy_text_encodings: dict[str, str] | None = None,
+    legacy_text_controls: dict[str, dict[str, int]] | None = None,
 ) -> dict[str, Path]:
     files: dict[str, Path] = {}
     resolved_root = root.resolve()
@@ -214,9 +216,11 @@ def _walk_files(
             prefix = handle.read(max(len(LFS_PREFIX), 256))
         if prefix.startswith(LFS_PREFIX):
             raise BibliographyImportError(f"Git LFS pointer is not permitted: {rel_posix}")
-        encoding = _validate_text(path, relative)
+        encoding, controls = _validate_text(path, relative)
         if encoding != "utf-8" and legacy_text_encodings is not None:
             legacy_text_encodings[rel_posix] = encoding
+        if controls and legacy_text_controls is not None:
+            legacy_text_controls[rel_posix] = controls
         files[rel_posix] = path
     return files
 
@@ -572,10 +576,12 @@ def validate_package(
     checkout = _require_commit(checkout_commit, "checkout_commit")
     _validate_structure(package)
     legacy_text_encodings: dict[str, str] = {}
+    legacy_text_controls: dict[str, dict[str, int]] = {}
     corpus_files = _walk_files(
         package,
         ignore_consumer_integrity=installed,
         legacy_text_encodings=legacy_text_encodings,
+        legacy_text_controls=legacy_text_controls,
     )
     citation_root = package / CITATION_ROOT
     citation_files = _walk_files(citation_root)
@@ -616,6 +622,7 @@ def validate_package(
         citation_metadata_sha256=sha256(package / CITATION_METADATA),
         citation_checksums_sha256=sha256(package / CITATION_CHECKSUMS),
         legacy_text_encodings=legacy_text_encodings,
+        legacy_text_controls=legacy_text_controls,
     )
 
 
@@ -642,6 +649,7 @@ def _integrity_payload(summary: PackageSummary) -> dict[str, object]:
         "citation_checksum_manifest_sha256": summary.citation_checksums_sha256,
         "ancestry_validated": True,
         "legacy_text_encodings": summary.legacy_text_encodings,
+        "legacy_text_controls": summary.legacy_text_controls,
         "files": summary.file_hashes,
     }
 
@@ -680,6 +688,18 @@ def _summary_from_integrity(destination: Path, integrity: dict[str, object]) -> 
     if normalized_encodings != summary.legacy_text_encodings:
         raise BibliographyImportError(
             "IMPORT_INTEGRITY.json legacy text encoding map differs from installed package"
+        )
+    recorded_controls = integrity.get("legacy_text_controls", {})
+    if not isinstance(recorded_controls, dict):
+        raise BibliographyImportError("IMPORT_INTEGRITY.json has invalid legacy_text_controls")
+    normalized_controls: dict[str, dict[str, int]] = {}
+    for path, counts in recorded_controls.items():
+        if not isinstance(counts, dict):
+            raise BibliographyImportError("IMPORT_INTEGRITY.json has invalid legacy_text_controls")
+        normalized_controls[str(path)] = {str(key): int(value) for key, value in counts.items()}
+    if normalized_controls != summary.legacy_text_controls:
+        raise BibliographyImportError(
+            "IMPORT_INTEGRITY.json legacy text control map differs from installed package"
         )
     return summary
 

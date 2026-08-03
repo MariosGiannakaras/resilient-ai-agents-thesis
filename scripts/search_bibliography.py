@@ -11,7 +11,7 @@ from pathlib import Path
 
 from bibliography_catalog import CatalogIndex, load_catalog
 from bibliography_import import BibliographyImportError, validate_installed_package
-from bibliography_text import BibliographyTextError, read_corpus_text
+from bibliography_text import BibliographyTextError, normalize_search_text, read_corpus_text
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_IMPORT_DIR = ROOT / "research" / "bibliography"
@@ -56,12 +56,17 @@ def _document_for(
     layer: str,
     catalog: CatalogIndex,
     legacy_text_encodings: dict[str, str],
+    legacy_text_controls: dict[str, dict[str, int]],
 ) -> SearchDocument:
     relative = path.relative_to(import_dir)
     try:
-        text, encoding = read_corpus_text(
-            path, relative, expected_encoding=legacy_text_encodings.get(relative.as_posix())
+        text, encoding, _ = read_corpus_text(
+            path,
+            relative,
+            expected_encoding=legacy_text_encodings.get(relative.as_posix()),
+            expected_controls=legacy_text_controls.get(relative.as_posix()),
         )
+        text = normalize_search_text(text)
     except BibliographyTextError as exc:
         raise BibliographyImportError(str(exc)) from exc
     stem = path.stem
@@ -122,6 +127,14 @@ def build_index(import_dir: Path, index_path: Path) -> list[SearchDocument]:
     if not isinstance(recorded, dict):
         raise BibliographyImportError("IMPORT_INTEGRITY.json has invalid legacy_text_encodings")
     legacy_text_encodings = {str(key): str(value) for key, value in recorded.items()}
+    recorded_controls = integrity.get("legacy_text_controls", {})
+    if not isinstance(recorded_controls, dict):
+        raise BibliographyImportError("IMPORT_INTEGRITY.json has invalid legacy_text_controls")
+    legacy_text_controls: dict[str, dict[str, int]] = {}
+    for path, counts in recorded_controls.items():
+        if not isinstance(counts, dict):
+            raise BibliographyImportError("IMPORT_INTEGRITY.json has invalid legacy_text_controls")
+        legacy_text_controls[str(path)] = {str(key): int(value) for key, value in counts.items()}
     catalog = load_catalog(import_dir)
     documents: list[SearchDocument] = []
     for layer in SEARCH_LAYERS:
@@ -129,11 +142,20 @@ def build_index(import_dir: Path, index_path: Path) -> list[SearchDocument]:
         if not root.exists():
             continue
         for path in sorted(root.rglob("*.md"), key=lambda item: item.relative_to(import_dir).as_posix()):
-            documents.append(_document_for(path, import_dir, layer, catalog, legacy_text_encodings))
+            documents.append(
+                _document_for(
+                    path,
+                    import_dir,
+                    layer,
+                    catalog,
+                    legacy_text_encodings,
+                    legacy_text_controls,
+                )
+            )
     documents.sort(key=lambda item: (item.relative_path, item.identifier, item.title))
     index_path.parent.mkdir(parents=True, exist_ok=True)
     payload = {
-        "schema_version": 2,
+        "schema_version": 3,
         "source_commit": validate_installed_package(import_dir).corpus_source_commit,
         "documents": [asdict(document) for document in documents],
     }
@@ -151,7 +173,7 @@ def load_index(import_dir: Path, index_path: Path, rebuild: bool = False) -> lis
         payload = json.loads(index_path.read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError):
         return build_index(import_dir, index_path)
-    if payload.get("schema_version") != 2 or not isinstance(payload.get("documents"), list):
+    if payload.get("schema_version") != 3 or not isinstance(payload.get("documents"), list):
         return build_index(import_dir, index_path)
     current = validate_installed_package(import_dir)
     if payload.get("source_commit") != current.corpus_source_commit:

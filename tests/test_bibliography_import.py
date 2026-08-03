@@ -330,6 +330,57 @@ class BibliographyImportTests(unittest.TestCase):
             with self.assertRaises(BibliographyImportError):
                 validate_package(fixture.package, "tag", CHECKOUT_COMMIT, ancestry_checker=ancestry)
 
+    def test_byte_preserved_controls_are_recorded_only_for_full_text_layers(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture = CorpusFixture(root)
+            source = fixture.package / "sources" / f"{SOURCE_ID}.md"
+            material = fixture.package / "materials" / f"{MATERIAL_ID}.md"
+            source_bytes = b"# Selected source\n\x00alpha\x1cbeta\n"
+            material_bytes = b"# Material\nleft\x14right\x1bright\n"
+            source.write_bytes(source_bytes)
+            material.write_bytes(material_bytes)
+            fixture.refresh()
+            destination = root / "bibliography"
+            summary = install_package(
+                fixture.package, destination, "tag", CHECKOUT_COMMIT, ancestry_checker=ancestry
+            )
+            expected = {
+                f"materials/{MATERIAL_ID}.md": {"U+0014": 1, "U+001B": 1},
+                f"sources/{SOURCE_ID}.md": {"U+0000": 1, "U+001C": 1},
+            }
+            self.assertEqual(summary.legacy_text_controls, expected)
+            self.assertEqual((destination / "sources" / f"{SOURCE_ID}.md").read_bytes(), source_bytes)
+            self.assertEqual((destination / "materials" / f"{MATERIAL_ID}.md").read_bytes(), material_bytes)
+            integrity = json.loads((destination / "IMPORT_INTEGRITY.json").read_text(encoding="utf-8"))
+            self.assertEqual(integrity["legacy_text_controls"], expected)
+            self.assertEqual(validate_installed_package(destination).legacy_text_controls, expected)
+
+    def test_control_characters_remain_rejected_outside_full_text_layers(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = CorpusFixture(Path(directory))
+            path = fixture.package / "analyses" / f"{SOURCE_ID}.md"
+            path.write_bytes(b"# Analysis\nunsafe\x00control\n")
+            fixture.refresh()
+            with self.assertRaises(BibliographyImportError):
+                validate_package(fixture.package, "tag", CHECKOUT_COMMIT, ancestry_checker=ancestry)
+
+    def test_installed_control_map_tampering_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fixture = CorpusFixture(root)
+            source = fixture.package / "sources" / f"{SOURCE_ID}.md"
+            source.write_bytes(b"# Selected source\nleft\x00right\n")
+            fixture.refresh()
+            destination = root / "bibliography"
+            install_package(fixture.package, destination, "tag", CHECKOUT_COMMIT, ancestry_checker=ancestry)
+            integrity_path = destination / "IMPORT_INTEGRITY.json"
+            integrity = json.loads(integrity_path.read_text(encoding="utf-8"))
+            integrity["legacy_text_controls"] = {}
+            integrity_path.write_text(json.dumps(integrity), encoding="utf-8")
+            with self.assertRaises(BibliographyImportError):
+                validate_installed_package(destination)
+
     def test_manual_post_import_modification_is_detected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
