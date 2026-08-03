@@ -1,2 +1,3 @@
 Trigger verified bibliography synchronization from MariosGiannakaras/ThesisBibliography main.
-Requested: 2026-08-02T17:00:00+03:00
+Requested: 2026-08-03
+Reason: retry after bibliography credential hardening and completed 580/109 canonical review.
