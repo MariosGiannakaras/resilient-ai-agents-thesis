@@ -109,6 +109,9 @@ bibliography/**/*.quarantine
 bibliography/**/.source_manifest.json.*.tmp
 bibliography/**/*~
 
+# Unreviewed local hardware/software capability snapshot.
+docs/context/system-capability.local.json
+
 # Office temporary files
 ~$*.doc*
 ~$*.xls*
