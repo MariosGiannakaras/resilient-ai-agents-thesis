@@ -41,11 +41,13 @@ Primary bibliography management no longer occurs in this repository.
 
 The private repository `MariosGiannakaras/ThesisBibliography` is the independent canonical source of truth for source discovery, metadata, originals, Markdown/OCR, scientific analysis, verified evidence, inclusion/exclusion decisions, and controlled thesis export.
 
-The first complete scientific selection has been completed there for **486/486 active sources**. Canonical status records **104 selected/verified sources**, **381 exclusions**, **1 theory-only/non-citation source**, **0 pending decisions**, and **104/104 verified evidence sets**.
+The current complete scientific selection has been completed there for **580/580 active sources**. Canonical status records **109 selected/verified sources**, **470 exclusions**, **1 theory-only/non-citation source**, **0 pending decisions**, and **109 verified evidence sets**.
 
 This repository consumes only the verified generated package under `research/bibliography/`, bound to an exact `SOURCE_COMMIT`. It does not copy the full bibliography repository, PDFs, raw conversion material, or repository history.
 
 Synchronization is pull-based and performed through a Pull Request. The binding architecture is defined in `docs/context/BIBLIOGRAPHY_INTEGRATION.md` and `bibliography/README.md`.
+
+The first controlled synchronization is currently **BLOCKED** at cross-repository authentication. A real synchronization run on 2026-08-03 confirmed that the `BIBLIOGRAPHY_SYNC_TOKEN` repository secret is non-empty, but `actions/checkout` cannot authenticate a read-only fetch of the private `MariosGiannakaras/ThesisBibliography` repository. The failed run stopped before export/import, so `research/bibliography/` has not been populated and no bibliography content was partially installed. The secret must be replaced with a valid credential that has read access to `ThesisBibliography`, after which a fresh controlled trigger can be used without changing the integration design.
 
 Source-derived scientific text and citation-ready evidence remain in the original language of the source. Translation for the final Greek thesis occurs only during writing and does not replace the original-language evidence record.
 
@@ -127,10 +129,11 @@ Greek Microsoft Word thesis
 
 ## What is still missing
 
+- Valid cross-repository read credential for the first controlled `ThesisBibliography` synchronization.
 - Actual automated hardware/software inventory and capability benchmark.
 - Fresh GridWorld landscape review and build/reuse/integration decision, using verified bibliography evidence as the basis.
 - Supervisor identity and supervisor-specific academic instructions.
 - Final research questions/hypotheses.
 - Final environment variants, models, metrics, and statistical protocol.
 - Current official Word template/submission package.
-- First synchronization of the verified `ThesisBibliography` package into `research/bibliography/` after the read-only synchronization credential is enabled.
+- First successful synchronization of the verified `ThesisBibliography` package into `research/bibliography/`.
