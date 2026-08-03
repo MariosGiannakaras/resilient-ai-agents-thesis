@@ -49,7 +49,7 @@ The workflow:
 4. proves the ref is a tag/full SHA and records the exact checkout;
 5. runs all upstream validators;
 6. copies the already committed corpus without regeneration;
-7. validates structure, trust semantics, counts, IDs, source-commit ancestry, UTF-8, forbidden artifacts, transactionality, and both checksum manifests;
+7. validates structure, trust semantics, counts, IDs, source-commit ancestry, text encodings/extraction artifacts, forbidden artifacts, transactionality, and both checksum manifests;
 8. installs only `research/bibliography/`, runs consumer validation/tests, and opens a generated-only PR;
 9. never merges directly to `main` and never writes upstream.
 
@@ -64,6 +64,8 @@ The initial baseline acceptance check is 583 canonical sources, 112 citation-rea
 Freshness searches and any source/material promotion occur only in `ThesisBibliography`, followed by a new immutable synchronization.
 
 
-## Byte-preserved legacy source text
+## Byte-preserved converted full text
 
-All metadata, manifests, analyses, evidence, materials, notes, aggregates, and the complete citation-ready layer must be strict UTF-8. The immutable `bibliography-integration-v2` baseline contains four canonical full-source Markdown files under `sources/` with otherwise valid UTF-8 text plus well-formed CESU-8 surrogate pairs produced by historical PDF conversion. The consumer preserves those upstream bytes unchanged, validates that every surrogate is paired, records the exact paths as `cesu-8` in `IMPORT_INTEGRITY.json`, and converts only the in-memory search representation to canonical Unicode. No other invalid UTF-8 or binary-like text is accepted.
+Metadata, manifests, analyses, evidence, notes, aggregates, and the complete citation-ready layer must be strict UTF-8 without low control characters other than normal layout whitespace. The immutable `bibliography-integration-v2` baseline contains four canonical `sources/*.md` files with well-formed CESU-8 surrogate pairs and 65 canonical full-text files—61 under `sources/` and 4 under `materials/`—with byte-preserved low control characters emitted by historical PDF extraction.
+
+The consumer preserves every upstream byte and both authoritative checksum manifests unchanged. It accepts CESU-8 only in canonical source Markdown, accepts extraction controls only in canonical source/material Markdown, records exact encoding paths plus per-path Unicode control-code counts in `IMPORT_INTEGRITY.json`, and verifies those maps after installation. Search converts CESU-8 to canonical Unicode and replaces recorded extraction controls with deterministic spaces only in the ignored index. Invalid UTF-8 elsewhere, unpaired surrogates, controls in trusted metadata/analysis/evidence/citation layers, binaries, archives, and LFS pointers remain rejected.
