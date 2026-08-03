@@ -43,16 +43,17 @@ Old conversation exports were used only for historical context. They do not esta
 
 ## Current phase
 
-Bootstrap is complete. The current complete scientific bibliography selection is also complete in `ThesisBibliography`: **580/580 active sources** have a final decision, **109 selected sources** have verified citation-ready evidence, **470 sources are rejected**, **1 source is theory-only/non-exported**, and there are **0 pending scientific decisions**.
+Bootstrap is complete. The current complete scientific bibliography selection is also complete in `ThesisBibliography`: **583/583 active sources** have a final decision, **112 selected sources** have verified citation-ready evidence, **470 sources are rejected**, **1 source is theory-only/non-exported**, and there are **0 pending scientific decisions**.
 
-The first controlled import into `research/bibliography/` is **not yet complete**. The hardened synchronization probe was rerun on 2026-08-03 and the configured `BIBLIOGRAPHY_SYNC_TOKEN` returned **HTTP 401 Bad credentials** when requesting private `ThesisBibliography` content. The workflow stopped before checkout, export, or import, so no bibliography files were partially installed. The secret must be replaced with a valid read credential before the controlled sync can complete.
+The first controlled import into `research/bibliography/` is **not yet complete**. The hardened synchronization probe was rerun again on 2026-08-03 against the current 583-source upstream state and the configured `BIBLIOGRAPHY_SYNC_TOKEN` still returned **HTTP 401 Bad credentials** when requesting private `ThesisBibliography` content. The workflow stopped before checkout, export, or import, so no bibliography files were partially installed. The secret must be replaced with a valid read credential before the controlled sync can complete.
 
 Preparatory Phase-1/research work has progressed without bypassing that gate:
 
 - the official application repository copy is integrity-pinned by SHA-256;
 - a privacy-minimal target-system inventory collector is implemented and tested, but still needs to run on the actual thesis machine;
 - the current GridWorld landscape pre-screen is complete, retaining a custom Gymnasium environment and a thin MiniGrid adaptation for bounded prototype comparison;
-- non-binding pre-import research workspaces now distinguish robustness from adaptation/recovery and propose persistent rule/dynamics change as the primary resilience axis, with observation/action disturbances as supporting robustness diagnostics.
+- non-binding pre-import research workspaces distinguish robustness from adaptation/recovery and propose persistent rule/dynamics change as the primary resilience axis, with observation/action disturbances as supporting robustness diagnostics;
+- an August 2026 freshness review added three recent, fully verified supporting sources to the canonical bibliography and tightened the provisional methodology around structured switching, practical change-detector validation, and leakage-free continual-RL tuning.
 
 The main application, final model implementation, final experiments, and normal results writing have not started.
 
