@@ -45,23 +45,30 @@ Old conversation exports were used only for historical context. They do not esta
 
 Bootstrap is complete. The current complete scientific bibliography selection is also complete in `ThesisBibliography`: **580/580 active sources** have a final decision, **109 selected sources** have verified citation-ready evidence, **470 sources are rejected**, **1 source is theory-only/non-exported**, and there are **0 pending scientific decisions**.
 
-The first controlled import into `research/bibliography/` is **not yet complete**. A synchronization attempt on 2026-08-03 verified that the `BIBLIOGRAPHY_SYNC_TOKEN` secret is present, but the token cannot authenticate a read-only checkout of the private `ThesisBibliography` repository. No bibliography files were imported by that failed attempt. The secret must be replaced with a credential that has read access before the controlled sync can complete.
+The first controlled import into `research/bibliography/` is **not yet complete**. The hardened synchronization probe was rerun on 2026-08-03 and the configured `BIBLIOGRAPHY_SYNC_TOKEN` returned **HTTP 401 Bad credentials** when requesting private `ThesisBibliography` content. The workflow stopped before checkout, export, or import, so no bibliography files were partially installed. The secret must be replaced with a valid read credential before the controlled sync can complete.
 
-The main application, model implementation, final experiments, and normal results writing have not started.
+Preparatory Phase-1/research work has progressed without bypassing that gate:
+
+- the official application repository copy is integrity-pinned by SHA-256;
+- a privacy-minimal target-system inventory collector is implemented and tested, but still needs to run on the actual thesis machine;
+- the current GridWorld landscape pre-screen is complete, retaining a custom Gymnasium environment and a thin MiniGrid adaptation for bounded prototype comparison;
+- non-binding pre-import research workspaces now distinguish robustness from adaptation/recovery and propose persistent rule/dynamics change as the primary resilience axis, with observation/action disturbances as supporting robustness diagnostics.
+
+The main application, final model implementation, final experiments, and normal results writing have not started.
 
 The active next phase is:
 
-1. complete the controlled import of the verified bibliography package once cross-repository authentication is corrected,
-2. automatically inventory the actual hardware/software environment,
-3. perform a fresh GridWorld landscape review and compare reuse/adapt/custom options,
-4. define the research questions, hypotheses, uncertainty taxonomy, models, and metrics from current evidence,
+1. replace the invalid cross-repository credential and complete the controlled verified bibliography import,
+2. run and accept the system capability inventory on the actual machine that will execute the thesis experiments,
+3. perform the bounded custom-Gymnasium versus MiniGrid prototypes and record the final GridWorld ADR,
+4. convert the pre-import research framing into source-ID-traceable final research questions, uncertainty taxonomy, model roles, and metric definitions,
 5. define a small and manageable pilot protocol,
 6. build an independent research core, with a lightweight debug/visualization surface only when useful for validation,
 7. limit the final polished dashboard feature set to the real needs of the thesis.
 
 Old code is not required. External GridWorld code is integrated only after code, license, maintenance, compatibility, and prototype review.
 
-The official application is stored at `thesis/source-material/GiannakarasMariosThesisApplication.pdf`. The user confirmed that it is the authoritative file provided for analysis. Codex must calculate and record the repository copy's SHA-256 after clone/system access.
+The official application is stored at `thesis/source-material/GiannakarasMariosThesisApplication.pdf`. The user confirmed that it is the authoritative file provided for analysis. The repository copy is integrity-pinned at SHA-256 `6f2026c7582e4ac396261b7686e799317515542c59c0ac505da11bf7611de4b5` and size `395338` bytes; automated tests reject accidental replacement or corruption.
 
 ## Operating model
 
@@ -160,7 +167,7 @@ docs/decisions/                       Decision log and ADRs
 
 New bibliography sources or files are added to `ThesisBibliography`, not to this repository.
 
-System inventory, SHA-256 verification of the official application, and the GridWorld landscape review are Codex tasks.
+The application checksum, system-inventory collector, and GridWorld landscape pre-screen are complete. The actual target-system inventory run and the bounded GridWorld prototype/ADR decision remain pending.
 
 ## Scientific integrity
 
