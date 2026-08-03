@@ -43,19 +43,21 @@ Old conversation exports were used only for historical context. They do not esta
 
 ## Current phase
 
-Bootstrap is complete. The first complete scientific bibliography selection is also complete in `ThesisBibliography`: **486/486 active sources** have a final decision and **104 selected sources** have verified citation-ready evidence.
+Bootstrap is complete. The current complete scientific bibliography selection is also complete in `ThesisBibliography`: **580/580 active sources** have a final decision, **109 selected sources** have verified citation-ready evidence, **470 sources are rejected**, **1 source is theory-only/non-exported**, and there are **0 pending scientific decisions**.
+
+The first controlled import into `research/bibliography/` is **not yet complete**. A synchronization attempt on 2026-08-03 verified that the `BIBLIOGRAPHY_SYNC_TOKEN` secret is present, but the token cannot authenticate a read-only checkout of the private `ThesisBibliography` repository. No bibliography files were imported by that failed attempt. The secret must be replaced with a credential that has read access before the controlled sync can complete.
 
 The main application, model implementation, final experiments, and normal results writing have not started.
 
-The next phase begins with:
+The active next phase is:
 
-1. synchronizing/importing the verified bibliography package and using its analyses/evidence for research framing,
-2. automatically inventorying the actual hardware/software environment,
-3. performing a fresh GridWorld landscape review and comparing reuse/adapt/custom options,
-4. defining the research questions, hypotheses, uncertainty taxonomy, models, and metrics from current evidence,
-5. defining a small and manageable pilot protocol,
-6. building an independent research core, with a lightweight debug/visualization surface only when useful for validation,
-7. limiting the final polished dashboard feature set to the real needs of the thesis.
+1. complete the controlled import of the verified bibliography package once cross-repository authentication is corrected,
+2. automatically inventory the actual hardware/software environment,
+3. perform a fresh GridWorld landscape review and compare reuse/adapt/custom options,
+4. define the research questions, hypotheses, uncertainty taxonomy, models, and metrics from current evidence,
+5. define a small and manageable pilot protocol,
+6. build an independent research core, with a lightweight debug/visualization surface only when useful for validation,
+7. limit the final polished dashboard feature set to the real needs of the thesis.
 
 Old code is not required. External GridWorld code is integrated only after code, license, maintenance, compatibility, and prototype review.
 
