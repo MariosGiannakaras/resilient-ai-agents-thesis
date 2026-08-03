@@ -1,0 +1,228 @@
+name: Apply post-import project reconciliation
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout reconciliation branch
+        uses: actions/checkout@v4
+        with:
+          ref: docs/postimport-project-reconciliation
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Reconcile source of truth
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('.')
+          baseline = (
+              "`bibliography-integration-v2` / "
+              "`27e325a74722b8f80643e6d1902e4bf3847036f5`"
+          )
+          corpus = "`ca511a0ff91388e7798e011642cc6b5608b336d8`"
+          citation = "`ef44fe3c30e6648f591ad9d3546ffc336fce4287`"
+
+          def read(path):
+              return (root / path).read_text(encoding='utf-8')
+
+          def write(path, text):
+              target = root / path
+              target.parent.mkdir(parents=True, exist_ok=True)
+              target.write_text(text.rstrip() + '\n', encoding='utf-8')
+
+          def insert_after_heading(path, note):
+              text = read(path)
+              if note in text:
+                  return
+              lines = text.splitlines()
+              index = 1
+              while index < len(lines) and not lines[index].strip():
+                  index += 1
+              lines[index:index] = ['', note, '']
+              write(path, '\n'.join(lines))
+
+          status_note = (
+              "> **Post-import status (2026-08-04):** the complete immutable research corpus is "
+              f"installed from {baseline}. The corpus source commit is {corpus}; the strict "
+              f"citation-ready source commit is {citation}. The active HTTP 401 blocker is resolved."
+          )
+          for path in (
+              'AGENTS.md',
+              'bibliography/README.md',
+              'docs/context/BIBLIOGRAPHY_INTEGRATION.md',
+              'docs/context/CONFIRMED_REQUIREMENTS.md',
+              'docs/context/EXECUTION_WORKFLOW.md',
+              'docs/context/IMPLEMENTATION_ROADMAP.md',
+              'docs/context/CODEX_BOOTSTRAP_PROMPT.md',
+          ):
+              insert_after_heading(path, status_note)
+
+          readme = read('README.md')
+          readme = re.sub(
+              r"## Current phase\n.*?(?=\n## Operating model)",
+              """## Current phase
+
+Bootstrap and the first complete bibliography-corpus migration are complete. The immutable baseline is `bibliography-integration-v2` at checkout `27e325a74722b8f80643e6d1902e4bf3847036f5`; the complete-corpus source commit is `ca511a0ff91388e7798e011642cc6b5608b336d8` and the strict citation-ready source commit is `ef44fe3c30e6648f591ad9d3546ffc336fce4287`.
+
+The installed generated corpus contains 583 canonical sources, 112 citation-ready selected sources, 19 research materials, and metadata for 280 immutable original PDFs without copying the binaries. Both upstream checksum manifests and consumer integrity validation pass. The former HTTP 401 synchronization blocker is resolved.
+
+The active bounded work is now: accept the real target-system inventory, complete source-traceable model/agent comparison, execute the custom-Gymnasium and thin-MiniGrid prototypes, record the GridWorld ADR, then define the pilot research core. The final model set, research question, severities, budgets, seeds, thresholds, and statistical protocol remain deliberately unfrozen.
+""".rstrip(),
+              readme,
+              flags=re.S,
+          )
+          write('README.md', readme)
+
+          context = read('docs/context/PROJECT_CONTEXT.md')
+          context = re.sub(
+              r"## Bibliography and scientific evidence\n.*?(?=\n## Current research proposal — not frozen)",
+              """## Bibliography and scientific evidence
+
+The complete generated `research-corpus/` is installed under `research/bibliography/` from immutable tag `bibliography-integration-v2` (`27e325a74722b8f80643e6d1902e4bf3847036f5`). Its complete-corpus source commit is `ca511a0ff91388e7798e011642cc6b5608b336d8`; its nested citation-ready source commit is `ef44fe3c30e6648f591ad9d3546ffc336fce4287`.
+
+The installed baseline contains 583 canonical sources, 112 citation-ready selected sources, 470 rejected sources, 1 theory-only source, 19 `MAT-*` research materials, and an index of 280 original PDFs. Original binaries, Git LFS objects, intake/conversion workspaces, and upstream history are not imported. The private read credential, all five upstream validators, both SHA-256 manifests, consumer integrity, contextual source-reference validation, and repository tests passed.
+
+`citation-ready/` is the only formal-citation surface. The broader corpus remains searchable for understanding, terminology, comparison, drafting, rejected/theory-only context, materials, and author notes without silent promotion. Upstream promotion remains the only route for a non-citation item needed to support a final claim.
+""".rstrip(),
+              context,
+              flags=re.S,
+          )
+          context = context.replace(
+              "- Migration of the thesis consumer from the citation-only package to the complete `research-corpus/` contract and the first successful controlled import.\n",
+              "",
+          )
+          write('docs/context/PROJECT_CONTEXT.md', context)
+
+          open_questions = read('docs/context/OPEN_QUESTIONS.md')
+          resolved = """## Resolved on 2026-08-04
+
+- Complete-corpus consumer migration: resolved by PR #21 and the generated import PR.
+- Private cross-repository authentication: resolved; the immutable metadata probe and checkout succeeded without exposing the token.
+- First complete import: resolved at `bibliography-integration-v2` with both checksum manifests passing.
+
+"""
+          if '## Resolved on 2026-08-04' not in open_questions:
+              first_section = open_questions.find('\n## ')
+              if first_section >= 0:
+                  open_questions = open_questions[:first_section+1] + resolved + open_questions[first_section+1:]
+              else:
+                  open_questions += '\n' + resolved
+          open_questions = re.sub(
+              r"(?mi)^.*(?:bibliography import|HTTP 401|BIBLIOGRAPHY_SYNC_TOKEN).*(?:\n|$)",
+              "",
+              open_questions,
+          )
+          write('docs/context/OPEN_QUESTIONS.md', open_questions)
+
+          contradictions = read('docs/context/CONTRADICTIONS.md')
+          if 'Complete-corpus import versus citation-only import' not in contradictions:
+              contradictions += """
+
+## Complete-corpus import versus citation-only import — RESOLVED 2026-08-04
+
+The earlier citation-only consumer assumption was superseded by DEC-021. `research/bibliography/` now contains the complete generated research corpus, while its nested `citation-ready/` directory remains the strict formal-citation layer. Checkout and package source commits are recorded separately and validated by ancestry rather than equality.
+"""
+          write('docs/context/CONTRADICTIONS.md', contradictions)
+
+          changelog = read('docs/context/CHANGELOG_CONTEXT.md')
+          if 'First complete immutable research-corpus import' not in changelog:
+              changelog += """
+
+## 2026-08-04 — First complete immutable research-corpus import
+
+- Migrated the thesis consumer from the old citation-only package to the complete generated `research-corpus/` contract.
+- Verified private read access without exposing the credential and imported immutable tag `bibliography-integration-v2`.
+- Recorded checkout, complete-corpus, and citation-ready source commits separately with ancestry validation.
+- Installed 583 canonical sources, 112 citation-ready sources, 19 research materials, and metadata for 280 original PDFs; no PDF or LFS object entered the repository.
+- Passed all upstream validators, both upstream checksum manifests, consumer integrity, contextual source-reference validation, Python 3.9/3.12 CI, and the complete test suite.
+- Resolved the active HTTP 401 and incomplete-import blockers.
+- Preserved pre-import research files as historical proposals and moved active work to post-import evidence synthesis, model research, target-system inventory, and bounded GridWorld prototypes.
+"""
+          write('docs/context/CHANGELOG_CONTEXT.md', changelog)
+
+          decision_log = read('docs/decisions/DECISION_LOG.md')
+          if 'DEC-022 — Accept the immutable full-corpus baseline' not in decision_log:
+              decision_log += """
+
+## DEC-022 — Accept the immutable full-corpus baseline
+
+**Status:** Accepted — 2026-08-04
+
+The thesis repository accepts `bibliography-integration-v2` at checkout `27e325a74722b8f80643e6d1902e4bf3847036f5` as the first complete immutable consumer baseline. The recorded complete-corpus source commit is `ca511a0ff91388e7798e011642cc6b5608b336d8`; the nested citation-ready source commit is `ef44fe3c30e6648f591ad9d3546ffc336fce4287`.
+
+This operational acceptance implements DEC-021 and preserves DEC-017's repository boundary. It does not promote any rejected, theory-only, `MAT-*`, or note content into formal-citation status and does not freeze any model, GridWorld, metric, or protocol decision.
+"""
+          write('docs/decisions/DECISION_LOG.md', decision_log)
+
+          historical_note = (
+              "> **Historical proposal record:** this document predates the successful complete-corpus "
+              "import. Preserve its original reasoning and generic literature references; use new post-import "
+              "documents for `SRC-*`-traceable decisions."
+          )
+          for path in sorted(Path('docs/research').glob('PREIMPORT_*.md')):
+              text = path.read_text(encoding='utf-8')
+              if historical_note not in text:
+                  lines = text.splitlines()
+                  lines[1:1] = ['', historical_note, '']
+                  path.write_text('\n'.join(lines).rstrip() + '\n', encoding='utf-8')
+
+          write('docs/research/POSTIMPORT_EVIDENCE_SYNTHESIS.md', """# Post-import Evidence Synthesis
+
+**Status:** Active research workspace; source-traceable but not a frozen protocol.  
+**Pinned baseline:** `bibliography-integration-v2` / `27e325a74722b8f80643e6d1902e4bf3847036f5`
+
+## Trust layers
+
+1. **Verified citation-ready evidence:** 112 selected `SRC-*` entries under `citation-ready/`; these alone may support formal thesis claims.
+2. **Complete source context:** all 583 canonical source Markdown files and analyses remain searchable for interpretation, terminology, comparison, and limitations.
+3. **Non-citation materials:** 19 `MAT-*` files remain useful for internal research and provenance but are not formal citations.
+4. **Author notes:** searchable without required bibliographic identity; factual final claims still need citation-ready support.
+5. **Rejected and theory-only sources:** accessible for scope, negative evidence, and historical context without automatic promotion.
+6. **Unresolved decisions:** final research questions, exact model set, GridWorld implementation, severities, metrics, tuning boundary, seeds, budgets, and statistical plan remain open.
+
+## Decision-driving citation-ready anchors
+
+- `SRC-70772C0629` constrains claims about ordinary Q-learning under structured switching non-stationarity: theoretical convergence depends on explicit assumptions and does not eliminate the need for empirical changepoint/recovery validation in this GridWorld.
+- `SRC-9464421E55` supports treating prior-free black-box adaptation and detector/reset mechanisms as conditional candidates whose finite-horizon activation, delay, and error behavior must be measured rather than assumed.
+- `SRC-76B2247457` supports a leakage-free boundary between tuning, pilots, and final continual-RL evaluation; no universal tuning fraction is imported as a default.
+- `SRC-FC42D9798A`, `SRC-3C0F7CC819`, and related robust-MDP evidence provide context for a robustness-oriented comparator, but any uncertainty-set construction must match the final environment semantics and information-access rules.
+
+## Current synthesis
+
+The strongest bounded design remains a primary persistent rule/dynamics change with observation corruption and action-execution failure as supporting robustness diagnostics. The comparison should use scientifically distinct capability roles rather than a catalogue: frozen nominal reference, naive continual learner, robustness-oriented comparator, and explicit change/context-aware adaptation. Detector/reset decomposition remains optional until prototypes and pilots establish a distinct question.
+
+## Upstream promotion rule
+
+When a `MAT-*`, rejected, theory-only, or note item is necessary for a final claim, record the exact missing bibliographic identity/evidence task in `ThesisBibliography`; do not promote it locally. A later immutable export and synchronization is required before formal citation.
+""")
+
+          write('docs/thesis/BIBLIOGRAPHY_USAGE.md', """# Thesis Bibliography Usage
+
+Final Greek thesis claims use only `research/bibliography/citation-ready/manifest.csv` identifiers and the corresponding verified evidence/analysis at the pinned source commit. Full-corpus sources, `MAT-*` materials, rejected/theory-only records, and notes may guide drafting and terminology but are not formal citations. Translation into Greek occurs during writing and never replaces the original-language evidence record.
+""")
+          PY
+
+          python scripts/bibliography_import.py --validate-only
+          python scripts/validate_bibliography_usage.py
+          python -m unittest discover -s tests -p 'test_*.py' -v
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit \
+            -m "docs: reconcile project after full-corpus import" \
+            -m "Record the accepted immutable bibliography baseline, resolve stale authentication/import blockers, preserve pre-import workspaces as historical proposals, and add post-import trust/evidence guidance. Validation: installed-corpus integrity, contextual reference validation, and the complete test suite passed."
+          git push origin HEAD:docs/postimport-project-reconciliation
