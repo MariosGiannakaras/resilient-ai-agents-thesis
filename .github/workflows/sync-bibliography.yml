@@ -32,12 +32,26 @@ jobs:
     env:
       BIBLIOGRAPHY_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.bibliography_ref || 'main' }}
     steps:
-      - name: Require read-only bibliography credential
+      - name: Verify read-only bibliography credential
         env:
           BIBLIOGRAPHY_SYNC_TOKEN: ${{ secrets.BIBLIOGRAPHY_SYNC_TOKEN }}
+          GH_TOKEN: ${{ secrets.BIBLIOGRAPHY_SYNC_TOKEN }}
+        shell: bash
         run: |
           if [ -z "$BIBLIOGRAPHY_SYNC_TOKEN" ]; then
-            echo "Missing repository secret BIBLIOGRAPHY_SYNC_TOKEN with read access to MariosGiannakaras/ThesisBibliography." >&2
+            echo "Missing repository secret BIBLIOGRAPHY_SYNC_TOKEN." >&2
+            echo "Configure a read-only credential for MariosGiannakaras/ThesisBibliography." >&2
+            exit 1
+          fi
+
+          if ! gh api \
+            --method GET \
+            repos/MariosGiannakaras/ThesisBibliography/contents/catalog/sources.csv \
+            -f "ref=$BIBLIOGRAPHY_REF" \
+            --silent; then
+            echo "BIBLIOGRAPHY_SYNC_TOKEN cannot read ThesisBibliography content at ref '$BIBLIOGRAPHY_REF'." >&2
+            echo "For a fine-grained personal access token, grant repository access to MariosGiannakaras/ThesisBibliography and Repository permissions -> Contents: Read-only." >&2
+            echo "Do not paste the token into logs, source files, Pull Requests, or chat." >&2
             exit 1
           fi
 
