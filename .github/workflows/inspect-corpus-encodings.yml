@@ -1,0 +1,59 @@
+name: Inspect immutable corpus text encodings
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/inspect-corpus-encodings.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout immutable bibliography corpus
+        uses: actions/checkout@v4
+        with:
+          repository: MariosGiannakaras/ThesisBibliography
+          ref: bibliography-integration-v2
+          token: ${{ secrets.BIBLIOGRAPHY_SYNC_TOKEN }}
+          persist-credentials: false
+          fetch-depth: 1
+          lfs: false
+
+      - name: Report non-UTF-8 text files and deterministic candidates
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          root = Path('research-corpus')
+          extensions = {'.md', '.txt', '.csv', '.json', '.yaml', '.yml', '.rst', '.tex'}
+          names = {'SOURCE_COMMIT', 'SHA256SUMS'}
+          invalid = []
+          for path in sorted(root.rglob('*')):
+              if not path.is_file() or (path.suffix.lower() not in extensions and path.name not in names):
+                  continue
+              data = path.read_bytes()
+              try:
+                  data.decode('utf-8')
+                  continue
+              except UnicodeDecodeError as exc:
+                  candidates = []
+                  for encoding in ('cp1253', 'iso-8859-7', 'cp1252'):
+                      try:
+                          text = data.decode(encoding)
+                      except UnicodeDecodeError:
+                          continue
+                      greek = sum('\u0370' <= ch <= '\u03ff' for ch in text)
+                      controls = sum(ord(ch) < 32 and ch not in '\n\r\t\f' for ch in text)
+                      candidates.append((encoding, greek, controls, text[:80].replace('\n', ' ')))
+                  invalid.append((path.relative_to(root).as_posix(), exc.start, data[exc.start:exc.start+8].hex(), candidates))
+          print(f'non_utf8_count={len(invalid)}')
+          for item in invalid:
+              print(item)
+          if not invalid:
+              raise SystemExit('Expected at least one non-UTF-8 file for diagnostic run')
+          PY
