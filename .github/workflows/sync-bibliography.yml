@@ -1,18 +1,13 @@
-name: Sync verified thesis bibliography
+name: Sync complete thesis research corpus
 
 on:
   workflow_dispatch:
     inputs:
       bibliography_ref:
-        description: ThesisBibliography branch, tag, or commit to export
-        required: false
-        default: main
+        description: Immutable ThesisBibliography tag or full commit SHA
+        required: true
         type: string
   push:
-    branches: [main]
-    paths:
-      - ".bibliography-sync-trigger"
-  pull_request:
     branches: [main]
     paths:
       - ".bibliography-sync-trigger"
@@ -27,113 +22,184 @@ concurrency:
 
 jobs:
   sync:
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    env:
-      BIBLIOGRAPHY_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.bibliography_ref || 'main' }}
     steps:
-      - name: Verify read-only bibliography credential
-        env:
-          BIBLIOGRAPHY_SYNC_TOKEN: ${{ secrets.BIBLIOGRAPHY_SYNC_TOKEN }}
-          GH_TOKEN: ${{ secrets.BIBLIOGRAPHY_SYNC_TOKEN }}
-        shell: bash
-        run: |
-          if [ -z "$BIBLIOGRAPHY_SYNC_TOKEN" ]; then
-            echo "Missing repository secret BIBLIOGRAPHY_SYNC_TOKEN." >&2
-            echo "Configure a read-only credential for MariosGiannakaras/ThesisBibliography." >&2
-            exit 1
-          fi
-
-          if ! gh api \
-            --method GET \
-            repos/MariosGiannakaras/ThesisBibliography/contents/catalog/sources.csv \
-            -f "ref=$BIBLIOGRAPHY_REF" \
-            --silent; then
-            echo "BIBLIOGRAPHY_SYNC_TOKEN cannot read ThesisBibliography content at ref '$BIBLIOGRAPHY_REF'." >&2
-            echo "For a fine-grained personal access token, grant repository access to MariosGiannakaras/ThesisBibliography and Repository permissions -> Contents: Read-only." >&2
-            echo "Do not paste the token into logs, source files, Pull Requests, or chat." >&2
-            exit 1
-          fi
-
       - name: Checkout thesis repository
         uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
 
+      - name: Resolve requested immutable bibliography ref
+        id: request
+        shell: bash
+        env:
+          DISPATCH_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.bibliography_ref || '' }}
+        run: |
+          set -euo pipefail
+          if [ -n "$DISPATCH_REF" ]; then
+            requested_ref="$DISPATCH_REF"
+          else
+            requested_ref="$(sed -n 's/^bibliography_ref=//p' .bibliography-sync-trigger | tail -n 1)"
+          fi
+          if [ -z "$requested_ref" ]; then
+            echo "::error::An explicit immutable bibliography tag or full SHA is required."
+            exit 1
+          fi
+          if [ "$requested_ref" = "main" ] || [ "$requested_ref" = "master" ] || [ "$requested_ref" = "HEAD" ]; then
+            echo "::error::Mutable branch/default refs are forbidden for production synchronization."
+            exit 1
+          fi
+          echo "ref=$requested_ref" >> "$GITHUB_OUTPUT"
+
+      - name: Verify read-only bibliography credential
+        env:
+          BIBLIOGRAPHY_SYNC_TOKEN: ${{ secrets.BIBLIOGRAPHY_SYNC_TOKEN }}
+          GH_TOKEN: ${{ secrets.BIBLIOGRAPHY_SYNC_TOKEN }}
+          BIBLIOGRAPHY_REF: ${{ steps.request.outputs.ref }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$BIBLIOGRAPHY_SYNC_TOKEN" ]; then
+            echo "::error::Missing repository secret BIBLIOGRAPHY_SYNC_TOKEN."
+            exit 1
+          fi
+          if ! gh api \
+            --method GET \
+            repos/MariosGiannakaras/ThesisBibliography/contents/research-corpus/catalog/package-metadata.json \
+            -f "ref=$BIBLIOGRAPHY_REF" \
+            --silent; then
+            echo "::error::BIBLIOGRAPHY_SYNC_TOKEN cannot read research-corpus metadata at the requested ref."
+            echo "The token must remain private and have read-only Contents access to MariosGiannakaras/ThesisBibliography."
+            exit 1
+          fi
+
       - name: Checkout bibliography source read-only
         uses: actions/checkout@v4
         with:
           repository: MariosGiannakaras/ThesisBibliography
-          ref: ${{ env.BIBLIOGRAPHY_REF }}
+          ref: ${{ steps.request.outputs.ref }}
           path: .bibliography-source
           token: ${{ secrets.BIBLIOGRAPHY_SYNC_TOKEN }}
           persist-credentials: false
-          fetch-depth: 1
+          fetch-depth: 0
           lfs: false
 
-      - name: Resolve exact bibliography commit
+      - name: Verify immutable ref and resolve checkout commit
         id: source
         shell: bash
+        env:
+          REQUESTED_REF: ${{ steps.request.outputs.ref }}
         run: |
-          commit="$(git -C .bibliography-source rev-parse HEAD)"
-          echo "commit=$commit" >> "$GITHUB_OUTPUT"
-          echo "short=${commit:0:12}" >> "$GITHUB_OUTPUT"
-
-      - name: Export verified package from ThesisBibliography
-        shell: bash
-        run: |
-          output="$RUNNER_TEMP/thesis-bibliography-package"
-          rm -rf "$output"
-          if [ -f .bibliography-source/tools/export_thesis.py ]; then
-            python .bibliography-source/tools/export_thesis.py --output "$output"
-          elif [ -f .bibliography-source/εργαλεία/εξαγωγή-διπλωματικής.py ]; then
-            python .bibliography-source/εργαλεία/εξαγωγή-διπλωματικής.py --output "$output"
+          set -euo pipefail
+          checkout_commit="$(git -C .bibliography-source rev-parse HEAD)"
+          if [[ "$REQUESTED_REF" =~ ^[0-9a-f]{40}$ ]]; then
+            if [ "$REQUESTED_REF" != "$checkout_commit" ]; then
+              echo "::error::Requested commit does not equal the resolved checkout commit."
+              exit 1
+            fi
           else
-            echo "Cannot locate ThesisBibliography exporter at the requested ref." >&2
-            exit 1
+            if ! git -C .bibliography-source show-ref --verify --quiet "refs/tags/$REQUESTED_REF"; then
+              echo "::error::Requested ref is not an immutable tag or full SHA: $REQUESTED_REF"
+              exit 1
+            fi
+            tagged_commit="$(git -C .bibliography-source rev-list -n 1 "refs/tags/$REQUESTED_REF")"
+            if [ "$tagged_commit" != "$checkout_commit" ]; then
+              echo "::error::Tag resolution differs from checkout commit."
+              exit 1
+            fi
           fi
+          echo "commit=$checkout_commit" >> "$GITHUB_OUTPUT"
+          echo "short=${checkout_commit:0:12}" >> "$GITHUB_OUTPUT"
 
-      - name: Install package transactionally
-        run: >-
-          python scripts/bibliography_import.py
-          --package "$RUNNER_TEMP/thesis-bibliography-package"
-          --source-commit "${{ steps.source.outputs.commit }}"
-
-      - name: Validate imported package and source references
+      - name: Validate committed upstream packages
+        working-directory: .bibliography-source
         run: |
+          python tools/package_integrity.py validate thesis-package
+          python tools/validate_thesis_package.py
+          python tools/research_materials.py validate
+          python tools/validate_research_material_review.py
+          python tools/export_research_corpus.py validate
+
+      - name: Install complete corpus transactionally
+        shell: bash
+        env:
+          REQUESTED_REF: ${{ steps.request.outputs.ref }}
+          CHECKOUT_COMMIT: ${{ steps.source.outputs.commit }}
+        run: |
+          set -euo pipefail
+          expectations=()
+          if [ "$REQUESTED_REF" = "bibliography-integration-v2" ]; then
+            expectations+=(
+              --expect-source-count 583
+              --expect-selected-source-count 112
+              --expect-research-material-count 19
+              --expect-original-pdf-count 280
+              --expect-schema-version 1
+            )
+          fi
           python scripts/bibliography_import.py \
-            --package "$RUNNER_TEMP/thesis-bibliography-package" \
-            --source-commit "${{ steps.source.outputs.commit }}" \
-            --validate-only
+            --package .bibliography-source/research-corpus \
+            --requested-ref "$REQUESTED_REF" \
+            --checkout-commit "$CHECKOUT_COMMIT" \
+            --source-repository .bibliography-source \
+            "${expectations[@]}"
+
+      - name: Verify upstream checksums after installation
+        working-directory: research/bibliography
+        run: |
+          sha256sum -c catalog/SHA256SUMS
+          (cd citation-ready && sha256sum -c catalog/SHA256SUMS)
+
+      - name: Run consumer validation and tests
+        run: |
+          python scripts/bibliography_import.py --validate-only
           python scripts/validate_bibliography_usage.py
-          python -m unittest tests.test_bibliography_import -v
+          python -m unittest discover -s tests -p 'test_*.py' -v
 
       - name: Remove source checkout before diff
         run: rm -rf .bibliography-source
 
-      - name: Open bibliography sync pull request
+      - name: Open generated-only bibliography Pull Request
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_COMMIT: ${{ steps.source.outputs.commit }}
-          SOURCE_SHORT: ${{ steps.source.outputs.short }}
+          REQUESTED_REF: ${{ steps.request.outputs.ref }}
+          CHECKOUT_COMMIT: ${{ steps.source.outputs.commit }}
+          CHECKOUT_SHORT: ${{ steps.source.outputs.short }}
         shell: bash
         run: |
+          set -euo pipefail
           if [ -z "$(git status --porcelain -- research/bibliography)" ]; then
-            echo "research/bibliography is already synchronized to the generated package."
+            echo "research/bibliography already matches the requested immutable corpus."
             exit 0
           fi
-
-          branch="automation/bibliography-sync-${GITHUB_RUN_ID}"
+          branch="automation/full-corpus-sync-${GITHUB_RUN_ID}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "$branch"
           git add research/bibliography
-          git commit -m "chore: sync verified bibliography ${SOURCE_SHORT}"
+          git commit -m "chore: sync complete bibliography corpus ${CHECKOUT_SHORT}"
           git push origin "HEAD:$branch"
-
+          body_file="$RUNNER_TEMP/bibliography-pr.md"
+          python - <<'PY' > "$body_file"
+          import json
+          from pathlib import Path
+          p = json.loads(Path("research/bibliography/IMPORT_INTEGRITY.json").read_text(encoding="utf-8"))
+          print("## Generated complete-corpus synchronization")
+          print()
+          print(f"- requested ref: `{p['requested_ref']}`")
+          print(f"- checkout commit: `{p['checkout_commit']}`")
+          print(f"- complete-corpus source commit: `{p['corpus_source_commit']}`")
+          print(f"- citation-ready source commit: `{p['citation_source_commit']}`")
+          print(f"- canonical sources: {p['source_count']}")
+          print(f"- citation-ready sources: {p['selected_source_count']}")
+          print(f"- research materials: {p['research_material_count']}")
+          print(f"- indexed originals: {p['original_pdf_count']}")
+          print()
+          print("This PR contains only the generated `research/bibliography/` directory. Both upstream checksum manifests, consumer integrity, trust-aware reference validation, and the repository test suite passed before publication. No PDFs or Git LFS objects are imported.")
+          PY
           gh pr create \
             --base main \
             --head "$branch" \
-            --title "chore: sync verified bibliography ${SOURCE_SHORT}" \
-            --body "Imports only the verified generated thesis package from MariosGiannakaras/ThesisBibliography at commit \`${SOURCE_COMMIT}\`. The sync excludes PDFs, LFS objects, raw originals, unverified analyses, and unverified evidence. Generated-file integrity and canonical SRC-* reference checks run before this PR is opened."
+            --title "chore: sync complete bibliography corpus ${CHECKOUT_SHORT}" \
+            --body-file "$body_file"
