@@ -123,17 +123,15 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 
 ## DEC-024 — Active-document reconciliation is part of every material change
 - **Date:** 2026-08-04
-- **Status:** Accepted by explicit user instruction; Codex prompt usage later clarified by explicit user instruction.
-- **Context:** A later audit found active files that still described completed bibliography migration/authentication and pre-DEC-023 architecture as pending. A stale Codex bootstrap prompt also remained tracked.
-- **Decision:**
-  - A material change is incomplete until all affected active context/status/research/architecture/workflow/prompt files are reconciled in the same PR.
-  - `CURRENT_STATUS.md` is the shortest current-state authority but does not excuse contradictions elsewhere.
-  - Obsolete files are deleted; useful historical records are retained only with prominent historical/superseded labels.
-  - There is one tracked current Codex prompt: `docs/context/CODEX_EXECUTION_PROMPT.md`; it is the directly executable entrypoint and is kept synchronized with material project changes. No copied task prompt is required.
-  - `docs/context/DOCUMENTATION_GOVERNANCE.md` defines the minimum dependency matrix.
-  - CI runs `scripts/validate_documentation_consistency.py` for mechanically detectable stale-state errors.
-- **Rationale:** Repository context must remain trustworthy for future Codex/ChatGPT work and must not require the user to remember which active-looking file is obsolete or maintain a second prompt manually.
-- **Alternatives rejected:** rely only on a current-status overlay; fix stale docs only when noticed manually; keep multiple tracked phase-specific Codex prompts; require a disposable copied prompt when the tracked canonical prompt can be used directly.
+- **Status:** Accepted.
+- **File:** `docs/decisions/DEC-024_DOCUMENTATION_GOVERNANCE.md`.
+- **Decision:** Material changes reconcile affected active docs/status/prompts/decisions in the same PR; obsolete active files are removed; CI validates mechanically detectable stale state; the tracked Codex prompt is the directly executable entrypoint.
+
+## DEC-025 — Canonical resumable Codex task registry
+- **Date:** 2026-08-04
+- **Status:** Accepted.
+- **File:** `docs/decisions/DEC-025_CODEX_TASK_REGISTRY.md`.
+- **Decision:** `docs/context/TASKS.md` is the single concrete execution checklist and resume ledger. Every Codex session reads it before selecting/resuming work; available session memory is used together with durable Git/repository evidence; unfinished tasks retain `IN_PROGRESS` resume state; branch checkpoint commits support quota/interruption recovery while coherent PRs still squash into `main`.
 
 ## Pending decisions
 
@@ -150,4 +148,4 @@ Future entries are still required for:
 - optional AI, if ever justified;
 - final citation style/Word template/submission specifics near writing/delivery.
 
-The general Python/core/storage/result-publication/dashboard architectural baseline is **not** a pending decision unless later measured requirements justify an explicit amendment to DEC-023.
+The general Python/core/storage/result-publication/dashboard architectural baseline and task-governance mechanism are **not** pending decisions unless later requirements justify explicit amendments.
