@@ -3,7 +3,7 @@
 **Official Greek title:** Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα  
 **Official English title:** Comparison and Evaluation of Resilient AI Agents in Uncertain Environments
 
-Private, version-controlled repository for the complete thesis lifecycle: research context, bibliography consumer, experimental software, runs/results, analysis artifacts, thesis writing, and final deliverables.
+Private, version-controlled repository for the complete thesis lifecycle: research context, bibliography consumer, experimental software, runs/results, analysis artifacts, thesis writing, defense presentation, and final deliverables.
 
 ## Project principle
 
@@ -41,11 +41,13 @@ No final research question, model set, GridWorld scientific parameters, uncertai
 
 - `docs/context/CURRENT_STATUS.md` — shortest authoritative current-state summary.
 - `docs/context/TASKS.md` — canonical concrete checklist and resumable Codex progress ledger.
+- `docs/context/END_TO_END_JOURNEY.md` — Codex/user journey and lifecycle handoff contracts; not a second checklist.
 - `docs/context/PROJECT_CONTEXT.md` — current integrated project context.
 - `docs/context/IMPLEMENTATION_ROADMAP.md` — phase/dependency explanation.
 - `docs/context/DOCUMENTATION_GOVERNANCE.md` — mandatory reconciliation rules.
 - `docs/decisions/DECISION_LOG.md` — accepted/superseded/pending decision index.
 - `docs/context/CODEX_EXECUTION_PROMPT.md` — single tracked, canonical, directly executable Codex prompt.
+- `docs/thesis/PRESENTATION_WORKFLOW.md` — deferred but already-defined final PowerPoint/speaker-material workflow.
 
 After cloning/updating the repository on the thesis machine, start Codex with: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.` Every Codex session must inspect `TASKS.md` before selecting/resuming work. Available session memory is used together with branch/working-tree/PR state; durable repository evidence is the fallback when a session or model quota is interrupted.
 
@@ -70,14 +72,29 @@ artifacts/exports/                     Exports and reports
 
 thesis/source-material/                Official thesis source material
 thesis/chapters/                       Writing-stage chapter drafts
-thesis/final/                          Final Word/PDF deliverables
+thesis/final/                          Final thesis deliverables
 
-docs/context/                          Current scope, tasks, requirements, workflow, roadmap
+presentation/source/                   Future slide outline/evidence map/speaker script sources
+presentation/assets/                   Future evidence-backed figures/screenshots/demo assets
+presentation/final/                    Future final PowerPoint and defense deliverables
+
+docs/context/                          Current scope, tasks, journeys, requirements, workflow, roadmap
 docs/research/                         Research framing and selection work
 docs/experiments/                      Protocol, run, storage, and provenance rules
 docs/architecture/                     Core/UI architecture
+docs/thesis/                           Thesis-writing and defense-presentation workflow rules
 docs/decisions/                        Decisions and ADRs
 ```
+
+The `presentation/` directories are a future output contract; they do not need to exist until the defense phase is executed.
+
+## Lifecycle handoff
+
+The intended end-to-end chain is:
+
+> validated application -> frozen final experiments -> frozen evidence/analysis -> thesis evidence package -> Greek thesis/review/final freeze -> PowerPoint + speaker notes/script -> final audit/delivery
+
+The application is therefore not the end of the project. It is the validated execution surface that hands off into the final experiment campaign. The thesis and presentation are downstream artifacts of the same frozen evidence chain.
 
 ## Experiment publication
 
@@ -89,4 +106,4 @@ Useful large thesis-produced outputs are retained while storage permits. Large t
 
 ## Scientific integrity
 
-Do not fabricate sources, data, runs, metrics, progress, figures, tables, or conclusions. Every final thesis result must trace to real source evidence, a versioned protocol/configuration, a recorded Git commit, stored run data, and reproducible analysis code.
+Do not fabricate sources, data, runs, metrics, progress, figures, tables, presentation claims, or conclusions. Every final thesis/result/presentation claim must trace to real source evidence, a versioned protocol/configuration, recorded run data, and reproducible analysis/evidence mappings as applicable.

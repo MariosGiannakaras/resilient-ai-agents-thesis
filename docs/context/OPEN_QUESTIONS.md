@@ -13,15 +13,19 @@ The following are **not open questions anymore**:
 - package/environment-information/RNG/run-bundle architecture;
 - filesystem-first storage and guarded one-commit/one-push publication;
 - selective Git LFS policy for large thesis-produced artifacts;
-- final-dashboard architectural direction as a thin local Streamlit layer after core/pilots.
+- final-dashboard architectural direction as a thin local Streamlit layer after core/pilots;
+- resumable Codex task/checkpoint workflow;
+- overall application -> final experiments -> analysis/evidence -> thesis/review -> defense presentation -> delivery handoff model;
+- requirement for a final PowerPoint, embedded speaker notes, separate full spoken Greek script, and evidence/rehearsal validation.
 
-They are governed by DEC-021, DEC-022, and DEC-023.
+They are governed by DEC-021 through DEC-026 as applicable. Exact scientific choices and future official delivery requirements remain open below.
 
 | ID | Open issue | Why open / missing information | Needed by | Blocks next phase? | Resolver | Safe temporary rule |
 |---|---|---|---|---|---|---|
 | OQ-ACA-001 | Are any supervisor-specific corrections introduced later? | The topic is approved and no current special instructions exist. | When feedback is actually received. | No. | User / supervisor. | Continue current work; record later feedback as an explicit change. |
 | OQ-ACA-002 | What is the eventual submission/presentation schedule? | No verified date/procedure has been provided. | Delivery planning. | No for research/program work. | User / Department. | Do not invent dates. |
 | OQ-ACA-003 | Is there a current official Word template/submission package? | Not needed for current implementation/experiments. | Final writing/submission QA. | No. | User / Department / supervisor. | Recheck near writing/submission; example theses are contextual only. |
+| OQ-ACA-004 | What are the exact current defense requirements: duration, presentation language, required/allowed file format or template, mandatory content, live-demo rules, and submission procedure? | The presentation workflow is defined, but current official defense specifics have not been verified and may change. | Before final slide outline/deck freeze. | No for current research/program work. | Department / supervisor / user-provided current guidance. | Prepare for a Greek PowerPoint with speaker notes/script and evidence-backed demo fallback; do not assume duration/slide count/template. |
 | OQ-HW-001 | What are the accepted capabilities of the actual experiment machine? | The collector exists and is tested, but the actual thesis machine has not yet produced an accepted inventory. | Before compute-dependent dependency/model/budget choices. | Yes for compute-dependent choices. | Local Codex/system inventory + review. | Remain CPU-compatible; make no CUDA/GPU assumption. |
 | OQ-RES-001 | What is the final main research question and minimal secondary questions? | Post-import evidence framing exists, but the final environment/model/metric feasibility chain is not complete. | Before pilot/final protocol freeze. | Yes. | Research decision from citation-ready evidence + prototypes/pilots. | Keep the bounded persistent-change direction as a proposal, not final methodology. |
 | OQ-RES-002 | Which hypotheses are theoretically/statistically justified? | Depends on final RQ, environment, model roles, and estimands. | Before final protocol. | Yes. | Research decision. | Keep exploratory questions separate; do not invent directional hypotheses. |

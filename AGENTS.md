@@ -20,7 +20,8 @@ Exceptions:
 
 - preserve exact official Greek thesis text when quoted;
 - scientific source text and citation-ready evidence remain in the **original source language**;
-- the final thesis remains a Greek Microsoft Word deliverable unless an official requirement changes.
+- the final thesis remains a Greek Microsoft Word deliverable unless an official requirement changes;
+- the final defense slide copy/speaker material is expected to be Greek unless current official guidance requires otherwise.
 
 ## Core scope principle
 
@@ -49,7 +50,7 @@ Do not use old conversations/bootstrap files to reopen accepted infrastructure w
 
 DEC-025 controls Codex task execution.
 
-`docs/context/TASKS.md` is the **single canonical concrete task checklist and resume ledger**. `IMPLEMENTATION_ROADMAP.md` explains phases/dependencies but is not a competing checklist.
+`docs/context/TASKS.md` is the **single canonical concrete task checklist and resume ledger**. `IMPLEMENTATION_ROADMAP.md` explains phases/dependencies and `END_TO_END_JOURNEY.md` explains major handoffs; neither is a competing checklist.
 
 At the start of **every Codex session**, including after quota/session interruption:
 
@@ -63,6 +64,8 @@ At the start of **every Codex session**, including after quota/session interrupt
 
 Session memory is useful and should not be ignored. Durable repository evidence is the recovery authority when memory is absent, truncated, ambiguous, or conflicting.
 
+`READY` means all required task-ID dependencies are complete. If the registry labels dependency-blocked work as `READY`, reconcile it before execution.
+
 For unfinished work:
 
 - mark the task `IN_PROGRESS`;
@@ -75,11 +78,11 @@ Every material PR reviews `TASKS.md`. Starting/completing/blocking/unblocking/su
 
 ## Operating model
 
-Full process: `docs/context/EXECUTION_WORKFLOW.md`.
+Full process: `docs/context/EXECUTION_WORKFLOW.md`. Major user/Codex/artifact handoffs: `docs/context/END_TO_END_JOURNEY.md`.
 
-- **User:** goals, real feedback, genuinely academic/product choices, supervisor guidance/private material when needed; not routine Git/task bookkeeping.
-- **ChatGPT:** scopes/reviews work, scientific reasoning, diffs/tests/results, and merge readiness.
-- **Codex:** executes dependency-valid work from repository state, maintains resumable task state, does not self-approve or silently expand/freeze scientific scope.
+- **User:** goals, real feedback, genuinely academic/product choices, supervisor guidance/private material when needed; not routine Git/task/result bookkeeping.
+- **ChatGPT:** scopes/reviews work, scientific reasoning, thesis/presentation narrative and language work, diffs/tests/results, and merge readiness.
+- **Codex:** executes dependency-valid repository work, maintains resumable task state, prepares/verifies reproducible evidence/assets, and does not self-approve or silently expand/freeze scientific scope.
 - **GitHub:** repeatable automated checks; passing CI is necessary but not sufficient.
 
 Normal flow:
@@ -98,9 +101,10 @@ Normal flow:
 6. `docs/context/PROJECT_CONTEXT.md`
 7. `docs/context/CONFIRMED_REQUIREMENTS.md`
 8. `docs/context/IMPLEMENTATION_ROADMAP.md`
-9. `docs/context/DOCUMENTATION_GOVERNANCE.md`
+9. `docs/context/END_TO_END_JOURNEY.md`
+10. `docs/context/DOCUMENTATION_GOVERNANCE.md`
 
-Then read only task-specific files needed for the active task. Do not reread the whole repository/generated bibliography for a bounded task. Repository-wide rereading is for cross-cutting audits/changes.
+Then read only task-specific files needed for the active task. For defense/presentation tasks read `docs/thesis/PRESENTATION_WORKFLOW.md`. Do not reread the whole repository/generated bibliography for a bounded task. Repository-wide rereading is for cross-cutting audits/changes.
 
 Do not ask the user for information that can be collected reliably from this repository, `ThesisBibliography`, the local system, or authoritative sources.
 
@@ -160,6 +164,19 @@ Scientific evidence remains in the original source language. Never fabricate sou
 - Resource telemetry is a lightweight current snapshot, not an observability subsystem.
 - Fake progress, mock final metrics, fabricated logs, and backend-inconsistent state are forbidden.
 
+## Lifecycle and downstream artifact rules
+
+DEC-026 controls the application → experiments → evidence → thesis → defense handoffs.
+
+- Do not treat UI implementation alone as application completion. The intended end-to-end user workflow must pass before normal final experiments.
+- Final experiments use frozen protocol/configuration and the same validated scientific core; no result-driven scientific retuning.
+- Freeze a thesis/defense evidence package after final analysis and before normal thesis drafting.
+- Thesis method/result claims must trace to that frozen package and citation-ready bibliography evidence.
+- Incorporate supervisor/reviewer feedback only as an explicit revision cycle; revalidate affected evidence/citations/figures/method descriptions.
+- Finalize the defense deck only after the thesis is stable.
+- Presentation claims/visuals must trace to the final thesis/frozen evidence. `docs/thesis/PRESENTATION_WORKFLOW.md` defines the PowerPoint, embedded notes, separate full spoken Greek script, demo fallback, and rehearsal/format checks.
+- Codex prepares/verifies repository-backed evidence/assets. ChatGPT is preferred for thesis/slide narrative, Greek copy, speaker script, and language/consistency review. Microsoft PowerPoint is the final deck inspection/rehearsal target; optional design tools must not become scientific authority.
+
 ## Tests and validation
 
 As applicable, test:
@@ -174,6 +191,7 @@ As applicable, test:
 - metric correctness on known synthetic fixtures;
 - statistical-processing fixtures;
 - provenance and automatic-publication safety;
+- task/documentation/lifecycle consistency;
 - regressions.
 
 Bibliography changes additionally validate immutable provenance/source commits, manifests/checksums, forbidden artifacts, generated integrity, and source-reference validity.
@@ -184,7 +202,7 @@ Synthetic fixtures are allowed only when clearly labelled tests.
 
 Follow `docs/context/DOCUMENTATION_GOVERNANCE.md`.
 
-- Material changes reconcile affected active docs, decisions, status, prompt, and `TASKS.md` in the same PR.
+- Material changes reconcile affected active docs, decisions, status, prompt, lifecycle handoffs, and `TASKS.md` in the same PR.
 - Use descriptive lowercase branches (`research/`, `feat/`, `fix/`, `test/`, `docs/`, `chore/`).
 - Intermediate branch checkpoint commits are allowed for recovery; prefer one logical squash merge to `main` for each coherent PR.
 - PRs state task IDs, scope, rationale, validation, scientific/protocol impact, exclusions/deferred work, and documentation/task reconciliation.
@@ -195,4 +213,4 @@ Follow `docs/context/DOCUMENTATION_GOVERNANCE.md`.
 
 ## Scientific integrity
 
-Do not fabricate sources, citations, runs, metrics, progress, logs, data, figures, tables, results, or conclusions.
+Do not fabricate sources, citations, runs, metrics, progress, logs, data, figures, tables, presentation claims, results, or conclusions.

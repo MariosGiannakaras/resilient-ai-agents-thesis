@@ -12,6 +12,7 @@ REQUIRED_ACTIVE = (
     "README.md",
     "docs/context/CURRENT_STATUS.md",
     "docs/context/TASKS.md",
+    "docs/context/END_TO_END_JOURNEY.md",
     "docs/context/PROJECT_CONTEXT.md",
     "docs/context/CONFIRMED_REQUIREMENTS.md",
     "docs/context/USER_DECISIONS.md",
@@ -23,6 +24,7 @@ REQUIRED_ACTIVE = (
     "docs/context/DEFINITION_OF_DONE.md",
     "docs/context/DOCUMENTATION_GOVERNANCE.md",
     "docs/context/CODEX_EXECUTION_PROMPT.md",
+    "docs/thesis/PRESENTATION_WORKFLOW.md",
     "docs/decisions/DECISION_LOG.md",
     "docs/context/CHANGELOG_CONTEXT.md",
     "docs/university/SOURCE_REGISTER.md",
@@ -38,6 +40,7 @@ CURRENT_STATE_FILES = (
     "README.md",
     "docs/context/CURRENT_STATUS.md",
     "docs/context/TASKS.md",
+    "docs/context/END_TO_END_JOURNEY.md",
     "docs/context/PROJECT_CONTEXT.md",
     "docs/context/CONFIRMED_REQUIREMENTS.md",
     "docs/context/USER_DECISIONS.md",
@@ -48,6 +51,7 @@ CURRENT_STATE_FILES = (
     "docs/context/IMPLEMENTATION_ROADMAP.md",
     "docs/context/DEFINITION_OF_DONE.md",
     "docs/context/CODEX_EXECUTION_PROMPT.md",
+    "docs/thesis/PRESENTATION_WORKFLOW.md",
     "docs/university/SOURCE_REGISTER.md",
 )
 
@@ -62,7 +66,10 @@ RESOLVED_STALE_FRAGMENTS = (
     "repository sha-256 pending codex local verification",
 )
 
-TASK_RE = re.compile(r"^- \[(?:x| )\](?:\s+(?:READY|BLOCKED|DEFERRED|IN_PROGRESS))?\s+`(T-\d+)`", re.MULTILINE)
+TASK_RE = re.compile(
+    r"^- \[(?P<checked>x| )\](?:\s+(?P<status>READY|BLOCKED|DEFERRED|IN_PROGRESS))?\s+`(?P<id>T-\d+)`",
+    re.MULTILINE,
+)
 
 
 def read(relative: str) -> str:
@@ -99,6 +106,7 @@ def main() -> int:
         for required in (
             "docs/context/CURRENT_STATUS.md",
             "docs/context/TASKS.md",
+            "docs/context/END_TO_END_JOURNEY.md",
             "docs/context/DOCUMENTATION_GOVERNANCE.md",
             "Read `docs/context/CODEX_EXECUTION_PROMPT.md` and execute it completely.",
             "Mandatory startup and resume procedure",
@@ -120,16 +128,35 @@ def main() -> int:
             "session memory",
             "git status",
             "Exact next action",
+            "END_TO_END_JOURNEY.md",
+            "PRESENTATION_WORKFLOW.md",
         ):
             if required.casefold() not in tasks.casefold():
-                errors.append(f"TASKS.md missing required resumability element: {required}")
+                errors.append(f"TASKS.md missing required resumability/lifecycle element: {required}")
 
-        ids = TASK_RE.findall(tasks)
+        matches = list(TASK_RE.finditer(tasks))
+        ids = [match.group("id") for match in matches]
         if not ids:
             errors.append("TASKS.md must contain task IDs using the canonical checklist syntax")
         duplicates = sorted({task_id for task_id in ids if ids.count(task_id) > 1})
         if duplicates:
             errors.append(f"TASKS.md contains duplicate task IDs: {', '.join(duplicates)}")
+
+        completed = {match.group("id") for match in matches if match.group("checked") == "x"}
+        for index, match in enumerate(matches):
+            if match.group("status") != "READY":
+                continue
+            block_end = matches[index + 1].start() if index + 1 < len(matches) else len(tasks)
+            block = tasks[match.end():block_end]
+            depends_match = re.search(r"^\s+- Depends on:\s*(.+)$", block, re.MULTILINE)
+            if not depends_match:
+                continue
+            dependencies = set(re.findall(r"`(T-\d+)`", depends_match.group(1)))
+            incomplete = sorted(dependencies - completed)
+            if incomplete:
+                errors.append(
+                    f"TASKS.md marks {match.group('id')} READY while dependencies are incomplete: {', '.join(incomplete)}"
+                )
 
         resume_match = re.search(r"- \*\*Current task:\*\* `(?P<task>T-\d+)`", tasks)
         if not resume_match:
