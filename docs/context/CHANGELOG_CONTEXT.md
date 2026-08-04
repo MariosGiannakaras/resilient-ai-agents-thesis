@@ -105,9 +105,15 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Audited active project/context/research/workflow files against the current accepted repository state.
 - Found and removed stale statements that still treated the full bibliography import/authentication and pre-DEC-023 architecture as pending.
 - Deleted the obsolete `CODEX_BOOTSTRAP_PROMPT.md` and created state-driven `CODEX_EXECUTION_PROMPT.md`.
-- Added git-ignored local `CODEX_TASK.md` usage so the one-shot Codex prompt does not enter Git history.
 - Corrected `POSTIMPORT_EVIDENCE_SYNTHESIS.md`: robust-MDP full-corpus records are internal candidates, not citation-ready anchors.
 - Reconciled active GridWorld/model/metrics/research workspaces with the actual imported evidence and current infrastructure without freezing scientific choices.
 - Added `DOCUMENTATION_GOVERNANCE.md`, stronger PR/contributor/agent consistency rules, and automated documentation-consistency validation in CI.
 - Marked `FINAL_BOOTSTRAP_AUDIT.md` explicitly historical rather than leaving obsolete blockers as active-looking guidance.
 - Added DEC-024: material changes must reconcile all affected active documentation/prompts/status/decisions in the same PR.
+
+## 2026-08-04 — Canonical Codex prompt made directly executable
+
+- Clarified that `docs/context/CODEX_EXECUTION_PROMPT.md` is not merely a template; it is the single canonical prompt Codex should read directly after the repository is cloned or updated.
+- Removed the normal requirement to copy the prompt into a disposable `CODEX_TASK.md` file.
+- Recorded that future material project/workflow changes must update the tracked canonical prompt in the same PR.
+- Updated README, current status, execution workflow, documentation governance, DEC-024, decision index, ignore rules and consistency validation accordingly.
