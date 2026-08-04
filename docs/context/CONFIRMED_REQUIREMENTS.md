@@ -49,6 +49,7 @@ This file contains only requirements established by the latest explicit user ins
 | REQ-EXP-009 | The UI exposes only approved/scientifically justified settings, not an uncontrolled parameter space. | User scope refinement. | CONFIRMED | Validated forms and progressive disclosure. |
 | REQ-EXP-010 | A run ID represents one whole experiment, possibly with many seeds/episodes; there is at most one automatic result commit/push per finalized whole experiment, never one permanent commit per seed. | Explicit user direction, 2026-08-04; DEC-023. | CONFIRMED | Integration test proves multi-seed experiment produces one guarded commit/push. |
 | REQ-EXP-011 | Useful large thesis-produced experiment artifacts are retained when storage permits and use configured Git LFS formats rather than being manually excluded solely due to size. | Explicit user direction, 2026-08-04; DEC-023. | CONFIRMED | LFS policy applied; retention changes only after real storage constraint/decision. |
+| REQ-EXP-012 | The normal frozen final experiment campaign starts only after both `protocol-v1.0` and the intended user-facing application workflow are validated. Any final-run headless fallback uses the identical scientific core/configuration path and is documented. | Explicit user workflow request, 2026-08-04; DEC-026. | CONFIRMED | Task dependencies enforce application/protocol gates; final runs do not use an unvalidated alternate scientific path. |
 
 ## Functional application
 
@@ -66,6 +67,7 @@ This file contains only requirements established by the latest explicit user ins
 | REQ-APP-010 | The feature set is limited to real thesis needs. | User scope refinement. | CONFIRMED | Pilot-derived required/optional/out-of-scope feature budget. |
 | REQ-APP-011 | Models, seeds, settings, and uncertainty conditions are compared clearly with charts and tables. | User scope refinement. | CONFIRMED | Compatible comparison view with distributions/counts. |
 | REQ-APP-012 | Resource telemetry remains a lightweight current snapshot, not an observability subsystem. | Accepted audit remediation. | CONFIRMED | CPU/RAM/disk and optional GPU current values only; no telemetry DB/agents/alerting. |
+| REQ-APP-013 | “Application complete” means the real configure/run/monitor/history/compare/export user journey works end to end on the validated scientific core; rendered screens alone are insufficient. | Explicit user journey request, 2026-08-04; DEC-026. | CONFIRMED | `T-511` acceptance passes before final campaign unlock. |
 
 ## Architecture and technical
 
@@ -108,12 +110,13 @@ This file contains only requirements established by the latest explicit user ins
 | REQ-REPO-005 | Useful large thesis-produced binaries/datasets/checkpoints/results may be committed automatically using the configured Git LFS policy; do not require per-run manual approval solely because files are large. | User direction + DEC-023. | CONFIRMED | LFS tracked formats/publisher safeguards; retention changed only for real storage constraints. |
 | REQ-REPO-006 | Complete bibliography lifecycle belongs to `ThesisBibliography`; this repository consumes the complete generated corpus and enforces nested citation-ready formal trust. | Current bibliography architecture. | CONFIRMED | No new primary-source ingestion here; immutable provenance/integrity; no bibliography PDF/LFS import. |
 | REQ-REPO-007 | Repository-authored operational/technical material is English; exact official Greek text/original-language scientific evidence remain unchanged where required. | Explicit user instruction, 2026-08-02. | CONFIRMED | Agent-facing docs/prompts/comments/naming English; source evidence not translated. |
-| REQ-REPO-008 | Every material change reconciles all affected active source-of-truth/status/decision/workflow/prompt/task files in the same PR; obsolete files are deleted or explicitly marked historical. | Explicit user instruction, 2026-08-04; DEC-024/DEC-025. | CONFIRMED | PR checklist + documentation/task governance + CI validator. |
+| REQ-REPO-008 | Every material change reconciles all affected active source-of-truth/status/decision/workflow/prompt/task/lifecycle files in the same PR; obsolete files are deleted or explicitly marked historical. | Explicit user instruction, 2026-08-04; DEC-024/DEC-025/DEC-026. | CONFIRMED | PR checklist + documentation/task/lifecycle governance + CI validator. |
 | REQ-REPO-009 | Prefer fewer meaningful permanent commits; coherent implementation PRs normally squash to one `main` commit and each finalized experiment produces at most one result commit. | Explicit user preference, 2026-08-04. | CONFIRMED | Squash merges/experiment publisher behavior. |
 | REQ-REPO-010 | Maintain one canonical resumable task registry; every Codex session must inspect it before work, use available session memory plus durable Git/repository evidence, and preserve unfinished-task resume state so quota/session interruption does not lose work. | Explicit user direction, 2026-08-04; DEC-025. | CONFIRMED | `TASKS.md`, canonical prompt/AGENTS startup rules, checkpoint/resume policy, and CI validation. |
 | REQ-PROV-001 | Every result maps to run ID, resolved configuration, source files, processing code, and source Git commit. | Provenance. | CONFIRMED | Machine-readable manifest/bundle. |
 | REQ-PROV-002 | Finalized raw results are immutable. | Reproducibility. | CONFIRMED | Checksums and no silent edits. |
 | REQ-PROV-003 | Automatic result publication must refuse mixed provenance/unrelated tracked changes/unsafe remote state rather than forcing a commit; local run data survives publication failure. | DEC-023 safety requirement. | CONFIRMED | Publisher integration/failure tests. |
+| REQ-PROV-004 | Final analysis must produce a frozen downstream evidence package mapping RQs/methods, citation-ready sources, runs/results, figures/tables/captions, and planned thesis/defense claims. | Explicit user lifecycle request, 2026-08-04; DEC-026. | CONFIRMED | `T-604` produces a versioned traceable handoff package before normal thesis drafting. |
 
 ## Tests
 
@@ -126,13 +129,14 @@ This file contains only requirements established by the latest explicit user ins
 | REQ-TEST-005 | Reproducibility tests distinguish deterministic replay from statistical repeatability. | Honest reporting. | CONFIRMED | Modes/tolerances documented. |
 | REQ-TEST-006 | CI checks mechanically detectable stale active-document states, including obsolete Codex prompt paths and incorrect formal-evidence labelling. | DEC-024. | CONFIRMED | `scripts/validate_documentation_consistency.py` passes. |
 | REQ-TEST-007 | CI checks that the canonical task registry exists, contains unique task IDs/resume state, and is required by the canonical Codex startup flow. | DEC-025. | CONFIRMED | Documentation consistency validator fails on missing/broken task-registry invariants. |
+| REQ-TEST-008 | CI checks that a task labelled `READY` does not reference incomplete required task-ID dependencies and that the lifecycle/presentation control files remain present/linked. | DEC-026 workflow audit. | CONFIRMED | Documentation consistency validator fails on invalid READY dependency state or missing lifecycle control files. |
 
 ## Thesis and deliverables
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
 | REQ-THESIS-001 | Thesis main language is Greek. | User decision. | CONFIRMED | Greek main text. |
-| REQ-THESIS-002 | Final deliverable is Microsoft Word. | User decision. | CONFIRMED | Validated `.docx`. |
+| REQ-THESIS-002 | Final thesis deliverable is Microsoft Word. | User decision. | CONFIRMED | Validated `.docx`. |
 | REQ-THESIS-003 | Final results/conclusions use only frozen real data. | User decision. | CONFIRMED | Claims map to artifacts. |
 | REQ-THESIS-004 | No fabricated sources, DOI values, measurements, or conclusions. | Integrity. | CONFIRMED | Citation/provenance audit. |
 | REQ-THESIS-005 | Figures/tables are generated automatically from real data. | User decision. | CONFIRMED | Rebuild command reproduces artifacts. |
@@ -140,3 +144,7 @@ This file contains only requirements established by the latest explicit user ins
 | REQ-THESIS-007 | Related Work, Methodology, and Discussion are drafted from verified imported evidence after required bibliography freshness/full-evidence gates. | User research direction/current bibliography architecture. | CONFIRMED | Claims map to verified citation-ready `SRC-*` evidence and limitations. |
 | REQ-THESIS-008 | Normal chapter drafting/final Word styling are deferred until research program/model study/protocol/evidence-producing experiments are mature; structured notes/evidence mappings/captions/method records are collected during implementation. | Explicit user direction, 2026-08-04. | CONFIRMED | Roadmap prioritizes research/program work without losing writing provenance. |
 | REQ-THESIS-009 | Two or three completed theses supplied later may inform presentation/structure only; they are not scientific sources or official formatting authority. | Explicit user direction, 2026-08-04. | DEFERRED | Examples clearly labelled and checked against official guidance near writing. |
+| REQ-THESIS-010 | A review-ready thesis precedes final freeze; supervisor/reviewer corrections received later are incorporated through an explicit revision cycle with affected evidence/citations/figures/method statements revalidated. | Explicit user journey request, 2026-08-04; DEC-026. | CONFIRMED | `T-711`/`T-712` complete or absence of required review cycle is recorded before final thesis freeze. |
+| REQ-THESIS-011 | After the final thesis is stable, create a complete PowerPoint defense deck grounded in the final thesis, frozen experiment evidence, citation-ready sources, and real application assets. | Explicit user request, 2026-08-04; DEC-026. | DEFERRED | Final `.pptx` has a slide evidence map and no unsupported scientific/result claims. |
+| REQ-THESIS-012 | The defense package includes embedded speaker notes and a separate full spoken Greek script synchronized slide-by-slide and detailed enough for rehearsal/following/reading during preparation. | Explicit user request, 2026-08-04; DEC-026. | DEFERRED | Notes/script match final slide order and thesis/evidence; final files are versioned. |
+| REQ-THESIS-013 | The defense package is validated for current official duration/content/file requirements, PowerPoint rendering, legibility, timing with margin, factual/numerical consistency, and a tested fallback for any live demo. | Explicit user request/workflow decision, 2026-08-04; DEC-026. | DEFERRED | `T-722` passes before final delivery readiness. |
