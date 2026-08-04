@@ -40,13 +40,14 @@ No final research question, model set, GridWorld scientific parameters, uncertai
 ## Current control files
 
 - `docs/context/CURRENT_STATUS.md` — shortest authoritative current-state summary.
+- `docs/context/TASKS.md` — canonical concrete checklist and resumable Codex progress ledger.
 - `docs/context/PROJECT_CONTEXT.md` — current integrated project context.
-- `docs/context/IMPLEMENTATION_ROADMAP.md` — phase/dependency order.
-- `docs/context/DOCUMENTATION_GOVERNANCE.md` — mandatory rule for updating/deleting related active files whenever a material change occurs.
+- `docs/context/IMPLEMENTATION_ROADMAP.md` — phase/dependency explanation.
+- `docs/context/DOCUMENTATION_GOVERNANCE.md` — mandatory reconciliation rules.
 - `docs/decisions/DECISION_LOG.md` — accepted/superseded/pending decision index.
-- `docs/context/CODEX_EXECUTION_PROMPT.md` — the single tracked, canonical, directly executable Codex prompt.
+- `docs/context/CODEX_EXECUTION_PROMPT.md` — single tracked, canonical, directly executable Codex prompt.
 
-After cloning/updating the repository on the thesis machine, start Codex with: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.` The prompt remains tracked and is updated whenever the project state or execution workflow materially changes.
+After cloning/updating the repository on the thesis machine, start Codex with: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.` Every Codex session must inspect `TASKS.md` before selecting/resuming work. Available session memory is used together with branch/working-tree/PR state; durable repository evidence is the fallback when a session or model quota is interrupted.
 
 Historical bootstrap/pre-import files are not current instructions. Useful historical records are explicitly labelled historical; obsolete active files are removed rather than left to drift.
 
@@ -71,7 +72,7 @@ thesis/source-material/                Official thesis source material
 thesis/chapters/                       Writing-stage chapter drafts
 thesis/final/                          Final Word/PDF deliverables
 
-docs/context/                          Current scope, requirements, workflow, roadmap
+docs/context/                          Current scope, tasks, requirements, workflow, roadmap
 docs/research/                         Research framing and selection work
 docs/experiments/                      Protocol, run, storage, and provenance rules
 docs/architecture/                     Core/UI architecture
