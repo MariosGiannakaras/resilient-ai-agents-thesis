@@ -25,7 +25,7 @@ Exceptions:
 
 ## Core scope principle
 
-Read and apply `docs/context/SCOPE_REFINEMENT.md`.
+`docs/context/SCOPE_REFINEMENT.md` is the detailed authority when a task changes project scope, product shape, or feature budget.
 
 **Polished outside, bounded inside.** Keep architecture and feature count small enough to finish while delivering a modern, coherent, screenshot-ready research dashboard for the real thesis workflow.
 
@@ -91,20 +91,28 @@ Normal flow:
 
 ## Reading policy
 
-### Permanent/session-start reading
+### Session-start core
+
+Read only these files at the start of every session:
 
 1. `AGENTS.md`
 2. `docs/context/TASKS.md`
 3. `docs/context/CURRENT_STATUS.md`
-4. `README.md`
-5. `docs/context/SCOPE_REFINEMENT.md`
-6. `docs/context/PROJECT_CONTEXT.md`
-7. `docs/context/CONFIRMED_REQUIREMENTS.md`
-8. `docs/context/IMPLEMENTATION_ROADMAP.md`
-9. `docs/context/EXECUTION_WORKFLOW.md`
-10. `docs/context/DOCUMENTATION_GOVERNANCE.md`
 
-Then read only task-specific files needed for the active task. For dashboard/UX tasks read `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` and `app/README.md`. For defense/presentation tasks read `docs/thesis/PRESENTATION_WORKFLOW.md`. Do not reread the whole repository/generated bibliography for a bounded task. Repository-wide rereading is for cross-cutting audits/changes.
+Do **not** automatically reread `README.md`, `SCOPE_REFINEMENT.md`, `PROJECT_CONTEXT.md`, `CONFIRMED_REQUIREMENTS.md`, `IMPLEMENTATION_ROADMAP.md`, `EXECUTION_WORKFLOW.md`, or `DOCUMENTATION_GOVERNANCE.md` on every session. Read them when the active task affects their domain, explicitly references them, requires a cross-cutting decision, or exposes a possible inconsistency.
+
+### Task-specific reading
+
+After selecting/resuming the active task:
+
+- read the complete task entry, dependencies, acceptance condition, and files it names;
+- use repository search to locate the smallest relevant active specification/evidence set before opening broad documents;
+- for research/environment/model/metric/protocol tasks, read the relevant files under `docs/research/` and `docs/experiments/` plus targeted citation-ready evidence; do not reread the generated corpus wholesale;
+- for architecture, repository, workflow, or source-of-truth changes, read the affected architecture/context files and `docs/context/DOCUMENTATION_GOVERNANCE.md`;
+- for dashboard/UX tasks, read `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` and `app/README.md`;
+- for thesis/defense tasks, read the relevant `docs/thesis/` files, including `docs/thesis/PRESENTATION_WORKFLOW.md` for presentation work;
+- treat historical files as context only and never let them override active authorities;
+- perform repository-wide rereading only for an explicitly cross-cutting audit or reconciliation task.
 
 Do not ask the user for information that can be collected reliably from this repository, `ThesisBibliography`, the local system, or authoritative sources.
 

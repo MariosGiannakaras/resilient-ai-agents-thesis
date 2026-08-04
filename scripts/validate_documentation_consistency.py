@@ -70,6 +70,12 @@ RESOLVED_STALE_FRAGMENTS = (
     "END_TO_END_JOURNEY.md",
 )
 
+SESSION_START_CORE = (
+    "AGENTS.md",
+    "docs/context/TASKS.md",
+    "docs/context/CURRENT_STATUS.md",
+)
+
 TASK_RE = re.compile(
     r"^- \[(?P<checked>x| )\](?:\s+(?P<status>READY|BLOCKED|DEFERRED|IN_PROGRESS))?\s+`(?P<id>T-\d+)`",
     re.MULTILINE,
@@ -107,24 +113,73 @@ def main() -> int:
         if required.casefold() not in agents.casefold():
             errors.append(f"AGENTS.md missing confirmed dashboard UX invariant: {required}")
 
+    if "### Permanent/session-start reading" in agents:
+        errors.append("AGENTS.md must use the lean session-start core, not the obsolete broad permanent reading list")
+    agents_core_match = re.search(
+        r"### Session-start core\s*(?P<section>.*?)(?=\n### Task-specific reading)",
+        agents,
+        re.DOTALL,
+    )
+    if not agents_core_match:
+        errors.append("AGENTS.md missing lean Session-start core / Task-specific reading sections")
+    else:
+        listed = tuple(re.findall(r"^\d+\.\s+`([^`]+)`", agents_core_match.group("section"), re.MULTILINE))
+        if listed != SESSION_START_CORE:
+            errors.append(
+                "AGENTS.md session-start numbered list must contain exactly: " + ", ".join(SESSION_START_CORE)
+            )
+        if "do **not** automatically reread" not in agents_core_match.group("section").casefold():
+            errors.append("AGENTS.md session-start policy must explicitly reject broad automatic rereading")
+
     prompt_path = ROOT / "docs/context/CODEX_EXECUTION_PROMPT.md"
     if prompt_path.is_file():
         prompt = prompt_path.read_text(encoding="utf-8")
         for required in (
+            "AGENTS.md",
             "docs/context/CURRENT_STATUS.md",
             "docs/context/TASKS.md",
-            "docs/context/EXECUTION_WORKFLOW.md",
             "docs/context/DOCUMENTATION_GOVERNANCE.md",
-            "docs/architecture/UI_INFORMATION_ARCHITECTURE.md",
             "Read `docs/context/CODEX_EXECUTION_PROMPT.md` and execute it completely.",
             "Mandatory startup and resume procedure",
             "IN_PROGRESS",
-            "T-512",
+            "one active scope",
+            "Do not self-approve",
+            "review/merge",
+            "does **not** mean attempting the entire thesis in one session",
         ):
             if required not in prompt:
-                errors.append(f"current Codex prompt missing required state/task-driven reference: {required}")
+                errors.append(f"current Codex prompt missing required lean execution invariant: {required}")
+
         if "copy its contents to" in prompt.casefold() or "CODEX_TASK.md" in prompt:
             errors.append("current Codex prompt must be directly executable and must not require a copied task prompt")
+
+        prompt_core_match = re.search(
+            r"2\. Read only the session-start core:\n(?P<section>.*?)(?=\n3\.)",
+            prompt,
+            re.DOTALL,
+        )
+        if not prompt_core_match:
+            errors.append("current Codex prompt missing explicit three-file session-start core")
+        else:
+            listed = tuple(re.findall(r"^[ \t]*- `([^`]+)`", prompt_core_match.group("section"), re.MULTILINE))
+            if listed != SESSION_START_CORE:
+                errors.append(
+                    "current Codex prompt session-start core must contain exactly: " + ", ".join(SESSION_START_CORE)
+                )
+
+        duplicate_policy_headings = (
+            "## Already accepted baseline",
+            "## Bibliography rules",
+            "## Scientific rules",
+            "## Architecture/UI rules",
+            "## Lifecycle handoff rules",
+        )
+        for heading in duplicate_policy_headings:
+            if heading in prompt:
+                errors.append(f"current Codex prompt duplicates AGENTS.md domain policy section: {heading}")
+
+        if len(prompt.split()) > 1800:
+            errors.append("current Codex prompt exceeds the lean bootstrap budget of 1800 words")
 
     tasks_path = ROOT / "docs/context/TASKS.md"
     if tasks_path.is_file():
@@ -138,11 +193,13 @@ def main() -> int:
             "git status",
             "Exact next action",
             "PRESENTATION_WORKFLOW.md",
+            "T-008",
+            "three-file session-start core",
             "T-512",
             "self-explanatory UX",
         ):
             if required.casefold() not in tasks.casefold():
-                errors.append(f"TASKS.md missing required resumability/lifecycle/UX element: {required}")
+                errors.append(f"TASKS.md missing required resumability/lifecycle/UX/bootstrap element: {required}")
 
         matches = list(TASK_RE.finditer(tasks))
         ids = [match.group("id") for match in matches]

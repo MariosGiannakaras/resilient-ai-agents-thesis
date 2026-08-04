@@ -144,6 +144,11 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **Status:** Accepted; implementation deferred to the final dashboard phase.
 - **Decision:** The final dashboard must be self-explanatory through clear labels/helper text/units, accurate tooltips/contextual help, consistent terminology, actionable states, pre-run configuration review, and text+icon+accessible semantic-color status treatment where color is never the sole signal. After the final dashboard structure is stable, add a short skippable/replayable first-run onboarding flow with Previous/Next/Skip/Finish using lightweight local/native Streamlit mechanisms. Do not introduce a heavyweight custom JavaScript/DOM tour framework, accounts, or a new persistence subsystem merely for onboarding unless a later demonstrated requirement justifies the complexity.
 
+## DEC-028 — Lean Codex bootstrap and bounded execution
+- **Date:** 2026-08-04
+- **Status:** Accepted and implemented.
+- **Decision:** The canonical Codex prompt is a lean execution bootstrap, not a second copy of `AGENTS.md`. Every session reads only `AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md` before selecting/resuming work, then loads only task-specific active specifications/evidence. “Execute it completely” means progressing one dependency-valid task/coherent work package at a time within review, machine, evidence, and scientific gates; it never authorizes an all-thesis attempt, blocked/deferred work, or completed-work reimplementation. CI enforces the three-file startup core, bounded-execution wording, non-duplication of domain-policy sections, and a lean prompt-size budget.
+
 ## Pending decisions
 
 Future entries are still required for:
@@ -160,4 +165,4 @@ Future entries are still required for:
 - final citation style/Word template/submission specifics near writing/delivery;
 - exact current defense duration, required slide/file rules, and administrative presentation/submission procedure near delivery.
 
-The general Python/core/storage/result-publication/dashboard architectural baseline, task-governance mechanism, end-to-end handoff model, and self-explanatory UI/onboarding baseline are **not** pending decisions unless later requirements justify explicit amendments.
+The general Python/core/storage/result-publication/dashboard architectural baseline, task-governance mechanism, lean Codex bootstrap, end-to-end handoff model, and self-explanatory UI/onboarding baseline are **not** pending decisions unless later requirements justify explicit amendments.

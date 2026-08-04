@@ -154,3 +154,12 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Added a dedicated deferred dashboard task for lightweight first-run onboarding after the final screen structure is stable: Previous/Next/Skip/Finish, replay from Help/Getting Started, local completion state, and no heavyweight custom frontend tour subsystem without demonstrated need.
 - Updated UI architecture, requirements, scope, task acceptance, Codex/agent rules, completion criteria and open-question framing.
 - Added DEC-027.
+
+## 2026-08-04 — Lean Codex bootstrap optimization
+
+- Audited the canonical Codex prompt for token/context efficiency, ambiguity, duplication, resume behavior, task selection, and review/stop semantics.
+- Converted the prompt from a repeated policy manual into a lean execution bootstrap; domain safeguards remain centralized in `AGENTS.md`.
+- Reduced mandatory session-start reading to exactly `AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md`, followed by targeted task-specific reading and repository search.
+- Clarified that `execute it completely` means advancing one dependency-valid task/coherent work package within review, machine, evidence, and scientific gates—not attempting the whole thesis, bypassing `BLOCKED`/`DEFERRED` work, or reopening completed tasks.
+- Preserved strict quota/interruption recovery, branch checkpoints, `IN_PROGRESS` resume state, documentation reconciliation, testing, PR review handoff, and compact final reporting.
+- Added `T-008`, DEC-028, and CI checks for the three-file startup core, non-duplicated prompt structure, bounded execution wording, and a lean prompt-size budget.

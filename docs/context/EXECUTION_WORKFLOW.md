@@ -14,17 +14,22 @@ Current supervisor identity, deadlines, and final Word formatting are not implem
 
 ## Codex continuation and recovery
 
-The tracked canonical and directly executable prompt is `docs/context/CODEX_EXECUTION_PROMPT.md`. The canonical concrete checklist/resume ledger is `docs/context/TASKS.md`.
+The tracked canonical and directly executable prompt is `docs/context/CODEX_EXECUTION_PROMPT.md`. The canonical concrete checklist/resume ledger is `docs/context/TASKS.md`; `AGENTS.md` is the project-policy authority.
 
 After cloning/updating the repository on the thesis machine, start Codex with: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.`
 
 At the start of every Codex session:
 
-1. inspect Git status/current branch/recent commits and relevant PR state;
-2. read `TASKS.md` before selecting work;
-3. resume any `IN_PROGRESS` task first unless genuinely blocked;
-4. use available session/conversation memory to understand prior work;
-5. verify that memory against durable repository evidence before changing task state.
+1. inspect Git status/current branch/recent commits, uncommitted work, and relevant PR/check state;
+2. read only `AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md` as the session-start core;
+3. inspect `Resume state` and resume any `IN_PROGRESS` task first unless genuinely blocked;
+4. use available session/conversation memory to understand prior work and verify it against durable repository evidence;
+5. otherwise select the first dependency-valid `READY` task, never a `BLOCKED` or `DEFERRED` task;
+6. read only the active task entry and its relevant task-specific active specifications/evidence, using repository search before broad reading.
+
+The prompt is a lean bootstrap and must not duplicate the domain rules already maintained in `AGENTS.md` or task-specific specifications. Broad context/roadmap/requirements/workflow/governance/historical/generated files are read only when the active task requires them or when a cross-cutting reconciliation is explicitly underway.
+
+`Execute it completely` means progressing one dependency-valid task or coherent work package as far as current permissions, machine, evidence, review, and scientific gates allow. It does not mean attempting the whole thesis in one session, bypassing task states, or reopening completed work.
 
 If model quota or the session ends unexpectedly, the next session inspects branch history, working-tree diff, PR/tests, `Resume state`, and session memory if available. It does not restart the task merely because the previous chat/session ended.
 

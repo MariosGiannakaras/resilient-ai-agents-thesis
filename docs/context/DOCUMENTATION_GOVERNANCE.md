@@ -31,7 +31,7 @@ These files must describe the current repository state and must be reconciled in
 - `docs/thesis/PRESENTATION_WORKFLOW.md`
 - active research/protocol/architecture/thesis workspaces relevant to the changed subject.
 
-`CURRENT_STATUS.md` is the shortest authoritative current-state summary. `TASKS.md` is the canonical concrete execution checklist/resume ledger. `IMPLEMENTATION_ROADMAP.md` explains phases, while `EXECUTION_WORKFLOW.md` records responsibilities and major handoffs. `UI_INFORMATION_ARCHITECTURE.md` controls the bounded dashboard information/UX contract when dashboard work is active. None excuses stale statements in other active files.
+`AGENTS.md` is the project-policy authority for Codex. `CODEX_EXECUTION_PROMPT.md` is only the lean execution bootstrap. `CURRENT_STATUS.md` is the shortest authoritative current-state summary. `TASKS.md` is the canonical concrete execution checklist/resume ledger. `IMPLEMENTATION_ROADMAP.md` explains phases, while `EXECUTION_WORKFLOW.md` records responsibilities and major handoffs. `UI_INFORMATION_ARCHITECTURE.md` controls the bounded dashboard information/UX contract when dashboard work is active. None excuses stale statements in other active files.
 
 ### 2. Accepted decision/history records
 
@@ -91,6 +91,7 @@ Changes to dashboard wording, terminology, status semantics, contextual help, pr
 | Any material task/work-package change | `TASKS`, resume state, affected active docs, PR metadata/tests |
 | Project phase/status/blocker resolved | `CURRENT_STATUS`, `TASKS`, `PROJECT_CONTEXT`, `OPEN_QUESTIONS`, `IMPLEMENTATION_ROADMAP`, `DEFINITION_OF_DONE`, Codex prompt, changelog |
 | User requirement/decision | `CONFIRMED_REQUIREMENTS`, `USER_DECISIONS`, `CONSTRAINTS`, `CONTRADICTIONS`, `TASKS` if execution changes, decision log/changelog, affected implementation docs |
+| Codex bootstrap/reading/task-execution policy | `AGENTS`, Codex prompt, `TASKS`, `CURRENT_STATUS`, `EXECUTION_WORKFLOW`, documentation validator, decision log/changelog |
 | Architecture/stack/storage/runner | `AGENTS`, `README`, architecture docs, `PROJECT_CONTEXT`, requirements/constraints, `TASKS`, decision log, Codex prompt, CI/tests |
 | GridWorld/environment | GridWorld research/spec/ADR, current status, `TASKS`, roadmap, open questions, requirements, tests, Codex prompt if execution rules change |
 | Models/metrics/protocol | corresponding research/protocol files, current status, `TASKS`, open questions, roadmap, decision log, Codex prompt, tests |
@@ -122,9 +123,19 @@ Before merge:
 
 There is only one tracked current Codex execution prompt: `docs/context/CODEX_EXECUTION_PROMPT.md`.
 
-It is the directly executable entrypoint for Codex after the repository is cloned or updated. Every session must pass through `TASKS.md` before selecting or resuming work. The prompt must remain state-driven and interruption-resilient: available session memory is used, but work can always be recovered from the registry and Git/repository state.
+It is the directly executable entrypoint after the repository is cloned or updated, but it must remain a **lean bootstrap**, not a second copy of project/domain policy. `AGENTS.md` owns scientific, bibliography, architecture, UI, experiment, lifecycle, language, Git, testing, and integrity rules. Task-specific active specifications own their detailed domain contracts.
 
-When workflow, responsibilities, architecture, project state, task-governance rules, lifecycle handoffs, or active execution materially changes, the prompt is reviewed and updated in the same PR.
+Every Codex session starts from exactly:
+
+1. `AGENTS.md`;
+2. `docs/context/TASKS.md`;
+3. `docs/context/CURRENT_STATUS.md`.
+
+Further reading is task-specific and search-driven. Do not add broad mandatory session-start reading merely because a file may be useful in some future phase. Do not paste domain-policy sections into the prompt; reference the controlling authority instead.
+
+The prompt must remain state-driven, bounded, and interruption-resilient: available session memory is used, work can always be recovered from the registry and Git/repository state, only dependency-valid work is selected, and “execute it completely” never overrides task, review, external-machine, evidence, or frozen-protocol gates.
+
+When bootstrap/resume/task-selection/checkpoint/stop/reporting behavior materially changes, update the prompt, `AGENTS.md`, relevant workflow/task/status files, and validator in the same PR. When only a domain rule changes, update `AGENTS.md` and the domain authority; modify the prompt only if the execution bootstrap itself is affected.
 
 ## No silent stale-state policy
 
