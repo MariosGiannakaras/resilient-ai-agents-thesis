@@ -1,3 +1,5 @@
-# Research core
+# Research core compatibility marker
 
-Future independent environment/model/evaluation core with CLI/API. It must work without the dashboard.
+The active independent research package lives under `src/resilient_agents/`.
+
+`core/` is retained temporarily so older documentation and tooling do not break while the repository is migrated. New scientific logic must not be added here.
