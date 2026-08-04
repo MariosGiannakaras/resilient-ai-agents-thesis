@@ -2,6 +2,10 @@
 
 <!-- One bounded outcome. -->
 
+## Task IDs
+
+<!-- List canonical IDs from docs/context/TASKS.md, e.g. T-210. Add any newly discovered required task to the registry. -->
+
 ## What changed
 
 <!-- Concrete files, behavior and evidence added or changed. -->
@@ -33,13 +37,16 @@ Commands/checks:
 
 ## Risks, limitations and deferred work
 
-## Naming, documentation, and source-of-truth reconciliation
+## Task, naming, documentation, and source-of-truth reconciliation
 
+- [ ] `docs/context/TASKS.md` was reviewed for this PR
+- [ ] Started/completed/blocked/unblocked/discovered/superseded tasks and `Resume state` were updated where applicable
+- [ ] No required work is recorded only in chat/PR prose when it needs a durable task ID
 - [ ] Names are descriptive and consistent
 - [ ] Comments explain reasoning rather than restating code
 - [ ] Every affected active context/status/decision/workflow/prompt file was reviewed
 - [ ] `CURRENT_STATUS.md`, `OPEN_QUESTIONS.md`, `DECISION_LOG.md`, and `CHANGELOG_CONTEXT.md` were updated when their claims changed
-- [ ] The current Codex execution prompt was reconciled if phase/workflow/architecture responsibilities changed
+- [ ] The current Codex execution prompt was reconciled if workflow/architecture/task-execution responsibilities changed
 - [ ] Obsolete files were deleted or explicitly marked historical; no stale file remains as active guidance
 - [ ] Documentation consistency validation passes
 
