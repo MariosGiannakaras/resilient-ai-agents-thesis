@@ -8,7 +8,7 @@ After cloning or updating the repository on the thesis machine, give Codex only 
 
 > Read `docs/context/CODEX_EXECUTION_PROMPT.md` and execute it completely.
 
-Do not copy this prompt to another task file and do not delete it after use. Whenever workflow, architecture, responsibilities, project state, or active work materially changes, this file and the canonical task registry must be reconciled in the same Pull Request.
+Do not copy this prompt to another task file and do not delete it after use. Whenever workflow, architecture, responsibilities, project state, active work, or lifecycle handoffs materially change, this file and the canonical task registry must be reconciled in the same Pull Request.
 
 ---
 
@@ -42,13 +42,15 @@ Read first:
 6. `docs/context/PROJECT_CONTEXT.md`
 7. `docs/context/CONFIRMED_REQUIREMENTS.md`
 8. `docs/context/IMPLEMENTATION_ROADMAP.md`
-9. `docs/context/DOCUMENTATION_GOVERNANCE.md`
+9. `docs/context/END_TO_END_JOURNEY.md`
+10. `docs/context/DOCUMENTATION_GOVERNANCE.md`
 
-Then read only task-specific files required by `AGENTS.md`. Historical files are context only and must not override current active files.
+Then read only task-specific files required by `AGENTS.md`. Historical files are context only and must not override current active files. For defense/presentation tasks also read `docs/thesis/PRESENTATION_WORKFLOW.md`.
 
 ## Task execution and checkpoint rules
 
-- Treat `docs/context/TASKS.md` as the canonical concrete checklist; the roadmap explains phases but does not replace the registry.
+- Treat `docs/context/TASKS.md` as the canonical concrete checklist; the roadmap explains phases and `END_TO_END_JOURNEY.md` explains handoffs but neither replaces the registry.
+- `READY` means all required task dependencies are actually complete. If task status and dependencies disagree, reconcile the registry before selecting work.
 - Do not skip a task because it seems implied by another task. Check its acceptance condition explicitly.
 - Do not mark a task complete until its acceptance condition is satisfied and validated.
 - Newly discovered required work receives a stable task ID/dependency in `TASKS.md` before it can be forgotten.
@@ -123,6 +125,17 @@ A run ID represents one **whole experiment**, potentially containing many seeds/
 - Lightweight debug visualization is allowed when useful for validation.
 - Polished dashboard follows validated pilots and remains a thin local Streamlit layer unless measured requirements justify another decision.
 
+## Lifecycle handoff rules
+
+Follow `docs/context/END_TO_END_JOURNEY.md` when crossing major work-package boundaries.
+
+- Application completion is an explicit gate: the intended user-facing configure/run/monitor/history/compare/export workflow must be validated before the normal frozen final experiment campaign begins.
+- Final experiments use the frozen protocol and the same validated scientific core. Do not introduce scientific changes because final results are interesting or inconvenient.
+- After final analysis, create/freeze the thesis/defense evidence package before normal thesis drafting. Writing must trace to citation-ready sources and frozen evidence rather than ad-hoc raw-result browsing.
+- Treat supervisor/reviewer corrections as an explicit review cycle: revalidate any affected claim, citation, figure, table, or method statement.
+- Finalize the defense presentation only after the final thesis is stable. Follow `docs/thesis/PRESENTATION_WORKFLOW.md` for the PowerPoint, embedded speaker notes, separate full spoken Greek script, evidence map, screenshots/demo fallback, and rehearsal/PowerPoint validation.
+- Codex owns repository-backed evidence/assets/reproducibility checks. ChatGPT is the preferred narrative/writing/presentation-language layer. Do not fabricate thesis or slide claims merely to make the story cleaner.
+
 ## Documentation and task consistency — mandatory
 
 For every material change follow `docs/context/DOCUMENTATION_GOVERNANCE.md`.
@@ -134,7 +147,7 @@ In the same PR:
 - search for old assumptions/status/paths/counts/architecture statements;
 - update affected active source-of-truth files;
 - update `CURRENT_STATUS.md`, `OPEN_QUESTIONS.md`, `DECISION_LOG.md`, and `CHANGELOG_CONTEXT.md` when affected;
-- update this prompt when workflow, architecture, responsibilities, or execution rules materially change;
+- update this prompt when workflow, architecture, responsibilities, lifecycle handoffs, or execution rules materially change;
 - delete obsolete files or mark useful historical records prominently as historical;
 - never rewrite generated bibliography evidence by hand.
 
@@ -171,6 +184,7 @@ At the end of a session report only:
 - tests/validators and results;
 - scientific/architecture decisions accepted or still unfrozen;
 - real blockers/gates;
-- exact next task/action from `TASKS.md`.
+- exact next task/action from `TASKS.md`;
+- when a major lifecycle gate was crossed, the concrete handoff output that now exists.
 
 This tracked prompt and `docs/context/TASKS.md` remain in the repository and are maintained as part of the project source of truth.
