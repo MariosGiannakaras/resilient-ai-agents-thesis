@@ -94,6 +94,18 @@ This file contains explicit current user decisions. Old conversations do not cre
 - The user should not have to manually remember or reconstruct unfinished Codex work between quota windows.
 - A task marked `READY` must actually have its required task dependencies complete; future dependency-blocked tasks are not labelled ready just because they are planned.
 
+## Testing effort and model quota
+
+- Testing must be risk-based and proportional; it must not become a parallel project that consumes more implementation time or model quota without meaningful risk reduction.
+- During implementation, Codex should run the smallest relevant targeted tests rather than the full suite after every small edit.
+- Add tests for task acceptance conditions, scientific invariants, critical reliability/security boundaries, and concrete regressions likely to recur.
+- Prefer a small number of strong known-answer, contract, invariant, or representative integration tests over many near-duplicate cases.
+- Do not pursue a coverage percentage for its own sake.
+- Do not add mutation testing, broad fuzz/property testing, exhaustive parameter combinations, snapshot proliferation, or large end-to-end matrices unless a concrete task-specific risk justifies them.
+- CI uses tiny deterministic fixtures/smoke runs; pilot and final experiment matrices are not tests.
+- Run the full repository checks when work is ready for review and rerun them only after a later change that could affect the result.
+- Stop adding tests when the acceptance condition and material risks are covered.
+
 ## End-to-end lifecycle and user journey
 
 - The repository workflow must continue reliably beyond application implementation through final experiments, statistical analysis, thesis writing/review, defense presentation, and final delivery.

@@ -35,6 +35,19 @@ If model quota or the session ends unexpectedly, the next session inspects branc
 
 Intermediate branch commits are valid recovery checkpoints. The coherent PR still normally reaches `main` through one squash merge, so quota resilience does not require noisy permanent main-branch history.
 
+## Testing and CI flow
+
+DEC-029 keeps validation proportional to actual risk and prevents test work from overtaking implementation.
+
+1. During implementation, Codex runs the smallest targeted test subset that validates the changed behavior.
+2. New tests are added only for task acceptance conditions, material scientific/reliability/security boundaries, or a concrete regression likely to recur.
+3. Tests use tiny deterministic fixtures, known-answer cases, contracts, or representative smoke/integration paths. Pilot and final experiment matrices are never used as CI tests.
+4. There is no arbitrary coverage target and no default mutation/fuzz/property/combinatorial/snapshot expansion.
+5. When the work is ready for review, run the normal full repository checks once. Rerun them only after a later change that could affect the result.
+6. Stop adding tests when the acceptance condition and material risks are covered; do not delay implementation for theoretical completeness.
+
+GitHub CI execution time is separate from model reasoning quota. The quota-sensitive waste to avoid is repeated test design, expansion, reruns, and analysis without a concrete risk or code change.
+
 ## Bibliography material flow
 
 PDFs, Markdown, NotebookLM exports, source lists, and other bibliography inputs go to `MariosGiannakaras/ThesisBibliography`. The thesis repository never writes back upstream. It receives only the committed complete research corpus through the immutable read-only PR-based synchronization contract in `docs/context/BIBLIOGRAPHY_INTEGRATION.md`.

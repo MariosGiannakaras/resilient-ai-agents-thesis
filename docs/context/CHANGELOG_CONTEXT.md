@@ -124,7 +124,7 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Required Codex to combine available session/conversation memory with durable branch/commit/working-tree/PR/test evidence rather than relying on either alone.
 - Added `IN_PROGRESS` resume state with branch/PR, last validated point, and exact next action for unfinished work.
 - Added checkpoint-commit guidance so abrupt model-quota/session interruptions can be recovered without restarting work.
-- Kept coherent PRs squash-merged to `main`, so checkpoint resilience does not create noisy permanent history.
+- Kept coherent PRs squash-merged to `main`, so checkpoint resilience does not create noisy permanent main history.
 - Added stable task IDs, dependencies, and acceptance conditions across the remaining research, implementation, pilot, dashboard, final-experiment, writing, and audit lifecycle.
 - Added DEC-025 and made task-registry reconciliation part of every material PR.
 
@@ -163,3 +163,13 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Clarified that `execute it completely` means advancing one dependency-valid task/coherent work package within review, machine, evidence, and scientific gates—not attempting the whole thesis, bypassing `BLOCKED`/`DEFERRED` work, or reopening completed tasks.
 - Preserved strict quota/interruption recovery, branch checkpoints, `IN_PROGRESS` resume state, documentation reconciliation, testing, PR review handoff, and compact final reporting.
 - Added `T-008`, DEC-028, and CI checks for the three-file startup core, non-duplicated prompt structure, bounded execution wording, and a lean prompt-size budget.
+
+## 2026-08-04 — Risk-based proportional testing
+
+- Audited the existing test suite and confirmed that it is currently focused on scientific/repository invariants rather than coverage for its own sake.
+- Added explicit safeguards against test-driven scope expansion and model-quota waste.
+- Required targeted test subsets during implementation and one normal full repository check at review readiness, with reruns only after relevant changes.
+- Limited new tests to task acceptance conditions, material scientific/reliability/security boundaries, and concrete regressions likely to recur.
+- Rejected arbitrary coverage targets and unjustified mutation, fuzz/property, exhaustive combinatorial, snapshot, or large end-to-end test expansion.
+- Required tiny deterministic fixtures/smoke runs in CI and prohibited using pilot/final experiment matrices as tests.
+- Added `REQ-TEST-010`, `REQ-TEST-011`, and DEC-029.
