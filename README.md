@@ -37,7 +37,18 @@ The accepted architecture uses:
 
 No final research question, model set, GridWorld scientific parameters, uncertainty severities, seed count, budgets, hyperparameters, recovery threshold, statistical plan, or final protocol is frozen yet.
 
-The authoritative operational status is `docs/context/CURRENT_STATUS.md`. The implementation sequence is `docs/context/IMPLEMENTATION_ROADMAP.md`. The architecture decision is `docs/decisions/DEC-023_RESEARCH_CORE_AUTOMATION.md`.
+## Current control files
+
+- `docs/context/CURRENT_STATUS.md` — shortest authoritative current-state summary.
+- `docs/context/PROJECT_CONTEXT.md` — current integrated project context.
+- `docs/context/IMPLEMENTATION_ROADMAP.md` — phase/dependency order.
+- `docs/context/DOCUMENTATION_GOVERNANCE.md` — mandatory rule for updating/deleting related active files whenever a material change occurs.
+- `docs/decisions/DECISION_LOG.md` — accepted/superseded/pending decision index.
+- `docs/context/CODEX_EXECUTION_PROMPT.md` — only tracked current Codex prompt template.
+
+For a local Codex session, copy the canonical prompt to repository-root `CODEX_TASK.md`. That local file is git-ignored and may be deleted after Codex reads it.
+
+Historical bootstrap/pre-import files are not current instructions. Useful historical records are explicitly labelled historical; obsolete active files are removed rather than left to drift.
 
 ## Repository map
 
@@ -73,7 +84,7 @@ A `run_id` means one whole experiment and may contain many seeds/episodes. The e
 
 When the experiment finalizes, the normal workflow can automatically create one commit and push containing only that run and the run index. The publisher refuses unsafe mixed-provenance commits, but never deletes the local experiment data when publication cannot proceed.
 
-Large traces and other configured large artifact formats use Git LFS. Bibliography PDFs and bibliography LFS objects remain upstream and are never imported here.
+Useful large thesis-produced outputs are retained while storage permits. Large traces and other configured formats use Git LFS. Bibliography PDFs and bibliography LFS objects remain upstream and are never imported here.
 
 ## Scientific integrity
 
