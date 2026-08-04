@@ -32,61 +32,82 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Set the priority order to bounded research question, validated GridWorld, small justified model/uncertainty set, reproducible protocol, reliable results and polished dashboard.
 - Clarified that application simplicity applies to internal architecture and feature count, not to visual or interaction quality.
 - Defined the target as a polished bounded research dashboard rather than a rough minimal UI or production-grade platform.
-- Consolidated the UI architecture into Dashboard, New Experiment, Runs, Compare and Artifacts.
-- Split features into required, justified-later and out-of-scope tiers.
+- Consolidated the UI architecture into essential thesis workflows.
 - Explicitly deferred cloud, multi-user/auth, distributed orchestration, enterprise infrastructure and non-essential AI.
-- Updated Codex bootstrap criteria to require a small completable research design and a dashboard feature budget before implementation.
-- Added DEC-013 and new confirmed requirements for scope, UI quality and architectural restraint.
+- Added DEC-013.
 
 ## 2026-07-29 — Lean agent workflow and staged literature evidence
 
-- Replaced universal whole-repository rereading with five permanent core files plus task-specific reading.
-- Compressed the first Codex mission from eleven standalone deliverables into four reviewable outputs without removing the required evidence.
-- Corrected `SOURCE_REGISTER.md`: the official PDF identity is user-confirmed; only local repository SHA-256 calculation remains pending.
-- Clarified that UI resource telemetry is a lightweight current snapshot, not a monitoring/observability subsystem.
-- Moved complete checksums, manifests, runtime details and provenance chains behind expandable details or export metadata.
-- Clarified that the fourteen roadmap phases are checkpoints and can be operated as eight larger work blocks.
-- Added literature refresh gates for initial framing, protocol freeze, thesis writing and final submission.
-- Added `RELATED_WORK_EVIDENCE_MATRIX.md` with comparable papers and institutional theses, reported results, limitations, implications and writing-structure lessons.
-- Added the initial local bibliography acquisition workflow. Its acquisition/storage implementation was later superseded by the dedicated canonical bibliography architecture recorded on 2026-08-02.
+- Replaced universal whole-repository rereading with a small permanent core plus task-specific reading.
+- Clarified lightweight UI telemetry and progressive disclosure for provenance.
+- Added staged literature refresh gates.
+- Added the initial local bibliography acquisition workflow, later superseded by the dedicated canonical bibliography architecture.
 - Added DEC-014.
 
 ## 2026-07-29 — Automated execution, review and merge workflow
 
 - Established the user/ChatGPT/Codex/GitHub responsibility split in `EXECUTION_WORKFLOW.md` and `AGENTS.md`.
-- Removed routine GitHub approval and merge work from the user; ChatGPT reviews and decides technical readiness.
-- Added branch, commit, naming, comment and Pull Request conventions.
-- Added a Pull Request template with validation, scientific-impact, artifact and scope sections.
-- Added lightweight GitHub Actions checks for merge markers, Python compilation, tests and JSON validity.
-- Added regression tests for the then-active local bibliography-manifest provenance behavior.
+- Removed routine GitHub approval and merge work from the user.
+- Added branch/commit/PR conventions and repository checks.
 - Added DEC-015.
 
 ## 2026-07-29 — Archived PDFs and Markdown-first bibliography workflow
 
 - Established the original in-repository PDF/Markdown/note/excerpt workflow and DEC-016.
-- **This workflow is historical and has been superseded by DEC-017.** The underlying preservation and Markdown-first principles now live in the dedicated `ThesisBibliography` repository rather than this thesis repository.
+- This workflow was later superseded by DEC-017; preservation/Markdown-first principles moved to `ThesisBibliography`.
 
 ## 2026-08-02 — Canonical ThesisBibliography integration and documentation normalization
 
-- Established `MariosGiannakaras/ThesisBibliography` as the canonical source of truth for source discovery, metadata, original PDFs, OCR/Markdown conversion, scientific analysis, verified citation-ready evidence, source selection and controlled export.
-- Limited this repository to the verified generated package under `research/bibliography/`, bound to exact `SOURCE_COMMIT` and SHA-256 import integrity.
-- Kept the repositories independent: no submodule and no write path from the thesis repository to `ThesisBibliography`; synchronization remains pull-based and Pull-Request-reviewed.
-- Retired local bibliography acquisition/archive/Markdown/note/excerpt paths as compatibility/history markers so older instructions cannot reactivate the superseded workflow.
-- Reconciled the Codex bootstrap prompt and implementation roadmap with the verified bibliography import instead of local paper downloads.
-- Removed the stale open question that treated the bibliography corpus as missing.
-- Recorded the user's language policy: repository-authored operational/technical documentation, prompts, Git/GitHub text, naming and code comments use English.
-- Preserved the exact official Greek thesis title and exact official Greek source/work titles where they identify authoritative material.
-- Preserved scientific source-derived text and citation-ready evidence in each source's original language; the final thesis remains Greek Microsoft Word.
-- Clarified that a lightweight visual/debug surface may support core validation, while the polished final dashboard remains gated behind validated core and pilot evidence.
-- Added DEC-017, DEC-018 and DEC-019 and marked DEC-016 as superseded.
+- Established `MariosGiannakaras/ThesisBibliography` as canonical source of truth for source discovery, originals, conversion/OCR, analysis, verified evidence, selection and controlled export.
+- Limited this repository to controlled generated bibliography consumption.
+- Kept repositories independent: no submodule and no thesis-to-bibliography write path.
+- Retired local bibliography acquisition/archive paths as historical/compatibility markers.
+- Recorded English technical/operational documentation policy while preserving exact Greek official text and original-language scientific evidence.
+- Clarified early debug visualization versus later polished dashboard.
+- Added DEC-017, DEC-018 and DEC-019; DEC-016 became superseded.
 
 ## 2026-08-04 — Implementation-first priority and deferred writing-stage inputs
 
-- Recorded that the proposed thesis topic has been approved and that no current supervisor-specific instructions or deadlines exist.
-- Removed supervisor identity, supervisor requirements, submission dates, and Word-template availability as current blockers for bibliography integration, model research, GridWorld selection, implementation, pilots, and experiments.
-- Established that later supervisor corrections are incorporated when actually received rather than anticipated in advance.
-- Prioritized complete bibliography-corpus integration, target-system inventory, model/agent research, GridWorld prototypes, the independent research program, pilots, and experiments before normal chapter drafting.
-- Preserved structured writing notes, evidence mappings, method records, captions, and reproducible artifacts during implementation so later writing is not a separate reconstruction exercise.
-- Recorded that two or three completed theses may be supplied near the writing phase as contextual examples only; they do not override official Department guidance or become scientific sources.
-- Recorded that the user created a fine-grained token and replaced the `BIBLIOGRAPHY_SYNC_TOKEN` Actions secret. Effective access remains to be verified by the migrated complete-corpus synchronization workflow without exposing the token value.
-- Added DEC-020 and updated the active requirements and open-question taxonomy.
+- Recorded approved topic and absence of current supervisor-specific instructions/deadlines.
+- Removed supervisor identity/deadline/template as blockers for research/program/pilots.
+- Prioritized bibliography integration, target-system inventory, model/agent research, GridWorld prototypes, research core, pilots and experiments before normal chapter drafting.
+- Kept structured writing/evidence notes throughout implementation.
+- Recorded contextual-only role of later example theses.
+- Recorded replacement of the `BIBLIOGRAPHY_SYNC_TOKEN` credential without exposing its value.
+- Added DEC-020.
+
+## 2026-08-04 — Complete immutable bibliography consumer and accepted baseline
+
+- Replaced the old citation-only imported-surface assumption with the complete `research-corpus/` consumer while preserving nested `citation-ready/` as the formal citation boundary.
+- Added provenance/ancestry/checksum/forbidden-artifact validation and deterministic trust-aware search.
+- Preserved bounded byte-level legacy PDF-conversion artifacts without weakening trust-sensitive validation.
+- Verified the current private read credential successfully.
+- Imported and accepted `bibliography-integration-v2` at checkout `27e325a74722b8f80643e6d1902e4bf3847036f5`.
+- Recorded 583 canonical sources, 112 citation-ready sources, 19 research materials, metadata for 280 indexed original PDFs and 1561 consumer-recorded corpus files.
+- Resolved the former HTTP 401/incomplete-import blockers.
+- Added DEC-021 and DEC-022.
+
+## 2026-08-04 — Reproducible research-core and automatic experiment publication architecture
+
+- Adopted Python 3.12 + `uv` + committed lockfile.
+- Established the independent importable `src/resilient_agents/` package.
+- Added evaluator-ground-truth/agent-visible-information separation and independent deterministic RNG streams.
+- Added explicit scenario/experiment/change/protocol contracts without hidden scientific defaults.
+- Added development/tuning/pilot/final partition infrastructure and known-answer resilience metric primitives.
+- Added filesystem-first experiment run bundles with config, capability snapshot, provenance, checksums, events/traces and summary.
+- Added guarded one-commit/one-push publication per finalized whole experiment, never per seed.
+- Changed repository policy so useful experiment outputs are tracked; configured large formats use selective Git LFS.
+- Accepted the future dashboard as a thin Streamlit layer after headless core/pilot validation.
+- Added DEC-023.
+
+## 2026-08-04 — Repository-wide active-document reconciliation
+
+- Audited active project/context/research/workflow files against the current accepted repository state.
+- Found and removed stale statements that still treated the full bibliography import/authentication and pre-DEC-023 architecture as pending.
+- Deleted the obsolete `CODEX_BOOTSTRAP_PROMPT.md` and created state-driven `CODEX_EXECUTION_PROMPT.md`.
+- Added git-ignored local `CODEX_TASK.md` usage so the one-shot Codex prompt does not enter Git history.
+- Corrected `POSTIMPORT_EVIDENCE_SYNTHESIS.md`: robust-MDP full-corpus records are internal candidates, not citation-ready anchors.
+- Reconciled active GridWorld/model/metrics/research workspaces with the actual imported evidence and current infrastructure without freezing scientific choices.
+- Added `DOCUMENTATION_GOVERNANCE.md`, stronger PR/contributor/agent consistency rules, and automated documentation-consistency validation in CI.
+- Marked `FINAL_BOOTSTRAP_AUDIT.md` explicitly historical rather than leaving obsolete blockers as active-looking guidance.
+- Added DEC-024: material changes must reconcile all affected active documentation/prompts/status/decisions in the same PR.
