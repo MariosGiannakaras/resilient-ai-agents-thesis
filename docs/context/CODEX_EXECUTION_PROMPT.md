@@ -54,14 +54,27 @@ For the active task:
 1. Confirm its dependencies, acceptance condition, relevant constraints, and required evidence.
 2. Form a concise implementation/research plan and execute it without asking the user for information that can be obtained reliably from the repository, actual machine, verified bibliography, prototypes, tests, or authoritative sources.
 3. Implement the smallest complete solution that satisfies the task. Do not silently expand scope or freeze scientific choices beyond available evidence.
-4. Validate the affected behavior and scientific invariants with relevant tests, fixtures, reference traces, reproducibility checks, or documented visual/end-to-end review as appropriate.
+4. Validate the affected behavior and scientific invariants with the smallest relevant set of tests, fixtures, reference traces, reproducibility checks, or documented visual/end-to-end review appropriate to the risk.
 5. Reconcile `TASKS.md`, `Resume state`, and every affected active source-of-truth file in the same change according to `docs/context/DOCUMENTATION_GOVERNANCE.md`.
-6. Run the documentation consistency validator, relevant tests, and the full repository checks required before the work is ready for review.
+6. Run the documentation consistency validator, targeted tests during iteration, and the full repository checks once the work is ready for review.
 7. Mark the task complete only when its acceptance condition is satisfied and validated. Partial work remains `IN_PROGRESS`.
 8. Create/update the PR with scope, task IDs, rationale, validation, scientific/protocol impact, limitations, and deferred work. Do not self-approve or silently bypass the repository review/merge workflow.
 9. Start another task only after the current task has reached its valid handoff/completion state and no review, merge, external-machine, or decision gate must be resolved first.
 
 All safeguards in `AGENTS.md` remain mandatory. In particular, never fabricate or silently alter sources, citations, evidence status, runs, data, metrics, progress, logs, figures, tables, results, conclusions, protocol state, or presentation claims.
+
+## Proportional testing discipline
+
+Testing supports implementation and scientific validity; it must not become an independent scope-expansion project.
+
+- During implementation, run the smallest targeted test subset that can validate the changed behavior. Do not repeatedly run the full suite after every small edit.
+- Add or change a test only when it protects a task acceptance condition, a scientifically important invariant, a reliability/security boundary, or a concrete regression likely to recur.
+- Prefer one strong known-answer, contract, invariant, or representative integration test over many near-duplicate examples.
+- Do not pursue an arbitrary coverage percentage. Do not add mutation testing, broad fuzz/property testing, exhaustive parameter combinations, snapshot proliferation, or large end-to-end matrices unless a concrete task-specific risk clearly justifies them.
+- CI and local tests must use tiny deterministic fixtures/smoke runs, never the full pilot or final experiment matrix.
+- For documentation-only changes, run the relevant validators and directly affected checks; the normal full repository CI remains the final pre-merge guard.
+- Run the full repository checks when the branch is ready for review, and rerun them only after later changes that could affect the result. Do not spend model quota repeatedly analyzing already-passing checks.
+- Stop adding tests when the task acceptance condition and material risks are covered. Theoretical completeness is not a reason to delay the implementation.
 
 ## Quota and interruption recovery
 
@@ -75,7 +88,7 @@ Assume a session can stop without warning.
 
 ## Stop and handoff conditions
 
-Do not stop for routine Git operations, task/documentation reconciliation, testing, or decisions resolvable from available evidence.
+Do not stop for routine Git operations, task/documentation reconciliation, proportionate testing, or decisions resolvable from available evidence.
 
 Stop and report only when continuation genuinely requires one of the following:
 
