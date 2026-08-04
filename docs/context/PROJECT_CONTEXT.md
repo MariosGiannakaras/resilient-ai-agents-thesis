@@ -75,6 +75,22 @@ Every Codex session reads it before selecting/resuming work. Codex uses availabl
 
 Intermediate branch commits are allowed as recovery checkpoints. Coherent work still normally reaches `main` through a squash merge, so recovery checkpoints do not create unnecessary permanent main history.
 
+`READY` has a strict meaning: required task dependencies are complete. Future work remains `BLOCKED`/`DEFERRED` until its dependencies/conditions actually permit execution.
+
+## End-to-end lifecycle — accepted
+
+DEC-026 and `docs/context/END_TO_END_JOURNEY.md` define how the project continues beyond implementation.
+
+The intended handoff chain is:
+
+> validated research/pilots -> frozen protocol -> validated application -> final experiments -> frozen evidence/statistics -> thesis/defense evidence package -> Greek thesis/review/final freeze -> PowerPoint defense package -> final audit/delivery
+
+The polished application is not the end of the project. It becomes the validated user-facing execution surface for the frozen final experiment campaign. Final experiments normally wait for both the frozen protocol and validated application workflow so the user does not have to switch to a separate manual execution path.
+
+After final analysis, a dedicated evidence package maps RQs, protocol/method references, citation-ready sources, run/result IDs, figures/tables/captions, and planned claims. Thesis and presentation work consume this package rather than reinterpreting raw runs ad hoc.
+
+The final defense phase is already specified but deferred. `docs/thesis/PRESENTATION_WORKFLOW.md` requires a final `.pptx`, embedded speaker notes, a separate full spoken Greek script, evidence mapping, validated application screenshots/demo fallback, and rehearsal/PowerPoint checks. Codex prepares/verifies repository-backed evidence/assets; ChatGPT is the preferred narrative/Greek-writing/speaker-script layer; PowerPoint-capable tooling creates the file and Microsoft PowerPoint is the final inspection/rehearsal target.
+
 ## Research direction — not frozen
 
 The imported evidence supports a bounded direction but does not yet freeze the final protocol:
@@ -113,23 +129,29 @@ A run ID represents one whole experiment and may contain many seeds/episodes.
 
 The intended user workflow is:
 
-> configure experiment → run → automatic persistence/provenance → finalize → one guarded commit/push
+> configure experiment -> run -> automatic persistence/provenance -> finalize -> one guarded commit/push
 
 The user should not manually stage, commit, move, or upload routine experiment artifacts. Publication safety may block the Git operation when provenance/working-tree/remote conditions are unsafe, but local run data is preserved.
 
-Development, tuning, pilot, exploratory, and final evidence remain separated. Final figures/tables are generated only from real stored data by version-controlled code.
+Development, tuning, pilot, exploratory, and final evidence remain separated. Final figures/tables are generated only from real stored data by version-controlled code. Final experiment execution is followed by explicit run-completeness validation and evidence freeze before statistical interpretation/writing.
 
-## Dashboard and thesis writing
+## Dashboard, thesis writing, and defense
 
 The dashboard is a supporting local single-user tool, not the scientific contribution. A small debug surface may be used during environment/core validation; the polished Streamlit dashboard follows pilot-established workflows and must not duplicate scientific logic.
 
-Normal chapter drafting and final Word styling remain later stages. Structured evidence mappings, method records, captions, figures, tables, provenance, and task progress are collected during implementation so later work is not reconstructed from memory.
+Application completion requires the actual user journey—not only rendered screens—to work on real backend state: configure, run/monitor, history, compare/detailed analysis, and artifacts/export.
+
+Normal chapter drafting and final Word styling remain later stages. Structured evidence mappings, method records, captions, figures, tables, provenance, and task progress are collected during implementation; a formal evidence package is frozen after final analysis so writing is not reconstructed from memory.
+
+A review-ready thesis precedes final thesis freeze. Supervisor/reviewer corrections are incorporated when received and affected evidence/citations/figures/method descriptions are revalidated.
+
+The final presentation is a distinct downstream deliverable after thesis stability, not an independent manual summary. It inherits the same evidence mappings and is finalized only after speaker notes/script, PowerPoint rendering, timing, factual consistency, and demo fallback checks pass.
 
 ## Current genuine gates
 
-The canonical concrete task/dependency list is `docs/context/TASKS.md`. The current first gate is `T-100`: actual system inventory on the thesis experiment machine. GridWorld, research framing, metrics, model selection, pilots, dashboard, final experiments, writing, and audits follow the dependency/acceptance conditions recorded in that registry.
+The canonical concrete task/dependency list is `docs/context/TASKS.md`. The current first gate is `T-100`: actual system inventory on the thesis experiment machine. GridWorld, research framing, metrics, model selection, pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the dependency/acceptance conditions recorded in that registry.
 
-Deferred, non-blocking inputs remain later supervisor corrections, eventual submission/presentation dates, a current official Word template, and optional contextual example theses supplied near writing.
+Deferred, non-blocking inputs remain later supervisor corrections, eventual submission/presentation dates, a current official Word template, exact defense duration/file rules, and optional contextual example theses supplied near writing.
 
 ## Current authority
 
@@ -138,6 +160,8 @@ Use:
 - `docs/context/CURRENT_STATUS.md` for the shortest current-state summary;
 - `docs/context/TASKS.md` for concrete task status/resume/next action;
 - `docs/context/IMPLEMENTATION_ROADMAP.md` for phase/dependency explanation;
-- `docs/context/DOCUMENTATION_GOVERNANCE.md` for keeping related files synchronized.
+- `docs/context/END_TO_END_JOURNEY.md` for Codex/user/artifact handoffs;
+- `docs/context/DOCUMENTATION_GOVERNANCE.md` for keeping related files synchronized;
+- `docs/thesis/PRESENTATION_WORKFLOW.md` for the deferred defense workflow.
 
 Historical bootstrap/pre-import records must not be used as current blockers or instructions.
