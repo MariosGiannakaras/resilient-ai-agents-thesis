@@ -10,8 +10,6 @@ Normal development flow:
 
 > goal -> task registry -> branch/PR -> CI/review -> corrections -> squash merge -> task/status update
 
-The major end-to-end handoffs and expected user/project outputs are defined in `docs/context/END_TO_END_JOURNEY.md`. It explains the journey; `TASKS.md` remains the only operational checklist.
-
 Current supervisor identity, deadlines, and final Word formatting are not implementation blockers. Later feedback is recorded as an explicit change when received.
 
 ## Codex continuation and recovery
@@ -101,6 +99,6 @@ Substantial PRs state task IDs, scope, rationale, validation, scientific/protoco
 
 ## Current project sequence
 
-The detailed concrete queue is maintained only in `docs/context/TASKS.md`. `IMPLEMENTATION_ROADMAP.md` explains the phase/dependency structure and `END_TO_END_JOURNEY.md` explains handoffs; neither may become a second competing checklist.
+The detailed concrete queue is maintained only in `docs/context/TASKS.md`. `IMPLEMENTATION_ROADMAP.md` explains the phase/dependency structure. This workflow records responsibilities and major handoffs without becoming a second checklist.
 
 Structured research notes, decisions, evidence mappings, figures, captions, task progress, presentation mappings, and implementation explanations are preserved throughout so later work and thesis/defense preparation are not reconstructed from memory.
