@@ -52,7 +52,7 @@ pnpm-debug.log*
 Thumbs.db
 desktop.ini
 
-# Logs, databases and transient runtime state
+# Logs, local databases and transient runtime state
 *.log
 *.pid
 *.sqlite
@@ -62,47 +62,17 @@ desktop.ini
 *.db-wal
 *.db-shm
 
-# Models/checkpoints/caches
-*.ckpt
-*.pt
-*.pth
-*.onnx
-*.safetensors
-checkpoints/
+# Rebuildable caches only. Experiment outputs and thesis artifacts are tracked.
+checkpoints/cache/
 models/cache/
 wandb/
 mlruns/
-.cache/bibliography/
+.cache/
 
-# Generated run outputs; keep reviewed placeholders.
-results/runs/**
-!results/runs/README.md
-!results/runs/.gitkeep
-results/summaries/**
-!results/summaries/README.md
-!results/summaries/.gitkeep
-
-# Generated data; add reviewed files explicitly when provenance is ready.
-data/raw/**
-!data/raw/README.md
-!data/raw/.gitkeep
-data/processed/**
-!data/processed/README.md
-!data/processed/.gitkeep
-data/external/**
-!data/external/README.md
-!data/external/.gitkeep
-
-# Generated artifacts; final selected artifacts may be added after review.
-artifacts/figures/**
-!artifacts/figures/README.md
-!artifacts/figures/.gitkeep
-artifacts/tables/**
-!artifacts/tables/README.md
-!artifacts/tables/.gitkeep
-artifacts/exports/**
-!artifacts/exports/README.md
-!artifacts/exports/.gitkeep
+# Temporary files inside run bundles are never evidence.
+results/runs/**/*.tmp
+results/runs/**/*.partial
+results/runs/**/.lock
 
 # Legacy bibliography acquisition/conversion transient files.
 bibliography/**/*.partial
