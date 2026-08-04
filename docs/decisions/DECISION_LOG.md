@@ -19,8 +19,8 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 
 ## DEC-004 — Research core precedes polished dashboard
 - **Date:** 2026-07-29
-- **Status:** Accepted; clarified by DEC-019/DEC-023.
-- **Decision:** Scientific/headless execution is independent from UI; small debug visualization may appear early, polished dashboard follows validated workflow/pilots.
+- **Status:** Accepted; clarified by DEC-019/DEC-023/DEC-026.
+- **Decision:** Scientific/headless execution is independent from UI; small debug visualization may appear early, polished dashboard follows validated workflow/pilots and is later validated as the normal final-experiment user surface.
 
 ## DEC-005 — No inherited final scientific matrix
 - **Date:** 2026-07-29
@@ -40,7 +40,7 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 ## DEC-008 — Department guidance is rechecked near delivery
 - **Date:** 2026-07-29
 - **Status:** Accepted.
-- **Decision:** Current official guidance controls; final Word/submission rules are refreshed near delivery.
+- **Decision:** Current official guidance controls; final Word/submission/defense rules are refreshed near delivery.
 
 ## DEC-009 — Conversation exports are context only
 - **Date:** 2026-07-29
@@ -133,6 +133,12 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **File:** `docs/decisions/DEC-025_CODEX_TASK_REGISTRY.md`.
 - **Decision:** `docs/context/TASKS.md` is the single concrete execution checklist and resume ledger. Every Codex session reads it before selecting/resuming work; available session memory is used together with durable Git/repository evidence; unfinished tasks retain `IN_PROGRESS` resume state; branch checkpoint commits support quota/interruption recovery while coherent PRs still squash into `main`.
 
+## DEC-026 — End-to-end lifecycle handoffs and defense package
+- **Date:** 2026-08-04
+- **Status:** Accepted.
+- **File:** `docs/decisions/DEC-026_END_TO_END_LIFECYCLE_AND_DEFENSE.md`.
+- **Decision:** Define explicit Codex/user/artifact handoffs from validated application through final experiments, frozen evidence/analysis, thesis/review, defense presentation, and delivery. Final experiments normally require both frozen protocol and validated application workflow; final analysis creates a thesis/defense evidence package before writing; the final defense package contains a PowerPoint `.pptx`, embedded speaker notes, separate full spoken Greek script, evidence mapping, real demo/screenshots with fallback, and rehearsal/PowerPoint validation. Codex prepares/verifies repository-backed evidence/assets, ChatGPT handles narrative/language/script work, and PowerPoint-capable tooling produces the deck with Microsoft PowerPoint as final inspection/rehearsal surface.
+
 ## Pending decisions
 
 Future entries are still required for:
@@ -146,6 +152,7 @@ Future entries are still required for:
 - final pilot protocol and `protocol-v1.0` freeze/amendments;
 - pilot-derived optional dashboard feature budget;
 - optional AI, if ever justified;
-- final citation style/Word template/submission specifics near writing/delivery.
+- final citation style/Word template/submission specifics near writing/delivery;
+- exact current defense duration, required slide/file rules, and administrative presentation/submission procedure near delivery.
 
-The general Python/core/storage/result-publication/dashboard architectural baseline and task-governance mechanism are **not** pending decisions unless later requirements justify explicit amendments.
+The general Python/core/storage/result-publication/dashboard architectural baseline, task-governance mechanism, and end-to-end handoff model are **not** pending decisions unless later requirements justify explicit amendments.
