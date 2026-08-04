@@ -12,7 +12,6 @@ REQUIRED_ACTIVE = (
     "README.md",
     "docs/context/CURRENT_STATUS.md",
     "docs/context/TASKS.md",
-    "docs/context/END_TO_END_JOURNEY.md",
     "docs/context/PROJECT_CONTEXT.md",
     "docs/context/CONFIRMED_REQUIREMENTS.md",
     "docs/context/USER_DECISIONS.md",
@@ -33,6 +32,7 @@ REQUIRED_ACTIVE = (
 OBSOLETE_ACTIVE_PATHS = (
     "docs/context/CODEX_BOOTSTRAP_PROMPT.md",
     "docs/context/BOOTSTRAP_VALIDATION.json",
+    "docs/context/END_TO_END_JOURNEY.md",
 )
 
 CURRENT_STATE_FILES = (
@@ -40,7 +40,6 @@ CURRENT_STATE_FILES = (
     "README.md",
     "docs/context/CURRENT_STATUS.md",
     "docs/context/TASKS.md",
-    "docs/context/END_TO_END_JOURNEY.md",
     "docs/context/PROJECT_CONTEXT.md",
     "docs/context/CONFIRMED_REQUIREMENTS.md",
     "docs/context/USER_DECISIONS.md",
@@ -64,6 +63,7 @@ RESOLVED_STALE_FRAGMENTS = (
     "`core/` must work without the ui",
     "repository sha-256 pending local calculation by codex",
     "repository sha-256 pending codex local verification",
+    "END_TO_END_JOURNEY.md",
 )
 
 TASK_RE = re.compile(
@@ -106,7 +106,7 @@ def main() -> int:
         for required in (
             "docs/context/CURRENT_STATUS.md",
             "docs/context/TASKS.md",
-            "docs/context/END_TO_END_JOURNEY.md",
+            "docs/context/EXECUTION_WORKFLOW.md",
             "docs/context/DOCUMENTATION_GOVERNANCE.md",
             "Read `docs/context/CODEX_EXECUTION_PROMPT.md` and execute it completely.",
             "Mandatory startup and resume procedure",
@@ -128,7 +128,6 @@ def main() -> int:
             "session memory",
             "git status",
             "Exact next action",
-            "END_TO_END_JOURNEY.md",
             "PRESENTATION_WORKFLOW.md",
         ):
             if required.casefold() not in tasks.casefold():

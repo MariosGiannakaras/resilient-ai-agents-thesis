@@ -14,7 +14,6 @@ These files must describe the current repository state and must be reconciled in
 - `README.md`
 - `docs/context/CURRENT_STATUS.md`
 - `docs/context/TASKS.md`
-- `docs/context/END_TO_END_JOURNEY.md`
 - `docs/context/PROJECT_CONTEXT.md`
 - `docs/context/CONFIRMED_REQUIREMENTS.md`
 - `docs/context/USER_DECISIONS.md`
@@ -30,7 +29,7 @@ These files must describe the current repository state and must be reconciled in
 - `docs/thesis/PRESENTATION_WORKFLOW.md`
 - active research/protocol/architecture/thesis workspaces relevant to the changed subject.
 
-`CURRENT_STATUS.md` is the shortest authoritative current-state summary. `TASKS.md` is the canonical concrete execution checklist/resume ledger. `END_TO_END_JOURNEY.md` explains role and artifact handoffs without becoming a second checklist. None excuses stale statements in other active files.
+`CURRENT_STATUS.md` is the shortest authoritative current-state summary. `TASKS.md` is the canonical concrete execution checklist/resume ledger. `IMPLEMENTATION_ROADMAP.md` explains phases, while `EXECUTION_WORKFLOW.md` records responsibilities and major handoffs. None excuses stale statements in other active files.
 
 ### 2. Accepted decision/history records
 
@@ -69,7 +68,7 @@ Session/conversation memory may assist continuation, but durable repository stat
 
 ## Lifecycle-handoff governance
 
-`docs/context/END_TO_END_JOURNEY.md` defines major responsibility/artifact handoffs, not task status. When the project crosses or changes a major boundary (application -> final experiments, experiments -> evidence/analysis, analysis -> thesis, thesis -> defense, defense -> delivery), review both the lifecycle guide and the relevant `TASKS.md` acceptance/dependency conditions.
+Major boundaries (application -> final experiments, experiments -> evidence/analysis, analysis -> thesis, thesis -> defense, defense -> delivery) are controlled by DEC-026, the corresponding `TASKS.md` dependencies/acceptance conditions, `IMPLEMENTATION_ROADMAP.md`, and `EXECUTION_WORKFLOW.md`.
 
 Downstream thesis/presentation artifacts must never become an independent source of scientific truth. They inherit from frozen experiment evidence and citation-ready bibliography mappings.
 
@@ -87,10 +86,10 @@ Downstream thesis/presentation artifacts must never become an independent source
 | Models/metrics/protocol | corresponding research/protocol files, current status, `TASKS`, open questions, roadmap, decision log, Codex prompt, tests |
 | Bibliography contract/baseline | bibliography integration docs, README/context, current status, `TASKS` when research gates change, decision log/changelog, import validation/workflow; never hand-edit generated evidence |
 | Experiment/run data policy | run/provenance docs, constraints, requirements, `TASKS`, `.gitignore`/`.gitattributes`, publisher/tests, decision log/changelog |
-| Application/dashboard workflow | architecture/UI docs, `END_TO_END_JOURNEY`, requirements, roadmap, current status, `TASKS`, Codex prompt, tests |
-| Final experiment/analysis -> writing handoff | `END_TO_END_JOURNEY`, `TASKS`, roadmap, experiment/analysis docs, thesis docs, requirements, current status, decision log/changelog |
-| Thesis/review workflow | thesis/university docs, `END_TO_END_JOURNEY`, requirements/user decisions, roadmap, current status, `TASKS`, Codex prompt when execution changes |
-| Defense presentation workflow | `PRESENTATION_WORKFLOW`, `END_TO_END_JOURNEY`, requirements/user decisions, roadmap, definition of done, `TASKS`, source register, decision log/changelog |
+| Application/dashboard workflow | architecture/UI docs, requirements, roadmap, workflow, current status, `TASKS`, Codex prompt, tests |
+| Final experiment/analysis -> writing handoff | `TASKS`, roadmap, workflow, experiment/analysis docs, thesis docs, requirements, current status, decision log/changelog |
+| Thesis/review workflow | thesis/university docs, requirements/user decisions, roadmap, workflow, current status, `TASKS`, Codex prompt when execution changes |
+| Defense presentation workflow | `PRESENTATION_WORKFLOW`, requirements/user decisions, roadmap, workflow, definition of done, `TASKS`, source register, decision log/changelog |
 | Final delivery guidance | thesis/university/presentation docs, requirements, open questions, roadmap, current status, `TASKS`, definition of done |
 
 The matrix is a minimum, not an exhaustive list. Review transitive dependencies when a statement is repeated elsewhere.
@@ -101,7 +100,7 @@ Before merge:
 
 1. identify what changed semantically, not only which files changed;
 2. review `TASKS.md` for affected task state/dependencies/acceptance/resume information;
-3. review lifecycle handoffs when the changed subject crosses a major project boundary;
+3. review relevant roadmap/workflow handoffs when the changed subject crosses a major project boundary;
 4. search active documentation for the old assumption, phase, path, status, stack, count, or blocker;
 5. update all active occurrences;
 6. delete obsolete files that no longer serve a purpose;

@@ -1,6 +1,6 @@
 # Definition of Done
 
-This file defines project-level completion conditions. It is **not** the operational task tracker. Concrete task IDs, dependencies, in-progress resume state, and next actions are maintained only in `docs/context/TASKS.md`. Major handoffs are explained in `docs/context/END_TO_END_JOURNEY.md`.
+This file defines project-level completion conditions. It is **not** the operational task tracker. Concrete task IDs, dependencies, in-progress resume state, and next actions are maintained only in `docs/context/TASKS.md`. Phase order and major handoffs are covered by `IMPLEMENTATION_ROADMAP.md` and `EXECUTION_WORKFLOW.md`.
 
 ## Foundation and bibliography
 

@@ -52,9 +52,9 @@ Every material change must reconcile all affected active docs/prompts/tasks/stat
 
 ## End-to-end lifecycle
 
-DEC-026 and `docs/context/END_TO_END_JOURNEY.md` define the complete handoff chain from implementation through final defense.
+DEC-026 defines the complete handoff chain from implementation through final defense. The detailed phase order lives in `IMPLEMENTATION_ROADMAP.md`; execution responsibilities and handoffs live in `EXECUTION_WORKFLOW.md`; concrete status/dependencies live only in `TASKS.md`.
 
-The normal sequence is now explicit:
+The normal sequence is:
 
 > validated research core/pilots -> frozen protocol -> validated application -> final experiment campaign -> frozen evidence/analysis -> thesis evidence package -> Greek thesis/review/final freeze -> PowerPoint defense package -> final audit/delivery
 
@@ -62,7 +62,7 @@ The application is considered complete only when the intended user-facing config
 
 After final analysis, a dedicated evidence package must be frozen before normal thesis drafting so result/method claims, figures/tables, run IDs, protocol identity, and citation-ready sources are already mapped.
 
-The defense workflow is also defined now, but remains deferred: after the final thesis is stable it will produce a final `.pptx`, embedded speaker notes, a separate full spoken Greek script, traceable presentation assets/evidence mapping, and rehearsal/PowerPoint/demo-fallback validation according to `docs/thesis/PRESENTATION_WORKFLOW.md`.
+The defense workflow is already defined but remains deferred: after the final thesis is stable it will produce a final `.pptx`, embedded speaker notes, a separate full spoken Greek script, traceable presentation assets/evidence mapping, and rehearsal/PowerPoint/demo-fallback validation according to `docs/thesis/PRESENTATION_WORKFLOW.md`.
 
 ## Trust model
 

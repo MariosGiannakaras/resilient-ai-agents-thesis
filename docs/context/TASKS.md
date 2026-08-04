@@ -3,7 +3,7 @@
 **Status:** Active canonical execution ledger  
 **Purpose:** Prevent task loss across Codex sessions, model-quota interruptions, machine restarts, or context changes.
 
-`IMPLEMENTATION_ROADMAP.md` defines phase/dependency intent. `CURRENT_STATUS.md` summarizes current state. `END_TO_END_JOURNEY.md` defines lifecycle handoffs and user/Codex responsibilities. This file is the canonical checklist of concrete remaining work and resumable progress. If these active files disagree, reconcile them in the same PR before continuing.
+`IMPLEMENTATION_ROADMAP.md` defines phase/dependency intent. `EXECUTION_WORKFLOW.md` defines responsibilities and major handoffs. `CURRENT_STATUS.md` summarizes current state. This file is the canonical checklist of concrete remaining work and resumable progress. If these active files disagree, reconcile them in the same PR before continuing.
 
 ## Mandatory session rule
 
@@ -74,7 +74,7 @@ Codex must assume a session can stop unexpectedly.
   - Acceptance: integration tests verify safe whole-experiment publication and retained evidence.
 - [x] `T-006` — Reconcile active documentation, create the directly executable canonical Codex prompt, and enforce documentation consistency in CI.
   - Acceptance: stale bootstrap instructions are retired and documentation validator passes.
-- [x] `T-007` — Audit the full Codex/user journey and define reliable handoffs from application completion through final experiments, analysis, thesis review/freeze, defense presentation, and delivery.
+- [x] `T-007` — Audit the full Codex/user lifecycle and define reliable handoffs from application completion through final experiments, analysis, thesis review/freeze, defense presentation, and delivery.
   - Depends on: `T-006`.
   - Acceptance: lifecycle/user/Codex handoffs, application-to-final-experiment dependency, frozen thesis/defense evidence package, thesis review cycle, PowerPoint/speaker-material workflow, task-status semantics, governance/requirements/decisions, and consistency validation are reconciled; full repository CI passes.
 
@@ -225,4 +225,4 @@ Codex must assume a session can stop unexpectedly.
 
 Every material PR must review this registry. If it completes, starts, blocks, unblocks, supersedes, or discovers a task, update the corresponding checkbox/status/dependencies/resume state in the same PR.
 
-Do not duplicate a second competing task list elsewhere. Roadmaps may explain phases; lifecycle docs may explain handoffs; issue/PR descriptions may describe a work package; this file remains the canonical execution checklist.
+Do not duplicate a second competing task list elsewhere. Roadmaps may explain phases; workflow docs may explain responsibilities/handoffs; issue/PR descriptions may describe a work package; this file remains the canonical execution checklist.

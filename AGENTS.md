@@ -50,7 +50,7 @@ Do not use old conversations/bootstrap files to reopen accepted infrastructure w
 
 DEC-025 controls Codex task execution.
 
-`docs/context/TASKS.md` is the **single canonical concrete task checklist and resume ledger**. `IMPLEMENTATION_ROADMAP.md` explains phases/dependencies and `END_TO_END_JOURNEY.md` explains major handoffs; neither is a competing checklist.
+`docs/context/TASKS.md` is the **single canonical concrete task checklist and resume ledger**. `IMPLEMENTATION_ROADMAP.md` explains phases/dependencies, while `EXECUTION_WORKFLOW.md` records responsibilities and major handoffs; neither is a competing checklist.
 
 At the start of **every Codex session**, including after quota/session interruption:
 
@@ -78,7 +78,7 @@ Every material PR reviews `TASKS.md`. Starting/completing/blocking/unblocking/su
 
 ## Operating model
 
-Full process: `docs/context/EXECUTION_WORKFLOW.md`. Major user/Codex/artifact handoffs: `docs/context/END_TO_END_JOURNEY.md`.
+Full process: `docs/context/EXECUTION_WORKFLOW.md`.
 
 - **User:** goals, real feedback, genuinely academic/product choices, supervisor guidance/private material when needed; not routine Git/task/result bookkeeping.
 - **ChatGPT:** scopes/reviews work, scientific reasoning, thesis/presentation narrative and language work, diffs/tests/results, and merge readiness.
@@ -101,7 +101,7 @@ Normal flow:
 6. `docs/context/PROJECT_CONTEXT.md`
 7. `docs/context/CONFIRMED_REQUIREMENTS.md`
 8. `docs/context/IMPLEMENTATION_ROADMAP.md`
-9. `docs/context/END_TO_END_JOURNEY.md`
+9. `docs/context/EXECUTION_WORKFLOW.md`
 10. `docs/context/DOCUMENTATION_GOVERNANCE.md`
 
 Then read only task-specific files needed for the active task. For defense/presentation tasks read `docs/thesis/PRESENTATION_WORKFLOW.md`. Do not reread the whole repository/generated bibliography for a bounded task. Repository-wide rereading is for cross-cutting audits/changes.
