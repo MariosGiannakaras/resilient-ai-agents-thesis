@@ -44,13 +44,17 @@ The actual target-machine inventory is still required before compute-dependent d
 
 `docs/context/CODEX_EXECUTION_PROMPT.md` is the only tracked current Codex prompt and is directly executable from the repository.
 
-`docs/context/TASKS.md` is the canonical concrete task checklist and resume ledger. Every Codex session must inspect it before selecting or resuming work. Codex uses available session/conversation memory together with durable Git/repository evidence. If a session ends because of model quota or another interruption, the next session resumes from any `IN_PROGRESS` task, branch/commits, working-tree diff, PR state, tests, and the registry rather than restarting from chat memory.
+DEC-028 optimizes that prompt as a lean bootstrap rather than a duplicate policy manual. Every Codex session now starts by reading only `AGENTS.md`, `docs/context/TASKS.md`, and `docs/context/CURRENT_STATUS.md`, then reads only the task-specific active specifications/evidence required for the selected task. Broad context, roadmap, requirements, workflow, governance, historical records, and generated bibliography are not reread automatically unless the active task genuinely requires them.
+
+`docs/context/TASKS.md` remains the canonical concrete task checklist and resume ledger. Codex uses available session/conversation memory together with durable Git/repository evidence. If a session ends because of model quota or another interruption, the next session resumes from any `IN_PROGRESS` task, branch/commits, working-tree diff, PR state, tests, and the registry rather than restarting from chat memory.
+
+The phrase `execute it completely` is explicitly bounded: Codex advances one dependency-valid task/coherent work package at a time and never interprets the instruction as permission to attempt the entire thesis in one session, bypass blocked/deferred work, or ignore review/external-machine/scientific gates.
 
 Intermediate branch commits are allowed as recovery checkpoints; coherent work still normally reaches `main` through one squash merge.
 
 After cloning/updating the repository on the thesis machine, the user only needs to tell Codex: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.`
 
-Every material change must reconcile all affected active docs/prompts/tasks/status/decision/workflow files in the same PR. CI includes a documentation-consistency validator for mechanically detectable stale states and invalid `READY` task dependencies.
+Every material change must reconcile all affected active docs/prompts/tasks/status/decision/workflow files in the same PR. CI validates the lean three-file startup core, bounded execution wording, task/resume invariants, mechanically detectable stale states, and invalid `READY` task dependencies.
 
 ## End-to-end lifecycle
 
