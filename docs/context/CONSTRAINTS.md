@@ -27,6 +27,16 @@
 - Normal research workflows should work offline after dependencies and required project inputs are installed.
 - The user should not need routine manual Git staging/committing/pushing for experiments.
 
+## Testing and validation budget
+
+- Testing is risk-based and proportional to the changed behavior, task acceptance condition, and scientific/reliability impact.
+- During implementation, use targeted tests; do not repeatedly run the full suite after every small edit.
+- The full repository checks are the review/merge guard and are rerun only after later changes that could affect their result.
+- There is no coverage-percentage target.
+- Mutation testing, broad fuzz/property testing, exhaustive parameter matrices, snapshot proliferation, and large end-to-end test suites are out of scope unless a concrete task-specific risk justifies them.
+- CI uses tiny deterministic fixtures, known-answer cases, contracts, and representative smoke/integration paths. Pilot and final experiment matrices are never used as tests.
+- Test work stops when task acceptance conditions and material risks are covered; theoretical completeness does not justify delaying implementation or consuming model quota.
+
 ## Dashboard UX complexity
 
 - The normal dashboard workflow must be self-explanatory through clear labels/messages/units, concise contextual help, semantic status treatment, and actionable states rather than a separate training/manual dependency.
