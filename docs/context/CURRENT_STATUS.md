@@ -48,7 +48,21 @@ Intermediate branch commits are allowed as recovery checkpoints; coherent work s
 
 After cloning/updating the repository on the thesis machine, the user only needs to tell Codex: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.`
 
-Every material change must reconcile all affected active docs/prompts/tasks/status/decision/workflow files in the same PR. CI includes a documentation-consistency validator for mechanically detectable stale states.
+Every material change must reconcile all affected active docs/prompts/tasks/status/decision/workflow files in the same PR. CI includes a documentation-consistency validator for mechanically detectable stale states and invalid `READY` task dependencies.
+
+## End-to-end lifecycle
+
+DEC-026 and `docs/context/END_TO_END_JOURNEY.md` define the complete handoff chain from implementation through final defense.
+
+The normal sequence is now explicit:
+
+> validated research core/pilots -> frozen protocol -> validated application -> final experiment campaign -> frozen evidence/analysis -> thesis evidence package -> Greek thesis/review/final freeze -> PowerPoint defense package -> final audit/delivery
+
+The application is considered complete only when the intended user-facing configure/run/monitor/history/compare/export workflow is validated on the same scientific core. The frozen final experiment campaign then follows that validated workflow.
+
+After final analysis, a dedicated evidence package must be frozen before normal thesis drafting so result/method claims, figures/tables, run IDs, protocol identity, and citation-ready sources are already mapped.
+
+The defense workflow is also defined now, but remains deferred: after the final thesis is stable it will produce a final `.pptx`, embedded speaker notes, a separate full spoken Greek script, traceable presentation assets/evidence mapping, and rehearsal/PowerPoint/demo-fallback validation according to `docs/thesis/PRESENTATION_WORKFLOW.md`.
 
 ## Trust model
 
@@ -56,10 +70,10 @@ Every material change must reconcile all affected active docs/prompts/tasks/stat
 
 ## Active bounded work
 
-The canonical concrete queue is `docs/context/TASKS.md`. Its current first gate is the target-system inventory on the actual thesis experiment machine (`T-100`), followed by the dependency-gated GridWorld/research/metrics/agent/pilot work recorded there.
+The canonical concrete queue is `docs/context/TASKS.md`. Its current first gate is the target-system inventory on the actual thesis experiment machine (`T-100`), followed by the dependency-gated GridWorld/research/metrics/agent/pilot/application/final-evidence work recorded there.
 
 The final research question, hypotheses, model set, GridWorld scientific parameters, uncertainty severities, seeds, budgets, hyperparameters, recovery threshold, and statistical plan remain unfrozen.
 
 ## Deferred, non-blocking inputs
 
-Supervisor identity, future supervisor corrections, final deadlines, example theses, and Word formatting remain later-stage inputs and do not block current research or implementation.
+Supervisor identity, future supervisor corrections, final deadlines, example theses, Word formatting, and exact defense duration/submission rules remain later-stage inputs and do not block current research or implementation. They are rechecked/incorporated at the explicit writing/defense tasks rather than guessed now.
