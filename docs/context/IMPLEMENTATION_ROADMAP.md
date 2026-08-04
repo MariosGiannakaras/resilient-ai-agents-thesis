@@ -4,7 +4,7 @@ The roadmap is phase-gated and optimized for thesis completion, scientific adequ
 
 ## Working rule
 
-Phases are checkpoints, not the concrete execution checklist and not mandatory separate PRs. `docs/context/TASKS.md` is the canonical task/status/resume registry. `docs/context/END_TO_END_JOURNEY.md` defines Codex/user handoffs between major lifecycle stages. Combine adjacent work when it remains reviewable, but do not skip task acceptance conditions or scientific gates merely because infrastructure already exists.
+Phases are checkpoints, not the concrete execution checklist and not mandatory separate PRs. `docs/context/TASKS.md` is the canonical task/status/resume registry. Combine adjacent work when it remains reviewable, but do not skip task acceptance conditions or scientific gates merely because infrastructure already exists.
 
 ## Phase 1 — Context, bibliography, and target machine
 
