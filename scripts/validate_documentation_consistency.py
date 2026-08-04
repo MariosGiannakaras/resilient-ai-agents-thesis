@@ -23,10 +23,12 @@ REQUIRED_ACTIVE = (
     "docs/context/CODEX_EXECUTION_PROMPT.md",
     "docs/decisions/DECISION_LOG.md",
     "docs/context/CHANGELOG_CONTEXT.md",
+    "docs/university/SOURCE_REGISTER.md",
 )
 
 OBSOLETE_ACTIVE_PATHS = (
     "docs/context/CODEX_BOOTSTRAP_PROMPT.md",
+    "docs/context/BOOTSTRAP_VALIDATION.json",
 )
 
 CURRENT_STATE_FILES = (
@@ -34,10 +36,16 @@ CURRENT_STATE_FILES = (
     "README.md",
     "docs/context/CURRENT_STATUS.md",
     "docs/context/PROJECT_CONTEXT.md",
+    "docs/context/CONFIRMED_REQUIREMENTS.md",
+    "docs/context/USER_DECISIONS.md",
+    "docs/context/CONSTRAINTS.md",
     "docs/context/OPEN_QUESTIONS.md",
+    "docs/context/CONTRADICTIONS.md",
     "docs/context/EXECUTION_WORKFLOW.md",
     "docs/context/IMPLEMENTATION_ROADMAP.md",
+    "docs/context/DEFINITION_OF_DONE.md",
     "docs/context/CODEX_EXECUTION_PROMPT.md",
+    "docs/university/SOURCE_REGISTER.md",
 )
 
 RESOLVED_STALE_FRAGMENTS = (
@@ -47,6 +55,8 @@ RESOLVED_STALE_FRAGMENTS = (
     "complete research-corpus consumer integration details",
     "no preferred stack.",
     "`core/` must work without the ui",
+    "repository sha-256 pending local calculation by codex",
+    "repository sha-256 pending codex local verification",
 )
 
 
