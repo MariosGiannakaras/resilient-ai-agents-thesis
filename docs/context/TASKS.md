@@ -153,10 +153,13 @@ Codex must assume a session can stop unexpectedly.
   - Acceptance: features use filesystem run bundles as source of truth; any index/database is rebuildable.
 - [ ] BLOCKED `T-510` — Implement the bounded local Streamlit dashboard as a thin layer over the same validated core.
   - Depends on: `T-500`.
-  - Acceptance: New Experiment, Run/Monitor, History, Compare, Detailed Analysis, and Artifacts/Export workflows operate on real core data with no duplicated scientific logic.
-- [ ] BLOCKED `T-511` — Validate the complete application/user workflow, UX, truthful state, screenshots, exports, and end-to-end consistency.
+  - Acceptance: New Experiment, Run/Monitor, History, Compare, Detailed Analysis, and Artifacts/Export workflows operate on real core data with no duplicated scientific logic and follow `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`.
+- [ ] BLOCKED `T-512` — Complete self-explanatory UX polish and lightweight onboarding after the final dashboard structure is stable.
   - Depends on: `T-510`.
-  - Acceptance: the intended user can configure and execute an approved multi-seed experiment, monitor it, inspect history/results, compare agents, and export artifacts through the local application; no fake progress/metrics/logs; desktop/laptop workflows are coherent, polished, and presentation-ready.
+  - Acceptance: confirmed self-explanatory UX requirements in `CONFIRMED_REQUIREMENTS.md` and `UI_INFORMATION_ARCHITECTURE.md` are implemented, including concise contextual help/tooltips, pre-run review, consistent semantic statuses, actionable states, proportionate confirmations, and a short skippable/replayable Previous/Next/Skip/Finish onboarding without unnecessary frontend infrastructure.
+- [ ] BLOCKED `T-511` — Validate the complete application/user workflow, UX, truthful state, screenshots, exports, onboarding/help, and end-to-end consistency.
+  - Depends on: `T-512`.
+  - Acceptance: the intended user can understand the primary controls/statuses without a separate manual, configure and execute an approved multi-seed experiment, monitor it, interpret common user-facing states, inspect history/results, compare agents, export artifacts, and complete/skip/replay onboarding; no fake progress/metrics/logs; desktop/laptop workflows are coherent, polished, and presentation-ready.
   - Handoff: satisfying this task marks the application complete for the intended thesis workflow and unlocks the frozen final experiment campaign.
 
 ## WP6 — Final experiments, frozen evidence, and writing package

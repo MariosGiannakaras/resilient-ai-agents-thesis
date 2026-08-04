@@ -33,6 +33,21 @@ This file contains explicit current user decisions. Old conversations do not cre
 - The final interface is a polished bounded research dashboard, not a minimal demo.
 - Application completion means the intended real user workflow is validated end to end, not merely that the UI renders.
 
+## Self-explanatory UI and onboarding
+
+- The final UI should be understandable without separate training or a manual for the normal workflow.
+- Use clear human-readable labels, helper text, visible units, accurate messages and consistent terminology throughout the application.
+- Non-obvious scientific/technical concepts and controls should have concise tooltips; longer explanations should use contextual help/popovers or expandable detail rather than cluttering the primary screen.
+- Statuses, warnings, errors and validation states should use understandable text together with consistent symbols/icons and semantic visual treatment.
+- Colors must be purposeful, consistent and accessible; color alone must never carry essential meaning.
+- Empty/loading/disabled/error states should explain what is happening, why an action/content is unavailable when non-obvious, and what the user can do next.
+- Before launch, show a clear summary of the resolved experiment configuration, protocol, run count and blocking validation issues so the user understands what will actually execute.
+- Use confirmations only for destructive/high-impact actions where accidental activation matters; avoid unnecessary confirmation friction elsewhere.
+- Show a clear next recommended action at important workflow boundaries where one objectively exists.
+- After the final dashboard structure is stable, add a short first-run onboarding/tutorial for the essential application flow with Previous, Next, Skip and Finish controls and a Help/Getting Started option to replay it later.
+- The onboarding must be lightweight, skippable and non-blocking, with only a local completion/preference flag; it must not require accounts or a new persistence subsystem.
+- Prefer native/lightweight Streamlit UI/state/dialog/popover mechanisms. Do not introduce a heavyweight custom JavaScript/DOM coach-mark framework only for onboarding unless the completed dashboard demonstrates a real need that cannot be satisfied simply.
+
 ## Scope restraint
 
 - Do not implement production infrastructure, microservices, Kubernetes, distributed workers, complex permissions, or enterprise observability.
@@ -82,7 +97,7 @@ This file contains explicit current user decisions. Old conversations do not cre
 ## End-to-end lifecycle and user journey
 
 - The repository workflow must continue reliably beyond application implementation through final experiments, statistical analysis, thesis writing/review, defense presentation, and final delivery.
-- `TASKS.md` remains the concrete execution checklist; a separate lifecycle guide may explain user/Codex/artifact handoffs without duplicating task status.
+- `TASKS.md` remains the concrete execution checklist; `IMPLEMENTATION_ROADMAP.md` and `EXECUTION_WORKFLOW.md` explain the phase order, responsibilities and handoffs without duplicating task status.
 - After final runs and analysis, create a frozen thesis/defense evidence package mapping research questions, protocol/method references, citation-ready sources, result/run IDs, figures/tables, captions, and planned claims.
 - Thesis and presentation work should consume that frozen evidence package rather than reconstructing conclusions later from raw results or memory.
 - The user should not manage routine Git, result-file movement, provenance, task state, analysis regeneration, or presentation evidence mapping.
@@ -142,10 +157,10 @@ This file contains explicit current user decisions. Old conversations do not cre
 
 ## Documentation consistency
 
-- When a material implementation, architecture, status, workflow, research, storage, protocol, task-state, lifecycle-handoff, thesis, or presentation decision changes, all related active files must be updated in the same change.
-- Do not leave old active prompts/status/task/lifecycle files to be corrected later.
+- When a material implementation, architecture, status, workflow, research, storage, protocol, task-state, lifecycle-handoff, thesis, presentation, or UX decision changes, all related active files must be updated in the same change.
+- Do not leave old active prompts/status/task files to be corrected later.
 - Delete obsolete files when they are no longer useful; preserve old records only when they have historical value and mark them clearly as historical.
-- The current Codex execution prompt, task registry, lifecycle handoff guide, and presentation workflow must be kept synchronized with repository state.
+- The current Codex execution prompt, task registry, roadmap/workflow, UI architecture, and presentation workflow must be kept synchronized with repository state.
 - Automated checks should enforce consistency where stale states can be detected mechanically.
 
 ## Thesis and repository

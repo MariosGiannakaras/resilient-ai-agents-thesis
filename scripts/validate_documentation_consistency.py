@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_ACTIVE = (
     "AGENTS.md",
     "README.md",
+    "app/README.md",
     "docs/context/CURRENT_STATUS.md",
     "docs/context/TASKS.md",
     "docs/context/PROJECT_CONTEXT.md",
@@ -23,6 +24,7 @@ REQUIRED_ACTIVE = (
     "docs/context/DEFINITION_OF_DONE.md",
     "docs/context/DOCUMENTATION_GOVERNANCE.md",
     "docs/context/CODEX_EXECUTION_PROMPT.md",
+    "docs/architecture/UI_INFORMATION_ARCHITECTURE.md",
     "docs/thesis/PRESENTATION_WORKFLOW.md",
     "docs/decisions/DECISION_LOG.md",
     "docs/context/CHANGELOG_CONTEXT.md",
@@ -38,6 +40,7 @@ OBSOLETE_ACTIVE_PATHS = (
 CURRENT_STATE_FILES = (
     "AGENTS.md",
     "README.md",
+    "app/README.md",
     "docs/context/CURRENT_STATUS.md",
     "docs/context/TASKS.md",
     "docs/context/PROJECT_CONTEXT.md",
@@ -50,6 +53,7 @@ CURRENT_STATE_FILES = (
     "docs/context/IMPLEMENTATION_ROADMAP.md",
     "docs/context/DEFINITION_OF_DONE.md",
     "docs/context/CODEX_EXECUTION_PROMPT.md",
+    "docs/architecture/UI_INFORMATION_ARCHITECTURE.md",
     "docs/thesis/PRESENTATION_WORKFLOW.md",
     "docs/university/SOURCE_REGISTER.md",
 )
@@ -99,6 +103,9 @@ def main() -> int:
     agents = read("AGENTS.md") if (ROOT / "AGENTS.md").is_file() else ""
     if "src/resilient_agents/" not in agents:
         errors.append("AGENTS.md must name the accepted src/resilient_agents/ core")
+    for required in ("UI_INFORMATION_ARCHITECTURE.md", "T-512", "color alone"):
+        if required.casefold() not in agents.casefold():
+            errors.append(f"AGENTS.md missing confirmed dashboard UX invariant: {required}")
 
     prompt_path = ROOT / "docs/context/CODEX_EXECUTION_PROMPT.md"
     if prompt_path.is_file():
@@ -108,9 +115,11 @@ def main() -> int:
             "docs/context/TASKS.md",
             "docs/context/EXECUTION_WORKFLOW.md",
             "docs/context/DOCUMENTATION_GOVERNANCE.md",
+            "docs/architecture/UI_INFORMATION_ARCHITECTURE.md",
             "Read `docs/context/CODEX_EXECUTION_PROMPT.md` and execute it completely.",
             "Mandatory startup and resume procedure",
             "IN_PROGRESS",
+            "T-512",
         ):
             if required not in prompt:
                 errors.append(f"current Codex prompt missing required state/task-driven reference: {required}")
@@ -129,9 +138,11 @@ def main() -> int:
             "git status",
             "Exact next action",
             "PRESENTATION_WORKFLOW.md",
+            "T-512",
+            "self-explanatory UX",
         ):
             if required.casefold() not in tasks.casefold():
-                errors.append(f"TASKS.md missing required resumability/lifecycle element: {required}")
+                errors.append(f"TASKS.md missing required resumability/lifecycle/UX element: {required}")
 
         matches = list(TASK_RE.finditer(tasks))
         ids = [match.group("id") for match in matches]
@@ -162,6 +173,47 @@ def main() -> int:
             errors.append("TASKS.md Resume state must name one current task ID")
         elif resume_match.group("task") not in ids:
             errors.append("TASKS.md Resume state current task must exist in the task checklist")
+
+        t511_match = re.search(
+            r"^- \[ \] BLOCKED `T-511`.*?^\s+- Depends on:\s*(.+)$",
+            tasks,
+            re.MULTILINE | re.DOTALL,
+        )
+        if not t511_match or "`T-512`" not in t511_match.group(1):
+            errors.append("T-511 application validation must depend on T-512 UX/onboarding completion")
+
+    requirements_path = ROOT / "docs/context/CONFIRMED_REQUIREMENTS.md"
+    if requirements_path.is_file():
+        requirements = requirements_path.read_text(encoding="utf-8")
+        for required in (
+            "REQ-UI-008",
+            "REQ-UI-009",
+            "REQ-UI-010",
+            "REQ-UI-011",
+            "REQ-UI-012",
+            "REQ-UI-013",
+            "REQ-UI-014",
+            "REQ-UI-015",
+            "REQ-TEST-009",
+        ):
+            if required not in requirements:
+                errors.append(f"CONFIRMED_REQUIREMENTS.md missing confirmed dashboard UX requirement: {required}")
+
+    ui_arch_path = ROOT / "docs/architecture/UI_INFORMATION_ARCHITECTURE.md"
+    if ui_arch_path.is_file():
+        ui_arch = ui_arch_path.read_text(encoding="utf-8").casefold()
+        for required in (
+            "self-explanatory ux contract",
+            "lightweight onboarding",
+            "previous",
+            "next",
+            "skip",
+            "finish",
+            "color alone",
+            "pre-run review",
+        ):
+            if required.casefold() not in ui_arch:
+                errors.append(f"UI_INFORMATION_ARCHITECTURE.md missing confirmed UX element: {required}")
 
     synthesis_path = ROOT / "docs/research/POSTIMPORT_EVIDENCE_SYNTHESIS.md"
     if synthesis_path.is_file():

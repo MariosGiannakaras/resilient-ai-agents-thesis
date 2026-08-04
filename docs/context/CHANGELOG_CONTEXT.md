@@ -139,3 +139,18 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Added `docs/thesis/PRESENTATION_WORKFLOW.md` and explicit defense tasks for slide evidence mapping, final `.pptx`, embedded speaker notes, separate full spoken Greek script, demo fallback, PowerPoint validation, and rehearsal timing.
 - Recorded the preferred future tool split: Codex for repository-backed evidence/assets and validation; ChatGPT for thesis/slide narrative, Greek copy, speaker notes/script and consistency review; PowerPoint-capable generation tooling for the deck; Microsoft PowerPoint for final inspection/rehearsal; optional Canva/design tools only as revalidated polish.
 - Added DEC-026 and reconciled task, prompt, roadmap, workflow, requirements, decisions, definition-of-done, and control-file governance accordingly.
+
+## 2026-08-04 — Redundant standalone journey layer removed
+
+- Removed `docs/context/END_TO_END_JOURNEY.md` after determining that it duplicated the canonical task registry, roadmap, execution workflow, and presentation workflow.
+- Preserved the useful application -> experiments -> evidence -> thesis -> defense lifecycle gates in their existing authoritative files.
+- Kept `TASKS.md` as the only concrete checklist and reduced active-document synchronization overhead.
+
+## 2026-08-04 — Self-explanatory UI and lightweight onboarding baseline
+
+- Confirmed that the final dashboard must be self-explanatory through clear labels/helper text/units, accurate tooltips/contextual help, consistent terminology, actionable states, and understandable messages.
+- Added semantic status/validation rules using text plus icons/symbols and accessible color treatment; color cannot be the sole essential signal.
+- Added pre-run resolved-configuration/validation review, proportionate confirmations, and contextual next-action guidance where useful.
+- Added a dedicated deferred dashboard task for lightweight first-run onboarding after the final screen structure is stable: Previous/Next/Skip/Finish, replay from Help/Getting Started, local completion state, and no heavyweight custom frontend tour subsystem without demonstrated need.
+- Updated UI architecture, requirements, scope, task acceptance, Codex/agent rules, completion criteria and open-question framing.
+- Added DEC-027.

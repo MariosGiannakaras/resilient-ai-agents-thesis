@@ -139,6 +139,11 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **File:** `docs/decisions/DEC-026_END_TO_END_LIFECYCLE_AND_DEFENSE.md`.
 - **Decision:** Define explicit Codex/user/artifact handoffs from validated application through final experiments, frozen evidence/analysis, thesis/review, defense presentation, and delivery. Final experiments normally require both frozen protocol and validated application workflow; final analysis creates a thesis/defense evidence package before writing; the final defense package contains a PowerPoint `.pptx`, embedded speaker notes, separate full spoken Greek script, evidence mapping, real demo/screenshots with fallback, and rehearsal/PowerPoint validation. Codex prepares/verifies repository-backed evidence/assets, ChatGPT handles narrative/language/script work, and PowerPoint-capable tooling produces the deck with Microsoft PowerPoint as final inspection/rehearsal surface.
 
+## DEC-027 — Self-explanatory UI and lightweight onboarding
+- **Date:** 2026-08-04
+- **Status:** Accepted; implementation deferred to the final dashboard phase.
+- **Decision:** The final dashboard must be self-explanatory through clear labels/helper text/units, accurate tooltips/contextual help, consistent terminology, actionable states, pre-run configuration review, and text+icon+accessible semantic-color status treatment where color is never the sole signal. After the final dashboard structure is stable, add a short skippable/replayable first-run onboarding flow with Previous/Next/Skip/Finish using lightweight local/native Streamlit mechanisms. Do not introduce a heavyweight custom JavaScript/DOM tour framework, accounts, or a new persistence subsystem merely for onboarding unless a later demonstrated requirement justifies the complexity.
+
 ## Pending decisions
 
 Future entries are still required for:
@@ -150,9 +155,9 @@ Future entries are still required for:
 - final primary/secondary/diagnostic metrics and statistical plan;
 - seeds, repetitions, tuning/resource budgets, and stopping rules;
 - final pilot protocol and `protocol-v1.0` freeze/amendments;
-- pilot-derived optional dashboard feature budget;
+- pilot-derived optional dashboard feature budget beyond the accepted self-explanatory UX/onboarding baseline;
 - optional AI, if ever justified;
 - final citation style/Word template/submission specifics near writing/delivery;
 - exact current defense duration, required slide/file rules, and administrative presentation/submission procedure near delivery.
 
-The general Python/core/storage/result-publication/dashboard architectural baseline, task-governance mechanism, and end-to-end handoff model are **not** pending decisions unless later requirements justify explicit amendments.
+The general Python/core/storage/result-publication/dashboard architectural baseline, task-governance mechanism, end-to-end handoff model, and self-explanatory UI/onboarding baseline are **not** pending decisions unless later requirements justify explicit amendments.

@@ -27,6 +27,15 @@
 - Normal research workflows should work offline after dependencies and required project inputs are installed.
 - The user should not need routine manual Git staging/committing/pushing for experiments.
 
+## Dashboard UX complexity
+
+- The normal dashboard workflow must be self-explanatory through clear labels/messages/units, concise contextual help, semantic status treatment, and actionable states rather than a separate training/manual dependency.
+- Tooltips and contextual explanations must stay synchronized with actual scientific definitions and implemented behavior.
+- Status meaning must not rely on color alone; text plus consistent symbols/icons and accessible semantic visual treatment are required.
+- The first-run onboarding is implemented only after the final dashboard structure is stable and remains short, skippable, replayable, and locally stateful.
+- Do not introduce accounts, a new persistence subsystem, or a heavyweight custom JavaScript/DOM coach-mark/tour framework merely for onboarding.
+- Exact palette values, decorative motion, and similar visual details are finalized against the real implemented UI; do not create premature design-system complexity that does not improve usability.
+
 ## Research scope
 
 - The official topic requires a simple simulated environment, comparison under uncertainty/dynamic change, resilience, and recovery speed.

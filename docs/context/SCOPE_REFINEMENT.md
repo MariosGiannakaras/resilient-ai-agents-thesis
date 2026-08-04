@@ -46,10 +46,17 @@ The interface must be:
 
 - modern and visually polished,
 - consistent and readable,
+- self-explanatory through precise labels, helper text, messages, symbols, semantic colors and clear visual hierarchy,
 - suitable for screenshots and presentation,
 - responsive for normal desktop and laptop use,
 - built from useful dashboards, cards, charts, filters, tables and status indicators,
 - based only on real backend data and scientific definitions.
+
+Non-obvious scientific/technical controls and terminology should have concise tooltips or contextual explanations. Status, warnings and errors should use consistent text plus symbols/visual treatment; color must not be the only carrier of meaning. Empty states and unavailable actions should explain what is missing and what the user can do next.
+
+Before an experiment launches, the application should show a concise resolved-configuration/validation summary so the user can understand what will actually run. Destructive or high-impact actions should request confirmation only when useful; harmless navigation/configuration should not be interrupted unnecessarily.
+
+After the final dashboard structure is stable, add a lightweight first-run onboarding/tutorial covering the essential workflow. It should be short, skippable, replayable from Help/Getting Started, support Previous/Next/Skip/Finish navigation, and avoid a heavy custom frontend/JavaScript tour framework unless native Streamlit capabilities prove genuinely insufficient.
 
 A visually minimal or outdated interface is not an acceptable interpretation of architectural simplicity.
 
@@ -65,7 +72,8 @@ The following are outside the required scope unless a documented need appears:
 - complex queue scheduling or remote workers,
 - mobile applications,
 - non-essential AI assistants,
-- speculative extensibility and future-proofing.
+- speculative extensibility and future-proofing,
+- heavyweight custom onboarding/coach-mark frontend infrastructure for behavior achievable with lightweight native UI primitives.
 
 Features such as advanced checkpoint management, complex sweeps, queue priorities, plugin systems or AI-assisted interpretation must remain optional until the core thesis workflow proves that they are necessary.
 
@@ -77,6 +85,7 @@ Features such as advanced checkpoint management, complex sweeps, queue prioritie
 - Defaults and available settings must come from the frozen protocol or validated exploratory scope.
 - Results must be visible, comparable and exportable before aesthetic extras are added.
 - Every feature must map to a research, reproducibility, usability or thesis-delivery requirement.
+- UI explanations must remain synchronized with the actual protocol/metric definitions and implemented behavior rather than becoming a separate manual that can drift.
 
 ## Completion criterion
 
@@ -85,5 +94,6 @@ The target is not a minimal demo and not a production platform. It is a complete
 - a validated independent core,
 - a controlled experimental design,
 - reliable result provenance,
-- a polished bounded dashboard,
+- a polished bounded and self-explanatory dashboard,
+- lightweight contextual help/onboarding sufficient for normal use without separate training,
 - enough functionality to execute and present the thesis experiments confidently.

@@ -49,8 +49,14 @@ This file defines project-level completion conditions. It is **not** the operati
 - [ ] Thin local Streamlit dashboard uses the same core/configuration/result interfaces.
 - [ ] Essential workflows validated: configure, run/monitor, history, compare, detailed analysis, artifacts/export.
 - [ ] A real approved multi-seed experiment can be executed end to end through the user-facing application.
+- [ ] Primary controls and scientific concepts are self-explanatory through clear labels, helper text, visible units and accurate contextual explanations/tooltips.
+- [ ] Pre-run review shows the resolved experiment configuration, protocol, run count and blocking validation before execution.
+- [ ] Status/loading/empty/warning/error states use consistent understandable text plus symbols/icons/semantic visual treatment and actionable guidance; color is never the sole essential signal.
+- [ ] Destructive/high-impact actions use proportionate confirmation; harmless navigation/configuration is not burdened by unnecessary confirmation steps.
+- [ ] A short first-run onboarding/tutorial supports Previous/Next/Skip/Finish, can be replayed from Help/Getting Started, and uses lightweight local state rather than a new account/persistence subsystem.
+- [ ] Onboarding/contextual-help implementation remains lightweight; no custom JavaScript/DOM tour framework is added without demonstrated necessity.
 - [ ] No scientific logic is duplicated in UI callbacks and no fake progress/metrics/logs exist.
-- [ ] Screenshots/views are polished and based on real data/state.
+- [ ] Screenshots/views are polished, readable, consistently styled and based on real data/state.
 
 ## Final experimental and evidence phase
 

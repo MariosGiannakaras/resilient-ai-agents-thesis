@@ -63,9 +63,13 @@ Phases are checkpoints, not the concrete execution checklist and not mandatory s
 
 - Implement the final dashboard as a thin local Streamlit layer unless a concrete pilot-derived requirement disproves that choice.
 - Required workflows: New Experiment, Run/Monitor, History, Compare, Detailed Analysis, and Artifacts/Export.
+- Make the UI self-explanatory using clear labels/helper text/units, concise tooltips and contextual help for non-obvious scientific concepts, consistent text+icon+semantic-color statuses, actionable empty/warning/error states, and clear next actions where useful.
+- Add a concise pre-run resolved-configuration/validation summary so the user knows what will actually execute.
+- After the final dashboard structure is stable, add lightweight first-run onboarding for the essential flow with Previous/Next/Skip/Finish plus replay from Help/Getting Started. Prefer native/lightweight Streamlit mechanisms and a local completion flag; do not add a heavyweight custom frontend tour framework without demonstrated need.
+- Use proportionate confirmation only for destructive/high-impact actions and keep routine navigation/configuration friction low.
 - Validate a real end-to-end multi-seed workflow through the user-facing application before the final experiment campaign.
 - No scientific logic may be duplicated in Streamlit callbacks.
-- **Gate:** application completion means the intended user workflow is truthful, tested, polished, and uses the same frozen scientific core.
+- **Gate:** application completion means the intended user workflow is truthful, tested, self-explanatory, accessible in normal use, polished, and uses the same frozen scientific core.
 
 ## Phase 11 — Final experiment campaign
 

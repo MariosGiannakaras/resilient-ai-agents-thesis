@@ -36,6 +36,8 @@ DEC-023 establishes the implementation baseline:
 - useful large result artifacts retained by default while storage permits;
 - future Streamlit dashboard as a thin layer only after core/pilot validation.
 
+DEC-027 fixes the future dashboard UX baseline without implementing it early: the final interface must be self-explanatory through clear labels/messages/units, accurate tooltips/contextual help, semantic text+icon+color status treatment, actionable states and pre-run review. A short skippable/replayable first-run onboarding flow is implemented only after the final dashboard structure is stable, using lightweight/native mechanisms rather than a new frontend subsystem.
+
 The actual target-machine inventory is still required before compute-dependent dependency/model/budget choices. The current base core remains CPU-compatible.
 
 ## Codex execution and resumable tasks
@@ -58,7 +60,7 @@ The normal sequence is:
 
 > validated research core/pilots -> frozen protocol -> validated application -> final experiment campaign -> frozen evidence/analysis -> thesis evidence package -> Greek thesis/review/final freeze -> PowerPoint defense package -> final audit/delivery
 
-The application is considered complete only when the intended user-facing configure/run/monitor/history/compare/export workflow is validated on the same scientific core. The frozen final experiment campaign then follows that validated workflow.
+The application is considered complete only when the intended user-facing configure/run/monitor/history/compare/export workflow and the confirmed self-explanatory UX/onboarding acceptance criteria are validated on the same scientific core. The frozen final experiment campaign then follows that validated workflow.
 
 After final analysis, a dedicated evidence package must be frozen before normal thesis drafting so result/method claims, figures/tables, run IDs, protocol identity, and citation-ready sources are already mapped.
 
