@@ -1,0 +1,17 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "resilient-ai-agents-thesis"
+version = "0.1.0"
+description = "Reproducible research core for the resilient AI agents thesis."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/resilient_agents"]
+
+[tool.uv]
+package = true
