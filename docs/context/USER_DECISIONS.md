@@ -9,7 +9,7 @@ This file contains explicit current user decisions. Old conversations do not cre
 - The application remains an important deliverable and must be polished, modern, consistent, and easy to use.
 - Simplification applies to architecture, feature count, and unnecessary engineering; it does not mean a rough or scientifically incomplete UI.
 - The UI should hide irrelevant technical complexity without hiding scientifically important information.
-- The repository covers the complete thesis lifecycle: research context, program/application, experiments, results, analysis artifacts, thesis writing, and final deliverables, with bibliography lifecycle ownership as the explicit external-repository exception.
+- The repository covers the complete thesis lifecycle: research context, program/application, experiments, results, analysis artifacts, thesis writing, defense presentation, and final deliverables, with bibliography lifecycle ownership as the explicit external-repository exception.
 
 ## Priority order
 
@@ -31,6 +31,7 @@ This file contains explicit current user decisions. Old conversations do not cre
 - Screenshots and real results will be used in the thesis and presentation.
 - A lightweight visual/debug surface may be used early for validation; the polished final dashboard follows a functional validated independent core and pilot evidence.
 - The final interface is a polished bounded research dashboard, not a minimal demo.
+- Application completion means the intended real user workflow is validated end to end, not merely that the UI renders.
 
 ## Scope restraint
 
@@ -51,6 +52,8 @@ This file contains explicit current user decisions. Old conversations do not cre
 - Pause/resume/stop/cancel/restart are supported only where genuinely useful and technically safe.
 - Resolved parameters and provenance are stored for every experiment.
 - Figures and tables are produced from real stored data.
+- The normal final experiment campaign begins only after both the final protocol and intended user-facing application workflow are validated.
+- A headless fallback may exist for reliability, but it must use the same scientific core/configuration path and be explicitly documented if used for final work.
 
 ## Experiment Git automation and storage
 
@@ -74,6 +77,37 @@ This file contains explicit current user decisions. Old conversations do not cre
 - Use intermediate branch checkpoint commits where useful for recovery, while still preferring one coherent squash commit in `main` per completed implementation PR.
 - Newly discovered required work must be added to the canonical registry rather than being left only in chat or informal notes.
 - The user should not have to manually remember or reconstruct unfinished Codex work between quota windows.
+- A task marked `READY` must actually have its required task dependencies complete; future dependency-blocked tasks are not labelled ready just because they are planned.
+
+## End-to-end lifecycle and user journey
+
+- The repository workflow must continue reliably beyond application implementation through final experiments, statistical analysis, thesis writing/review, defense presentation, and final delivery.
+- `TASKS.md` remains the concrete execution checklist; a separate lifecycle guide may explain user/Codex/artifact handoffs without duplicating task status.
+- After final runs and analysis, create a frozen thesis/defense evidence package mapping research questions, protocol/method references, citation-ready sources, result/run IDs, figures/tables, captions, and planned claims.
+- Thesis and presentation work should consume that frozen evidence package rather than reconstructing conclusions later from raw results or memory.
+- The user should not manage routine Git, result-file movement, provenance, task state, analysis regeneration, or presentation evidence mapping.
+- The user's later responsibilities are mainly academic/product choices, providing/relaying supervisor or official guidance, reviewing scientific interpretation/thesis wording, and rehearsing the defense.
+
+## Thesis writing and review
+
+- The thesis is written in Greek and final delivery is Microsoft Word unless official guidance changes.
+- Current official instructions override historical examples.
+- Normal chapter drafting/final styling occur after evidence-producing research is mature and the final evidence package exists.
+- A review-ready Word thesis should be produced before final freeze.
+- Supervisor/reviewer corrections received later must be incorporated through an explicit revision cycle; affected citations, figures, tables, result claims, and methodology descriptions must be revalidated.
+- Final thesis claims use only citation-ready bibliography evidence and frozen experiment evidence as appropriate.
+
+## Defense presentation
+
+- After the thesis is stable/finalized, create a complete PowerPoint presentation for the examination/defense.
+- The presentation must contain the necessary thesis context, methodology, experiments, main results, conclusions, limitations, and appropriate application/demo material without becoming a chapter-by-chapter copy of the thesis.
+- The final defense package must include a `.pptx`, embedded speaker notes, and a separate full spoken Greek script detailed enough to follow/read during rehearsal or presentation preparation.
+- The presentation must remain traceable to the final thesis, citation-ready bibliography, frozen results, and repository-generated figures/screenshots.
+- Speaker notes/script must be synchronized with slide order and use spoken, presentation-appropriate Greek rather than pasted thesis prose.
+- Final presentation duration/content/file requirements must be rechecked from current official guidance near the defense; do not invent them now.
+- Rehearsal/timing, PowerPoint rendering, legibility, factual/numerical consistency, and demo fallback must be validated before presentation freeze.
+- Preferred tool split: Codex prepares/verifies repository-backed evidence, figures, tables, screenshots, evidence mappings, and reproducible assets; ChatGPT prepares/refines the slide narrative, Greek slide copy, speaker notes/full script, and consistency review; PowerPoint-capable generation tooling produces the `.pptx`; Microsoft PowerPoint is the final inspection/rehearsal surface.
+- Canva or similar tools are optional visual-polish tools only. If used, the exported `.pptx` must be revalidated and presentation tooling must never become the scientific source of truth.
 
 ## GridWorld
 
@@ -104,25 +138,22 @@ This file contains explicit current user decisions. Old conversations do not cre
 - Repository-authored operational and technical material is written in English for consistency with Codex, code, APIs, tests, and technical documentation.
 - Preserve exact official Greek text where required.
 - Scientific source-derived text/evidence stays in its original language.
-- The final thesis itself remains Greek unless official guidance changes.
+- The final thesis and expected defense-language materials remain Greek unless official guidance changes.
 
 ## Documentation consistency
 
-- When a material implementation, architecture, status, workflow, research, storage, protocol, or task-state decision changes, all related active files must be updated in the same change.
-- Do not leave old active prompts/status/task files to be corrected later.
+- When a material implementation, architecture, status, workflow, research, storage, protocol, task-state, lifecycle-handoff, thesis, or presentation decision changes, all related active files must be updated in the same change.
+- Do not leave old active prompts/status/task/lifecycle files to be corrected later.
 - Delete obsolete files when they are no longer useful; preserve old records only when they have historical value and mark them clearly as historical.
-- The current Codex execution prompt and task registry must be kept synchronized with repository state.
+- The current Codex execution prompt, task registry, lifecycle handoff guide, and presentation workflow must be kept synchronized with repository state.
 - Automated checks should enforce consistency where stale states can be detected mechanically.
 
 ## Thesis and repository
 
-- The thesis is written in Greek.
-- The final deliverable is Microsoft Word.
-- Current official instructions override historical examples.
-- This repository remains private and is the source of truth for thesis context, code, experiments, results, writing, and presentation, with the explicit bibliography boundary above.
+- This repository remains private and is the source of truth for thesis context, code, experiments, results, writing, defense presentation, and final deliverables, with the explicit bibliography boundary above.
 - The official application is stored unchanged in the private repository.
 - Raw chat exports are not committed.
-- Fabricated citations, data, results, and conclusions are forbidden.
+- Fabricated citations, data, results, presentation claims, and conclusions are forbidden.
 
 ## Optional AI
 
