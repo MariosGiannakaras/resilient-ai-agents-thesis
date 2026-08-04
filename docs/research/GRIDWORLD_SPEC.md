@@ -1,89 +1,76 @@
 # GridWorld Specification Workspace
 
-**Status:** `RESEARCH_REQUIRED`. No implementation has been selected and there is no legacy-code requirement.
+**Status:** Active; final GridWorld implementation/scientific parameters are not yet selected.
 
-**Current technical pre-screen:** `docs/research/GRIDWORLD_LANDSCAPE_REVIEW.md`. It narrows the prototype candidates but does not constitute a final environment decision or ADR.
+The technical pre-screen in `docs/research/GRIDWORLD_LANDSCAPE_REVIEW.md` retained bounded prototype paths but is not a final ADR. DEC-023 already establishes the shared environment/information/randomness/run architecture in `src/resilient_agents/`; GridWorld work must use those contracts rather than create parallel interfaces.
 
 ## Confirmed purpose
 
-The environment must be simple, controlled, and suitable for comparative evaluation of decision agents under uncertainty and dynamic change. It must support repeatable episodes, explicit disturbance parameters, trace capture, metric validation, and execution without the dashboard.
+The environment must be simple, controlled, and suitable for comparative evaluation of decision agents under uncertainty and dynamic change. It must support repeatable episodes, explicit disturbance parameters, trace capture, metric validation, and headless execution independent of the dashboard.
 
-The official application gives examples including:
+Official examples include observation/data noise, rule changes, and action-execution failures. These remain scope examples rather than a frozen factorial design.
 
-- data/observation noise,
-- rule changes,
-- action-execution failures.
+## Current prototype decision to make
 
-These are scope examples, not a frozen taxonomy or factorial design.
+The bounded next comparison is between:
 
-## Implementation strategy to decide
-
-The final decision will compare:
-
-| Strategy | Description | Required evidence before selection |
+| Strategy | Current role | Required evidence before selection |
 |---|---|---|
-| Reuse | Use a current GridWorld package/framework largely as provided. | Current maintenance, compatible license/API, deterministic seeding, required disturbance support, tests, low integration risk. |
-| Adapt/wrap | Use a package for base mechanics with project-owned wrappers/extensions. | Clear boundary, pinned source, provenance, test parity, no hidden semantics, manageable upgrade policy. |
-| Custom minimal implementation | Project-owned environment designed for the exact protocol. | Small scope, complete known-answer tests, explicit semantics, lower total complexity than adapting a framework. |
+| Project-owned Gymnasium-compatible environment | Leading minimal/custom path | Known-answer semantics, small implementation surface, deterministic seeding, disturbance extensibility, easy provenance/tests. |
+| Thin MiniGrid adaptation | Conditional reuse/adapt path | License/version review, transparent inherited semantics, no unnecessary orientation/partial-observation/action confounds, deterministic/testable wrapper boundary. |
 
-There is no preselected repository. Codex must perform a fresh landscape review and small prototype before an ADR. Any external code requires a pinned version/commit, license review, and attribution.
+Gymnasium Toy Text environments may serve as reference fixtures. Other engines/frameworks are not added unless they solve a concrete requirement the retained prototype paths cannot satisfy.
 
-## Evaluation matrix for candidate frameworks
+## Shared architecture already decided
 
-- Last meaningful release/commit and maintenance activity.
-- License compatibility and redistribution obligations.
-- Python/runtime and Gymnasium/API compatibility.
-- Explicit `terminated`/`truncated` semantics.
-- Seed ownership and deterministic replay.
-- Extensibility for the official uncertainty examples.
-- Observation/action/state configurability.
-- Layout/config serialization and checksums.
-- Headless speed and batch execution.
-- Test coverage/source readability.
-- Rendering separation from environment logic.
-- Dependency size, security, and maintenance risk.
-- Ability to run on the actual local system.
-- Ease of provenance and version pinning.
+The final GridWorld must integrate with the accepted core contracts:
 
-## Specification decisions required after research
+- evaluator ground truth is distinct from delivered agent observation;
+- agent-visible optional information is explicitly policy-controlled;
+- intended and executed actions are separately representable;
+- change/disturbance events are structured rather than hidden `if step == ...` behavior;
+- independent RNG streams isolate environment, observation disturbance, action disturbance, exploration, and initialization randomness;
+- scenario/experiment/protocol configs do not contain hidden scientific defaults;
+- traces/run bundles are UI-independent and provenance-bound.
 
-1. Grid dimensions and coordinate convention.
-2. Start and goal distribution/fixed sets.
-3. Obstacle representation and collision semantics.
-4. Action set and nominal transition.
-5. Reward/penalty semantics and scaling.
-6. Episode terminal/truncation conditions.
-7. Observation schema and observability class.
-8. Reset behavior and scenario generation.
-9. RNG streams and seed derivation.
-10. Disturbance types, severity, onset, duration, and combinations.
-11. Online-adaptation/frozen-policy regimes.
+These are implementation invariants, not final scientific parameter choices.
+
+## Scientific specification decisions still required
+
+1. Grid dimensions/layout family and coordinate convention.
+2. Start/goal distribution or fixed scenario sets.
+3. Obstacle/collision semantics.
+4. Final action set and nominal transition semantics.
+5. Reward/penalty semantics and comparability across changes.
+6. Episode termination/truncation rules.
+7. Observation schema and final observability class.
+8. Reset/scenario-generation behavior.
+9. Exact disturbance/change mechanisms.
+10. Severity, onset, duration, persistence, and combination rules.
+11. Training/adaptation/evaluation regime.
 12. Serialization/version identifiers.
-13. Trace/event schema independent of UI.
-14. Validation fixtures with hand-calculated trajectories and returns.
+13. Reference traces/known-answer fixtures.
+
+No grid size, reward value, severity, changepoint, horizon, or recovery threshold is accepted merely as a convenient default.
 
 ## Required validation suite
 
-- Nominal deterministic trace.
-- Boundary and invalid-action behavior.
-- Obstacle collision semantics.
-- Goal reward and exact termination.
-- Step-limit truncation.
-- Seed replay for each stochastic mechanism.
-- Scheduled rule/action/noise change at the exact step.
-- Serialization round trip.
-- Reachability/solvability classification where applicable.
-- State isolation between episodes.
-- Renderer/trace parity.
-- Library-wrapper parity tests if third-party code is used.
-- Performance smoke benchmark in headless mode.
+- nominal deterministic reference trace;
+- boundary/invalid-action behavior;
+- obstacle collision semantics;
+- goal reward and exact termination;
+- step-limit truncation;
+- independent seeded replay for each stochastic mechanism;
+- exact scheduled change onset and persistence;
+- observation corruption does not mutate true state;
+- action-execution failure preserves intended versus executed action distinction;
+- hidden regime/change metadata is not exposed to agents unless explicitly permitted;
+- serialization round trip;
+- state isolation between episodes;
+- renderer/trace parity where rendering exists;
+- wrapper parity tests if third-party code is used;
+- headless performance smoke benchmark on the actual target machine before final matrix freeze.
 
-## Current non-decisions
+## ADR gate
 
-- No grid size is selected.
-- No action set is selected.
-- No reward values are selected.
-- No partial-observability design is selected.
-- No disturbance severity levels are selected.
-- No framework/repository/package is selected.
-- No old-conversation example is considered a default.
+The GridWorld ADR is accepted only after both retained prototype paths are compared on scientific semantic transparency, implementation/dependency cost, deterministic testability, disturbance extensibility, information-access correctness, and measured feasibility. The simplest adequate option wins; feature richness is not a selection criterion by itself.

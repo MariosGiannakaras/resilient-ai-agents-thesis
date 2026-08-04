@@ -1,47 +1,68 @@
 # Definition of Done
 
-## Bootstrap phase
+## Foundation and bibliography
 
 - [x] Official application examined and exact titles recorded.
-- [x] Relevant exported conversations inventoried strictly as historical examples/context, not as decision inputs or candidate shortlists.
-- [x] Confirmed requirements, decisions, constraints, contradictions and open questions documented.
-- [x] Private repository structure prepared.
-- [x] README, AGENTS, contributing rules and citation metadata prepared.
-- [x] Research, experimental, architecture, thesis, university and decision files prepared.
-- [x] Source/bibliography placeholders prepared.
-- [x] Official application uploaded at the expected path in the private GitHub repository.
-- [x] User confirmed that the repository PDF is the same authoritative file supplied for analysis; no replacement is required.
-- [x] Repository SHA-256 computation/recording assigned to Codex after local clone.
-- [x] Codex bootstrap prompt prepared.
-- [x] Final bootstrap re-audit corrected old-chat, GridWorld and hardware responsibilities.
+- [x] Old conversation exports classified as historical context only.
+- [x] Confirmed requirements, decisions, constraints, contradictions, and open questions documented.
+- [x] Official application stored and integrity-pinned.
 - [x] Raw chat exports excluded.
-- [x] No application, dashboard, model, final experiment or fabricated thesis result implemented.
-- [x] All prepared text/documentation files pushed to the private GitHub repository.
-- [x] Logical commit history verified.
-- [x] Bootstrap documentation/privacy audit passed for the private-repository phase.
+- [x] Canonical `ThesisBibliography` ownership boundary established.
+- [x] Complete immutable research-corpus consumer implemented.
+- [x] First full-corpus baseline imported and validated.
+- [x] Private bibliography authentication/read access verified.
+- [x] Citation-ready formal-evidence boundary enforced.
 
-## Research-core phase
-- [ ] Fresh GridWorld landscape review completed and build/reuse/adapt decision accepted.
-- [ ] Research questions and hypotheses approved.
-- [ ] GridWorld and uncertainty schema frozen for pilots.
-- [ ] Models/baselines and metrics justified by literature.
-- [ ] Core runs without UI.
-- [ ] Transition/reward/metric/runner tests pass.
-- [ ] Pilot report supports final protocol decisions.
+## Research infrastructure
+
+- [x] Python 3.12 + `uv` + committed lockfile established.
+- [x] Independent importable `src/resilient_agents/` package established.
+- [x] Ground-truth/agent-information boundary implemented and tested.
+- [x] Independent deterministic RNG streams implemented and tested.
+- [x] Scenario/experiment/change/protocol contracts established without hidden scientific defaults.
+- [x] Filesystem-first run bundles/provenance/checksums established.
+- [x] Guarded one-commit/one-push publication per finalized whole experiment implemented and tested.
+- [x] Selective Git LFS policy for large thesis-produced artifacts established.
+- [x] Development/tuning/pilot/final separation infrastructure established.
+- [x] Documentation governance and stale-state validation established.
+
+## Current research/environment phase
+
+- [ ] Actual target-machine inventory run and accepted.
+- [ ] Bounded GridWorld prototype comparison completed and ADR accepted.
+- [ ] Selected GridWorld implementation and uncertainty schema validated with known-answer/reference-trace tests.
+- [ ] Main research question and minimal secondary questions/hypotheses approved.
+- [ ] Final model/baseline set justified by citation-ready evidence, environment fit, feasibility, and pilots.
+- [ ] Final resilience/recovery metrics/estimands operationalized and validated on known-answer fixtures.
+- [ ] Seeds, budgets, severities, tuning rules, and statistical plan justified for pilots/final protocol.
+- [ ] Full headless experiment completes with real selected environment/agents and auditable outputs.
+- [ ] Pilot report supports protocol freeze decisions.
 
 ## Final experimental phase
-- [ ] Protocol and analysis plan frozen before final result inspection.
-- [ ] Required runs complete or transparently accounted for.
-- [ ] Raw results immutable and checksummed.
-- [ ] Failures/cancellations/exclusions retained.
+
+- [ ] `protocol-v1.0` and analysis plan frozen before final result inspection.
+- [ ] Required final runs complete or transparently accounted for.
+- [ ] Finalized raw results immutable and checksummed.
+- [ ] Failures/cancellations/invalid/excluded runs retained with reasons.
 - [ ] Statistical analysis reproducible.
+- [ ] `results/thesis-final/` frozen from the validated final run set.
 - [ ] Every thesis figure/table has machine-readable provenance.
 
+## Dashboard phase
+
+- [ ] Real pilot/headless workflow establishes the required UI feature budget.
+- [ ] Thin local Streamlit dashboard uses the same core/configuration/result interfaces.
+- [ ] Essential workflows validated: configure, run/monitor, history, compare, detailed analysis, artifacts/export.
+- [ ] No scientific logic duplicated in UI callbacks.
+- [ ] Screenshots/views are polished and based on real data/state.
+
 ## Final thesis/repository phase
-- [ ] Official current template and submission rules verified.
+
+- [ ] Official current template/submission rules reverified.
+- [ ] Required bibliography freshness/full-evidence checks completed and synchronized.
 - [ ] Greek Word document complete with required bilingual front matter.
-- [ ] Citations and bibliography audited.
-- [ ] Claims trace to sources or result IDs.
-- [ ] Privacy and secret scan passed.
+- [ ] Citations/bibliography audited against citation-ready evidence.
+- [ ] Claims trace to source IDs or result/artifact IDs.
+- [ ] Privacy/secret/license scan passed.
 - [ ] Reproduction guide validated on a clean environment.
 - [ ] Final release/commit and thesis result set frozen.

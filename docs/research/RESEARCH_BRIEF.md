@@ -1,145 +1,126 @@
 # Research Brief
 
-**Status:** `RESEARCH_REQUIRED` except where explicitly marked `CONFIRMED`.
+**Status:** Active post-import research workspace; final RQ/hypotheses are not frozen.
 
-This file defines the research problem and the process for deriving the final questions. It does not preserve model, metric, GridWorld-rule or experimental preferences from old conversations.
+This file defines the current research problem and freeze criteria. Historical/pre-import workspaces may explain earlier reasoning but do not override this active brief.
 
-## Identity
+## Confirmed identity and purpose
 
-- **Greek title — CONFIRMED:** Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα.
-- **English title — CONFIRMED:** Comparison and Evaluation of Resilient AI Agents in Uncertain Environments.
-- **Institution — CONFIRMED:** Πανεπιστήμιο Δυτικής Αττικής, Σχολή Μηχανικών, Τμήμα Μηχανικών Πληροφορικής και Υπολογιστών.
+- **Greek title:** Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα.
+- **English title:** Comparison and Evaluation of Resilient AI Agents in Uncertain Environments.
+- **Institution:** University of West Attica, School of Engineering, Department of Informatics and Computer Engineering.
+- Compare resilient decision agents in a simple controlled simulated environment under uncertainty/dynamic change.
+- GridWorld is the confirmed environment direction.
+- Official examples include observation/data noise, rule changes, and action-execution failures.
+- Evaluation must address resilience and recovery speed.
 
-## Official subject and problem
+## Evidence state
 
-- **CONFIRMED:** Study and comparative evaluation of resilient AI decision agents under uncertainty and dynamic environmental changes.
-- **CONFIRMED:** Use of a simple simulated environment; GridWorld is the current project direction.
-- **CONFIRMED:** Official examples include data/observation noise, rule changes and failed action execution.
-- **CONFIRMED:** Evaluation must address resilience and recovery speed.
-- **RESEARCH_REQUIRED:** Operational definitions of agent, resilience, adaptation, uncertainty, dynamic change and recovery for this thesis.
+The complete bibliography corpus is already imported and pinned. Formal thesis claims use only the nested citation-ready layer.
 
-## Research-question generation
+Current decision-driving citation-ready anchors include:
 
-The final main and secondary research questions are **not yet written**. They must be generated after:
+- `SRC-70772C0629` — structured switching/non-stationarity cautions against describing ordinary Q-learning as universally incapable;
+- `SRC-9464421E55` — motivates practical finite-horizon validation of detector/restart behavior under non-stationarity;
+- `SRC-76B2247457` — supports a strict tuning/pilot/final-evaluation boundary in continual-RL evaluation.
 
-1. analysis of the official application,
-2. review of the user's real bibliography,
-3. fresh primary/peer-reviewed literature search,
-4. current GridWorld landscape review and environment-class decision,
-5. automated system inventory and feasibility measurements,
-6. supervisor/user review where required.
+Robust-MDP full-corpus sources may inform internal comparator research but require citation-ready verification/promotion before supporting a final formal claim if retained.
 
-A valid main research question must specify:
+## Current bounded direction — proposed, not frozen
 
-- the exact class of decision agents being compared,
-- the environment and information assumptions,
-- the uncertainty/change conditions,
-- the adaptation/evaluation regime,
-- the primary outcome constructs,
-- the scope within which conclusions are valid.
+- Separate robustness from post-change adaptation/recovery.
+- Use persistent rule/dynamics change as the leading recovery axis.
+- Keep observation corruption and action-execution failure as supporting robustness diagnostics unless a distinct final RQ justifies more.
+- Compare a small number of scientifically distinct capability roles, not a catalogue of algorithms.
+- Preserve nominal performance, immediate/worst degradation, recovery trajectory/time, post-change performance, non-recovery, and across-run uncertainty.
+- Keep development/tuning/pilot/final scenarios separated and prevent information leakage.
+- Keep the final matrix CPU-feasible until the real target-machine inventory is accepted.
 
-Secondary questions may be added only when they estimate a distinct effect, test a validity threat or explain a relevant trade-off. They must not be added merely to justify a preferred model or feature.
+## Research question freeze prerequisites
+
+Already complete:
+
+- official application analysis;
+- complete bibliography import and evidence trust boundary;
+- initial post-import evidence synthesis;
+- technical architecture for information isolation, deterministic randomness, protocol partitions, run provenance, and automatic publication.
+
+Still required before final freeze:
+
+1. accepted actual target-machine inventory;
+2. bounded GridWorld prototype/ADR decision;
+3. explicit environment/observability/change semantics;
+4. exact small model-role/method set with evidence/feasibility rationale;
+5. operational metric estimands and known-answer validation;
+6. pilot evidence for runtime, variance, storage, recovery behavior, tuning budget, and statistical choices.
+
+## Valid research-question form
+
+The final main RQ must identify:
+
+- compared agent class/roles;
+- environment and information assumptions;
+- uncertainty/change regime;
+- adaptation/evaluation regime;
+- primary outcome constructs;
+- scope within which conclusions are valid.
+
+Secondary questions are added only for distinct scientific effects, validity checks, or explanatory trade-offs.
 
 ## Hypothesis policy
 
-- **OPEN:** No directional or model-specific hypothesis is confirmed.
-- Hypotheses must follow from verified theory or prior evidence, not from model names mentioned in old chats.
-- Every hypothesis must identify independent/dependent variables, expected direction or equivalence/non-inferiority claim where appropriate, unit of analysis and falsification criterion.
-- Exploratory questions must remain labeled exploratory rather than being rewritten post hoc as hypotheses.
+- No directional/model-specific hypothesis is currently confirmed.
+- Hypotheses must follow verified theory/prior evidence and the final environment/model/metric design.
+- Exploratory questions remain labelled exploratory rather than rewritten post hoc.
+- Final hypotheses identify independent/dependent variables, expected direction/equivalence claim where appropriate, unit of analysis, and falsification criterion.
 
 ## Expected contribution
 
-The exact contribution is **RESEARCH_REQUIRED**. The official topic is compatible with a comparative empirical contribution; it does not require invention of a new algorithm.
+The likely contribution is comparative/empirical rather than invention of a new algorithm. Candidate contribution forms include:
 
-Possible contribution categories to evaluate, without selecting them in advance, include:
+- validated controlled evaluation environment;
+- reproducible disturbance/change protocol;
+- defensible operationalization of resilience/recovery;
+- fair comparative evidence across distinct agent capabilities;
+- reproducible software/provenance infrastructure;
+- negative/boundary-condition findings.
 
-- a validated controlled evaluation environment,
-- a reproducible uncertainty/disturbance protocol,
-- operational definitions and measurements of resilience/recovery,
-- a scientifically fair comparative study,
-- transparent software/provenance infrastructure supporting the study,
-- negative or boundary-condition findings that clarify where methods do or do not work.
+The final contribution statement is written only after the final evidence exists.
 
-The final contribution statement must be supported by literature-gap analysis and actual results.
+## Threats to validity
 
-## Role of project components
-
-- **GridWorld — CONFIRMED:** Controlled simulated environment; implementation and exact specification remain open.
-- **Models/agents — CONFIRMED:** Objects of comparison; no shortlist exists.
-- **Experiments — CONFIRMED:** Primary evidence-production mechanism.
-- **Dashboard — CONFIRMED:** Supporting control, observation, comparison and export tool; not the scientific core.
-- **Thesis — CONFIRMED:** Greek Microsoft Word synthesis of verified sources, methodology, implementation and real results.
-
-## Variable-definition workspace
-
-No final variable list is frozen. The research phase must define and justify:
-
-### Independent/explanatory factors
-- agent identity/capability dimension,
-- environment/scenario identity,
-- uncertainty/change type and severity,
-- timing and duration of change,
-- information/observability assumptions,
-- training, adaptation and evaluation regime,
-- controlled resource/tuning conditions.
-
-### Outcomes
-- nominal task performance,
-- immediate impact of disruption,
-- recovery behavior and post-change performance,
-- reliability/variability across independent runs,
-- resource cost where scientifically relevant.
-
-### Blocking/nuisance factors
-- seed and repetition,
-- layout/scenario,
-- implementation/software version,
-- hardware/load for timing measurements,
-- tuning effort and checkpoint-selection rule.
-
-Exact variables and measurement formulas require literature and protocol decisions.
-
-## Threats to validity to address
-
-### Internal validity
-- implementation errors,
-- unequal tuning or information access,
-- leakage from final evaluation into selection,
-- selective run exclusion,
+### Internal
+- unequal information/tuning access;
+- implementation errors;
+- leakage from final evaluation into selection;
+- selective exclusions;
 - inconsistent adaptation regimes.
 
-### Construct validity
-- ambiguous definitions of resilience or recovery,
-- metrics that do not represent the intended construct,
-- reward changes that break comparability,
-- conflating training performance with evaluation resilience.
+### Construct
+- ambiguous resilience/recovery definitions;
+- invalid thresholds/windows;
+- reward changes that destroy comparability;
+- conflating training performance with resilience.
 
-### External validity
-- conclusions limited to the selected environment, layouts, disturbances and compute regime,
-- simplified GridWorld properties not representing broader domains,
-- model selection constrained by feasible local resources.
+### External
+- conclusions limited to selected GridWorld layouts/disturbances/compute regime;
+- simplified environment properties;
+- model set constrained by feasible local resources.
 
-### Statistical conclusion validity
-- insufficient independent repetitions,
-- dependence between nested observations,
-- post-hoc outcome selection,
-- multiple comparisons,
-- censored/non-recovered runs and heavy-tailed results.
+### Statistical
+- insufficient independent seeds;
+- treating nested episodes as independent replicates;
+- post-hoc primary outcomes;
+- censoring/non-recovery;
+- inappropriate multiple-comparison handling.
 
 ### Reproducibility
-- uncontrolled randomness,
-- missing source/config/environment metadata,
-- mutable raw results,
-- manually edited final values,
-- third-party source/version/license ambiguity.
+- uncontrolled randomness;
+- missing configs/provenance;
+- mutable final results;
+- manual final values;
+- hidden third-party semantics.
 
-## Research freeze gate
+## Freeze gate
 
-The research brief may be marked frozen only when:
-
-- the source review is documented,
-- the main and secondary questions are approved,
-- hypotheses/exploratory questions are clearly separated,
-- every question maps to environment factors, agents, metrics and analysis,
-- the proposed scope is feasible on the measured system,
-- the decision log records important alternatives and exclusions.
+This brief becomes frozen methodology only when every final question maps to validated environment factors, agents, estimands, and analysis; the design is feasible on measured hardware; pilot evidence resolves practical protocol choices; and the decision log records inclusions/exclusions and limitations.

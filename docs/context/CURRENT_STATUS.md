@@ -1,9 +1,9 @@
 # Current Project Status
 
 **Date:** 2026-08-04  
-**Status:** Authoritative current-state overlay
+**Status:** Authoritative current-state summary
 
-This file supersedes stale operational status statements elsewhere without rewriting historical decisions or pre-import research records.
+Active repository files must agree with this state. Historical records may preserve earlier states only when explicitly marked historical. Documentation synchronization is governed by `docs/context/DOCUMENTATION_GOVERNANCE.md`.
 
 ## Bibliography integration
 
@@ -19,7 +19,7 @@ The first complete immutable bibliography import is finished.
 - Indexed original PDFs: 280, metadata only
 - Consumer-recorded corpus files: 1561
 
-The private read credential succeeded. All upstream validators, both upstream checksum manifests, consumer integrity, contextual source-reference validation, and the repository test suite passed for the imported baseline. The former HTTP 401 and incomplete-import blockers are resolved. No bibliography PDF or bibliography LFS object entered this repository.
+The private read credential succeeded. All upstream validators, both upstream checksum manifests, consumer integrity, contextual source-reference validation, and repository checks passed for the imported baseline. The former HTTP 401 and incomplete-import blockers are resolved. No bibliography PDF or bibliography LFS object entered this repository.
 
 ## Research implementation architecture
 
@@ -33,9 +33,18 @@ DEC-023 establishes the implementation baseline:
 - filesystem-first run bundles with provenance, capability snapshot, checksums, events/traces, and summary;
 - one guarded automatic Git commit and push per finalized whole experiment, never per seed;
 - selective Git LFS for large thesis-produced artifacts;
+- useful large result artifacts retained by default while storage permits;
 - future Streamlit dashboard as a thin layer only after core/pilot validation.
 
-The actual target-machine inventory is still required before compute-dependent dependency/model/budget choices. The current zero-runtime-dependency core remains CPU-compatible.
+The actual target-machine inventory is still required before compute-dependent dependency/model/budget choices. The current base core remains CPU-compatible.
+
+## Documentation and Codex execution
+
+The obsolete pre-import `CODEX_BOOTSTRAP_PROMPT.md` has been retired. `docs/context/CODEX_EXECUTION_PROMPT.md` is the only tracked current Codex prompt template and is intentionally state-driven from this file and the roadmap.
+
+For local use, copy the canonical prompt to git-ignored root `CODEX_TASK.md`; the local copy can be deleted after Codex reads it without affecting Git history.
+
+Every material change must reconcile all affected active docs/prompts/status/decision/workflow files in the same PR. Useful historical records are marked historical rather than left as ambiguous current guidance. CI includes a documentation-consistency validator for mechanically detectable stale states.
 
 ## Trust model
 

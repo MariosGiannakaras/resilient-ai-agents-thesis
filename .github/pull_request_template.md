@@ -33,11 +33,15 @@ Commands/checks:
 
 ## Risks, limitations and deferred work
 
-## Naming and documentation
+## Naming, documentation, and source-of-truth reconciliation
 
 - [ ] Names are descriptive and consistent
 - [ ] Comments explain reasoning rather than restating code
-- [ ] Context/decision/changelog files updated when required
+- [ ] Every affected active context/status/decision/workflow/prompt file was reviewed
+- [ ] `CURRENT_STATUS.md`, `OPEN_QUESTIONS.md`, `DECISION_LOG.md`, and `CHANGELOG_CONTEXT.md` were updated when their claims changed
+- [ ] The current Codex execution prompt was reconciled if phase/workflow/architecture responsibilities changed
+- [ ] Obsolete files were deleted or explicitly marked historical; no stale file remains as active guidance
+- [ ] Documentation consistency validation passes
 
 ## Not changed
 
