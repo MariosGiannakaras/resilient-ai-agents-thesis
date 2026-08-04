@@ -139,7 +139,11 @@ Development, tuning, pilot, exploratory, and final evidence remain separated. Fi
 
 The dashboard is a supporting local single-user tool, not the scientific contribution. A small debug surface may be used during environment/core validation; the polished Streamlit dashboard follows pilot-established workflows and must not duplicate scientific logic.
 
-Application completion requires the actual user workflow—not only rendered screens—to work on real backend state: configure, run/monitor, history, compare/detailed analysis, and artifacts/export.
+DEC-027 fixes the required dashboard UX baseline while leaving exact implementation-level styling for the real UI: clear human-readable labels/helper text/units, accurate tooltips/contextual help, consistent terminology, understandable text+icon+semantic-color statuses, actionable empty/loading/warning/error states, a pre-run resolved-configuration/validation review, proportionate confirmations, and next-action guidance where useful. Color cannot be the sole essential signal.
+
+A short first-run onboarding flow is added only after the final dashboard structure is stable. It is skippable and replayable, uses Previous/Next/Skip/Finish, stores only lightweight local completion state, and must not create a new account/persistence system or heavyweight custom JavaScript/DOM tour framework without demonstrated need.
+
+Application completion requires the actual user workflow—not only rendered screens—to work on real backend state: configure, run/monitor, history, compare/detailed analysis, artifacts/export, contextual help, and onboarding/help validation. The `T-510 -> T-512 -> T-511` task chain enforces this order before final experiments.
 
 Normal chapter drafting and final Word styling remain later stages. Structured evidence mappings, method records, captions, figures, tables, provenance, and task progress are collected during implementation; a formal evidence package is frozen after final analysis so writing is not reconstructed from memory.
 
@@ -162,6 +166,7 @@ Use:
 - `docs/context/IMPLEMENTATION_ROADMAP.md` for phase/dependency explanation;
 - `docs/context/EXECUTION_WORKFLOW.md` for responsibilities and major handoffs;
 - `docs/context/DOCUMENTATION_GOVERNANCE.md` for keeping related files synchronized;
+- `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` for the bounded dashboard information/UX contract;
 - `docs/thesis/PRESENTATION_WORKFLOW.md` for the deferred defense workflow.
 
 Historical bootstrap/pre-import records must not be used as current blockers or instructions.
