@@ -73,6 +73,10 @@ DEC-025 establishes `docs/context/TASKS.md` as the single concrete execution che
 
 Every Codex session reads it before selecting/resuming work. Codex uses available session/conversation memory to continue efficiently, but verifies that memory against durable repository evidence: branch/commits, working-tree diff, PR state, tests, task state, and active docs. If model quota/session interruption occurs, unfinished work is resumed rather than reconstructed or restarted.
 
+DEC-028 makes the directly executable Codex prompt a lean bootstrap rather than a second policy manual. Session startup reads exactly `AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md`; additional files/evidence are loaded only for the selected task, using repository search before broad reading. Domain rules stay centralized in `AGENTS.md` and the relevant active specifications.
+
+`Execute it completely` is bounded by task dependencies and accepted gates. Codex advances one dependency-valid task/coherent work package at a time; it does not attempt the entire thesis in one session, start `BLOCKED`/`DEFERRED` work, reopen completed tasks without evidence, self-approve completed PRs, or bypass actual-machine/review/scientific constraints.
+
 Intermediate branch commits are allowed as recovery checkpoints. Coherent work still normally reaches `main` through a squash merge, so recovery checkpoints do not create unnecessary permanent main history.
 
 `READY` has a strict meaning: required task dependencies are complete. Future work remains `BLOCKED`/`DEFERRED` until its dependencies/conditions actually permit execution.
@@ -161,6 +165,8 @@ Deferred, non-blocking inputs remain later supervisor corrections, eventual subm
 
 Use:
 
+- `AGENTS.md` for Codex/project policy;
+- `docs/context/CODEX_EXECUTION_PROMPT.md` only as the lean execution bootstrap;
 - `docs/context/CURRENT_STATUS.md` for the shortest current-state summary;
 - `docs/context/TASKS.md` for concrete task status/resume/next action;
 - `docs/context/IMPLEMENTATION_ROADMAP.md` for phase/dependency explanation;
