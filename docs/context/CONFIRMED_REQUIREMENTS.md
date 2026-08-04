@@ -1,6 +1,6 @@
 # Confirmed Requirements
 
-This file contains only requirements established by the latest explicit user instruction, the official application, or verified official guidance.
+This file contains only requirements established by the latest explicit user instruction, the official application, verified official guidance, or accepted current project decisions implementing explicit user direction.
 
 **Status values:** `CONFIRMED`, `PARTIALLY_CONFIRMED`, `BLOCKED_BY_DECISION`, `DEFERRED`.
 
@@ -11,10 +11,10 @@ This file contains only requirements established by the latest explicit user ins
 | REQ-ACA-001 | The work is a thesis of the Department of Informatics and Computer Engineering, School of Engineering, University of West Attica. | Official application. | CONFIRMED | Consistent use across repository and Word deliverable. |
 | REQ-ACA-002 | The exact official Greek title is “Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα”. | Official application. | CONFIRMED | Exact use until a formal change. |
 | REQ-ACA-003 | The official English title is “Comparison and Evaluation of Resilient AI Agents in Uncertain Environments”. | Official application. | CONFIRMED | Exact use until a formal change. |
-| REQ-ACA-004 | The topic is approved. No supervisor identity or supervisor-specific instruction is required to continue the bibliography integration, model research, GridWorld selection, implementation, pilots, or experiments. Later supervisor corrections are incorporated when actually received. | Explicit user clarification, 2026-08-04. | CONFIRMED | Current work is not blocked by missing supervisor details; later feedback is recorded as an explicit change. |
+| REQ-ACA-004 | The topic is approved. No supervisor identity or supervisor-specific instruction is required to continue research, implementation, pilots, or experiments. Later supervisor corrections are incorporated when actually received. | Explicit user clarification, 2026-08-04. | CONFIRMED | Current work is not blocked by missing supervisor details; later feedback is recorded as an explicit change. |
 | REQ-ACA-005 | Current official Department instructions override historical examples and informal formatting references. | User decision. | CONFIRMED | Formatting checklist uses verified official sources near submission. |
 | REQ-ACA-006 | No current submission or presentation deadline has been provided; the project must not invent dates or delay research and implementation because a schedule is unavailable. | Explicit user clarification, 2026-08-04. | CONFIRMED | Scheduling remains unset until real dates are provided. |
-| REQ-ACA-007 | Completed theses supplied later by the user may be used only as contextual examples of structure and presentation, not as authoritative requirements. | Explicit user direction, 2026-08-04. | DEFERRED | Example theses are reviewed near the writing phase and never override official guidance. |
+| REQ-ACA-007 | Completed theses supplied later by the user may be used only as contextual examples of structure and presentation, not as authoritative requirements. | Explicit user direction, 2026-08-04. | DEFERRED | Examples are reviewed near writing and never override official guidance. |
 
 ## Research
 
@@ -24,29 +24,31 @@ This file contains only requirements established by the latest explicit user ins
 | REQ-RES-002 | Use a simple simulated environment, with GridWorld as the confirmed direction. | Application and user direction. | CONFIRMED | Versioned, validated GridWorld specification. |
 | REQ-RES-003 | Evaluation addresses adaptation, resilience, and recovery speed. | Official application. | CONFIRMED | Valid operational definitions and metrics. |
 | REQ-RES-004 | Uncertainty mechanisms are defined, parameterized, and tested. | Scientific validity. | CONFIRMED | Schema, severity, seeding, and tests. |
-| REQ-RES-005 | Models are selected from zero after bibliography evidence, environment definition, inventory, prototypes, and pilots. | User decision. | CONFIRMED | Verified inclusion/exclusion decision. |
+| REQ-RES-005 | Final models are selected after bibliography evidence, environment definition, actual inventory, prototypes, and pilots; historical chats do not define the shortlist. | User decision. | CONFIRMED | Verified inclusion/exclusion decision. |
 | REQ-RES-006 | The dashboard supports rather than replaces the research contribution. | User decision. | CONFIRMED | Contribution statement is grounded in protocol/results. |
 | REQ-RES-007 | Old chats are not a shortlist or preference source. | User clarification. | CONFIRMED | Fresh evidence drives selections. |
 | REQ-RES-008 | GridWorld implementation is selected through a current reuse/adapt/custom comparison. | User clarification. | CONFIRMED | Landscape review, prototype, and ADR. |
-| REQ-RES-009 | The research question and experimental design must be clear, bounded, and realistically completable. | Latest user scope refinement. | CONFIRMED | Small explainable matrix within measured resources. |
-| REQ-RES-010 | The number of models and uncertainty types remains the minimum scientifically sufficient set. | Latest user scope refinement. | CONFIRMED | Every included factor has distinct RQ value; redundant options are rejected. |
-| REQ-RES-011 | Related primary studies are examined for research question, method, experimental design, results, and limitations before GridWorld/models/metrics/protocol are selected. | User research direction. | CONFIRMED | Decision-driving selections trace to verified `ThesisBibliography` analyses/evidence. |
-| REQ-RES-012 | Literature research is refreshed before protocol freeze, before major writing gates, and before submission. | User research direction and freshness control. | CONFIRMED | Dated refresh in `ThesisBibliography` followed by controlled verified sync. |
-| REQ-RES-013 | The immediate project priority is scientific model/agent research, environment/protocol definition, program implementation, and evidence-producing experiments. Normal chapter drafting and final formatting occur later. | Explicit user direction, 2026-08-04. | CONFIRMED | Roadmap and active tasks prioritize research and implementation while preserving structured writing notes. |
+| REQ-RES-009 | The research question and experimental design must be clear, bounded, and realistically completable. | User scope refinement. | CONFIRMED | Small explainable matrix within measured resources. |
+| REQ-RES-010 | The number of models and uncertainty types remains the minimum scientifically sufficient set. | User scope refinement. | CONFIRMED | Every included factor has distinct RQ value; redundant options are rejected. |
+| REQ-RES-011 | Related primary studies are examined for research question, method, experimental design, results, and limitations before final GridWorld/models/metrics/protocol selection. | User research direction. | CONFIRMED | Decision-driving selections trace to verified `ThesisBibliography` analyses/evidence. |
+| REQ-RES-012 | Literature research is refreshed before protocol freeze, major writing gates, and submission. | User research direction/freshness control. | CONFIRMED | Dated refresh in `ThesisBibliography` followed by controlled verified sync. |
+| REQ-RES-013 | Immediate priority is scientific model/agent research, environment/protocol definition, program implementation, and evidence-producing experiments; normal chapter drafting/final formatting occur later. | Explicit user direction, 2026-08-04. | CONFIRMED | Roadmap prioritizes research/program work while preserving structured writing notes. |
 
 ## Experimental
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
 | REQ-EXP-001 | Single-run model comparison is not allowed. | User decision. | CONFIRMED | Multiple predefined independent seeds/repetitions. |
-| REQ-EXP-002 | Pilot, exploratory, and final runs remain distinct. | User decision. | CONFIRMED | `run_type` and frozen final set. |
+| REQ-EXP-002 | Development/tuning/pilot/exploratory/final evidence remain separated. | User decision + DEC-023. | CONFIRMED | Explicit protocol stage/partition and frozen final set. |
 | REQ-EXP-003 | Model-specific settings are allowed under a fair documented protocol. | User decision. | CONFIRMED | Tuning policy and common evaluation. |
-| REQ-EXP-004 | Failed, cancelled, interrupted, incomplete, and excluded runs are retained. | User decision. | CONFIRMED | No run silently disappears; reason is recorded. |
-| REQ-EXP-005 | Resolved parameters are stored for every run. | User decision. | CONFIRMED | Immutable run manifest. |
+| REQ-EXP-004 | Failed, cancelled, interrupted, incomplete, invalid, and excluded runs are retained. | User decision. | CONFIRMED | No run silently disappears; reason is recorded. |
+| REQ-EXP-005 | Resolved parameters/provenance are stored for every whole experiment. | User decision + DEC-023. | CONFIRMED | Immutable finalized run manifest/bundle. |
 | REQ-EXP-006 | Final figures/tables are produced from real stored data. | User decision. | CONFIRMED | Reproducible artifact manifest. |
 | REQ-EXP-007 | Seeds, repetitions, ranges, and budgets are justified by literature, pilots, and actual resources. | User decision. | CONFIRMED | Frozen protocol and compute estimate. |
 | REQ-EXP-008 | The statistical analysis plan is frozen before final results are examined. | Bias control. | CONFIRMED | Frozen estimands, intervals, exclusions, and sensitivity plan. |
-| REQ-EXP-009 | The UI exposes only approved or scientifically justified settings, not an uncontrolled parameter space. | User scope refinement. | CONFIRMED | Validated forms and progressive disclosure. |
+| REQ-EXP-009 | The UI exposes only approved/scientifically justified settings, not an uncontrolled parameter space. | User scope refinement. | CONFIRMED | Validated forms and progressive disclosure. |
+| REQ-EXP-010 | A run ID represents one whole experiment, possibly with many seeds/episodes; there is at most one automatic result commit/push per finalized whole experiment, never one permanent commit per seed. | Explicit user direction, 2026-08-04; DEC-023. | CONFIRMED | Integration test proves multi-seed experiment produces one guarded commit/push. |
+| REQ-EXP-011 | Useful large thesis-produced experiment artifacts are retained when storage permits and use configured Git LFS formats rather than being manually excluded solely due to size. | Explicit user direction, 2026-08-04; DEC-023. | CONFIRMED | LFS policy applied; retention changes only after real storage constraint/decision. |
 
 ## Functional application
 
@@ -54,66 +56,74 @@ This file contains only requirements established by the latest explicit user ins
 |---|---|---|---|---|
 | REQ-APP-001 | Local single-user operation. | User decision. | CONFIRMED | No account service. |
 | REQ-APP-002 | No authentication, roles, multi-user support, or required public deployment. | User decision. | CONFIRMED | No auth/cloud-only flows. |
-| REQ-APP-003 | The user can create and execute required runs without code/console commands. | User decision. | CONFIRMED | End-to-end validated UI launch. |
+| REQ-APP-003 | The user can create and execute required experiments without code/console commands or routine manual Git operations. | User decision. | CONFIRMED | End-to-end validated UI launch and automatic result persistence/publication. |
 | REQ-APP-004 | Pause/resume/stop/cancel/restart only where technically safe and useful. | User decision and scope restraint. | PARTIALLY_CONFIRMED | Capability-based controls; unsupported states are explicit. |
 | REQ-APP-005 | Status, progress, logs, warnings, errors, and metrics are real. | Integrity requirement. | CONFIRMED | UI derives from backend state/events. |
 | REQ-APP-006 | Run history, comparison, result exploration, and export are supported. | User decision. | CONFIRMED | End-to-end history-to-export workflow. |
 | REQ-APP-007 | GridWorld and agent visualization must not alter experiments. | User decision. | CONFIRMED | Trace/event-based optional visualization. |
 | REQ-APP-008 | Show real CPU/RAM and supported GPU/VRAM telemetry where reliable. | User decision. | CONFIRMED | Source and unsupported states are visible. |
 | REQ-APP-009 | The final application is a polished research dashboard, not a rough minimal demo. | User scope refinement. | CONFIRMED | Modern coherent screenshot-ready UI across essential workflows. |
-| REQ-APP-010 | The feature set is limited to real thesis needs. | User scope refinement. | CONFIRMED | Required/optional/out-of-scope feature budget before final dashboard implementation. |
-| REQ-APP-011 | Models, seeds, settings, and uncertainty conditions are compared clearly with charts and tables. | User scope refinement. | CONFIRMED | Compatible comparison view with distributions and counts. |
-| REQ-APP-012 | Resource telemetry remains a lightweight current snapshot, not an observability subsystem. | Accepted audit remediation. | CONFIRMED | CPU/RAM/disk and optional GPU current values only; no telemetry database, agents, or alerting platform. |
+| REQ-APP-010 | The feature set is limited to real thesis needs. | User scope refinement. | CONFIRMED | Pilot-derived required/optional/out-of-scope feature budget. |
+| REQ-APP-011 | Models, seeds, settings, and uncertainty conditions are compared clearly with charts and tables. | User scope refinement. | CONFIRMED | Compatible comparison view with distributions/counts. |
+| REQ-APP-012 | Resource telemetry remains a lightweight current snapshot, not an observability subsystem. | Accepted audit remediation. | CONFIRMED | CPU/RAM/disk and optional GPU current values only; no telemetry DB/agents/alerting. |
 
 ## Architecture and technical
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
-| REQ-ARCH-001 | The research core works independently from the UI. | User decision. | CONFIRMED | Headless run smoke test. |
-| REQ-ARCH-002 | A lightweight debug/visualization surface may assist core validation, but the polished final dashboard starts only after validated core and pilot evidence. | User workflow direction and scope control. | CONFIRMED | Scientific logic remains in the core; final dashboard gate is preserved. |
-| REQ-ARCH-003 | Run/result storage does not depend on the UI lifecycle. | Reliability. | CONFIRMED | Closing the UI does not corrupt evidence. |
-| REQ-ARCH-004 | Avoid microservices, Kubernetes, cloud infrastructure, and complex authentication. | Local scope. | CONFIRMED | Bounded local architecture. |
-| REQ-ARCH-005 | Final stack follows compatibility/prototype review. | Conflicting historical proposals. | CONFIRMED | ADR with evidence. |
-| REQ-ARCH-006 | Production infrastructure, distributed orchestration, and enterprise observability are out of scope. | User scope refinement. | CONFIRMED | No such components without formal scope change. |
-| REQ-ARCH-007 | Architecture must support a polished UI without exposing internal complexity to the user. | User scope refinement. | CONFIRMED | Small top-level navigation and unified validated workflows. |
-| REQ-TECH-001 | Do not assume NVIDIA/CUDA or GPU availability before inventory. | User decision. | CONFIRMED | Capability report first. |
-| REQ-TECH-002 | Codex automatically collects actual hardware/software/storage information. | User decision. | CONFIRMED | Versioned inventory without manual transcription. |
+| REQ-ARCH-001 | The research core works independently from the UI. | User decision. | CONFIRMED | Headless full-experiment smoke test. |
+| REQ-ARCH-002 | Lightweight debug/visualization may assist core validation, but polished final dashboard starts after validated core/pilot evidence. | User workflow direction. | CONFIRMED | Scientific logic remains in core; final dashboard gate preserved. |
+| REQ-ARCH-003 | Run/result storage does not depend on UI lifecycle. | Reliability. | CONFIRMED | Closing UI cannot corrupt evidence. |
+| REQ-ARCH-004 | Avoid microservices, Kubernetes, cloud infrastructure, complex authentication, and production observability. | Local scope. | CONFIRMED | Bounded local architecture. |
+| REQ-ARCH-005 | The accepted current stack baseline is Python 3.12 + `uv` + `src/resilient_agents/` + filesystem-first run bundles; final scientific dependencies and optional UI details follow real inventory/prototypes/pilots. | DEC-023. | CONFIRMED | CI lock validation, importable headless package, explicit later amendments only if justified. |
+| REQ-ARCH-006 | Production infrastructure/distributed orchestration/enterprise observability are out of scope. | User scope refinement. | CONFIRMED | No such components without formal scope change. |
+| REQ-ARCH-007 | Architecture supports a polished UI without exposing internal complexity. | User scope refinement. | CONFIRMED | Small navigation and unified validated workflows. |
+| REQ-ARCH-008 | Final dashboard is a thin local Streamlit layer over the same core unless measured pilot requirements justify a recorded amendment. | DEC-023 accepted after user requested implementation of the proposal. | CONFIRMED | No scientific logic in Streamlit callbacks; same config/run/result interfaces. |
+| REQ-ARCH-009 | Evaluator ground truth and agent-visible information are explicitly separated; no hidden privileged state/change/disturbance information is leaked without protocol justification. | Scientific fairness + DEC-023. | CONFIRMED | Contract/integration tests enforce boundary. |
+| REQ-ARCH-010 | Randomness uses independent deterministic streams for scientifically distinct mechanisms. | Reproducibility + DEC-023. | CONFIRMED | Derived stream seeds deterministic/independent and stored in provenance. |
+| REQ-TECH-001 | Do not assume NVIDIA/CUDA or GPU availability before actual-machine inventory. | User decision. | CONFIRMED | Capability report first for compute-dependent decisions. |
+| REQ-TECH-002 | Codex automatically collects actual hardware/software/storage information. | User decision. | CONFIRMED | Versioned privacy-minimal inventory without manual transcription. |
+| REQ-TECH-003 | Python environment resolution is reproducible from committed `pyproject.toml`, `.python-version`, and `uv.lock`. | DEC-023. | CONFIRMED | `uv lock --check` and `uv sync --locked` pass in CI. |
 
 ## UI/UX
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
-| REQ-UI-001 | Modern, clean, and visually polished appearance. | User decision. | CONFIRMED | Consistent design system and research views. |
+| REQ-UI-001 | Modern, clean, visually polished appearance. | User decision. | CONFIRMED | Consistent design system/research views. |
 | REQ-UI-002 | Aesthetics do not override correctness, reliability, or usability. | Priority rule. | CONFIRMED | No decorative behavior hides scientific state. |
 | REQ-UI-003 | No fake progress, mock final metrics, fabricated logs, or inconsistent states. | Integrity rule. | CONFIRMED | Integration tests against real runner state. |
-| REQ-UI-004 | Views must be suitable for screenshots and presentation. | User decision. | CONFIRMED | Legible stable labels and export-ready layouts. |
-| REQ-UI-005 | Responsive desktop/laptop layouts, consistent cards/charts/filters/tables, and clear loading/error/empty states. | User scope refinement. | CONFIRMED | UX review of all essential workflows. |
-| REQ-UI-006 | Scientific metadata remains accessible even when complexity is hidden with progressive disclosure. | User scope refinement. | CONFIRMED | Definitions, parameters, and provenance reachable from context. |
-| REQ-UI-007 | Full checksums, manifests, software/hardware details, and provenance chains do not clutter primary views. | Accepted audit remediation. | CONFIRMED | Essential provenance in main view; full technical details in expandable panels or exports. |
+| REQ-UI-004 | Views must be suitable for screenshots/presentation. | User decision. | CONFIRMED | Legible stable labels/export-ready layouts. |
+| REQ-UI-005 | Responsive desktop/laptop layouts, consistent cards/charts/filters/tables, and clear loading/error/empty states. | User scope refinement. | CONFIRMED | UX review of essential workflows. |
+| REQ-UI-006 | Scientific metadata remains accessible even when complexity is hidden with progressive disclosure. | User scope refinement. | CONFIRMED | Definitions/parameters/provenance reachable from context. |
+| REQ-UI-007 | Full checksums/manifests/software/hardware/provenance chains do not clutter primary views. | Accepted audit remediation. | CONFIRMED | Essential provenance in main view; full details expandable/exported. |
 
 ## Repository and provenance
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
-| REQ-REPO-001 | This private repository is the permanent source of truth for thesis context, code, experiments, results, writing, and presentation; bibliography lifecycle ownership is the explicit exception defined by `BIBLIOGRAPHY_INTEGRATION.md`. | User decision and current architecture. | CONFIRMED | Context/decisions/configs are versioned; bibliography boundary remains explicit. |
+| REQ-REPO-001 | This private repository is the permanent source of truth for thesis context, code, experiments, results, writing, and presentation; bibliography lifecycle ownership is the explicit exception. | User decision/current architecture. | CONFIRMED | Context/decisions/configs/results/deliverables versioned; bibliography boundary explicit. |
 | REQ-REPO-002 | The official application is stored unchanged. | User decision. | CONFIRMED | Repository SHA-256 recorded. |
 | REQ-REPO-003 | Raw chat exports are not committed. | User decision. | CONFIRMED | Content scan passes. |
 | REQ-REPO-004 | Do not store secrets, credentials, virtual environments, caches, or useless artifacts. | Security. | CONFIRMED | Ignore/scan/review. |
-| REQ-REPO-005 | Large binaries/datasets/checkpoints are reviewed before commit. | Maintainability. | CONFIRMED | Storage/LFS policy. |
-| REQ-REPO-006 | Complete source acquisition, original PDFs, OCR/Markdown conversion, source analysis, evidence verification, research-material identification, and bibliography selection belong to `ThesisBibliography`. This repository consumes the generated complete research corpus while enforcing its nested citation-ready layer for formal citations. | Current bibliography architecture and explicit user direction. | CONFIRMED | No new primary-source ingestion here; import is bound to explicit immutable provenance and integrity validation; no PDF/LFS binaries are imported. |
-| REQ-REPO-007 | Repository-authored operational/technical material is written in English; exact official Greek text and original-language scientific evidence remain unchanged where required. | Explicit user instruction, 2026-08-02. | CONFIRMED | Agent-facing docs/prompts/comments/naming are English; source evidence is not translated. |
-| REQ-PROV-001 | Every result maps to run ID, configuration, source files, processing code, and commit. | Provenance. | CONFIRMED | Machine-readable manifest. |
-| REQ-PROV-002 | Raw results are immutable. | Reproducibility. | CONFIRMED | Checksums and append-only corrections. |
+| REQ-REPO-005 | Useful large thesis-produced binaries/datasets/checkpoints/results may be committed automatically using the configured Git LFS policy; do not require per-run manual approval solely because files are large. | User direction + DEC-023. | CONFIRMED | LFS tracked formats/publisher safeguards; retention changed only for real storage constraints. |
+| REQ-REPO-006 | Complete bibliography lifecycle belongs to `ThesisBibliography`; this repository consumes the complete generated corpus and enforces nested citation-ready formal trust. | Current bibliography architecture. | CONFIRMED | No new primary-source ingestion here; immutable provenance/integrity; no bibliography PDF/LFS import. |
+| REQ-REPO-007 | Repository-authored operational/technical material is English; exact official Greek text/original-language scientific evidence remain unchanged where required. | Explicit user instruction, 2026-08-02. | CONFIRMED | Agent-facing docs/prompts/comments/naming English; source evidence not translated. |
+| REQ-REPO-008 | Every material change reconciles all affected active source-of-truth/status/decision/workflow/prompt files in the same PR; obsolete files are deleted or explicitly marked historical. | Explicit user instruction, 2026-08-04; DEC-024. | CONFIRMED | PR checklist + documentation governance + CI validator. |
+| REQ-REPO-009 | Prefer fewer meaningful permanent commits; coherent implementation PRs normally squash to one `main` commit and each finalized experiment produces at most one result commit. | Explicit user preference, 2026-08-04. | CONFIRMED | Squash merges/experiment publisher behavior. |
+| REQ-PROV-001 | Every result maps to run ID, resolved configuration, source files, processing code, and source Git commit. | Provenance. | CONFIRMED | Machine-readable manifest/bundle. |
+| REQ-PROV-002 | Finalized raw results are immutable. | Reproducibility. | CONFIRMED | Checksums and no silent edits. |
+| REQ-PROV-003 | Automatic result publication must refuse mixed provenance/unrelated tracked changes/unsafe remote state rather than forcing a commit; local run data survives publication failure. | DEC-023 safety requirement. | CONFIRMED | Publisher integration/failure tests. |
 
 ## Tests
 
 | ID | Requirement | Source / rationale | Status | Acceptance criterion |
 |---|---|---|---|---|
-| REQ-TEST-001 | Deterministic GridWorld tests cover transitions, rewards, termination, and disturbances. | Scientific validity. | CONFIRMED | Reference and invariant tests pass. |
-| REQ-TEST-002 | Model adapters require contract tests. | Fair interface. | CONFIRMED | Agent contract verified. |
-| REQ-TEST-003 | Runner requires lifecycle, persistence, recovery, and failure tests. | Reliability. | CONFIRMED | Interruption tests preserve valid state. |
-| REQ-TEST-004 | Processing/aggregation code uses known synthetic fixtures. | Statistical correctness. | CONFIRMED | Hand-calculated values match. |
-| REQ-TEST-005 | Reproducibility tests distinguish deterministic replay from statistical repeatability. | Honest reporting. | CONFIRMED | Modes and tolerances documented. |
+| REQ-TEST-001 | Deterministic GridWorld tests cover transitions, rewards, termination, and disturbances. | Scientific validity. | CONFIRMED | Reference/invariant tests pass. |
+| REQ-TEST-002 | Model adapters require contract/information-boundary tests. | Fair interface. | CONFIRMED | Agent contract verified. |
+| REQ-TEST-003 | Runner requires lifecycle, persistence, recovery, publication, and failure tests. | Reliability. | CONFIRMED | Interruption/publication tests preserve valid state/data. |
+| REQ-TEST-004 | Processing/aggregation/metrics code uses known synthetic fixtures. | Statistical correctness. | CONFIRMED | Hand-calculated values match. |
+| REQ-TEST-005 | Reproducibility tests distinguish deterministic replay from statistical repeatability. | Honest reporting. | CONFIRMED | Modes/tolerances documented. |
+| REQ-TEST-006 | CI checks mechanically detectable stale active-document states, including obsolete Codex prompt paths and incorrect formal-evidence labelling. | DEC-024. | CONFIRMED | `scripts/validate_documentation_consistency.py` passes. |
 
 ## Thesis and deliverables
 
@@ -122,10 +132,9 @@ This file contains only requirements established by the latest explicit user ins
 | REQ-THESIS-001 | Thesis main language is Greek. | User decision. | CONFIRMED | Greek main text. |
 | REQ-THESIS-002 | Final deliverable is Microsoft Word. | User decision. | CONFIRMED | Validated `.docx`. |
 | REQ-THESIS-003 | Final results/conclusions use only frozen real data. | User decision. | CONFIRMED | Claims map to artifacts. |
-| REQ-THESIS-004 | No fabricated sources, DOI values, measurements, or conclusions. | Integrity. | CONFIRMED | Citation and provenance audit. |
-| REQ-THESIS-005 | Figures and tables are generated automatically from real data. | User decision. | CONFIRMED | Rebuild command reproduces artifacts. |
+| REQ-THESIS-004 | No fabricated sources, DOI values, measurements, or conclusions. | Integrity. | CONFIRMED | Citation/provenance audit. |
+| REQ-THESIS-005 | Figures/tables are generated automatically from real data. | User decision. | CONFIRMED | Rebuild command reproduces artifacts. |
 | REQ-THESIS-006 | Greek summary/keywords and English abstract/keywords. | Department guidance. | CONFIRMED | Both present. |
-| REQ-THESIS-007 | Related Work, Methodology, and Discussion are drafted from verified imported evidence after the required `ThesisBibliography` freshness/full-evidence gates. | User research direction and current bibliography architecture. | CONFIRMED | Claims map to verified `SRC-*` evidence and recorded limitations at pinned provenance. |
-| REQ-THESIS-008 | Normal chapter drafting and final Word styling are deferred until the research program, model study, protocol, and evidence-producing experiments are sufficiently mature. Structured notes, evidence mappings, captions, and method records should still be collected during implementation. | Explicit user direction, 2026-08-04. | CONFIRMED | Current roadmap prioritizes research/program work without losing writing provenance. |
-| REQ-THESIS-009 | Two or three completed theses supplied later may inform presentation and structure only; they are not scientific sources or official formatting authority. | Explicit user direction, 2026-08-04. | DEFERRED | Examples are clearly labelled and checked against official guidance near writing. |
-| REQ-DELIV-001 | Final repository includes code, configs, tests, imported bibliography corpus, thesis material, results, figures/tables/exports, and reproduction scripts. | User requirement. | DEFERRED | Final checklist complete. |
+| REQ-THESIS-007 | Related Work, Methodology, and Discussion are drafted from verified imported evidence after required bibliography freshness/full-evidence gates. | User research direction/current bibliography architecture. | CONFIRMED | Claims map to verified citation-ready `SRC-*` evidence and limitations. |
+| REQ-THESIS-008 | Normal chapter drafting/final Word styling are deferred until research program/model study/protocol/evidence-producing experiments are mature; structured notes/evidence mappings/captions/method records are collected during implementation. | Explicit user direction, 2026-08-04. | CONFIRMED | Roadmap prioritizes research/program work without losing writing provenance. |
+| REQ-THESIS-009 | Two or three completed theses supplied later may inform presentation/structure only; they are not scientific sources or official formatting authority. | Explicit user direction, 2026-08-04. | DEFERRED | Examples clearly labelled and checked against official guidance near writing. |
