@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Repository documentation is part of the thesis source of truth. A code, research, architecture, workflow, storage, protocol, task-state, lifecycle-handoff, or delivery change is incomplete if related active documentation still describes the previous state.
+Repository documentation is part of the thesis source of truth. A code, research, architecture, workflow, storage, protocol, task-state, lifecycle-handoff, UX, or delivery change is incomplete if related active documentation still describes the previous state.
 
 ## Document classes
 
@@ -12,6 +12,7 @@ These files must describe the current repository state and must be reconciled in
 
 - `AGENTS.md`
 - `README.md`
+- `app/README.md`
 - `docs/context/CURRENT_STATUS.md`
 - `docs/context/TASKS.md`
 - `docs/context/PROJECT_CONTEXT.md`
@@ -26,10 +27,11 @@ These files must describe the current repository state and must be reconciled in
 - `docs/decisions/DECISION_LOG.md`
 - `docs/context/CHANGELOG_CONTEXT.md`
 - `docs/context/CODEX_EXECUTION_PROMPT.md`
+- `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`
 - `docs/thesis/PRESENTATION_WORKFLOW.md`
 - active research/protocol/architecture/thesis workspaces relevant to the changed subject.
 
-`CURRENT_STATUS.md` is the shortest authoritative current-state summary. `TASKS.md` is the canonical concrete execution checklist/resume ledger. `IMPLEMENTATION_ROADMAP.md` explains phases, while `EXECUTION_WORKFLOW.md` records responsibilities and major handoffs. None excuses stale statements in other active files.
+`CURRENT_STATUS.md` is the shortest authoritative current-state summary. `TASKS.md` is the canonical concrete execution checklist/resume ledger. `IMPLEMENTATION_ROADMAP.md` explains phases, while `EXECUTION_WORKFLOW.md` records responsibilities and major handoffs. `UI_INFORMATION_ARCHITECTURE.md` controls the bounded dashboard information/UX contract when dashboard work is active. None excuses stale statements in other active files.
 
 ### 2. Accepted decision/history records
 
@@ -74,6 +76,14 @@ Downstream thesis/presentation artifacts must never become an independent source
 
 `docs/thesis/PRESENTATION_WORKFLOW.md` is the active deferred specification for the defense phase and must be reconciled if presentation tooling, output format, speaker-material requirements, evidence mapping, or rehearsal/delivery rules change.
 
+## Dashboard UX governance
+
+DEC-027, `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`, `app/README.md`, confirmed `REQ-UI-*` requirements, and the `T-510`/`T-512`/`T-511` task chain control the final dashboard UX baseline.
+
+The self-explanatory UX/onboarding baseline is a required application-completion condition, not an optional cosmetic enhancement. Exact palette values and other implementation-level styling details remain intentionally unfrozen until the real dashboard exists.
+
+Changes to dashboard wording, terminology, status semantics, contextual help, pre-run review, onboarding/help flow, or UI architecture must reconcile the relevant requirements/tasks and must not introduce a parallel manual/help system that can drift from implemented behavior.
+
 ## Change-impact matrix
 
 | Change | Files that must be reviewed in the same PR |
@@ -86,7 +96,7 @@ Downstream thesis/presentation artifacts must never become an independent source
 | Models/metrics/protocol | corresponding research/protocol files, current status, `TASKS`, open questions, roadmap, decision log, Codex prompt, tests |
 | Bibliography contract/baseline | bibliography integration docs, README/context, current status, `TASKS` when research gates change, decision log/changelog, import validation/workflow; never hand-edit generated evidence |
 | Experiment/run data policy | run/provenance docs, constraints, requirements, `TASKS`, `.gitignore`/`.gitattributes`, publisher/tests, decision log/changelog |
-| Application/dashboard workflow | architecture/UI docs, requirements, roadmap, workflow, current status, `TASKS`, Codex prompt, tests |
+| Application/dashboard workflow or UX | `app/README`, `UI_INFORMATION_ARCHITECTURE`, `AGENTS`, requirements/user decisions/constraints, roadmap, workflow, current/project status, `TASKS`, Codex prompt, definition of done, tests, decision log/changelog |
 | Final experiment/analysis -> writing handoff | `TASKS`, roadmap, workflow, experiment/analysis docs, thesis docs, requirements, current status, decision log/changelog |
 | Thesis/review workflow | thesis/university docs, requirements/user decisions, roadmap, workflow, current status, `TASKS`, Codex prompt when execution changes |
 | Defense presentation workflow | `PRESENTATION_WORKFLOW`, requirements/user decisions, roadmap, workflow, definition of done, `TASKS`, source register, decision log/changelog |
