@@ -127,3 +127,15 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Kept coherent PRs squash-merged to `main`, so checkpoint resilience does not create noisy permanent history.
 - Added stable task IDs, dependencies, and acceptance conditions across the remaining research, implementation, pilot, dashboard, final-experiment, writing, and audit lifecycle.
 - Added DEC-025 and made task-registry reconciliation part of every material PR.
+
+## 2026-08-04 — End-to-end lifecycle and defense workflow audit
+
+- Audited the full Codex journey and user journey from current implementation through final delivery.
+- Added `docs/context/END_TO_END_JOURNEY.md` to define responsibility/artifact handoffs without creating a second task checklist.
+- Corrected task-state semantics so `READY` means required dependencies are actually complete; added CI validation for invalid `READY` dependencies.
+- Made validated application completion an explicit gate before the normal frozen final experiment campaign.
+- Added a frozen thesis/defense evidence-package handoff after final analysis so writing and presentation do not reinterpret raw final runs ad hoc.
+- Expanded thesis workflow to include a review-ready Word document, explicit supervisor/reviewer revision cycle when feedback exists, bibliography/guidance audit, and final thesis freeze.
+- Added `docs/thesis/PRESENTATION_WORKFLOW.md` and explicit defense tasks for slide evidence mapping, final `.pptx`, embedded speaker notes, separate full spoken Greek script, demo fallback, PowerPoint validation, and rehearsal timing.
+- Recorded the preferred future tool split: Codex for repository-backed evidence/assets and validation; ChatGPT for thesis/slide narrative, Greek copy, speaker notes/script and consistency review; PowerPoint-capable generation tooling for the deck; Microsoft PowerPoint for final inspection/rehearsal; optional Canva/design tools only as revalidated polish.
+- Added DEC-026 and reconciled task, prompt, roadmap, workflow, requirements, decisions, definition-of-done, and control-file governance accordingly.
