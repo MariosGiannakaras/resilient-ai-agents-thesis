@@ -54,9 +54,16 @@
 - Retention/pruning changes require an explicit decision only if real repository/LFS/storage limits become a practical problem.
 - Bibliography PDFs and bibliography Git LFS objects remain upstream and are never copied into this repository.
 
+## Lifecycle and evidence handoffs
+
+- The normal final experiment campaign does not begin before both the final protocol and intended application workflow are validated.
+- Thesis/presentation writing does not begin from ad-hoc raw final-run inspection; a frozen downstream evidence package is created after final analysis.
+- Final thesis and defense materials must not silently contradict frozen evidence or citation-ready bibliography support.
+- Any supervisor/reviewer correction that changes a claim, figure, table, method statement, or interpretation requires corresponding evidence/citation revalidation.
+
 ## Documentation/source-of-truth consistency
 
-- A material change is incomplete until related active documentation, prompts, decisions, status, tests, and workflows are reconciled in the same PR.
+- A material change is incomplete until related active documentation, prompts, tasks, lifecycle handoffs, decisions, status, tests, and workflows are reconciled in the same PR.
 - Obsolete active files are deleted; useful old records are marked historical and linked to current authority.
 - Generated bibliography content is never manually edited for consistency.
 - Follow `docs/context/DOCUMENTATION_GOVERNANCE.md`.
@@ -68,8 +75,11 @@
 - Raw conversation exports are not stored in the repository.
 - Any public release requires privacy/license audit and redaction first.
 
-## Academic delivery
+## Academic delivery and defense
 
-- No final deadline is currently known.
+- No final deadline or verified defense schedule is currently known.
 - Current final Word template/submission package remains a later verification item.
+- Exact current defense duration, required content, presentation language, slide/template rules, live-demo rules, and submission procedure are not assumed; recheck them near delivery.
+- The planned defense output is a PowerPoint `.pptx` plus embedded speaker notes and a separate full spoken Greek script, subject to later official requirements.
+- Microsoft PowerPoint is the final rendering/rehearsal target for the `.pptx`; optional design tools must be revalidated after export.
 - Supervisor-specific instructions, when actually provided, are recorded as explicit changes and override lower-level generic conventions where applicable.
