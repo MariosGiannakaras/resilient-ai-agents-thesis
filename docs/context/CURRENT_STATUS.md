@@ -40,9 +40,9 @@ The actual target-machine inventory is still required before compute-dependent d
 
 ## Documentation and Codex execution
 
-The obsolete pre-import `CODEX_BOOTSTRAP_PROMPT.md` has been retired. `docs/context/CODEX_EXECUTION_PROMPT.md` is the only tracked current Codex prompt template and is intentionally state-driven from this file and the roadmap.
+The obsolete pre-import `CODEX_BOOTSTRAP_PROMPT.md` has been retired. `docs/context/CODEX_EXECUTION_PROMPT.md` is the only tracked current Codex prompt and is directly executable from the repository.
 
-For local use, copy the canonical prompt to git-ignored root `CODEX_TASK.md`; the local copy can be deleted after Codex reads it without affecting Git history.
+After cloning/updating the repository on the thesis machine, the user only needs to tell Codex: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.` The tracked prompt is not deleted after use and must be updated in the same PR whenever workflow, architecture, responsibilities, project state, or the active next task materially changes.
 
 Every material change must reconcile all affected active docs/prompts/status/decision/workflow files in the same PR. Useful historical records are marked historical rather than left as ambiguous current guidance. CI includes a documentation-consistency validator for mechanically detectable stale states.
 
