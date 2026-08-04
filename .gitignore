@@ -9,10 +9,6 @@
 secrets/
 credentials/
 
-# Local one-shot Codex task prompt copied from the tracked canonical template.
-/CODEX_TASK.md
-/.codex-task.md
-
 # Python
 __pycache__/
 *.py[cod]

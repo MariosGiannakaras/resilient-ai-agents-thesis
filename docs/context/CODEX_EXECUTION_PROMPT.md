@@ -2,9 +2,15 @@
 
 ## How to use
 
-This is the tracked canonical prompt template. Before starting a local Codex session, copy its contents to the git-ignored repository-root file `CODEX_TASK.md`, ask Codex to read and execute `CODEX_TASK.md`, and allow that local copy to be deleted after it has been read. Do not commit `CODEX_TASK.md`.
+This file is the single tracked canonical and directly executable Codex prompt for the thesis project.
 
-The instructions below are deliberately state-driven. `docs/context/CURRENT_STATUS.md` and the current repository state override any phase snapshot that could become outdated later.
+After cloning or updating the repository on the thesis machine, give Codex only this instruction:
+
+> Read `docs/context/CODEX_EXECUTION_PROMPT.md` and execute it completely.
+
+Do not copy this prompt to another task file and do not delete it after use. Whenever workflow, architecture, responsibilities, project state, or the active next task materially changes, this file must be reconciled in the same Pull Request.
+
+The instructions below are deliberately state-driven. `docs/context/CURRENT_STATUS.md` and the actual current repository state override any phase snapshot that could become outdated later.
 
 ---
 
@@ -159,4 +165,4 @@ At the end of the session report only:
 - real remaining blockers/gates;
 - the exact next bounded task.
 
-If this prompt was supplied as the local git-ignored `CODEX_TASK.md`, delete that local file after reading/executing it. Do not delete the tracked canonical `docs/context/CODEX_EXECUTION_PROMPT.md` unless the project deliberately replaces it with a newer canonical prompt in the same PR.
+This tracked file remains in the repository as the canonical prompt. Do not delete or replace it without updating all related active documentation and recording the change in the same PR.

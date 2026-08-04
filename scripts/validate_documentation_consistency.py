@@ -94,10 +94,12 @@ def main() -> int:
         for required in (
             "docs/context/CURRENT_STATUS.md",
             "docs/context/DOCUMENTATION_GOVERNANCE.md",
-            "CODEX_TASK.md",
+            "Read `docs/context/CODEX_EXECUTION_PROMPT.md` and execute it completely.",
         ):
             if required not in prompt:
                 errors.append(f"current Codex prompt missing required state-driven reference: {required}")
+        if "copy its contents to" in prompt.casefold() or "CODEX_TASK.md" in prompt:
+            errors.append("current Codex prompt must be directly executable and must not require a copied task prompt")
 
     synthesis_path = ROOT / "docs/research/POSTIMPORT_EVIDENCE_SYNTHESIS.md"
     if synthesis_path.is_file():

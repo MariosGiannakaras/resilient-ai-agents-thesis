@@ -24,7 +24,7 @@ These files must describe the current repository state and must be reconciled in
 - `docs/context/DEFINITION_OF_DONE.md`
 - `docs/decisions/DECISION_LOG.md`
 - `docs/context/CHANGELOG_CONTEXT.md`
-- the current Codex execution prompt
+- `docs/context/CODEX_EXECUTION_PROMPT.md`
 - active research/protocol/architecture workspaces relevant to the changed subject.
 
 `CURRENT_STATUS.md` is the shortest authoritative current-state summary. It does not excuse stale statements in other active files.
@@ -44,10 +44,6 @@ Examples include:
 ### 3. Generated or externally owned content
 
 Do not reconcile generated bibliography files by editing them manually. `research/bibliography/` is replaced only through the controlled bibliography synchronization workflow. Source-derived scientific text remains unchanged.
-
-### 4. Local one-shot task files
-
-`CODEX_TASK.md` and `.codex-task.md` at repository root are git-ignored local files. They may be copied from the tracked current Codex execution prompt and deleted after use without creating Git history.
 
 ## Change-impact matrix
 
@@ -79,9 +75,11 @@ Before merge:
 
 ## Prompt rule
 
-There is only one tracked current Codex execution prompt. It must be written to remain as state-driven as possible: Codex reads `CURRENT_STATUS.md` and the roadmap and must not redo work merely because an older phase is mentioned in the prompt.
+There is only one tracked current Codex execution prompt: `docs/context/CODEX_EXECUTION_PROMPT.md`.
 
-When workflow, responsibilities, architecture, or the active next task materially changes, the prompt is reviewed in the same PR.
+It is the directly executable entrypoint for Codex after the repository is cloned or updated. The user should not need to copy, regenerate, or manually maintain a second prompt file. The prompt must remain state-driven: Codex reads `CURRENT_STATUS.md` and the roadmap and must not redo work merely because an older phase is mentioned in the prompt.
+
+When workflow, responsibilities, architecture, project state, or the active next task materially changes, the prompt is reviewed and updated in the same PR.
 
 ## No silent stale-state policy
 
