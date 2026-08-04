@@ -1,6 +1,6 @@
 # Definition of Done
 
-This file defines project-level completion conditions. It is **not** the operational task tracker. Concrete task IDs, dependencies, in-progress resume state, and next actions are maintained only in `docs/context/TASKS.md`.
+This file defines project-level completion conditions. It is **not** the operational task tracker. Concrete task IDs, dependencies, in-progress resume state, and next actions are maintained only in `docs/context/TASKS.md`. Major handoffs are explained in `docs/context/END_TO_END_JOURNEY.md`.
 
 ## Foundation and bibliography
 
@@ -28,6 +28,7 @@ This file defines project-level completion conditions. It is **not** the operati
 - [x] Development/tuning/pilot/final separation infrastructure established.
 - [x] Documentation governance and stale-state validation established.
 - [x] Canonical resumable Codex task registry and interruption-recovery workflow established.
+- [x] End-to-end lifecycle/user handoffs and defense-presentation workflow defined.
 
 ## Current research/environment phase
 
@@ -41,31 +42,51 @@ This file defines project-level completion conditions. It is **not** the operati
 - [ ] Full headless experiment completes with real selected environment/agents and auditable outputs.
 - [ ] Pilot report supports protocol freeze decisions.
 
-## Final experimental phase
+## Application completion phase
 
 - [ ] `protocol-v1.0` and analysis plan frozen before final result inspection.
-- [ ] Required final runs complete or transparently accounted for.
-- [ ] Finalized raw results immutable and checksummed.
-- [ ] Failures/cancellations/invalid/excluded runs retained with reasons.
-- [ ] Statistical analysis reproducible.
-- [ ] `results/thesis-final/` frozen from the validated final run set.
-- [ ] Every thesis figure/table has machine-readable provenance.
-
-## Dashboard phase
-
 - [ ] Real pilot/headless workflow establishes the required UI feature budget.
 - [ ] Thin local Streamlit dashboard uses the same core/configuration/result interfaces.
 - [ ] Essential workflows validated: configure, run/monitor, history, compare, detailed analysis, artifacts/export.
-- [ ] No scientific logic duplicated in UI callbacks.
+- [ ] A real approved multi-seed experiment can be executed end to end through the user-facing application.
+- [ ] No scientific logic is duplicated in UI callbacks and no fake progress/metrics/logs exist.
 - [ ] Screenshots/views are polished and based on real data/state.
 
-## Final thesis/repository phase
+## Final experimental and evidence phase
 
-- [ ] Official current template/submission rules reverified.
+- [ ] Required final runs complete or transparently accounted for after application/protocol validation.
+- [ ] Finalized raw results immutable and checksummed.
+- [ ] Failures/cancellations/invalid/excluded runs retained with reasons.
+- [ ] Statistical analysis reproducible from frozen evidence.
+- [ ] `results/thesis-final/` frozen from the validated final run set.
+- [ ] Every thesis figure/table has machine-readable provenance.
+- [ ] A versioned thesis/defense evidence package maps RQs, protocol/methods, source IDs, result/run IDs, figures/tables, captions, and planned claims.
+
+## Final thesis phase
+
+- [ ] Official current thesis/template/submission/defense rules reverified.
 - [ ] Required bibliography freshness/full-evidence checks completed and synchronized.
-- [ ] Greek Word document complete with required bilingual front matter.
+- [ ] Complete Greek thesis drafted from citation-ready bibliography and frozen evidence package.
+- [ ] Review-ready Word document complete with required bilingual front matter and validated figures/tables/cross-references.
+- [ ] Supervisor/reviewer feedback incorporated when received and affected evidence/citations revalidated.
 - [ ] Citations/bibliography audited against citation-ready evidence.
 - [ ] Claims trace to source IDs or result/artifact IDs.
+- [ ] Final thesis `.docx` and any officially required exports frozen/versioned.
+
+## Defense presentation phase
+
+- [ ] Current official defense duration/content/file requirements reverified.
+- [ ] Slide narrative and slide-to-thesis/result/source evidence map complete.
+- [ ] Final PowerPoint `.pptx` generated from the final thesis/frozen evidence.
+- [ ] Embedded speaker notes are synchronized with slide order.
+- [ ] Separate full spoken Greek script is complete and suitable for rehearsal/following/reading during preparation.
+- [ ] Real application screenshots/demo assets are validated and a non-live fallback exists where needed.
+- [ ] PowerPoint rendering, legibility, media, factual consistency, and timing rehearsal pass.
+
+## Final repository/delivery phase
+
 - [ ] Privacy/secret/license scan passed.
 - [ ] Reproduction guide validated on a clean environment.
+- [ ] Thesis, presentation, speaker material, application, and frozen evidence agree.
+- [ ] Required delivery files are present and validated.
 - [ ] Final release/commit and thesis result set frozen.
