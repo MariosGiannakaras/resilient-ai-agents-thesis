@@ -1,118 +1,91 @@
 # Implementation Roadmap
 
-The roadmap is phase-gated and optimized for thesis completion, scientific adequacy, and bounded engineering complexity.
+The roadmap is phase-gated and optimized for thesis completion, scientific adequacy, reproducibility, and bounded engineering complexity.
 
-## How to use this roadmap
+## Working rule
 
-The fourteen numbered phases are **checkpoints**, not fourteen mandatory separate prompts, branches, PRs, or approval meetings. Combine adjacent phases when one bounded task can complete them safely.
+Phases are checkpoints, not mandatory separate PRs. Combine adjacent work when it remains reviewable. Do not skip scientific gates merely because infrastructure already exists.
 
-Operationally, the work can be managed as eight larger blocks:
+## Phase 1 — Context, bibliography, and target machine
 
-1. Research definition, verified bibliography import, and source validation.
-2. GridWorld decision and environment specification.
-3. Models, metrics, and experimental protocol.
-4. Independent core and validation.
-5. Pilots and final protocol freeze.
-6. Minimal experiment management and polished dashboard.
-7. Final experiments, analysis, and artifacts.
-8. Thesis writing and final validation.
+- Confirm the immutable bibliography baseline and current project context.
+- Run/accept the privacy-minimal system inventory on the actual experiment machine.
+- **Gate:** no compute-dependent dependency, model-budget, or acceleration decision before the real inventory.
 
-Use separate review gates only for decisions that materially affect scientific validity, feasibility, architecture, or final evidence.
+## Phase 2 — Research framing
 
-## Phase 1 — Context and system validation
+- Define the bounded main research question, minimal secondary questions, and hypotheses from citation-ready evidence.
+- Keep final model/environment/protocol choices unfrozen until feasibility evidence exists.
 
-- **Goal:** Establish trusted sources, current scope, and actual machine capabilities.
-- **Deliverables:** Source audit, official-application SHA-256 verification, bibliography-import status, automated hardware/software inventory.
-- **Gate:** No compute-dependent or stack decision before completion.
+## Phase 3 — Environment contract and GridWorld decision
 
-## Phase 2 — Bibliography and research framing
+- Use the common environment/ground-truth contracts in `src/resilient_agents/`.
+- Complete bounded custom-versus-reuse prototypes and the GridWorld ADR.
+- Define explicit scenario, change, disturbance, reward, termination, and information-access schemas.
+- **Gate:** known-answer transition/reference-trace tests pass.
 
-- **Goal:** Convert the official topic and verified bibliography evidence into a clear and bounded research problem.
-- **Deliverables:** Validated `research/bibliography/` import with exact `SOURCE_COMMIT`, focused related-work synthesis, main research question, minimal secondary questions, and candidate hypotheses.
-- **Source action:** Use the verified generated package from `MariosGiannakaras/ThesisBibliography`. Fresh source discovery/acquisition/verification occurs only in `ThesisBibliography`, followed by controlled export/synchronization; do not acquire papers directly in this repository.
-- **Gate:** Every question maps to measurable verified evidence and remains feasible.
+## Phase 4 — Reproducibility and metric fixtures
 
-## Phase 3 — GridWorld landscape and decision
+- Validate independent RNG streams, deterministic replay, provenance, run bundles, and storage.
+- Define metric estimands and test them on synthetic known-answer trajectories before complex agents.
+- Explicitly represent non-recovery rather than substituting the horizon.
 
-- **Goal:** Compare reuse, adapt/wrap, and minimal custom implementation.
-- **Deliverables:** Candidate matrix, license/maintenance/API audit, small prototypes, and ADR.
-- **Gate:** No third-party integration before a documented decision.
+## Phase 5 — Small model-role selection
 
-## Phase 4 — Environment and uncertainty specification
+- Select only scientifically distinct baseline/adaptive/robust roles supported by evidence and feasible on the target machine.
+- Implement all agents behind the same information-limited contract.
+- **Gate:** no privileged ground truth and no model without a distinct research role.
 
-- **Goal:** Define the simplest environment that adequately answers the research question.
-- **Deliverables:** Versioned state/action/reward/termination rules, minimal uncertainty taxonomy, severity design, and validation fixtures.
-- **Gate:** Environment reference traces and invariant tests pass.
+## Phase 6 — Pilot protocol
 
-## Phase 5 — Minimal model and metric selection
+- Define explicit development/tuning/pilot/final scenario partitions.
+- Define seeds, budgets, severities, tuning rules, failure rules, and preliminary statistics from evidence/pilots rather than convenience defaults.
+- Refresh relevant literature in `ThesisBibliography` before freeze.
 
-- **Goal:** Select only scientifically distinct and feasible models/baselines and outcomes.
-- **Deliverables:** Inclusion/exclusion matrix, common agent contract, metric definitions, and estimands.
-- **Gate:** No model, uncertainty type, or metric without a distinct research role.
+## Phase 7 — Headless experiment core
 
-## Phase 6 — Pilot experimental protocol
+- Complete the environment, agent implementations, orchestration, persistence, manifests, and recovery behavior inside `src/resilient_agents/`.
+- A whole experiment may contain many seeds; it finalizes once and optionally creates one automatic Git commit/push.
+- **Gate:** full experiments run without the UI and produce auditable bundles.
 
-- **Goal:** Define training/tuning/evaluation separation and pilot work.
-- **Deliverables:** Pilot configs, stopping/failure rules, preliminary statistical plan, and compute estimate.
-- **Literature refresh:** Recheck recent directly relevant work in `ThesisBibliography`, verify any new evidence there, and synchronize a new package before freezing decisions if the evidence changes the design.
-- **Gate:** Protocol can be executed without hidden manual choices.
+## Phase 8 — Pilots and protocol freeze
 
-## Phase 7 — Independent research core
+- Measure runtime, variance, detector/adaptation behavior, failure modes, storage volume, and metric behavior.
+- Freeze `protocol-v1.0` only after pilot questions are answered.
+- Any later scientific change requires an explicit protocol amendment/version.
 
-- **Goal:** Implement only environment, selected agent adapters, runner, persistence, manifests, and CLI.
-- **Deliverables:** Minimal reproducible headless workflow.
-- **Debug UI allowance:** A lightweight visualization/debug surface may be used if it helps validate environment or agent behavior, but it must use the same core interfaces and must not duplicate scientific logic or expand into the final dashboard.
-- **Done when:** A full run completes without UI and produces valid real outputs.
-- **Gate:** Architecture and contract tests pass.
+## Phase 9 — Minimal experiment management
 
-## Phase 8 — Validation and pilots
+- Add only the run registry, truthful lifecycle state, interruption/recovery, batch support, and current resource snapshot required by the frozen workflow.
+- Filesystem run bundles remain the source of truth; any database/index is rebuildable cache.
 
-- **Goal:** Verify correctness and estimate runtime, variance, failures, and metric behavior.
-- **Deliverables:** Unit/integration/recovery tests, pilot registry, and pilot report.
-- **Gate:** Pilots answer protocol-design questions; no pilot result is treated as final evidence.
+## Phase 10 — Polished bounded dashboard
 
-## Phase 9 — Freeze final protocol
+- Implement the final dashboard as a thin local Streamlit layer unless a concrete pilot-derived requirement disproves that choice.
+- Required workflows: New Experiment, Run/Monitor, History, Compare, Detailed Analysis, and Artifacts/Export.
+- No scientific logic may be duplicated in Streamlit callbacks.
 
-- **Goal:** Set a feasible and scientifically fair final experiment matrix.
-- **Deliverables:** Frozen models, scenarios, seeds/repetitions, budgets, metrics, statistical plan, and exclusions.
-- **Literature refresh:** Confirm through the canonical `ThesisBibliography` evidence chain that no recent primary study materially changes the design or required comparisons; synchronize the verified package used for the freeze.
-- **Gate:** Any later change requires an explicit amendment.
+## Phase 11 — Final runs
 
-## Phase 10 — Minimal experiment management
+- Execute the frozen matrix with automatic provenance, storage, checksums, and one commit/push per whole experiment.
+- Retain failed/cancelled/invalid/excluded runs with reasons.
+- Large thesis-produced artifacts may use Git LFS; bibliography LFS/PDF objects remain upstream.
 
-- **Goal:** Provide reliable run registry, lifecycle state, and recovery required by the frozen protocol.
-- **Deliverables:** Real status/events, safe interruption handling, provenance, and essential batch support.
-- **Gate:** Do not implement queue priorities, remote workers, or advanced orchestration unless required by measured workflow.
+## Phase 12 — Statistical analysis and frozen evidence
 
-## Phase 11 — Polished bounded dashboard
+- Produce reproducible summaries, intervals/effect sizes/diagnostics as justified, figures, tables, and exports.
+- Freeze `results/thesis-final/` from the validated final run set only.
 
-- **Goal:** Enable the user to execute and understand the thesis experiments without code or console commands.
-- **Required workflows:** Dashboard, New Experiment, Runs, Compare, and Artifacts.
-- **Required quality:** Modern, consistent, responsive, screenshot-ready, and based on real data.
-- **Deliverables:** Configuration/launch, truthful monitoring, GridWorld view, history/details, comparison charts/tables, and export.
-- **Scope note:** Telemetry is a lightweight current snapshot. Detailed checksums/provenance use expandable details and exports.
-- **Gate:** Every screen and feature maps to a real thesis workflow. Advanced features remain deferred.
+## Phase 13 — Thesis and presentation artifacts
 
-## Phase 12 — Final runs
+- Write the Greek Word thesis from the verified bibliography and frozen experiment evidence.
+- Generate figures/tables/screenshots/presentation material from the same traceable evidence chain.
 
-- **Goal:** Produce the frozen thesis evidence set.
-- **Deliverables:** Complete run set, checksums, failures/exclusions registry, and immutable raw outputs.
-- **Gate:** Completeness and provenance audits pass; no cherry-picking.
+## Phase 14 — Final audit
 
-## Phase 13 — Statistical analysis and artifacts
-
-- **Goal:** Produce reproducible estimates, figures, tables, and exports.
-- **Deliverables:** Versioned scripts, intervals/effect sizes where appropriate, diagnostics, and artifact manifests.
-- **Gate:** Every reported value traces to source runs, configs, and code.
-
-## Phase 14 — Thesis writing and final validation
-
-- **Goal:** Complete the Greek Microsoft Word thesis and repository package.
-- **Deliverables:** Background, related work, methods, implementation, results, discussion, limitations, conclusions, Word formatting, and reproduction guide.
-- **Writing literature review:** Before drafting Related Work, Methodology, and Discussion, complete the required freshness/full-evidence check in `ThesisBibliography`, synchronize the verified package, and write only from the pinned imported `SRC-*` evidence and associated analyses/limitations. Distinguish peer-reviewed work, preprints, and benchmark/tool papers.
-- **Submission freshness check:** Recheck recent sources in `ThesisBibliography`, synchronize the final verified bibliography package, and recheck the official Word template/submission guidance shortly before final delivery.
-- **Gate:** Claims, citations, figures, cross-references, privacy, and provenance audits pass.
+- Repeat bibliography freshness and official submission-guidance checks.
+- Audit claims, citations, protocol versions, included/excluded runs, figures, cross-references, privacy, and reproducibility.
 
 ## Completion rule
 
-The project is complete when the research question is answered with reliable evidence and the polished local dashboard supports the required experiment workflow. Production-platform scope is not required.
+The project is complete when the research question is answered with reliable reproducible evidence and the bounded local dashboard supports the real experiment workflow. Production-platform engineering is not required.
