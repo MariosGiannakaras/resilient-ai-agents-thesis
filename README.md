@@ -41,9 +41,9 @@ No final research question, model set, GridWorld scientific parameters, uncertai
 
 - `docs/context/CURRENT_STATUS.md` — shortest authoritative current-state summary.
 - `docs/context/TASKS.md` — canonical concrete checklist and resumable Codex progress ledger.
-- `docs/context/END_TO_END_JOURNEY.md` — Codex/user journey and lifecycle handoff contracts; not a second checklist.
 - `docs/context/PROJECT_CONTEXT.md` — current integrated project context.
 - `docs/context/IMPLEMENTATION_ROADMAP.md` — phase/dependency explanation.
+- `docs/context/EXECUTION_WORKFLOW.md` — execution responsibilities and major handoffs.
 - `docs/context/DOCUMENTATION_GOVERNANCE.md` — mandatory reconciliation rules.
 - `docs/decisions/DECISION_LOG.md` — accepted/superseded/pending decision index.
 - `docs/context/CODEX_EXECUTION_PROMPT.md` — single tracked, canonical, directly executable Codex prompt.
@@ -78,7 +78,7 @@ presentation/source/                   Future slide outline/evidence map/speaker
 presentation/assets/                   Future evidence-backed figures/screenshots/demo assets
 presentation/final/                    Future final PowerPoint and defense deliverables
 
-docs/context/                          Current scope, tasks, journeys, requirements, workflow, roadmap
+docs/context/                          Current scope, tasks, requirements, workflow, roadmap
 docs/research/                         Research framing and selection work
 docs/experiments/                      Protocol, run, storage, and provenance rules
 docs/architecture/                     Core/UI architecture
