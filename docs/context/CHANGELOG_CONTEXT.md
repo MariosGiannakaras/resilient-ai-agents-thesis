@@ -113,7 +113,17 @@ Record only material changes to the project source of truth. Do not duplicate or
 
 ## 2026-08-04 — Canonical Codex prompt made directly executable
 
-- Clarified that `docs/context/CODEX_EXECUTION_PROMPT.md` is not merely a template; it is the single canonical prompt Codex should read directly after the repository is cloned or updated.
-- Removed the normal requirement to copy the prompt into a disposable `CODEX_TASK.md` file.
-- Recorded that future material project/workflow changes must update the tracked canonical prompt in the same PR.
-- Updated README, current status, execution workflow, documentation governance, DEC-024, decision index, ignore rules and consistency validation accordingly.
+- Clarified that `docs/context/CODEX_EXECUTION_PROMPT.md` is the single canonical prompt Codex reads directly after the repository is cloned or updated.
+- Removed the normal requirement for a copied disposable task prompt.
+- Recorded that future material project/workflow changes update the tracked canonical prompt in the same PR.
+
+## 2026-08-04 — Resumable canonical Codex task registry
+
+- Added `docs/context/TASKS.md` as the single concrete execution checklist and resume ledger for the thesis lifecycle.
+- Required every Codex session to inspect the registry before selecting or resuming work.
+- Required Codex to combine available session/conversation memory with durable branch/commit/working-tree/PR/test evidence rather than relying on either alone.
+- Added `IN_PROGRESS` resume state with branch/PR, last validated point, and exact next action for unfinished work.
+- Added checkpoint-commit guidance so abrupt model-quota/session interruptions can be recovered without restarting work.
+- Kept coherent PRs squash-merged to `main`, so checkpoint resilience does not create noisy permanent history.
+- Added stable task IDs, dependencies, and acceptance conditions across the remaining research, implementation, pilot, dashboard, final-experiment, writing, and audit lifecycle.
+- Added DEC-025 and made task-registry reconciliation part of every material PR.
