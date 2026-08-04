@@ -28,12 +28,13 @@ def compute_resilience_metrics(
     *,
     change_index: int,
     recovery_fraction: float,
-    reference_value: float | None = None,
+    reference_value: float | None,
 ) -> ResilienceMetrics:
-    """Compute basic recovery metrics without silently choosing a threshold.
+    """Compute basic recovery metrics without silently choosing thresholds/references.
 
-    ``recovery_fraction`` must be supplied by the protocol. ``None`` is returned
-    when recovery is not observed inside the available horizon.
+    ``recovery_fraction`` and ``reference_value`` are protocol inputs. Passing
+    ``None`` explicitly requests the pre-change nominal mean as the loss reference.
+    ``None`` is also returned when recovery is not observed inside the horizon.
     """
 
     _validate(values, change_index)
