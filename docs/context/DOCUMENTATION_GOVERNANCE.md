@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Repository documentation is part of the thesis source of truth. A code, research, architecture, workflow, storage, protocol, or task-state change is incomplete if related active documentation still describes the previous state.
+Repository documentation is part of the thesis source of truth. A code, research, architecture, workflow, storage, protocol, task-state, lifecycle-handoff, or delivery change is incomplete if related active documentation still describes the previous state.
 
 ## Document classes
 
@@ -14,6 +14,7 @@ These files must describe the current repository state and must be reconciled in
 - `README.md`
 - `docs/context/CURRENT_STATUS.md`
 - `docs/context/TASKS.md`
+- `docs/context/END_TO_END_JOURNEY.md`
 - `docs/context/PROJECT_CONTEXT.md`
 - `docs/context/CONFIRMED_REQUIREMENTS.md`
 - `docs/context/USER_DECISIONS.md`
@@ -26,9 +27,10 @@ These files must describe the current repository state and must be reconciled in
 - `docs/decisions/DECISION_LOG.md`
 - `docs/context/CHANGELOG_CONTEXT.md`
 - `docs/context/CODEX_EXECUTION_PROMPT.md`
-- active research/protocol/architecture workspaces relevant to the changed subject.
+- `docs/thesis/PRESENTATION_WORKFLOW.md`
+- active research/protocol/architecture/thesis workspaces relevant to the changed subject.
 
-`CURRENT_STATUS.md` is the shortest authoritative current-state summary. `TASKS.md` is the canonical concrete execution checklist/resume ledger. Neither excuses stale statements in other active files.
+`CURRENT_STATUS.md` is the shortest authoritative current-state summary. `TASKS.md` is the canonical concrete execution checklist/resume ledger. `END_TO_END_JOURNEY.md` explains role and artifact handoffs without becoming a second checklist. None excuses stale statements in other active files.
 
 ### 2. Accepted decision/history records
 
@@ -59,9 +61,19 @@ Every material PR must review the registry and update it when the PR:
 - supersedes/removes work;
 - changes the exact next action or active resume state.
 
+`READY` has a strict meaning: all required task-ID dependencies are completed and any non-task precondition explicitly stated for readiness is satisfied. Do not label future dependency-blocked work `READY` merely because it belongs to the planned roadmap. The documentation validator checks task-ID dependencies mechanically.
+
 Started unfinished work must remain unchecked and be marked `IN_PROGRESS` with enough durable resume information to continue after a session/model-quota interruption. Completed tasks remain checked for auditability.
 
 Session/conversation memory may assist continuation, but durable repository state is the recovery authority. Do not encode task progress only in chat.
+
+## Lifecycle-handoff governance
+
+`docs/context/END_TO_END_JOURNEY.md` defines major responsibility/artifact handoffs, not task status. When the project crosses or changes a major boundary (application -> final experiments, experiments -> evidence/analysis, analysis -> thesis, thesis -> defense, defense -> delivery), review both the lifecycle guide and the relevant `TASKS.md` acceptance/dependency conditions.
+
+Downstream thesis/presentation artifacts must never become an independent source of scientific truth. They inherit from frozen experiment evidence and citation-ready bibliography mappings.
+
+`docs/thesis/PRESENTATION_WORKFLOW.md` is the active deferred specification for the defense phase and must be reconciled if presentation tooling, output format, speaker-material requirements, evidence mapping, or rehearsal/delivery rules change.
 
 ## Change-impact matrix
 
@@ -75,8 +87,11 @@ Session/conversation memory may assist continuation, but durable repository stat
 | Models/metrics/protocol | corresponding research/protocol files, current status, `TASKS`, open questions, roadmap, decision log, Codex prompt, tests |
 | Bibliography contract/baseline | bibliography integration docs, README/context, current status, `TASKS` when research gates change, decision log/changelog, import validation/workflow; never hand-edit generated evidence |
 | Experiment/run data policy | run/provenance docs, constraints, requirements, `TASKS`, `.gitignore`/`.gitattributes`, publisher/tests, decision log/changelog |
-| Dashboard workflow | architecture/UI docs, requirements, roadmap, current status, `TASKS`, Codex prompt, tests |
-| Thesis/delivery guidance | thesis/university docs, requirements, open questions, roadmap, current status, `TASKS` where relevant |
+| Application/dashboard workflow | architecture/UI docs, `END_TO_END_JOURNEY`, requirements, roadmap, current status, `TASKS`, Codex prompt, tests |
+| Final experiment/analysis -> writing handoff | `END_TO_END_JOURNEY`, `TASKS`, roadmap, experiment/analysis docs, thesis docs, requirements, current status, decision log/changelog |
+| Thesis/review workflow | thesis/university docs, `END_TO_END_JOURNEY`, requirements/user decisions, roadmap, current status, `TASKS`, Codex prompt when execution changes |
+| Defense presentation workflow | `PRESENTATION_WORKFLOW`, `END_TO_END_JOURNEY`, requirements/user decisions, roadmap, definition of done, `TASKS`, source register, decision log/changelog |
+| Final delivery guidance | thesis/university/presentation docs, requirements, open questions, roadmap, current status, `TASKS`, definition of done |
 
 The matrix is a minimum, not an exhaustive list. Review transitive dependencies when a statement is repeated elsewhere.
 
@@ -86,12 +101,13 @@ Before merge:
 
 1. identify what changed semantically, not only which files changed;
 2. review `TASKS.md` for affected task state/dependencies/acceptance/resume information;
-3. search active documentation for the old assumption, phase, path, status, stack, count, or blocker;
-4. update all active occurrences;
-5. delete obsolete files that no longer serve a purpose;
-6. mark useful historical records explicitly historical rather than leaving ambiguous stale instructions;
-7. update decisions/changelog when the change is material;
-8. run `scripts/validate_documentation_consistency.py` and the normal repository test suite.
+3. review lifecycle handoffs when the changed subject crosses a major project boundary;
+4. search active documentation for the old assumption, phase, path, status, stack, count, or blocker;
+5. update all active occurrences;
+6. delete obsolete files that no longer serve a purpose;
+7. mark useful historical records explicitly historical rather than leaving ambiguous stale instructions;
+8. update decisions/changelog when the change is material;
+9. run `scripts/validate_documentation_consistency.py` and the normal repository test suite.
 
 ## Prompt rule
 
@@ -99,7 +115,7 @@ There is only one tracked current Codex execution prompt: `docs/context/CODEX_EX
 
 It is the directly executable entrypoint for Codex after the repository is cloned or updated. Every session must pass through `TASKS.md` before selecting or resuming work. The prompt must remain state-driven and interruption-resilient: available session memory is used, but work can always be recovered from the registry and Git/repository state.
 
-When workflow, responsibilities, architecture, project state, task-governance rules, or active execution materially changes, the prompt is reviewed and updated in the same PR.
+When workflow, responsibilities, architecture, project state, task-governance rules, lifecycle handoffs, or active execution materially changes, the prompt is reviewed and updated in the same PR.
 
 ## No silent stale-state policy
 
