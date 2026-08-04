@@ -19,7 +19,23 @@ The first complete immutable bibliography import is finished.
 - Indexed original PDFs: 280, metadata only
 - Consumer-recorded corpus files: 1561
 
-The private read credential succeeded. All upstream validators, both upstream checksum manifests, consumer integrity, contextual source-reference validation, Python 3.9/3.12 CI, and the complete test suite passed. The former active HTTP 401 and incomplete-import blockers are resolved. No PDF or Git LFS object entered this repository.
+The private read credential succeeded. All upstream validators, both upstream checksum manifests, consumer integrity, contextual source-reference validation, and the repository test suite passed for the imported baseline. The former HTTP 401 and incomplete-import blockers are resolved. No bibliography PDF or bibliography LFS object entered this repository.
+
+## Research implementation architecture
+
+DEC-023 establishes the implementation baseline:
+
+- Python 3.12 + `uv` + committed lockfile;
+- independent package at `src/resilient_agents/`;
+- evaluator-ground-truth versus agent-visible information boundary;
+- deterministic independent RNG streams;
+- explicit scenario/experiment/protocol contracts without hidden scientific defaults;
+- filesystem-first run bundles with provenance, capability snapshot, checksums, events/traces, and summary;
+- one guarded automatic Git commit and push per finalized whole experiment, never per seed;
+- selective Git LFS for large thesis-produced artifacts;
+- future Streamlit dashboard as a thin layer only after core/pilot validation.
+
+The actual target-machine inventory is still required before compute-dependent dependency/model/budget choices. The current zero-runtime-dependency core remains CPU-compatible.
 
 ## Trust model
 
@@ -29,12 +45,13 @@ The private read credential succeeded. All upstream validators, both upstream ch
 
 1. Run and accept the target-system inventory on the actual experiment machine.
 2. Complete source-traceable model/agent-family comparison.
-3. Execute custom Gymnasium-compatible and thin MiniGrid prototypes.
-4. Record the GridWorld ADR.
-5. Define the bounded research questions, metrics, and pilot protocol.
-6. Implement the independent headless research core.
+3. Complete bounded GridWorld prototype/ADR work and promote the selected environment into `src/resilient_agents/`.
+4. Define versioned scenario/change/disturbance schemas and known-answer environment fixtures.
+5. Validate metric estimands with synthetic fixtures before complex agent implementation.
+6. Define the pilot protocol and implement only the small agent set justified by the research roles.
+7. Run pilots before any polished dashboard implementation or final protocol freeze.
 
-The final research question, hypotheses, model set, uncertainty severities, seeds, budgets, hyperparameters, recovery threshold, and statistical plan remain unfrozen.
+The final research question, hypotheses, model set, GridWorld scientific parameters, uncertainty severities, seeds, budgets, hyperparameters, recovery threshold, and statistical plan remain unfrozen.
 
 ## Deferred, non-blocking inputs
 
