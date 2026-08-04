@@ -154,14 +154,14 @@ def main() -> int:
             errors.append("current Codex prompt must be directly executable and must not require a copied task prompt")
 
         prompt_core_match = re.search(
-            r"2\. Read only the session-start core:\s*(?P<section>.*?)(?=\n3\.)",
+            r"2\. Read only the session-start core:\n(?P<section>.*?)(?=\n3\.)",
             prompt,
             re.DOTALL,
         )
         if not prompt_core_match:
             errors.append("current Codex prompt missing explicit three-file session-start core")
         else:
-            listed = tuple(re.findall(r"^\s+- `([^`]+)`", prompt_core_match.group("section"), re.MULTILINE))
+            listed = tuple(re.findall(r"^[ \t]*- `([^`]+)`", prompt_core_match.group("section"), re.MULTILINE))
             if listed != SESSION_START_CORE:
                 errors.append(
                     "current Codex prompt session-start core must contain exactly: " + ", ".join(SESSION_START_CORE)
