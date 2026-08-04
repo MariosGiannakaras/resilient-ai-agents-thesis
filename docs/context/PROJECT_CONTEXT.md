@@ -79,7 +79,7 @@ Intermediate branch commits are allowed as recovery checkpoints. Coherent work s
 
 ## End-to-end lifecycle — accepted
 
-DEC-026 and `docs/context/END_TO_END_JOURNEY.md` define how the project continues beyond implementation.
+DEC-026 defines how the project continues beyond implementation. `IMPLEMENTATION_ROADMAP.md` explains the phase order, `EXECUTION_WORKFLOW.md` records responsibilities/handoffs, and `TASKS.md` is the only concrete status/dependency ledger.
 
 The intended handoff chain is:
 
@@ -139,7 +139,7 @@ Development, tuning, pilot, exploratory, and final evidence remain separated. Fi
 
 The dashboard is a supporting local single-user tool, not the scientific contribution. A small debug surface may be used during environment/core validation; the polished Streamlit dashboard follows pilot-established workflows and must not duplicate scientific logic.
 
-Application completion requires the actual user journey—not only rendered screens—to work on real backend state: configure, run/monitor, history, compare/detailed analysis, and artifacts/export.
+Application completion requires the actual user workflow—not only rendered screens—to work on real backend state: configure, run/monitor, history, compare/detailed analysis, and artifacts/export.
 
 Normal chapter drafting and final Word styling remain later stages. Structured evidence mappings, method records, captions, figures, tables, provenance, and task progress are collected during implementation; a formal evidence package is frozen after final analysis so writing is not reconstructed from memory.
 
@@ -160,7 +160,7 @@ Use:
 - `docs/context/CURRENT_STATUS.md` for the shortest current-state summary;
 - `docs/context/TASKS.md` for concrete task status/resume/next action;
 - `docs/context/IMPLEMENTATION_ROADMAP.md` for phase/dependency explanation;
-- `docs/context/END_TO_END_JOURNEY.md` for Codex/user/artifact handoffs;
+- `docs/context/EXECUTION_WORKFLOW.md` for responsibilities and major handoffs;
 - `docs/context/DOCUMENTATION_GOVERNANCE.md` for keeping related files synchronized;
 - `docs/thesis/PRESENTATION_WORKFLOW.md` for the deferred defense workflow.
 
