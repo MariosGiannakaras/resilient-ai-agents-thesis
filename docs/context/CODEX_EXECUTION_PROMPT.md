@@ -45,7 +45,7 @@ Read first:
 9. `docs/context/EXECUTION_WORKFLOW.md`
 10. `docs/context/DOCUMENTATION_GOVERNANCE.md`
 
-Then read only task-specific files required by `AGENTS.md`. Historical files are context only and must not override current active files. For defense/presentation tasks also read `docs/thesis/PRESENTATION_WORKFLOW.md`.
+Then read only task-specific files required by `AGENTS.md`. Historical files are context only and must not override current active files. For dashboard/UX tasks read `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` and `app/README.md`. For defense/presentation tasks also read `docs/thesis/PRESENTATION_WORKFLOW.md`.
 
 ## Task execution and checkpoint rules
 
@@ -124,12 +124,20 @@ A run ID represents one **whole experiment**, potentially containing many seeds/
 - Avoid microservices, Kubernetes, cloud-only infrastructure, distributed workers, authentication systems, or production observability.
 - Lightweight debug visualization is allowed when useful for validation.
 - Polished dashboard follows validated pilots and remains a thin local Streamlit layer unless measured requirements justify another decision.
+- Follow `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` and the confirmed `REQ-UI-*` requirements when implementing dashboard tasks.
+- The normal workflow must be self-explanatory: clear human-readable labels/helper text/units, consistent terminology, concise tooltips or contextual help for non-obvious scientific/technical concepts, and accurate action/status messages.
+- Use understandable status text plus consistent symbols/icons and accessible semantic visual treatment; never make color the only essential signal.
+- Provide actionable empty/loading/disabled/warning/error states and clear next-action guidance where the application can objectively recommend the next step.
+- Before launch, show a resolved experiment configuration/validation summary with protocol identity, run count and blocking issues.
+- Use confirmations only for destructive/high-impact actions where accidental activation matters.
+- Implement `T-512` only after the final dashboard structure is stable: short first-run onboarding with Previous/Next/Skip/Finish and replay from Help/Getting Started, using lightweight local state.
+- Do not add a heavyweight custom JavaScript/DOM coach-mark/tour subsystem merely for onboarding unless the final dashboard demonstrates a concrete unmet need and the scope change is explicitly justified.
 
 ## Lifecycle handoff rules
 
 DEC-026, `IMPLEMENTATION_ROADMAP.md`, `EXECUTION_WORKFLOW.md`, and the relevant `TASKS.md` dependencies/acceptance conditions control major work-package boundaries.
 
-- Application completion is an explicit gate: the intended user-facing configure/run/monitor/history/compare/export workflow must be validated before the normal frozen final experiment campaign begins.
+- Application completion is an explicit gate: the intended user-facing configure/run/monitor/history/compare/export workflow, including the confirmed UX/onboarding acceptance criteria, must be validated before the normal frozen final experiment campaign begins.
 - Final experiments use the frozen protocol and the same validated scientific core. Do not introduce scientific changes because final results are interesting or inconvenient.
 - After final analysis, create/freeze the thesis/defense evidence package before normal thesis drafting. Writing must trace to citation-ready sources and frozen evidence rather than ad-hoc raw-result browsing.
 - Treat supervisor/reviewer corrections as an explicit review cycle: revalidate any affected claim, citation, figure, table, or method statement.
@@ -156,6 +164,8 @@ Run the documentation consistency validator before merge.
 ## Testing and review
 
 Use a branch and Pull Request for substantive work. Run relevant tests plus repository checks. Tests must cover affected scientific/behavioral invariants, not only syntax.
+
+For final dashboard work, validate the self-explanatory UX contract and onboarding/help behavior with automated checks where practical plus a documented end-to-end/visual review; visual polish cannot be inferred from unit tests alone.
 
 Passing CI is necessary but not sufficient if implementation or scientific assumptions are wrong. Record rationale, validation, exclusions, and remaining gates.
 
