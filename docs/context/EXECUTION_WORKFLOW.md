@@ -40,7 +40,11 @@ The first complete import is already accepted. Formal citation trust remains con
 
 The application is not considered complete merely because the Streamlit pages render. Application completion requires the real scientific core, frozen protocol, pilot-proven management behavior, and validated user-facing configure/run/monitor/history/compare/export workflow.
 
-Only after this gate should the frozen final experiment campaign begin in the normal user journey. The final campaign uses the same validated core/configuration path as pilots; a headless fallback is allowed only when needed and explicitly documented, never as a scientifically different execution path.
+The final application also has to satisfy the self-explanatory UX baseline from DEC-027 and `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`: understandable labels/messages/units, accurate contextual help/tooltips, consistent text+icon+semantic-color states, actionable empty/loading/warning/error states, pre-run resolved-configuration/validation review, proportionate confirmations, and clear next actions where useful. Color must not be the only essential signal.
+
+Onboarding is deliberately sequenced after the stable dashboard structure (`T-510 -> T-512 -> T-511`). It remains short, skippable and replayable with Previous/Next/Skip/Finish, uses lightweight local state, and must not create a new frontend/account/persistence subsystem without demonstrated need.
+
+Only after the complete `T-511` application gate should the frozen final experiment campaign begin in the normal user journey. The final campaign uses the same validated core/configuration path as pilots; a headless fallback is allowed only when needed and explicitly documented, never as a scientifically different execution path.
 
 ## Experiment result flow
 
@@ -76,10 +80,11 @@ The intended user workflow is deliberately small:
 
 1. clone/update the repository on the thesis machine and start Codex from the canonical prompt;
 2. answer only genuinely academic/product questions or provide new official/supervisor input when needed;
-3. once the application is validated, execute the predefined final experiment campaign through the approved UI workflow;
-4. review the final scientific interpretation/analysis outputs rather than manually manipulating result files;
-5. review the thesis and provide/relay supervisor feedback;
-6. review and rehearse the final PowerPoint and speaking script.
+3. use the finished self-explanatory application, contextual help and optional/replayable onboarding without needing a separate usage manual;
+4. once the application is validated, execute the predefined final experiment campaign through the approved UI workflow;
+5. review the final scientific interpretation/analysis outputs rather than manually manipulating result files;
+6. review the thesis and provide/relay supervisor feedback;
+7. review and rehearse the final PowerPoint and speaking script.
 
 Routine Git, task bookkeeping, result-file movement, provenance, analysis regeneration, and presentation evidence mapping remain automated/repository-managed.
 
