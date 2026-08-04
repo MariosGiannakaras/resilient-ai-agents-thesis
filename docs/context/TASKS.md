@@ -32,7 +32,7 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 - **Current task:** `T-100`
 - **State:** `BLOCKED until executed on the actual thesis experiment machine`
 - **Active branch / PR:** none for `T-100`.
-- **Last validated point:** `T-007` end-to-end lifecycle audit is complete and passed full repository CI in PR #38.
+- **Last validated point:** `T-008` optimized the canonical Codex bootstrap to use a three-file session-start core, task-specific reading, bounded execution semantics, and preserved quota/review recovery safeguards.
 - **Exact next action:** clone/update current `main` on the actual thesis machine, start Codex from `CODEX_EXECUTION_PROMPT.md`, change `T-100` to `READY/IN_PROGRESS` after confirming it is the actual experiment machine, and execute it.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
@@ -77,6 +77,9 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-007` — Audit the full Codex/user lifecycle and define reliable handoffs from application completion through final experiments, analysis, thesis review/freeze, defense presentation, and delivery.
   - Depends on: `T-006`.
   - Acceptance: lifecycle/user/Codex handoffs, application-to-final-experiment dependency, frozen thesis/defense evidence package, thesis review cycle, PowerPoint/speaker-material workflow, task-status semantics, governance/requirements/decisions, and consistency validation are reconciled; full repository CI passes.
+- [x] `T-008` — Optimize the canonical Codex bootstrap for minimal context use and reliable bounded execution.
+  - Depends on: `T-006`, `T-007`.
+  - Acceptance: every session starts from `AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md`; further reading is task-specific; the canonical prompt does not duplicate domain policy; “execute completely” is bounded by task dependencies/review/external gates; quota recovery, documentation reconciliation, testing, and final reporting remain explicit; full repository CI passes.
 
 ## WP1 — Target-machine baseline
 
