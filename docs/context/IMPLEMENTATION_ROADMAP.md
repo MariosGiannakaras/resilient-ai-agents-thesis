@@ -4,7 +4,7 @@ The roadmap is phase-gated and optimized for thesis completion, scientific adequ
 
 ## Working rule
 
-Phases are checkpoints, not the concrete execution checklist and not mandatory separate PRs. `docs/context/TASKS.md` is the canonical task/status/resume registry. Combine adjacent work when it remains reviewable, but do not skip task acceptance conditions or scientific gates merely because infrastructure already exists.
+Phases are checkpoints, not the concrete execution checklist and not mandatory separate PRs. `docs/context/TASKS.md` is the canonical task/status/resume registry. `docs/context/END_TO_END_JOURNEY.md` defines Codex/user handoffs between major lifecycle stages. Combine adjacent work when it remains reviewable, but do not skip task acceptance conditions or scientific gates merely because infrastructure already exists.
 
 ## Phase 1 — Context, bibliography, and target machine
 
@@ -59,33 +59,47 @@ Phases are checkpoints, not the concrete execution checklist and not mandatory s
 - Add only the run registry, truthful lifecycle state, interruption/recovery, batch support, and current resource snapshot required by the frozen workflow.
 - Filesystem run bundles remain the source of truth; any database/index is rebuildable cache.
 
-## Phase 10 — Polished bounded dashboard
+## Phase 10 — Polished bounded application
 
 - Implement the final dashboard as a thin local Streamlit layer unless a concrete pilot-derived requirement disproves that choice.
 - Required workflows: New Experiment, Run/Monitor, History, Compare, Detailed Analysis, and Artifacts/Export.
+- Validate a real end-to-end multi-seed workflow through the user-facing application before the final experiment campaign.
 - No scientific logic may be duplicated in Streamlit callbacks.
+- **Gate:** application completion means the intended user workflow is truthful, tested, polished, and uses the same frozen scientific core.
 
-## Phase 11 — Final runs
+## Phase 11 — Final experiment campaign
 
-- Execute the frozen matrix with automatic provenance, storage, checksums, and one commit/push per whole experiment.
+- Execute the frozen matrix only after `protocol-v1.0` and the validated application workflow are ready.
+- Use automatic provenance, storage, checksums, and one commit/push per whole experiment.
 - Retain failed/cancelled/invalid/excluded runs with reasons.
 - Large thesis-produced artifacts may use Git LFS; bibliography LFS/PDF objects remain upstream.
 
-## Phase 12 — Statistical analysis and frozen evidence
+## Phase 12 — Statistical analysis and frozen evidence package
 
-- Produce reproducible summaries, intervals/effect sizes/diagnostics as justified, figures, tables, and exports.
-- Freeze `results/thesis-final/` from the validated final run set only.
+- Freeze the accepted final run set under `results/thesis-final/`.
+- Produce reproducible summaries, intervals/effect sizes/diagnostics as justified, figures, tables, captions, and exports from frozen evidence only.
+- Produce a versioned thesis/defense evidence package mapping RQs, protocol/method references, source IDs, result/run IDs, figures/tables, and planned claims.
+- **Gate:** writing/presentation must not require ad-hoc reinterpretation of raw final runs.
 
-## Phase 13 — Thesis and presentation artifacts
+## Phase 13 — Thesis writing and review
 
-- Write the Greek Word thesis from the verified bibliography and frozen experiment evidence.
-- Generate figures/tables/screenshots/presentation material from the same traceable evidence chain.
+- Refresh current official thesis/template/submission guidance.
+- Write the Greek Word thesis from citation-ready bibliography evidence and the frozen evidence package.
+- Produce a review-ready `.docx`, incorporate supervisor/reviewer corrections when received, and revalidate affected claims/figures/citations.
+- Perform final bibliography/guidance audit and freeze the final thesis deliverable.
 
-## Phase 14 — Final audit
+## Phase 14 — Defense presentation
 
-- Repeat bibliography freshness and official submission-guidance checks.
-- Audit claims, citations, protocol versions, included/excluded runs, figures, cross-references, privacy, and reproducibility.
+- Follow `docs/thesis/PRESENTATION_WORKFLOW.md` only after the final thesis is stable.
+- Build the defense narrative and slide evidence map from the final thesis and frozen evidence.
+- Produce the final PowerPoint `.pptx`, embedded speaker notes, and a separate full spoken Greek script.
+- Validate application screenshots/demo fallback, factual consistency, PowerPoint rendering, and rehearsal timing.
+
+## Phase 15 — Final audit and delivery
+
+- Audit claims, citations, protocol versions, included/excluded runs, figures, cross-references, privacy, licensing, reproducibility, thesis/presentation consistency, and official required files.
+- Confirm the final repository/application, thesis, PowerPoint, speaker material, and demo/delivery package are ready.
 
 ## Completion rule
 
-The project is complete when the research question is answered with reliable reproducible evidence and the bounded local dashboard supports the real experiment workflow. Production-platform engineering is not required. Concrete completion is tracked through task acceptance conditions in `TASKS.md`.
+The project is complete when the research question is answered with reliable reproducible evidence, the bounded local application supports the real experiment workflow, and the final thesis and defense package faithfully communicate the same frozen evidence. Production-platform engineering is not required. Concrete completion is tracked through task acceptance conditions in `TASKS.md`.
