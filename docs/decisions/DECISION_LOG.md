@@ -149,6 +149,11 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **Status:** Accepted and implemented.
 - **Decision:** The canonical Codex prompt is a lean execution bootstrap, not a second copy of `AGENTS.md`. Every session reads only `AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md` before selecting/resuming work, then loads only task-specific active specifications/evidence. “Execute it completely” means progressing one dependency-valid task/coherent work package at a time within review, machine, evidence, and scientific gates; it never authorizes an all-thesis attempt, blocked/deferred work, or completed-work reimplementation. CI enforces the three-file startup core, bounded-execution wording, non-duplication of domain-policy sections, and a lean prompt-size budget.
 
+## DEC-029 — Risk-based proportional testing
+- **Date:** 2026-08-04
+- **Status:** Accepted.
+- **Decision:** Testing protects scientific validity, task acceptance conditions, critical reliability/security boundaries, and concrete regressions, but must not become an independent scope-expansion project. Codex uses targeted tests during implementation, tiny deterministic fixtures/smoke runs in CI, and the full repository checks at review readiness rather than after every small edit. There is no arbitrary coverage-percentage target and no mutation/fuzz/property/combinatorial/snapshot expansion without a concrete task-specific risk. Stop adding tests once material risks and acceptance conditions are covered; never run pilot/final experiment matrices as CI tests.
+
 ## Pending decisions
 
 Future entries are still required for:
@@ -165,4 +170,4 @@ Future entries are still required for:
 - final citation style/Word template/submission specifics near writing/delivery;
 - exact current defense duration, required slide/file rules, and administrative presentation/submission procedure near delivery.
 
-The general Python/core/storage/result-publication/dashboard architectural baseline, task-governance mechanism, lean Codex bootstrap, end-to-end handoff model, and self-explanatory UI/onboarding baseline are **not** pending decisions unless later requirements justify explicit amendments.
+The general Python/core/storage/result-publication/dashboard architectural baseline, task-governance mechanism, lean Codex bootstrap, proportional testing discipline, end-to-end handoff model, and self-explanatory UI/onboarding baseline are **not** pending decisions unless later requirements justify explicit amendments.
