@@ -1,5 +1,7 @@
 # Definition of Done
 
+This file defines project-level completion conditions. It is **not** the operational task tracker. Concrete task IDs, dependencies, in-progress resume state, and next actions are maintained only in `docs/context/TASKS.md`.
+
 ## Foundation and bibliography
 
 - [x] Official application examined and exact titles recorded.
@@ -25,6 +27,7 @@
 - [x] Selective Git LFS policy for large thesis-produced artifacts established.
 - [x] Development/tuning/pilot/final separation infrastructure established.
 - [x] Documentation governance and stale-state validation established.
+- [x] Canonical resumable Codex task registry and interruption-recovery workflow established.
 
 ## Current research/environment phase
 

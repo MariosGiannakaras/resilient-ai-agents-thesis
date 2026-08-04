@@ -4,7 +4,7 @@ The roadmap is phase-gated and optimized for thesis completion, scientific adequ
 
 ## Working rule
 
-Phases are checkpoints, not mandatory separate PRs. Combine adjacent work when it remains reviewable. Do not skip scientific gates merely because infrastructure already exists.
+Phases are checkpoints, not the concrete execution checklist and not mandatory separate PRs. `docs/context/TASKS.md` is the canonical task/status/resume registry. Combine adjacent work when it remains reviewable, but do not skip task acceptance conditions or scientific gates merely because infrastructure already exists.
 
 ## Phase 1 — Context, bibliography, and target machine
 
@@ -88,4 +88,4 @@ Phases are checkpoints, not mandatory separate PRs. Combine adjacent work when i
 
 ## Completion rule
 
-The project is complete when the research question is answered with reliable reproducible evidence and the bounded local dashboard supports the real experiment workflow. Production-platform engineering is not required.
+The project is complete when the research question is answered with reliable reproducible evidence and the bounded local dashboard supports the real experiment workflow. Production-platform engineering is not required. Concrete completion is tracked through task acceptance conditions in `TASKS.md`.

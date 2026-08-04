@@ -64,6 +64,17 @@ This file contains explicit current user decisions. Old conversations do not cre
 - Git LFS may be used automatically for appropriate large result/artifact formats.
 - Do not discard useful result data merely to avoid large files unless a real storage/LFS limit requires a deliberate retention change.
 
+## Codex task continuity and quota interruptions
+
+- Maintain one canonical task registry with checkboxes/stable task IDs so required work cannot be forgotten across the long thesis lifecycle.
+- Every Codex session must pass through the task registry before selecting or resuming work.
+- Codex should use its available session/conversation memory to remember where it left off; the task registry and Git/repository state supplement that memory and provide recovery when the session/model quota ends.
+- If a task has started but is unfinished, preserve exactly where it stopped: active branch/PR, last validated point, tests, relevant changed files, and exact next action.
+- If model quota ends abruptly, the next session must inspect existing branch commits, working-tree diff, PR/test state, and the registry before assuming the task needs to restart.
+- Use intermediate branch checkpoint commits where useful for recovery, while still preferring one coherent squash commit in `main` per completed implementation PR.
+- Newly discovered required work must be added to the canonical registry rather than being left only in chat or informal notes.
+- The user should not have to manually remember or reconstruct unfinished Codex work between quota windows.
+
 ## GridWorld
 
 - The project is built afresh; legacy code is not required.
@@ -97,10 +108,10 @@ This file contains explicit current user decisions. Old conversations do not cre
 
 ## Documentation consistency
 
-- When a material implementation, architecture, status, workflow, research, storage, or protocol decision changes, all related active files must be updated in the same change.
-- Do not leave old active prompts/status files to be corrected later.
+- When a material implementation, architecture, status, workflow, research, storage, protocol, or task-state decision changes, all related active files must be updated in the same change.
+- Do not leave old active prompts/status/task files to be corrected later.
 - Delete obsolete files when they are no longer useful; preserve old records only when they have historical value and mark them clearly as historical.
-- The current Codex execution prompt must be kept synchronized with the repository state.
+- The current Codex execution prompt and task registry must be kept synchronized with repository state.
 - Automated checks should enforce consistency where stale states can be detected mechanically.
 
 ## Thesis and repository

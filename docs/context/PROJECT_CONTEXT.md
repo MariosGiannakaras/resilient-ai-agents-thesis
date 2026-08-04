@@ -67,6 +67,14 @@ DEC-023 establishes the current implementation baseline:
 
 Large thesis-produced experiment artifacts are retained by default rather than manually excluded merely because they are large. The configured LFS policy handles selected large formats; retention is revisited only if a real storage constraint appears.
 
+## Codex execution continuity — accepted
+
+DEC-025 establishes `docs/context/TASKS.md` as the single concrete execution checklist and resumable progress ledger.
+
+Every Codex session reads it before selecting/resuming work. Codex uses available session/conversation memory to continue efficiently, but verifies that memory against durable repository evidence: branch/commits, working-tree diff, PR state, tests, task state, and active docs. If model quota/session interruption occurs, unfinished work is resumed rather than reconstructed or restarted.
+
+Intermediate branch commits are allowed as recovery checkpoints. Coherent work still normally reaches `main` through a squash merge, so recovery checkpoints do not create unnecessary permanent main history.
+
 ## Research direction — not frozen
 
 The imported evidence supports a bounded direction but does not yet freeze the final protocol:
@@ -115,19 +123,21 @@ Development, tuning, pilot, exploratory, and final evidence remain separated. Fi
 
 The dashboard is a supporting local single-user tool, not the scientific contribution. A small debug surface may be used during environment/core validation; the polished Streamlit dashboard follows pilot-established workflows and must not duplicate scientific logic.
 
-Normal chapter drafting and final Word styling remain later stages. Structured evidence mappings, method records, captions, figures, tables, and provenance are collected during implementation so writing is not reconstructed from memory.
+Normal chapter drafting and final Word styling remain later stages. Structured evidence mappings, method records, captions, figures, tables, provenance, and task progress are collected during implementation so later work is not reconstructed from memory.
 
 ## Current genuine gates
 
-1. Run and accept the system inventory on the actual thesis experiment machine.
-2. Complete the bounded GridWorld prototype comparison and ADR.
-3. Finalize source-traceable research question/hypotheses and exact environment/observability framing.
-4. Finalize the small model/baseline set and formal evidence support.
-5. Operationalize/freeze metrics, uncertainty severities/timing, seeds, budgets, tuning rules, and statistical plan through pilots.
-6. Complete the actual environment/agent/orchestration implementation and run pilots before final protocol/dashboard work.
+The canonical concrete task/dependency list is `docs/context/TASKS.md`. The current first gate is `T-100`: actual system inventory on the thesis experiment machine. GridWorld, research framing, metrics, model selection, pilots, dashboard, final experiments, writing, and audits follow the dependency/acceptance conditions recorded in that registry.
 
 Deferred, non-blocking inputs remain later supervisor corrections, eventual submission/presentation dates, a current official Word template, and optional contextual example theses supplied near writing.
 
 ## Current authority
 
-Use `docs/context/CURRENT_STATUS.md` for the shortest current-state summary, `docs/context/IMPLEMENTATION_ROADMAP.md` for execution order, and `docs/context/DOCUMENTATION_GOVERNANCE.md` for keeping related files synchronized. Historical bootstrap/pre-import records must not be used as current blockers or instructions.
+Use:
+
+- `docs/context/CURRENT_STATUS.md` for the shortest current-state summary;
+- `docs/context/TASKS.md` for concrete task status/resume/next action;
+- `docs/context/IMPLEMENTATION_ROADMAP.md` for phase/dependency explanation;
+- `docs/context/DOCUMENTATION_GOVERNANCE.md` for keeping related files synchronized.
+
+Historical bootstrap/pre-import records must not be used as current blockers or instructions.

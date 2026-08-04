@@ -38,13 +38,17 @@ DEC-023 establishes the implementation baseline:
 
 The actual target-machine inventory is still required before compute-dependent dependency/model/budget choices. The current base core remains CPU-compatible.
 
-## Documentation and Codex execution
+## Codex execution and resumable tasks
 
-The obsolete pre-import `CODEX_BOOTSTRAP_PROMPT.md` has been retired. `docs/context/CODEX_EXECUTION_PROMPT.md` is the only tracked current Codex prompt and is directly executable from the repository.
+`docs/context/CODEX_EXECUTION_PROMPT.md` is the only tracked current Codex prompt and is directly executable from the repository.
 
-After cloning/updating the repository on the thesis machine, the user only needs to tell Codex: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.` The tracked prompt is not deleted after use and must be updated in the same PR whenever workflow, architecture, responsibilities, project state, or the active next task materially changes.
+`docs/context/TASKS.md` is the canonical concrete task checklist and resume ledger. Every Codex session must inspect it before selecting or resuming work. Codex uses available session/conversation memory together with durable Git/repository evidence. If a session ends because of model quota or another interruption, the next session resumes from any `IN_PROGRESS` task, branch/commits, working-tree diff, PR state, tests, and the registry rather than restarting from chat memory.
 
-Every material change must reconcile all affected active docs/prompts/status/decision/workflow files in the same PR. Useful historical records are marked historical rather than left as ambiguous current guidance. CI includes a documentation-consistency validator for mechanically detectable stale states.
+Intermediate branch commits are allowed as recovery checkpoints; coherent work still normally reaches `main` through one squash merge.
+
+After cloning/updating the repository on the thesis machine, the user only needs to tell Codex: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.`
+
+Every material change must reconcile all affected active docs/prompts/tasks/status/decision/workflow files in the same PR. CI includes a documentation-consistency validator for mechanically detectable stale states.
 
 ## Trust model
 
@@ -52,13 +56,7 @@ Every material change must reconcile all affected active docs/prompts/status/dec
 
 ## Active bounded work
 
-1. Run and accept the target-system inventory on the actual experiment machine.
-2. Complete source-traceable model/agent-family comparison.
-3. Complete bounded GridWorld prototype/ADR work and promote the selected environment into `src/resilient_agents/`.
-4. Define versioned scenario/change/disturbance schemas and known-answer environment fixtures.
-5. Validate metric estimands with synthetic fixtures before complex agent implementation.
-6. Define the pilot protocol and implement only the small agent set justified by the research roles.
-7. Run pilots before any polished dashboard implementation or final protocol freeze.
+The canonical concrete queue is `docs/context/TASKS.md`. Its current first gate is the target-system inventory on the actual thesis experiment machine (`T-100`), followed by the dependency-gated GridWorld/research/metrics/agent/pilot work recorded there.
 
 The final research question, hypotheses, model set, GridWorld scientific parameters, uncertainty severities, seeds, budgets, hyperparameters, recovery threshold, and statistical plan remain unfrozen.
 

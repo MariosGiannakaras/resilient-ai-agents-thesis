@@ -2,6 +2,7 @@
 """Validate mechanically detectable project-documentation consistency rules."""
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -10,6 +11,7 @@ REQUIRED_ACTIVE = (
     "AGENTS.md",
     "README.md",
     "docs/context/CURRENT_STATUS.md",
+    "docs/context/TASKS.md",
     "docs/context/PROJECT_CONTEXT.md",
     "docs/context/CONFIRMED_REQUIREMENTS.md",
     "docs/context/USER_DECISIONS.md",
@@ -35,6 +37,7 @@ CURRENT_STATE_FILES = (
     "AGENTS.md",
     "README.md",
     "docs/context/CURRENT_STATUS.md",
+    "docs/context/TASKS.md",
     "docs/context/PROJECT_CONTEXT.md",
     "docs/context/CONFIRMED_REQUIREMENTS.md",
     "docs/context/USER_DECISIONS.md",
@@ -58,6 +61,8 @@ RESOLVED_STALE_FRAGMENTS = (
     "repository sha-256 pending local calculation by codex",
     "repository sha-256 pending codex local verification",
 )
+
+TASK_RE = re.compile(r"^- \[(?:x| )\](?:\s+(?:READY|BLOCKED|DEFERRED|IN_PROGRESS))?\s+`(T-\d+)`", re.MULTILINE)
 
 
 def read(relative: str) -> str:
@@ -93,13 +98,44 @@ def main() -> int:
         prompt = prompt_path.read_text(encoding="utf-8")
         for required in (
             "docs/context/CURRENT_STATUS.md",
+            "docs/context/TASKS.md",
             "docs/context/DOCUMENTATION_GOVERNANCE.md",
             "Read `docs/context/CODEX_EXECUTION_PROMPT.md` and execute it completely.",
+            "Mandatory startup and resume procedure",
+            "IN_PROGRESS",
         ):
             if required not in prompt:
-                errors.append(f"current Codex prompt missing required state-driven reference: {required}")
+                errors.append(f"current Codex prompt missing required state/task-driven reference: {required}")
         if "copy its contents to" in prompt.casefold() or "CODEX_TASK.md" in prompt:
             errors.append("current Codex prompt must be directly executable and must not require a copied task prompt")
+
+    tasks_path = ROOT / "docs/context/TASKS.md"
+    if tasks_path.is_file():
+        tasks = tasks_path.read_text(encoding="utf-8")
+        for required in (
+            "## Mandatory session rule",
+            "## Resume state",
+            "## Quota/interruption resilience",
+            "IN_PROGRESS",
+            "session memory",
+            "git status",
+            "Exact next action",
+        ):
+            if required.casefold() not in tasks.casefold():
+                errors.append(f"TASKS.md missing required resumability element: {required}")
+
+        ids = TASK_RE.findall(tasks)
+        if not ids:
+            errors.append("TASKS.md must contain task IDs using the canonical checklist syntax")
+        duplicates = sorted({task_id for task_id in ids if ids.count(task_id) > 1})
+        if duplicates:
+            errors.append(f"TASKS.md contains duplicate task IDs: {', '.join(duplicates)}")
+
+        resume_match = re.search(r"- \*\*Current task:\*\* `(?P<task>T-\d+)`", tasks)
+        if not resume_match:
+            errors.append("TASKS.md Resume state must name one current task ID")
+        elif resume_match.group("task") not in ids:
+            errors.append("TASKS.md Resume state current task must exist in the task checklist")
 
     synthesis_path = ROOT / "docs/research/POSTIMPORT_EVIDENCE_SYNTHESIS.md"
     if synthesis_path.is_file():
