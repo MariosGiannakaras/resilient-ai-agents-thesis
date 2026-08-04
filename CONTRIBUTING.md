@@ -4,37 +4,51 @@ This repository is private and serves one thesis project, but changes must follo
 
 ## Before making a change
 
-- Read `AGENTS.md` and the relevant canonical context files.
-- Identify the requirement or decision that justifies the change.
-- If none exists, record the need or open issue before implementation.
-- Identify every active document, prompt, test, workflow, schema, or status statement that depends on the thing being changed.
+- Read `AGENTS.md`, `docs/context/TASKS.md`, and the relevant canonical context files.
+- Identify the canonical task ID(s), requirement, or decision that justifies the change.
+- If required work is newly discovered, add a stable task ID/dependency to `TASKS.md` before it can be forgotten.
+- Identify every active document, prompt, test, workflow, schema, task state, or status statement that depends on the thing being changed.
 
-## Documentation consistency rule
+## Task and documentation consistency rule
 
 A change is not complete when only the code or primary document is updated.
 
 In the same Pull Request:
 
-1. update every active source-of-truth document affected by the change;
-2. update the current Codex execution prompt if the active phase, workflow, architecture, or responsibilities changed;
-3. delete obsolete compatibility files when they no longer serve a purpose;
-4. preserve genuinely historical records only when useful, and mark them prominently as historical so they cannot be mistaken for current instructions;
-5. update `CURRENT_STATUS.md`, `OPEN_QUESTIONS.md`, `DECISION_LOG.md`, and `CHANGELOG_CONTEXT.md` when their claims are affected;
-6. add or update automated consistency checks when a stale state can be detected mechanically.
+1. review `TASKS.md` and update started/completed/blocked/unblocked/discovered/superseded tasks and `Resume state` where applicable;
+2. update every active source-of-truth document affected by the change;
+3. update the current Codex execution prompt if workflow, architecture, task-execution rules, or responsibilities changed;
+4. delete obsolete compatibility files when they no longer serve a purpose;
+5. preserve genuinely historical records only when useful, and mark them prominently as historical so they cannot be mistaken for current instructions;
+6. update `CURRENT_STATUS.md`, `OPEN_QUESTIONS.md`, `DECISION_LOG.md`, and `CHANGELOG_CONTEXT.md` when their claims are affected;
+7. add/update automated consistency checks when stale state can be detected mechanically.
 
-`docs/context/DOCUMENTATION_GOVERNANCE.md` defines the dependency/update matrix. `docs/context/CURRENT_STATUS.md` is the authoritative current-state summary.
+`docs/context/DOCUMENTATION_GOVERNANCE.md` defines the dependency/update matrix. `CURRENT_STATUS.md` summarizes current state. `TASKS.md` is the canonical concrete execution/resume ledger.
+
+## Interruption-safe work
+
+Codex work may be interrupted by quota/session loss.
+
+- Preserve useful current-session memory but verify it against Git/repository state.
+- Use descriptive work branches and intermediate checkpoint commits after meaningful validated substeps when practical.
+- Keep unfinished tasks `IN_PROGRESS` with an exact resume note.
+- On a new session inspect branch, commits, working-tree diff, PR/tests, and task resume state before restarting work.
+- Normally squash the coherent PR into `main`; checkpoint commits need not become permanent main history.
 
 ## Branches and commits
 
 - `main`: stable thesis source of truth.
 - Feature/research branches: use short descriptive names such as `research/gridworld-spec`, `feat/run-registry`, `experiments/run-schema-v1`.
-- Keep commits small but meaningful; squash related connector-generated commits before merging when practical.
+- Keep commits small but meaningful; intermediate recovery commits are acceptable on branches.
+- Squash coherent connector/checkpoint commits before merging when appropriate.
 - Typical prefixes: `docs:`, `research:`, `feat:`, `experiments:`, `test:`, `fix:`, `chore:`.
 - Commit and Pull Request text is written in English.
 
 ## Pull Request checklist
 
-- [ ] The change maps to a requirement, issue, or decision.
+- [ ] The PR lists the affected canonical task ID(s).
+- [ ] `TASKS.md` and `Resume state` were reconciled where applicable.
+- [ ] The change maps to a requirement/decision/research need.
 - [ ] Relevant tests were added or updated.
 - [ ] No secrets or generated artifacts without provenance were added.
 - [ ] Every affected active source-of-truth/status/prompt file was reviewed and reconciled.
