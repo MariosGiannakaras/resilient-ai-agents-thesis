@@ -104,7 +104,7 @@ Normal flow:
 9. `docs/context/EXECUTION_WORKFLOW.md`
 10. `docs/context/DOCUMENTATION_GOVERNANCE.md`
 
-Then read only task-specific files needed for the active task. For defense/presentation tasks read `docs/thesis/PRESENTATION_WORKFLOW.md`. Do not reread the whole repository/generated bibliography for a bounded task. Repository-wide rereading is for cross-cutting audits/changes.
+Then read only task-specific files needed for the active task. For dashboard/UX tasks read `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` and `app/README.md`. For defense/presentation tasks read `docs/thesis/PRESENTATION_WORKFLOW.md`. Do not reread the whole repository/generated bibliography for a bounded task. Repository-wide rereading is for cross-cutting audits/changes.
 
 Do not ask the user for information that can be collected reliably from this repository, `ThesisBibliography`, the local system, or authoritative sources.
 
@@ -161,6 +161,15 @@ Scientific evidence remains in the original source language. Never fabricate sou
 - Lightweight debug visualization is allowed when it helps validation.
 - Final UI must be polished, consistent, responsive, screenshot-ready, and based only on real backend state/data.
 - Essential final workflows: configure, run/monitor, GridWorld inspect, history, compare/detailed analysis, artifacts/export.
+- Follow `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` for the bounded dashboard structure and self-explanatory UX contract.
+- Use clear human-readable labels/helper text/visible units and consistent terminology; internal codes never replace understandable primary labels.
+- Use concise tooltips/contextual help for non-obvious scientific or technical concepts, synchronized with the real protocol/metric definitions.
+- Use text plus consistent icons/symbols and accessible semantic visual treatment for statuses/validation; never rely on color alone for essential meaning.
+- Empty/loading/disabled/warning/error states must be understandable and actionable when the next step is not obvious.
+- Show a resolved pre-run configuration/validation summary before launch.
+- Use confirmations only where accidental destructive/high-impact actions warrant them.
+- Implement lightweight first-run onboarding only after the final dashboard structure is stable (`T-512`): short, skippable, replayable, Previous/Next/Skip/Finish, local state, no account system.
+- Prefer native/lightweight Streamlit mechanisms; do not introduce a custom JavaScript/DOM tour framework unless a demonstrated final-UI requirement cannot be met otherwise.
 - Resource telemetry is a lightweight current snapshot, not an observability subsystem.
 - Fake progress, mock final metrics, fabricated logs, and backend-inconsistent state are forbidden.
 
@@ -192,6 +201,7 @@ As applicable, test:
 - statistical-processing fixtures;
 - provenance and automatic-publication safety;
 - task/documentation/lifecycle consistency;
+- self-explanatory dashboard states, pre-run validation, contextual help and onboarding/help behavior where practical, plus visual/end-to-end UX review;
 - regressions.
 
 Bibliography changes additionally validate immutable provenance/source commits, manifests/checksums, forbidden artifacts, generated integrity, and source-reference validity.
