@@ -89,6 +89,7 @@ class MetricTests(unittest.TestCase):
             [10.0, 10.0, 4.0, 7.0, 9.0, 10.0],
             change_index=2,
             recovery_fraction=0.9,
+            reference_value=None,
         )
         self.assertEqual(metrics.nominal_mean, 10.0)
         self.assertEqual(metrics.immediate_degradation, 6.0)
@@ -100,6 +101,7 @@ class MetricTests(unittest.TestCase):
             [10.0, 10.0, 4.0, 5.0, 6.0],
             change_index=2,
             recovery_fraction=0.9,
+            reference_value=None,
         )
         self.assertIsNone(metrics.recovery_step)
 
