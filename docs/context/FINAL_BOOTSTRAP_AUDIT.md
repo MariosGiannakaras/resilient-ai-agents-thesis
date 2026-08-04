@@ -1,72 +1,41 @@
 # Final Bootstrap Audit
 
+> **Historical record — 2026-07-29.** This file documents the state at the end of the original bootstrap and is **not current project status or an execution checklist**. Its former blocker/next-phase statements have been superseded. Use `docs/context/CURRENT_STATUS.md`, `docs/context/PROJECT_CONTEXT.md`, and `docs/context/IMPLEMENTATION_ROADMAP.md` for current guidance.
+
 **Audit date:** 2026-07-29  
-**Scope:** Original user task, official application, ten conversation exports, all substantive bootstrap documentation, repository structure, current clarification and selected current public sources.
+**Status:** `HISTORICAL_CONTEXT_ONLY`
 
-## Audit conclusion
+## Historical conclusion
 
-The repository structure and the core scientific/reproducibility requirements are sound. The interruptions did not corrupt the folder structure or omit the required substantive document categories. However, the first synthesis made three interpretation errors that materially affected the plan:
+The original bootstrap established a sound repository structure and core scientific/reproducibility requirements, while correcting three interpretation errors that appeared in earlier synthesis:
 
-1. It treated historical conversation content as a source of reconstructed preferences and candidate shortlists.
-2. It treated an existing/legacy GridWorld codebase as something the user needed to provide or recover.
-3. It treated exact hardware inventory as information the user needed to add manually.
+1. old conversation content had been treated too strongly as preferences/candidate shortlists;
+2. an existing/legacy GridWorld codebase had been treated as something the user needed to provide or recover;
+3. hardware inventory had been treated as information the user needed to transcribe manually.
 
-All three are superseded by the user's explicit clarification and corrected across the repository.
+The corrected bootstrap rules remain historically important:
 
-## Correct authoritative interpretation
+- old chats are context only;
+- research/technical decisions require current evidence;
+- legacy user-owned code is not required;
+- actual hardware is inspected automatically;
+- the research core is independent from the final dashboard;
+- fabricated data/results are forbidden.
 
-- Old chats are examples and context only. They help reveal what was previously considered, but they do not make a model, metric, stack or GridWorld design more likely to be selected.
-- Every research and technical decision is made anew from the official topic, current verified literature, current technical sources, the actual execution environment and pilots.
-- The project is built anew; no legacy code is required.
-- Codex first researches current GridWorld options and compares reuse/adapt/custom. It downloads and integrates a third-party option only after suitability, license, maintenance, API, determinism and prototype validation.
-- Codex inspects the actual CPU/RAM/GPU/OS/drivers/runtimes/storage directly. No manual user transcription is required.
+## Later developments that supersede the original blocker section
 
-## Repository checks performed
+Since this audit:
 
-- Required top-level folders and requested documentation categories are present.
-- No final application, model implementation, final experiment or fabricated thesis chapter was created.
-- No raw conversation export was committed.
-- The official application is present at the expected GitHub path.
-- The user explicitly confirmed that the repository PDF is the same authoritative file supplied for analysis; no replacement is required.
-- The repository SHA-256 will be calculated and recorded by Codex after local clone, where direct filesystem hashing is available.
-- The repository is private and accessible with admin/push permission.
-- A temporary audit marker accidentally created during connector verification was removed in the corrective commit; it is not part of the final repository state.
-- Experiment design, run schema, immutable raw-result policy, provenance, core-first architecture and truthful UI requirements remain valid.
-- The available official Department writing guide was rechecked at its official URL; it is an official available document but is not assumed to be the newest possible revision.
-- Recent-thesis metadata was rechecked: paraphrased titles were corrected and one unverified item was removed.
-- A current public search shows multiple GridWorld/Gymnasium alternatives, supporting the decision not to preselect the older repository referenced in historical chats.
+- `MariosGiannakaras/ThesisBibliography` became the canonical bibliography repository;
+- the complete immutable research corpus was imported successfully under DEC-021/DEC-022;
+- the bibliography authentication/integrity blocker was resolved;
+- Python 3.12 + `uv` and the independent `src/resilient_agents/` architecture were accepted under DEC-023;
+- information-boundary, deterministic RNG, protocol-partition, run-bundle, Git LFS, and automatic whole-experiment publication infrastructure were implemented/tested;
+- the obsolete pre-import Codex bootstrap prompt was deleted and replaced by the state-driven `docs/context/CODEX_EXECUTION_PROMPT.md`;
+- active-document consistency is now governed by `docs/context/DOCUMENTATION_GOVERNANCE.md`.
 
-## Files materially corrected
+Therefore statements from the 2026-07-29 audit such as “the bibliography has not yet been added”, “the repository SHA remains for Codex”, “the stack is entirely undecided”, or “Codex must first present the original bootstrap evidence package” must not be interpreted as current instructions.
 
-- `README.md`
-- `AGENTS.md`
-- `docs/context/PROJECT_CONTEXT.md`
-- `docs/context/CONFIRMED_REQUIREMENTS.md`
-- `docs/context/USER_DECISIONS.md`
-- `docs/context/CONSTRAINTS.md`
-- `docs/context/OPEN_QUESTIONS.md`
-- `docs/context/CONTRADICTIONS.md`
-- `docs/context/SOURCE_AUDIT.md`
-- `docs/context/CODEX_BOOTSTRAP_PROMPT.md`
-- `docs/context/IMPLEMENTATION_ROADMAP.md`
-- `docs/context/DEFINITION_OF_DONE.md`
-- `docs/context/BOOTSTRAP_VALIDATION.json`
-- `docs/research/RESEARCH_BRIEF.md`
-- `docs/research/GRIDWORLD_SPEC.md`
-- `docs/research/MODEL_CANDIDATES.md`
-- `docs/research/METRICS_CANDIDATES.md`
-- `docs/decisions/DECISION_LOG.md`
-- `docs/thesis/THESIS_STRUCTURE_DRAFT.md`
-- `docs/university/RECENT_THESES_REVIEW.md`
-- `docs/university/SOURCE_REGISTER.md`
+## Historical value
 
-## Remaining real blockers
-
-- The user's actual bibliography has not yet been added.
-- Supervisor-specific requirements and deadline are unknown.
-- A current official Word template/submission package has not been verified.
-- The GridWorld implementation, research questions, models, metrics and final protocol are intentionally undecided pending the fresh research phase.
-
-## Next phase acceptance gate
-
-Bootstrap is complete. Codex may begin research discovery and system inspection, but must not begin the dashboard or commit to a model/GridWorld stack until it presents the fresh evidence package described in `CODEX_BOOTSTRAP_PROMPT.md` and the corresponding decisions are recorded.
+Keep this file only to document what the bootstrap audit checked and which early misunderstandings were corrected. Do not update it as a rolling project-status document. New current-state changes belong in `CURRENT_STATUS.md`, decision records, and `CHANGELOG_CONTEXT.md`.
