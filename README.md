@@ -44,9 +44,9 @@ No final research question, model set, GridWorld scientific parameters, uncertai
 - `docs/context/IMPLEMENTATION_ROADMAP.md` — phase/dependency order.
 - `docs/context/DOCUMENTATION_GOVERNANCE.md` — mandatory rule for updating/deleting related active files whenever a material change occurs.
 - `docs/decisions/DECISION_LOG.md` — accepted/superseded/pending decision index.
-- `docs/context/CODEX_EXECUTION_PROMPT.md` — only tracked current Codex prompt template.
+- `docs/context/CODEX_EXECUTION_PROMPT.md` — the single tracked, canonical, directly executable Codex prompt.
 
-For a local Codex session, copy the canonical prompt to repository-root `CODEX_TASK.md`. That local file is git-ignored and may be deleted after Codex reads it.
+After cloning/updating the repository on the thesis machine, start Codex with: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.` The prompt remains tracked and is updated whenever the project state or execution workflow materially changes.
 
 Historical bootstrap/pre-import files are not current instructions. Useful historical records are explicitly labelled historical; obsolete active files are removed rather than left to drift.
 
