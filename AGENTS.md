@@ -196,7 +196,22 @@ DEC-026 controls the application → experiments → evidence → thesis → def
 
 ## Tests and validation
 
-As applicable, test:
+DEC-029 controls testing effort. Testing is **risk-based and proportional**: it protects scientific validity and critical behavior, but it must not become an independent scope-expansion project or consume more implementation time/model quota without corresponding risk reduction.
+
+During implementation:
+
+- run the smallest targeted test subset that can validate the changed behavior;
+- add or modify tests only for task acceptance conditions, scientifically important invariants, critical reliability/security boundaries, or a concrete regression likely to recur;
+- prefer one strong known-answer, contract, invariant, or representative integration test over many near-duplicate examples;
+- do not repeatedly run the full suite after every small edit;
+- do not pursue an arbitrary coverage percentage;
+- do not add mutation testing, broad fuzz/property testing, exhaustive parameter combinations, snapshot proliferation, or large end-to-end matrices without a concrete task-specific justification;
+- use tiny deterministic fixtures and smoke runs in CI; never use the pilot or final experiment matrix as a test suite;
+- stop adding tests when the acceptance condition and material risks are covered.
+
+Before review, run the relevant validators/tests and the normal full repository checks once. Rerun the full checks only after a later change that could affect their result. Do not spend model quota repeatedly analysing already-passing checks.
+
+As applicable, protect these high-value areas:
 
 - environment transitions/reward/termination/disturbances and known-answer traces;
 - seeding, independent randomness, deterministic replay;
@@ -210,7 +225,7 @@ As applicable, test:
 - provenance and automatic-publication safety;
 - task/documentation/lifecycle consistency;
 - self-explanatory dashboard states, pre-run validation, contextual help and onboarding/help behavior where practical, plus visual/end-to-end UX review;
-- regressions.
+- concrete regressions.
 
 Bibliography changes additionally validate immutable provenance/source commits, manifests/checksums, forbidden artifacts, generated integrity, and source-reference validity.
 
