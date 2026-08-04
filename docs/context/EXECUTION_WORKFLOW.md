@@ -12,9 +12,11 @@ Normal development flow:
 
 Current supervisor identity, deadlines, and final Word formatting are not implementation blockers. Later feedback is recorded as an explicit change when received.
 
-## Codex local continuation
+## Codex continuation
 
-The tracked canonical prompt is `docs/context/CODEX_EXECUTION_PROMPT.md`. For a local Codex session, copy it to root `CODEX_TASK.md`, which is git-ignored. Codex reads the current repository/status rather than replaying old chat or obsolete bootstrap phases. The local copy may be deleted after use.
+The tracked canonical and directly executable prompt is `docs/context/CODEX_EXECUTION_PROMPT.md`. After cloning/updating the repository on the thesis machine, start Codex with: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.`
+
+Codex reads the current repository/status rather than replaying old chat or obsolete bootstrap phases. The prompt remains tracked and is updated whenever the project state or workflow materially changes.
 
 ## Bibliography material flow
 
