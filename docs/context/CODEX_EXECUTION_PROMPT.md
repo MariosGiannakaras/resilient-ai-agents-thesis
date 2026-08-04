@@ -42,14 +42,14 @@ Read first:
 6. `docs/context/PROJECT_CONTEXT.md`
 7. `docs/context/CONFIRMED_REQUIREMENTS.md`
 8. `docs/context/IMPLEMENTATION_ROADMAP.md`
-9. `docs/context/END_TO_END_JOURNEY.md`
+9. `docs/context/EXECUTION_WORKFLOW.md`
 10. `docs/context/DOCUMENTATION_GOVERNANCE.md`
 
 Then read only task-specific files required by `AGENTS.md`. Historical files are context only and must not override current active files. For defense/presentation tasks also read `docs/thesis/PRESENTATION_WORKFLOW.md`.
 
 ## Task execution and checkpoint rules
 
-- Treat `docs/context/TASKS.md` as the canonical concrete checklist; the roadmap explains phases and `END_TO_END_JOURNEY.md` explains handoffs but neither replaces the registry.
+- Treat `docs/context/TASKS.md` as the canonical concrete checklist; the roadmap explains phases and `EXECUTION_WORKFLOW.md` records responsibilities/handoffs but neither replaces the registry.
 - `READY` means all required task dependencies are actually complete. If task status and dependencies disagree, reconcile the registry before selecting work.
 - Do not skip a task because it seems implied by another task. Check its acceptance condition explicitly.
 - Do not mark a task complete until its acceptance condition is satisfied and validated.
@@ -127,7 +127,7 @@ A run ID represents one **whole experiment**, potentially containing many seeds/
 
 ## Lifecycle handoff rules
 
-Follow `docs/context/END_TO_END_JOURNEY.md` when crossing major work-package boundaries.
+DEC-026, `IMPLEMENTATION_ROADMAP.md`, `EXECUTION_WORKFLOW.md`, and the relevant `TASKS.md` dependencies/acceptance conditions control major work-package boundaries.
 
 - Application completion is an explicit gate: the intended user-facing configure/run/monitor/history/compare/export workflow must be validated before the normal frozen final experiment campaign begins.
 - Final experiments use the frozen protocol and the same validated scientific core. Do not introduce scientific changes because final results are interesting or inconvenient.
