@@ -31,9 +31,9 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 - **Current work package:** WP1 — Target-machine baseline
 - **Current task:** `T-100`
 - **State:** `BLOCKED until executed on the actual thesis experiment machine`
-- **Active branch / PR:** none for `T-100`; lifecycle audit PR #38 is pending final merge.
-- **Last validated point:** `T-007` end-to-end lifecycle audit passed full repository CI on PR #38; this final registry closure must also pass CI before merge.
-- **Exact next action:** after PR #38 is squash-merged, clone/update `main` on the actual thesis machine, start Codex from `CODEX_EXECUTION_PROMPT.md`, change `T-100` to `READY/IN_PROGRESS` after confirming it is the actual experiment machine, and execute it.
+- **Active branch / PR:** none for `T-100`.
+- **Last validated point:** `T-007` end-to-end lifecycle audit is complete and passed full repository CI in PR #38.
+- **Exact next action:** clone/update current `main` on the actual thesis machine, start Codex from `CODEX_EXECUTION_PROMPT.md`, change `T-100` to `READY/IN_PROGRESS` after confirming it is the actual experiment machine, and execute it.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
