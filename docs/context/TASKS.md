@@ -28,14 +28,12 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 ## Resume state
 
-- **Current work package:** WP0 — Repository/research infrastructure
-- **Current task:** `T-007`
-- **State:** `IN_PROGRESS — lifecycle audit implemented on branch; PR/CI validation pending`
-- **Active branch / PR:** `docs/end-to-end-lifecycle` / not opened yet
-- **Last validated point:** lifecycle/user/Codex handoffs, final-experiment gate, evidence package, thesis review cycle, defense workflow, requirements/decisions, and READY dependency validator are reconciled on the branch.
-- **Tests already run:** none for this branch yet.
-- **Relevant changed files:** task/workflow/context/governance/requirements/decision docs, `docs/context/END_TO_END_JOURNEY.md`, `docs/thesis/PRESENTATION_WORKFLOW.md`, and `scripts/validate_documentation_consistency.py`.
-- **Exact next action:** open the lifecycle audit PR, run full repository CI, fix any findings, then mark `T-007` complete and restore the next resume gate to `T-100` before squash merge.
+- **Current work package:** WP1 — Target-machine baseline
+- **Current task:** `T-100`
+- **State:** `BLOCKED until executed on the actual thesis experiment machine`
+- **Active branch / PR:** none for `T-100`; lifecycle audit PR #38 is pending final merge.
+- **Last validated point:** `T-007` end-to-end lifecycle audit passed full repository CI on PR #38; this final registry closure must also pass CI before merge.
+- **Exact next action:** after PR #38 is squash-merged, clone/update `main` on the actual thesis machine, start Codex from `CODEX_EXECUTION_PROMPT.md`, change `T-100` to `READY/IN_PROGRESS` after confirming it is the actual experiment machine, and execute it.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -76,7 +74,7 @@ Codex must assume a session can stop unexpectedly.
   - Acceptance: integration tests verify safe whole-experiment publication and retained evidence.
 - [x] `T-006` — Reconcile active documentation, create the directly executable canonical Codex prompt, and enforce documentation consistency in CI.
   - Acceptance: stale bootstrap instructions are retired and documentation validator passes.
-- [ ] IN_PROGRESS `T-007` — Audit the full Codex/user journey and define reliable handoffs from application completion through final experiments, analysis, thesis review/freeze, defense presentation, and delivery.
+- [x] `T-007` — Audit the full Codex/user journey and define reliable handoffs from application completion through final experiments, analysis, thesis review/freeze, defense presentation, and delivery.
   - Depends on: `T-006`.
   - Acceptance: lifecycle/user/Codex handoffs, application-to-final-experiment dependency, frozen thesis/defense evidence package, thesis review cycle, PowerPoint/speaker-material workflow, task-status semantics, governance/requirements/decisions, and consistency validation are reconciled; full repository CI passes.
 
