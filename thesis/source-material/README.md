@@ -17,4 +17,4 @@ Accepted formats may include PDF, DOCX, images or plain text, subject to reposit
 - Codex must inspect this material before freezing the research plan.
 - Private/personal material must not be included in public releases without redaction.
 
-The official application has been verified locally and approved for unchanged storage at `GiannakarasMariosThesisApplication.pdf`. Repository presence must be verified before the bootstrap is marked complete.
+The official application has been verified locally and approved for unchanged storage at `ThesisApplication.pdf`. Repository presence must be verified before the bootstrap is marked complete.
