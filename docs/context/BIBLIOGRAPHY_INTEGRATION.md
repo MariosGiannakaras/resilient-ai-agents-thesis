@@ -39,7 +39,7 @@ Checkout commit equality with either package source commit is not required. Gene
 
 ## Synchronization
 
-`.github/workflows/sync-bibliography.yml` accepts only an explicit immutable tag or full SHA. For the initial migration it uses `bibliography-integration-v2`, which resolves to `27e325a74722b8f80643e6d1902e4bf3847036f5`.
+`.github/workflows/sync-bibliography.yml` accepts only an explicit immutable tag or full SHA. The initial complete-corpus migration used immutable `bibliography-integration-v2`; the current synchronized baseline is immutable `bibliography-integration-v3`, resolving to checkout commit `71995373ae0da64149583cae8d7a2c17e5ab1a0a`. Older immutable refs remain historical snapshots and are never moved.
 
 The workflow:
 
@@ -53,7 +53,7 @@ The workflow:
 8. installs only `research/bibliography/`, runs consumer validation/tests, and opens a generated-only PR;
 9. never merges directly to `main` and never writes upstream.
 
-The initial baseline acceptance check is 583 canonical sources, 112 citation-ready sources, 19 research materials, 280 indexed original PDFs, and upstream schema version 1. These values are not permanent logic; later imports validate their own metadata dynamically.
+Current v3 acceptance facts are 585 canonical sources, 113 citation-ready sources, 19 research materials, 281 indexed original PDFs, 1,568 integrity-covered corpus files, and upstream schema version 1. These values describe this immutable baseline only; synchronization logic reads and validates metadata dynamically for every later immutable ref. The original v2 acceptance facts remain historical and are preserved in their decision/history records rather than treated as current state.
 
 ## Search and validation
 
@@ -63,9 +63,8 @@ The initial baseline acceptance check is 583 canonical sources, 112 citation-rea
 
 Freshness searches and any source/material promotion occur only in `ThesisBibliography`, followed by a new immutable synchronization.
 
-
 ## Byte-preserved converted full text
 
-Metadata, manifests, analyses, evidence, notes, aggregates, and the complete citation-ready layer must be strict UTF-8 without low control characters other than normal layout whitespace. The immutable `bibliography-integration-v2` baseline contains four canonical `sources/*.md` files with well-formed CESU-8 surrogate pairs and 65 canonical full-text files—61 under `sources/` and 4 under `materials/`—with byte-preserved low control characters emitted by historical PDF extraction.
+Metadata, manifests, analyses, evidence, notes, aggregates, and the complete citation-ready layer must be strict UTF-8 without low control characters other than normal layout whitespace. The immutable `bibliography-integration-v2` baseline established the accepted historical compatibility case: four canonical `sources/*.md` files with well-formed CESU-8 surrogate pairs and 65 canonical full-text files—61 under `sources/` and 4 under `materials/`—with byte-preserved low control characters emitted by historical PDF extraction. Later immutable imports preserve and validate upstream bytes against their own manifests rather than normalizing source-derived content in the consumer.
 
 The consumer preserves every upstream byte and both authoritative checksum manifests unchanged. It accepts CESU-8 only in canonical source Markdown, accepts extraction controls only in canonical source/material Markdown, records exact encoding paths plus per-path Unicode control-code counts in `IMPORT_INTEGRITY.json`, and verifies those maps after installation. Search converts CESU-8 to canonical Unicode and replaces recorded extraction controls with deterministic spaces only in the ignored index. Invalid UTF-8 elsewhere, unpaired surrogates, controls in trusted metadata/analysis/evidence/citation layers, binaries, archives, and LFS pointers remain rejected.

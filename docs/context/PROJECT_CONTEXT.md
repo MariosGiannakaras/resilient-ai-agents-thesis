@@ -29,25 +29,25 @@ The official application defines the broad objective: compare resilient decision
 
 `MariosGiannakaras/ThesisBibliography` is the canonical source of truth for source discovery, originals/PDFs, conversion/OCR, canonical Markdown, scientific analysis, evidence verification, source selection, research materials, notes, and generated exports.
 
-The first complete immutable consumer import is **finished** and accepted by DEC-021/DEC-022.
+The first complete immutable consumer import was accepted by DEC-021/DEC-022. The current synchronized immutable baseline has since advanced without changing the ownership/trust architecture.
 
-Pinned baseline:
+Current pinned baseline:
 
-- requested ref: `bibliography-integration-v2`;
-- checkout: `27e325a74722b8f80643e6d1902e4bf3847036f5`;
-- complete-corpus source commit: `ca511a0ff91388e7798e011642cc6b5608b336d8`;
-- citation-ready source commit: `ef44fe3c30e6648f591ad9d3546ffc336fce4287`;
-- 583 canonical sources;
-- 112 citation-ready selected sources;
+- requested ref: `bibliography-integration-v3`;
+- checkout: `71995373ae0da64149583cae8d7a2c17e5ab1a0a`;
+- complete-corpus source commit: `e46693d4201cf47c118eb61c216243f3c5798e28`;
+- citation-ready source commit: `822891fb585c98dbe4464602e97998704d1609c5`;
+- 585 canonical sources;
+- 113 citation-ready selected sources;
 - 19 research materials;
-- metadata for 280 indexed original PDFs;
-- 1561 consumer-recorded corpus files.
+- metadata for 281 indexed original PDFs;
+- 1568 consumer-recorded corpus files.
 
-Private authentication/read access, upstream validators, SHA-256 manifests, ancestry, consumer integrity, contextual source-reference validation, and repository tests passed for this baseline. The former HTTP 401 and incomplete-import blockers are resolved.
+The immutable `bibliography-integration-v2` baseline remains an unchanged historical snapshot. Private authentication/read access, upstream validators, SHA-256 manifests, ancestry, consumer integrity, contextual source-reference validation, and the full repository test suite passed for the v3 synchronization before its generated branch was published. The former HTTP 401 and incomplete-import blockers remain resolved.
 
 `research/bibliography/citation-ready/` is the only automatic formal-citation surface. Full-corpus/rejected/theory-only/`MAT-*`/note content remains available for internal research without silent promotion. New formal evidence promotion occurs only upstream in `ThesisBibliography`, followed by a new immutable synchronization.
 
-No bibliography PDF or bibliography Git LFS object is imported into this repository.
+No bibliography PDF, structured original, or bibliography Git LFS object is imported into this repository.
 
 ## Current technical architecture — accepted
 

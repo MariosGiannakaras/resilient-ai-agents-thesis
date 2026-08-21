@@ -15,7 +15,7 @@ The final tool is local and single-user. It must let the user configure, execute
 
 ## Current implementation baseline
 
-The canonical bibliography lifecycle remains in the private `MariosGiannakaras/ThesisBibliography` repository. This repository consumes its verified immutable export under `research/bibliography/`. The current imported baseline contains 583 canonical sources, 112 citation-ready sources, 19 research materials, and metadata for 280 indexed original PDFs.
+The canonical bibliography lifecycle remains in the private `MariosGiannakaras/ThesisBibliography` repository. This repository consumes its verified immutable complete research-corpus export under `research/bibliography/`, with the nested `citation-ready/` layer as the only automatic formal-citation surface. The current synchronized baseline is `bibliography-integration-v3` and contains 585 canonical sources, 113 citation-ready sources, 19 research materials, metadata for 281 indexed original PDFs, and 1,568 integrity-covered corpus files. Bibliography PDFs, structured originals, and bibliography Git LFS objects remain upstream and are not imported here.
 
 The active research implementation lives in the importable package:
 
