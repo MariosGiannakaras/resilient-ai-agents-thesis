@@ -1,6 +1,6 @@
 # Contributing
 
-This repository is private and serves one thesis project, but changes must follow a controlled process.
+This repository serves one thesis project, but changes must follow a controlled process.
 
 ## Before making a change
 
@@ -18,15 +18,15 @@ In the same Pull Request:
 1. review `TASKS.md` and update started/completed/blocked/unblocked/discovered/superseded tasks and `Resume state` where applicable;
 2. ensure any task marked `READY` really has its required task dependencies complete;
 3. update every active source-of-truth document affected by the change;
-4. review `END_TO_END_JOURNEY.md` if a major application/experiment/evidence/thesis/defense/delivery handoff changes;
+4. review `docs/context/IMPLEMENTATION_ROADMAP.md` and `docs/context/EXECUTION_WORKFLOW.md` if a major application/experiment/evidence/thesis/defense/delivery handoff changes;
 5. review `docs/thesis/PRESENTATION_WORKFLOW.md` if defense outputs/tooling/speaker material/rehearsal rules change;
-6. update the current Codex execution prompt if workflow, architecture, task-execution rules, lifecycle handoffs, or responsibilities changed;
+6. update `docs/context/CODEX_EXECUTION_PROMPT.md` only when bootstrap, resume, task-selection, checkpoint, stop, review-gate, or reporting behavior changes; domain rules stay in `AGENTS.md` or their controlling specification;
 7. delete obsolete compatibility files when they no longer serve a purpose;
 8. preserve genuinely historical records only when useful, and mark them prominently as historical so they cannot be mistaken for current instructions;
 9. update `CURRENT_STATUS.md`, `OPEN_QUESTIONS.md`, `DECISION_LOG.md`, and `CHANGELOG_CONTEXT.md` when their claims are affected;
 10. add/update automated consistency checks when stale state can be detected mechanically.
 
-`docs/context/DOCUMENTATION_GOVERNANCE.md` defines the dependency/update matrix. `CURRENT_STATUS.md` summarizes current state. `TASKS.md` is the canonical concrete execution/resume ledger. `END_TO_END_JOURNEY.md` explains handoffs but is not a second task list.
+`docs/context/DOCUMENTATION_GOVERNANCE.md` defines the dependency/update matrix. `CURRENT_STATUS.md` summarizes current state. `TASKS.md` is the canonical concrete execution/resume ledger. `IMPLEMENTATION_ROADMAP.md` explains phase/dependency order, while `EXECUTION_WORKFLOW.md` owns responsibilities and major handoffs; neither is a second task list.
 
 ## Interruption-safe work
 

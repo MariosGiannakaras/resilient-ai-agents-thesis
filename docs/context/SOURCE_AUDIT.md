@@ -1,5 +1,9 @@
 # Source Audit
 
+> **Historical bootstrap record — 2026-07-29 to 2026-08-03.** This file preserves the provenance and repository/source checks performed during the original bootstrap. It is **not current execution guidance or project status**. Visibility/access wording below describes the state at the time of the audit. For current work use `AGENTS.md`, `docs/context/TASKS.md`, and `docs/context/CURRENT_STATUS.md`.
+
+**Status:** `HISTORICAL_CONTEXT_ONLY`
+
 ## Source hierarchy
 
 1. Newer explicit user instruction.

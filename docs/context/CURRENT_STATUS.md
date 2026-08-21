@@ -19,7 +19,7 @@ The current complete immutable bibliography import is finished and synchronized.
 - Indexed original PDFs: 281, metadata only
 - Consumer-recorded corpus files: 1568
 
-The immutable `bibliography-integration-v2` snapshot remains historical and unchanged. The private read credential succeeded for the v3 synchronization. All upstream validators, both upstream checksum manifests, consumer integrity, contextual source-reference validation, and the full thesis repository test suite passed before the synchronized branch was published. The former HTTP 401 and incomplete-import blockers remain resolved. No bibliography PDF, structured original, or bibliography Git LFS object entered this repository.
+The immutable `bibliography-integration-v2` snapshot remains historical and unchanged. Read access succeeded for the v3 synchronization. All upstream validators, both upstream checksum manifests, consumer integrity, contextual source-reference validation, and the full thesis repository test suite passed before the synchronized branch was published. The former HTTP 401 and incomplete-import blockers remain resolved. No bibliography PDF, structured original, or bibliography Git LFS object entered this repository.
 
 ## Research implementation architecture
 

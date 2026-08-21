@@ -3,7 +3,7 @@
 **Official Greek title:** Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα  
 **Official English title:** Comparison and Evaluation of Resilient AI Agents in Uncertain Environments
 
-Private, version-controlled repository for the complete thesis lifecycle: research context, bibliography consumer, experimental software, runs/results, analysis artifacts, thesis writing, defense presentation, and final deliverables.
+Version-controlled repository for the complete thesis lifecycle: research context, bibliography consumer, experimental software, runs/results, analysis artifacts, thesis writing, defense presentation, and final deliverables.
 
 ## Project principle
 
@@ -15,7 +15,7 @@ The final tool is local and single-user. It must let the user configure, execute
 
 ## Current implementation baseline
 
-The canonical bibliography lifecycle remains in the private `MariosGiannakaras/ThesisBibliography` repository. This repository consumes its verified immutable complete research-corpus export under `research/bibliography/`, with the nested `citation-ready/` layer as the only automatic formal-citation surface. The current synchronized baseline is `bibliography-integration-v3` and contains 585 canonical sources, 113 citation-ready sources, 19 research materials, metadata for 281 indexed original PDFs, and 1,568 integrity-covered corpus files. Bibliography PDFs, structured originals, and bibliography Git LFS objects remain upstream and are not imported here.
+The canonical bibliography lifecycle remains in `MariosGiannakaras/ThesisBibliography`. This repository consumes its verified immutable complete research-corpus export under `research/bibliography/`, with the nested `citation-ready/` layer as the only automatic formal-citation surface. The current synchronized baseline is `bibliography-integration-v3` and contains 585 canonical sources, 113 citation-ready sources, 19 research materials, metadata for 281 indexed original PDFs, and 1,568 integrity-covered corpus files. Bibliography PDFs, structured originals, and bibliography Git LFS objects remain upstream and are not imported here.
 
 The active research implementation lives in the importable package:
 

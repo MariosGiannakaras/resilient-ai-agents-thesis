@@ -173,3 +173,11 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Rejected arbitrary coverage targets and unjustified mutation, fuzz/property, exhaustive combinatorial, snapshot, or large end-to-end test expansion.
 - Required tiny deterministic fixtures/smoke runs in CI and prohibited using pilot/final experiment matrices as tests.
 - Added `REQ-TEST-010`, `REQ-TEST-011`, and DEC-029.
+
+## 2026-08-21 — Pre-Codex repository cleanup
+
+- Removed the retired top-level `core/` compatibility marker; `src/resilient_agents/` is now the only research-code root.
+- Removed the retired top-level `bibliography/` compatibility tree; `research/bibliography/` is now the only thesis-side bibliography surface.
+- Removed stale repository-visibility wording from active current-state documentation.
+- Reconciled `CONTRIBUTING.md` and the Pull Request template with the current roadmap/workflow authorities and the lean Codex-prompt governance rule.
+- Extended documentation consistency validation so obsolete compatibility roots and stale lifecycle references in operational templates cannot silently return.

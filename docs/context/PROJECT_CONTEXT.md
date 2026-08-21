@@ -11,7 +11,7 @@
 
 ## Project identity
 
-This repository is the permanent private source of truth for the complete thesis lifecycle:
+This repository is the permanent source of truth for the complete thesis lifecycle:
 
 > **Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα**
 
@@ -43,7 +43,7 @@ Current pinned baseline:
 - metadata for 281 indexed original PDFs;
 - 1568 consumer-recorded corpus files.
 
-The immutable `bibliography-integration-v2` baseline remains an unchanged historical snapshot. Private authentication/read access, upstream validators, SHA-256 manifests, ancestry, consumer integrity, contextual source-reference validation, and the full repository test suite passed for the v3 synchronization before its generated branch was published. The former HTTP 401 and incomplete-import blockers remain resolved.
+The immutable `bibliography-integration-v2` baseline remains an unchanged historical snapshot. Read access, upstream validators, SHA-256 manifests, ancestry, consumer integrity, contextual source-reference validation, and the full repository test suite passed for the v3 synchronization before its generated branch was published. The former HTTP 401 and incomplete-import blockers remain resolved.
 
 `research/bibliography/citation-ready/` is the only automatic formal-citation surface. Full-corpus/rejected/theory-only/`MAT-*`/note content remains available for internal research without silent promotion. New formal evidence promotion occurs only upstream in `ThesisBibliography`, followed by a new immutable synchronization.
 
