@@ -44,7 +44,7 @@ jobs:
           fi
 
       - name: Compile Python sources
-        run: uv run python -m compileall -q scripts tests src core
+        run: uv run python -m compileall -q scripts tests src
 
       - name: Validate documentation consistency
         run: uv run python scripts/validate_documentation_consistency.py
