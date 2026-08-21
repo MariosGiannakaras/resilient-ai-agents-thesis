@@ -10,6 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_ACTIVE = (
     "AGENTS.md",
     "README.md",
+    "CONTRIBUTING.md",
+    ".github/pull_request_template.md",
     "app/README.md",
     "docs/context/CURRENT_STATUS.md",
     "docs/context/TASKS.md",
@@ -35,11 +37,15 @@ OBSOLETE_ACTIVE_PATHS = (
     "docs/context/CODEX_BOOTSTRAP_PROMPT.md",
     "docs/context/BOOTSTRAP_VALIDATION.json",
     "docs/context/END_TO_END_JOURNEY.md",
+    "core",
+    "bibliography",
 )
 
 CURRENT_STATE_FILES = (
     "AGENTS.md",
     "README.md",
+    "CONTRIBUTING.md",
+    ".github/pull_request_template.md",
     "app/README.md",
     "docs/context/CURRENT_STATUS.md",
     "docs/context/TASKS.md",
