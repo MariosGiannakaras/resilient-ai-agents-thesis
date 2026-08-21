@@ -2,7 +2,7 @@
 
 | ID | Source | Location | Retrieved | Status | Use |
 |---|---|---|---|---|---|
-| UNIWA-APPLICATION-001 | Student's official thesis application | `thesis/source-material/GiannakarasMariosThesisApplication.pdf` | 2026-07-29; repository verification 2026-08-03 | PRIMARY / PRIVATE; source identity confirmed by user; repository SHA-256 `6f2026c7582e4ac396261b7686e799317515542c59c0ac505da11bf7611de4b5`, size `395338` bytes; automated test protects against accidental replacement | Exact titles, institution and official objective |
+| UNIWA-APPLICATION-001 | Student's official thesis application | `thesis/source-material/ThesisApplication.pdf` | 2026-07-29; repository verification 2026-08-03 | PRIMARY / PRIVATE; source identity confirmed by user; repository SHA-256 `6f2026c7582e4ac396261b7686e799317515542c59c0ac505da11bf7611de4b5`, size `395338` bytes; automated test protects against accidental replacement | Exact titles, institution and official objective |
 | UNIWA-ICE-WRITING-001 | Οδηγίες Συγγραφής Διπλωματικής Εργασίας, Τμήμα Μηχανικών Πληροφορικής και Υπολογιστών | Official `ice.uniwa.gr` PDF uploaded under `/2022/06/` | 2026-07-29 | VERIFIED AVAILABLE OFFICIAL DOCUMENT; not proven latest revision | Structure, methodology, formatting and citation guidance |
 | UNIWA-ICE-FORMS-001 | Department category «Χρήσιμα έντυπα» | `https://ice.uniwa.gr/category/all/documents/` | 2026-07-29 | VERIFIED PAGE; individual current files require later audit | Locate administrative forms/templates/submission/defense material |
 | UNIWA-POLYNOE-COLLECTION-001 | Department collection in Polynoe/OpenArchives | OpenArchives Department collection | 2026-07-29 | VERIFIED COLLECTION | Locate contextual recent theses; supporting evidence only |
