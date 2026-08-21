@@ -1,25 +1,25 @@
 # Current Project Status
 
-**Date:** 2026-08-04  
+**Date:** 2026-08-21  
 **Status:** Authoritative current-state summary
 
 Active repository files must agree with this state. Historical records may preserve earlier states only when explicitly marked historical. Documentation synchronization is governed by `docs/context/DOCUMENTATION_GOVERNANCE.md`.
 
 ## Bibliography integration
 
-The first complete immutable bibliography import is finished.
+The current complete immutable bibliography import is finished and synchronized.
 
-- Requested ref: `bibliography-integration-v2`
-- Resolved checkout: `27e325a74722b8f80643e6d1902e4bf3847036f5`
-- Complete-corpus source commit: `ca511a0ff91388e7798e011642cc6b5608b336d8`
-- Citation-ready source commit: `ef44fe3c30e6648f591ad9d3546ffc336fce4287`
-- Canonical sources: 583
-- Citation-ready selected sources: 112
+- Requested ref: `bibliography-integration-v3`
+- Resolved checkout: `71995373ae0da64149583cae8d7a2c17e5ab1a0a`
+- Complete-corpus source commit: `e46693d4201cf47c118eb61c216243f3c5798e28`
+- Citation-ready source commit: `822891fb585c98dbe4464602e97998704d1609c5`
+- Canonical sources: 585
+- Citation-ready selected sources: 113
 - Research materials: 19
-- Indexed original PDFs: 280, metadata only
-- Consumer-recorded corpus files: 1561
+- Indexed original PDFs: 281, metadata only
+- Consumer-recorded corpus files: 1568
 
-The private read credential succeeded. All upstream validators, both upstream checksum manifests, consumer integrity, contextual source-reference validation, and repository checks passed for the imported baseline. The former HTTP 401 and incomplete-import blockers are resolved. No bibliography PDF or bibliography LFS object entered this repository.
+The immutable `bibliography-integration-v2` snapshot remains historical and unchanged. The private read credential succeeded for the v3 synchronization. All upstream validators, both upstream checksum manifests, consumer integrity, contextual source-reference validation, and the full thesis repository test suite passed before the synchronized branch was published. The former HTTP 401 and incomplete-import blockers remain resolved. No bibliography PDF, structured original, or bibliography Git LFS object entered this repository.
 
 ## Research implementation architecture
 
