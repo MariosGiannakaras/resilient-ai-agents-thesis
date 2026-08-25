@@ -369,7 +369,8 @@ def write_report(report: Dict[str, object], output: Optional[Path]) -> None:
         return
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = output.with_name(output.name + ".tmp")
-    temporary.write_text(payload, encoding="utf-8")
+    with temporary.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(payload)
     temporary.replace(output)
     print(f"Wrote system capability inventory: {output}")
 

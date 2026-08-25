@@ -163,6 +163,7 @@ class SystemInventoryTests(unittest.TestCase):
             system_inventory.write_report(report, output)
 
             self.assertEqual(json.loads(output.read_text(encoding="utf-8")), report)
+            self.assertNotIn(b"\r\n", output.read_bytes())
             self.assertFalse(output.with_name(output.name + ".tmp").exists())
 
 
