@@ -181,3 +181,14 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Removed stale repository-visibility wording from active current-state documentation.
 - Reconciled `CONTRIBUTING.md` and the Pull Request template with the current roadmap/workflow authorities and the lean Codex-prompt governance rule.
 - Extended documentation consistency validation so obsolete compatibility roots and stale lifecycle references in operational templates cannot silently return.
+
+## 2026-08-25 — Quota-efficient fail-fast validation
+
+- Refined the Codex workflow so targeted local validation is used during implementation and GitHub PR CI is the canonical full-suite pre-merge guard when available; duplicate local full-suite runs are reserved for explicit debugging/CI-unavailable cases.
+- Required Codex to treat successful CI as a conclusion rather than repeatedly reading or summarizing successful logs; failed checks are investigated at the narrowest failed step first.
+- Allowed adjacent dependency-valid task IDs to share one coherent branch/PR when no scientific, review, user-decision, external-machine, or protocol-freeze gate separates them.
+- Added fail-closed implementation rules for required configuration/contracts/schema/provenance/lifecycle state, explicit `unavailable`/`unsupported` handling for genuinely optional probes, and atomic/transactional finalization where practical.
+- Reordered repository Actions so cheap merge-marker, documentation, JSON, and compile checks fail before dependency installation/tests where possible.
+- Kept one bounded CI job with superseded-run cancellation, added a hard timeout, reduced successful unittest/checksum/JSON/pip/uv log noise, and preserved specific failure diagnostics.
+- Kept push-to-`main` CI as a repository safety guard while instructing Codex not to spend model quota re-analysing successful post-merge repeats.
+- Added DEC-030.
