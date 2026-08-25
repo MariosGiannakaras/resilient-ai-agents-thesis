@@ -58,4 +58,5 @@ Record only material changes to the project source of truth. Detailed commit-by-
 - Removed superseded `FINAL_BOOTSTRAP_AUDIT.md` and `SOURCE_AUDIT.md` from the current tree; their history remains available in Git and their durable decisions are represented in current authorities/decision records.
 - Compacted this changelog to material context milestones instead of duplicating ordinary Git history.
 - Kept both active GitHub Actions workflows: bounded repository validation and controlled immutable bibliography synchronization remain required.
+- Removed the duplicate repository-wide unittest run from bibliography synchronization; the sync workflow now performs only upstream/import-specific integrity checks before opening its generated PR, whose normal repository CI runs the complete suite exactly once.
 - Did not add nested `AGENTS.md`, generic skill packs, extra planning/status files, or multi-agent infrastructure because the current single-repository structure does not demonstrate a need that justifies their extra context/maintenance cost.
