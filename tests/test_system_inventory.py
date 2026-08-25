@@ -80,11 +80,23 @@ class SystemInventoryTests(unittest.TestCase):
                 return_value=([{"index": 0, "name": "GPU", "memory_total_mib": 8192, "driver_version": "1"}], True),
             ),
             mock.patch.object(system_inventory, "detect_cpu_model", return_value="CPU"),
+            mock.patch.object(
+                system_inventory, "detect_windows_physical_cores", return_value=8
+            ),
+            mock.patch.object(
+                system_inventory, "detect_windows_display_adapters", return_value=[]
+            ),
             mock.patch.object(system_inventory, "detect_total_memory_bytes", return_value=16_000_000),
             mock.patch.object(
                 system_inventory,
                 "run_command",
-                side_effect=["git version 2.50.0", "v24.0.0", None],
+                side_effect=[
+                    "git version 2.50.0",
+                    "git-lfs/3.7.1",
+                    "v24.0.0",
+                    None,
+                    "uv 0.10.10",
+                ],
             ),
             mock.patch.object(
                 system_inventory,
@@ -103,11 +115,12 @@ class SystemInventoryTests(unittest.TestCase):
         ):
             report = system_inventory.collect_inventory()
 
-        self.assertEqual(report["schema_version"], 1)
+        self.assertEqual(report["schema_version"], 2)
         self.assertEqual(report["memory"]["total_bytes"], 16_000_000)
         self.assertEqual(report["storage"]["repository_filesystem_free_bytes"], 400_000)
         self.assertEqual(report["accelerators"]["nvidia"]["devices"][0]["name"], "GPU")
         self.assertEqual(report["repository"]["commit"], "b" * 40)
+        self.assertEqual(report["tools"]["uv"], "uv 0.10.10")
         self.assertFalse(report["repository"]["untracked_nonoutput_present"])
 
         serialized = json.dumps(report).casefold()
@@ -121,6 +134,27 @@ class SystemInventoryTests(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, serialized)
 
+    def test_windows_cpu_model_prefers_registry_description(self) -> None:
+        with (
+            mock.patch.object(system_inventory.platform, "system", return_value="Windows"),
+            mock.patch.object(
+                system_inventory,
+                "detect_windows_cpu_model",
+                return_value="Example CPU",
+            ),
+            mock.patch.object(
+                system_inventory.platform,
+                "processor",
+                return_value="Generic processor identifier",
+            ),
+        ):
+            self.assertEqual(system_inventory.detect_cpu_model(), "Example CPU")
+
+    def test_positive_int_rejects_legacy_sentinel_values(self) -> None:
+        self.assertEqual(system_inventory._positive_int(8_589_934_592), 8_589_934_592)
+        self.assertIsNone(system_inventory._positive_int(0))
+        self.assertIsNone(system_inventory._positive_int("8589934592"))
+
     def test_write_report_writes_valid_json_atomically(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "nested" / "inventory.json"
@@ -129,6 +163,7 @@ class SystemInventoryTests(unittest.TestCase):
             system_inventory.write_report(report, output)
 
             self.assertEqual(json.loads(output.read_text(encoding="utf-8")), report)
+            self.assertNotIn(b"\r\n", output.read_bytes())
             self.assertFalse(output.with_name(output.name + ".tmp").exists())
 
 

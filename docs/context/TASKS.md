@@ -29,11 +29,14 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP1 — Target-machine baseline
-- **Current task:** `T-100`
-- **State:** `BLOCKED until executed on the actual thesis experiment machine`
-- **Active branch / PR:** none for `T-100`.
-- **Last validated point:** `T-008` optimized the canonical Codex bootstrap to use a three-file session-start core, task-specific reading, bounded execution semantics, and preserved quota/review recovery safeguards.
-- **Exact next action:** clone/update current `main` on the actual thesis machine, start Codex from `CODEX_EXECUTION_PROMPT.md`, change `T-100` to `READY/IN_PROGRESS` after confirming it is the actual experiment machine, and execute it.
+- **Current task:** `T-100` and `T-101` complete on the review branch
+- **State:** `REVIEW GATE`
+- **Active branch / PR:** `feat/target-machine-baseline`; PR #55.
+- **Last validated point:** current `main` was reconciled at `fea0e39`, preserving its fail-fast/provenance work and renumbering the target-machine decision to DEC-031. Checkpoint `6c760cd` makes inventory JSON LF-stable; the final clean-commit snapshot cites it and passes privacy, CPU/core, full-width VRAM, runtime/tooling, storage, provenance, and untracked-input review.
+- **Tests already run:** focused inventory tests (7 passed) and documentation consistency passed after main reconciliation; LF-only/stable snapshot privacy/provenance invariants and Windows Git LFS verification passed. The pre-merge package passed the then-current full local suite (51 tests, 1 platform-specific skip, bibliography/integrity/JSON checks); PR #55's canonical GitHub `sanity` check passed at head `5f24d32` after current-main reconciliation.
+- **Relevant files changed:** collector/tests, accepted JSON/report, DEC-031/decision index, and affected active context/research/task/status documentation.
+- **Uncommitted work:** this docs-only handoff-state reconciliation; no implementation/evidence change.
+- **Exact next action:** review and squash-merge mergeable PR #55; after merge, start `T-200` before the also-ready `T-210`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -79,24 +82,24 @@ Codex must assume a session can stop unexpectedly.
   - Acceptance: lifecycle/user/Codex handoffs, application-to-final-experiment dependency, frozen thesis/defense evidence package, thesis review cycle, PowerPoint/speaker-material workflow, task-status semantics, governance/requirements/decisions, and consistency validation are reconciled; full repository CI passes.
 - [x] `T-008` — Optimize the canonical Codex bootstrap for minimal context use and reliable bounded execution.
   - Depends on: `T-006`, `T-007`.
-  - Acceptance: every session starts from `AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md`; further reading is task-specific; the canonical prompt does not duplicate domain policy; “execute completely” is bounded by task dependencies/review/external gates; quota recovery, documentation reconciliation, testing, and final reporting remain explicit; full repository CI passes.
+  - Acceptance: every session starts from the three-file session-start core (`AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md`); further reading is task-specific; the canonical prompt does not duplicate domain policy; “execute completely” is bounded by task dependencies/review/external gates; quota recovery, documentation reconciliation, testing, and final reporting remain explicit; full repository CI passes.
 
 ## WP1 — Target-machine baseline
 
-- [ ] BLOCKED `T-100` — Run the privacy-minimal hardware/software/storage inventory on the actual thesis experiment machine.
+- [x] `T-100` — Run the privacy-minimal hardware/software/storage inventory on the actual thesis experiment machine.
   - Depends on: `T-006` plus execution on the actual thesis experiment machine.
   - Output: versioned accepted capability report with CPU, RAM, OS, Python/tooling, storage, GPU/VRAM/driver/runtime when present, and supported acceleration.
   - Acceptance: report is generated automatically on the actual machine, privacy-reviewed, tests/validation pass, and current docs/tasks are reconciled.
-- [ ] BLOCKED `T-101` — Use the accepted inventory to resolve compute-dependent dependency/tooling constraints without freezing unsupported scientific choices.
+- [x] `T-101` — Use the accepted inventory to resolve compute-dependent dependency/tooling constraints without freezing unsupported scientific choices.
   - Depends on: `T-100`.
   - Acceptance: dependency/runtime decisions that actually depend on hardware are documented and reproducible; CPU-compatible fallback remains clear where needed.
 
 ## WP2 — Research framing and GridWorld
 
-- [ ] BLOCKED `T-200` — Complete source-traceable research-question and hypothesis framing from citation-ready evidence, while keeping feasibility-dependent choices provisional.
+- [ ] READY `T-200` — Complete source-traceable research-question and hypothesis framing from citation-ready evidence, while keeping feasibility-dependent choices provisional.
   - Depends on: `T-100` for feasibility-sensitive scope; bibliography baseline already complete.
   - Acceptance: bounded main RQ, minimal secondary RQs/hypotheses, evidence mapping, limitations, and open feasibility gates are documented.
-- [ ] BLOCKED `T-210` — Complete bounded GridWorld prototype comparison (minimal custom implementation versus justified reuse/adaptation candidates).
+- [ ] READY `T-210` — Complete bounded GridWorld prototype comparison (minimal custom implementation versus justified reuse/adaptation candidates).
   - Depends on: `T-100`.
   - Acceptance: prototypes/audit compare semantics, determinism, seeding, disturbance extensibility, testability, maintenance/license/dependency cost, and fit to the RQ.
 - [ ] BLOCKED `T-211` — Record the final GridWorld implementation ADR.

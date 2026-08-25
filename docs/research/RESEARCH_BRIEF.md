@@ -34,7 +34,7 @@ Robust-MDP full-corpus sources may inform internal comparator research but requi
 - Compare a small number of scientifically distinct capability roles, not a catalogue of algorithms.
 - Preserve nominal performance, immediate/worst degradation, recovery trajectory/time, post-change performance, non-recovery, and across-run uncertainty.
 - Keep development/tuning/pilot/final scenarios separated and prevent information leakage.
-- Keep the final matrix CPU-feasible until the real target-machine inventory is accepted.
+- Keep the final matrix CPU-feasible under the accepted target-machine baseline; the detected Radeon adapter is not a validated scientific-compute backend.
 
 ## Research question freeze prerequisites
 
@@ -44,15 +44,15 @@ Already complete:
 - complete bibliography import and evidence trust boundary;
 - initial post-import evidence synthesis;
 - technical architecture for information isolation, deterministic randomness, protocol partitions, run provenance, and automatic publication.
+- accepted target-machine inventory and CPU-first runtime/tooling constraints (DEC-031).
 
 Still required before final freeze:
 
-1. accepted actual target-machine inventory;
-2. bounded GridWorld prototype/ADR decision;
-3. explicit environment/observability/change semantics;
-4. exact small model-role/method set with evidence/feasibility rationale;
-5. operational metric estimands and known-answer validation;
-6. pilot evidence for runtime, variance, storage, recovery behavior, tuning budget, and statistical choices.
+1. bounded GridWorld prototype/ADR decision;
+2. explicit environment/observability/change semantics;
+3. exact small model-role/method set with evidence/feasibility rationale;
+4. operational metric estimands and known-answer validation;
+5. pilot evidence for runtime, variance, storage, recovery behavior, tuning budget, and statistical choices.
 
 ## Valid research-question form
 

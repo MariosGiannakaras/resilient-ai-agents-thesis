@@ -1,6 +1,6 @@
 # Current Project Status
 
-**Date:** 2026-08-25  
+**Date:** 2026-08-25
 **Status:** Authoritative current-state summary
 
 This file is intentionally short. Detailed policy, history, requirements, and design rationale live in the source-of-truth documents routed by `AGENTS.md`; do not grow this file into a second project manual.
@@ -9,9 +9,10 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 
 - Canonical concrete ledger: `docs/context/TASKS.md`.
 - Current work package: **WP1 — Target-machine baseline**.
-- Current task: **`T-100`**, blocked only until execution on the actual thesis experiment machine.
-- Exact next action: clone/update current `main` on that machine, start Codex with the `/goal` command under **User entrypoint** in `docs/context/CODEX_EXECUTION_PROMPT.md`, confirm the environment is the actual experiment machine, then move `T-100` to `READY/IN_PROGRESS` and execute the privacy-minimal capability inventory.
-- No current scientific choice should be frozen before `T-100` where feasibility depends on real hardware/runtime evidence.
+- Current tasks: **`T-100`** and **`T-101`** complete on branch `feat/target-machine-baseline` in PR #55.
+- Current state: review/merge gate after accepting the actual-machine capability and runtime baseline.
+- Exact next action: review and squash-merge PR #55, then start the first dependency-valid task, `T-200`; `T-210` is also ready but remains later in canonical task order.
+- No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline
 
@@ -40,6 +41,17 @@ Codex reports objective `X/Y` progress only from real denominators in `TASKS.md`
 - 281 indexed original PDFs as metadata only; 1,568 integrity-covered consumer files
 
 `research/bibliography/citation-ready/` is the strict automatic formal-citation layer. Upstream promotion/refresh occurs in `ThesisBibliography`, followed by a new immutable synchronization; primary bibliography originals/PDFs/LFS objects are not copied here.
+
+## Target-machine baseline
+
+The actual target-machine baseline is accepted in `SYSTEM_CAPABILITY_REPORT.md`
+and the generated schema-v2 snapshot `system-capability.accepted.json` (DEC-031).
+The machine provides a Ryzen 5 2600X (6 cores/12 threads), about 31.9 GiB usable
+RAM, a Radeon RX 570 with 8 GiB VRAM, and about 169.4 GiB free on the repository
+filesystem at collection. The canonical runtime is native Windows CPython 3.12
+managed by the locked `uv` environment. CPU execution remains mandatory;
+NVIDIA/CUDA is absent and no AMD scientific-compute backend is validated, so no
+accelerator-specific dependency is accepted yet.
 
 ## Lifecycle gates
 

@@ -159,7 +159,7 @@ The final presentation is a distinct downstream deliverable after thesis stabili
 
 ## Current genuine gates
 
-The canonical concrete task/dependency list is `docs/context/TASKS.md`. The current first gate is `T-100`: actual system inventory on the thesis experiment machine. GridWorld, research framing, metrics, model selection, pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the dependency/acceptance conditions recorded in that registry.
+The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine inventory/runtime baseline is accepted by `T-100`/`T-101` and DEC-031. After review/merge, research framing (`T-200`) is the first dependency-valid task, with the bounded GridWorld comparison (`T-210`) also unlocked; metrics, model selection, pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions.
 
 Deferred, non-blocking inputs remain later supervisor corrections, eventual submission/presentation dates, a current official Word template, exact defense duration/file rules, and optional contextual example theses supplied near writing.
 
