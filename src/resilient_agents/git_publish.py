@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Sequence
 
-FINAL_STATUSES = {"completed", "failed", "cancelled", "invalid", "excluded"}
+FINAL_STATUSES = {"completed", "failed", "cancelled", "invalid"}
 FINALIZATION_MARKER = "FINALIZED"
 CHECKSUM_RE = re.compile(r"^([0-9a-f]{64})  ([^/\\]+)$")
 
