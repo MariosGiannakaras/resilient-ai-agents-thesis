@@ -44,7 +44,7 @@ Already complete:
 - complete bibliography import and evidence trust boundary;
 - initial post-import evidence synthesis;
 - technical architecture for information isolation, deterministic randomness, protocol partitions, run provenance, and automatic publication.
-- accepted target-machine inventory and CPU-first runtime/tooling constraints (DEC-030).
+- accepted target-machine inventory and CPU-first runtime/tooling constraints (DEC-031).
 
 Still required before final freeze:
 

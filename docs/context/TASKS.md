@@ -32,9 +32,9 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 - **Current task:** `T-100` and `T-101` complete on the review branch
 - **State:** `REVIEW GATE`
 - **Active branch / PR:** `feat/target-machine-baseline`; PR #55.
-- **Last validated point:** schema-v2 collector checkpoint `a4d349e` passed 7 focused tests and generated a clean-commit stable snapshot; the snapshot and capability interpretation passed provenance, privacy, CPU/core, full-width VRAM, runtime/tooling, and storage review. DEC-030 records the CPU-first Windows runtime constraints without freezing scientific choices.
+- **Last validated point:** schema-v2 collector checkpoint `a4d349e` passed 7 focused tests and generated a clean-commit stable snapshot; the snapshot and capability interpretation passed provenance, privacy, CPU/core, full-width VRAM, runtime/tooling, and storage review. DEC-031 records the CPU-first Windows runtime constraints without freezing scientific choices.
 - **Tests already run:** full CI-equivalent checks passed: lock/sync, compile, documentation consistency, 51 tests passed with 1 platform-specific symlink test skipped, bibliography import/usage and both checksum manifests passed, and all committed JSON parsed; live/stable inventory privacy/provenance invariants and Windows Git LFS verification also passed.
-- **Relevant files changed:** collector/tests, accepted JSON/report, DEC-030/decision index, and affected active context/research/task/status documentation.
+- **Relevant files changed:** collector/tests, accepted JSON/report, DEC-031/decision index, and affected active context/research/task/status documentation.
 - **Uncommitted work:** PR-number reconciliation only.
 - **Exact next action:** validate and push this PR-number reconciliation, then wait for review/squash merge of PR #55 before starting `T-200`.
 
@@ -156,7 +156,7 @@ Codex must assume a session can stop unexpectedly.
 
 - [ ] BLOCKED `T-500` — Implement only the pilot-proven experiment-management features needed for final work: truthful lifecycle state, history/registry, batch execution, interruption/recovery where safe, and current resource snapshot.
   - Depends on: `T-412`.
-  - Acceptance: features use filesystem run bundles as source of truth; any index/database is rebuildable.
+  - Acceptance: features use filesystem run bundles as source of truth; any index/database is rebuildable; batch/concurrent execution serializes shared `run-index` and Git publication through a single-writer boundary (or an equivalently proven race-free design), and unsafe publication contention fails closed while preserving local finalized bundles for later retry.
 - [ ] BLOCKED `T-510` — Implement the bounded local Streamlit dashboard as a thin layer over the same validated core.
   - Depends on: `T-500`.
   - Acceptance: New Experiment, Run/Monitor, History, Compare, Detailed Analysis, and Artifacts/Export workflows operate on real core data with no duplicated scientific logic and follow `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`.

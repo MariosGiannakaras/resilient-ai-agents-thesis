@@ -164,11 +164,10 @@ jobs:
           sha256sum -c catalog/SHA256SUMS
           (cd citation-ready && sha256sum -c catalog/SHA256SUMS)
 
-      - name: Run consumer validation and tests
+      - name: Run consumer-specific validation
         run: |
           uv run python scripts/bibliography_import.py --validate-only
           uv run python scripts/validate_bibliography_usage.py
-          uv run python -m unittest discover -s tests -p 'test_*.py' -v
 
       - name: Remove source checkout before diff
         run: rm -rf .bibliography-source
@@ -209,7 +208,7 @@ jobs:
           print(f"- research materials: {p['research_material_count']}")
           print(f"- indexed originals: {p['original_pdf_count']}")
           print()
-          print("This PR contains only the generated `research/bibliography/` directory. Both upstream checksum manifests, consumer integrity, trust-aware reference validation, and the repository test suite passed before publication. No PDFs or Git LFS objects are imported.")
+          print("This PR contains only the generated `research/bibliography/` directory. Upstream package validation, both upstream checksum manifests, consumer integrity, and trust-aware reference validation passed before publication. The repository-wide test suite runs once in this PR's canonical repository checks. No PDFs or Git LFS objects are imported.")
           PY
           gh pr create \
             --base main \

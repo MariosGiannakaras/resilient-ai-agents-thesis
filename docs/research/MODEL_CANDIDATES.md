@@ -23,7 +23,7 @@ Full-corpus robust-MDP candidates are internal research context only until requi
 
 ## Required selection process
 
-1. Use the accepted CPU-first target-machine baseline from DEC-030.
+1. Use the accepted CPU-first target-machine baseline from DEC-031.
 2. Complete the GridWorld prototype/ADR and final information/observability framing.
 3. Finalize the bounded RQ roles that agents must answer.
 4. For each retained role, verify literature assumptions and formal citation status.

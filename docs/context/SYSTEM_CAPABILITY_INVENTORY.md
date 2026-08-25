@@ -55,7 +55,7 @@ The report becomes project evidence only after all of the following are true:
 
 The accepted target-system report is
 `docs/context/SYSTEM_CAPABILITY_REPORT.md`, backed by the stable generated JSON
-snapshot `docs/context/system-capability.accepted.json`. DEC-030 applies its
+snapshot `docs/context/system-capability.accepted.json`. DEC-031 applies its
 runtime/dependency implications.
 
 The accepted baseline requires:

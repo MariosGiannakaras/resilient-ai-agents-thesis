@@ -31,6 +31,7 @@ The accepted architecture uses:
 - strict separation of evaluator ground truth from agent-visible information;
 - independent deterministic RNG streams;
 - filesystem-first experiment run bundles with provenance and checksums;
+- fail-closed finalization with a last-written completion marker plus marker/manifest/checksum/run-index agreement before automatic publication;
 - one guarded automatic Git commit and push per finalized whole experiment, never per seed;
 - selective Git LFS for large thesis-produced artifacts;
 - a future thin Streamlit dashboard after the headless core and pilots establish the real workflow.
@@ -46,10 +47,10 @@ No final research question, model set, GridWorld scientific parameters, uncertai
 - `docs/context/EXECUTION_WORKFLOW.md` — execution responsibilities and major handoffs.
 - `docs/context/DOCUMENTATION_GOVERNANCE.md` — mandatory reconciliation rules.
 - `docs/decisions/DECISION_LOG.md` — accepted/superseded/pending decision index.
-- `docs/context/CODEX_EXECUTION_PROMPT.md` — single tracked, canonical, directly executable Codex prompt.
+- `docs/context/CODEX_EXECUTION_PROMPT.md` — single tracked, canonical Codex execution bootstrap and Goal-mode entrypoint.
 - `docs/thesis/PRESENTATION_WORKFLOW.md` — deferred but already-defined final PowerPoint/speaker-material workflow.
 
-After cloning/updating the repository on the thesis machine, start Codex with: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.` Every Codex session must inspect `TASKS.md` before selecting/resuming work. Available session memory is used together with branch/working-tree/PR state; durable repository evidence is the fallback when a session or model quota is interrupted.
+After cloning/updating the repository on the thesis machine, start Codex with the `/goal` command shown under **User entrypoint** in `docs/context/CODEX_EXECUTION_PROMPT.md`. Goal mode keeps the long-horizon objective active across successive dependency-valid bounded tasks; real user/scientific/external/review gates still pause it. Every Codex session must inspect `TASKS.md` before selecting/resuming work. Available session memory is used together with branch/working-tree/PR state; durable repository evidence is the fallback when a session or model quota is interrupted.
 
 Historical bootstrap/pre-import files are not current instructions. Useful historical records are explicitly labelled historical; obsolete active files are removed rather than left to drift.
 
@@ -100,7 +101,9 @@ The application is therefore not the end of the project. It is the validated exe
 
 A `run_id` means one whole experiment and may contain many seeds/episodes. The experiment writes its resolved configuration, capability snapshot, events/traces, summary, manifest, and SHA-256 checksums under `results/runs/<run-id>/`.
 
-When the experiment finalizes, the normal workflow can automatically create one commit and push containing only that run and the run index. The publisher refuses unsafe mixed-provenance commits, but never deletes the local experiment data when publication cannot proceed.
+A run becomes publishable only after finalization writes the `FINALIZED` sentinel as its last step. Before any Git staging, the publisher verifies that the marker agrees with the manifest and that the manifest payload metadata, file sizes, checksum scope/SHA-256 values, provenance, and exactly one matching run-index entry are internally consistent. Corrupted, partial, duplicate-index, or manually fabricated finalized-looking evidence therefore fails closed.
+
+When the verified experiment finalizes, the normal workflow can automatically create one commit and push containing only that run and the run index. The publisher also refuses unsafe mixed-provenance/dirty-state/non-fast-forward publication, but never deletes the local experiment data when publication cannot proceed.
 
 Useful large thesis-produced outputs are retained while storage permits. Large traces and other configured formats use Git LFS. Bibliography PDFs and bibliography LFS objects remain upstream and are never imported here.
 

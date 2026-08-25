@@ -75,7 +75,9 @@ Every Codex session reads it before selecting/resuming work. Codex uses availabl
 
 DEC-028 makes the directly executable Codex prompt a lean bootstrap rather than a second policy manual. Session startup reads exactly `AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md`; additional files/evidence are loaded only for the selected task, using repository search before broad reading. Domain rules stay centralized in `AGENTS.md` and the relevant active specifications.
 
-`Execute it completely` is bounded by task dependencies and accepted gates. Codex advances one dependency-valid task/coherent work package at a time; it does not attempt the entire thesis in one session, start `BLOCKED`/`DEFERRED` work, reopen completed tasks without evidence, self-approve completed PRs, or bypass actual-machine/review/scientific constraints.
+The canonical `/goal` entrypoint is the persistent long-horizon wrapper over that bounded execution model. Codex advances one dependency-valid task/coherent work package at a time, validates/checkpoints it, then re-evaluates `TASKS.md` and automatically continues with the next `READY` scope when no genuine gate requires input. Completing a routine task, branch, or PR is not by itself a reason to clear the goal or ask the user to say “continue”. Goal persistence does not turn the thesis into one undifferentiated task and never permits `BLOCKED`/`DEFERRED` work, reopening completed work without evidence, self-approval, or crossing user, external-machine, scientific, protocol, access, or review gates.
+
+A separate startup `/plan` is normally redundant because the repository already contains the roadmap, task dependencies, and acceptance conditions. Plan mode may be used within the active goal for a specific task whose implementation/research approach is genuinely unclear and benefits from investigation before editing.
 
 Intermediate branch commits are allowed as recovery checkpoints. Coherent work still normally reaches `main` through a squash merge, so recovery checkpoints do not create unnecessary permanent main history.
 
@@ -157,7 +159,7 @@ The final presentation is a distinct downstream deliverable after thesis stabili
 
 ## Current genuine gates
 
-The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine inventory/runtime baseline is accepted by `T-100`/`T-101` and DEC-030. After review/merge, research framing (`T-200`) is the first dependency-valid task, with the bounded GridWorld comparison (`T-210`) also unlocked; metrics, model selection, pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions.
+The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine inventory/runtime baseline is accepted by `T-100`/`T-101` and DEC-031. After review/merge, research framing (`T-200`) is the first dependency-valid task, with the bounded GridWorld comparison (`T-210`) also unlocked; metrics, model selection, pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions.
 
 Deferred, non-blocking inputs remain later supervisor corrections, eventual submission/presentation dates, a current official Word template, exact defense duration/file rules, and optional contextual example theses supplied near writing.
 
@@ -166,7 +168,7 @@ Deferred, non-blocking inputs remain later supervisor corrections, eventual subm
 Use:
 
 - `AGENTS.md` for Codex/project policy;
-- `docs/context/CODEX_EXECUTION_PROMPT.md` only as the lean execution bootstrap;
+- `docs/context/CODEX_EXECUTION_PROMPT.md` as the lean Goal-mode execution bootstrap;
 - `docs/context/CURRENT_STATUS.md` for the shortest current-state summary;
 - `docs/context/TASKS.md` for concrete task status/resume/next action;
 - `docs/context/IMPLEMENTATION_ROADMAP.md` for phase/dependency explanation;

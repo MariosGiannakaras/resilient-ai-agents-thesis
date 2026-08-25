@@ -82,7 +82,7 @@ This file contains explicit current user decisions. Old conversations do not cre
 - Git LFS may be used automatically for appropriate large result/artifact formats.
 - Do not discard useful result data merely to avoid large files unless a real storage/LFS limit requires a deliberate retention change.
 
-## Codex task continuity and quota interruptions
+## Codex task continuity, progress, and quota interruptions
 
 - Maintain one canonical task registry with checkboxes/stable task IDs so required work cannot be forgotten across the long thesis lifecycle.
 - Every Codex session must pass through the task registry before selecting or resuming work.
@@ -93,6 +93,8 @@ This file contains explicit current user decisions. Old conversations do not cre
 - Newly discovered required work must be added to the canonical registry rather than being left only in chat or informal notes.
 - The user should not have to manually remember or reconstruct unfinished Codex work between quota windows.
 - A task marked `READY` must actually have its required task dependencies complete; future dependency-blocked tasks are not labelled ready just because they are planned.
+- During long execution, Codex should provide concise progress updates after meaningful completed/validated checkpoints, gates, or blockers rather than narrating every command.
+- Use `X/Y` only when `Y` is objectively defined. Project and work-package/deliverable counts come from canonical `TASKS.md`; an active-task fraction is shown only when the task has a genuine finite substep set. In-progress or failed work never counts as complete and no second progress tracker is created.
 
 ## Testing effort and model quota
 
@@ -103,7 +105,8 @@ This file contains explicit current user decisions. Old conversations do not cre
 - Do not pursue a coverage percentage for its own sake.
 - Do not add mutation testing, broad fuzz/property testing, exhaustive parameter combinations, snapshot proliferation, or large end-to-end matrices unless a concrete task-specific risk justifies them.
 - CI uses tiny deterministic fixtures/smoke runs; pilot and final experiment matrices are not tests.
-- Run the full repository checks when work is ready for review and rerun them only after a later change that could affect the result.
+- When GitHub Actions is available, PR CI is the canonical full-suite pre-merge verification. Do not duplicate the full suite locally merely because a branch is ready for review.
+- Successful CI should be recorded as a conclusion without repeated log analysis. On failure, inspect and reproduce the narrowest failing step first; run a local full suite only when CI is unavailable, CI/test infrastructure itself needs reproduction, or a specific failure requires it.
 - Stop adding tests when the acceptance condition and material risks are covered.
 
 ## End-to-end lifecycle and user journey
@@ -177,10 +180,12 @@ This file contains explicit current user decisions. Old conversations do not cre
 
 ## Thesis and repository
 
-- This repository remains private and is the source of truth for thesis context, code, experiments, results, writing, defense presentation, and final deliverables, with the explicit bibliography boundary above.
-- The official application is stored unchanged in the private repository.
+- This repository is the source of truth for thesis context, code, experiments, results, writing, defense presentation, and final deliverables, with the explicit bibliography boundary above.
+- Repository visibility may be changed temporarily, at explicit user direction, for CI/Actions. Temporary public visibility is an operational choice and is not a decision to publish or permanently redistribute the thesis package.
+- The official application remains stored unchanged. Tokens, credentials and tracked secrets remain forbidden regardless of visibility.
+- Any deliberate public release/distribution still requires the final privacy, copyright, licensing, and redaction audit; temporary CI visibility does not waive it.
 - Raw chat exports are not committed.
-- Fabricated citations, data, results, presentation claims, and conclusions are forbidden.
+- Fabricated citations, data, results, presentation claims, progress, and conclusions are forbidden.
 
 ## Optional AI
 

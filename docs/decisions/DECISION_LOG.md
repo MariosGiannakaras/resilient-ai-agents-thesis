@@ -29,7 +29,7 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 
 ## DEC-006 — No acceleration assumptions before real inventory
 - **Date:** 2026-07-29
-- **Status:** Accepted; inventory gate satisfied and applied by DEC-030.
+- **Status:** Accepted; inventory gate satisfied and applied by DEC-031.
 - **Decision:** Actual target-machine inventory precedes compute-dependent choices; CPU-compatible operation remains the required supported baseline until a specific acceleration backend is validated.
 
 ## DEC-007 — Raw chat exports excluded
@@ -144,20 +144,26 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **Status:** Accepted; implementation deferred to the final dashboard phase.
 - **Decision:** The final dashboard must be self-explanatory through clear labels/helper text/units, accurate tooltips/contextual help, consistent terminology, actionable states, pre-run configuration review, and text+icon+accessible semantic-color status treatment where color is never the sole signal. After the final dashboard structure is stable, add a short skippable/replayable first-run onboarding flow with Previous/Next/Skip/Finish using lightweight local/native Streamlit mechanisms. Do not introduce a heavyweight custom JavaScript/DOM tour framework, accounts, or a new persistence subsystem merely for onboarding unless a later demonstrated requirement justifies the complexity.
 
-## DEC-028 — Lean Codex bootstrap and bounded execution
+## DEC-028 — Lean Codex bootstrap, persistent goal, and bounded execution
 - **Date:** 2026-08-04
-- **Status:** Accepted and implemented.
-- **Decision:** The canonical Codex prompt is a lean execution bootstrap, not a second copy of `AGENTS.md`. Every session reads only `AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md` before selecting/resuming work, then loads only task-specific active specifications/evidence. “Execute it completely” means progressing one dependency-valid task/coherent work package at a time within review, machine, evidence, and scientific gates; it never authorizes an all-thesis attempt, blocked/deferred work, or completed-work reimplementation. CI enforces the three-file startup core, bounded-execution wording, non-duplication of domain-policy sections, and a lean prompt-size budget.
+- **Status:** Accepted and implemented; Goal-mode entrypoint refined 2026-08-25.
+- **Decision:** The canonical Codex prompt is a lean execution bootstrap, not a second copy of `AGENTS.md`. Every session reads only `AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md` before selecting/resuming work, then loads only task-specific active specifications/evidence. The canonical `/goal` entrypoint keeps the long-horizon project objective active across successive dependency-valid scopes, but Codex still executes one bounded task/coherent work package at a time. When a scope is validated and any required review/merge gate resolves, Codex re-evaluates the task registry and continues to the next valid `READY` scope instead of stopping at a routine task boundary. Goal persistence never authorizes `BLOCKED`/`DEFERRED` work, an undifferentiated whole-thesis scope, completed-work reimplementation, self-approval, or crossing user, external-machine, scientific, protocol, access, or review gates. A separate startup `/plan` is unnecessary because the repository already has the roadmap/task ledger; plan mode is reserved for a specific task whose approach genuinely needs investigation. CI enforces the three-file startup core, bounded-execution wording, non-duplication of domain-policy sections, and a lean prompt-size budget.
 
 ## DEC-029 — Risk-based proportional testing
 - **Date:** 2026-08-04
-- **Status:** Accepted.
+- **Status:** Accepted; refined by DEC-030.
 - **Decision:** Testing protects scientific validity, task acceptance conditions, critical reliability/security boundaries, and concrete regressions, but must not become an independent scope-expansion project. Codex uses targeted tests during implementation, tiny deterministic fixtures/smoke runs in CI, and the full repository checks at review readiness rather than after every small edit. There is no arbitrary coverage-percentage target and no mutation/fuzz/property/combinatorial/snapshot expansion without a concrete task-specific risk. Stop adding tests once material risks and acceptance conditions are covered; never run pilot/final experiment matrices as CI tests.
 
-## DEC-030 — Target-machine runtime and acceleration baseline
+## DEC-030 — Quota-efficient fail-fast validation
 - **Date:** 2026-08-25
 - **Status:** Accepted.
-- **File:** `docs/decisions/DEC-030_TARGET_MACHINE_BASELINE.md`.
+- **File:** `docs/decisions/DEC-030_QUOTA_EFFICIENT_FAIL_FAST_VALIDATION.md`.
+- **Decision:** Use targeted local validation and GitHub PR CI as the canonical full-suite pre-merge guard when available; do not duplicate full-suite runs or analyse successful logs without cause. Keep CI bounded, quiet on success and explicit on failure. Validate required inputs/contracts/schema/provenance at boundaries before expensive work, fail closed on invalid/ambiguous required state, keep optional unavailability explicit, prefer atomic finalization, and allow adjacent dependency-valid tasks to share a coherent PR when no real gate separates them.
+
+## DEC-031 — Target-machine runtime and acceleration baseline
+- **Date:** 2026-08-25
+- **Status:** Accepted.
+- **File:** `docs/decisions/DEC-031_TARGET_MACHINE_BASELINE.md`.
 - **Decision:** Accept the actual Windows target-machine capability report; use native Windows CPython 3.12 via the locked `uv` environment; require CPU-compatible execution; do not infer a validated scientific-compute backend from the Radeon display adapter; use compatible Windows Git/Git LFS for LFS-sensitive operations.
 
 ## Pending decisions
@@ -176,4 +182,4 @@ Future entries are still required for:
 - final citation style/Word template/submission specifics near writing/delivery;
 - exact current defense duration, required slide/file rules, and administrative presentation/submission procedure near delivery.
 
-The general Python/core/storage/result-publication/dashboard architectural baseline, accepted target-machine/runtime baseline, task-governance mechanism, lean Codex bootstrap, proportional testing discipline, end-to-end handoff model, and self-explanatory UI/onboarding baseline are **not** pending decisions unless later requirements justify explicit amendments.
+The general Python/core/storage/result-publication/dashboard architectural baseline, accepted target-machine/runtime baseline, task-governance mechanism, lean Goal-mode Codex bootstrap, proportional testing discipline, quota-efficient fail-fast validation, end-to-end handoff model, and self-explanatory UI/onboarding baseline are **not** pending decisions unless later requirements justify explicit amendments.

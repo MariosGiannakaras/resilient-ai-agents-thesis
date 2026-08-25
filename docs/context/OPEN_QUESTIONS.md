@@ -20,7 +20,7 @@ The following are **not open questions anymore**:
 - requirement for a final PowerPoint, embedded speaker notes, separate full spoken Greek script, and evidence/rehearsal validation.
 - actual target-machine CPU/RAM/storage/GPU/runtime baseline and current acceleration support.
 
-They are governed by DEC-021 through DEC-027 as applicable. Exact scientific choices, pilot-derived optional UI controls, and future official delivery requirements remain open below.
+They are governed by DEC-021 through DEC-031 as applicable. Exact scientific choices, pilot-derived optional UI controls, and future official delivery requirements remain open below.
 
 | ID | Open issue | Why open / missing information | Needed by | Blocks next phase? | Resolver | Safe temporary rule |
 |---|---|---|---|---|---|---|
@@ -41,4 +41,4 @@ They are governed by DEC-021 through DEC-027 as applicable. Exact scientific cho
 | OQ-EXP-003 | What exact final statistical plan is appropriate? | Depends on estimands, nesting, censoring/non-recovery, paired scenario structure, and pilot distributions. | Before final result inspection. | Yes. | Statistical/protocol decision. | Freeze analysis roles before final evidence is inspected. |
 | OQ-UI-001 | Which optional dashboard controls/views survive after pilots? | The self-explanatory UX baseline and lightweight onboarding are confirmed, but optional controls/views still depend on the real experiment workflow and feature budget. | Dashboard implementation. | No now. | Pilot-derived workflow + user/product decision where needed. | Always implement the confirmed UX baseline; add no speculative advanced controls/views. |
 | OQ-AI-001 | Is any optional AI feature useful in the dashboard? | No demonstrated need exists. | Late dashboard phase only. | No. | User + measured value. | Do not integrate it. |
-| OQ-PRIV-001 | What must be redacted before any possible public release? | Repository currently remains private. | Only if public release is considered. | No. | User/privacy audit. | Keep repository private. |
+| OQ-PRIV-001 | What must be redacted or licensed differently before a deliberate public release/distribution? | Temporary public repository visibility may be used explicitly for GitHub Actions/CI, but that operational choice is not a decision to publish the thesis package or redistribute every contained artifact permanently. | Before any intentional public release/distribution. | No for current research/program work. | User + final privacy/licensing audit. | Temporary CI visibility does not waive the final privacy, secret, copyright, or licensing audit. |

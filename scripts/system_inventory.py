@@ -26,6 +26,7 @@ from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 SCHEMA_VERSION = 2
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_PROBES = ("numpy", "scipy", "pandas", "torch", "gymnasium", "minigrid")
+GENERATED_OUTPUT_PREFIXES = ("results/", "artifacts/")
 
 
 def run_command(command: Sequence[str], timeout: int = 5) -> Optional[str]:
@@ -271,14 +272,25 @@ def package_versions(names: Iterable[str] = PACKAGE_PROBES) -> Dict[str, Optiona
     return versions
 
 
+def untracked_nonoutput_present(output: Optional[str]) -> Optional[bool]:
+    if output is None:
+        return None
+    paths = [path for path in output.split("\0") if path]
+    return any(not path.startswith(GENERATED_OUTPUT_PREFIXES) for path in paths)
+
+
 def repository_state() -> Dict[str, object]:
     commit = run_command(["git", "-C", str(ROOT), "rev-parse", "HEAD"])
     status = run_command(
         ["git", "-C", str(ROOT), "status", "--porcelain", "--untracked-files=no"]
     )
+    untracked = run_command(
+        ["git", "-C", str(ROOT), "ls-files", "-z", "--others", "--exclude-standard"]
+    )
     return {
         "commit": commit.splitlines()[0] if commit else None,
         "tracked_changes_present": bool(status) if status is not None else None,
+        "untracked_nonoutput_present": untracked_nonoutput_present(untracked),
     }
 
 

@@ -31,11 +31,14 @@
 
 - Testing is risk-based and proportional to the changed behavior, task acceptance condition, and scientific/reliability impact.
 - During implementation, use targeted tests; do not repeatedly run the full suite after every small edit.
-- The full repository checks are the review/merge guard and are rerun only after later changes that could affect their result.
+- When GitHub Actions is available, PR CI is the canonical full-suite pre-merge guard. Do not run an otherwise unnecessary local full suite merely to duplicate it.
+- On successful CI, record the conclusion without repeatedly reading or summarizing logs. On failure, inspect the narrowest failed step first and reproduce only what is useful.
+- A local full-suite run is reserved for unavailable CI, CI/test-infrastructure changes where local reproduction is useful, or a specific failure that requires it.
 - There is no coverage-percentage target.
 - Mutation testing, broad fuzz/property testing, exhaustive parameter matrices, snapshot proliferation, and large end-to-end test suites are out of scope unless a concrete task-specific risk justifies them.
 - CI uses tiny deterministic fixtures, known-answer cases, contracts, and representative smoke/integration paths. Pilot and final experiment matrices are never used as tests.
 - Test work stops when task acceptance conditions and material risks are covered; theoretical completeness does not justify delaying implementation or consuming model quota.
+- Required configuration/contracts/schema/provenance/lifecycle conditions fail closed at clear boundaries; optional unavailability must remain explicit rather than being interpreted as successful evidence.
 
 ## Dashboard UX complexity
 
@@ -89,10 +92,11 @@
 
 ## Privacy and repository
 
-- The repository remains private while it contains the unredacted official application/personal academic information.
-- Tokens, passwords, API keys, credentials, and local secrets are forbidden in tracked content.
+- Repository visibility may be changed temporarily at explicit user direction for CI/Actions. Temporary public visibility is an operational choice, not a permanent public-release or redistribution decision.
+- Tokens, passwords, API keys, credentials, and local secrets are forbidden in tracked content regardless of repository visibility.
 - Raw conversation exports are not stored in the repository.
-- Any public release requires privacy/license audit and redaction first.
+- Temporary CI visibility does not waive privacy, personal-data, copyright, licensing, or provenance obligations.
+- Any deliberate public release/distribution requires a privacy/license/copyright audit and appropriate redaction or exclusion first.
 
 ## Academic delivery and defense
 

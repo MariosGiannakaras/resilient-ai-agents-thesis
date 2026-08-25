@@ -1,120 +1,89 @@
 # Codex Execution Prompt
 
-## How to use
+## User entrypoint
 
-This is the single tracked, canonical, directly executable Codex prompt for the thesis project.
+After cloning/updating the repository on the actual thesis machine, give Codex only this Goal-mode command:
 
-After cloning or updating the repository on the actual thesis machine, give Codex only this instruction:
+> `/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely. Continue autonomously across successive dependency-valid tasks and coherent work packages while the next work can proceed without a genuine user, external-machine, scientific, protocol, access, or review gate. Treat the goal as complete only when no dependency-valid work remains before such a gate. Validate and checkpoint each bounded scope; never bypass BLOCKED or DEFERRED work or accepted gates.`
 
-> Read `docs/context/CODEX_EXECUTION_PROMPT.md` and execute it completely.
+This file is the single tracked execution bootstrap. Do not copy it into disposable task prompts. A separate startup `/plan` is not required because the repository already contains the accepted roadmap, dependency ledger, and task acceptance conditions; use plan mode only when a specific task has a genuinely unclear approach that benefits from investigation before editing.
 
-Do not copy this prompt into another task file and do not delete it after use.
+## Execute from repository state
 
----
+Goal mode is the persistent long-horizon wrapper. Within it, work **one bounded scope at a time**: one task or one genuinely coherent adjacent task package. After a scope is validated and any required review/merge gate has resolved, re-read the task state and continue automatically with the next dependency-valid `READY` work instead of stopping merely because one task finished.
 
-Continue work autonomously in the private repository `MariosGiannakaras/resilient-ai-agents-thesis` from the **actual current repository state**.
+“Execute it completely” therefore means continue through successive valid scopes as far as the environment, permissions, evidence, review gates, and accepted workflow allow. It does not mean treating the whole thesis as one undifferentiated task, bypassing `BLOCKED`/`DEFERRED` work, reopening accepted work without evidence, or crossing a scientific/user/external-machine/protocol/review gate.
 
-“Execute it completely” means: advance the project as far as the current environment, permissions, task dependencies, review gates, and accepted scientific workflow validly allow. It does **not** mean attempting the entire thesis in one session, bypassing blockers, starting `BLOCKED`/`DEFERRED` tasks, or reopening completed work.
+`AGENTS.md` contains the always-on project rules and routing map. Do not duplicate or reconstruct those rules from chat history.
 
-## Authority and conflict handling
+## Startup / resume
 
-Use these authorities in order for normal execution:
-
-1. `AGENTS.md` — project policy, scientific/technical safeguards, source hierarchy, Git and documentation rules.
-2. `docs/context/TASKS.md` — the only concrete task/status/dependency/resume ledger.
-3. `docs/context/CURRENT_STATUS.md` — shortest authoritative current-state summary.
-4. Current Git state, files, tests, PR/check status, actual machine evidence, and task-specific active specifications.
-5. Available session/conversation memory, verified against durable repository evidence.
-
-Do not reconstruct the project from chat history. Do not redo checked/accepted work unless current repository evidence shows a regression or an explicit newer decision reopens it. If active authorities conflict, reconcile them in the same branch/PR before continuing substantive work; do not silently choose whichever wording is convenient.
-
-## Mandatory startup and resume procedure
-
-Run this procedure at the start of **every Codex session**, including after quota exhaustion, interruption, machine restart, or context loss:
-
-1. Inspect `git status`, current branch, recent commits, uncommitted changes, and any relevant open PR/check state.
+1. Inspect `git status`, branch, recent commits, uncommitted work, and relevant open PR/check state.
 2. Read only the session-start core:
    - `AGENTS.md`
    - `docs/context/TASKS.md`
    - `docs/context/CURRENT_STATUS.md`
-3. Inspect `Resume state` and every task marked `IN_PROGRESS`.
-4. Use available session memory to understand prior work, then verify it against Git, files, tests, and PR state. Durable repository evidence wins on conflict.
-5. Resume the existing `IN_PROGRESS` task before selecting another unless it is genuinely blocked.
-6. If no task is in progress, select the first task that is actually `READY` and dependency-valid. Never begin a `BLOCKED` or `DEFERRED` task merely because it appears earlier in the roadmap.
-7. Define one active scope: the selected task or one clearly coherent work package needed to satisfy its acceptance condition.
-8. Read only the task entry, files it explicitly names, and the relevant task-domain specifications required by `AGENTS.md`. Use repository search before broad reading. Do not reread the entire repository, historical records, or generated bibliography for a bounded task unless the task is explicitly a cross-cutting audit.
-9. For substantial work, create or reuse a descriptive branch and mark the task `IN_PROGRESS` with a recoverable `Resume state` no later than the first meaningful checkpoint.
+3. Inspect `Resume state` and any `IN_PROGRESS` task. Repository/Git evidence wins if memory conflicts.
+4. Resume valid `IN_PROGRESS` work first. Otherwise select the first dependency-valid `READY` task. Never start `BLOCKED`/`DEFERRED` work just because it is next numerically.
+5. Define one bounded scope: one task or one genuinely coherent adjacent task package permitted by `AGENTS.md`.
+6. Read only the task entry, explicitly referenced files, and the smallest relevant active specifications/evidence. Search before broad reading.
+7. For substantial work, create/reuse a descriptive branch and make the task recoverable in `TASKS.md` no later than the first meaningful checkpoint.
 
-Do not spend the session merely summarizing files already read. After resolving scope and constraints, begin the task.
+Do not spend the session summarizing context already established. Once scope/dependencies are clear, execute.
 
-## Execution loop
+## Execution contract
 
-For the active task:
+For each active bounded scope:
 
-1. Confirm its dependencies, acceptance condition, relevant constraints, and required evidence.
-2. Form a concise implementation/research plan and execute it without asking the user for information that can be obtained reliably from the repository, actual machine, verified bibliography, prototypes, tests, or authoritative sources.
-3. Implement the smallest complete solution that satisfies the task. Do not silently expand scope or freeze scientific choices beyond available evidence.
-4. Validate the affected behavior and scientific invariants with the smallest relevant set of tests, fixtures, reference traces, reproducibility checks, or documented visual/end-to-end review appropriate to the risk.
-5. Reconcile `TASKS.md`, `Resume state`, and every affected active source-of-truth file in the same change according to `docs/context/DOCUMENTATION_GOVERNANCE.md`.
-6. Run the documentation consistency validator, targeted tests during iteration, and the full repository checks once the work is ready for review.
-7. Mark the task complete only when its acceptance condition is satisfied and validated. Partial work remains `IN_PROGRESS`.
-8. Create/update the PR with scope, task IDs, rationale, validation, scientific/protocol impact, limitations, and deferred work. Do not self-approve or silently bypass the repository review/merge workflow.
-9. Start another task only after the current task has reached its valid handoff/completion state and no review, merge, external-machine, or decision gate must be resolved first.
+1. Confirm dependencies, acceptance condition, constraints, and evidence needed.
+2. Implement/research the smallest complete solution that satisfies the acceptance condition. Follow all scientific, bibliography, provenance, UI, lifecycle, and scope rules routed by `AGENTS.md`.
+3. Fail closed on invalid/ambiguous required state; do not fabricate fallbacks or apparent success.
+4. Validate with the smallest relevant deterministic checks during implementation.
+5. Keep `TASKS.md`, `Resume state`, and affected active source-of-truth docs consistent in the same change.
+6. Before PR/update, run the documentation consistency validator and directly affected targeted checks. Do not duplicate an available PR full-suite CI run locally.
+7. Mark a task complete only when its acceptance condition is actually satisfied and validated; otherwise keep it `IN_PROGRESS` or correctly blocked.
+8. Create/update a coherent PR with task IDs, scope/rationale, validation, scientific/protocol impact, and deferred/excluded work.
+9. Use GitHub PR CI as the canonical full-suite pre-merge guard when available. On success, record the conclusion without rereading logs. On failure, inspect only the failing step/log, reproduce narrowly when useful, fix, and let CI verify the whole repository again.
+10. Review the actual diff before merge. Do not self-approve or bypass a genuine review/decision gate.
+11. When the scope is fully resolved and no gate requires external input, select the next dependency-valid task and continue under the same active goal.
 
-All safeguards in `AGENTS.md` remain mandatory. In particular, never fabricate or silently alter sources, citations, evidence status, runs, data, metrics, progress, logs, figures, tables, results, conclusions, protocol state, or presentation claims.
+## Progress and quota discipline
 
-## Proportional testing discipline
+- Give concise user updates after scope is set and at meaningful completed/validated checkpoints, gates, or blockers—not after routine commands.
+- Use `X/Y` only for objective finite denominators. `Project: X/Y` comes from checked/all canonical `T-*` entries in `TASKS.md`; add the current work-package/deliverable count when useful. Add active-task `X/Y` only if real finite substeps exist.
+- In-progress/failed work never counts as complete. Do not create another tracker or invented percentage.
+- Prefer targeted search/ranges and bounded outputs; avoid broad repository/corpus dumps and unnecessary successful-log reading.
+- Preserve recoverable checkpoint commits/state after substantial validated substeps when practical, especially before long experiments or major context switches.
+- Do not clear or declare the persistent goal complete merely because one bounded task, branch, PR, or work package completed while another dependency-valid scope can proceed without a genuine gate.
 
-Testing supports implementation and scientific validity; it must not become an independent scope-expansion project.
+## Stop conditions
 
-- During implementation, run the smallest targeted test subset that can validate the changed behavior. Do not repeatedly run the full suite after every small edit.
-- Add or change a test only when it protects a task acceptance condition, a scientifically important invariant, a reliability/security boundary, or a concrete regression likely to recur.
-- Prefer one strong known-answer, contract, invariant, or representative integration test over many near-duplicate examples.
-- Do not pursue an arbitrary coverage percentage. Do not add mutation testing, broad fuzz/property testing, exhaustive parameter combinations, snapshot proliferation, or large end-to-end matrices unless a concrete task-specific risk clearly justifies them.
-- CI and local tests must use tiny deterministic fixtures/smoke runs, never the full pilot or final experiment matrix.
-- For documentation-only changes, run the relevant validators and directly affected checks; the normal full repository CI remains the final pre-merge guard.
-- Run the full repository checks when the branch is ready for review, and rerun them only after later changes that could affect the result. Do not spend model quota repeatedly analyzing already-passing checks.
-- Stop adding tests when the task acceptance condition and material risks are covered. Theoretical completeness is not a reason to delay the implementation.
+Continue without asking the user for routine repository, Git, validation, evidence-retrieval, task-selection, or next-task work that can be resolved from available sources.
 
-## Quota and interruption recovery
+Pause/stop Goal mode and report only when continuation genuinely requires one of these:
 
-Assume a session can stop without warning.
+- a non-objective academic/product choice;
+- new supervisor/Department guidance or private input available only from the user;
+- execution on another physical machine when the current environment cannot provide evidence required by the next task;
+- an unrecoverable access/credential, safety, privacy, legal, or licensing blocker;
+- an explicit frozen-protocol amendment/approval;
+- a PR/review/merge or other external gate that must resolve before dependency-valid downstream work;
+- no remaining dependency-valid work before one of the above gates.
 
-- Preserve a recoverable checkpoint after each substantial validated substep when practical, especially before long experiments or a major context switch.
-- Intermediate branch commits are allowed as recovery checkpoints; coherent completed work should still normally reach `main` through one squash merge.
-- When the next action is not obvious from the commit, update `TASKS.md`/`Resume state` with the task ID, branch/PR, last validated point, tests already run, relevant files, uncommitted work, and exact next action.
-- If interruption occurs before that update, the next session must inspect the existing working tree, branch history, PR, tests, and artifacts before deciding what remains.
-- Never discard useful uncommitted or checkpointed work merely because the previous session ended.
+A routine task boundary, successful validation, completed branch, or newly unblocked next task is **not** by itself a stop condition.
 
-## Stop and handoff conditions
-
-Do not stop for routine Git operations, task/documentation reconciliation, proportionate testing, or decisions resolvable from available evidence.
-
-Stop and report only when continuation genuinely requires one of the following:
-
-- an academic/product choice that cannot be resolved objectively;
-- new supervisor/Department guidance available only from the user;
-- execution on the actual thesis machine when the current environment is not that machine and the result materially controls the next task;
-- an access/credential failure that cannot be repaired from the available environment;
-- a safety, legal, privacy, or licensing blocker;
-- a frozen-protocol amendment requiring explicit approval;
-- review/merge of a completed PR before dependency-valid downstream work can begin.
-
-A completed PR awaiting review is a valid workflow handoff, not permission to start unrelated blocked work.
-
-Before any intentional stop, leave the work recoverable and the repository internally consistent: checkpoint appropriate branch work, update task/resume state, record the exact blocker or handoff, and preserve all valid local results/artifacts.
+Before an intentional pause/stop, leave branch/task/resume state internally consistent and recoverable.
 
 ## Final report
 
-At the end of the session, report only:
+Report only:
 
-- task IDs completed or still `IN_PROGRESS`;
-- what was completed;
-- branch, PR, merge, and checkpoint commits as applicable;
-- tests/validators/checks and their results;
-- scientific/architecture decisions accepted or still unfrozen;
-- genuine blockers or review gates;
-- the exact next task/action from `TASKS.md`;
-- any concrete artifact created at a major lifecycle handoff.
-
-This prompt and `docs/context/TASKS.md` remain tracked and must be updated whenever their execution workflow materially changes.
+- final objective progress line;
+- completed/`IN_PROGRESS` task IDs;
+- material work completed;
+- branch/PR/merge/checkpoint state;
+- validators/tests/CI conclusions;
+- accepted or still-unfrozen scientific/architecture decisions;
+- genuine blockers/review gates;
+- exact next task/action from `TASKS.md`;
+- major artifact produced, if any.
