@@ -146,6 +146,20 @@ class RunBundleTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 bundle.append_event({"step": 2, "event": "late-mutation"})
 
+    def test_noncanonical_complete_alias_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            bundle = RunBundle(
+                repo_root=root,
+                run_id="EXP-OLD-STATUS",
+                resolved_config={"seed": 1},
+                protocol_version="protocol-v0.1",
+                stage="development",
+                retention_policy="events",
+            )
+            with self.assertRaises(ValueError):
+                bundle.finalize(status="complete", summary={"return": 1.0})
+
 
 class GitPublicationTests(unittest.TestCase):
     def _git(self, root: Path, *args: str) -> str:
