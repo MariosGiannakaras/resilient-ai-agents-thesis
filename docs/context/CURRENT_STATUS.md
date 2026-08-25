@@ -8,10 +8,10 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 ## Current execution state
 
 - Canonical concrete ledger: `docs/context/TASKS.md`.
-- Current work package: **WP1 — Target-machine baseline**.
-- Current tasks: **`T-100`** and **`T-101`** complete on branch `feat/target-machine-baseline` in PR #55.
-- Current state: review/merge gate after accepting the actual-machine capability and runtime baseline.
-- Exact next action: review and squash-merge PR #55, then start the first dependency-valid task, `T-200`; `T-210` is also ready but remains later in canonical task order.
+- **WP1 — Target-machine baseline is complete**: `T-100` and `T-101` were accepted and squash-merged in PR #55 (`45e04cd`).
+- Current work package: **WP2 — Research framing and GridWorld**.
+- First dependency-valid task: **`T-200`**; `T-210` is also `READY` and follows in canonical task order.
+- Exact next action: synchronize local `main` after PR #55, reconcile any stale pre-merge Resume-state prose against actual Git/PR state, then start `T-200` and continue under the persistent Goal contract.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline
@@ -24,7 +24,7 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - Untracked non-output repository inputs are treated as dirty source provenance; generated `results/**`/`artifacts/**` do not create a false source-dirty state.
 - Future Streamlit UI remains a thin layer over the validated headless core after pilots.
 
-Codex uses a progressive-disclosure bootstrap: the session-start core is exactly `AGENTS.md`, `TASKS.md`, and this file. `AGENTS.md` is a compact routing/control file; task-specific specifications are opened only when needed. The canonical tracked execution bootstrap is `docs/context/CODEX_EXECUTION_PROMPT.md`, and Goal mode is the long-horizon wrapper that continues across successive dependency-valid bounded scopes until a genuine gate requires input or no valid work remains before that gate.
+Codex uses progressive disclosure: the session-start core is exactly `AGENTS.md`, `TASKS.md`, and this file. The canonical tracked execution bootstrap is `docs/context/CODEX_EXECUTION_PROMPT.md`. Goal mode persists across the canonical lifecycle: routine task completion, PR creation, CI, objective diff review, squash merge, reconciliation, and next-task selection are autonomous execution steps rather than stop conditions when available permissions and repository policy allow them. Only genuinely external/user-only gates pause the goal.
 
 Testing is risk-based and proportional: targeted local checks while implementing, PR CI as the canonical full-suite pre-merge guard when available, no duplicate full-suite runs for reassurance, and no arbitrary coverage/mutation/fuzz/property/combinatorial expansion without a concrete risk.
 
@@ -44,14 +44,7 @@ Codex reports objective `X/Y` progress only from real denominators in `TASKS.md`
 
 ## Target-machine baseline
 
-The actual target-machine baseline is accepted in `SYSTEM_CAPABILITY_REPORT.md`
-and the generated schema-v2 snapshot `system-capability.accepted.json` (DEC-031).
-The machine provides a Ryzen 5 2600X (6 cores/12 threads), about 31.9 GiB usable
-RAM, a Radeon RX 570 with 8 GiB VRAM, and about 169.4 GiB free on the repository
-filesystem at collection. The canonical runtime is native Windows CPython 3.12
-managed by the locked `uv` environment. CPU execution remains mandatory;
-NVIDIA/CUDA is absent and no AMD scientific-compute backend is validated, so no
-accelerator-specific dependency is accepted yet.
+The actual target-machine baseline is accepted in `SYSTEM_CAPABILITY_REPORT.md` and the generated schema-v2 snapshot `system-capability.accepted.json` (DEC-031). The machine provides a Ryzen 5 2600X (6 cores/12 threads), about 31.9 GiB usable RAM, a Radeon RX 570 with 8 GiB VRAM, and about 169.4 GiB free on the repository filesystem at collection. The canonical runtime is native Windows CPython 3.12 managed by the locked `uv` environment. CPU execution remains mandatory; NVIDIA/CUDA is absent and no AMD scientific-compute backend is validated, so no accelerator-specific dependency is accepted yet.
 
 ## Lifecycle gates
 
