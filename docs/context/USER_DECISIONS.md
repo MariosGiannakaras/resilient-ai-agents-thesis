@@ -86,6 +86,11 @@ This file contains explicit current user decisions. Old conversations do not cre
 
 - Maintain one canonical task registry with checkboxes/stable task IDs so required work cannot be forgotten across the long thesis lifecycle.
 - Every Codex session must pass through the task registry before selecting or resuming work.
+- The persistent Codex `/goal` should continue through the **entire dependency-valid project lifecycle**, one bounded task/coherent work package at a time, rather than stopping after each task or PR and waiting for the user to say “continue”.
+- Routine branch creation, commits, PR creation, GitHub CI, objective diff review, correction of failures/findings, squash merge, task/status reconciliation, and selection of the next `READY` task are Codex-owned execution work and must not be treated as user gates when available permissions and repository policy allow them.
+- Codex must not submit an `APPROVE` review on its own PR, but after green CI and objective diff review it may squash-merge its own validated PR when no distinct human approval is explicitly required.
+- Evidence-backed research, architecture, implementation, testing, and ADR choices should be resolved autonomously when the active task's evidence and acceptance conditions are sufficient; a generic “scientific” or “review” label is not by itself a reason to stop.
+- Pause the long-running Goal only for genuinely non-objective user choices, required supervisor/Department/private input, another physical machine that is actually required, unavailable credentials/access, safety/privacy/legal/licensing blockers, or an explicit external approval requirement in the controlling task/specification/repository protection.
 - Codex should use its available session/conversation memory to remember where it left off; the task registry and Git/repository state supplement that memory and provide recovery when the session/model quota ends.
 - If a task has started but is unfinished, preserve exactly where it stopped: active branch/PR, last validated point, tests, relevant changed files, and exact next action.
 - If model quota ends abruptly, the next session must inspect existing branch commits, working-tree diff, PR/test state, and the registry before assuming the task needs to restart.
@@ -93,7 +98,7 @@ This file contains explicit current user decisions. Old conversations do not cre
 - Newly discovered required work must be added to the canonical registry rather than being left only in chat or informal notes.
 - The user should not have to manually remember or reconstruct unfinished Codex work between quota windows.
 - A task marked `READY` must actually have its required task dependencies complete; future dependency-blocked tasks are not labelled ready just because they are planned.
-- During long execution, Codex should provide concise progress updates after meaningful completed/validated checkpoints, gates, or blockers rather than narrating every command.
+- During long execution, Codex should provide concise progress updates after meaningful completed/validated checkpoints or genuine blockers rather than narrating every command.
 - Use `X/Y` only when `Y` is objectively defined. Project and work-package/deliverable counts come from canonical `TASKS.md`; an active-task fraction is shown only when the task has a genuine finite substep set. In-progress or failed work never counts as complete and no second progress tracker is created.
 
 ## Testing effort and model quota
@@ -116,7 +121,7 @@ This file contains explicit current user decisions. Old conversations do not cre
 - After final runs and analysis, create a frozen thesis/defense evidence package mapping research questions, protocol/method references, citation-ready sources, result/run IDs, figures/tables, captions, and planned claims.
 - Thesis and presentation work should consume that frozen evidence package rather than reconstructing conclusions later from raw results or memory.
 - The user should not manage routine Git, result-file movement, provenance, task state, analysis regeneration, or presentation evidence mapping.
-- The user's later responsibilities are mainly academic/product choices, providing/relaying supervisor or official guidance, reviewing scientific interpretation/thesis wording, and rehearsing the defense.
+- The user's later responsibilities are mainly genuinely non-objective academic/product choices, providing/relaying supervisor or official guidance when required, reviewing scientific interpretation/thesis wording at explicit review gates, and rehearsing the defense.
 
 ## Thesis writing and review
 
