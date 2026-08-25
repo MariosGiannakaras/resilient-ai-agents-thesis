@@ -59,7 +59,7 @@ The canonical machine-readable format should be versioned JSON or another schema
 
 | Field | Required | Description |
 |---|---:|---|
-| `status.current` | yes | Current/final state. |
+| `status.current` | yes | Current/final state. Canonical successful terminal value is `completed`. |
 | `status.history` | yes | Ordered state changes with timestamps/reasons. |
 | `queue.position_history` | no | Queue changes if used. |
 | `progress.mode` | yes | Determinate with unit/total or indeterminate. |
