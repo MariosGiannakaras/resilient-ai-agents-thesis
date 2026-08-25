@@ -112,12 +112,14 @@ The canonical machine-readable format should be versioned JSON or another schema
 | `created_at` | yes | Manifest creation time. |
 | `finalized_at` | no | Lock/finalization time. |
 | `checksums` | yes | Hashes for raw results/config/checkpoints/artifacts. |
+| `finalization_marker` | yes for a publishable finalized bundle | Last-written sentinel proving all planned finalization steps completed; publisher must also revalidate manifest/checksum integrity rather than trusting marker presence alone. |
 | `provenance_version` | yes | Provenance-policy version. |
 | `notes` | no | Non-authoritative annotation. |
 
 ## Example lifecycle rules
 
-- `completed` requires final metrics, output checksums and finalized manifest.
+- `completed` requires final metrics, output checksums, finalized manifest and the last-written finalization marker.
+- Automatic publication must reject a missing finalization marker, checksum/manifest mismatch, or inconsistent provenance before Git staging.
 - `failed` requires failure reason and retained partial outputs.
 - `cancelled` requires cancellation reason.
 - `excluded` is an analysis status layered over the execution outcome; original execution status is retained.
