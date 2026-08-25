@@ -12,7 +12,7 @@ Do not copy this prompt into another task file and do not delete it after use.
 
 ---
 
-Continue work autonomously in the private repository `MariosGiannakaras/resilient-ai-agents-thesis` from the **actual current repository state**.
+Continue work autonomously in `MariosGiannakaras/resilient-ai-agents-thesis` from the **actual current repository state**.
 
 “Execute it completely” means: advance the project as far as the current environment, permissions, task dependencies, review gates, and accepted scientific workflow validly allow. It does **not** mean attempting the entire thesis in one session, bypassing blockers, starting `BLOCKED`/`DEFERRED` tasks, or reopening completed work.
 
@@ -46,6 +46,19 @@ Run this procedure at the start of **every Codex session**, including after quot
 9. For substantial work, create or reuse a descriptive branch and mark the task `IN_PROGRESS` with a recoverable `Resume state` no later than the first meaningful checkpoint.
 
 Do not spend the session merely summarizing files already read. After resolving scope and constraints, begin the task.
+
+## Concise progress updates
+
+Keep the user informed during execution without turning progress reporting into its own task.
+
+- Send a short progress update after scope is established and after meaningful completed/validated checkpoints, important gates, or a material blocker. Do not report every command, file read, or tiny edit.
+- Derive progress only from real completed work. Never fabricate percentages or count an in-progress/failed item as completed.
+- When a scope has a clear finite denominator, report it as `X/Y`, where `X` is fully completed/validated items and `Y` is the known total. If the denominator is not stable or objectively defined, use a concise status instead of inventing `Y`.
+- For the top level, use the canonical task registry when useful: `Project: X/Y` counts checked task entries versus all canonical `T-*` entries in `TASKS.md`.
+- Also report the current major work package or deliverable when meaningful, for example `WP5 Application: 2/4`, `Thesis: 3/6`, or `Presentation: 1/3`. These counts must be derived from the relevant canonical task entries, not from an informal parallel checklist.
+- If the active task itself has a clear finite set of implementation/research substeps, add one lower level such as `T-510: 3/5`. Do not create speculative substeps merely to produce a fraction.
+- Prefer one compact line such as `Progress — Project: 8/47 | WP1 Target-machine baseline: 0/2 | T-100: 2/4` followed by at most one sentence stating what just completed and what comes next.
+- Recompute counts after task-registry changes so progress can never drift from repository state.
 
 ## Execution loop
 
@@ -110,6 +123,7 @@ Before any intentional stop, leave the work recoverable and the repository inter
 
 At the end of the session, report only:
 
+- the final concise progress line derived from `TASKS.md` and any objectively defined active-task substeps;
 - task IDs completed or still `IN_PROGRESS`;
 - what was completed;
 - branch, PR, merge, and checkpoint commits as applicable;
