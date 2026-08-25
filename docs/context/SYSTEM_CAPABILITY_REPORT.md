@@ -2,17 +2,17 @@
 
 **Status:** Accepted target-machine baseline
 
-**Collected:** 2026-08-25 19:56:40 UTC
+**Collected:** 2026-08-25 21:18:02 UTC
 
-**Tasks:** `T-100`, `T-101`
+**Tasks:** `T-100`, `T-101`, `T-102`
 
 ## Evidence and provenance
 
 The automatically generated, privacy-reviewed source snapshot is
 `docs/context/system-capability.accepted.json` (schema version 2).
 
-- Collector/source commit: `6c760cdea2c67dbc7ce755c8cbab7f5a139f72a5`
-- Snapshot SHA-256: `fd8391675563568aca8898e25fcf1117d3e16363db8263e5b736befe6cb0f1fe`
+- Collector/source commit: `c35babd14aa361c407225bf3f618b7eddc8d493f`
+- Snapshot SHA-256: `bf808df09eb91104dd9249cecac24fb9e8e8a53db9b88bd2fbcacfee60b58001`
 - Repository state at collection: clean (`tracked_changes_present: false`, `untracked_nonoutput_present: false`)
 - Privacy policy: no user, host, network, machine, installation, path, or serial identifiers
 
@@ -28,7 +28,7 @@ deliberately as project evidence.
 | Host OS | Windows 10, build `10.0.19045`, AMD64 |
 | CPU | AMD Ryzen 5 2600X, 6 physical cores / 12 logical processors |
 | RAM | 34,276,913,152 bytes (about 31.9 GiB usable) |
-| Repository filesystem | 1,000,186,310,656 bytes total; 181,832,863,744 bytes (about 169.4 GiB) free at collection |
+| Repository filesystem | 1,000,186,310,656 bytes total; 181,803,716,608 bytes (about 169.3 GiB) free at collection |
 | Display adapter | Radeon RX 570 Series, 8 GiB VRAM from the full-width registry value, driver `31.0.21923.11000` |
 | NVIDIA/CUDA | `nvidia-smi` absent; no NVIDIA device reported; `nvcc` absent |
 | Project runtime | CPython 3.12.13 managed by `uv` 0.10.10 |
@@ -91,6 +91,7 @@ runtime enough to justify its portability and maintenance cost.
 - focused inventory unit tests after current-main reconciliation: 7 passed;
 - live schema-v2 collector probe: passed;
 - clean-commit/provenance, schema, VRAM, LF-only serialization, and JSON invariants: passed;
+- source commit is a durable merged-main ancestor rather than a squash-discarded feature checkpoint;
 - forbidden-identifier privacy scan and manual review: passed;
 - documentation consistency validator: passed after merge resolution;
 - the pre-merge package passed the full local suite (51 tests passed, 1 platform-specific symlink test skipped, plus bibliography/integrity/JSON checks); after current-main reconciliation, PR #55's canonical GitHub `sanity` check passed at head `5f24d32` under DEC-030.

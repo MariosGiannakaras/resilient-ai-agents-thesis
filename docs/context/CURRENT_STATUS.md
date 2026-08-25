@@ -8,10 +8,10 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 ## Current execution state
 
 - Canonical concrete ledger: `docs/context/TASKS.md`.
-- **WP1 — Target-machine baseline is complete**: `T-100` and `T-101` were accepted and squash-merged in PR #55 (`45e04cd`).
-- Current work package: **WP2 — Research framing and GridWorld**.
-- First dependency-valid task: **`T-200`**; `T-210` is also `READY` and follows in canonical task order.
-- Exact next action: synchronize local `main` after PR #55, reconcile any stale pre-merge Resume-state prose against actual Git/PR state, then start `T-200` and continue under the persistent Goal contract.
+- `T-100` and `T-101` were accepted and squash-merged in PR #55 (`45e04cd`).
+- Current work package: **WP1 provenance reconciliation**.
+- Current task: **`T-102`**, correcting the accepted snapshot from a squash-discarded feature checkpoint to durable merged-main source provenance.
+- Exact next action: validate and merge the bounded `T-102` correction, then start `T-200`; `T-210` becomes ready at the same point but follows in canonical task order.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline
