@@ -163,7 +163,7 @@ class RunBundle:
 
     def finalize(self, *, status: str, summary: Mapping[str, Any]) -> Path:
         self._require_running()
-        if status not in {"completed", "failed", "cancelled", "invalid", "excluded"}:
+        if status not in {"completed", "failed", "cancelled", "invalid"}:
             raise ValueError("unsupported final run status")
 
         _write_json(self.run_dir / "summary.json", summary)

@@ -160,6 +160,26 @@ class RunBundleTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 bundle.finalize(status="complete", summary={"return": 1.0})
 
+    def test_excluded_is_analysis_status_not_terminal_execution_status(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            bundle = RunBundle(
+                repo_root=root,
+                run_id="EXP-EXCLUSION",
+                resolved_config={"seed": 1},
+                protocol_version="protocol-v0.1",
+                stage="development",
+                retention_policy="events",
+            )
+            with self.assertRaises(ValueError):
+                bundle.finalize(status="excluded", summary={"reason": "analysis-rule"})
+
+            manifest = json.loads(
+                (bundle.run_dir / "manifest.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(manifest["status"], "running")
+            self.assertFalse((bundle.run_dir / "FINALIZED").exists())
+
 
 class GitPublicationTests(unittest.TestCase):
     def _git(self, root: Path, *args: str) -> str:

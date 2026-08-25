@@ -2,7 +2,7 @@
 
 A `run_id` represents one whole experiment execution and may contain many seeds and episodes. Intermediate seed completion never creates a Git commit.
 
-When the whole experiment reaches a final state (`completed`, `failed`, `cancelled`, `invalid`, or `excluded`), its bundle is finalized once. If automatic publication is enabled, exactly one result commit is created and pushed.
+When the whole experiment reaches an execution-final state (`completed`, `failed`, `cancelled`, or `invalid`), its bundle is finalized once. If automatic publication is enabled, exactly one result commit is created and pushed. `excluded` is not an execution-final state: it is a later analysis/inclusion decision layered over the retained original execution outcome, so exclusion must never overwrite whether the run actually completed, failed, was cancelled, or was invalid.
 
 ## Bundle
 
