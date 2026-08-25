@@ -31,19 +31,18 @@ These files must describe the current repository state and must be reconciled in
 - `docs/thesis/PRESENTATION_WORKFLOW.md`
 - active research/protocol/architecture/thesis workspaces relevant to the changed subject.
 
-`AGENTS.md` is the project-policy authority for Codex. `CODEX_EXECUTION_PROMPT.md` is only the lean execution bootstrap. `CURRENT_STATUS.md` is the shortest authoritative current-state summary. `TASKS.md` is the canonical concrete execution checklist/resume ledger. `IMPLEMENTATION_ROADMAP.md` explains phases, while `EXECUTION_WORKFLOW.md` records responsibilities and major handoffs. `UI_INFORMATION_ARCHITECTURE.md` controls the bounded dashboard information/UX contract when dashboard work is active. None excuses stale statements in other active files.
+`AGENTS.md` is the compact always-on Codex policy/routing map: it keeps only non-inferable cross-cutting invariants and points to deeper authorities rather than duplicating their full contracts. `CODEX_EXECUTION_PROMPT.md` is the lean execution bootstrap. `CURRENT_STATUS.md` is the shortest authoritative current-state summary. `TASKS.md` is the canonical concrete execution checklist/resume ledger. `IMPLEMENTATION_ROADMAP.md` explains phases, while `EXECUTION_WORKFLOW.md` records responsibilities and major handoffs. Task-domain files under `docs/research/`, `docs/experiments/`, `docs/architecture/`, and `docs/thesis/` own detailed contracts when their domain is active. None excuses stale statements in other active files.
 
 ### 2. Accepted decision/history records
 
-Accepted decisions and historical audits may preserve the state and reasoning that existed when they were written. They must not be silently rewritten to pretend they originally reflected later knowledge.
+Accepted decisions and useful historical records may preserve the state and reasoning that existed when they were written. They must not be silently rewritten to pretend they originally reflected later knowledge.
 
-When a historical file contains statements that are no longer current, add a prominent historical-status notice or supersession pointer if a future reader could mistake it for active guidance.
+Keep a historical file in the current tree only when it still provides material audit/reasoning value that is not adequately preserved by Git history, decision records, or the context changelog. If retained, mark it prominently historical/superseded so it cannot masquerade as current guidance. Superseded bootstrap audit snapshots with no remaining operational value should be removed from the current tree; Git history remains the audit trail.
 
-Examples include:
+Examples of retained history include:
 
-- `docs/context/FINAL_BOOTSTRAP_AUDIT.md`
-- `docs/research/PREIMPORT_*.md`
-- superseded decision records.
+- `docs/research/PREIMPORT_*.md` when their research rationale remains useful;
+- accepted/superseded decision records whose rationale is still relevant.
 
 ### 3. Generated or externally owned content
 
@@ -93,15 +92,15 @@ Changes to dashboard wording, terminology, status semantics, contextual help, pr
 | Any material task/work-package change | `TASKS`, resume state, affected active docs, PR metadata/tests |
 | Project phase/status/blocker resolved | `CURRENT_STATUS`, `TASKS`, `PROJECT_CONTEXT`, `OPEN_QUESTIONS`, `IMPLEMENTATION_ROADMAP`, `DEFINITION_OF_DONE`, Codex prompt, changelog |
 | User requirement/decision | `CONFIRMED_REQUIREMENTS`, `USER_DECISIONS`, `CONSTRAINTS`, `CONTRADICTIONS`, `TASKS` if execution changes, decision log/changelog, affected implementation docs |
-| Codex bootstrap/reading/task-execution policy | `AGENTS` when project policy changes, Codex prompt, `TASKS` when task semantics change, `CURRENT_STATUS`, `EXECUTION_WORKFLOW`, documentation validator, decision log/changelog |
-| Architecture/stack/storage/runner | `AGENTS`, `README`, architecture docs, `PROJECT_CONTEXT`, requirements/constraints, `TASKS`, decision log, Codex prompt, CI/tests |
-| GridWorld/environment | GridWorld research/spec/ADR, current status, `TASKS`, roadmap, open questions, requirements, tests, Codex prompt if execution rules change |
-| Models/metrics/protocol | corresponding research/protocol files, current status, `TASKS`, open questions, roadmap, decision log, Codex prompt, tests |
+| Codex bootstrap/reading/task-execution policy | `AGENTS` when always-on policy/routing changes, Codex prompt, `TASKS` when task semantics change, `CURRENT_STATUS`, `EXECUTION_WORKFLOW`, documentation validator, decision log/changelog |
+| Architecture/stack/storage/runner | `AGENTS` only for cross-cutting always-on invariants/routing, `README`, architecture docs, `PROJECT_CONTEXT`, requirements/constraints, `TASKS`, decision log, Codex prompt only if execution semantics change, CI/tests |
+| GridWorld/environment | GridWorld research/spec/ADR, current status, `TASKS`, roadmap, open questions, requirements, tests; `AGENTS`/Codex prompt only if an always-on or execution invariant changes |
+| Models/metrics/protocol | corresponding research/protocol files, current status, `TASKS`, open questions, roadmap, decision log, tests; `AGENTS`/Codex prompt only if an always-on or execution invariant changes |
 | Bibliography contract/baseline | bibliography integration docs, README/context, current status, `TASKS` when research gates change, decision log/changelog, import validation/workflow; never hand-edit generated evidence |
-| Experiment/run data policy | run/provenance docs, constraints, requirements, `TASKS`, `.gitignore`/`.gitattributes`, publisher/tests, decision log/changelog |
-| Application/dashboard workflow or UX | `app/README`, `UI_INFORMATION_ARCHITECTURE`, `AGENTS`, requirements/user decisions/constraints, roadmap, workflow, current/project status, `TASKS`, Codex prompt, definition of done, tests, decision log/changelog |
+| Experiment/run data policy | run/provenance docs, constraints, requirements, `TASKS`, `.gitignore`/`.gitattributes`, publisher/tests, decision log/changelog; `AGENTS` only for cross-cutting provenance invariants |
+| Application/dashboard workflow or UX | `app/README`, `UI_INFORMATION_ARCHITECTURE`, requirements/user decisions/constraints, roadmap, workflow, current/project status, `TASKS`, definition of done, tests, decision log/changelog; update `AGENTS` only for cross-cutting always-on UX policy |
 | Final experiment/analysis -> writing handoff | `TASKS`, roadmap, workflow, experiment/analysis docs, thesis docs, requirements, current status, decision log/changelog |
-| Thesis/review workflow | thesis/university docs, requirements/user decisions, roadmap, workflow, current status, `TASKS`, Codex prompt when execution changes |
+| Thesis/review workflow | thesis/university docs, requirements/user decisions, roadmap, workflow, current status, `TASKS`; Codex prompt only when execution semantics change |
 | Defense presentation workflow | `PRESENTATION_WORKFLOW`, requirements/user decisions, roadmap, workflow, definition of done, `TASKS`, source register, decision log/changelog |
 | Final delivery guidance | thesis/university/presentation docs, requirements, open questions, roadmap, current status, `TASKS`, definition of done |
 
@@ -117,15 +116,15 @@ Before merge:
 4. search active documentation for the old assumption, phase, path, status, stack, count, or blocker;
 5. update all active occurrences;
 6. delete obsolete files that no longer serve a purpose;
-7. mark useful historical records explicitly historical rather than leaving ambiguous stale instructions;
+7. retain/mark historical records only when they still add useful rationale beyond Git history/decision records;
 8. update decisions/changelog when the change is material;
 9. run `scripts/validate_documentation_consistency.py` and the smallest directly affected local validators/tests needed for review readiness; when GitHub Actions is available, PR CI is the canonical full-suite pre-merge verification rather than an automatic duplicate local full-suite run.
 
-## Prompt rule
+## Prompt and context rule
 
 There is only one tracked current Codex execution prompt: `docs/context/CODEX_EXECUTION_PROMPT.md`.
 
-It is the directly executable entrypoint after the repository is cloned or updated, but it must remain a **lean bootstrap**, not a second copy of project/domain policy. `AGENTS.md` owns scientific, bibliography, architecture, UI, experiment, lifecycle, language, Git, testing, and integrity rules. Task-specific active specifications own their detailed domain contracts.
+It is the directly executable entrypoint after the repository is cloned or updated, but it must remain a **lean bootstrap**, not a second copy of project/domain policy. `AGENTS.md` is likewise not a domain encyclopedia: it is the small always-on control/routing layer for non-inferable cross-cutting invariants. Detailed scientific, bibliography, architecture, UI, experiment, lifecycle, and delivery contracts stay in their task-specific active authorities and are loaded through progressive disclosure.
 
 Every Codex session starts from exactly:
 
@@ -133,12 +132,14 @@ Every Codex session starts from exactly:
 2. `docs/context/TASKS.md`;
 3. `docs/context/CURRENT_STATUS.md`.
 
-Further reading is task-specific and search-driven. Do not add broad mandatory session-start reading merely because a file may be useful in some future phase. Do not paste domain-policy sections into the prompt; reference the controlling authority instead.
+Further reading is task-specific and search-driven. Do not add broad mandatory session-start reading merely because a file may be useful in some future phase. Do not paste task-domain policy sections into the prompt or `AGENTS.md`; route to the controlling authority instead.
 
 The prompt must remain state-driven, bounded, and interruption-resilient: available session memory is used, work can always be recovered from the registry and Git/repository state, only dependency-valid work is selected, and “execute it completely” never overrides task, review, external-machine, evidence, or frozen-protocol gates.
 
-Bootstrap/resume/task-selection/checkpoint/stop/reporting behavior belongs in the lean prompt and the relevant workflow/status/requirements records; update `AGENTS.md` only when the underlying project/domain policy also changes. This prevents execution-reporting mechanics from being duplicated into the always-read policy file. Domain-rule changes continue to update `AGENTS.md` and the domain authority, and modify the prompt only if the execution bootstrap itself is affected.
+Bootstrap/resume/task-selection/checkpoint/stop/reporting behavior belongs in the lean prompt and relevant workflow/status records. Update `AGENTS.md` only when a non-inferable always-on cross-cutting invariant/routing rule changes. Update detailed task-domain authorities directly instead of mirroring their content into always-read context.
+
+CI enforces bounded context budgets for `AGENTS.md`, `CODEX_EXECUTION_PROMPT.md`, and `CURRENT_STATUS.md` so repeated policy/history cannot silently accumulate in every future session.
 
 ## No silent stale-state policy
 
-Known obsolete statements must not remain in active documentation as a convenience. If the old wording is scientifically or historically useful, move/mark it as historical and point to the current authority.
+Known obsolete statements must not remain in active documentation as a convenience. If old wording is still materially useful, keep it only in a clearly historical/decision record or Git history and point current readers to the active authority.

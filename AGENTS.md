@@ -2,252 +2,100 @@
 
 ## Mission
 
-Develop and document a scientifically valid, reproducible, and realistically completable thesis with the official titles:
+Build a scientifically valid, reproducible, realistically completable thesis on resilient AI agents under uncertainty. Keep the research contribution primary; the local application is a polished execution, inspection, analysis, and presentation tool, not a production platform.
 
-> **Greek:** Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα
->
-> **English:** Comparison and Evaluation of Resilient AI Agents in Uncertain Environments
+This repository is the thesis project source of truth. `MariosGiannakaras/ThesisBibliography` is the separate canonical source of truth for bibliography discovery, originals, OCR/conversion, scientific source analysis, verification, selection, and exports; this repository consumes its generated export read-only.
 
-The project compares decision-making agents in a controlled simulated environment under uncertainty and dynamic change. The application is an important research deliverable and execution/inspection/presentation tool; it is not the main research contribution and must not become a production-grade platform.
+## Language
 
-This repository is the permanent source of truth for the thesis project, with one explicit boundary: `MariosGiannakaras/ThesisBibliography` is the canonical source of truth for the complete bibliography lifecycle. This repository consumes its verified generated export read-only.
+- Repository-authored technical/operational material, code, configs, branches, commits, and PR text: English.
+- Preserve exact official Greek text when quoted.
+- Scientific evidence stays in its original source language.
+- Final thesis and expected defense copy/speaker material are Greek unless official guidance changes.
 
-## Language policy
+## Always-on authority map
 
-Repository-authored operational and technical material is written in **English**: agent instructions/prompts, READMEs, context/architecture/protocol/testing docs, code comments/identifiers, configs, branches, commits, and PR text.
-
-Exceptions:
-
-- preserve exact official Greek thesis text when quoted;
-- scientific source text and citation-ready evidence remain in the **original source language**;
-- the final thesis remains a Greek Microsoft Word deliverable unless an official requirement changes;
-- the final defense slide copy/speaker material is expected to be Greek unless current official guidance requires otherwise.
-
-## Core scope principle
-
-`docs/context/SCOPE_REFINEMENT.md` is the detailed authority when a task changes project scope, product shape, or feature budget.
-
-**Polished outside, bounded inside.** Keep architecture and feature count small enough to finish while delivering a modern, coherent, screenshot-ready research dashboard for the real thesis workflow.
-
-## Accepted technical baseline
-
-DEC-023 controls unless a later explicit decision amends it:
-
-- Python 3.12;
-- `uv`, `pyproject.toml`, `.python-version`, committed `uv.lock`;
-- independent importable research package under `src/resilient_agents/`;
-- strict evaluator-ground-truth versus agent-visible information separation;
-- independent deterministic RNG streams;
-- explicit scenario/experiment/protocol/change contracts without hidden scientific defaults;
-- filesystem-first run bundles with provenance/checksums;
-- one guarded automatic Git commit/push per finalized whole experiment, never per seed;
-- selective Git LFS for configured large thesis-produced artifacts;
-- future thin Streamlit dashboard after validated headless core/pilots.
-
-Do not use old conversations/bootstrap files to reopen accepted infrastructure without new evidence.
-
-## Mandatory task and resume policy
-
-DEC-025 controls Codex task execution.
-
-`docs/context/TASKS.md` is the **single canonical concrete task checklist and resume ledger**. `IMPLEMENTATION_ROADMAP.md` explains phases/dependencies, while `EXECUTION_WORKFLOW.md` records responsibilities and major handoffs; neither is a competing checklist.
-
-At the start of **every Codex session**, including after quota/session interruption:
-
-1. inspect Git status, current branch, recent commits, and relevant PR state;
-2. read `TASKS.md` before selecting work;
-3. inspect `Resume state` and any `IN_PROGRESS` task;
-4. use available session/conversation memory to understand where work was left;
-5. verify memory against branch commits, working-tree diff, tests, PR state, and repository files;
-6. resume an `IN_PROGRESS` task before starting another unless genuinely blocked;
-7. otherwise choose the first dependency-valid pending task.
-
-Session memory is useful and should not be ignored. Durable repository evidence is the recovery authority when memory is absent, truncated, ambiguous, or conflicting.
-
-`READY` means all required task-ID dependencies are complete. If the registry labels dependency-blocked work as `READY`, reconcile it before execution.
-
-For unfinished work:
-
-- mark the task `IN_PROGRESS`;
-- record branch/PR, last validated substep, tests/result, relevant changed files, and exact next action;
-- use intermediate branch commits as practical recovery checkpoints;
-- if a session ends abruptly, inspect existing uncommitted/branch work before restarting anything;
-- keep coherent PR history clean by normally squash-merging once complete.
-
-Every material PR reviews `TASKS.md`. Starting/completing/blocking/unblocking/superseding/discovering required work updates the registry in the same PR. Newly discovered required work gets a stable task ID and dependency; do not leave required work only in chat/prose/comments.
-
-## Operating model
-
-Full process: `docs/context/EXECUTION_WORKFLOW.md`.
-
-- **User:** goals, real feedback, genuinely academic/product choices, supervisor guidance/private material when needed; not routine Git/task/result bookkeeping.
-- **ChatGPT:** scopes/reviews work, scientific reasoning, thesis/presentation narrative and language work, diffs/tests/results, and merge readiness.
-- **Codex:** executes dependency-valid repository work, maintains resumable task state, prepares/verifies reproducible evidence/assets, and does not self-approve or silently expand/freeze scientific scope.
-- **GitHub:** repeatable automated checks; passing CI is necessary but not sufficient.
-
-Normal flow:
-
-> goal → task registry → bounded work → branch/PR/checkpoints → CI/review → corrections → squash merge → task/status reconciliation
-
-## Reading policy
-
-### Session-start core
-
-Read only these files at the start of every session:
+Start every Codex session with exactly:
 
 1. `AGENTS.md`
 2. `docs/context/TASKS.md`
 3. `docs/context/CURRENT_STATUS.md`
 
-Do **not** automatically reread `README.md`, `SCOPE_REFINEMENT.md`, `PROJECT_CONTEXT.md`, `CONFIRMED_REQUIREMENTS.md`, `IMPLEMENTATION_ROADMAP.md`, `EXECUTION_WORKFLOW.md`, or `DOCUMENTATION_GOVERNANCE.md` on every session. Read them when the active task affects their domain, explicitly references them, requires a cross-cutting decision, or exposes a possible inconsistency.
+Then read only what the active task needs. Use repository search before opening broad documents or generated corpora.
 
-### Task-specific reading
+- Concrete task/status/dependency/resume ledger: `docs/context/TASKS.md`
+- Current accepted state and exact next gate: `docs/context/CURRENT_STATUS.md`
+- Scope/product budget: `docs/context/SCOPE_REFINEMENT.md`
+- Responsibilities, Git/PR handoffs, and lifecycle: `docs/context/EXECUTION_WORKFLOW.md`
+- Documentation/source-of-truth rules: `docs/context/DOCUMENTATION_GOVERNANCE.md`
+- Research framing/model/GridWorld/metrics evidence: `docs/research/`
+- Protocol/run/provenance specifications: `docs/experiments/`
+- Dashboard/UX: `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` and `app/README.md`
+- Thesis/defense: `docs/thesis/`
+- Accepted architectural decisions: `docs/decisions/DECISION_LOG.md` and referenced ADRs
 
-After selecting/resuming the active task:
+Historical files and old conversations are context only and never override current authorities.
 
-- read the complete task entry, dependencies, acceptance condition, and files it names;
-- use repository search to locate the smallest relevant active specification/evidence set before opening broad documents;
-- for research/environment/model/metric/protocol tasks, read the relevant files under `docs/research/` and `docs/experiments/` plus targeted citation-ready evidence; do not reread the generated corpus wholesale;
-- for architecture, repository, workflow, or source-of-truth changes, read the affected architecture/context files and `docs/context/DOCUMENTATION_GOVERNANCE.md`;
-- for dashboard/UX tasks, read `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` and `app/README.md`;
-- for thesis/defense tasks, read the relevant `docs/thesis/` files, including `docs/thesis/PRESENTATION_WORKFLOW.md` for presentation work;
-- treat historical files as context only and never let them override active authorities;
-- perform repository-wide rereading only for an explicitly cross-cutting audit or reconciliation task.
+## Task execution and recovery
 
-Do not ask the user for information that can be collected reliably from this repository, `ThesisBibliography`, the local system, or authoritative sources.
-
-## Source hierarchy
-
-1. Newer explicit user instruction.
-2. Official approved application/formal thesis description.
-3. Current official University/Department/supervisor guidance.
-4. Verified primary/high-quality scientific literature through `ThesisBibliography`.
-5. Official technical documentation/source/releases/licenses/reproducible benchmarks.
-6. Actual system inventory, prototypes, pilots.
-7. Old conversations as historical context only.
-
-## Bibliography rules
-
-Bibliography research is refreshed at these gates: initial framing; before pilot/final protocol freeze; before Related Work/Methodology/Discussion; before submission.
-
-`ThesisBibliography` owns discovery, PDFs/originals, OCR/conversion, analysis, evidence verification, selection, research materials, notes, and exports. Do **not** download/edit primary bibliography sources here.
-
-`research/bibliography/` is generated and synchronized only through the controlled PR workflow. `research/bibliography/citation-ready/` is the only automatic formal-citation layer. Other canonical/rejected/theory-only/`MAT-*`/note content may support internal research but requires upstream promotion + resynchronization before formal citation where applicable.
-
-Scientific evidence remains in the original source language. Never fabricate sources, DOI values, evidence, or citation status.
-
-## Scientific and experimental rules
-
-- Keep RQ, matrix, models, uncertainty types, and metrics small and scientifically distinct.
-- Final scientific choices come from evidence, actual inventory, prototypes, and pilots—not historical chats or convenience defaults.
-- Do not choose seeds/repetitions/budgets/hyperparameters/severities/thresholds arbitrarily.
-- No single-run model comparison.
-- Keep development, tuning, pilot/exploratory, and final evaluation separated.
-- No agent receives hidden regime/change/disturbance/ground-truth information unless the protocol explicitly and fairly permits it.
-- Retain failed/cancelled/interrupted/invalid/excluded runs with reasons.
-- Every run stores resolved configuration, seeds, software/hardware snapshot, and source Git commit.
-- Raw/finalized results are immutable; figures/tables derive from version-controlled processing of real stored data.
-- Do not cherry-pick runs/results or inspect final evidence then silently retune primary outcomes.
-- Non-recovery remains explicit; do not substitute the horizon as a fake recovery time.
-
-## GridWorld and hardware
-
-- No legacy GridWorld code is required.
-- Compare current minimal custom versus reuse/adapt options; audit maintenance, license, API, determinism, seeding, disturbance extensibility, testability, performance, and dependency cost.
-- Integrate third-party code only after audit/prototype/ADR.
-- Prefer the simplest option that fully supports the research design.
-- Automatically collect CPU, RAM, GPU/VRAM, OS, drivers/runtimes, storage, and supported acceleration on the actual experiment machine.
-- Do not assume NVIDIA/CUDA/usable GPU before inventory; keep pre-inventory compute-dependent choices CPU-compatible/unfrozen.
-
-## Software and UI rules
-
-- `src/resilient_agents/` works without UI.
-- UI uses the same core/config paths and never reimplements scientific logic.
-- Run/result storage does not depend on UI lifecycle.
-- Filesystem run bundles are source of truth; any database/index is rebuildable cache.
-- Validate required configuration, contracts, schema, provenance, and lifecycle preconditions at clear boundaries before expensive work starts; invalid or ambiguous required state fails closed with an explicit error/non-zero result.
-- Do not swallow broad exceptions or convert required failures into defaults, empty results, or apparent success. Optional best-effort probes may report an explicit `unavailable`/`unsupported` state only when absence is genuinely non-fatal, and that state must never be interpreted as successful evidence.
-- Prefer atomic/transactional finalization so partial outputs cannot be mistaken for valid finalized artifacts. Keep validation outside hot loops when one boundary check is sufficient; fail early rather than performing repeated expensive validation.
-- Avoid microservices, Kubernetes, cloud infrastructure, distributed workers, multi-user auth, production observability, speculative plugins, or unnecessary platform engineering.
-- Lightweight debug visualization is allowed when it helps validation.
-- Final UI must be polished, consistent, responsive, screenshot-ready, and based only on real backend state/data.
-- Essential final workflows: configure, run/monitor, GridWorld inspect, history, compare/detailed analysis, artifacts/export.
-- Follow `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` for the bounded dashboard structure and self-explanatory UX contract.
-- Use clear human-readable labels/helper text/visible units and consistent terminology; internal codes never replace understandable primary labels.
-- Use concise tooltips/contextual help for non-obvious scientific or technical concepts, synchronized with the real protocol/metric definitions.
-- Use text plus consistent icons/symbols and accessible semantic visual treatment for statuses/validation; never rely on color alone for essential meaning.
-- Empty/loading/disabled/warning/error states must be understandable and actionable when the next step is not obvious.
-- Show a resolved pre-run configuration/validation summary before launch.
-- Use confirmations only where accidental destructive/high-impact actions warrant them.
-- Implement lightweight first-run onboarding only after the final dashboard structure is stable (`T-512`): short, skippable, replayable, Previous/Next/Skip/Finish, local state, no account system.
-- Prefer native/lightweight Streamlit mechanisms; do not introduce a custom JavaScript/DOM tour framework unless a demonstrated final-UI requirement cannot be met otherwise.
-- Resource telemetry is a lightweight current snapshot, not an observability subsystem.
-- Fake progress, mock final metrics, fabricated logs, and backend-inconsistent state are forbidden.
-
-## Lifecycle and downstream artifact rules
-
-DEC-026 controls the application → experiments → evidence → thesis → defense handoffs.
-
-- Do not treat UI implementation alone as application completion. The intended end-to-end user workflow must pass before normal final experiments.
-- Final experiments use frozen protocol/configuration and the same validated scientific core; no result-driven scientific retuning.
-- Freeze a thesis/defense evidence package after final analysis and before normal thesis drafting.
-- Thesis method/result claims must trace to that frozen package and citation-ready bibliography evidence.
-- Incorporate supervisor/reviewer feedback only as an explicit revision cycle; revalidate affected evidence/citations/figures/method descriptions.
-- Finalize the defense deck only after the thesis is stable.
-- Presentation claims/visuals must trace to the final thesis/frozen evidence. `docs/thesis/PRESENTATION_WORKFLOW.md` defines the PowerPoint, embedded notes, separate full spoken Greek script, demo fallback, and rehearsal/format checks.
-- Codex prepares/verifies repository-backed evidence/assets. ChatGPT is preferred for thesis/slide narrative, Greek copy, speaker script, and language/consistency review. Microsoft PowerPoint is the final deck inspection/rehearsal target; optional design tools must not become scientific authority.
-
-## Tests and validation
-
-DEC-029 and DEC-030 control testing/validation effort. Testing is **risk-based and proportional**: it protects scientific validity and critical behavior, but it must not become an independent scope-expansion project or consume more implementation time/model quota without corresponding risk reduction.
-
-During implementation:
-
-- run the smallest targeted test subset that can validate the changed behavior;
-- add or modify tests only for task acceptance conditions, scientifically important invariants, critical reliability/security boundaries, or a concrete regression likely to recur;
-- prefer one strong known-answer, contract, invariant, or representative integration test over many near-duplicate examples;
-- do not repeatedly run the full suite after every small edit;
-- do not pursue an arbitrary coverage percentage;
-- do not add mutation testing, broad fuzz/property testing, exhaustive parameter combinations, snapshot proliferation, or large end-to-end matrices without a concrete task-specific justification;
-- use tiny deterministic fixtures and smoke runs in CI; never use the pilot or final experiment matrix as a test suite;
-- stop adding tests when the acceptance condition and material risks are covered.
-
-When GitHub Actions is available, PR CI is the canonical full-suite pre-merge runner. Before opening/updating the PR, run only the directly affected validators/targeted tests needed to make the branch review-ready; do **not** run the full suite locally merely to duplicate CI. After CI starts, inspect its conclusion rather than tailing successful logs. If it passes, do not rerun or re-analyse it. If it fails, inspect only the failed step/log, reproduce with the narrowest relevant local command when useful, fix the cause, and let CI verify the complete repository again. Run the full suite locally only when CI is unavailable, when CI/test infrastructure itself changed and local reproduction is useful, or when a specific failure requires it.
-
-As applicable, protect these high-value areas:
-
-- environment transitions/reward/termination/disturbances and known-answer traces;
-- seeding, independent randomness, deterministic replay;
-- information-boundary enforcement;
-- agent contract/reference behavior;
-- config validation;
-- run lifecycle/persistence/recovery/failure;
-- serialization/schema compatibility;
-- metric correctness on known synthetic fixtures;
-- statistical-processing fixtures;
-- provenance and automatic-publication safety;
-- task/documentation/lifecycle consistency;
-- self-explanatory dashboard states, pre-run validation, contextual help and onboarding/help behavior where practical, plus visual/end-to-end UX review;
-- concrete regressions.
-
-Bibliography changes additionally validate immutable provenance/source commits, manifests/checksums, forbidden artifacts, generated integrity, and source-reference validity.
-
-Synthetic fixtures are allowed only when clearly labelled tests.
-
-## Git, task, and documentation rules
-
-Follow `docs/context/DOCUMENTATION_GOVERNANCE.md`.
-
-- Material changes reconcile affected active docs, decisions, status, prompt, lifecycle handoffs, and `TASKS.md` in the same PR.
-- Use descriptive lowercase branches (`research/`, `feat/`, `fix/`, `test/`, `docs/`, `chore/`).
-- Intermediate branch checkpoint commits are allowed for recovery; prefer one logical squash merge to `main` for each coherent PR.
-- Adjacent dependency-valid task IDs may share one branch/PR when they form one genuinely coherent implementation unit and there is no scientific, review, user-decision, external-machine, or protocol-freeze gate between them. Do not create micro-PRs solely because task IDs are separate.
-- PRs state task IDs, scope, rationale, validation, scientific/protocol impact, exclusions/deferred work, and documentation/task reconciliation.
-- Do not silently change a frozen protocol or raw/final evidence.
-- Use clear English naming and comments for non-obvious reasoning/invariants, not obvious code narration.
-- Do not store secrets, credentials, caches, or unjustified binaries.
-- Large thesis-produced evidence/artifacts are allowed under the configured LFS policy; bibliography PDFs/LFS objects remain upstream.
+- `TASKS.md` is the only concrete checklist. Resume an `IN_PROGRESS` task before selecting new work unless it is genuinely blocked; otherwise select the first dependency-valid `READY` task.
+- Never begin `BLOCKED`/`DEFERRED` work merely because it appears earlier in the roadmap.
+- Work on one bounded task or one genuinely coherent adjacent task package; do not cross scientific, review, user-decision, external-machine, or protocol-freeze gates.
+- Preserve recoverable branch checkpoints after substantial validated substeps when useful. Never discard prior uncommitted/checkpoint work without inspecting it.
+- Material discoveries that create required work get a stable task ID/dependency in `TASKS.md`; do not leave required work only in chat/comments.
+- Report concise progress at meaningful checkpoints. Use `X/Y` only from a real finite denominator in `TASKS.md`; in-progress/failed work never counts as complete.
+- Do not ask the user for information that can be reliably obtained from the repository, connected bibliography, actual machine, tests, or authoritative sources.
 
 ## Scientific integrity
 
-Do not fabricate sources, citations, runs, metrics, progress, logs, data, figures, tables, presentation claims, results, or conclusions.
+- Never fabricate or silently alter sources, citations, evidence status, runs, metrics, progress, logs, data, figures, tables, results, conclusions, protocol state, or presentation claims.
+- Keep RQs, agents/models, uncertainty types, metrics, and experiment matrix small and scientifically distinct.
+- Scientific choices must follow verified evidence, actual machine capability, prototypes, and pilots; never choose seeds, repetitions, budgets, hyperparameters, severities, or thresholds as unexplained convenience defaults.
+- Keep development/tuning, pilot/exploratory, and final evaluation separated. Do not inspect final evidence and silently retune primary outcomes.
+- Agents never receive hidden regime/change/disturbance/ground-truth information unless the explicit protocol permits it fairly.
+- No single-run model comparison. Retain failed/cancelled/interrupted/invalid runs and later analysis exclusions with reasons.
+- Non-recovery stays explicit; never substitute the horizon as fake recovery time.
+- Frozen protocol, raw/finalized results, and accepted final evidence are immutable except through an explicit documented amendment/revision path.
+
+## Bibliography boundary
+
+- Do not download/edit primary bibliography sources here.
+- `research/bibliography/` is generated through the controlled immutable synchronization workflow.
+- `research/bibliography/citation-ready/` is the strict automatic formal-citation layer. Other corpus material may support internal research but needs upstream verification/promotion and a new immutable sync before formal citation where required.
+- Never invent source metadata, DOI values, evidence, or citation status.
+
+## Software and provenance invariants
+
+- `src/resilient_agents/` must work without the UI. UI uses the same validated core/configuration paths and never reimplements scientific logic.
+- Filesystem run bundles are the evidence source of truth; indexes/databases are rebuildable caches.
+- Validate required config/contracts/schema/provenance/lifecycle boundaries before expensive work. Invalid or ambiguous required state fails closed with explicit failure; optional probes may only return explicit `unavailable`/`unsupported` when genuinely non-fatal.
+- Do not swallow required failures into defaults, empty results, or apparent success. Prefer atomic/transactional finalization so partial artifacts cannot look finalized.
+- Runs preserve resolved config, seeds, software/hardware capability snapshot, and source Git commit. Automatic publication must preserve clean-source provenance and one whole-experiment publication boundary.
+- Avoid speculative platform engineering: no cloud/distributed workers, microservices, Kubernetes, multi-user auth, production observability, or custom frontend infrastructure without a demonstrated thesis requirement.
+- Before target-machine inventory, keep compute-dependent choices CPU-compatible and unfrozen; do not assume CUDA or usable GPU.
+
+## Testing and CI
+
+Testing is risk-based and proportional.
+
+- During implementation run the smallest targeted validator/test set that protects the changed acceptance condition or material scientific/reliability regression.
+- Prefer a small number of strong known-answer, contract, invariant, or representative integration tests over near-duplicates.
+- Do not chase coverage percentages or add broad mutation/fuzz/property/combinatorial/snapshot/E2E matrices without a concrete task-specific risk.
+- CI fixtures are tiny/deterministic; pilot/final experiment matrices are never tests.
+- When GitHub Actions is available, PR CI is the canonical full-suite pre-merge check. Do not duplicate the full suite locally merely for reassurance.
+- On CI failure inspect the failed step/log and reproduce narrowly when useful; on success record the conclusion without rereading successful logs.
+
+## Git and documentation
+
+- Use descriptive lowercase feature branches and coherent PRs; intermediate checkpoint commits are allowed, with one logical squash merge to `main` normally preferred.
+- Adjacent dependency-valid task IDs may share a PR only when they are one coherent unit with no gate between them. Avoid micro-PRs created solely from task numbering.
+- PRs state task IDs, scope/rationale, validation, scientific/protocol impact, and deferred/excluded work.
+- Do not self-approve. Passing CI is necessary but not sufficient; review the actual diff before merge.
+- Material changes reconcile affected active source-of-truth docs and `TASKS.md` in the same PR according to `DOCUMENTATION_GOVERNANCE.md`.
+- Do not store secrets, credentials, caches, or unjustified binaries. Large thesis-produced evidence follows the configured LFS policy; bibliography PDFs/LFS stay upstream.
+
+## Context discipline
+
+- Prefer targeted search, file ranges, summaries, and bounded command output over broad dumps. Do not read the full generated bibliography or whole repository for a bounded task.
+- Do not create extra planning/status Markdown files when `TASKS.md` and the relevant active specification already cover the state.
+- Add a new instruction/document only when it captures non-inferable durable knowledge or fixes a demonstrated failure mode; otherwise rely on code, schemas, tests, and existing source-of-truth docs.

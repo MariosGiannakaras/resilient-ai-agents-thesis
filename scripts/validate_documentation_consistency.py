@@ -37,6 +37,8 @@ OBSOLETE_ACTIVE_PATHS = (
     "docs/context/CODEX_BOOTSTRAP_PROMPT.md",
     "docs/context/BOOTSTRAP_VALIDATION.json",
     "docs/context/END_TO_END_JOURNEY.md",
+    "docs/context/FINAL_BOOTSTRAP_AUDIT.md",
+    "docs/context/SOURCE_AUDIT.md",
     "core",
     "bibliography",
 )
@@ -117,27 +119,38 @@ def main() -> int:
     agents = read("AGENTS.md") if (ROOT / "AGENTS.md").is_file() else ""
     if "src/resilient_agents/" not in agents:
         errors.append("AGENTS.md must name the accepted src/resilient_agents/ core")
-    for required in ("UI_INFORMATION_ARCHITECTURE.md", "T-512", "color alone"):
+    for required in (
+        "docs/context/TASKS.md",
+        "docs/context/CURRENT_STATUS.md",
+        "UI_INFORMATION_ARCHITECTURE.md",
+        "DOCUMENTATION_GOVERNANCE.md",
+        "citation-ready/",
+        "PR CI is the canonical full-suite pre-merge check",
+        "Prefer targeted search",
+    ):
         if required.casefold() not in agents.casefold():
-            errors.append(f"AGENTS.md missing confirmed dashboard UX invariant: {required}")
+            errors.append(f"AGENTS.md missing required compact routing/invariant: {required}")
 
-    if "### Permanent/session-start reading" in agents:
-        errors.append("AGENTS.md must use the lean session-start core, not the obsolete broad permanent reading list")
     agents_core_match = re.search(
-        r"### Session-start core\s*(?P<section>.*?)(?=\n### Task-specific reading)",
+        r"Start every Codex session with exactly:\s*(?P<section>.*?)(?=\nThen read only)",
         agents,
         re.DOTALL,
     )
     if not agents_core_match:
-        errors.append("AGENTS.md missing lean Session-start core / Task-specific reading sections")
+        errors.append("AGENTS.md missing explicit compact three-file session-start core")
     else:
-        listed = tuple(re.findall(r"^\d+\.\s+`([^`]+)`", agents_core_match.group("section"), re.MULTILINE))
+        listed = tuple(
+            re.findall(r"^\d+\.\s+`([^`]+)`", agents_core_match.group("section"), re.MULTILINE)
+        )
         if listed != SESSION_START_CORE:
             errors.append(
-                "AGENTS.md session-start numbered list must contain exactly: " + ", ".join(SESSION_START_CORE)
+                "AGENTS.md session-start list must contain exactly: " + ", ".join(SESSION_START_CORE)
             )
-        if "do **not** automatically reread" not in agents_core_match.group("section").casefold():
-            errors.append("AGENTS.md session-start policy must explicitly reject broad automatic rereading")
+
+    if len(agents.splitlines()) > 160:
+        errors.append("AGENTS.md exceeds the 160-line always-on context budget")
+    if len(agents.split()) > 1500:
+        errors.append("AGENTS.md exceeds the 1500-word always-on context budget")
 
     prompt_path = ROOT / "docs/context/CODEX_EXECUTION_PROMPT.md"
     if prompt_path.is_file():
@@ -146,17 +159,14 @@ def main() -> int:
             "AGENTS.md",
             "docs/context/CURRENT_STATUS.md",
             "docs/context/TASKS.md",
-            "docs/context/DOCUMENTATION_GOVERNANCE.md",
             "Read `docs/context/CODEX_EXECUTION_PROMPT.md` and execute it completely.",
-            "Mandatory startup and resume procedure",
+            "Startup / resume",
             "IN_PROGRESS",
-            "one active scope",
+            "one bounded scope",
             "Do not self-approve",
-            "review/merge",
-            "does **not** mean attempting the entire thesis in one session",
-            "Concise progress updates",
             "Project: X/Y",
-            "In-progress or failed work never counts as complete",
+            "In-progress/failed work never counts as complete",
+            "Stop conditions",
         ):
             if required not in prompt:
                 errors.append(f"current Codex prompt missing required lean execution invariant: {required}")
@@ -172,25 +182,43 @@ def main() -> int:
         if not prompt_core_match:
             errors.append("current Codex prompt missing explicit three-file session-start core")
         else:
-            listed = tuple(re.findall(r"^[ \t]*- `([^`]+)`", prompt_core_match.group("section"), re.MULTILINE))
+            listed = tuple(
+                re.findall(r"^[ \t]*- `([^`]+)`", prompt_core_match.group("section"), re.MULTILINE)
+            )
             if listed != SESSION_START_CORE:
                 errors.append(
-                    "current Codex prompt session-start core must contain exactly: " + ", ".join(SESSION_START_CORE)
+                    "current Codex prompt session-start core must contain exactly: "
+                    + ", ".join(SESSION_START_CORE)
                 )
 
         duplicate_policy_headings = (
-            "## Already accepted baseline",
             "## Bibliography rules",
             "## Scientific rules",
             "## Architecture/UI rules",
             "## Lifecycle handoff rules",
+            "## Proportional testing discipline",
         )
         for heading in duplicate_policy_headings:
             if heading in prompt:
                 errors.append(f"current Codex prompt duplicates AGENTS.md domain policy section: {heading}")
 
-        if len(prompt.split()) > 1800:
-            errors.append("current Codex prompt exceeds the lean bootstrap budget of 1800 words")
+        if len(prompt.split()) > 1200:
+            errors.append("current Codex prompt exceeds the 1200-word lean execution budget")
+
+    current_status_path = ROOT / "docs/context/CURRENT_STATUS.md"
+    if current_status_path.is_file():
+        current_status = current_status_path.read_text(encoding="utf-8")
+        for required in (
+            "T-100",
+            "Exact next action",
+            "bibliography-integration-v3",
+            "progressive-disclosure",
+            "Still intentionally unfrozen",
+        ):
+            if required.casefold() not in current_status.casefold():
+                errors.append(f"CURRENT_STATUS.md missing compact current-state invariant: {required}")
+        if len(current_status.split()) > 1200:
+            errors.append("CURRENT_STATUS.md exceeds the 1200-word session-start budget")
 
     tasks_path = ROOT / "docs/context/TASKS.md"
     if tasks_path.is_file():
@@ -233,7 +261,8 @@ def main() -> int:
             incomplete = sorted(dependencies - completed)
             if incomplete:
                 errors.append(
-                    f"TASKS.md marks {match.group('id')} READY while dependencies are incomplete: {', '.join(incomplete)}"
+                    f"TASKS.md marks {match.group('id')} READY while dependencies are incomplete: "
+                    + ", ".join(incomplete)
                 )
 
         resume_match = re.search(r"- \*\*Current task:\*\* `(?P<task>T-\d+)`", tasks)
