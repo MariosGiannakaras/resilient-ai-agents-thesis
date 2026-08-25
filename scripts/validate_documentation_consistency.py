@@ -160,12 +160,13 @@ def main() -> int:
             "docs/context/CURRENT_STATUS.md",
             "docs/context/TASKS.md",
             "/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.",
-            "Goal mode",
-            "successive dependency-valid",
+            "Complete the canonical project task registry autonomously",
+            "routine Git, PR creation, CI",
             "Startup / resume",
             "IN_PROGRESS",
             "one bounded scope",
-            "Do not self-approve",
+            "Do not submit an `APPROVE` review on your own PR.",
+            "own-PR squash merge",
             "Project: X/Y",
             "In-progress/failed work never counts as complete",
             "Stop conditions",
@@ -212,9 +213,10 @@ def main() -> int:
         current_status = current_status_path.read_text(encoding="utf-8")
         for required in (
             "T-100",
+            "T-200",
             "Exact next action",
             "bibliography-integration-v3",
-            "progressive-disclosure",
+            "progressive",
             "Still intentionally unfrozen",
         ):
             if required.casefold() not in current_status.casefold():
