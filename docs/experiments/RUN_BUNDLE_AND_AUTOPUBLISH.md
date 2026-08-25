@@ -28,6 +28,8 @@ Before any Git staging, publication requires the finalization sentinel and reval
 
 Publication stages only `results/runs/<run-id>/...` and `results/run-index.jsonl`. It also refuses to publish if the source code changed during the run, the run did not begin from a verified clean tracked state, unrelated tracked files would enter the commit, Git LFS is required but unavailable, or the remote is no longer fast-forward compatible. In every such case the experiment files remain on disk.
 
+Automatic Git publication is a **single-writer boundary**. Later batch/concurrent execution may run scientific work in parallel only when useful, but shared `run-index` mutation and Git commit/push operations must be serialized (or an equivalently race-free design must be proven). Two experiments must never concurrently rewrite the index or advance the same Git branch. A simple publication lock/queue is preferred over distributed coordination; if safe serialization is unavailable, publication fails closed and preserves each local finalized bundle for later retry.
+
 Commit format:
 
 ```text
