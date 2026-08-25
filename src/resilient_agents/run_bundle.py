@@ -163,7 +163,7 @@ class RunBundle:
 
     def finalize(self, *, status: str, summary: Mapping[str, Any]) -> Path:
         self._require_running()
-        if status not in {"complete", "failed", "cancelled", "invalid", "excluded"}:
+        if status not in {"completed", "failed", "cancelled", "invalid", "excluded"}:
             raise ValueError("unsupported final run status")
 
         _write_json(self.run_dir / "summary.json", summary)
@@ -197,7 +197,7 @@ class RunBundle:
         self._update_run_index()
 
         # This marker is deliberately written last. Consumers/publishers require
-        # it, so a partially failed finalization cannot masquerade as complete.
+        # it, so a partially failed finalization cannot masquerade as finalized.
         _write_text_atomic(
             self.run_dir / FINALIZATION_MARKER,
             f"schema_version={SCHEMA_VERSION}\nstatus={status}\n",
