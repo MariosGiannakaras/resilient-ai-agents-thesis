@@ -11,6 +11,7 @@ from typing import Any, Sequence
 
 FINAL_STATUSES = {"completed", "failed", "cancelled", "invalid"}
 FINALIZATION_MARKER = "FINALIZED"
+GENERATED_OUTPUT_PREFIXES = ("results/", "artifacts/")
 CHECKSUM_RE = re.compile(r"^([0-9a-f]{64})  ([^/\\]+)$")
 
 
@@ -200,6 +201,12 @@ def _tracked_changes(repo_root: Path) -> list[str]:
     return paths
 
 
+def _untracked_nonoutput_paths(repo_root: Path) -> list[str]:
+    output = _run(repo_root, ["ls-files", "-z", "--others", "--exclude-standard"])
+    paths = [path for path in output.split("\0") if path]
+    return [path for path in paths if not path.startswith(GENERATED_OUTPUT_PREFIXES)]
+
+
 def _requires_lfs(repo_root: Path, paths: Sequence[str]) -> bool:
     for path in paths:
         attributes = _run(repo_root, ["check-attr", "filter", "--", path], check=False)
@@ -215,9 +222,10 @@ def publish_finalized_run(
 
     A run may contain many seeds/episodes. Publication happens only after the
     completion marker, manifest, checksums, and run-index entry agree, so partial
-    or corrupted evidence fails before Git staging. Unrelated tracked changes,
-    changed source code, non-fast-forward remotes, and missing Git LFS are also
-    safe publication failures; the run files remain on disk.
+    or corrupted evidence fails before Git staging. Dirty tracked state,
+    untracked non-output files, changed source code, non-fast-forward remotes,
+    and missing Git LFS are also safe publication failures; the run files remain
+    on disk.
     """
 
     repo_root = repo_root.resolve()
@@ -239,6 +247,8 @@ def publish_finalized_run(
         raise PublishError("repository HEAD changed after the run started; refusing mixed provenance")
     if source.get("tracked_changes_present") is not False:
         raise PublishError("run did not start from a verified clean tracked repository state")
+    if source.get("untracked_nonoutput_present") is not False:
+        raise PublishError("run did not start from a verified clean non-output repository state")
 
     allowed_prefix = f"results/runs/{run_id}/"
     allowed_exact = {"results/run-index.jsonl"}
@@ -251,6 +261,8 @@ def publish_finalized_run(
         raise PublishError(
             "unrelated tracked changes present; refusing automatic commit: " + ", ".join(unrelated)
         )
+    if _untracked_nonoutput_paths(repo_root):
+        raise PublishError("untracked non-output files present; refusing automatic publication")
 
     relative_paths = [
         path.relative_to(repo_root).as_posix() for path in run_dir.rglob("*") if path.is_file()
