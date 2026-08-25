@@ -31,12 +31,12 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 - **Current work package:** WP1 — Target-machine baseline
 - **Current task:** `T-100` and `T-101` complete on the review branch
 - **State:** `REVIEW GATE`
-- **Active branch / PR:** `feat/target-machine-baseline`; PR not yet opened.
+- **Active branch / PR:** `feat/target-machine-baseline`; PR #55.
 - **Last validated point:** schema-v2 collector checkpoint `a4d349e` passed 7 focused tests and generated a clean-commit stable snapshot; the snapshot and capability interpretation passed provenance, privacy, CPU/core, full-width VRAM, runtime/tooling, and storage review. DEC-030 records the CPU-first Windows runtime constraints without freezing scientific choices.
 - **Tests already run:** full CI-equivalent checks passed: lock/sync, compile, documentation consistency, 51 tests passed with 1 platform-specific symlink test skipped, bibliography import/usage and both checksum manifests passed, and all committed JSON parsed; live/stable inventory privacy/provenance invariants and Windows Git LFS verification also passed.
 - **Relevant files changed:** collector/tests, accepted JSON/report, DEC-030/decision index, and affected active context/research/task/status documentation.
-- **Uncommitted work:** accepted snapshot and fully validated source-of-truth reconciliation awaiting the final package commit.
-- **Exact next action:** commit/push the completed WP1 package, open the PR, record its number, then wait for review/squash merge before starting `T-200`.
+- **Uncommitted work:** PR-number reconciliation only.
+- **Exact next action:** validate and push this PR-number reconciliation, then wait for review/squash merge of PR #55 before starting `T-200`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
