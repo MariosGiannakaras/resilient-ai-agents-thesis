@@ -33,10 +33,10 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 - **State:** `REVIEW GATE`
 - **Active branch / PR:** `feat/target-machine-baseline`; PR #55.
 - **Last validated point:** current `main` was reconciled at `fea0e39`, preserving its fail-fast/provenance work and renumbering the target-machine decision to DEC-031. Checkpoint `6c760cd` makes inventory JSON LF-stable; the final clean-commit snapshot cites it and passes privacy, CPU/core, full-width VRAM, runtime/tooling, storage, provenance, and untracked-input review.
-- **Tests already run:** focused inventory tests (7 passed) and documentation consistency passed after main reconciliation; LF-only/stable snapshot privacy/provenance invariants and Windows Git LFS verification passed. The pre-merge package passed the then-current full local suite (51 tests, 1 platform-specific skip, bibliography/integrity/JSON checks); current merged-head full validation is delegated to PR CI under DEC-030.
+- **Tests already run:** focused inventory tests (7 passed) and documentation consistency passed after main reconciliation; LF-only/stable snapshot privacy/provenance invariants and Windows Git LFS verification passed. The pre-merge package passed the then-current full local suite (51 tests, 1 platform-specific skip, bibliography/integrity/JSON checks); PR #55's canonical GitHub `sanity` check passed at head `5f24d32` after current-main reconciliation.
 - **Relevant files changed:** collector/tests, accepted JSON/report, DEC-031/decision index, and affected active context/research/task/status documentation.
-- **Uncommitted work:** final regenerated accepted JSON plus report/resume reconciliation.
-- **Exact next action:** validate, commit, and push the regenerated evidence; confirm PR #55 CI/mergeability, then wait for review/squash merge before starting `T-200`.
+- **Uncommitted work:** this docs-only handoff-state reconciliation; no implementation/evidence change.
+- **Exact next action:** review and squash-merge mergeable PR #55; after merge, start `T-200` before the also-ready `T-210`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 

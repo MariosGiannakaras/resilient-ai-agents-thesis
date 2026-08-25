@@ -93,4 +93,4 @@ runtime enough to justify its portability and maintenance cost.
 - clean-commit/provenance, schema, VRAM, LF-only serialization, and JSON invariants: passed;
 - forbidden-identifier privacy scan and manual review: passed;
 - documentation consistency validator: passed after merge resolution;
-- the pre-merge package passed the full local suite (51 tests passed, 1 platform-specific symlink test skipped, plus bibliography/integrity/JSON checks); the current merged head uses PR CI as the canonical full-suite pre-merge guard under DEC-030.
+- the pre-merge package passed the full local suite (51 tests passed, 1 platform-specific symlink test skipped, plus bibliography/integrity/JSON checks); after current-main reconciliation, PR #55's canonical GitHub `sanity` check passed at head `5f24d32` under DEC-030.
