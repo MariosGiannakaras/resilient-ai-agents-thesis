@@ -29,14 +29,14 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP1 — Target-machine baseline
-- **Current task:** `T-100`
-- **State:** `IN_PROGRESS`
+- **Current task:** `T-100` and `T-101` complete on the review branch
+- **State:** `REVIEW GATE`
 - **Active branch / PR:** `feat/target-machine-baseline`; PR not yet opened.
-- **Last validated point:** schema v2 reports the exact Windows CPU/core topology, full-width registry VRAM for the AMD display adapter, Windows/Python/storage data, and `uv`/Git LFS tooling without machine identifiers; the live probe and focused inventory tests pass.
-- **Tests already run:** `uv run --frozen python -m unittest tests.test_system_inventory` (7 passed); live schema-v2 JSON probe inspected successfully; `git diff --check` passed.
-- **Relevant files changed:** `scripts/system_inventory.py`, `tests/test_system_inventory.py`, `docs/context/SYSTEM_CAPABILITY_INVENTORY.md`, `docs/context/TASKS.md`.
-- **Uncommitted work:** validated collector/test/documentation updates awaiting a checkpoint commit.
-- **Exact next action:** checkpoint schema v2, regenerate a clean-repository stable accepted JSON snapshot from that commit, privacy-review it, and reconcile all affected active documentation.
+- **Last validated point:** schema-v2 collector checkpoint `a4d349e` passed 7 focused tests and generated a clean-commit stable snapshot; the snapshot and capability interpretation passed provenance, privacy, CPU/core, full-width VRAM, runtime/tooling, and storage review. DEC-030 records the CPU-first Windows runtime constraints without freezing scientific choices.
+- **Tests already run:** full CI-equivalent checks passed: lock/sync, compile, documentation consistency, 51 tests passed with 1 platform-specific symlink test skipped, bibliography import/usage and both checksum manifests passed, and all committed JSON parsed; live/stable inventory privacy/provenance invariants and Windows Git LFS verification also passed.
+- **Relevant files changed:** collector/tests, accepted JSON/report, DEC-030/decision index, and affected active context/research/task/status documentation.
+- **Uncommitted work:** accepted snapshot and fully validated source-of-truth reconciliation awaiting the final package commit.
+- **Exact next action:** commit/push the completed WP1 package, open the PR, record its number, then wait for review/squash merge before starting `T-200`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -86,20 +86,20 @@ Codex must assume a session can stop unexpectedly.
 
 ## WP1 — Target-machine baseline
 
-- [ ] IN_PROGRESS `T-100` — Run the privacy-minimal hardware/software/storage inventory on the actual thesis experiment machine.
+- [x] `T-100` — Run the privacy-minimal hardware/software/storage inventory on the actual thesis experiment machine.
   - Depends on: `T-006` plus execution on the actual thesis experiment machine.
   - Output: versioned accepted capability report with CPU, RAM, OS, Python/tooling, storage, GPU/VRAM/driver/runtime when present, and supported acceleration.
   - Acceptance: report is generated automatically on the actual machine, privacy-reviewed, tests/validation pass, and current docs/tasks are reconciled.
-- [ ] BLOCKED `T-101` — Use the accepted inventory to resolve compute-dependent dependency/tooling constraints without freezing unsupported scientific choices.
+- [x] `T-101` — Use the accepted inventory to resolve compute-dependent dependency/tooling constraints without freezing unsupported scientific choices.
   - Depends on: `T-100`.
   - Acceptance: dependency/runtime decisions that actually depend on hardware are documented and reproducible; CPU-compatible fallback remains clear where needed.
 
 ## WP2 — Research framing and GridWorld
 
-- [ ] BLOCKED `T-200` — Complete source-traceable research-question and hypothesis framing from citation-ready evidence, while keeping feasibility-dependent choices provisional.
+- [ ] READY `T-200` — Complete source-traceable research-question and hypothesis framing from citation-ready evidence, while keeping feasibility-dependent choices provisional.
   - Depends on: `T-100` for feasibility-sensitive scope; bibliography baseline already complete.
   - Acceptance: bounded main RQ, minimal secondary RQs/hypotheses, evidence mapping, limitations, and open feasibility gates are documented.
-- [ ] BLOCKED `T-210` — Complete bounded GridWorld prototype comparison (minimal custom implementation versus justified reuse/adaptation candidates).
+- [ ] READY `T-210` — Complete bounded GridWorld prototype comparison (minimal custom implementation versus justified reuse/adaptation candidates).
   - Depends on: `T-100`.
   - Acceptance: prototypes/audit compare semantics, determinism, seeding, disturbance extensibility, testability, maintenance/license/dependency cost, and fit to the RQ.
 - [ ] BLOCKED `T-211` — Record the final GridWorld implementation ADR.

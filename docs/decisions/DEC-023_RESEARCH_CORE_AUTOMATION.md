@@ -26,4 +26,4 @@ The architecture maximizes reproducibility and auditability while keeping the ap
 
 This decision does not freeze the research questions, final model set, GridWorld scientific parameters, uncertainty severities, seed count, budgets, hyperparameters, recovery threshold, statistical plan, or final protocol.
 
-The actual thesis-machine system inventory remains a required gate before compute-dependent choices. Dependency additions beyond the zero-runtime-dependency core are made after that inventory and relevant prototypes.
+DEC-030 satisfies the actual thesis-machine inventory gate and keeps CPU execution as the required supported baseline. Dependency additions beyond the zero-runtime-dependency core still require relevant prototypes and must not assume an unvalidated accelerator backend.

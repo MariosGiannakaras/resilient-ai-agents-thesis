@@ -2,10 +2,10 @@
 
 ## Compute and hardware
 
-- Actual hardware/software inventory is not a user-supplied blocker. Codex must collect it automatically from the **actual thesis experiment machine**.
-- Until that inventory and any required capability benchmarks are accepted, compute-dependent model/dependency/budget choices remain CPU-compatible and unfrozen.
-- Do not assume NVIDIA, CUDA, usable ROCm, or unlimited compute.
-- Historical hardware references are not decision inputs until verified on the real system.
+- The accepted actual-machine inventory is `SYSTEM_CAPABILITY_REPORT.md` plus the generated `system-capability.accepted.json`; Codex regenerates it automatically after material host/runtime changes.
+- CPU execution is the required supported baseline. The observed Radeon RX 570 is not treated as a validated scientific-compute backend; NVIDIA/CUDA tooling is absent.
+- Do not assume usable ROCm, DirectML, or unlimited compute.
+- Compute-dependent model/dependency/budget choices remain unfrozen until relevant prototypes and pilots establish feasibility; historical hardware references are not decision inputs.
 - The final experiment matrix must remain practically executable on the measured hardware or an explicitly approved alternative.
 
 ## Accepted technical baseline

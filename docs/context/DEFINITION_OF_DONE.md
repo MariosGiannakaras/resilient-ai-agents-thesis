@@ -32,7 +32,7 @@ This file defines project-level completion conditions. It is **not** the operati
 
 ## Current research/environment phase
 
-- [ ] Actual target-machine inventory run and accepted.
+- [x] Actual target-machine inventory run and accepted.
 - [ ] Bounded GridWorld prototype comparison completed and ADR accepted.
 - [ ] Selected GridWorld implementation and uncertainty schema validated with known-answer/reference-trace tests.
 - [ ] Main research question and minimal secondary questions/hypotheses approved.

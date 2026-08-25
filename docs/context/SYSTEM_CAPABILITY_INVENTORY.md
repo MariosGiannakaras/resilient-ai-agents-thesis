@@ -1,6 +1,6 @@
 # System Capability Inventory
 
-**Status:** schema-v2 collector implemented; target-system report in progress under `T-100`.
+**Status:** schema-v2 collector and target-system baseline accepted under `T-100`/`T-101`.
 
 ## Purpose
 
@@ -53,13 +53,18 @@ The report becomes project evidence only after all of the following are true:
 
 ## Current decision impact
 
-Until a target-system report has passed the acceptance procedure:
+The accepted target-system report is
+`docs/context/SYSTEM_CAPABILITY_REPORT.md`, backed by the stable generated JSON
+snapshot `docs/context/system-capability.accepted.json`. DEC-030 applies its
+runtime/dependency implications.
 
-- keep GridWorld and model prototypes CPU-compatible,
-- do not assume CUDA/NVIDIA acceleration,
-- do not select models because of presumed local compute,
-- do not record GitHub Actions runner hardware as thesis hardware,
-- do not freeze training budgets or runtime-based feasibility claims.
+The accepted baseline requires:
+
+- CPU-compatible GridWorld and model prototypes;
+- no CUDA/NVIDIA or AMD scientific-compute assumption;
+- no model selection merely because a display adapter exists;
+- no GitHub Actions runner hardware recorded as thesis hardware;
+- no frozen training budgets or runtime feasibility claims before prototypes and pilots.
 
 ## Schema summary
 

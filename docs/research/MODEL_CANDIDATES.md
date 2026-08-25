@@ -23,7 +23,7 @@ Full-corpus robust-MDP candidates are internal research context only until requi
 
 ## Required selection process
 
-1. Accept the actual target-machine inventory.
+1. Use the accepted CPU-first target-machine baseline from DEC-030.
 2. Complete the GridWorld prototype/ADR and final information/observability framing.
 3. Finalize the bounded RQ roles that agents must answer.
 4. For each retained role, verify literature assumptions and formal citation status.
@@ -46,7 +46,7 @@ Full-corpus robust-MDP candidates are internal research context only until requi
 
 | Candidate ID | Exact method | Role | Citation-ready support | Environment assumptions | Information access | Adaptation mode | Compute/tuning burden | Correctness test | Inclusion status |
 |---|---|---|---|---|---|---|---|---|---|
-| TBD | TBD after environment/inventory gate |  |  |  |  |  |  |  | UNFROZEN |
+| TBD | TBD after environment/RQ gates |  |  |  |  |  |  |  | UNFROZEN |
 
 ## Exclusion principles
 

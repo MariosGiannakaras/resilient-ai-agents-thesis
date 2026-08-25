@@ -29,8 +29,8 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 
 ## DEC-006 — No acceleration assumptions before real inventory
 - **Date:** 2026-07-29
-- **Status:** Accepted.
-- **Decision:** Actual target-machine inventory precedes compute-dependent choices; CPU-compatible operation is the temporary safe baseline.
+- **Status:** Accepted; inventory gate satisfied and applied by DEC-030.
+- **Decision:** Actual target-machine inventory precedes compute-dependent choices; CPU-compatible operation remains the required supported baseline until a specific acceleration backend is validated.
 
 ## DEC-007 — Raw chat exports excluded
 - **Date:** 2026-07-29
@@ -154,6 +154,12 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **Status:** Accepted.
 - **Decision:** Testing protects scientific validity, task acceptance conditions, critical reliability/security boundaries, and concrete regressions, but must not become an independent scope-expansion project. Codex uses targeted tests during implementation, tiny deterministic fixtures/smoke runs in CI, and the full repository checks at review readiness rather than after every small edit. There is no arbitrary coverage-percentage target and no mutation/fuzz/property/combinatorial/snapshot expansion without a concrete task-specific risk. Stop adding tests once material risks and acceptance conditions are covered; never run pilot/final experiment matrices as CI tests.
 
+## DEC-030 — Target-machine runtime and acceleration baseline
+- **Date:** 2026-08-25
+- **Status:** Accepted.
+- **File:** `docs/decisions/DEC-030_TARGET_MACHINE_BASELINE.md`.
+- **Decision:** Accept the actual Windows target-machine capability report; use native Windows CPython 3.12 via the locked `uv` environment; require CPU-compatible execution; do not infer a validated scientific-compute backend from the Radeon display adapter; use compatible Windows Git/Git LFS for LFS-sensitive operations.
+
 ## Pending decisions
 
 Future entries are still required for:
@@ -170,4 +176,4 @@ Future entries are still required for:
 - final citation style/Word template/submission specifics near writing/delivery;
 - exact current defense duration, required slide/file rules, and administrative presentation/submission procedure near delivery.
 
-The general Python/core/storage/result-publication/dashboard architectural baseline, task-governance mechanism, lean Codex bootstrap, proportional testing discipline, end-to-end handoff model, and self-explanatory UI/onboarding baseline are **not** pending decisions unless later requirements justify explicit amendments.
+The general Python/core/storage/result-publication/dashboard architectural baseline, accepted target-machine/runtime baseline, task-governance mechanism, lean Codex bootstrap, proportional testing discipline, end-to-end handoff model, and self-explanatory UI/onboarding baseline are **not** pending decisions unless later requirements justify explicit amendments.

@@ -1,6 +1,6 @@
 # Current Project Status
 
-**Date:** 2026-08-21  
+**Date:** 2026-08-25
 **Status:** Authoritative current-state summary
 
 Active repository files must agree with this state. Historical records may preserve earlier states only when explicitly marked historical. Documentation synchronization is governed by `docs/context/DOCUMENTATION_GOVERNANCE.md`.
@@ -38,7 +38,14 @@ DEC-023 establishes the implementation baseline:
 
 DEC-027 fixes the future dashboard UX baseline without implementing it early: the final interface must be self-explanatory through clear labels/messages/units, accurate tooltips/contextual help, semantic text+icon+color status treatment, actionable states and pre-run review. A short skippable/replayable first-run onboarding flow is implemented only after the final dashboard structure is stable, using lightweight/native mechanisms rather than a new frontend subsystem.
 
-The actual target-machine inventory is still required before compute-dependent dependency/model/budget choices. The current base core remains CPU-compatible.
+The actual target-machine baseline is accepted in `SYSTEM_CAPABILITY_REPORT.md`
+and the generated schema-v2 snapshot `system-capability.accepted.json` (DEC-030).
+The machine provides a Ryzen 5 2600X (6 cores/12 threads), about 31.9 GiB usable
+RAM, a Radeon RX 570 with 8 GiB VRAM, and about 169.4 GiB free on the repository
+filesystem at collection. The canonical runtime is native Windows CPython 3.12
+managed by the locked `uv` environment. CPU execution remains mandatory;
+NVIDIA/CUDA is absent and no AMD scientific-compute backend is validated, so no
+accelerator-specific dependency is accepted yet.
 
 ## Codex execution and resumable tasks
 
@@ -78,7 +85,11 @@ The defense workflow is already defined but remains deferred: after the final th
 
 ## Active bounded work
 
-The canonical concrete queue is `docs/context/TASKS.md`. Its current first gate is the target-system inventory on the actual thesis experiment machine (`T-100`), followed by the dependency-gated GridWorld/research/metrics/agent/pilot/application/final-evidence work recorded there.
+The canonical concrete queue is `docs/context/TASKS.md`. The target-machine
+baseline (`T-100`, `T-101`) is complete on the current review branch. After its
+review/merge gate, the first dependency-valid task is research framing
+(`T-200`); the bounded GridWorld comparison (`T-210`) is also dependency-valid
+but follows the canonical task order unless the registry is explicitly changed.
 
 The final research question, hypotheses, model set, GridWorld scientific parameters, uncertainty severities, seeds, budgets, hyperparameters, recovery threshold, and statistical plan remain unfrozen.
 
