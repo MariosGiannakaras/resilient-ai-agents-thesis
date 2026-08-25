@@ -47,10 +47,10 @@ No final research question, model set, GridWorld scientific parameters, uncertai
 - `docs/context/EXECUTION_WORKFLOW.md` — execution responsibilities and major handoffs.
 - `docs/context/DOCUMENTATION_GOVERNANCE.md` — mandatory reconciliation rules.
 - `docs/decisions/DECISION_LOG.md` — accepted/superseded/pending decision index.
-- `docs/context/CODEX_EXECUTION_PROMPT.md` — single tracked, canonical, directly executable Codex prompt.
+- `docs/context/CODEX_EXECUTION_PROMPT.md` — single tracked, canonical Codex execution bootstrap and Goal-mode entrypoint.
 - `docs/thesis/PRESENTATION_WORKFLOW.md` — deferred but already-defined final PowerPoint/speaker-material workflow.
 
-After cloning/updating the repository on the thesis machine, start Codex with: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.` Every Codex session must inspect `TASKS.md` before selecting/resuming work. Available session memory is used together with branch/working-tree/PR state; durable repository evidence is the fallback when a session or model quota is interrupted.
+After cloning/updating the repository on the thesis machine, start Codex with the `/goal` command shown under **User entrypoint** in `docs/context/CODEX_EXECUTION_PROMPT.md`. Goal mode keeps the long-horizon objective active across successive dependency-valid bounded tasks; real user/scientific/external/review gates still pause it. Every Codex session must inspect `TASKS.md` before selecting/resuming work. Available session memory is used together with branch/working-tree/PR state; durable repository evidence is the fallback when a session or model quota is interrupted.
 
 Historical bootstrap/pre-import files are not current instructions. Useful historical records are explicitly labelled historical; obsolete active files are removed rather than left to drift.
 
