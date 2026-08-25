@@ -16,7 +16,7 @@ from resilient_agents.contracts import (  # noqa: E402
     ProtocolStage,
     project_for_agent,
 )
-from resilient_agents.git_publish import publish_finalized_run  # noqa: E402
+from resilient_agents.git_publish import PublishError, publish_finalized_run  # noqa: E402
 from resilient_agents.metrics import compute_resilience_metrics  # noqa: E402
 from resilient_agents.protocol import ProtocolPartition, assert_stage_access  # noqa: E402
 from resilient_agents.randomness import RandomStreams, derive_seed  # noqa: E402
@@ -139,8 +139,12 @@ class RunBundleTests(unittest.TestCase):
             self.assertIn("resolved-config.json", manifest["files"])
             self.assertIn("system-capability.json", manifest["files"])
             self.assertTrue((run_dir / "checksums.sha256").is_file())
+            self.assertTrue((run_dir / "FINALIZED").is_file())
             index = (root / "results" / "run-index.jsonl").read_text(encoding="utf-8")
             self.assertIn("EXP-TEST-001", index)
+
+            with self.assertRaises(RuntimeError):
+                bundle.append_event({"step": 2, "event": "late-mutation"})
 
 
 class GitPublicationTests(unittest.TestCase):
@@ -153,21 +157,23 @@ class GitPublicationTests(unittest.TestCase):
         )
         return result.stdout.strip()
 
+    def _initialize_repo(self, base: Path) -> tuple[Path, str]:
+        remote = base / "remote.git"
+        repo = base / "repo"
+        subprocess.run(["git", "init", "--bare", str(remote)], check=True, capture_output=True)
+        subprocess.run(["git", "init", "-b", "main", str(repo)], check=True, capture_output=True)
+        self._git(repo, "config", "user.email", "test@example.invalid")
+        self._git(repo, "config", "user.name", "Test Runner")
+        self._git(repo, "remote", "add", "origin", str(remote))
+        (repo / "README.md").write_text("test\n", encoding="utf-8")
+        self._git(repo, "add", "README.md")
+        self._git(repo, "commit", "-m", "initial")
+        self._git(repo, "push", "-u", "origin", "main")
+        return repo, self._git(repo, "rev-parse", "HEAD")
+
     def test_finalized_experiment_creates_one_commit_and_push(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
-            base = Path(temporary)
-            remote = base / "remote.git"
-            repo = base / "repo"
-            subprocess.run(["git", "init", "--bare", str(remote)], check=True, capture_output=True)
-            subprocess.run(["git", "init", "-b", "main", str(repo)], check=True, capture_output=True)
-            self._git(repo, "config", "user.email", "test@example.invalid")
-            self._git(repo, "config", "user.name", "Test Runner")
-            self._git(repo, "remote", "add", "origin", str(remote))
-            (repo / "README.md").write_text("test\n", encoding="utf-8")
-            self._git(repo, "add", "README.md")
-            self._git(repo, "commit", "-m", "initial")
-            self._git(repo, "push", "-u", "origin", "main")
-            source_commit = self._git(repo, "rev-parse", "HEAD")
+            repo, source_commit = self._initialize_repo(Path(temporary))
 
             bundle = RunBundle(
                 repo_root=repo,
@@ -189,6 +195,27 @@ class GitPublicationTests(unittest.TestCase):
             self.assertIn("experiment: complete EXP-001", message)
             self.assertIn("Run-ID: EXP-001", message)
             self.assertIn(f"Source-Commit: {source_commit}", message)
+
+    def test_corrupted_finalized_bundle_is_not_published(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repo, source_commit = self._initialize_repo(Path(temporary))
+            bundle = RunBundle(
+                repo_root=repo,
+                run_id="EXP-CORRUPT",
+                resolved_config={"seeds": [1]},
+                protocol_version="protocol-v0.1",
+                stage="pilot",
+                retention_policy="events",
+            )
+            bundle.append_event({"seed": 1, "event": "completed"})
+            run_dir = bundle.finalize(status="complete", summary={"seeds_completed": 1})
+            (run_dir / "summary.json").write_text('{"seeds_completed": 999}\n', encoding="utf-8")
+
+            with self.assertRaises(PublishError):
+                publish_finalized_run(repo_root=repo, run_id="EXP-CORRUPT")
+
+            self.assertEqual(self._git(repo, "rev-parse", "HEAD"), source_commit)
+            self.assertEqual(self._git(repo, "rev-parse", "origin/main"), source_commit)
 
 
 if __name__ == "__main__":
