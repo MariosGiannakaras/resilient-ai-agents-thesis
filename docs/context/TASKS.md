@@ -28,15 +28,15 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 ## Resume state
 
-- **Current work package:** WP1 — Target-machine baseline
-- **Current task:** `T-100` and `T-101` complete on the review branch
-- **State:** `REVIEW GATE`
-- **Active branch / PR:** `feat/target-machine-baseline`; PR #55.
-- **Last validated point:** current `main` was reconciled at `fea0e39`, preserving its fail-fast/provenance work and renumbering the target-machine decision to DEC-031. Checkpoint `6c760cd` makes inventory JSON LF-stable; the final clean-commit snapshot cites it and passes privacy, CPU/core, full-width VRAM, runtime/tooling, storage, provenance, and untracked-input review.
-- **Tests already run:** focused inventory tests (7 passed) and documentation consistency passed after main reconciliation; LF-only/stable snapshot privacy/provenance invariants and Windows Git LFS verification passed. The pre-merge package passed the then-current full local suite (51 tests, 1 platform-specific skip, bibliography/integrity/JSON checks); PR #55's canonical GitHub `sanity` check passed at head `5f24d32` after current-main reconciliation.
-- **Relevant files changed:** collector/tests, accepted JSON/report, DEC-031/decision index, and affected active context/research/task/status documentation.
-- **Uncommitted work:** this docs-only handoff-state reconciliation; no implementation/evidence change.
-- **Exact next action:** review and squash-merge mergeable PR #55; after merge, start `T-200` before the also-ready `T-210`.
+- **Current work package:** WP1 — Target-machine baseline provenance reconciliation
+- **Current task:** `T-102` complete on the review branch
+- **State:** `READY TO MERGE`
+- **Active branch / PR:** `fix/target-baseline-merge-provenance`; PR #57.
+- **Last validated point:** objective post-merge review confirmed PR #55 and CI succeeded but found that the accepted snapshot cited squash-discarded feature checkpoint `6c760cd`, which is not an ancestor of merged `main`. The snapshot was regenerated from clean merged-main commit `c35babd` with unchanged capability conclusions.
+- **Tests already run:** refreshed snapshot source ancestry, clean tracked/untracked-input state, and matching SHA-256 were verified; documentation consistency passed with the new mainline-ancestry invariant; focused inventory tests passed (7 tests); PR #57 canonical `sanity` CI passed in 31 seconds.
+- **Relevant files changed:** accepted JSON/report, inventory acceptance procedure, documentation validator, `TASKS.md`, and `CURRENT_STATUS.md`.
+- **Uncommitted work:** task/current-status completion reconciliation only.
+- **Exact next action:** validate and push this completion reconciliation, perform the final objective diff review, squash-merge PR #57, then start `T-200` before the also-ready `T-210`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -93,14 +93,17 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-101` — Use the accepted inventory to resolve compute-dependent dependency/tooling constraints without freezing unsupported scientific choices.
   - Depends on: `T-100`.
   - Acceptance: dependency/runtime decisions that actually depend on hardware are documented and reproducible; CPU-compatible fallback remains clear where needed.
+- [x] `T-102` — Reconcile the accepted target-machine snapshot after squash merge so its collector/source commit is durable mainline provenance.
+  - Depends on: `T-100`, `T-101`.
+  - Acceptance: the generated snapshot cites a clean source commit that is an ancestor of the accepting branch/mainline; the reviewed report records the matching SHA-256; validation prevents branch-only squash-orphaned provenance from recurring.
 
 ## WP2 — Research framing and GridWorld
 
 - [ ] READY `T-200` — Complete source-traceable research-question and hypothesis framing from citation-ready evidence, while keeping feasibility-dependent choices provisional.
-  - Depends on: `T-100` for feasibility-sensitive scope; bibliography baseline already complete.
+  - Depends on: `T-102` for durable feasibility evidence; bibliography baseline already complete.
   - Acceptance: bounded main RQ, minimal secondary RQs/hypotheses, evidence mapping, limitations, and open feasibility gates are documented.
 - [ ] READY `T-210` — Complete bounded GridWorld prototype comparison (minimal custom implementation versus justified reuse/adaptation candidates).
-  - Depends on: `T-100`.
+  - Depends on: `T-102`.
   - Acceptance: prototypes/audit compare semantics, determinism, seeding, disturbance extensibility, testability, maintenance/license/dependency cost, and fit to the RQ.
 - [ ] BLOCKED `T-211` — Record the final GridWorld implementation ADR.
   - Depends on: `T-210` and current research framing from `T-200`.

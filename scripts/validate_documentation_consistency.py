@@ -2,7 +2,10 @@
 """Validate mechanically detectable project-documentation consistency rules."""
 from __future__ import annotations
 
+import hashlib
+import json
 import re
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -328,6 +331,54 @@ def main() -> int:
                 errors.append(
                     f"{non_citation_ready} must not be labelled citation-ready in POSTIMPORT_EVIDENCE_SYNTHESIS.md"
                 )
+
+    inventory_path = ROOT / "docs/context/system-capability.accepted.json"
+    capability_report_path = ROOT / "docs/context/SYSTEM_CAPABILITY_REPORT.md"
+    if inventory_path.is_file() and capability_report_path.is_file():
+        try:
+            inventory_bytes = inventory_path.read_bytes()
+            inventory = json.loads(inventory_bytes)
+        except (OSError, json.JSONDecodeError) as error:
+            errors.append(f"accepted system capability JSON is unreadable: {error}")
+        else:
+            if not isinstance(inventory, dict):
+                errors.append("accepted system capability JSON must be an object")
+                inventory = {}
+            repository = inventory.get("repository", {})
+            if not isinstance(repository, dict):
+                errors.append("accepted system capability repository field must be an object")
+                repository = {}
+            source_commit = repository.get("commit")
+            if not isinstance(source_commit, str) or not re.fullmatch(
+                r"[0-9a-f]{40}", source_commit
+            ):
+                errors.append("accepted system capability JSON must record a full source commit")
+            else:
+                ancestry = subprocess.run(
+                    ["git", "merge-base", "--is-ancestor", source_commit, "HEAD"],
+                    cwd=ROOT,
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                )
+                if ancestry.returncode != 0:
+                    errors.append(
+                        "accepted system capability source commit must be an ancestor of HEAD"
+                    )
+
+            if repository.get("tracked_changes_present") is not False:
+                errors.append("accepted system capability snapshot must come from clean tracked state")
+            if repository.get("untracked_nonoutput_present") is not False:
+                errors.append(
+                    "accepted system capability snapshot must have no untracked non-output inputs"
+                )
+
+            capability_report = capability_report_path.read_text(encoding="utf-8")
+            digest = hashlib.sha256(inventory_bytes).hexdigest()
+            if isinstance(source_commit, str) and source_commit not in capability_report:
+                errors.append("capability report must record the accepted JSON source commit")
+            if digest not in capability_report:
+                errors.append("capability report must record the accepted JSON SHA-256")
 
     if errors:
         for error in errors:

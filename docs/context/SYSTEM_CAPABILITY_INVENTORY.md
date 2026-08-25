@@ -45,11 +45,15 @@ python scripts/system_inventory.py
 The report becomes project evidence only after all of the following are true:
 
 1. It was generated on the machine that will actually run the thesis development/pilot/final experiments, or the report explicitly records a later approved target machine.
-2. The repository commit in the report is known and the collector itself is present at that commit.
+2. The repository commit in the report is known, the collector itself is present at that commit, and the commit is a durable ancestor of the branch/mainline accepting the evidence rather than a squash-discarded branch-only checkpoint.
 3. The values are inspected for obvious probe failures or misleading omissions.
 4. GPU conclusions respect the supported-probe boundary; an empty NVIDIA device list is not generalized to all accelerator families.
 5. The reviewed capability summary is recorded in project context/decision documentation and used to bound prototype/model/experiment choices.
 6. If a raw JSON snapshot is committed later, it is added deliberately under a stable reviewed filename rather than by unignoring the local scratch file.
+
+The documentation consistency validator checks the accepted JSON's mainline
+ancestry, clean tracked/untracked-input state, and the report's recorded source
+commit and SHA-256 so a later squash merge cannot silently orphan its provenance.
 
 ## Current decision impact
 

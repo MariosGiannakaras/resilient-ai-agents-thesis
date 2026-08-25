@@ -61,3 +61,8 @@ Record only material changes to the project source of truth. Detailed commit-by-
 - Removed the duplicate repository-wide unittest run from bibliography synchronization; the sync workflow now performs only upstream/import-specific integrity checks before opening its generated PR, whose normal repository CI runs the complete suite exactly once.
 - Adopted the Codex `/goal` command as the canonical long-horizon startup wrapper and then refined it after the first actual-machine run: routine PR creation, CI, objective own-diff review, corrections, squash merge, task reconciliation, and next-task selection are autonomous execution steps, not Goal stop conditions. Evidence-backed research/ADR decisions also proceed autonomously when task acceptance criteria resolve them; only genuinely external/user-only approvals or unavailable required evidence pause the Goal.
 - Did not add nested `AGENTS.md`, generic skill packs, extra planning/status files, or multi-agent infrastructure because the current single-repository structure does not demonstrate a need that justifies their extra context/maintenance cost.
+
+## 2026-08-26 — Durable target-machine evidence provenance
+
+- Corrected the accepted target-machine snapshot after PR #55's squash merge so its collector/source commit is a durable merged-main ancestor rather than a feature-branch-only checkpoint.
+- Extended documentation consistency validation to enforce accepted-snapshot source ancestry, clean tracked/untracked-input state, and report commit/SHA-256 agreement.
