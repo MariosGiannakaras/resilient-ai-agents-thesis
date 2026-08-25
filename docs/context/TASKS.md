@@ -153,7 +153,7 @@ Codex must assume a session can stop unexpectedly.
 
 - [ ] BLOCKED `T-500` — Implement only the pilot-proven experiment-management features needed for final work: truthful lifecycle state, history/registry, batch execution, interruption/recovery where safe, and current resource snapshot.
   - Depends on: `T-412`.
-  - Acceptance: features use filesystem run bundles as source of truth; any index/database is rebuildable.
+  - Acceptance: features use filesystem run bundles as source of truth; any index/database is rebuildable; batch/concurrent execution serializes shared `run-index` and Git publication through a single-writer boundary (or an equivalently proven race-free design), and unsafe publication contention fails closed while preserving local finalized bundles for later retry.
 - [ ] BLOCKED `T-510` — Implement the bounded local Streamlit dashboard as a thin layer over the same validated core.
   - Depends on: `T-500`.
   - Acceptance: New Experiment, Run/Monitor, History, Compare, Detailed Analysis, and Artifacts/Export workflows operate on real core data with no duplicated scientific logic and follow `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`.
