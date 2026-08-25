@@ -68,6 +68,8 @@ Started unfinished work must remain unchecked and be marked `IN_PROGRESS` with e
 
 Session/conversation memory may assist continuation, but durable repository state is the recovery authority. Do not encode task progress only in chat.
 
+User-facing progress reporting must derive from this registry rather than becoming another status store. `X/Y` is shown only when the denominator is objectively defined; an active-task fraction may use a real finite local substep set, but that substep view must not become a competing permanent task ledger.
+
 ## Lifecycle-handoff governance
 
 Major boundaries (application -> final experiments, experiments -> evidence/analysis, analysis -> thesis, thesis -> defense, defense -> delivery) are controlled by DEC-026, the corresponding `TASKS.md` dependencies/acceptance conditions, `IMPLEMENTATION_ROADMAP.md`, and `EXECUTION_WORKFLOW.md`.
@@ -91,7 +93,7 @@ Changes to dashboard wording, terminology, status semantics, contextual help, pr
 | Any material task/work-package change | `TASKS`, resume state, affected active docs, PR metadata/tests |
 | Project phase/status/blocker resolved | `CURRENT_STATUS`, `TASKS`, `PROJECT_CONTEXT`, `OPEN_QUESTIONS`, `IMPLEMENTATION_ROADMAP`, `DEFINITION_OF_DONE`, Codex prompt, changelog |
 | User requirement/decision | `CONFIRMED_REQUIREMENTS`, `USER_DECISIONS`, `CONSTRAINTS`, `CONTRADICTIONS`, `TASKS` if execution changes, decision log/changelog, affected implementation docs |
-| Codex bootstrap/reading/task-execution policy | `AGENTS`, Codex prompt, `TASKS`, `CURRENT_STATUS`, `EXECUTION_WORKFLOW`, documentation validator, decision log/changelog |
+| Codex bootstrap/reading/task-execution policy | `AGENTS` when project policy changes, Codex prompt, `TASKS` when task semantics change, `CURRENT_STATUS`, `EXECUTION_WORKFLOW`, documentation validator, decision log/changelog |
 | Architecture/stack/storage/runner | `AGENTS`, `README`, architecture docs, `PROJECT_CONTEXT`, requirements/constraints, `TASKS`, decision log, Codex prompt, CI/tests |
 | GridWorld/environment | GridWorld research/spec/ADR, current status, `TASKS`, roadmap, open questions, requirements, tests, Codex prompt if execution rules change |
 | Models/metrics/protocol | corresponding research/protocol files, current status, `TASKS`, open questions, roadmap, decision log, Codex prompt, tests |
@@ -117,7 +119,7 @@ Before merge:
 6. delete obsolete files that no longer serve a purpose;
 7. mark useful historical records explicitly historical rather than leaving ambiguous stale instructions;
 8. update decisions/changelog when the change is material;
-9. run `scripts/validate_documentation_consistency.py` and the normal repository test suite.
+9. run `scripts/validate_documentation_consistency.py` and the smallest directly affected local validators/tests needed for review readiness; when GitHub Actions is available, PR CI is the canonical full-suite pre-merge verification rather than an automatic duplicate local full-suite run.
 
 ## Prompt rule
 
@@ -135,7 +137,7 @@ Further reading is task-specific and search-driven. Do not add broad mandatory s
 
 The prompt must remain state-driven, bounded, and interruption-resilient: available session memory is used, work can always be recovered from the registry and Git/repository state, only dependency-valid work is selected, and “execute it completely” never overrides task, review, external-machine, evidence, or frozen-protocol gates.
 
-When bootstrap/resume/task-selection/checkpoint/stop/reporting behavior materially changes, update the prompt, `AGENTS.md`, relevant workflow/task/status files, and validator in the same PR. When only a domain rule changes, update `AGENTS.md` and the domain authority; modify the prompt only if the execution bootstrap itself is affected.
+Bootstrap/resume/task-selection/checkpoint/stop/reporting behavior belongs in the lean prompt and the relevant workflow/status/requirements records; update `AGENTS.md` only when the underlying project/domain policy also changes. This prevents execution-reporting mechanics from being duplicated into the always-read policy file. Domain-rule changes continue to update `AGENTS.md` and the domain authority, and modify the prompt only if the execution bootstrap itself is affected.
 
 ## No silent stale-state policy
 
