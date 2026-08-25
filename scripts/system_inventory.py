@@ -23,7 +23,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_PROBES = ("numpy", "scipy", "pandas", "torch", "gymnasium", "minigrid")
 
@@ -49,6 +49,11 @@ def run_command(command: Sequence[str], timeout: int = 5) -> Optional[str]:
 
 
 def detect_cpu_model() -> Optional[str]:
+    if platform.system() == "Windows":
+        model = detect_windows_cpu_model()
+        if model:
+            return model
+
     value = platform.processor().strip()
     if value:
         return value
@@ -70,13 +75,41 @@ def detect_cpu_model() -> Optional[str]:
         output = run_command(["sysctl", "-n", "machdep.cpu.brand_string"])
         if output:
             return output.splitlines()[0].strip() or None
-    elif system == "Windows":
-        output = run_command(["wmic", "cpu", "get", "name", "/value"])
-        if output:
-            for line in output.splitlines():
-                if line.startswith("Name="):
-                    return line.partition("=")[2].strip() or None
     return None
+
+
+def detect_windows_cpu_model() -> Optional[str]:
+    """Read the stable CPU description without collecting machine identifiers."""
+    try:
+        import winreg
+
+        path = r"HARDWARE\DESCRIPTION\System\CentralProcessor\0"
+        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, path) as key:
+            value, _ = winreg.QueryValueEx(key, "ProcessorNameString")
+    except (ImportError, OSError):
+        return None
+    model = str(value).strip()
+    return model or None
+
+
+def detect_windows_physical_cores() -> Optional[int]:
+    output = run_command(
+        [
+            "powershell",
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            "(Get-CimInstance Win32_Processor | Measure-Object "
+            "-Property NumberOfCores -Sum).Sum",
+        ]
+    )
+    if not output:
+        return None
+    try:
+        cores = int(output.splitlines()[-1].strip())
+    except ValueError:
+        return None
+    return cores if cores > 0 else None
 
 
 def detect_total_memory_bytes() -> Optional[int]:
@@ -148,6 +181,86 @@ def detect_nvidia_gpus() -> Tuple[List[Dict[str, object]], bool]:
     return parse_nvidia_smi(output), executable_present
 
 
+def detect_windows_display_adapters() -> List[Dict[str, object]]:
+    """Enumerate Windows display adapters with registry-first full VRAM values.
+
+    The legacy ``AdapterRAM`` CIM field is limited to a 32-bit value on some
+    systems. ``HardwareInformation.qwMemorySize`` is preferred when the display
+    driver exposes it, with the legacy registry value retained only as fallback.
+    """
+    if platform.system() != "Windows":
+        return []
+    try:
+        import winreg
+    except ImportError:
+        return []
+
+    class_path = (
+        r"SYSTEM\CurrentControlSet\Control\Class"
+        r"\{4d36e968-e325-11ce-bfc1-08002be10318}"
+    )
+    devices: List[Dict[str, object]] = []
+    try:
+        class_key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, class_path)
+    except OSError:
+        return devices
+
+    with class_key:
+        index = 0
+        while True:
+            try:
+                subkey_name = winreg.EnumKey(class_key, index)
+            except OSError:
+                break
+            index += 1
+            try:
+                adapter_key = winreg.OpenKey(class_key, subkey_name)
+            except OSError:
+                continue
+            with adapter_key:
+                name = _registry_value(winreg, adapter_key, "DriverDesc")
+                if not name:
+                    continue
+                driver = _registry_value(winreg, adapter_key, "DriverVersion")
+                memory_bytes = _positive_int(
+                    _registry_value(
+                        winreg, adapter_key, "HardwareInformation.qwMemorySize"
+                    )
+                )
+                memory_source = "registry-qword"
+                if memory_bytes is None:
+                    memory_bytes = _positive_int(
+                        _registry_value(
+                            winreg, adapter_key, "HardwareInformation.MemorySize"
+                        )
+                    )
+                    memory_source = "registry-legacy" if memory_bytes else None
+                devices.append(
+                    {
+                        "index": len(devices),
+                        "name": str(name).strip() or None,
+                        "memory_total_bytes": memory_bytes,
+                        "memory_source": memory_source,
+                        "driver_version": str(driver).strip() if driver else None,
+                    }
+                )
+    return devices
+
+
+def _registry_value(winreg: object, key: object, name: str) -> object:
+    try:
+        value, _ = winreg.QueryValueEx(key, name)  # type: ignore[attr-defined]
+    except OSError:
+        return None
+    return value
+
+
+def _positive_int(value: object) -> Optional[int]:
+    if isinstance(value, int) and value > 0:
+        return value
+    return None
+
+
 def package_versions(names: Iterable[str] = PACKAGE_PROBES) -> Dict[str, Optional[str]]:
     versions: Dict[str, Optional[str]] = {}
     for name in names:
@@ -172,9 +285,12 @@ def repository_state() -> Dict[str, object]:
 def collect_inventory() -> Dict[str, object]:
     disk = shutil.disk_usage(ROOT)
     nvidia_devices, nvidia_smi_present = detect_nvidia_gpus()
+    windows_display_devices = detect_windows_display_adapters()
     git_version = run_command(["git", "--version"])
+    git_lfs_version = run_command(["git-lfs", "version"])
     node_version = run_command(["node", "--version"])
     nvcc_output = run_command(["nvcc", "--version"])
+    uv_version = run_command(["uv", "--version"])
 
     return {
         "schema_version": SCHEMA_VERSION,
@@ -183,12 +299,18 @@ def collect_inventory() -> Dict[str, object]:
         "system": {
             "os": platform.system() or None,
             "os_release": platform.release() or None,
+            "os_version": platform.version() or None,
             "architecture": platform.machine() or None,
             "python_implementation": platform.python_implementation(),
             "python_version": platform.python_version(),
         },
         "cpu": {
             "logical_processors": os.cpu_count(),
+            "physical_cores": (
+                detect_windows_physical_cores()
+                if platform.system() == "Windows"
+                else None
+            ),
             "model": detect_cpu_model(),
         },
         "memory": {"total_bytes": detect_total_memory_bytes()},
@@ -202,15 +324,26 @@ def collect_inventory() -> Dict[str, object]:
                 "probe_executable_present": nvidia_smi_present,
                 "devices": nvidia_devices,
             },
-            "other_gpu_families": {
-                "status": "not-enumerated-by-schema-v1",
-                "note": "Absence from this report is not proof that no non-NVIDIA GPU exists.",
+            "windows_display_adapters": {
+                "probe": "display-class-registry",
+                "status": (
+                    "enumerated"
+                    if platform.system() == "Windows"
+                    else "not-applicable"
+                ),
+                "devices": windows_display_devices,
+                "note": (
+                    "Registry full-width VRAM is preferred over the legacy "
+                    "32-bit AdapterRAM field."
+                ),
             },
         },
         "tools": {
             "git": git_version.splitlines()[0] if git_version else None,
+            "git_lfs": git_lfs_version.splitlines()[0] if git_lfs_version else None,
             "node": node_version.splitlines()[0] if node_version else None,
             "nvcc": nvcc_output.splitlines()[-1] if nvcc_output else None,
+            "uv": uv_version.splitlines()[0] if uv_version else None,
         },
         "python_packages": package_versions(),
         "repository": repository_state(),

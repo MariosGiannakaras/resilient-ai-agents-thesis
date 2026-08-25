@@ -1,6 +1,6 @@
 # System Capability Inventory
 
-**Status:** collector implemented; target-system report still required.
+**Status:** schema-v2 collector implemented; target-system report in progress under `T-100`.
 
 ## Purpose
 
@@ -22,7 +22,7 @@ The collector intentionally does **not** record:
 
 The report contains only capability-relevant information: OS, architecture, Python runtime, logical CPU count/model when available, total RAM, filesystem capacity, selected tool/package versions, repository commit/cleanliness, and NVIDIA GPU/VRAM/driver data when `nvidia-smi` is available and succeeds.
 
-Schema version 1 does not enumerate AMD, Intel, Apple, or other GPU families. Their absence from the report is therefore **not evidence that no such accelerator exists**. Extend the probe only after the target OS/hardware makes another reliable read-only probe necessary.
+Schema version 2 enumerates Windows display adapters from the display-class registry in addition to the NVIDIA `nvidia-smi` probe. It prefers the full-width `HardwareInformation.qwMemorySize` value because legacy `AdapterRAM`/`HardwareInformation.MemorySize` values may saturate near 4 GiB. Non-Windows non-NVIDIA GPU families are not enumerated; their absence is therefore **not evidence that no accelerator exists**.
 
 ## Run on the target machine
 

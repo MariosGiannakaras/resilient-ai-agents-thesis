@@ -30,10 +30,13 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 - **Current work package:** WP1 — Target-machine baseline
 - **Current task:** `T-100`
-- **State:** `BLOCKED until executed on the actual thesis experiment machine`
-- **Active branch / PR:** none for `T-100`.
-- **Last validated point:** `T-008` optimized the canonical Codex bootstrap to use a three-file session-start core, task-specific reading, bounded execution semantics, and preserved quota/review recovery safeguards.
-- **Exact next action:** clone/update current `main` on the actual thesis machine, start Codex from `CODEX_EXECUTION_PROMPT.md`, change `T-100` to `READY/IN_PROGRESS` after confirming it is the actual experiment machine, and execute it.
+- **State:** `IN_PROGRESS`
+- **Active branch / PR:** `feat/target-machine-baseline`; PR not yet opened.
+- **Last validated point:** schema v2 reports the exact Windows CPU/core topology, full-width registry VRAM for the AMD display adapter, Windows/Python/storage data, and `uv`/Git LFS tooling without machine identifiers; the live probe and focused inventory tests pass.
+- **Tests already run:** `uv run --frozen python -m unittest tests.test_system_inventory` (7 passed); live schema-v2 JSON probe inspected successfully; `git diff --check` passed.
+- **Relevant files changed:** `scripts/system_inventory.py`, `tests/test_system_inventory.py`, `docs/context/SYSTEM_CAPABILITY_INVENTORY.md`, `docs/context/TASKS.md`.
+- **Uncommitted work:** validated collector/test/documentation updates awaiting a checkpoint commit.
+- **Exact next action:** checkpoint schema v2, regenerate a clean-repository stable accepted JSON snapshot from that commit, privacy-review it, and reconcile all affected active documentation.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -79,11 +82,11 @@ Codex must assume a session can stop unexpectedly.
   - Acceptance: lifecycle/user/Codex handoffs, application-to-final-experiment dependency, frozen thesis/defense evidence package, thesis review cycle, PowerPoint/speaker-material workflow, task-status semantics, governance/requirements/decisions, and consistency validation are reconciled; full repository CI passes.
 - [x] `T-008` — Optimize the canonical Codex bootstrap for minimal context use and reliable bounded execution.
   - Depends on: `T-006`, `T-007`.
-  - Acceptance: every session starts from `AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md`; further reading is task-specific; the canonical prompt does not duplicate domain policy; “execute completely” is bounded by task dependencies/review/external gates; quota recovery, documentation reconciliation, testing, and final reporting remain explicit; full repository CI passes.
+  - Acceptance: every session starts from the three-file session-start core (`AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md`); further reading is task-specific; the canonical prompt does not duplicate domain policy; “execute completely” is bounded by task dependencies/review/external gates; quota recovery, documentation reconciliation, testing, and final reporting remain explicit; full repository CI passes.
 
 ## WP1 — Target-machine baseline
 
-- [ ] BLOCKED `T-100` — Run the privacy-minimal hardware/software/storage inventory on the actual thesis experiment machine.
+- [ ] IN_PROGRESS `T-100` — Run the privacy-minimal hardware/software/storage inventory on the actual thesis experiment machine.
   - Depends on: `T-006` plus execution on the actual thesis experiment machine.
   - Output: versioned accepted capability report with CPU, RAM, OS, Python/tooling, storage, GPU/VRAM/driver/runtime when present, and supported acceleration.
   - Acceptance: report is generated automatically on the actual machine, privacy-reviewed, tests/validation pass, and current docs/tasks are reconciled.
