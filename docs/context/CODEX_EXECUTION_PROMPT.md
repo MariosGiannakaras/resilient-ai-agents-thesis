@@ -49,16 +49,10 @@ Do not spend the session merely summarizing files already read. After resolving 
 
 ## Concise progress updates
 
-Keep the user informed during execution without turning progress reporting into its own task.
-
-- Send a short progress update after scope is established and after meaningful completed/validated checkpoints, important gates, or a material blocker. Do not report every command, file read, or tiny edit.
-- Derive progress only from real completed work. Never fabricate percentages or count an in-progress/failed item as completed.
-- When a scope has a clear finite denominator, report it as `X/Y`, where `X` is fully completed/validated items and `Y` is the known total. If the denominator is not stable or objectively defined, use a concise status instead of inventing `Y`.
-- For the top level, use the canonical task registry when useful: `Project: X/Y` counts checked task entries versus all canonical `T-*` entries in `TASKS.md`.
-- Also report the current major work package or deliverable when meaningful, for example `WP5 Application: 2/4`, `Thesis: 3/6`, or `Presentation: 1/3`. These counts must be derived from the relevant canonical task entries, not from an informal parallel checklist.
-- If the active task itself has a clear finite set of implementation/research substeps, add one lower level such as `T-510: 3/5`. Do not create speculative substeps merely to produce a fraction.
-- Prefer one compact line such as `Progress — Project: 8/47 | WP1 Target-machine baseline: 0/2 | T-100: 2/4` followed by at most one sentence stating what just completed and what comes next.
-- Recompute counts after task-registry changes so progress can never drift from repository state.
+- Update the user after scope is set and meaningful completed/validated checkpoints, gates, or blockers—not every command or tiny edit.
+- Use `X/Y` only for an objective finite denominator. `Project: X/Y` is checked/all canonical `T-*` entries in `TASKS.md`; add the current WP/deliverable from the same registry when useful.
+- Add an active-task `X/Y` only for real finite substeps; otherwise use a short status. In-progress or failed work never counts as complete. Never create a second tracker or invented percentage.
+- Prefer one compact progress line plus one sentence on what completed and what comes next; recompute after task-state changes.
 
 ## Execution loop
 
