@@ -217,6 +217,38 @@ class GitPublicationTests(unittest.TestCase):
             self.assertEqual(self._git(repo, "rev-parse", "HEAD"), source_commit)
             self.assertEqual(self._git(repo, "rev-parse", "origin/main"), source_commit)
 
+    def test_finalization_marker_and_index_must_match_manifest(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repo, source_commit = self._initialize_repo(Path(temporary))
+            bundle = RunBundle(
+                repo_root=repo,
+                run_id="EXP-FINALIZATION",
+                resolved_config={"seeds": [1]},
+                protocol_version="protocol-v0.1",
+                stage="pilot",
+                retention_policy="events",
+            )
+            bundle.append_event({"seed": 1, "event": "completed"})
+            run_dir = bundle.finalize(status="complete", summary={"seeds_completed": 1})
+
+            marker = run_dir / "FINALIZED"
+            marker.write_text("schema_version=1\nstatus=failed\n", encoding="utf-8")
+            with self.assertRaises(PublishError):
+                publish_finalized_run(repo_root=repo, run_id="EXP-FINALIZATION")
+
+            marker.write_text("schema_version=1\nstatus=complete\n", encoding="utf-8")
+            index_path = repo / "results" / "run-index.jsonl"
+            index = index_path.read_text(encoding="utf-8")
+            index_path.write_text(
+                index.replace('"status": "complete"', '"status": "failed"'),
+                encoding="utf-8",
+            )
+            with self.assertRaises(PublishError):
+                publish_finalized_run(repo_root=repo, run_id="EXP-FINALIZATION")
+
+            self.assertEqual(self._git(repo, "rev-parse", "HEAD"), source_commit)
+            self.assertEqual(self._git(repo, "rev-parse", "origin/main"), source_commit)
+
 
 if __name__ == "__main__":
     unittest.main()
