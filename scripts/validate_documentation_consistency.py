@@ -326,11 +326,23 @@ def main() -> int:
         start = synthesis.find("## Decision-driving citation-ready anchors")
         end = synthesis.find("\n## ", start + 3) if start >= 0 else -1
         section = synthesis[start:end if end >= 0 else None] if start >= 0 else ""
-        for non_citation_ready in ("SRC-FC42D9798A", "SRC-3C0F7CC819"):
-            if non_citation_ready in section:
-                errors.append(
-                    f"{non_citation_ready} must not be labelled citation-ready in POSTIMPORT_EVIDENCE_SYNTHESIS.md"
+        manifest_path = ROOT / "research/bibliography/citation-ready/manifest.csv"
+        if not manifest_path.is_file():
+            errors.append("citation-ready manifest is missing")
+        else:
+            manifest_ids = set(
+                re.findall(
+                    r"^SRC-[A-F0-9]{10}",
+                    manifest_path.read_text(encoding="utf-8"),
+                    flags=re.MULTILINE,
                 )
+            )
+            for source_id in sorted(set(re.findall(r"\bSRC-[A-F0-9]{10}\b", section))):
+                if source_id not in manifest_ids:
+                    errors.append(
+                        f"{source_id} is labelled citation-ready in "
+                        "POSTIMPORT_EVIDENCE_SYNTHESIS.md but is absent from the citation-ready manifest"
+                    )
 
     inventory_path = ROOT / "docs/context/system-capability.accepted.json"
     capability_report_path = ROOT / "docs/context/SYSTEM_CAPABILITY_REPORT.md"

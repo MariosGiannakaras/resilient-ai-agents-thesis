@@ -66,3 +66,9 @@ Record only material changes to the project source of truth. Detailed commit-by-
 
 - Corrected the accepted target-machine snapshot after PR #55's squash merge so its collector/source commit is a durable merged-main ancestor rather than a feature-branch-only checkpoint.
 - Extended documentation consistency validation to enforce accepted-snapshot source ancestry, clean tracked/untracked-input state, and report commit/SHA-256 agreement.
+
+## 2026-08-26 — Bounded source-traceable research framing
+
+- Completed the provisional T-200 main RQ, minimal secondary questions, falsifiable construct-level hypothesis candidates, evidence map, limitations, and explicit downstream feasibility/freeze gates without selecting algorithms or protocol parameters early.
+- Reconciled the accepted bibliography v3 counts/provenance and recognized `SRC-FC42D9798A` and `SRC-3C0F7CC819` as citation-ready support for the robustness-versus-adaptation distinction, while preserving their limits for comparator selection and changepoint-recovery claims.
+- Replaced the obsolete hard-coded robust-source rejection in documentation validation with a manifest-backed check for every source listed as a citation-ready decision anchor.

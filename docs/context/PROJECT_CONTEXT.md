@@ -110,7 +110,7 @@ The imported evidence supports a bounded direction but does not yet freeze the f
 - compare a small number of scientifically distinct capability roles rather than a catalogue of algorithms;
 - keep the tuning/pilot/final boundary explicit and leakage-resistant.
 
-Decision-driving citation-ready evidence currently includes `SRC-70772C0629`, `SRC-9464421E55`, and `SRC-76B2247457`. Robust-MDP full-corpus records may guide internal research but require upstream verification/promotion before supporting a formal final claim if that comparator is retained.
+Decision-driving citation-ready evidence currently includes `SRC-70772C0629`, `SRC-9464421E55`, `SRC-76B2247457`, `SRC-FC42D9798A`, and `SRC-3C0F7CC819`. The robust-MDP records now support the formal conceptual distinction between declared-set robustness and online changepoint adaptation, but do not select a comparator or establish recovery superiority; method/assumption fit remains a `T-310` decision and any evidence gap for retained claims remains conditional `T-311` work.
 
 ## GridWorld — current state
 

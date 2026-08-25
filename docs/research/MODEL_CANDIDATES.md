@@ -12,14 +12,14 @@ The project compares capability roles rather than accumulating many named method
 |---|---|---|
 | Frozen nominal/reference behavior | RETAIN | Sanity/reference comparison for disruption impact. |
 | Naive continual tabular learner | RETAIN FOR PROTOTYPE/PILOT | Useful adaptation baseline; must not be described as universally incapable under all non-stationarity. |
-| Robustness-oriented comparator | CONDITIONAL | Include only if uncertainty-set assumptions fit the selected GridWorld and formal citation-ready support is resolved. |
+| Robustness-oriented comparator | CONDITIONAL | Include only if uncertainty-set assumptions fit the selected GridWorld and the exact retained claims stay within sufficient citation-ready support. |
 | Explicit change/context-aware adaptive learner | LEADING ADAPTIVE ROLE | Exact algorithm remains to be selected from evidence/feasibility. |
 | Detector-triggered reset/restart decomposition | OPTIONAL | Include only if it answers a distinct question after practical detector validation. |
 | Deep/function-approximation methods | DEFER / EXCLUDE INITIALLY | Add only if the final environment/RQ shows tabular methods are inadequate and compute/complexity is justified. |
 
-Decision-driving citation-ready anchors currently include `SRC-70772C0629`, `SRC-9464421E55`, and `SRC-76B2247457`.
+Decision-driving citation-ready anchors currently include `SRC-70772C0629`, `SRC-9464421E55`, `SRC-76B2247457`, `SRC-FC42D9798A`, and `SRC-3C0F7CC819`.
 
-Full-corpus robust-MDP candidates are internal research context only until required evidence is promoted upstream and resynchronized.
+The two robust-MDP records support the conceptual robustness-versus-adaptation distinction. They do not select a comparator or establish faster changepoint recovery. `T-310` must test assumption fit and scientific necessity; `T-311` is needed only if the retained method or claims require evidence beyond the current verified scope.
 
 ## Required selection process
 
