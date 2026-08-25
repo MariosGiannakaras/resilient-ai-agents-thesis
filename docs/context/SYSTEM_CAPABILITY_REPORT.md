@@ -2,7 +2,7 @@
 
 **Status:** Accepted target-machine baseline
 
-**Collected:** 2026-08-25 19:44:21 UTC
+**Collected:** 2026-08-25 19:56:40 UTC
 
 **Tasks:** `T-100`, `T-101`
 
@@ -11,9 +11,9 @@
 The automatically generated, privacy-reviewed source snapshot is
 `docs/context/system-capability.accepted.json` (schema version 2).
 
-- Collector/source commit: `a4d349e838c8900d3b1885b7f962a4248f20209b`
-- Snapshot SHA-256: `26e006d1c36651d961404e8e0a11a710664a4fd516c9149b2e15c00a2eaa458d`
-- Repository state at collection: clean (`tracked_changes_present: false`)
+- Collector/source commit: `6c760cdea2c67dbc7ce755c8cbab7f5a139f72a5`
+- Snapshot SHA-256: `fd8391675563568aca8898e25fcf1117d3e16363db8263e5b736befe6cb0f1fe`
+- Repository state at collection: clean (`tracked_changes_present: false`, `untracked_nonoutput_present: false`)
 - Privacy policy: no user, host, network, machine, installation, path, or serial identifiers
 
 The report was generated with the committed collector on the Windows host that
@@ -28,7 +28,7 @@ deliberately as project evidence.
 | Host OS | Windows 10, build `10.0.19045`, AMD64 |
 | CPU | AMD Ryzen 5 2600X, 6 physical cores / 12 logical processors |
 | RAM | 34,276,913,152 bytes (about 31.9 GiB usable) |
-| Repository filesystem | 1,000,186,310,656 bytes total; 181,834,334,208 bytes (about 169.4 GiB) free at collection |
+| Repository filesystem | 1,000,186,310,656 bytes total; 181,832,863,744 bytes (about 169.4 GiB) free at collection |
 | Display adapter | Radeon RX 570 Series, 8 GiB VRAM from the full-width registry value, driver `31.0.21923.11000` |
 | NVIDIA/CUDA | `nvidia-smi` absent; no NVIDIA device reported; `nvcc` absent |
 | Project runtime | CPython 3.12.13 managed by `uv` 0.10.10 |
@@ -88,9 +88,9 @@ runtime enough to justify its portability and maintenance cost.
 
 ## Validation performed
 
-- focused inventory unit tests: 7 passed;
+- focused inventory unit tests after current-main reconciliation: 7 passed;
 - live schema-v2 collector probe: passed;
-- clean-commit/provenance, schema, VRAM, and JSON invariants: passed;
+- clean-commit/provenance, schema, VRAM, LF-only serialization, and JSON invariants: passed;
 - forbidden-identifier privacy scan and manual review: passed;
-- documentation consistency validator: passed before the collector checkpoint;
-- full repository checks passed after final documentation reconciliation (51 tests passed, 1 platform-specific symlink test skipped; bibliography/integrity/JSON checks passed).
+- documentation consistency validator: passed after merge resolution;
+- the pre-merge package passed the full local suite (51 tests passed, 1 platform-specific symlink test skipped, plus bibliography/integrity/JSON checks); the current merged head uses PR CI as the canonical full-suite pre-merge guard under DEC-030.

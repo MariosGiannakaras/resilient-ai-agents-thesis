@@ -32,11 +32,11 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 - **Current task:** `T-100` and `T-101` complete on the review branch
 - **State:** `REVIEW GATE`
 - **Active branch / PR:** `feat/target-machine-baseline`; PR #55.
-- **Last validated point:** schema-v2 collector checkpoint `a4d349e` passed 7 focused tests and generated a clean-commit stable snapshot; the snapshot and capability interpretation passed provenance, privacy, CPU/core, full-width VRAM, runtime/tooling, and storage review. DEC-031 records the CPU-first Windows runtime constraints without freezing scientific choices.
-- **Tests already run:** full CI-equivalent checks passed: lock/sync, compile, documentation consistency, 51 tests passed with 1 platform-specific symlink test skipped, bibliography import/usage and both checksum manifests passed, and all committed JSON parsed; live/stable inventory privacy/provenance invariants and Windows Git LFS verification also passed.
+- **Last validated point:** current `main` was reconciled at `fea0e39`, preserving its fail-fast/provenance work and renumbering the target-machine decision to DEC-031. Checkpoint `6c760cd` makes inventory JSON LF-stable; the final clean-commit snapshot cites it and passes privacy, CPU/core, full-width VRAM, runtime/tooling, storage, provenance, and untracked-input review.
+- **Tests already run:** focused inventory tests (7 passed) and documentation consistency passed after main reconciliation; LF-only/stable snapshot privacy/provenance invariants and Windows Git LFS verification passed. The pre-merge package passed the then-current full local suite (51 tests, 1 platform-specific skip, bibliography/integrity/JSON checks); current merged-head full validation is delegated to PR CI under DEC-030.
 - **Relevant files changed:** collector/tests, accepted JSON/report, DEC-031/decision index, and affected active context/research/task/status documentation.
-- **Uncommitted work:** PR-number reconciliation only.
-- **Exact next action:** validate and push this PR-number reconciliation, then wait for review/squash merge of PR #55 before starting `T-200`.
+- **Uncommitted work:** final regenerated accepted JSON plus report/resume reconciliation.
+- **Exact next action:** validate, commit, and push the regenerated evidence; confirm PR #55 CI/mergeability, then wait for review/squash merge before starting `T-200`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
