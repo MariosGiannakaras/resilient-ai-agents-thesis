@@ -30,13 +30,13 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 - **Current work package:** WP2 — Research framing
 - **Current task:** `T-200` complete on the review branch
-- **State:** `READY TO PUBLISH AND MERGE`
-- **Active branch / PR:** `research/rq-hypothesis-framing`; PR not yet opened.
+- **State:** `UNDER REVIEW`
+- **Active branch / PR:** `research/rq-hypothesis-framing`; PR #58.
 - **Last validated point:** the bounded main RQ, two secondary questions, two falsifiable construct-level hypothesis candidates, source/limitation map, and downstream feasibility/freeze gates are documented without freezing exact methods, parameters, metrics, or protocol choices. The accepted v3 bibliography state and promoted robust-MDP evidence boundary are reconciled across active research/context files.
 - **Tests already run:** documentation consistency passed; targeted bibliography-use validation found 27 citation-ready references; normal full repository checks passed (56 tests, 1 skipped), including locked environment, compile, bibliography integrity/use, and both checksum manifests.
 - **Relevant files changed:** active research brief/evidence/model workspaces, affected context/status/changelog/task authorities, and the documentation validator's citation-ready-anchor check.
-- **Uncommitted work:** completion/status reconciliation after successful validation.
-- **Exact next action:** commit and push the branch, open the `T-200` PR, use canonical CI plus objective diff review, squash-merge, then start ready task `T-210`.
+- **Uncommitted work:** PR-number/status reconciliation only.
+- **Exact next action:** push this PR-state checkpoint, require canonical CI plus objective diff review, squash-merge PR #58, then start ready task `T-210`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
