@@ -208,6 +208,8 @@ class GitPublicationTests(unittest.TestCase):
     def test_finalized_experiment_creates_one_commit_and_push(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             repo, source_commit = self._initialize_repo(Path(temporary))
+            (repo / "artifacts").mkdir()
+            (repo / "artifacts" / "local-only.txt").write_text("local generated output\n", encoding="utf-8")
 
             bundle = RunBundle(
                 repo_root=repo,
@@ -217,6 +219,7 @@ class GitPublicationTests(unittest.TestCase):
                 stage="pilot",
                 retention_policy="events",
             )
+            self.assertFalse(bundle.provenance["untracked_nonoutput_present"])
             for seed in (1, 2, 3):
                 bundle.append_event({"seed": seed, "event": "completed"})
             bundle.finalize(status="completed", summary={"seeds_completed": 3})
@@ -229,6 +232,30 @@ class GitPublicationTests(unittest.TestCase):
             self.assertIn("experiment: completed EXP-001", message)
             self.assertIn("Run-ID: EXP-001", message)
             self.assertIn(f"Source-Commit: {source_commit}", message)
+
+    def test_untracked_nonoutput_source_is_not_published(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repo, source_commit = self._initialize_repo(Path(temporary))
+            (repo / "src").mkdir()
+            (repo / "src" / "local.py").write_text("VALUE = 1\n", encoding="utf-8")
+
+            bundle = RunBundle(
+                repo_root=repo,
+                run_id="EXP-UNTRACKED",
+                resolved_config={"seeds": [1]},
+                protocol_version="protocol-v0.1",
+                stage="pilot",
+                retention_policy="events",
+            )
+            self.assertTrue(bundle.provenance["untracked_nonoutput_present"])
+            bundle.append_event({"seed": 1, "event": "completed"})
+            bundle.finalize(status="completed", summary={"seeds_completed": 1})
+
+            with self.assertRaises(PublishError):
+                publish_finalized_run(repo_root=repo, run_id="EXP-UNTRACKED")
+
+            self.assertEqual(self._git(repo, "rev-parse", "HEAD"), source_commit)
+            self.assertEqual(self._git(repo, "rev-parse", "origin/main"), source_commit)
 
     def test_corrupted_finalized_bundle_is_not_published(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

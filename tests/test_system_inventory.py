@@ -42,22 +42,33 @@ class SystemInventoryTests(unittest.TestCase):
         with mock.patch.object(
             system_inventory,
             "run_command",
-            side_effect=["a" * 40, ""],
+            side_effect=["a" * 40, "", "results/runs/local\0artifacts/table.csv\0"],
         ):
             state = system_inventory.repository_state()
 
         self.assertEqual(state["commit"], "a" * 40)
         self.assertFalse(state["tracked_changes_present"])
+        self.assertFalse(state["untracked_nonoutput_present"])
 
         with mock.patch.object(
             system_inventory,
             "run_command",
-            side_effect=[None, None],
+            side_effect=["a" * 40, "", "results/runs/local\0src/local.py\0"],
+        ):
+            dirty = system_inventory.repository_state()
+
+        self.assertTrue(dirty["untracked_nonoutput_present"])
+
+        with mock.patch.object(
+            system_inventory,
+            "run_command",
+            side_effect=[None, None, None],
         ):
             unavailable = system_inventory.repository_state()
 
         self.assertIsNone(unavailable["commit"])
         self.assertIsNone(unavailable["tracked_changes_present"])
+        self.assertIsNone(unavailable["untracked_nonoutput_present"])
 
     def test_collect_inventory_has_stable_privacy_minimal_shape(self) -> None:
         disk = mock.Mock(total=1_000_000, free=400_000)
@@ -83,7 +94,11 @@ class SystemInventoryTests(unittest.TestCase):
             mock.patch.object(
                 system_inventory,
                 "repository_state",
-                return_value={"commit": "b" * 40, "tracked_changes_present": False},
+                return_value={
+                    "commit": "b" * 40,
+                    "tracked_changes_present": False,
+                    "untracked_nonoutput_present": False,
+                },
             ),
         ):
             report = system_inventory.collect_inventory()
@@ -93,6 +108,7 @@ class SystemInventoryTests(unittest.TestCase):
         self.assertEqual(report["storage"]["repository_filesystem_free_bytes"], 400_000)
         self.assertEqual(report["accelerators"]["nvidia"]["devices"][0]["name"], "GPU")
         self.assertEqual(report["repository"]["commit"], "b" * 40)
+        self.assertFalse(report["repository"]["untracked_nonoutput_present"])
 
         serialized = json.dumps(report).casefold()
         for forbidden in (

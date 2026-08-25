@@ -13,6 +13,7 @@ from typing import Any, Mapping
 
 SCHEMA_VERSION = 1
 FINALIZATION_MARKER = "FINALIZED"
+GENERATED_OUTPUT_PREFIXES = ("results/", "artifacts/")
 
 
 def _utc_now() -> str:
@@ -61,12 +62,21 @@ def _git(repo_root: Path, *args: str) -> str | None:
     return result.stdout.strip()
 
 
+def _untracked_nonoutput_present(repo_root: Path) -> bool | None:
+    output = _git(repo_root, "ls-files", "-z", "--others", "--exclude-standard")
+    if output is None:
+        return None
+    paths = [path for path in output.split("\0") if path]
+    return any(not path.startswith(GENERATED_OUTPUT_PREFIXES) for path in paths)
+
+
 def source_provenance(repo_root: Path) -> dict[str, Any]:
     commit = _git(repo_root, "rev-parse", "HEAD")
     tracked_status = _git(repo_root, "status", "--porcelain", "--untracked-files=no")
     return {
         "git_commit": commit,
         "tracked_changes_present": bool(tracked_status) if tracked_status is not None else None,
+        "untracked_nonoutput_present": _untracked_nonoutput_present(repo_root),
         "python_version": platform.python_version(),
         "python_implementation": platform.python_implementation(),
         "platform": platform.platform(),
