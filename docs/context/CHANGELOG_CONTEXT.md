@@ -184,11 +184,12 @@ Record only material changes to the project source of truth. Do not duplicate or
 
 ## 2026-08-25 — Quota-efficient fail-fast validation
 
-- Refined the Codex workflow so targeted local validation is used during implementation and GitHub PR CI is the canonical full-suite pre-merge guard when available; duplicate local full-suite runs are reserved for explicit debugging/CI-unavailable cases.
-- Required Codex to treat successful CI as a conclusion rather than repeatedly reading or summarizing successful logs; failed checks are investigated at the narrowest failed step first.
-- Allowed adjacent dependency-valid task IDs to share one coherent branch/PR when no scientific, review, user-decision, external-machine, or protocol-freeze gate separates them.
-- Added fail-closed implementation rules for required configuration/contracts/schema/provenance/lifecycle state, explicit `unavailable`/`unsupported` handling for genuinely optional probes, and atomic/transactional finalization where practical.
-- Reordered repository Actions so cheap merge-marker, documentation, JSON, and compile checks fail before dependency installation/tests where possible.
-- Kept one bounded CI job with superseded-run cancellation, added a hard timeout, reduced successful unittest/checksum/JSON/pip/uv log noise, and preserved specific failure diagnostics.
-- Kept push-to-`main` CI as a repository safety guard while instructing Codex not to spend model quota re-analysing successful post-merge repeats.
-- Added DEC-030.
+- Refined Codex execution to use targeted local checks and GitHub PR CI as the canonical full-suite pre-merge guard when available, without repeated success-log analysis or unjustified test expansion.
+- Added concise repository-derived progress reporting: objective `X/Y` only, with project/current work-package and active-task detail when a real denominator exists; no invented percentages or second tracker.
+- Allowed adjacent dependency-valid tasks to share one coherent PR only when no scientific, review, user-decision, external-machine, or protocol-freeze gate separates them.
+- Added fail-closed boundary rules for required configuration/contracts/schema/provenance/lifecycle state and explicit `unavailable`/`unsupported` handling for genuinely optional probes.
+- Hardened run finalization with a last-written `FINALIZED` marker, post-finalization mutation rejection, and publisher-side manifest/checksum revalidation before Git staging so partial/corrupted evidence cannot be auto-published.
+- Reordered the single bounded Actions job so cheap checks fail before dependency installation/tests, added a hard timeout, and reduced successful unittest/checksum/JSON/pip/uv log noise while retaining specific failure diagnostics.
+- Kept full CI for PRs and for `main` pushes containing source/config/protocol/bibliography/tests/active documentation; pure generated `results/**`/`artifacts/**` pushes may skip the duplicate full suite.
+- Recorded temporary public thesis-repository visibility as an allowed CI/Actions operation at explicit user direction without treating it as a permanent public-release decision or waiving privacy/copyright/licensing audits.
+- Added DEC-030 and mechanical checks protecting the new progress/visibility invariants.
