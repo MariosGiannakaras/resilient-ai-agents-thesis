@@ -3,93 +3,58 @@
 **Date:** 2026-08-25  
 **Status:** Authoritative current-state summary
 
-Active repository files must agree with this state. Historical records may preserve earlier states only when explicitly marked historical. Documentation synchronization is governed by `docs/context/DOCUMENTATION_GOVERNANCE.md`.
+This file is intentionally short. Detailed policy, history, requirements, and design rationale live in the source-of-truth documents routed by `AGENTS.md`; do not grow this file into a second project manual.
 
-## Bibliography integration
+## Current execution state
 
-The current complete immutable bibliography import is finished and synchronized.
+- Canonical concrete ledger: `docs/context/TASKS.md`.
+- Current work package: **WP1 — Target-machine baseline**.
+- Current task: **`T-100`**, blocked only until execution on the actual thesis experiment machine.
+- Exact next action: clone/update current `main` on that machine, start Codex with `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.`, confirm the environment is the actual experiment machine, then move `T-100` to `READY/IN_PROGRESS` and execute the privacy-minimal capability inventory.
+- No current scientific choice should be frozen before `T-100` where feasibility depends on real hardware/runtime evidence.
 
-- Requested ref: `bibliography-integration-v3`
-- Resolved checkout: `71995373ae0da64149583cae8d7a2c17e5ab1a0a`
-- Complete-corpus source commit: `e46693d4201cf47c118eb61c216243f3c5798e28`
-- Citation-ready source commit: `822891fb585c98dbe4464602e97998704d1609c5`
-- Canonical sources: 585
-- Citation-ready selected sources: 113
-- Research materials: 19
-- Indexed original PDFs: 281, metadata only
-- Consumer-recorded corpus files: 1568
+## Accepted repository / Codex baseline
 
-The immutable `bibliography-integration-v2` snapshot remains historical and unchanged. Read access succeeded for the v3 synchronization. All upstream validators, both upstream checksum manifests, consumer integrity, contextual source-reference validation, and the full thesis repository test suite passed before the synchronized branch was published. The former HTTP 401 and incomplete-import blockers remain resolved. No bibliography PDF, structured original, or bibliography Git LFS object entered this repository.
+- Python 3.12 + `uv` + committed lockfile.
+- Independent research package: `src/resilient_agents/`.
+- Ground-truth/agent-visible information boundary and independent deterministic RNG streams are established.
+- Filesystem-first run bundles, provenance/checksums, selective Git LFS, and guarded one-commit/one-push publication per finalized whole experiment are established.
+- Run publication fails closed on inconsistent finalization/checksums/index/provenance; analysis exclusion remains separate from the original execution outcome.
+- Untracked non-output repository inputs are treated as dirty source provenance; generated `results/**`/`artifacts/**` do not create a false source-dirty state.
+- Future Streamlit UI remains a thin layer over the validated headless core after pilots.
 
-## Research implementation architecture
+Codex uses a progressive-disclosure bootstrap: the session-start core is exactly `AGENTS.md`, `TASKS.md`, and this file. `AGENTS.md` is a compact routing/control file; task-specific specifications are opened only when needed. The canonical tracked execution bootstrap is `docs/context/CODEX_EXECUTION_PROMPT.md`.
 
-DEC-023 establishes the implementation baseline:
+Testing is risk-based and proportional: targeted local checks while implementing, PR CI as the canonical full-suite pre-merge guard when available, no duplicate full-suite runs for reassurance, and no arbitrary coverage/mutation/fuzz/property/combinatorial expansion without a concrete risk.
 
-- Python 3.12 + `uv` + committed lockfile;
-- independent package at `src/resilient_agents/`;
-- evaluator-ground-truth versus agent-visible information boundary;
-- deterministic independent RNG streams;
-- explicit scenario/experiment/protocol contracts without hidden scientific defaults;
-- filesystem-first run bundles with provenance, capability snapshot, checksums, events/traces, and summary;
-- one guarded automatic Git commit and push per finalized whole experiment, never per seed;
-- selective Git LFS for large thesis-produced artifacts;
-- useful large result artifacts retained by default while storage permits;
-- future Streamlit dashboard as a thin layer only after core/pilot validation.
+Codex reports objective `X/Y` progress only from real denominators in `TASKS.md` and preserves recoverable `IN_PROGRESS`/branch checkpoints across interruptions.
 
-DEC-027 fixes the future dashboard UX baseline without implementing it early: the final interface must be self-explanatory through clear labels/messages/units, accurate tooltips/contextual help, semantic text+icon+color status treatment, actionable states and pre-run review. A short skippable/replayable first-run onboarding flow is implemented only after the final dashboard structure is stable, using lightweight/native mechanisms rather than a new frontend subsystem.
+## Bibliography baseline
 
-The actual target-machine inventory is still required before compute-dependent dependency/model/budget choices. The current base core remains CPU-compatible.
+`MariosGiannakaras/ThesisBibliography` remains the canonical bibliography source of truth and is currently private. The accepted immutable thesis import is `bibliography-integration-v3`:
 
-## Codex execution and resumable tasks
+- resolved checkout: `71995373ae0da64149583cae8d7a2c17e5ab1a0a`
+- complete-corpus source: `e46693d4201cf47c118eb61c216243f3c5798e28`
+- citation-ready source: `822891fb585c98dbe4464602e97998704d1609c5`
+- 585 canonical sources; 113 citation-ready; 19 research materials
+- 281 indexed original PDFs as metadata only; 1,568 integrity-covered consumer files
 
-`docs/context/CODEX_EXECUTION_PROMPT.md` is the only tracked current Codex prompt and is directly executable from the repository.
+`research/bibliography/citation-ready/` is the strict automatic formal-citation layer. Upstream promotion/refresh occurs in `ThesisBibliography`, followed by a new immutable synchronization; primary bibliography originals/PDFs/LFS objects are not copied here.
 
-DEC-028 optimizes that prompt as a lean bootstrap rather than a duplicate policy manual. Every Codex session now starts by reading only `AGENTS.md`, `docs/context/TASKS.md`, and `docs/context/CURRENT_STATUS.md`, then reads only the task-specific active specifications/evidence required for the selected task. Broad context, roadmap, requirements, workflow, governance, historical records, and generated bibliography are not reread automatically unless the active task genuinely requires them.
+## Lifecycle gates
 
-DEC-029 makes testing risk-based and proportional. Codex runs targeted tests while implementing, adds tests only for task acceptance conditions/material scientific or reliability risks/concrete regressions, and uses tiny deterministic fixtures rather than experiment matrices. There is no arbitrary coverage target or unjustified mutation/fuzz/property/combinatorial/snapshot expansion.
+The accepted sequence remains:
 
-DEC-030 makes the implementation/validation path quota-efficient and fail-fast without allowing false passes. When GitHub Actions is available, Codex uses targeted local validators/tests and treats PR CI as the canonical full-suite pre-merge guard instead of duplicating the full suite locally. Successful CI is recorded without repeated log analysis; detailed logs are opened only for failed/cancelled/ambiguous checks. Required configuration/contracts/schema/provenance/lifecycle conditions fail closed at clear boundaries before expensive work, optional unavailable capabilities remain explicit rather than looking successful, and finalization is atomic/transactional where practical. Adjacent dependency-valid tasks may share a coherent branch/PR only when no scientific/review/user/external-machine/protocol gate separates them.
+> target-machine baseline → research framing/GridWorld → metrics/agent selection → pilots → protocol/statistical-plan freeze → experiment management/dashboard → validated application → final experiment campaign → frozen evidence/statistics → thesis evidence package → Greek thesis/review/freeze → defense presentation → final audit/delivery
 
-Codex also reports concise progress at meaningful completed/validated checkpoints. `X/Y` is used only when a real denominator exists: project/work-package/deliverable counts come from the canonical `TASKS.md`, and an active-task fraction is added only when that task has a genuine finite substep set. In-progress or failed work never counts as complete, and no second progress tracker is introduced.
+The application is complete only after the intended real configure/run/monitor/history/compare/export workflow and the self-explanatory UX/onboarding criteria are validated on the same scientific core. Final experiments then use the frozen protocol through that validated core/workflow. Writing and presentation claims later trace to a frozen evidence package plus citation-ready literature.
 
-The repository CI remains a single bounded job. Superseded runs are cancelled, a hard timeout prevents runaway use, cheap deterministic preflight checks execute before dependency installation/tests where practical, and successful test/checksum/JSON output is compact while failures retain specific diagnostics. PRs receive complete validation. Pushes to `main` also receive complete validation whenever source/config/protocol/bibliography/tests/active documentation change; pure generated `results/**`/`artifacts/**` pushes may skip the duplicate full suite.
+## Still intentionally unfrozen
 
-Repository visibility is operational rather than architectural. At explicit user direction the thesis repository may be temporarily public to use public-repository GitHub Actions; that does not constitute approval for permanent public release or waive privacy, secret, copyright, licensing, provenance, or final-release audits. `ThesisBibliography` remains the canonical bibliography repository and is currently private.
+Final RQ/hypotheses, GridWorld scientific parameters, model/agent set, uncertainty severities, seeds/repetitions, budgets, hyperparameters, recovery threshold, experiment matrix, and statistical plan remain evidence/pilot dependent.
 
-`docs/context/TASKS.md` remains the canonical concrete task checklist and resume ledger. Codex uses available session/conversation memory together with durable Git/repository evidence. If a session ends because of model quota or another interruption, the next session resumes from any `IN_PROGRESS` task, branch/commits, working-tree diff, PR state, tests, and the registry rather than restarting from chat memory.
+Supervisor identity, future corrections, deadlines, example theses, final Word formatting, and exact defense/submission rules are later-stage inputs and do not block current implementation. Current official guidance is rechecked at the explicit writing/defense tasks.
 
-The phrase `execute it completely` is explicitly bounded: Codex advances one dependency-valid task/coherent work package at a time and never interprets the instruction as permission to attempt the entire thesis in one session, bypass blocked/deferred work, or ignore review/external-machine/scientific gates.
+## Repository visibility
 
-Intermediate branch commits are allowed as recovery checkpoints; coherent work still normally reaches `main` through one squash merge.
-
-After cloning/updating the repository on the thesis machine, the user only needs to tell Codex: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.`
-
-Every material change must reconcile all affected active docs/prompts/tasks/status/decision/workflow files in the same PR. CI validates the lean three-file startup core, bounded execution wording, task/resume invariants, mechanically detectable stale states, and invalid `READY` task dependencies.
-
-## End-to-end lifecycle
-
-DEC-026 defines the complete handoff chain from implementation through final defense. The detailed phase order lives in `IMPLEMENTATION_ROADMAP.md`; execution responsibilities and handoffs live in `EXECUTION_WORKFLOW.md`; concrete status/dependencies live only in `TASKS.md`.
-
-The normal sequence is:
-
-> validated research core/pilots -> frozen protocol -> validated application -> final experiment campaign -> frozen evidence/analysis -> thesis evidence package -> Greek thesis/review/final freeze -> PowerPoint defense package -> final audit/delivery
-
-The application is considered complete only when the intended user-facing configure/run/monitor/history/compare/export workflow and the confirmed self-explanatory UX/onboarding acceptance criteria are validated on the same scientific core. The frozen final experiment campaign then follows that validated workflow.
-
-After final analysis, a dedicated evidence package must be frozen before normal thesis drafting so result/method claims, figures/tables, run IDs, protocol identity, and citation-ready sources are already mapped.
-
-The defense workflow is already defined but remains deferred: after the final thesis is stable it will produce a final `.pptx`, embedded speaker notes, a separate full spoken Greek script, traceable presentation assets/evidence mapping, and rehearsal/PowerPoint/demo-fallback validation according to `docs/thesis/PRESENTATION_WORKFLOW.md`.
-
-## Trust model
-
-`research/bibliography/citation-ready/` is the strict formal-citation layer. The complete corpus remains searchable for internal research, terminology, synthesis, rejected/theory-only context, `MAT-*` material, and notes without silent promotion. Promotion is performed only upstream in `ThesisBibliography`, followed by a new immutable synchronization.
-
-## Active bounded work
-
-The canonical concrete queue is `docs/context/TASKS.md`. Its current first gate is the target-system inventory on the actual thesis experiment machine (`T-100`), followed by the dependency-gated GridWorld/research/metrics/agent/pilot/application/final-evidence work recorded there.
-
-The final research question, hypotheses, model set, GridWorld scientific parameters, uncertainty severities, seeds, budgets, hyperparameters, recovery threshold, and statistical plan remain unfrozen.
-
-## Deferred, non-blocking inputs
-
-Supervisor identity, future supervisor corrections, final deadlines, example theses, Word formatting, and exact defense duration/submission rules remain later-stage inputs and do not block current research or implementation. They are rechecked/incorporated at the explicit writing/defense tasks rather than guessed now.
+The thesis repository may be temporarily public at explicit user direction to use public GitHub Actions. Public CI availability is an operational choice, not approval for permanent public release; privacy, copyright/licensing, source-material, secret, provenance, and final-release checks remain required before any intended public distribution.
