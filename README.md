@@ -31,7 +31,7 @@ The accepted architecture uses:
 - strict separation of evaluator ground truth from agent-visible information;
 - independent deterministic RNG streams;
 - filesystem-first experiment run bundles with provenance and checksums;
-- fail-closed finalization with a last-written completion marker and checksum revalidation before automatic publication;
+- fail-closed finalization with a last-written completion marker plus marker/manifest/checksum/run-index agreement before automatic publication;
 - one guarded automatic Git commit and push per finalized whole experiment, never per seed;
 - selective Git LFS for large thesis-produced artifacts;
 - a future thin Streamlit dashboard after the headless core and pilots establish the real workflow.
@@ -101,7 +101,7 @@ The application is therefore not the end of the project. It is the validated exe
 
 A `run_id` means one whole experiment and may contain many seeds/episodes. The experiment writes its resolved configuration, capability snapshot, events/traces, summary, manifest, and SHA-256 checksums under `results/runs/<run-id>/`.
 
-A run becomes publishable only after finalization writes the `FINALIZED` sentinel as its last step. After that, the publisher revalidates the final status, run identity, manifest file metadata, sizes and SHA-256 checksum scope before any Git staging. Corrupted or partially finalized evidence therefore fails closed.
+A run becomes publishable only after finalization writes the `FINALIZED` sentinel as its last step. Before any Git staging, the publisher verifies that the marker agrees with the manifest and that the manifest payload metadata, file sizes, checksum scope/SHA-256 values, provenance, and exactly one matching run-index entry are internally consistent. Corrupted, partial, duplicate-index, or manually fabricated finalized-looking evidence therefore fails closed.
 
 When the verified experiment finalizes, the normal workflow can automatically create one commit and push containing only that run and the run index. The publisher also refuses unsafe mixed-provenance/dirty-state/non-fast-forward publication, but never deletes the local experiment data when publication cannot proceed.
 
