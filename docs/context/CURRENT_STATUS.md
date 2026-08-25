@@ -10,7 +10,7 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - Canonical concrete ledger: `docs/context/TASKS.md`.
 - Current work package: **WP1 — Target-machine baseline**.
 - Current task: **`T-100`**, blocked only until execution on the actual thesis experiment machine.
-- Exact next action: clone/update current `main` on that machine, start Codex with `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.`, confirm the environment is the actual experiment machine, then move `T-100` to `READY/IN_PROGRESS` and execute the privacy-minimal capability inventory.
+- Exact next action: clone/update current `main` on that machine, start Codex with the `/goal` command under **User entrypoint** in `docs/context/CODEX_EXECUTION_PROMPT.md`, confirm the environment is the actual experiment machine, then move `T-100` to `READY/IN_PROGRESS` and execute the privacy-minimal capability inventory.
 - No current scientific choice should be frozen before `T-100` where feasibility depends on real hardware/runtime evidence.
 
 ## Accepted repository / Codex baseline
@@ -23,7 +23,7 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - Untracked non-output repository inputs are treated as dirty source provenance; generated `results/**`/`artifacts/**` do not create a false source-dirty state.
 - Future Streamlit UI remains a thin layer over the validated headless core after pilots.
 
-Codex uses a progressive-disclosure bootstrap: the session-start core is exactly `AGENTS.md`, `TASKS.md`, and this file. `AGENTS.md` is a compact routing/control file; task-specific specifications are opened only when needed. The canonical tracked execution bootstrap is `docs/context/CODEX_EXECUTION_PROMPT.md`.
+Codex uses a progressive-disclosure bootstrap: the session-start core is exactly `AGENTS.md`, `TASKS.md`, and this file. `AGENTS.md` is a compact routing/control file; task-specific specifications are opened only when needed. The canonical tracked execution bootstrap is `docs/context/CODEX_EXECUTION_PROMPT.md`, and Goal mode is the long-horizon wrapper that continues across successive dependency-valid bounded scopes until a genuine gate requires input or no valid work remains before that gate.
 
 Testing is risk-based and proportional: targeted local checks while implementing, PR CI as the canonical full-suite pre-merge guard when available, no duplicate full-suite runs for reassurance, and no arbitrary coverage/mutation/fuzz/property/combinatorial expansion without a concrete risk.
 

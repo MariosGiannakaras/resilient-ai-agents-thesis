@@ -8,15 +8,15 @@ ChatGPT scopes/reviews scientific and technical work and decides merge readiness
 
 Normal development flow:
 
-> goal -> task registry -> branch/PR -> CI/review -> corrections -> squash merge -> task/status update
+> persistent goal -> task registry -> bounded scope -> branch/PR -> CI/review -> corrections -> squash merge -> task/status update -> next dependency-valid scope
 
 Current supervisor identity, deadlines, and final Word formatting are not implementation blockers. Later feedback is recorded as an explicit change when received.
 
 ## Codex continuation and recovery
 
-The tracked canonical and directly executable prompt is `docs/context/CODEX_EXECUTION_PROMPT.md`. The canonical concrete checklist/resume ledger is `docs/context/TASKS.md`; `AGENTS.md` is the project-policy authority.
+The tracked canonical execution bootstrap is `docs/context/CODEX_EXECUTION_PROMPT.md`. The canonical concrete checklist/resume ledger is `docs/context/TASKS.md`; `AGENTS.md` is the project-policy authority.
 
-After cloning/updating the repository on the thesis machine, start Codex with: `Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.`
+After cloning/updating the repository on the thesis machine, start Codex with the `/goal` command under **User entrypoint** in `CODEX_EXECUTION_PROMPT.md`. Goal mode is the persistent long-horizon wrapper; the repository task ledger remains the authority for what may actually run.
 
 At the start of every Codex session:
 
@@ -29,9 +29,11 @@ At the start of every Codex session:
 
 The prompt is a lean bootstrap and must not duplicate the domain rules already maintained in `AGENTS.md` or task-specific specifications. Broad context/roadmap/requirements/workflow/governance/historical/generated files are read only when the active task requires them or when a cross-cutting reconciliation is explicitly underway.
 
-`Execute it completely` means progressing one dependency-valid task or coherent work package as far as current permissions, machine, evidence, review, and scientific gates allow. It does not mean attempting the whole thesis in one session, bypassing task states, or reopening completed work.
+`Execute it completely` means progressing **one bounded task/coherent work package at a time** while Goal mode keeps the higher-level objective active. When a bounded scope is validated and any required review/merge gate has resolved, Codex re-evaluates `TASKS.md` and continues automatically with the next dependency-valid `READY` work. A normal task boundary is not a reason to stop. The persistent goal still never authorizes `BLOCKED`/`DEFERRED` work, reopening completed work, self-approval, or crossing actual-machine/review/scientific/protocol/user gates.
 
-If model quota or the session ends unexpectedly, the next session inspects branch history, working-tree diff, PR/tests, `Resume state`, and session memory if available. It does not restart the task merely because the previous chat/session ended.
+A separate startup `/plan` is normally unnecessary because the repository already contains the accepted roadmap, dependency graph and task acceptance conditions. Use plan mode inside Goal mode only when a specific task has a genuinely unclear approach that benefits from investigation before edits.
+
+If model quota or the session ends unexpectedly, the next session inspects branch history, working-tree diff, PR/tests, `Resume state`, and session memory if available. It does not restart the task merely because the previous chat/session ended. If the persistent goal can be resumed, resume it after reconciling repository state.
 
 Intermediate branch commits are valid recovery checkpoints. The coherent PR still normally reaches `main` through one squash merge, so quota resilience does not require noisy permanent main-branch history.
 
@@ -122,7 +124,7 @@ After the final thesis is stable, the defense package follows `docs/thesis/PRESE
 
 The intended user workflow is deliberately small:
 
-1. clone/update the repository on the thesis machine and start Codex from the canonical prompt;
+1. clone/update the repository on the thesis machine and start Codex from the canonical Goal-mode entrypoint;
 2. answer only genuinely academic/product questions or provide new official/supervisor input when needed;
 3. use the finished self-explanatory application, contextual help and optional/replayable onboarding without needing a separate usage manual;
 4. once the application is validated, execute the predefined final experiment campaign through the approved UI workflow;

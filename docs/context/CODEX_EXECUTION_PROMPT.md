@@ -2,15 +2,17 @@
 
 ## User entrypoint
 
-After cloning/updating the repository on the actual thesis machine, give Codex only:
+After cloning/updating the repository on the actual thesis machine, give Codex only this Goal-mode command:
 
-> Read `docs/context/CODEX_EXECUTION_PROMPT.md` and execute it completely.
+> `/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely. Continue autonomously across successive dependency-valid tasks and coherent work packages while the next work can proceed without a genuine user, external-machine, scientific, protocol, access, or review gate. Treat the goal as complete only when no dependency-valid work remains before such a gate. Validate and checkpoint each bounded scope; never bypass BLOCKED or DEFERRED work or accepted gates.`
 
-This file is the single tracked execution bootstrap. Do not copy it into disposable task prompts.
+This file is the single tracked execution bootstrap. Do not copy it into disposable task prompts. A separate startup `/plan` is not required because the repository already contains the accepted roadmap, dependency ledger, and task acceptance conditions; use plan mode only when a specific task has a genuinely unclear approach that benefits from investigation before editing.
 
 ## Execute from repository state
 
-Continue autonomously from the **actual current repository state**. “Execute it completely” means advance the current dependency-valid task/coherent work package as far as the environment, permissions, evidence, review gates, and accepted workflow allow. It does not mean attempting the whole thesis, bypassing `BLOCKED`/`DEFERRED` work, reopening accepted work without evidence, or crossing a scientific/user/external-machine/protocol gate.
+Goal mode is the persistent long-horizon wrapper. Within it, work **one bounded scope at a time**: one task or one genuinely coherent adjacent task package. After a scope is validated and any required review/merge gate has resolved, re-read the task state and continue automatically with the next dependency-valid `READY` work instead of stopping merely because one task finished.
+
+“Execute it completely” therefore means continue through successive valid scopes as far as the environment, permissions, evidence, review gates, and accepted workflow allow. It does not mean treating the whole thesis as one undifferentiated task, bypassing `BLOCKED`/`DEFERRED` work, reopening accepted work without evidence, or crossing a scientific/user/external-machine/protocol/review gate.
 
 `AGENTS.md` contains the always-on project rules and routing map. Do not duplicate or reconstruct those rules from chat history.
 
@@ -31,7 +33,7 @@ Do not spend the session summarizing context already established. Once scope/dep
 
 ## Execution contract
 
-For the active scope:
+For each active bounded scope:
 
 1. Confirm dependencies, acceptance condition, constraints, and evidence needed.
 2. Implement/research the smallest complete solution that satisfies the acceptance condition. Follow all scientific, bibliography, provenance, UI, lifecycle, and scope rules routed by `AGENTS.md`.
@@ -43,6 +45,7 @@ For the active scope:
 8. Create/update a coherent PR with task IDs, scope/rationale, validation, scientific/protocol impact, and deferred/excluded work.
 9. Use GitHub PR CI as the canonical full-suite pre-merge guard when available. On success, record the conclusion without rereading logs. On failure, inspect only the failing step/log, reproduce narrowly when useful, fix, and let CI verify the whole repository again.
 10. Review the actual diff before merge. Do not self-approve or bypass a genuine review/decision gate.
+11. When the scope is fully resolved and no gate requires external input, select the next dependency-valid task and continue under the same active goal.
 
 ## Progress and quota discipline
 
@@ -51,21 +54,25 @@ For the active scope:
 - In-progress/failed work never counts as complete. Do not create another tracker or invented percentage.
 - Prefer targeted search/ranges and bounded outputs; avoid broad repository/corpus dumps and unnecessary successful-log reading.
 - Preserve recoverable checkpoint commits/state after substantial validated substeps when practical, especially before long experiments or major context switches.
+- Do not clear or declare the persistent goal complete merely because one bounded task, branch, PR, or work package completed while another dependency-valid scope can proceed without a genuine gate.
 
 ## Stop conditions
 
-Continue without asking the user for routine repository, Git, validation, or evidence-retrieval work that can be resolved from available sources.
+Continue without asking the user for routine repository, Git, validation, evidence-retrieval, task-selection, or next-task work that can be resolved from available sources.
 
-Stop and report only when continuation genuinely requires one of these:
+Pause/stop Goal mode and report only when continuation genuinely requires one of these:
 
 - a non-objective academic/product choice;
 - new supervisor/Department guidance or private input available only from the user;
-- execution on the actual thesis machine when this environment is not it and the result controls the next task;
+- execution on another physical machine when the current environment cannot provide evidence required by the next task;
 - an unrecoverable access/credential, safety, privacy, legal, or licensing blocker;
 - an explicit frozen-protocol amendment/approval;
-- a completed PR/review/merge gate that must resolve before dependency-valid downstream work.
+- a PR/review/merge or other external gate that must resolve before dependency-valid downstream work;
+- no remaining dependency-valid work before one of the above gates.
 
-Before an intentional stop, leave branch/task/resume state internally consistent and recoverable.
+A routine task boundary, successful validation, completed branch, or newly unblocked next task is **not** by itself a stop condition.
+
+Before an intentional pause/stop, leave branch/task/resume state internally consistent and recoverable.
 
 ## Final report
 
