@@ -14,6 +14,7 @@ Implementation and validation must minimize model quota, local repetition, and G
 - Adjacent dependency-valid tasks may share one coherent branch/PR when no scientific, review, user-decision, external-machine, or protocol-freeze gate separates them.
 - CI remains a single bounded job with superseded-run cancellation, a hard timeout, cheap deterministic preflight checks before expensive setup/tests where practical, and compact success output while preserving clear failure diagnostics.
 - Pure generated `results/**` / `artifacts/**` pushes may skip the full repository suite; PRs and any push containing source/config/protocol/bibliography/test/active-document changes retain complete validation.
+- Repository visibility may be made temporarily public at explicit user direction to use public-repository GitHub Actions. That operational choice does not constitute a public-release decision and does not relax secret, privacy, copyright, licensing, provenance, or final-release audits.
 - Required configuration, contracts, schemas, provenance, lifecycle preconditions, and scientific invariants fail closed at clear boundaries before expensive work. Required failures must not be swallowed or converted into defaults/empty results/apparent success.
 - Optional probes may report explicit `unavailable` or `unsupported` states only when genuinely non-fatal, and downstream logic must not treat those states as affirmative evidence.
 - Finalization is atomic/transactional where practical so partial output cannot masquerade as valid finalized evidence.
@@ -27,4 +28,4 @@ The thesis needs strong scientific invariants, but model quota and execution tim
 
 ## Non-goals
 
-This decision does not reduce required scientific-invariant coverage, permit false passes, weaken bibliography integrity checks, replace pilot/final experiment validation with unit tests, or authorize invented progress percentages.
+This decision does not reduce required scientific-invariant coverage, permit false passes, weaken bibliography integrity checks, replace pilot/final experiment validation with unit tests, authorize invented progress percentages, or treat temporary repository visibility as approval for permanent public redistribution.
