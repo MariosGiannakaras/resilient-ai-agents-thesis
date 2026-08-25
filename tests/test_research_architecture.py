@@ -133,9 +133,9 @@ class RunBundleTests(unittest.TestCase):
             )
             bundle.append_event({"step": 1, "event": "change"})
             bundle.append_trace({"step": 1, "state": [0, 0]})
-            run_dir = bundle.finalize(status="complete", summary={"return": 1.0})
+            run_dir = bundle.finalize(status="completed", summary={"return": 1.0})
             manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
-            self.assertEqual(manifest["status"], "complete")
+            self.assertEqual(manifest["status"], "completed")
             self.assertIn("resolved-config.json", manifest["files"])
             self.assertIn("system-capability.json", manifest["files"])
             self.assertTrue((run_dir / "checksums.sha256").is_file())
@@ -185,14 +185,14 @@ class GitPublicationTests(unittest.TestCase):
             )
             for seed in (1, 2, 3):
                 bundle.append_event({"seed": seed, "event": "completed"})
-            bundle.finalize(status="complete", summary={"seeds_completed": 3})
+            bundle.finalize(status="completed", summary={"seeds_completed": 3})
             result = publish_finalized_run(repo_root=repo, run_id="EXP-001")
 
             self.assertNotEqual(result.commit, source_commit)
             self.assertEqual(self._git(repo, "rev-list", "--count", f"{source_commit}..HEAD"), "1")
             self.assertEqual(self._git(repo, "rev-parse", "origin/main"), result.commit)
             message = self._git(repo, "log", "-1", "--pretty=%B")
-            self.assertIn("experiment: complete EXP-001", message)
+            self.assertIn("experiment: completed EXP-001", message)
             self.assertIn("Run-ID: EXP-001", message)
             self.assertIn(f"Source-Commit: {source_commit}", message)
 
@@ -208,7 +208,7 @@ class GitPublicationTests(unittest.TestCase):
                 retention_policy="events",
             )
             bundle.append_event({"seed": 1, "event": "completed"})
-            run_dir = bundle.finalize(status="complete", summary={"seeds_completed": 1})
+            run_dir = bundle.finalize(status="completed", summary={"seeds_completed": 1})
             (run_dir / "summary.json").write_text('{"seeds_completed": 999}\n', encoding="utf-8")
 
             with self.assertRaises(PublishError):
@@ -229,18 +229,18 @@ class GitPublicationTests(unittest.TestCase):
                 retention_policy="events",
             )
             bundle.append_event({"seed": 1, "event": "completed"})
-            run_dir = bundle.finalize(status="complete", summary={"seeds_completed": 1})
+            run_dir = bundle.finalize(status="completed", summary={"seeds_completed": 1})
 
             marker = run_dir / "FINALIZED"
             marker.write_text("schema_version=1\nstatus=failed\n", encoding="utf-8")
             with self.assertRaises(PublishError):
                 publish_finalized_run(repo_root=repo, run_id="EXP-FINALIZATION")
 
-            marker.write_text("schema_version=1\nstatus=complete\n", encoding="utf-8")
+            marker.write_text("schema_version=1\nstatus=completed\n", encoding="utf-8")
             index_path = repo / "results" / "run-index.jsonl"
             index = index_path.read_text(encoding="utf-8")
             index_path.write_text(
-                index.replace('"status": "complete"', '"status": "failed"'),
+                index.replace('"status": "completed"', '"status": "failed"'),
                 encoding="utf-8",
             )
             with self.assertRaises(PublishError):
