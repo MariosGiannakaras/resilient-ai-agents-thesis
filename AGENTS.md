@@ -40,7 +40,7 @@ Historical files and old conversations are context only and never override curre
 
 - `TASKS.md` is the only concrete checklist. Resume an `IN_PROGRESS` task before selecting new work unless it is genuinely blocked; otherwise select the first dependency-valid `READY` task.
 - Never begin `BLOCKED`/`DEFERRED` work merely because it appears earlier in the roadmap.
-- Work on one bounded task or one genuinely coherent adjacent task package; do not cross scientific, review, user-decision, external-machine, or protocol-freeze gates.
+- Work on one bounded task or one genuinely coherent adjacent task package at a time. Evidence-backed scientific/architecture/ADR decisions and routine PR/CI/objective-review/merge boundaries are normal autonomous work when the active task and accepted evidence resolve them. Stop only at an explicit user/supervisor/external-machine/protocol/external-approval gate or another genuinely non-resolvable blocker defined by the controlling task/specification.
 - Preserve recoverable branch checkpoints after substantial validated substeps when useful. Never discard prior uncommitted/checkpoint work without inspecting it.
 - Material discoveries that create required work get a stable task ID/dependency in `TASKS.md`; do not leave required work only in chat/comments.
 - Report concise progress at meaningful checkpoints. Use `X/Y` only from a real finite denominator in `TASKS.md`; in-progress/failed work never counts as complete.
@@ -72,7 +72,7 @@ Historical files and old conversations are context only and never override curre
 - Do not swallow required failures into defaults, empty results, or apparent success. Prefer atomic/transactional finalization so partial artifacts cannot look finalized.
 - Runs preserve resolved config, seeds, software/hardware capability snapshot, and source Git commit. Automatic publication must preserve clean-source provenance and one whole-experiment publication boundary.
 - Avoid speculative platform engineering: no cloud/distributed workers, microservices, Kubernetes, multi-user auth, production observability, or custom frontend infrastructure without a demonstrated thesis requirement.
-- Before target-machine inventory, keep compute-dependent choices CPU-compatible and unfrozen; do not assume CUDA or usable GPU.
+- The accepted target-machine baseline is native Windows CPython 3.12 via the locked `uv` environment with CPU execution required as the supported baseline. The observed Radeon GPU is not a validated scientific-compute backend; do not add CUDA/ROCm/DirectML/GPU dependencies without a later bounded compatibility justification.
 
 ## Testing and CI
 
@@ -88,9 +88,9 @@ Testing is risk-based and proportional.
 ## Git and documentation
 
 - Use descriptive lowercase feature branches and coherent PRs; intermediate checkpoint commits are allowed, with one logical squash merge to `main` normally preferred.
-- Adjacent dependency-valid task IDs may share a PR only when they are one coherent unit with no gate between them. Avoid micro-PRs created solely from task numbering.
+- Adjacent dependency-valid task IDs may share a PR only when they are one coherent unit with no explicit external/user approval gate between them. Avoid micro-PRs created solely from task numbering.
 - PRs state task IDs, scope/rationale, validation, scientific/protocol impact, and deferred/excluded work.
-- Do not self-approve. Passing CI is necessary but not sufficient; review the actual diff before merge.
+- Review the actual diff before merge. Do not submit an `APPROVE` review on your own PR. If CI is green, scope/evidence/docs are sound, findings are resolved, and repository policy does not require a distinct human approval, squash-merge your validated PR with available permissions and continue to the next dependency-valid task. A routine own-PR merge is not a stop condition.
 - Material changes reconcile affected active source-of-truth docs and `TASKS.md` in the same PR according to `DOCUMENTATION_GOVERNANCE.md`.
 - Do not store secrets, credentials, caches, or unjustified binaries. Large thesis-produced evidence follows the configured LFS policy; bibliography PDFs/LFS stay upstream.
 

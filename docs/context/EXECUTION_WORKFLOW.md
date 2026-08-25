@@ -2,13 +2,13 @@
 
 ## Operating model
 
-The user provides goals, observed behavior, genuinely academic/product choices, later supervisor feedback, and private material when required. The user is not responsible for routine branches, commits, tests, PRs, CI, review corrections, merges, experiment-result Git publication, or manually remembering unfinished Codex subtasks.
+The user provides goals, observed behavior, genuinely non-objective academic/product choices, later supervisor feedback, and private material when required. The user is not responsible for routine branches, commits, tests, PRs, CI, review corrections, merges, experiment-result Git publication, or manually remembering unfinished Codex subtasks.
 
-ChatGPT scopes/reviews scientific and technical work and decides merge readiness. Codex executes bounded work from the actual repository state without self-approval or silent scientific scope expansion. GitHub runs repeatable checks; passing CI is necessary but not sufficient.
+Codex executes bounded work from the actual repository state, performs objective diff review, uses GitHub CI as the canonical full-suite guard, fixes failures/findings, and may squash-merge its own validated PR when repository policy does not require a distinct human approval. It must not submit an `APPROVE` review on its own PR. ChatGPT may provide independent review or scientific/writing support when useful, but routine ChatGPT review is not a mandatory stop gate for the long-running Goal. Passing CI is necessary but not sufficient: scope, diff, evidence, task acceptance, documentation, and unresolved review findings still matter.
 
 Normal development flow:
 
-> persistent goal -> task registry -> bounded scope -> branch/PR -> CI/review -> corrections -> squash merge -> task/status update -> next dependency-valid scope
+> persistent goal -> task registry -> bounded scope -> branch/PR -> CI + objective diff review -> corrections -> squash merge -> task/status reconciliation -> next dependency-valid scope
 
 Current supervisor identity, deadlines, and final Word formatting are not implementation blockers. Later feedback is recorded as an explicit change when received.
 
@@ -24,26 +24,29 @@ At the start of every Codex session:
 2. read only `AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md` as the session-start core;
 3. inspect `Resume state` and resume any `IN_PROGRESS` task first unless genuinely blocked;
 4. use available session/conversation memory to understand prior work and verify it against durable repository evidence;
-5. otherwise select the first dependency-valid `READY` task, never a `BLOCKED` or `DEFERRED` task;
-6. read only the active task entry and its relevant task-specific active specifications/evidence, using repository search before broad reading.
+5. reconcile stale handoff prose when actual branch/PR/merge evidence has already resolved it;
+6. otherwise select the first dependency-valid `READY` task, never a `BLOCKED` or `DEFERRED` task;
+7. read only the active task entry and its relevant task-specific active specifications/evidence, using repository search before broad reading.
 
 The prompt is a lean bootstrap and must not duplicate the domain rules already maintained in `AGENTS.md` or task-specific specifications. Broad context/roadmap/requirements/workflow/governance/historical/generated files are read only when the active task requires them or when a cross-cutting reconciliation is explicitly underway.
 
-`Execute it completely` means progressing **one bounded task/coherent work package at a time** while Goal mode keeps the higher-level objective active. When a bounded scope is validated and any required review/merge gate has resolved, Codex re-evaluates `TASKS.md` and continues automatically with the next dependency-valid `READY` work. A normal task boundary is not a reason to stop. The persistent goal still never authorizes `BLOCKED`/`DEFERRED` work, reopening completed work, self-approval, or crossing actual-machine/review/scientific/protocol/user gates.
+`Execute it completely` means progressing **one bounded task/coherent work package at a time** while Goal mode keeps the project-lifecycle objective active. When a bounded scope is validated, Codex performs the routine PR/CI/review/merge/reconciliation path itself when permissions and repository policy allow, then re-evaluates `TASKS.md` and continues automatically with the next dependency-valid `READY` work. A task, PR, CI, or merge boundary is not a reason to stop.
 
-A separate startup `/plan` is normally unnecessary because the repository already contains the accepted roadmap, dependency graph and task acceptance conditions. Use plan mode inside Goal mode only when a specific task has a genuinely unclear approach that benefits from investigation before edits.
+Evidence-backed research, architecture, ADR, implementation, and test decisions are autonomous when the active task's evidence and acceptance criteria resolve them. The Goal pauses only where the controlling task/specification explicitly requires user/supervisor/external approval, required evidence exists only elsewhere, or the choice is genuinely non-objective. It never authorizes `BLOCKED`/`DEFERRED` work, fabricated evidence, or bypassing an explicit external approval requirement.
+
+A separate startup `/plan` is normally unnecessary because the repository already contains the accepted roadmap, dependency graph, and task acceptance conditions. Use plan mode inside Goal mode only when a specific task has a genuinely unclear approach that benefits from investigation before edits.
 
 If model quota or the session ends unexpectedly, the next session inspects branch history, working-tree diff, PR/tests, `Resume state`, and session memory if available. It does not restart the task merely because the previous chat/session ended. If the persistent goal can be resumed, resume it after reconciling repository state.
 
-Intermediate branch commits are valid recovery checkpoints. The coherent PR still normally reaches `main` through one squash merge, so quota resilience does not require noisy permanent main-branch history.
+Intermediate branch commits are valid recovery checkpoints. A coherent PR still normally reaches `main` through one squash merge, so quota resilience does not require noisy permanent main-branch history.
 
-Adjacent dependency-valid tasks may share a branch/PR only when they are one coherent implementation unit and no scientific, review, user-decision, external-machine, or protocol-freeze gate separates them. Separate task IDs do not by themselves justify micro-PRs.
+Adjacent dependency-valid tasks may share a branch/PR only when they are one coherent implementation unit and no explicit user/supervisor/external-machine/protocol-approval gate separates them. Separate task IDs do not by themselves justify micro-PRs.
 
 ## Progress reporting
 
 Codex keeps long executions understandable with concise milestone reporting rather than continuous narration.
 
-- Report after scope is established and after meaningful completed/validated checkpoints, important gates, or a material blocker; do not report every command or tiny edit.
+- Report after scope is established and after meaningful completed/validated checkpoints or a material genuine blocker; do not report every command or tiny edit.
 - Use `X/Y` only when the denominator is objectively defined. Completed/validated items count toward `X`; in-progress, failed, or merely attempted work does not.
 - The canonical task registry provides the durable high-level count: `Project: X/Y` may count checked versus total `T-*` entries in `TASKS.md`.
 - Also report the relevant current work package or major deliverable when useful, such as `WP5 Application: 2/4`, `Thesis: 3/6`, or `Presentation: 1/3`, using the corresponding canonical task entries rather than a second tracker.
@@ -114,9 +117,9 @@ Before normal thesis drafting, a thesis/defense evidence package is frozen. It m
 
 ## Thesis review and defense handoff
 
-ChatGPT is the preferred writing/restructuring/review layer for the Greek thesis, while Codex continues to own reproducible repository-backed figures, tables, evidence checks, and legitimate code/data corrections. Current official guidance is rechecked near writing/delivery.
+ChatGPT remains the preferred writing/restructuring/review layer for polished Greek thesis prose when that stage is reached, while Codex owns reproducible repository-backed figures, tables, evidence checks, technical drafts, and legitimate code/data corrections. Current official guidance is rechecked near writing/delivery. If the final narrative workflow explicitly requires user/supervisor review, that is a genuine later-stage gate; it is not an implementation-stage blocker.
 
-A review-ready Word thesis is produced before final freeze. Supervisor/reviewer corrections are incorporated when they are actually received, with affected evidence/citations/figures revalidated.
+A review-ready thesis precedes final thesis freeze. Supervisor/reviewer corrections are incorporated when they are actually received, with affected evidence/citations/figures revalidated.
 
 After the final thesis is stable, the defense package follows `docs/thesis/PRESENTATION_WORKFLOW.md`: evidence-mapped PowerPoint, embedded speaker notes, a separate full spoken Greek script, real screenshots/demo assets, and rehearsal/timing/factual-consistency validation.
 
@@ -125,11 +128,11 @@ After the final thesis is stable, the defense package follows `docs/thesis/PRESE
 The intended user workflow is deliberately small:
 
 1. clone/update the repository on the thesis machine and start Codex from the canonical Goal-mode entrypoint;
-2. answer only genuinely academic/product questions or provide new official/supervisor input when needed;
-3. use the finished self-explanatory application, contextual help and optional/replayable onboarding without needing a separate usage manual;
-4. once the application is validated, execute the predefined final experiment campaign through the approved UI workflow;
-5. review the final scientific interpretation/analysis outputs rather than manually manipulating result files;
-6. review the thesis and provide/relay supervisor feedback;
+2. answer only genuinely non-objective academic/product questions or provide new official/supervisor/private input when actually required;
+3. otherwise let Codex continue through routine implementation, research, Git/PR/CI/merge, evidence generation, and task reconciliation autonomously;
+4. use the finished self-explanatory application, contextual help and optional/replayable onboarding without needing a separate usage manual;
+5. once the application is validated, execute the predefined final experiment campaign through the approved UI workflow;
+6. review the final scientific interpretation/thesis when the explicit downstream review gate is reached;
 7. review and rehearse the final PowerPoint and speaking script.
 
 Routine Git, task bookkeeping, result-file movement, provenance, analysis regeneration, and presentation evidence mapping remain automated/repository-managed.
@@ -146,7 +149,7 @@ Delete obsolete files when they have no continuing value. Preserve useful histor
 
 Use descriptive lowercase branches with `research/`, `feat/`, `fix/`, `test/`, `docs/`, or `chore/`. Branch tooling may create several mechanical/checkpoint commits, but one coherent PR should normally reach `main` as one squash commit.
 
-Substantial PRs state task IDs, scope, rationale, validation, scientific/protocol impact, limitations, deferred work, and documentation/task reconciliation. Merge only when scope is correct, tests meaningfully cover the change, CI passes, review findings are resolved, source-of-truth docs agree, and no data/results/logs/metrics/citations/progress are fabricated.
+Substantial PRs state task IDs, scope, rationale, validation, scientific/protocol impact, limitations, deferred work, and documentation/task reconciliation. Before merge, Codex reviews the actual diff and check state. If scope is correct, tests meaningfully cover the change, CI passes, review findings are resolved, source-of-truth docs agree, no external approval is required, and no data/results/logs/metrics/citations/progress are fabricated, Codex may squash-merge with available permissions and continue. It does not submit an `APPROVE` review on its own PR.
 
 ## Current project sequence
 

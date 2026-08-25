@@ -4,15 +4,17 @@
 
 After cloning/updating the repository on the actual thesis machine, give Codex only this Goal-mode command:
 
-> `/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely. Continue autonomously across successive dependency-valid tasks and coherent work packages while the next work can proceed without a genuine user, external-machine, scientific, protocol, access, or review gate. Treat the goal as complete only when no dependency-valid work remains before such a gate. Validate and checkpoint each bounded scope; never bypass BLOCKED or DEFERRED work or accepted gates.`
+> `/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely. Complete the canonical project task registry autonomously, one bounded dependency-valid task or coherent work package at a time. Treat routine Git, PR creation, CI, objective diff review, corrections, squash merge, task reconciliation, and selection of the next READY task as work to perform—not reasons to stop. Continue until the project lifecycle is complete or continuation genuinely requires user/supervisor/external input that cannot be resolved from repository evidence and accepted rules. Never bypass BLOCKED or DEFERRED work, fabricate evidence, or cross an explicit external approval gate.`
 
 This file is the single tracked execution bootstrap. Do not copy it into disposable task prompts. A separate startup `/plan` is not required because the repository already contains the accepted roadmap, dependency ledger, and task acceptance conditions; use plan mode only when a specific task has a genuinely unclear approach that benefits from investigation before editing.
 
 ## Execute from repository state
 
-Goal mode is the persistent long-horizon wrapper. Within it, work **one bounded scope at a time**: one task or one genuinely coherent adjacent task package. After a scope is validated and any required review/merge gate has resolved, re-read the task state and continue automatically with the next dependency-valid `READY` work instead of stopping merely because one task finished.
+Goal mode is the persistent long-horizon wrapper. Within it, work **one bounded scope at a time**: one task or one genuinely coherent adjacent task package. After each validated scope, resolve routine repository/PR/CI/merge work with available permissions, reconcile the task ledger, then continue automatically with the next dependency-valid `READY` work.
 
-“Execute it completely” therefore means continue through successive valid scopes as far as the environment, permissions, evidence, review gates, and accepted workflow allow. It does not mean treating the whole thesis as one undifferentiated task, bypassing `BLOCKED`/`DEFERRED` work, reopening accepted work without evidence, or crossing a scientific/user/external-machine/protocol/review gate.
+“Execute it completely” means continuing through the canonical project lifecycle as far as the actual evidence and accepted rules permit. It does not mean treating the whole thesis as one undifferentiated edit, bypassing `BLOCKED`/`DEFERRED` dependencies, reopening accepted work without evidence, or inventing missing academic/external input.
+
+Evidence-backed research, architecture, implementation, test, and ADR decisions that the active task can resolve from its acceptance criteria and available sources are normal autonomous work. Do not turn them into artificial user gates merely because they involve scientific or architectural judgment. Pause only when the controlling task/specification explicitly requires external/user/supervisor approval or the choice cannot be resolved objectively from accepted evidence and constraints.
 
 `AGENTS.md` contains the always-on project rules and routing map. Do not duplicate or reconstruct those rules from chat history.
 
@@ -23,7 +25,7 @@ Goal mode is the persistent long-horizon wrapper. Within it, work **one bounded 
    - `AGENTS.md`
    - `docs/context/TASKS.md`
    - `docs/context/CURRENT_STATUS.md`
-3. Inspect `Resume state` and any `IN_PROGRESS` task. Repository/Git evidence wins if memory conflicts.
+3. Inspect `Resume state` and any `IN_PROGRESS` task. Repository/Git evidence wins if memory or stale handoff prose conflicts with actual merged PR/check state; reconcile stale state before continuing.
 4. Resume valid `IN_PROGRESS` work first. Otherwise select the first dependency-valid `READY` task. Never start `BLOCKED`/`DEFERRED` work just because it is next numerically.
 5. Define one bounded scope: one task or one genuinely coherent adjacent task package permitted by `AGENTS.md`.
 6. Read only the task entry, explicitly referenced files, and the smallest relevant active specifications/evidence. Search before broad reading.
@@ -44,33 +46,32 @@ For each active bounded scope:
 7. Mark a task complete only when its acceptance condition is actually satisfied and validated; otherwise keep it `IN_PROGRESS` or correctly blocked.
 8. Create/update a coherent PR with task IDs, scope/rationale, validation, scientific/protocol impact, and deferred/excluded work.
 9. Use GitHub PR CI as the canonical full-suite pre-merge guard when available. On success, record the conclusion without rereading logs. On failure, inspect only the failing step/log, reproduce narrowly when useful, fix, and let CI verify the whole repository again.
-10. Review the actual diff before merge. Do not self-approve or bypass a genuine review/decision gate.
-11. When the scope is fully resolved and no gate requires external input, select the next dependency-valid task and continue under the same active goal.
+10. Review the actual diff before merge. Do not submit an `APPROVE` review on your own PR. When CI is green, the diff is sound, no unresolved review finding exists, and repository policy does not require a distinct human approval, squash-merge with available permissions. A routine own-PR merge is not “self-approval”; it is an execution step after objective review. If branch protection or an explicit task/policy genuinely requires another human's approval, that external approval is a real gate.
+11. After merge, synchronize the local repository to the resulting `main`, verify task/status state against the merge, select the next dependency-valid task, and continue under the same active goal.
 
 ## Progress and quota discipline
 
-- Give concise user updates after scope is set and at meaningful completed/validated checkpoints, gates, or blockers—not after routine commands.
+- Give concise user updates after scope is set and at meaningful completed/validated checkpoints or genuine blockers—not after routine commands.
 - Use `X/Y` only for objective finite denominators. `Project: X/Y` comes from checked/all canonical `T-*` entries in `TASKS.md`; add the current work-package/deliverable count when useful. Add active-task `X/Y` only if real finite substeps exist.
 - In-progress/failed work never counts as complete. Do not create another tracker or invented percentage.
 - Prefer targeted search/ranges and bounded outputs; avoid broad repository/corpus dumps and unnecessary successful-log reading.
 - Preserve recoverable checkpoint commits/state after substantial validated substeps when practical, especially before long experiments or major context switches.
-- Do not clear or declare the persistent goal complete merely because one bounded task, branch, PR, or work package completed while another dependency-valid scope can proceed without a genuine gate.
+- Do not clear or declare the persistent goal complete merely because one task, branch, PR, CI run, merge, or work package completed while another dependency-valid scope can proceed.
 
 ## Stop conditions
 
-Continue without asking the user for routine repository, Git, validation, evidence-retrieval, task-selection, or next-task work that can be resolved from available sources.
+Continue without asking the user for routine repository, Git, PR, CI, diff review, merge, validation, evidence-retrieval, task-selection, research synthesis, implementation, or next-task work that can be resolved from available sources and accepted rules.
 
 Pause/stop Goal mode and report only when continuation genuinely requires one of these:
 
-- a non-objective academic/product choice;
-- new supervisor/Department guidance or private input available only from the user;
+- a non-objective academic/product choice that the task/specification reserves for the user;
+- new supervisor/Department guidance or private input available only from the user and required now;
 - execution on another physical machine when the current environment cannot provide evidence required by the next task;
 - an unrecoverable access/credential, safety, privacy, legal, or licensing blocker;
-- an explicit frozen-protocol amendment/approval;
-- a PR/review/merge or other external gate that must resolve before dependency-valid downstream work;
-- no remaining dependency-valid work before one of the above gates.
+- an explicit external approval required by a frozen-protocol amendment, repository protection, or controlling task/specification;
+- all canonical tasks that can proceed without one of the above external inputs are complete.
 
-A routine task boundary, successful validation, completed branch, or newly unblocked next task is **not** by itself a stop condition.
+A task boundary, successful validation, PR creation, green CI, objective self-review, own-PR squash merge, evidence-backed research/ADR decision, or newly unblocked next task is **not** by itself a stop condition.
 
 Before an intentional pause/stop, leave branch/task/resume state internally consistent and recoverable.
 
@@ -84,6 +85,6 @@ Report only:
 - branch/PR/merge/checkpoint state;
 - validators/tests/CI conclusions;
 - accepted or still-unfrozen scientific/architecture decisions;
-- genuine blockers/review gates;
+- genuine external blockers/approval gates;
 - exact next task/action from `TASKS.md`;
 - major artifact produced, if any.
