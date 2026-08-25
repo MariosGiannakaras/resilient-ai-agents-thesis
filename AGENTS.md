@@ -165,6 +165,9 @@ Scientific evidence remains in the original source language. Never fabricate sou
 - UI uses the same core/config paths and never reimplements scientific logic.
 - Run/result storage does not depend on UI lifecycle.
 - Filesystem run bundles are source of truth; any database/index is rebuildable cache.
+- Validate required configuration, contracts, schema, provenance, and lifecycle preconditions at clear boundaries before expensive work starts; invalid or ambiguous required state fails closed with an explicit error/non-zero result.
+- Do not swallow broad exceptions or convert required failures into defaults, empty results, or apparent success. Optional best-effort probes may report an explicit `unavailable`/`unsupported` state only when absence is genuinely non-fatal, and that state must never be interpreted as successful evidence.
+- Prefer atomic/transactional finalization so partial outputs cannot be mistaken for valid finalized artifacts. Keep validation outside hot loops when one boundary check is sufficient; fail early rather than performing repeated expensive validation.
 - Avoid microservices, Kubernetes, cloud infrastructure, distributed workers, multi-user auth, production observability, speculative plugins, or unnecessary platform engineering.
 - Lightweight debug visualization is allowed when it helps validation.
 - Final UI must be polished, consistent, responsive, screenshot-ready, and based only on real backend state/data.
@@ -196,7 +199,7 @@ DEC-026 controls the application → experiments → evidence → thesis → def
 
 ## Tests and validation
 
-DEC-029 controls testing effort. Testing is **risk-based and proportional**: it protects scientific validity and critical behavior, but it must not become an independent scope-expansion project or consume more implementation time/model quota without corresponding risk reduction.
+DEC-029 and DEC-030 control testing/validation effort. Testing is **risk-based and proportional**: it protects scientific validity and critical behavior, but it must not become an independent scope-expansion project or consume more implementation time/model quota without corresponding risk reduction.
 
 During implementation:
 
@@ -209,7 +212,7 @@ During implementation:
 - use tiny deterministic fixtures and smoke runs in CI; never use the pilot or final experiment matrix as a test suite;
 - stop adding tests when the acceptance condition and material risks are covered.
 
-Before review, run the relevant validators/tests and the normal full repository checks once. Rerun the full checks only after a later change that could affect their result. Do not spend model quota repeatedly analysing already-passing checks.
+When GitHub Actions is available, PR CI is the canonical full-suite pre-merge runner. Before opening/updating the PR, run only the directly affected validators/targeted tests needed to make the branch review-ready; do **not** run the full suite locally merely to duplicate CI. After CI starts, inspect its conclusion rather than tailing successful logs. If it passes, do not rerun or re-analyse it. If it fails, inspect only the failed step/log, reproduce with the narrowest relevant local command when useful, fix the cause, and let CI verify the complete repository again. Run the full suite locally only when CI is unavailable, when CI/test infrastructure itself changed and local reproduction is useful, or when a specific failure requires it.
 
 As applicable, protect these high-value areas:
 
@@ -238,6 +241,7 @@ Follow `docs/context/DOCUMENTATION_GOVERNANCE.md`.
 - Material changes reconcile affected active docs, decisions, status, prompt, lifecycle handoffs, and `TASKS.md` in the same PR.
 - Use descriptive lowercase branches (`research/`, `feat/`, `fix/`, `test/`, `docs/`, `chore/`).
 - Intermediate branch checkpoint commits are allowed for recovery; prefer one logical squash merge to `main` for each coherent PR.
+- Adjacent dependency-valid task IDs may share one branch/PR when they form one genuinely coherent implementation unit and there is no scientific, review, user-decision, external-machine, or protocol-freeze gate between them. Do not create micro-PRs solely because task IDs are separate.
 - PRs state task IDs, scope, rationale, validation, scientific/protocol impact, exclusions/deferred work, and documentation/task reconciliation.
 - Do not silently change a frozen protocol or raw/final evidence.
 - Use clear English naming and comments for non-obvious reasoning/invariants, not obvious code narration.

@@ -58,7 +58,7 @@ Record only material changes to the project source of truth. Do not duplicate or
 
 ## 2026-08-02 — Canonical ThesisBibliography integration and documentation normalization
 
-- Established `MariosGiannakaras/ThesisBibliography` as canonical source of truth for source discovery, originals, conversion/OCR, analysis, verified evidence, selection and controlled export.
+- Established `MariosGiannakaras/ThesisBibliography` as canonical source of truth for source discovery, originals, conversion/OCR, canonical Markdown, scientific analysis, evidence verification, source selection, research materials, notes, and generated exports.
 - Limited this repository to controlled generated bibliography consumption.
 - Kept repositories independent: no submodule and no thesis-to-bibliography write path.
 - Retired local bibliography acquisition/archive paths as historical/compatibility markers.
@@ -181,3 +181,17 @@ Record only material changes to the project source of truth. Do not duplicate or
 - Removed stale repository-visibility wording from active current-state documentation.
 - Reconciled `CONTRIBUTING.md` and the Pull Request template with the current roadmap/workflow authorities and the lean Codex-prompt governance rule.
 - Extended documentation consistency validation so obsolete compatibility roots and stale lifecycle references in operational templates cannot silently return.
+
+## 2026-08-25 — Quota-efficient fail-fast validation
+
+- Refined Codex execution to use targeted local checks and GitHub PR CI as the canonical full-suite pre-merge guard when available, without repeated success-log analysis or unjustified test expansion.
+- Added concise repository-derived progress reporting: objective `X/Y` only, with project/current work-package and active-task detail when a real denominator exists; no invented percentages or second tracker.
+- Allowed adjacent dependency-valid tasks to share one coherent PR only when no scientific, review, user-decision, external-machine, or protocol-freeze gate separates them.
+- Added fail-closed boundary rules for required configuration/contracts/schema/provenance/lifecycle state and explicit `unavailable`/`unsupported` handling for genuinely optional probes.
+- Hardened run finalization with a last-written `FINALIZED` marker, post-finalization mutation rejection, marker/manifest/checksum/run-index agreement, and publisher-side revalidation before Git staging so partial/corrupted/fabricated finalized-looking evidence cannot be auto-published.
+- Standardized the successful terminal run status on the existing lifecycle vocabulary `completed` before real thesis experiment runs begin, removing the conflicting implementation-only `complete` spelling.
+- Recorded automatic publication as a single-writer boundary and added that requirement to `T-500`, so future batch execution must serialize shared run-index/Git publication or fail closed while preserving finalized local bundles.
+- Reordered the single bounded Actions job so cheap checks fail before dependency installation/tests, added a hard timeout, and reduced successful unittest/checksum/JSON/pip/uv log noise while retaining specific failure diagnostics.
+- Kept full CI for PRs and for `main` pushes containing source/config/protocol/bibliography/tests/active documentation; pure generated `results/**`/`artifacts/**` pushes may skip the duplicate full suite.
+- Recorded temporary public thesis-repository visibility as an allowed CI/Actions operation at explicit user direction without treating it as a permanent public-release decision or waiving privacy/copyright/licensing audits.
+- Added DEC-030 and mechanical checks protecting the new progress/visibility invariants.

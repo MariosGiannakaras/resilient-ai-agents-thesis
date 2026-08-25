@@ -35,18 +35,44 @@ If model quota or the session ends unexpectedly, the next session inspects branc
 
 Intermediate branch commits are valid recovery checkpoints. The coherent PR still normally reaches `main` through one squash merge, so quota resilience does not require noisy permanent main-branch history.
 
+Adjacent dependency-valid tasks may share a branch/PR only when they are one coherent implementation unit and no scientific, review, user-decision, external-machine, or protocol-freeze gate separates them. Separate task IDs do not by themselves justify micro-PRs.
+
+## Progress reporting
+
+Codex keeps long executions understandable with concise milestone reporting rather than continuous narration.
+
+- Report after scope is established and after meaningful completed/validated checkpoints, important gates, or a material blocker; do not report every command or tiny edit.
+- Use `X/Y` only when the denominator is objectively defined. Completed/validated items count toward `X`; in-progress, failed, or merely attempted work does not.
+- The canonical task registry provides the durable high-level count: `Project: X/Y` may count checked versus total `T-*` entries in `TASKS.md`.
+- Also report the relevant current work package or major deliverable when useful, such as `WP5 Application: 2/4`, `Thesis: 3/6`, or `Presentation: 1/3`, using the corresponding canonical task entries rather than a second tracker.
+- Add an active-task fraction such as `T-510: 3/5` only when the task has a real finite substep set. If no stable denominator exists, report a concise textual state instead of inventing one.
+- Keep most updates to one progress line plus one sentence stating what just completed and what comes next. Recompute counts whenever task state changes.
+
 ## Testing and CI flow
 
-DEC-029 keeps validation proportional to actual risk and prevents test work from overtaking implementation.
+DEC-029 and DEC-030 keep validation proportional to actual risk while making failure detection early, explicit, and inexpensive.
 
 1. During implementation, Codex runs the smallest targeted test subset that validates the changed behavior.
 2. New tests are added only for task acceptance conditions, material scientific/reliability/security boundaries, or a concrete regression likely to recur.
 3. Tests use tiny deterministic fixtures, known-answer cases, contracts, or representative smoke/integration paths. Pilot and final experiment matrices are never used as CI tests.
 4. There is no arbitrary coverage target and no default mutation/fuzz/property/combinatorial/snapshot expansion.
-5. When the work is ready for review, run the normal full repository checks once. Rerun them only after a later change that could affect the result.
-6. Stop adding tests when the acceptance condition and material risks are covered; do not delay implementation for theoretical completeness.
+5. Before opening/updating a PR, Codex runs the documentation consistency validator and only the directly affected validators/targeted tests needed for review readiness.
+6. When GitHub Actions is available, PR CI is the canonical full-suite pre-merge runner. Codex does not run the full suite locally merely to duplicate it.
+7. On successful CI, record the conclusion and continue; do not tail, summarize, or repeatedly re-analyse successful logs. On failure, inspect only the failed step/log, reproduce narrowly when useful, fix the cause, and let CI rerun the complete repository checks.
+8. A local full-suite run is reserved for unavailable CI, changes to CI/test infrastructure where local reproduction is useful, or debugging a specific failure.
+9. Stop adding tests when the acceptance condition and material risks are covered; do not delay implementation for theoretical completeness.
 
-GitHub CI execution time is separate from model reasoning quota. The quota-sensitive waste to avoid is repeated test design, expansion, reruns, and analysis without a concrete risk or code change.
+The repository CI remains one bounded fail-fast job rather than a growing matrix. Cheap deterministic checks run before environment installation/tests where possible, superseded runs are cancelled, successful output is compact, and a timeout prevents a hung check from consuming unbounded Actions time. PRs always receive the complete repository validation. Pushes to `main` also receive it whenever source, config, protocol, bibliography, tests, or active documentation changes; a push that changes only generated `results/**` and/or `artifacts/**` may skip the duplicate full suite because the producing code was already validated and the publisher has its own fail-closed provenance safeguards.
+
+Temporary public repository visibility may be used at explicit user direction to obtain public-repository GitHub Actions. Visibility is an operational CI choice, not a release decision, and does not weaken secret/privacy/copyright/licensing or final-release audits.
+
+GitHub CI execution time is separate from model reasoning quota. The quota-sensitive waste to avoid is repeated test design, expansion, local/full-CI duplication, verbose success-log analysis, and reruns without a concrete risk or code change.
+
+## Fail-fast implementation behavior
+
+Required configuration, contracts, schemas, provenance, lifecycle preconditions, and scientific invariants are validated at clear boundaries before expensive work starts. Invalid or ambiguous required state fails closed with an explicit exception/error or non-zero result; it must never be converted into an empty/default value that looks successful.
+
+Broad exception swallowing and silent fallback are forbidden for required behavior. Optional probes may return an explicit `unavailable`/`unsupported` state only when the capability is genuinely optional, and downstream logic must not treat that state as affirmative evidence. Finalization is atomic/transactional where practical so partial output cannot masquerade as a valid finalized artifact. Validation is kept out of hot inner loops when one trusted boundary check is sufficient, preserving both correctness and runtime efficiency.
 
 ## Bibliography material flow
 

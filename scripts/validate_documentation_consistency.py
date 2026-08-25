@@ -74,6 +74,8 @@ RESOLVED_STALE_FRAGMENTS = (
     "repository sha-256 pending local calculation by codex",
     "repository sha-256 pending codex local verification",
     "END_TO_END_JOURNEY.md",
+    "this repository remains private",
+    "the repository remains private while it contains",
 )
 
 SESSION_START_CORE = (
@@ -152,6 +154,9 @@ def main() -> int:
             "Do not self-approve",
             "review/merge",
             "does **not** mean attempting the entire thesis in one session",
+            "Concise progress updates",
+            "Project: X/Y",
+            "In-progress or failed work never counts as complete",
         ):
             if required not in prompt:
                 errors.append(f"current Codex prompt missing required lean execution invariant: {required}")
@@ -257,10 +262,11 @@ def main() -> int:
             "REQ-UI-013",
             "REQ-UI-014",
             "REQ-UI-015",
+            "REQ-REPO-011",
             "REQ-TEST-009",
         ):
             if required not in requirements:
-                errors.append(f"CONFIRMED_REQUIREMENTS.md missing confirmed dashboard UX requirement: {required}")
+                errors.append(f"CONFIRMED_REQUIREMENTS.md missing confirmed dashboard/execution requirement: {required}")
 
     ui_arch_path = ROOT / "docs/architecture/UI_INFORMATION_ARCHITECTURE.md"
     if ui_arch_path.is_file():

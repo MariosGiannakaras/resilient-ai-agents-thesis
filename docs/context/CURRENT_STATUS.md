@@ -1,6 +1,6 @@
 # Current Project Status
 
-**Date:** 2026-08-21  
+**Date:** 2026-08-25  
 **Status:** Authoritative current-state summary
 
 Active repository files must agree with this state. Historical records may preserve earlier states only when explicitly marked historical. Documentation synchronization is governed by `docs/context/DOCUMENTATION_GOVERNANCE.md`.
@@ -46,7 +46,15 @@ The actual target-machine inventory is still required before compute-dependent d
 
 DEC-028 optimizes that prompt as a lean bootstrap rather than a duplicate policy manual. Every Codex session now starts by reading only `AGENTS.md`, `docs/context/TASKS.md`, and `docs/context/CURRENT_STATUS.md`, then reads only the task-specific active specifications/evidence required for the selected task. Broad context, roadmap, requirements, workflow, governance, historical records, and generated bibliography are not reread automatically unless the active task genuinely requires them.
 
-DEC-029 makes testing risk-based and proportional. Codex runs targeted tests while implementing, adds tests only for task acceptance conditions/material scientific or reliability risks/concrete regressions, uses tiny deterministic fixtures rather than experiment matrices, and runs the full repository checks when the work is ready for review instead of after every small edit. There is no arbitrary coverage target or unjustified mutation/fuzz/property/combinatorial/snapshot expansion.
+DEC-029 makes testing risk-based and proportional. Codex runs targeted tests while implementing, adds tests only for task acceptance conditions/material scientific or reliability risks/concrete regressions, and uses tiny deterministic fixtures rather than experiment matrices. There is no arbitrary coverage target or unjustified mutation/fuzz/property/combinatorial/snapshot expansion.
+
+DEC-030 makes the implementation/validation path quota-efficient and fail-fast without allowing false passes. When GitHub Actions is available, Codex uses targeted local validators/tests and treats PR CI as the canonical full-suite pre-merge guard instead of duplicating the full suite locally. Successful CI is recorded without repeated log analysis; detailed logs are opened only for failed/cancelled/ambiguous checks. Required configuration/contracts/schema/provenance/lifecycle conditions fail closed at clear boundaries before expensive work, optional unavailable capabilities remain explicit rather than looking successful, and finalization is atomic/transactional where practical. Adjacent dependency-valid tasks may share a coherent branch/PR only when no scientific/review/user/external-machine/protocol gate separates them.
+
+Codex also reports concise progress at meaningful completed/validated checkpoints. `X/Y` is used only when a real denominator exists: project/work-package/deliverable counts come from the canonical `TASKS.md`, and an active-task fraction is added only when that task has a genuine finite substep set. In-progress or failed work never counts as complete, and no second progress tracker is introduced.
+
+The repository CI remains a single bounded job. Superseded runs are cancelled, a hard timeout prevents runaway use, cheap deterministic preflight checks execute before dependency installation/tests where practical, and successful test/checksum/JSON output is compact while failures retain specific diagnostics. PRs receive complete validation. Pushes to `main` also receive complete validation whenever source/config/protocol/bibliography/tests/active documentation change; pure generated `results/**`/`artifacts/**` pushes may skip the duplicate full suite.
+
+Repository visibility is operational rather than architectural. At explicit user direction the thesis repository may be temporarily public to use public-repository GitHub Actions; that does not constitute approval for permanent public release or waive privacy, secret, copyright, licensing, provenance, or final-release audits. `ThesisBibliography` remains the canonical bibliography repository and is currently private.
 
 `docs/context/TASKS.md` remains the canonical concrete task checklist and resume ledger. Codex uses available session/conversation memory together with durable Git/repository evidence. If a session ends because of model quota or another interruption, the next session resumes from any `IN_PROGRESS` task, branch/commits, working-tree diff, PR state, tests, and the registry rather than restarting from chat memory.
 

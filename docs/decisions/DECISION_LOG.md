@@ -151,8 +151,14 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 
 ## DEC-029 — Risk-based proportional testing
 - **Date:** 2026-08-04
-- **Status:** Accepted.
+- **Status:** Accepted; refined by DEC-030.
 - **Decision:** Testing protects scientific validity, task acceptance conditions, critical reliability/security boundaries, and concrete regressions, but must not become an independent scope-expansion project. Codex uses targeted tests during implementation, tiny deterministic fixtures/smoke runs in CI, and the full repository checks at review readiness rather than after every small edit. There is no arbitrary coverage-percentage target and no mutation/fuzz/property/combinatorial/snapshot expansion without a concrete task-specific risk. Stop adding tests once material risks and acceptance conditions are covered; never run pilot/final experiment matrices as CI tests.
+
+## DEC-030 — Quota-efficient fail-fast validation
+- **Date:** 2026-08-25
+- **Status:** Accepted.
+- **File:** `docs/decisions/DEC-030_QUOTA_EFFICIENT_FAIL_FAST_VALIDATION.md`.
+- **Decision:** Use targeted local validation and GitHub PR CI as the canonical full-suite pre-merge guard when available; do not duplicate full-suite runs or analyse successful logs without cause. Keep CI bounded, quiet on success and explicit on failure. Validate required inputs/contracts/schema/provenance at boundaries before expensive work, fail closed on invalid/ambiguous required state, keep optional unavailability explicit, prefer atomic finalization, and allow adjacent dependency-valid tasks to share a coherent PR when no real gate separates them.
 
 ## Pending decisions
 
@@ -170,4 +176,4 @@ Future entries are still required for:
 - final citation style/Word template/submission specifics near writing/delivery;
 - exact current defense duration, required slide/file rules, and administrative presentation/submission procedure near delivery.
 
-The general Python/core/storage/result-publication/dashboard architectural baseline, task-governance mechanism, lean Codex bootstrap, proportional testing discipline, end-to-end handoff model, and self-explanatory UI/onboarding baseline are **not** pending decisions unless later requirements justify explicit amendments.
+The general Python/core/storage/result-publication/dashboard architectural baseline, task-governance mechanism, lean Codex bootstrap, proportional testing discipline, quota-efficient fail-fast validation, end-to-end handoff model, and self-explanatory UI/onboarding baseline are **not** pending decisions unless later requirements justify explicit amendments.
