@@ -24,7 +24,7 @@ results/runs/<run-id>/
 
 ## Automatic commit and push
 
-Before any Git staging, publication requires the finalization sentinel and revalidates the run ID, final status, payload metadata, file sizes, SHA-256 values, checksum scope, and source provenance. A partial or corrupted bundle therefore fails closed rather than being committed.
+Before any Git staging, publication requires the finalization sentinel and revalidates the marker contents against manifest schema/status, run ID/final status, payload metadata, file sizes, SHA-256 values, checksum scope, source provenance, and the matching `run-index` record. A missing, malformed, partial, corrupted, duplicated, or internally inconsistent finalized-looking bundle therefore fails closed rather than being committed.
 
 Publication stages only `results/runs/<run-id>/...` and `results/run-index.jsonl`. It also refuses to publish if the source code changed during the run, the run did not begin from a verified clean tracked state, unrelated tracked files would enter the commit, Git LFS is required but unavailable, or the remote is no longer fast-forward compatible. In every such case the experiment files remain on disk.
 
