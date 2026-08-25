@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any, Mapping
 
 SCHEMA_VERSION = 1
+FINALIZATION_MARKER = "FINALIZED"
 
 
 def _utc_now() -> str:
@@ -30,14 +31,18 @@ def _jsonable(value: Any) -> Any:
     return value
 
 
-def _write_json(path: Path, payload: Any) -> None:
+def _write_text_atomic(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_suffix(path.suffix + ".tmp")
-    temporary.write_text(
-        json.dumps(_jsonable(payload), ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
+    temporary = path.with_name(path.name + ".tmp")
+    temporary.write_text(text, encoding="utf-8")
     temporary.replace(path)
+
+
+def _write_json(path: Path, payload: Any) -> None:
+    _write_text_atomic(
+        path,
+        json.dumps(_jsonable(payload), ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+    )
 
 
 def _git(repo_root: Path, *args: str) -> str | None:
@@ -138,10 +143,16 @@ class RunBundle:
         _write_json(self.run_dir / "system-capability.json", capture_system_inventory(self.repo_root))
         _write_json(self.run_dir / "manifest.json", self.manifest)
 
+    def _require_running(self) -> None:
+        if self.manifest.get("status") != "running":
+            raise RuntimeError("run bundle is already finalized and cannot be mutated")
+
     def append_event(self, event: Mapping[str, Any]) -> None:
+        self._require_running()
         self._append_jsonl("events.jsonl", event)
 
     def append_trace(self, record: Mapping[str, Any]) -> None:
+        self._require_running()
         self._append_jsonl("trace.jsonl", record)
 
     def _append_jsonl(self, filename: str, payload: Mapping[str, Any]) -> None:
@@ -151,8 +162,10 @@ class RunBundle:
             handle.write("\n")
 
     def finalize(self, *, status: str, summary: Mapping[str, Any]) -> Path:
+        self._require_running()
         if status not in {"complete", "failed", "cancelled", "invalid", "excluded"}:
             raise ValueError("unsupported final run status")
+
         _write_json(self.run_dir / "summary.json", summary)
         self.manifest["status"] = status
         self.manifest["finished_at_utc"] = _utc_now()
@@ -160,7 +173,8 @@ class RunBundle:
         payload_files = [
             path
             for path in self.run_dir.iterdir()
-            if path.is_file() and path.name not in {"manifest.json", "checksums.sha256"}
+            if path.is_file()
+            and path.name not in {"manifest.json", "checksums.sha256", FINALIZATION_MARKER}
         ]
         self.manifest["files"] = {
             path.name: {"sha256": sha256_file(path), "size_bytes": path.stat().st_size}
@@ -170,12 +184,24 @@ class RunBundle:
 
         checksum_lines = []
         for path in sorted(self.run_dir.iterdir()):
-            if path.is_file() and path.name != "checksums.sha256":
+            if path.is_file() and path.name not in {"checksums.sha256", FINALIZATION_MARKER}:
                 checksum_lines.append(f"{sha256_file(path)}  {path.name}")
-        (self.run_dir / "checksums.sha256").write_text(
-            "\n".join(checksum_lines) + "\n", encoding="utf-8"
+        _write_text_atomic(
+            self.run_dir / "checksums.sha256",
+            "\n".join(checksum_lines) + "\n",
         )
+
+        # The index is a rebuildable cache, but a failed update is still explicit:
+        # do not advertise the bundle as finalized until every planned finalization
+        # side effect has succeeded.
         self._update_run_index()
+
+        # This marker is deliberately written last. Consumers/publishers require
+        # it, so a partially failed finalization cannot masquerade as complete.
+        _write_text_atomic(
+            self.run_dir / FINALIZATION_MARKER,
+            f"schema_version={SCHEMA_VERSION}\nstatus={status}\n",
+        )
         return self.run_dir
 
     def _update_run_index(self) -> None:
@@ -196,6 +222,4 @@ class RunBundle:
         without_same_run = [
             line for line in existing if json.loads(line).get("run_id") != self.run_id
         ]
-        temporary = index_path.with_suffix(".jsonl.tmp")
-        temporary.write_text("\n".join([*without_same_run, encoded]) + "\n", encoding="utf-8")
-        temporary.replace(index_path)
+        _write_text_atomic(index_path, "\n".join([*without_same_run, encoded]) + "\n")
