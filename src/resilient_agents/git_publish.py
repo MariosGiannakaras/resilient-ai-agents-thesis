@@ -57,6 +57,67 @@ def _read_manifest(path: Path) -> dict[str, Any]:
     return value
 
 
+def _read_finalization_marker(path: Path) -> dict[str, str]:
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except (OSError, UnicodeError) as exc:
+        raise PublishError("cannot read run finalization marker") from exc
+
+    fields: dict[str, str] = {}
+    for number, line in enumerate(lines, start=1):
+        if not line or "=" not in line:
+            raise PublishError(f"malformed run finalization marker line {number}")
+        key, value = line.split("=", 1)
+        if key not in {"schema_version", "status"} or key in fields:
+            raise PublishError("run finalization marker contains invalid or duplicate fields")
+        fields[key] = value
+    return fields
+
+
+def _verify_run_index(index_path: Path, manifest: dict[str, Any]) -> None:
+    if not index_path.is_file():
+        raise PublishError("finalized run bundle has no run-index entry")
+    try:
+        lines = index_path.read_text(encoding="utf-8").splitlines()
+    except (OSError, UnicodeError) as exc:
+        raise PublishError("cannot read run index") from exc
+
+    matches: list[dict[str, Any]] = []
+    for number, line in enumerate(lines, start=1):
+        if not line:
+            continue
+        try:
+            record = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise PublishError(f"invalid run-index JSON on line {number}") from exc
+        if not isinstance(record, dict):
+            raise PublishError(f"run-index line {number} must be a JSON object")
+        if record.get("run_id") == manifest.get("run_id"):
+            matches.append(record)
+
+    if len(matches) != 1:
+        raise PublishError("finalized run must have exactly one matching run-index entry")
+
+    source = manifest.get("source")
+    if not isinstance(source, dict):
+        raise PublishError("run manifest source provenance must be an object")
+    expected = {
+        "run_id": manifest.get("run_id"),
+        "status": manifest.get("status"),
+        "protocol_version": manifest.get("protocol_version"),
+        "stage": manifest.get("stage"),
+        "started_at_utc": manifest.get("started_at_utc"),
+        "finished_at_utc": manifest.get("finished_at_utc"),
+        "source_git_commit": source.get("git_commit"),
+    }
+    record = matches[0]
+    mismatched = [key for key, value in expected.items() if record.get(key) != value]
+    if mismatched:
+        raise PublishError(
+            "run-index entry does not match finalized manifest: " + ", ".join(mismatched)
+        )
+
+
 def _verify_finalized_bundle(run_dir: Path, run_id: str) -> dict[str, Any]:
     marker_path = run_dir / FINALIZATION_MARKER
     manifest_path = run_dir / "manifest.json"
@@ -75,6 +136,14 @@ def _verify_finalized_bundle(run_dir: Path, run_id: str) -> dict[str, Any]:
     status = str(manifest.get("status", ""))
     if status not in FINAL_STATUSES:
         raise PublishError("run bundle must be finalized before publication")
+
+    marker = _read_finalization_marker(marker_path)
+    expected_marker = {
+        "schema_version": str(manifest.get("schema_version")),
+        "status": status,
+    }
+    if marker != expected_marker:
+        raise PublishError("run finalization marker does not match finalized manifest")
 
     files_metadata = manifest.get("files")
     if not isinstance(files_metadata, dict):
@@ -145,10 +214,10 @@ def publish_finalized_run(
     """Commit and push exactly one verified finalized whole-experiment bundle.
 
     A run may contain many seeds/episodes. Publication happens only after the
-    bundle has a finalization marker and its manifest/checksums revalidate, so
-    partial or corrupted evidence fails before Git staging. Unrelated tracked
-    changes, changed source code, non-fast-forward remotes, and missing Git LFS
-    are also safe publication failures; the run files remain on disk.
+    completion marker, manifest, checksums, and run-index entry agree, so partial
+    or corrupted evidence fails before Git staging. Unrelated tracked changes,
+    changed source code, non-fast-forward remotes, and missing Git LFS are also
+    safe publication failures; the run files remain on disk.
     """
 
     repo_root = repo_root.resolve()
@@ -163,6 +232,8 @@ def publish_finalized_run(
     source_commit = source.get("git_commit")
     if not source_commit:
         raise PublishError("run manifest has no source Git commit")
+    _verify_run_index(index_path, manifest)
+
     current_commit = _run(repo_root, ["rev-parse", "HEAD"])
     if current_commit != source_commit:
         raise PublishError("repository HEAD changed after the run started; refusing mixed provenance")
