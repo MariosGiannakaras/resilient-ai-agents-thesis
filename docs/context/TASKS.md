@@ -31,12 +31,12 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 - **Current work package:** WP1 — Target-machine baseline provenance reconciliation
 - **Current task:** `T-102`
 - **State:** `IN_PROGRESS`
-- **Active branch / PR:** `fix/target-baseline-merge-provenance`; PR not yet opened.
+- **Active branch / PR:** `fix/target-baseline-merge-provenance`; PR #57.
 - **Last validated point:** objective post-merge review confirmed PR #55 and CI succeeded but found that the accepted snapshot cited squash-discarded feature checkpoint `6c760cd`, which is not an ancestor of merged `main`. The snapshot was regenerated from clean merged-main commit `c35babd` with unchanged capability conclusions.
 - **Tests already run:** PR #55 `sanity` passed before merge; refreshed snapshot source ancestry, clean tracked/untracked-input state, and matching SHA-256 were verified; documentation consistency passed with the new mainline-ancestry invariant; focused inventory tests passed (7 tests).
 - **Relevant files changed:** accepted JSON/report, inventory acceptance procedure, documentation validator, `TASKS.md`, and `CURRENT_STATUS.md`.
-- **Uncommitted work:** validated mainline-provenance snapshot plus validator/documentation/task reconciliation awaiting checkpoint.
-- **Exact next action:** checkpoint, objectively review, publish, and merge `T-102`, then start `T-200`.
+- **Uncommitted work:** PR-number reconciliation only.
+- **Exact next action:** validate and push the PR-number reconciliation, confirm PR #57 CI and mergeability, perform the final objective diff review, squash-merge, then start `T-200`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
