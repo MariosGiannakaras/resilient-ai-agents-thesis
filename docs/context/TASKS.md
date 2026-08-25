@@ -28,15 +28,15 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 ## Resume state
 
-- **Current work package:** WP1 — Target-machine baseline provenance reconciliation
-- **Current task:** `T-102` complete on the review branch
-- **State:** `READY TO MERGE`
-- **Active branch / PR:** `fix/target-baseline-merge-provenance`; PR #57.
-- **Last validated point:** objective post-merge review confirmed PR #55 and CI succeeded but found that the accepted snapshot cited squash-discarded feature checkpoint `6c760cd`, which is not an ancestor of merged `main`. The snapshot was regenerated from clean merged-main commit `c35babd` with unchanged capability conclusions.
-- **Tests already run:** refreshed snapshot source ancestry, clean tracked/untracked-input state, and matching SHA-256 were verified; documentation consistency passed with the new mainline-ancestry invariant; focused inventory tests passed (7 tests); PR #57 canonical `sanity` CI passed in 31 seconds.
-- **Relevant files changed:** accepted JSON/report, inventory acceptance procedure, documentation validator, `TASKS.md`, and `CURRENT_STATUS.md`.
-- **Uncommitted work:** task/current-status completion reconciliation only.
-- **Exact next action:** validate and push this completion reconciliation, perform the final objective diff review, squash-merge PR #57, then start `T-200` before the also-ready `T-210`.
+- **Current work package:** WP2 — Research framing
+- **Current task:** `T-200` complete on the review branch
+- **State:** `UNDER REVIEW`
+- **Active branch / PR:** `research/rq-hypothesis-framing`; PR #58.
+- **Last validated point:** the bounded main RQ, two secondary questions, two falsifiable construct-level hypothesis candidates, source/limitation map, and downstream feasibility/freeze gates are documented without freezing exact methods, parameters, metrics, or protocol choices. The accepted v3 bibliography state and promoted robust-MDP evidence boundary are reconciled across active research/context files.
+- **Tests already run:** documentation consistency passed; targeted bibliography-use validation found 27 citation-ready references; normal full repository checks passed (56 tests, 1 skipped), including locked environment, compile, bibliography integrity/use, and both checksum manifests.
+- **Relevant files changed:** active research brief/evidence/model workspaces, affected context/status/changelog/task authorities, and the documentation validator's citation-ready-anchor check.
+- **Uncommitted work:** PR-number/status reconciliation only.
+- **Exact next action:** push this PR-state checkpoint, require canonical CI plus objective diff review, squash-merge PR #58, then start ready task `T-210`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -99,7 +99,7 @@ Codex must assume a session can stop unexpectedly.
 
 ## WP2 — Research framing and GridWorld
 
-- [ ] READY `T-200` — Complete source-traceable research-question and hypothesis framing from citation-ready evidence, while keeping feasibility-dependent choices provisional.
+- [x] `T-200` — Complete source-traceable research-question and hypothesis framing from citation-ready evidence, while keeping feasibility-dependent choices provisional.
   - Depends on: `T-102` for durable feasibility evidence; bibliography baseline already complete.
   - Acceptance: bounded main RQ, minimal secondary RQs/hypotheses, evidence mapping, limitations, and open feasibility gates are documented.
 - [ ] READY `T-210` — Complete bounded GridWorld prototype comparison (minimal custom implementation versus justified reuse/adaptation candidates).

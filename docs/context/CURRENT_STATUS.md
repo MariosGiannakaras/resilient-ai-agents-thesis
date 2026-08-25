@@ -1,6 +1,6 @@
 # Current Project Status
 
-**Date:** 2026-08-25
+**Date:** 2026-08-26
 **Status:** Authoritative current-state summary
 
 This file is intentionally short. Detailed policy, history, requirements, and design rationale live in the source-of-truth documents routed by `AGENTS.md`; do not grow this file into a second project manual.
@@ -9,9 +9,11 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 
 - Canonical concrete ledger: `docs/context/TASKS.md`.
 - `T-100` and `T-101` were accepted and squash-merged in PR #55 (`45e04cd`).
-- `T-102` is complete on PR #57: the accepted snapshot now cites durable merged-main source provenance and CI enforces that invariant.
-- Current state: final objective diff review and squash merge of PR #57.
-- Exact next action: merge PR #57, then start `T-200`; `T-210` is also ready but follows in canonical task order.
+- `T-102` was objectively reviewed, CI-validated, and squash-merged in PR #57 (`48f7124`); the accepted snapshot now cites durable merged-main source provenance.
+- Current work package: **WP2 — Research framing**.
+- `T-200` is complete on PR #58 (`research/rq-hypothesis-framing`): the provisional bounded main RQ, two secondary questions, two falsifiable construct-level hypothesis candidates, evidence boundaries, limitations, and downstream feasibility/freeze gates are documented and locally validated.
+- Current state: canonical CI and objective diff review before squash merge of PR #58.
+- Exact next action after merge: start ready task `T-210`, the bounded GridWorld prototype comparison.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline
@@ -56,7 +58,7 @@ The application is complete only after the intended real configure/run/monitor/h
 
 ## Still intentionally unfrozen
 
-Final RQ/hypotheses, GridWorld scientific parameters, model/agent set, uncertainty severities, seeds/repetitions, budgets, hyperparameters, recovery threshold, experiment matrix, and statistical plan remain evidence/pilot dependent.
+The T-200 construct-level RQ/hypothesis framing is complete but remains explicitly provisional. Final operational RQ/hypotheses, GridWorld scientific parameters, model/agent set, uncertainty severities, seeds/repetitions, budgets, hyperparameters, recovery threshold, experiment matrix, and statistical plan remain evidence/pilot dependent.
 
 Supervisor identity, future corrections, deadlines, example theses, final Word formatting, and exact defense/submission rules are later-stage inputs and do not block current implementation. Current official guidance is rechecked at the explicit writing/defense tasks.
 
