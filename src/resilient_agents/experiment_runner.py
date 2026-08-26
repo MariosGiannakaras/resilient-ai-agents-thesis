@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import math
+import time
 import traceback
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -36,6 +37,10 @@ from .session import ExperimentSession
 
 HEADLESS_RUNNER_SCHEMA_VERSION = 1
 RUNNER_STATE_FILENAME = "runner-state.json"
+
+
+class ExperimentTimeoutError(RuntimeError):
+    """Raised when a predeclared child wall-clock deadline is exceeded."""
 
 
 def _probability(value: Any, *, field: str, allow_one: bool = False) -> float:
@@ -96,6 +101,7 @@ class HeadlessExperimentRequest:
     recovery_stability_episodes: int
     retention_policy: RetentionPolicy
     auto_publish: bool
+    execution_timeout_seconds: float | None = None
 
     @classmethod
     def from_dict(cls, payload: Mapping[str, Any]) -> "HeadlessExperimentRequest":
@@ -121,6 +127,7 @@ class HeadlessExperimentRequest:
             "recovery_stability_episodes",
             "retention_policy",
             "auto_publish",
+            "execution_timeout_seconds",
         }
         if set(payload) != expected:
             raise ValueError(
@@ -179,6 +186,13 @@ class HeadlessExperimentRequest:
             raise ValueError("retention_policy must be RetentionPolicy")
         if not isinstance(self.auto_publish, bool):
             raise ValueError("auto_publish must be boolean")
+        if self.execution_timeout_seconds is not None and (
+            not isinstance(self.execution_timeout_seconds, (int, float))
+            or isinstance(self.execution_timeout_seconds, bool)
+            or not math.isfinite(float(self.execution_timeout_seconds))
+            or self.execution_timeout_seconds <= 0.0
+        ):
+            raise ValueError("execution_timeout_seconds must be finite and positive")
         object.__setattr__(self, "root_seeds", seeds)
         object.__setattr__(self, "agent_ids", agents)
 
@@ -203,6 +217,7 @@ class HeadlessExperimentRequest:
             "recovery_stability_episodes": self.recovery_stability_episodes,
             "retention_policy": self.retention_policy.value,
             "auto_publish": self.auto_publish,
+            "execution_timeout_seconds": self.execution_timeout_seconds,
         }
 
 
@@ -232,6 +247,7 @@ class HeadlessExperimentRunner:
         self.protocol = protocol
         self.request = request
         self._payload = protocol.to_dict()
+        self._deadline_monotonic: float | None = None
         self._validate_request()
 
     def _validate_request(self) -> None:
@@ -311,6 +327,15 @@ class HeadlessExperimentRunner:
                 raise ValueError("pilot experiments must execute the complete agent set")
             if self.request.retention_policy is not RetentionPolicy.EVENTS:
                 raise ValueError("pilot-v0.1 requires events plus persisted episode curves")
+        if self.request.stage in {ProtocolStage.TUNING, ProtocolStage.PILOT}:
+            timeout = self.request.execution_timeout_seconds
+            timeout_rule = self._payload["resource_policy"]["child_timeout_rule"]
+            if timeout is None or not (
+                timeout_rule["minimum_seconds"]
+                <= timeout
+                <= timeout_rule["maximum_seconds"]
+            ):
+                raise ValueError("tuning/pilot child timeout is outside pilot-v0.1")
 
     def _resolved_config(self) -> dict[str, Any]:
         return {
@@ -381,6 +406,11 @@ class HeadlessExperimentRunner:
         return state
 
     def run(self) -> HeadlessRunResult:
+        self._deadline_monotonic = (
+            None
+            if self.request.execution_timeout_seconds is None
+            else time.monotonic() + self.request.execution_timeout_seconds
+        )
         bundle, resumed = self._new_or_resumed_bundle()
         session = ExperimentSession(bundle)
         state = self._load_state(bundle, resumed=resumed)
@@ -412,6 +442,7 @@ class HeadlessExperimentRunner:
                 raise RuntimeError(message)
         try:
             for root_seed in self.request.root_seeds:
+                self._check_deadline()
                 if root_seed in state["completed_root_seeds"]:
                     continue
                 bundle.append_event(
@@ -445,7 +476,7 @@ class HeadlessExperimentRunner:
                 session.finalize(
                     status="failed",
                     summary={"failure": failure, "runner_state": state},
-                    auto_publish=False,
+                    auto_publish=self.request.auto_publish,
                 )
             raise
         summary = {
@@ -465,6 +496,15 @@ class HeadlessExperimentRunner:
             run_dir=run_dir,
             publication_commit=None if publication is None else publication.commit,
         )
+
+    def _check_deadline(self) -> None:
+        if (
+            self._deadline_monotonic is not None
+            and time.monotonic() >= self._deadline_monotonic
+        ):
+            raise ExperimentTimeoutError(
+                f"experiment exceeded {self.request.execution_timeout_seconds} seconds"
+            )
 
     def _run_root(self, *, bundle: RunBundle, root_seed: int) -> dict[str, Any]:
         checkpoint, training_curves = self._train_checkpoint(bundle=bundle, root_seed=root_seed)
@@ -502,6 +542,7 @@ class HeadlessExperimentRunner:
             scenario = self._scenario(layout_id=layout_id, condition_id="nominal")
             returns: list[float] = []
             for episode in range(self.request.training_episodes_per_layout):
+                self._check_deadline()
                 agent = self._q_agent(
                     agent_id="nominal-trainer",
                     learning_enabled=True,
@@ -593,6 +634,7 @@ class HeadlessExperimentRunner:
         current_checkpoint = dict(q_checkpoint)
         robust_agent = self._robust_agent() if agent_id == "r0" else None
         for episode in range(total):
+            self._check_deadline()
             after_change = episode >= self.request.pre_change_episodes
             condition_id = (
                 self.request.condition_id
@@ -674,6 +716,7 @@ class HeadlessExperimentRunner:
         outcome = "invalid"
         try:
             while True:
+                self._check_deadline()
                 action_name = agent.act(observation)
                 if action_name not in ACTION_NAMES:
                     raise ValueError("agent returned an unknown action")

@@ -33,6 +33,7 @@ from .contracts import (
 )
 from .experiment_runner import (
     HEADLESS_RUNNER_SCHEMA_VERSION,
+    ExperimentTimeoutError,
     HeadlessExperimentRequest,
     HeadlessExperimentRunner,
     HeadlessRunResult,
@@ -67,6 +68,7 @@ __all__ = [
     "ChangeEvent",
     "DerivedRunRecords",
     "ExperimentSpec",
+    "ExperimentTimeoutError",
     "GridAction",
     "GridWorldEnvironment",
     "GridWorldGymEnv",
