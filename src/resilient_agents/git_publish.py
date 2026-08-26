@@ -1,13 +1,15 @@
 """Safe one-commit/one-push publication for finalized experiment bundles."""
+
 from __future__ import annotations
 
 import hashlib
 import json
 import re
 import subprocess
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any
 
 FINAL_STATUSES = {"completed", "failed", "cancelled", "invalid"}
 FINALIZATION_MARKER = "FINALIZED"
@@ -185,6 +187,19 @@ def _verify_finalized_bundle(run_dir: Path, run_id: str) -> dict[str, Any]:
         if _sha256_file(path) != recorded[name]:
             raise PublishError(f"run checksum mismatch: {name}")
 
+    return manifest
+
+
+def validate_finalized_run(*, repo_root: Path, run_id: str) -> dict[str, Any]:
+    """Validate one finalized bundle and its unique run-index record read-only."""
+
+    if not isinstance(repo_root, Path):
+        raise TypeError("repo_root must be pathlib.Path")
+    if not isinstance(run_id, str) or not run_id or Path(run_id).name != run_id:
+        raise ValueError("run_id must be a safe non-empty name")
+    root = repo_root.resolve()
+    manifest = _verify_finalized_bundle(root / "results" / "runs" / run_id, run_id)
+    _verify_run_index(root / "results" / "run-index.jsonl", manifest)
     return manifest
 
 
