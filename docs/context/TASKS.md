@@ -28,13 +28,13 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 ## Resume state
 
-- **Current work package:** WP4 — Pilot protocol and headless experiment system
-- **Current task:** `T-412`
+- **Current work package:** WP5 — Experiment management and dashboard
+- **Current task:** `T-510`
 - **State:** `IN_PROGRESS`
 - **Active branch / PR:** none
-- **Last validated point:** T-411 completed; freshness review confirms no new evidence requires protocol change.
-- **Uncommitted work:** Auditing and repairing `protocol-v1.0.json`.
-- **Exact next action:** Repair protocol-v1.0.json and statistical plan to objectively freeze the design.
+- **Last validated point:** T-500 completed; headless experiment registry and batch execution are validated.
+- **Uncommitted work:** Auditing and repairing Streamlit baseline for T-510.
+- **Exact next action:** Repair Streamlit UI to correctly launch `CampaignManager` and implement `run_app.bat`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -147,23 +147,19 @@ Codex must assume a session can stop unexpectedly.
   - Acceptance: stored run bundles deterministically produce validated summaries/diagnostics through version-controlled code.
 - [x] `T-410` — Execute pilots and record runtime, variance, failures, recovery/metric behavior, storage volume, and agent-specific issues.
   - Depends on: `T-401`, `T-402`.
-- [x] `T-400` — Establish `src/resilient_agents/contracts.py` schema for strict isolation between agents, gridworld scenarios, environments, evaluation logic, and metrics.
-- [x] `T-401` — Establish `resilient_agents.gridworld` and deterministic unannounced disruption implementations.
-- [x] `T-402` — Establish nominal, continual tabular Q-learning, and robust state-action value iteration baseline agents.
-- [x] `T-410` — Execute the diagnostic `pilot-v0.2` campaign to validate pipeline safety, verify environment/model isolation, and measure variance for required final-protocol constraints.
 - [x] `T-411` — Conduct a literature freshness review in canonical `ThesisBibliography` for evidence material to the protocol freeze.
   - Depends on: `T-410`.
   - Acceptance: Canonical bibliography workflow is executed; any required citation-ready synchronization is complete; objective evidence supports the decision to freeze or amend the protocol.
-- [/] IN_PROGRESS `T-412` — Freeze the final protocol (`protocol-v1.0.json`), statistical analysis plan, and acceptance criteria based on validated pilot bounds and freshness evidence.
+- [x] `T-412` — Freeze the final protocol (`protocol-v1.0.json`), statistical analysis plan, and acceptance criteria based on validated pilot bounds and freshness evidence.
   - Depends on: `T-411`.
   - Acceptance: RQs, machine-readable protocol, and human-readable analysis plan are objectively frozen and mutually consistent; R0 decision is audited; partitions/seeds/budgets/severities/metrics are finalized and backed by evidence.
 
 ## WP5 — Experiment management and dashboard
 
-- [ ] BLOCKED `T-500` — Implement only the pilot-proven experiment-management features needed for final work: truthful lifecycle state, history/registry, batch execution, interruption/recovery where safe, and current resource snapshot.
+- [x] `T-500` — Implement only the pilot-proven experiment-management features needed for final work: truthful lifecycle state, history/registry, batch execution, interruption/recovery where safe, and current resource snapshot.
   - Depends on: `T-412`.
   - Acceptance: features use filesystem run bundles as source of truth; any index/database is rebuildable with strict integrity semantics; batch/concurrent execution serializes shared `run-index` and Git publication through a single-writer boundary; unsafe publication fails closed; unittest CI passes.
-- [ ] BLOCKED `T-510` — Implement the bounded local Streamlit dashboard as a thin layer over the same validated core.
+- [/] IN_PROGRESS `T-510` — Implement the bounded local Streamlit dashboard as a thin layer over the same validated core.
   - Depends on: `T-500`.
   - Acceptance: New Experiment actually launches validated core; Runs, Compare, Artifacts operate on real core data with no duplicated logic; root `run_app.bat` implemented; follows `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`.
 - [ ] BLOCKED `T-512` — Complete self-explanatory UX polish and lightweight onboarding after the final dashboard structure is stable.

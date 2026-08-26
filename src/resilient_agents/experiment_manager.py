@@ -115,6 +115,7 @@ class CampaignManager:
         Executes a batch of headless run requests.
         Ensures execution and publication uses single-writer locking to prevent race conditions.
         """
+        import tempfile
         runner_script = self.repo_root / "scripts" / "run_headless_experiment.py"
         
         for req in requests:
@@ -125,18 +126,25 @@ class CampaignManager:
                 continue
             
             with acquire_single_writer_lock(self.repo_root):
+                with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+                    json.dump(req, f)
+                    req_path = f.name
+                
                 cmd = [
                     sys.executable,
                     str(runner_script),
                     "--repo-root", str(self.repo_root),
                     "--protocol", str(protocol_path),
-                    "--publish"
+                    "--request", req_path
                 ]
-                req_json = json.dumps(req)
                 
                 logger.info("Launching run %s", run_id)
                 try:
-                    subprocess.run(cmd, input=req_json, encoding="utf-8", check=True)
+                    subprocess.run(cmd, check=True)
                 except subprocess.CalledProcessError as e:
                     logger.error("Run %s failed with code %d", run_id, e.returncode)
                     raise
+                finally:
+                    import os
+                    if os.path.exists(req_path):
+                        os.unlink(req_path)
