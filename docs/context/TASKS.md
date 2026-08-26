@@ -29,14 +29,14 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP3 — Metrics and agent/model selection
-- **Current task:** `T-310`
-- **State:** `READY` after `T-300`/`T-301` review/merge synchronization
-- **Active branch / PR:** `research/resilience-metrics`; PR not yet opened.
-- **Last validated point:** `T-212`/`T-213` passed canonical CI and squash-merged in PR #62 (`e7352d5`). Operational metric schema v1 now uses aligned higher-is-better observed/reference curves, explicit windows/tolerance/stability, signed degradation/terminal gaps, cumulative deficit, and distinct no-degradation/recovered/non-recovered states.
-- **Tests already run:** six deterministic metric known-answer/fail-closed tests plus 14 directly affected research-architecture tests pass on native Windows.
-- **Relevant files changed:** metric implementation/status aggregation, dedicated known-answer tests, operational metric authority/evidence mapping, decision/context/task reconciliation.
-- **Uncommitted work:** complete local `T-300`/`T-301` coherent package.
-- **Exact next action:** run targeted compile/documentation/lock/diff validation, objectively review and checkpoint/push the package, open its PR, complete canonical CI/review/merge, synchronize main, then start `T-310`.
+- **Current task:** `T-312`
+- **State:** `READY` after `T-310`/`T-311` review/merge synchronization
+- **Active branch / PR:** `research/agent-role-selection`; PR not yet opened.
+- **Last validated point:** `T-300`/`T-301` passed canonical CI and squash-merged in PR #63 (`25f67bb`). The bounded implementation/pilot agent set is F0 frozen and C0 continual regimes of one common tabular Q-learning implementation plus R0 frozen finite rectangular robust value iteration.
+- **Tests already run:** documentation consistency, bibliography-usage validation (40 references: 38 citation-ready and 2 research-material), and diff whitespace validation pass; all decision-driving citations for this scope are in the accepted citation-ready layer.
+- **Relevant files changed:** exact agent-role/evidence/fairness/exclusion matrix, DEC-034 and robust citation sufficiency, research/context/task reconciliation.
+- **Uncommitted work:** completed local `T-310`/`T-311` research selection package.
+- **Exact next action:** checkpoint/push, open the `T-310`/`T-311` PR, complete canonical CI/review/merge, synchronize main, then implement the selected methods under `T-312`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -125,14 +125,14 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-301` — Validate all selected metrics against synthetic known-answer trajectories.
   - Depends on: `T-300`.
   - Acceptance: hand-checkable fixtures verify values and non-recovery is never converted into artificial horizon recovery.
-- [ ] READY `T-310` — Complete source-traceable comparison of scientifically distinct agent/model roles.
+- [x] `T-310` — Complete source-traceable comparison of scientifically distinct agent/model roles.
   - Depends on: `T-100`, `T-200`, `T-212`.
   - Acceptance: inclusion/exclusion matrix covers nominal baseline, continual/adaptive roles, robustness role, and any optional detector/reset decomposition only when scientifically distinct.
-- [ ] BLOCKED `T-311` — Resolve formal citation support for any robust-MDP comparator retained for final use.
+- [x] `T-311` — Resolve formal citation support for any robust-MDP comparator retained for final use.
   - Depends on: `T-310` deciding that robust MDP remains necessary.
   - External action if required: verify/promote appropriate robust-MDP evidence upstream in `ThesisBibliography`, then perform a new immutable bibliography synchronization.
   - Acceptance: final robust-MDP claims/selection are supported by citation-ready evidence, or the comparator is explicitly excluded.
-- [ ] BLOCKED `T-312` — Implement the selected small agent set behind the common information-limited `Agent` contract.
+- [ ] READY `T-312` — Implement the selected small agent set behind the common information-limited `Agent` contract.
   - Depends on: `T-310`; `T-311` if robust MDP is retained.
   - Acceptance: agent contract tests and tiny known-MDP/reference tests pass; no privileged hidden information.
 

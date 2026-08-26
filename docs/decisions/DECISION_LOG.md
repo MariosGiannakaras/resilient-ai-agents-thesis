@@ -177,6 +177,11 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **Status:** Accepted and implemented by `T-300`/`T-301`; numeric parameters/statistical roles remain pilot/freeze decisions.
 - **Decision:** Use aligned higher-is-better disrupted and predeclared matched-reference curves to report separate nominal, signed immediate/worst/terminal gap, cumulative deficit, and stabilization-based recovery estimands. Preserve `NO_DEGRADATION`, `RECOVERED`, and `NOT_RECOVERED` as distinct outcomes; non-recovery has no fabricated horizon time. Do not create a composite resilience score. Detailed formulas and interpretation boundaries live in `docs/research/METRICS_CANDIDATES.md`.
 
+## DEC-034 — Bounded tabular agent capability set
+- **Date:** 2026-08-26
+- **Status:** Accepted for implementation/pilots; final role retention and hyperparameters remain pilot/protocol-freeze decisions.
+- **Decision:** Implement one tabular Q-learning method evaluated from a common nominal checkpoint as F0 frozen and C0 continual regimes, plus R0 frozen finite s,a-rectangular robust value iteration with explicit stronger model/uncertainty-set prior. Exclude context-memory, detector-reset, oracle, duplicate tabular, deep/function-approximation, and diagnostic-specific agents unless their recorded reopening conditions are met. Citation-ready `SRC-52E62452B8` sufficiently supports the retained robust Bellman claims, so conditional `T-311` requires no upstream promotion. Detailed method/fairness/evidence boundaries live in `docs/research/MODEL_CANDIDATES.md`.
+
 ## Pending decisions
 
 Future entries are still required for:
@@ -184,7 +189,7 @@ Future entries are still required for:
 - final research question and hypotheses;
 - final GridWorld scientific parameters and validated specification;
 - final uncertainty taxonomy/severities/timing;
-- exact selected models/baselines, including whether robust-MDP comparison receives formal evidence support;
+- final post-pilot retention and hyperparameters of the selected model/baseline regimes;
 - final primary/secondary/diagnostic metric roles, numeric parameters, and statistical plan;
 - seeds, repetitions, tuning/resource budgets, and stopping rules;
 - final pilot protocol and `protocol-v1.0` freeze/amendments;

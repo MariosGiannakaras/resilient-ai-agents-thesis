@@ -10,6 +10,7 @@ Record only material changes to the project source of truth. Detailed commit-by-
 - Kept prototype fixture values, timing, and all scientific environment/protocol parameters unfrozen.
 - Implemented schema-v1 core mechanics, fail-closed resolved configuration/serialization, explicit persistent change and independent disturbance streams, evaluator-only truth, and deterministic known-answer/invariant validation.
 - Implemented curve-based operational metric schema v1 with explicit matched references/windows/tolerance/stability, separated degradation/recovery/terminal outcomes, real non-recovery, outcome counts, and hand-calculated validation; no composite score or final numeric protocol values were introduced.
+- Selected the bounded agent implementation/pilot set: common tabular Q-learning in frozen/continual regimes plus frozen finite rectangular robust value iteration; recorded stronger-prior fairness, citation sufficiency, excluded methods, and reopening gates without freezing hyperparameters or final post-pilot retention.
 
 ## 2026-07-29 — Corrected bootstrap and thesis-completion-first scope
 

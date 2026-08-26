@@ -52,7 +52,7 @@ Recurring-context recall and detector quality remain method-conditional diagnost
 
 ### Provisional, falsifiable hypothesis candidates
 
-These are pre-protocol candidates, not confirmed directional findings. `T-300`, `T-310`, `T-400`, and the pilots must replace the construct-level placeholders with the selected agent roles, validated estimands, unit of analysis, practical-effect or equivalence bounds, and final decision rules before the final evaluation is inspected.
+These are pre-protocol candidates, not confirmed directional findings. `T-300` and `T-310` now provide validated estimands and selected implementation/pilot roles; `T-400` and the pilots must supply numeric parameters, unit-of-analysis details, practical-effect or equivalence bounds, final role retention, and decision rules before final evaluation is inspected.
 
 - **H-P1 — online-adaptation recovery:** for at least one validated primary persistent-change condition, an information-matched role permitted to update online will have a more favorable post-change recovery profile than its corresponding frozen evaluation after nominal-performance cost is reported. It is falsified if the predeclared recovery and post-change estimands show no practically meaningful advantage, or show a disadvantage, across the retained primary conditions.
 - **H-P2 — phase-dependent capability trade-off:** comparative conclusions will depend on evaluation phase: nominal performance, immediate resistance, and later recovery/post-change performance will not collapse into one invariant agent ordering. It is falsified if the predeclared role-by-phase contrasts are practically equivalent and ordering remains stable across the retained primary conditions.
@@ -74,7 +74,7 @@ No hypothesis asserts that ordinary Q-learning must fail, that a detector must a
 
 - `T-210`–`T-213`: select and validate a GridWorld whose hidden truth, agent observation, intended/executed actions, persistent change, and deterministic traces match the framing.
 - `T-300`–`T-301` complete operational schema-v1 estimands and known-answer validation; pilots/freeze still select numeric windows/tolerance/stability, metric roles, and statistical aggregation.
-- `T-310`–`T-312`: select a small feasible agent-role set, resolve any remaining citation gate, and validate information-matched implementations. A robust-MDP role may still be excluded even though conceptual support is now citation-ready.
+- `T-310`/`T-311` select F0 frozen/C0 continual common tabular Q-learning plus R0 rectangular robust value iteration and establish sufficient citation-ready robust-DP support; `T-312` must validate their declared information/fairness boundaries before pilots.
 - `T-400`–`T-410`: predeclare disjoint development/tuning/pilot/final partitions and use pilots to determine feasible budgets, severities, repetitions, variance handling, recovery behavior, and practical-effect criteria.
 - `T-411`–`T-412`: refresh decision-driving literature, then freeze the final protocol, research questions, hypotheses, and statistical analysis plan before final results are inspected.
 
@@ -91,11 +91,12 @@ Already complete:
 - accepted target-machine inventory and CPU-first runtime/tooling constraints (DEC-031).
 - bounded GridWorld comparison/ADR/core/invariant validation (DEC-032; `T-210`–`T-213`).
 - operational resilience estimands and synthetic known-answer validation (`T-300`/`T-301`).
+- exact bounded agent implementation/pilot roles and robust-MDP citation sufficiency (`T-310`/`T-311`; DEC-034).
 
 Still required before final freeze:
 
-1. exact small model-role/method set with evidence/feasibility rationale;
-2. pilot evidence for runtime, variance, storage, recovery behavior, tuning budget, metric parameters/roles, and statistical choices.
+1. correctness/feasibility validation of the selected agent implementations (`T-312`);
+2. pilot evidence for runtime, variance, storage, recovery behavior, tuning budget, final role retention, metric parameters/roles, and statistical choices.
 
 ## Valid research-question form
 
