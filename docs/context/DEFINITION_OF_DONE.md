@@ -40,6 +40,7 @@ This file defines project-level completion conditions. It is **not** the operati
 - [x] Resilience/recovery metric estimands operationalized and validated on known-answer fixtures; final protocol roles/parameters remain a later freeze gate.
 - [ ] Pilot seeds/budgets/severities/tuning rules are predeclared; pilot evidence and final statistical-plan values still require freeze.
 - [x] Full headless experiment completes with real selected environment/agents, multi-seed recovery, and auditable outputs.
+- [x] Finalized bundles deterministically reproduce validated scientific units, pilot diagnostics, and the predeclared metric-sensitivity grid.
 - [ ] Pilot report supports protocol freeze decisions.
 
 ## Application completion phase

@@ -192,6 +192,12 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **Status:** Accepted and implemented by `T-401`; pilot execution awaits reproducible analysis (`T-402`).
 - **Decision:** Resolve the validated protocol through one CLI/core path that trains a root-specific nominal Q checkpoint shared by F0/C0, derives R0 from the fixed rectangular prior, executes matched reference/disrupted episode branches, computes schema-v1 metrics, persists events per episode and state atomically per completed root, and finalizes one whole-experiment bundle. Resume is supported only at verified root boundaries with identical config/source/content/log integrity; an incomplete root is deterministically rerun. Publication occurs at most once after all roots and bundle finalization. Detailed contract lives in `docs/experiments/HEADLESS_RUNNER.md`.
 
+## DEC-037 — Deterministic finalized-bundle pilot analysis
+
+- **Date:** 2026-08-26
+- **Status:** Accepted and implemented by `T-402`; inferential roles and final statistical plan remain unfrozen.
+- **Decision:** Analyze only finalized, integrity-consistent run bundles through one version-controlled core path that semantically reconstructs completed requests, state/checkpoint invariants, matched curves, and schema-v1 metrics. Treat one run/layout/condition/root/agent as the preliminary scientific unit; keep operational attempts and noncompleted runs explicit but outside scientific aggregates; reproduce the entire predeclared metric-sensitivity grid; and write immutable checksummed analysis bundles. Pilot summaries are diagnostic only and cannot support final claims or silently freeze post-pilot statistical choices. Detailed contract lives in `docs/experiments/ANALYSIS_PIPELINE.md`.
+
 ## Pending decisions
 
 Future entries are still required for:

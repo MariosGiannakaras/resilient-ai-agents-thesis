@@ -137,6 +137,8 @@ A run ID represents one whole experiment and may contain many seeds/episodes.
 
 The validated headless CLI/core now resolves `pilot-v0.1` into root-specific common Q checkpoints, layout-specific R0 plans, matched nominal/disrupted branches, schema-v1 metrics, continuously appended events, and atomic completed-root state. External interruption resumes only with identical config/source/log integrity and reruns an incomplete root deterministically; ordinary failure is finalized and retained. Successful multi-root execution finalizes one bundle and optionally invokes the guarded publisher once after all roots.
 
+The validated analysis core consumes only finalized, checksum/index-consistent bundles; semantically reconstructs completed requests, checkpoints, matched curves, and primary metrics; and deterministically emits immutable unit, aggregate, operational, and predeclared sensitivity diagnostics. Noncompleted runs remain explicit without becoming scientific units, and these pre-final outputs carry no inferential or final-claim status.
+
 The intended user workflow is:
 
 > configure experiment -> run -> automatic persistence/provenance -> finalize -> one guarded commit/push
@@ -165,7 +167,7 @@ The final presentation is a distinct downstream deliverable after thesis stabili
 
 ## Current genuine gates
 
-The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline/provenance, research framing/GridWorld, metrics, bounded agents, pilot protocol, and headless orchestration tasks (`T-100` through `T-401`) are complete. Reproducible bundle analysis (`T-402`) is next. Pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
+The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline/provenance, research framing/GridWorld, metrics, bounded agents, pilot protocol, headless orchestration, and reproducible analysis tasks (`T-100` through `T-402`) are complete. Pilot execution (`T-410`) is next. Application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
 
 Deferred, non-blocking inputs remain later supervisor corrections, eventual submission/presentation dates, a current official Word template, exact defense duration/file rules, and optional contextual example theses supplied near writing.
 
