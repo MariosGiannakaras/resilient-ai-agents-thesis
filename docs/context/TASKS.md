@@ -29,14 +29,14 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP4 — Pilot protocol and headless experiment system
-- **Current task:** `T-401`
-- **State:** `READY` after `T-400` review/merge synchronization
-- **Active branch / PR:** `research/pilot-protocol-v0`; validated machine-readable checkpoint `657de30` is pushed; PR not yet opened.
-- **Last validated point:** `T-312` passed canonical CI/review and squash-merged in PR #65 (`6f596a3`). `pilot-v0.1` now defines disjoint stage layouts, episode-block change semantics, bounded tuning/evaluation, severities, seeds, metrics, resources, failures, exclusions, and required artifacts.
-- **Tests already run:** five deterministic pilot-protocol load/canonicalization/leakage/drift/fail-closed tests and targeted compilation/diff validation pass on native Windows.
-- **Relevant files changed:** versioned pilot config, core fail-closed loader, protocol contract tests, scientific rationale/lifecycle, and active task/decision/context reconciliation.
-- **Uncommitted work:** T-400 rationale, exact tuning/analysis/stopping additions, and documentation/task reconciliation after pushed checkpoint `657de30`.
-- **Exact next action:** run protocol/documentation/bibliography consistency and objective full-diff review, checkpoint/push the completed T-400 package, open its PR, complete canonical CI/review/merge, synchronize main, then implement the headless multi-seed experiment path under `T-401`.
+- **Current task:** `T-402`
+- **State:** `READY` after `T-401` review/merge synchronization
+- **Active branch / PR:** `feat/headless-experiment-runner`; validated implementation checkpoint `c4d51c1` is pushed; PR not yet opened.
+- **Last validated point:** `T-400` passed canonical CI/review and squash-merged in PR #66 (`1502bfd`). `T-401` now executes the real GridWorld/F0/C0/R0/metrics path over multiple roots, continuously persists events/state, resumes verified incomplete roots, finalizes one bundle, and invokes publication once.
+- **Tests already run:** 42 directly affected agent/GridWorld/metric/runner/architecture tests passed before checkpoint; five runner integration tests now cover deterministic replay, two-root all-agent execution, recovery, corruption/mismatch failure, and one publication call.
+- **Relevant files changed:** headless runner/CLI, scoped seed derivation, resumable run-bundle provenance/log checks, integration tests, runner/protocol/bundle documentation, and active task/decision/context reconciliation.
+- **Uncommitted work:** post-checkpoint provenance hardening, tuning/pilot request constraints, corrupted-log test, and T-401 documentation/task reconciliation.
+- **Exact next action:** run targeted runner/documentation consistency and objective full-diff review, checkpoint/push the completed T-401 package, open its PR, complete canonical CI/review/merge, synchronize main, then implement deterministic bundle-to-summary analysis under `T-402`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -141,10 +141,10 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-400` — Define development/tuning/pilot/final scenario partitions and versioned pilot protocol.
   - Depends on: `T-213`, `T-301`, `T-312`.
   - Acceptance: partitions do not overlap; seeds/budgets/severities/tuning/failure/exclusion rules are explicit and justified rather than convenience defaults.
-- [ ] READY `T-401` — Complete the headless experiment runner/orchestration path for the selected environment/agents/metrics.
+- [x] `T-401` — Complete the headless experiment runner/orchestration path for the selected environment/agents/metrics.
   - Depends on: `T-400`.
   - Acceptance: a full experiment with multiple seeds runs without UI, persists continuously, resumes safely where supported, finalizes one auditable bundle, and uses the existing publisher correctly.
-- [ ] BLOCKED `T-402` — Complete reproducible analysis pipeline for experiment summaries and pilot diagnostics.
+- [ ] READY `T-402` — Complete reproducible analysis pipeline for experiment summaries and pilot diagnostics.
   - Depends on: `T-401`.
   - Acceptance: stored run bundles deterministically produce validated summaries/diagnostics through version-controlled code.
 - [ ] BLOCKED `T-410` — Execute pilots and record runtime, variance, failures, recovery/metric behavior, storage volume, and agent-specific issues.

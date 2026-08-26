@@ -31,6 +31,7 @@ The accepted architecture uses:
 - strict separation of evaluator ground truth from agent-visible information;
 - independent deterministic RNG streams;
 - filesystem-first experiment run bundles with provenance and checksums;
+- a validated CLI/core headless runner with real multi-seed F0/C0/R0 execution, atomic root-boundary recovery, and matched episode-return curves;
 - fail-closed finalization with a last-written completion marker plus marker/manifest/checksum/run-index agreement before automatic publication;
 - one guarded automatic Git commit and push per finalized whole experiment, never per seed;
 - selective Git LFS for large thesis-produced artifacts;

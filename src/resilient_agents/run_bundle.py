@@ -70,6 +70,34 @@ def _untracked_nonoutput_present(repo_root: Path) -> bool | None:
     return any(not path.startswith(GENERATED_OUTPUT_PREFIXES) for path in paths)
 
 
+def _tracked_diff_sha256(repo_root: Path) -> str | None:
+    output = _git(repo_root, "diff", "--binary", "HEAD")
+    if output is None:
+        return None
+    return hashlib.sha256(output.encode("utf-8")).hexdigest()
+
+
+def _untracked_nonoutput_sha256(repo_root: Path) -> str | None:
+    output = _git(repo_root, "ls-files", "-z", "--others", "--exclude-standard")
+    if output is None:
+        return None
+    paths = sorted(
+        path
+        for path in output.split("\0")
+        if path and not path.startswith(GENERATED_OUTPUT_PREFIXES)
+    )
+    digest = hashlib.sha256()
+    try:
+        for relative in paths:
+            path = repo_root / relative
+            digest.update(relative.encode("utf-8"))
+            digest.update(b"\0")
+            digest.update(bytes.fromhex(sha256_file(path)))
+    except OSError:
+        return None
+    return digest.hexdigest()
+
+
 def source_provenance(repo_root: Path) -> dict[str, Any]:
     commit = _git(repo_root, "rev-parse", "HEAD")
     tracked_status = _git(repo_root, "status", "--porcelain", "--untracked-files=no")
@@ -77,6 +105,8 @@ def source_provenance(repo_root: Path) -> dict[str, Any]:
         "git_commit": commit,
         "tracked_changes_present": bool(tracked_status) if tracked_status is not None else None,
         "untracked_nonoutput_present": _untracked_nonoutput_present(repo_root),
+        "tracked_diff_sha256": _tracked_diff_sha256(repo_root),
+        "untracked_nonoutput_sha256": _untracked_nonoutput_sha256(repo_root),
         "python_version": platform.python_version(),
         "python_implementation": platform.python_implementation(),
         "platform": platform.platform(),
@@ -153,6 +183,100 @@ class RunBundle:
         _write_json(self.run_dir / "system-capability.json", capture_system_inventory(self.repo_root))
         _write_json(self.run_dir / "manifest.json", self.manifest)
 
+    @classmethod
+    def resume(
+        cls,
+        *,
+        repo_root: Path,
+        run_id: str,
+        resolved_config: Mapping[str, Any],
+        protocol_version: str,
+        stage: str,
+        retention_policy: str,
+    ) -> "RunBundle":
+        """Reopen an unfinished bundle only when identity/provenance still agree."""
+
+        root = repo_root.resolve()
+        run_dir = root / "results" / "runs" / run_id
+        if not run_dir.is_dir():
+            raise FileNotFoundError(f"run bundle does not exist: {run_dir}")
+        if (run_dir / FINALIZATION_MARKER).exists():
+            raise RuntimeError("finalized run bundles cannot be resumed")
+        try:
+            manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+            stored_config = json.loads(
+                (run_dir / "resolved-config.json").read_text(encoding="utf-8")
+            )
+        except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+            raise RuntimeError("unfinished run bundle metadata is unreadable") from exc
+        if not isinstance(manifest, dict) or manifest.get("status") != "running":
+            raise RuntimeError("only an explicitly running bundle can be resumed")
+        expected_identity = {
+            "run_id": run_id,
+            "protocol_version": protocol_version,
+            "stage": stage,
+            "retention_policy": retention_policy,
+        }
+        if any(manifest.get(key) != value for key, value in expected_identity.items()):
+            raise RuntimeError("resume identity does not match the stored manifest")
+        if _jsonable(resolved_config) != stored_config:
+            raise RuntimeError("resume resolved configuration does not match")
+        stored_source = manifest.get("source")
+        if not isinstance(stored_source, dict):
+            raise RuntimeError("resume source provenance is unavailable")
+        current_source = source_provenance(root)
+        if current_source.get("git_commit") != stored_source.get("git_commit"):
+            raise RuntimeError("source Git commit changed since the run started")
+        if current_source.get("tracked_changes_present") != stored_source.get(
+            "tracked_changes_present"
+        ):
+            raise RuntimeError("tracked source state changed since the run started")
+        if current_source.get("untracked_nonoutput_present") != stored_source.get(
+            "untracked_nonoutput_present"
+        ):
+            raise RuntimeError("untracked non-output source state changed since run start")
+        if current_source.get("tracked_diff_sha256") != stored_source.get(
+            "tracked_diff_sha256"
+        ):
+            raise RuntimeError("tracked source content changed since the run started")
+        if current_source.get("untracked_nonoutput_sha256") != stored_source.get(
+            "untracked_nonoutput_sha256"
+        ):
+            raise RuntimeError("untracked non-output inputs changed since run start")
+        cls._validate_resumable_jsonl(run_dir / "events.jsonl")
+        cls._validate_resumable_jsonl(run_dir / "trace.jsonl")
+
+        bundle = cls.__new__(cls)
+        bundle.repo_root = root
+        bundle.run_id = run_id
+        bundle.run_dir = run_dir
+        bundle.started_at = str(manifest.get("started_at_utc"))
+        bundle.provenance = stored_source
+        bundle.manifest = manifest
+        return bundle
+
+    @staticmethod
+    def _validate_resumable_jsonl(path: Path) -> None:
+        if not path.exists():
+            return
+        try:
+            content = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeError) as exc:
+            raise RuntimeError(f"resume log is unreadable: {path.name}") from exc
+        if content and not content.endswith("\n"):
+            raise RuntimeError(f"resume log has an incomplete final line: {path.name}")
+        for number, line in enumerate(content.splitlines(), start=1):
+            try:
+                value = json.loads(line)
+            except json.JSONDecodeError as exc:
+                raise RuntimeError(
+                    f"resume log contains invalid JSON at {path.name}:{number}"
+                ) from exc
+            if not isinstance(value, dict):
+                raise RuntimeError(
+                    f"resume log entry must be an object at {path.name}:{number}"
+                )
+
     def _require_running(self) -> None:
         if self.manifest.get("status") != "running":
             raise RuntimeError("run bundle is already finalized and cannot be mutated")
@@ -164,6 +288,23 @@ class RunBundle:
     def append_trace(self, record: Mapping[str, Any]) -> None:
         self._require_running()
         self._append_jsonl("trace.jsonl", record)
+
+    def write_json_artifact(self, filename: str, payload: Mapping[str, Any]) -> Path:
+        """Atomically replace one top-level JSON checkpoint while running."""
+
+        self._require_running()
+        if (
+            not isinstance(filename, str)
+            or not filename.endswith(".json")
+            or Path(filename).name != filename
+            or filename in {"manifest.json", "resolved-config.json", "system-capability.json"}
+        ):
+            raise ValueError("artifact filename must be a safe non-reserved .json name")
+        if not isinstance(payload, Mapping):
+            raise ValueError("JSON artifact payload must be an object")
+        path = self.run_dir / filename
+        _write_json(path, payload)
+        return path
 
     def _append_jsonl(self, filename: str, payload: Mapping[str, Any]) -> None:
         path = self.run_dir / filename

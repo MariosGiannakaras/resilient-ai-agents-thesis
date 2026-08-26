@@ -13,6 +13,7 @@ Record only material changes to the project source of truth. Detailed commit-by-
 - Selected the bounded agent implementation/pilot set: common tabular Q-learning in frozen/continual regimes plus frozen finite rectangular robust value iteration; recorded stronger-prior fairness, citation sufficiency, excluded methods, and reopening gates without freezing hyperparameters or final post-pilot retention.
 - Implemented that selected set behind the strict common agent contract with versioned stable Q checkpoints/robust plans, deterministic seeded behavior, explicit terminal/truncation and convergence semantics, frozen-deployment guarantees, fail-closed model/information validation, and focused known-answer tests.
 - Defined and fail-closed validated `pilot-v0.1`: disjoint same-scale stage layouts, episode-block persistent change with matched nominal reference, bounded pre-outcome tuning and severities, fixed R0 prior, precommitted disjoint seeds, metric sensitivity, CPU resource/stopping rules, explicit failures/exclusions, and required artifacts; final-reserve execution and final claims remain forbidden.
+- Integrated a real CLI/core headless experiment path across GridWorld, F0/C0/R0, scoped RNG streams, matched curves, metrics, continuous run-bundle persistence, root-specific common checkpoints, fail-closed source/log/config validation, verified root-boundary resume, one finalization/index update, and one optional post-experiment publication.
 
 ## 2026-07-29 — Corrected bootstrap and thesis-completion-first scope
 
