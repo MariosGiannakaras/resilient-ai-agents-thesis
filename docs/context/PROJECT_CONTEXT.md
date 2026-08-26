@@ -110,7 +110,7 @@ The imported evidence supports a bounded direction but does not yet freeze the f
 - compare a small number of scientifically distinct capability roles rather than a catalogue of algorithms;
 - keep the tuning/pilot/final boundary explicit and leakage-resistant.
 
-Decision-driving citation-ready evidence currently includes `SRC-70772C0629`, `SRC-9464421E55`, `SRC-76B2247457`, `SRC-FC42D9798A`, and `SRC-3C0F7CC819`. The robust-MDP records now support the formal conceptual distinction between declared-set robustness and online changepoint adaptation, but do not select a comparator or establish recovery superiority; method/assumption fit remains a `T-310` decision and any evidence gap for retained claims remains conditional `T-311` work.
+Decision-driving citation-ready evidence currently includes `SRC-70772C0629`, `SRC-9464421E55`, `SRC-76B2247457`, `SRC-52E62452B8`, `SRC-FC42D9798A`, and `SRC-3C0F7CC819`. The robust-MDP records support finite rectangular robust dynamic programming and the conceptual distinction between declared-set robustness and online changepoint adaptation, but do not establish recovery superiority. DEC-034 records the resulting bounded comparator and evidence boundaries.
 
 ## GridWorld — current state
 
@@ -125,9 +125,9 @@ Both prototypes passed deterministic semantic parity checks on the native target
 
 ## Models and metrics — current state
 
-There is no final algorithm shortlist, metric set, seed count, severity set, hyperparameter set, or statistical plan.
+The implementation/pilot algorithm shortlist and operational metric schema are selected and validated. Final post-pilot retention, metric roles/parameters, seed count, severity set, hyperparameters, and statistical plan remain unfrozen.
 
-The bounded implementation/pilot set is two methods in three roles: one common tabular Q-learning checkpoint evaluated as F0 frozen and C0 continual, plus R0 frozen finite s,a-rectangular robust value iteration with its stronger model/uncertainty-set prior declared. Context-memory, detector-reset, extra tabular variants, deep methods, and dedicated diagnostic-specific agents are excluded unless a recorded reopening condition is met. Final retention and all hyperparameters/budgets remain pilot/freeze decisions.
+The bounded implementation/pilot set is implemented as two methods in three roles: one versioned common tabular Q-learning checkpoint evaluated as F0 frozen and C0 continual, plus R0 frozen finite s,a-rectangular robust value iteration with its stronger model/uncertainty-set prior declared. Deterministic replay, exact updates/backups, checkpoint/plan stability, frozen-state behavior, probability/model validation, and strict rejection of evaluator-only information have focused tests. Context-memory, detector-reset, extra tabular variants, deep methods, and dedicated diagnostic-specific agents are excluded unless a recorded reopening condition is met. Final retention and all hyperparameters/budgets remain pilot/freeze decisions.
 
 Operational metric schema v1 and hand-calculated tests now define matched-reference nominal performance, signed immediate/worst/terminal gaps, cumulative deficit, stabilization-based recovery, `NO_DEGRADATION`, `RECOVERED`, and real `NOT_RECOVERED` with no artificial horizon time. Numeric windows/tolerance/stability, primary/secondary roles, aggregation, intervals, and final statistical plan remain pilot/freeze decisions.
 
@@ -161,7 +161,7 @@ The final presentation is a distinct downstream deliverable after thesis stabili
 
 ## Current genuine gates
 
-The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline/provenance, research-framing/GridWorld tasks, metric operationalization/validation, and exact agent-role/evidence selection (`T-100` through `T-311`) are complete. Agent implementation (`T-312`) is next. Pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
+The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline/provenance, research-framing/GridWorld, metric, and bounded agent selection/implementation tasks (`T-100` through `T-312`) are complete. Pilot protocol definition (`T-400`) is next. Pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
 
 Deferred, non-blocking inputs remain later supervisor corrections, eventual submission/presentation dates, a current official Word template, exact defense duration/file rules, and optional contextual example theses supplied near writing.
 

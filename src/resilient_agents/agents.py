@@ -134,7 +134,7 @@ class TabularQLearningAgent:
             _canonical_json(action, field="action"): action for action in config.actions
         }
         self._base_q_values = self._load_checkpoint(checkpoint)
-        self._q_values: dict[tuple[str, str], float] = {}
+        self._q_values: dict[tuple[str, str], float] = dict(self._base_q_values)
         self._exploration_rng: random.Random | None = None
         self._initialization_seed: int | None = None
         self._exploration_seed: int | None = None
@@ -234,6 +234,8 @@ class TabularQLearningAgent:
         self._require_reset()
         if not isinstance(transition, AgentTransition):
             raise ValueError("transition must be AgentTransition")
+        if not isinstance(transition.optional_information, Mapping):
+            raise ValueError("transition.optional_information must be an object")
         if transition.optional_information:
             raise ValueError("selected tabular agents forbid optional evaluator information")
         if self._pending is None:
@@ -587,6 +589,8 @@ class RectangularRobustValueIterationAgent:
         self._require_reset()
         if not isinstance(transition, AgentTransition):
             raise ValueError("transition must be AgentTransition")
+        if not isinstance(transition.optional_information, Mapping):
+            raise ValueError("transition.optional_information must be an object")
         if transition.optional_information:
             raise ValueError("robust deployment forbids optional evaluator information")
         if self._pending_action_key is None:
@@ -600,7 +604,11 @@ class RectangularRobustValueIterationAgent:
         )
         if delivered_action_key != self._pending_action_key:
             raise ValueError("transition intended_action does not match the pending action")
-        _canonical_json(transition.observation, field="transition observation")
+        next_state_key = _canonical_json(
+            transition.observation, field="transition observation"
+        )
+        if next_state_key not in self._state_by_key:
+            raise ValueError("transition observation is not in the robust state space")
         _finite_number(transition.reward, field="transition reward")
         if not isinstance(transition.terminated, bool) or not isinstance(
             transition.truncated, bool
@@ -621,6 +629,41 @@ class RectangularRobustValueIterationAgent:
         return {
             "schema_version": ROBUST_PLAN_SCHEMA_VERSION,
             "method": "rectangular_robust_value_iteration_v1",
+            "model": {
+                "states": [
+                    _json_value(state_key) for state_key in self._state_by_key
+                ],
+                "terminal_states": [
+                    _json_value(state_key) for state_key in sorted(self._terminal_keys)
+                ],
+                "actions": [
+                    _json_value(action_key) for action_key in self._action_by_key
+                ],
+                "state_actions": [
+                    {
+                        "state": entry.state,
+                        "action": entry.action,
+                        "candidate_rows": [
+                            [
+                                {
+                                    "next_state": item.next_state,
+                                    "probability": float(item.probability),
+                                    "reward": float(item.reward),
+                                    "terminal": item.terminal,
+                                }
+                                for item in candidate.outcomes
+                            ]
+                            for candidate in entry.candidate_rows
+                        ],
+                    }
+                    for _, entry in sorted(self._entries.items())
+                ],
+                "discount_factor": float(self.config.discount_factor),
+                "convergence_tolerance": float(self.config.convergence_tolerance),
+                "max_iterations": self.config.max_iterations,
+                "initial_value": float(self.config.initial_value),
+                "exploration_epsilon": float(self.config.exploration_epsilon),
+            },
             "iterations": self._iterations,
             "residual": self._residual,
             "values": [

@@ -132,6 +132,8 @@ class TabularQLearningAgentTests(unittest.TestCase):
         continual = TabularQLearningAgent(
             q_config(agent_id="c0", learning_enabled=True), checkpoint=nominal
         )
+        self.assertEqual(frozen.checkpoint(), nominal)
+        self.assertEqual(continual.checkpoint(), nominal)
         frozen.reset(initialization_seed=8, exploration_seed=9)
         continual.reset(initialization_seed=8, exploration_seed=9)
         self.assertEqual(frozen.checkpoint_sha256(), continual.checkpoint_sha256())
@@ -253,6 +255,7 @@ class RobustValueIterationAgentTests(unittest.TestCase):
     def test_singleton_rows_reduce_to_nominal_value_iteration(self) -> None:
         agent = RectangularRobustValueIterationAgent(self._config(uncertain=False))
         plan = agent.plan()
+        self.assertEqual(plan["model"]["terminal_states"], ["goal"])
         q_values = {
             (item["state"], item["action"]): item["value"]
             for item in plan["q_values"]

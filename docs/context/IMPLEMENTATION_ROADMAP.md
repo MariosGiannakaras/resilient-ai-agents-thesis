@@ -31,8 +31,8 @@ Phases are checkpoints, not the concrete execution checklist and not mandatory s
 
 ## Phase 5 — Small model-role selection
 
-- Implement the selected F0/C0 common tabular Q-learning and R0 rectangular robust-value-iteration roles; final retention follows pilots.
-- Implement all agents behind the same information-limited contract.
+- F0/C0 common tabular Q-learning and R0 rectangular robust value iteration are implemented with versioned state and focused correctness tests; final retention follows pilots.
+- All selected agents use the same strict information-limited contract.
 - **Gate:** no privileged ground truth and no model without a distinct research role.
 
 ## Phase 6 — Pilot protocol

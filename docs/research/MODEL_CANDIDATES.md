@@ -1,6 +1,6 @@
 # Agent and Model Role Selection
 
-**Status:** `T-310` selection complete; `T-311` formal robust-MDP evidence is sufficient. Exact hyperparameters/budgets and final post-pilot freeze remain open.
+**Status:** `T-310`/`T-311` selection/evidence and `T-312` correctness implementation are complete. Exact hyperparameters/budgets and final post-pilot freeze remain open.
 
 ## Selection outcome
 
@@ -74,7 +74,7 @@ R0's stronger prior means the thesis compares declared capability/assumption reg
 | Dedicated action/observation robust agents | **EXCLUDE** | Those disturbances are supporting diagnostics, not separate primary agent-role questions. |
 | Random policy or optimal/oracle planner | **REFERENCE FIXTURE ONLY** | Useful for correctness/scale checks, not a scientifically comparable resilience capability role. |
 
-## T-312 correctness and feasibility gates
+## T-312 correctness and feasibility results
 
 ### Common tabular implementation
 
@@ -98,4 +98,4 @@ R0's stronger prior means the thesis compares declared capability/assumption reg
 
 ## Remaining freeze gates
 
-`T-312` implements and validates the selected methods. `T-400` and pilots then determine explicit hyperparameters, budgets, uncertainty-set calibration, exploration policy, repeated-run feasibility, and whether every role remains informative. `T-412` freezes the final set and fair statistical protocol before final results are inspected.
+`T-312` implements and validates these gates in `src/resilient_agents/agents.py` and `tests/test_agents.py`: eight focused tests cover exact Q updates, terminal behavior, common checkpoint/frozen mutation, deterministic replay/round-trip state, hidden-information rejection, singleton and worst-row robust backups, frozen deployment, and invalid model/probability failure. `T-400` and pilots next determine explicit hyperparameters, budgets, uncertainty-set calibration, exploration policy, repeated-run feasibility, and whether every role remains informative. `T-412` freezes the final set and fair statistical protocol before final results are inspected.
