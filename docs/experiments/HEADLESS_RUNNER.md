@@ -21,7 +21,7 @@ All three paths are required. The request is exact-key/fail-closed JSON with:
 | `q_learning_rate`, `discount_factor`, `exploration_epsilon` | Resolved selected tabular/deployment parameters |
 | `training_episodes_per_layout` | Fixed nominal checkpoint-training budget |
 | `pre_change_episodes`, `post_change_episodes` | Episode-block curve budget |
-| metric window/tolerance/stability fields | One explicit schema-v1 summary setting; T-402 derives the full predeclared sensitivity grid from stored curves |
+| metric window/tolerance/stability fields | One explicit schema-v1 summary setting; the analysis pipeline derives the full predeclared sensitivity grid from stored curves |
 | `retention_policy` | `events` or `full-trace`; pilot-v0.1 requires events plus persisted episode curves |
 | `auto_publish` | One optional publication only after whole-experiment finalization |
 
@@ -49,3 +49,5 @@ Ordinary execution exceptions finalize the one bundle as `failed` with type, mes
 ## T-401 validation
 
 Tiny deterministic integration tests execute two roots across all F0/C0/R0 regimes, reproduce identical scientific root results in a second repository, verify matched pre-change curves and real metric outcomes, interrupt/resume at a root boundary, reject mismatched requests and corrupted logs, and confirm one mocked publisher call only after all roots. Pilot/final matrices remain outside CI.
+
+Finalized bundles are consumed read-only by the deterministic pipeline in `ANALYSIS_PIPELINE.md`; analysis independently revalidates the bundle and recomputes metrics rather than trusting stored summaries as derived ground truth.

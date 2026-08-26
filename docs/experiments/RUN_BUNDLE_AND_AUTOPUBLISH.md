@@ -23,6 +23,8 @@ results/runs/<run-id>/
 
 `FINALIZED` is a completion sentinel, not a scientific data file. It is written **last**, only after the final manifest, checksum manifest, and run-index update succeed. If finalization is interrupted before that point the marker is absent, so the bundle cannot be mistaken for a valid finalized publication candidate. Event/trace mutation is rejected after finalization.
 
+Finalized bundles are consumed read-only by `src/resilient_agents/analysis.py`. The analysis path reuses the same marker/manifest/checksum/index validation, semantically reproduces completed scientific records, and writes a separate immutable `results/summaries/<analysis-id>/` bundle. Failed, cancelled, and invalid execution outcomes remain visible but never create scientific units. See `ANALYSIS_PIPELINE.md`.
+
 The headless runner atomically checkpoints completed root-seed units in `runner-state.json`. An unfinished bundle may resume only with identical resolved configuration, source commit/content fingerprints, running manifest identity, supported runner-state schema, and complete valid event/trace JSONL. Resume restarts a partial root deterministically; it never guesses or fabricates unsupported mid-root learning state. See `HEADLESS_RUNNER.md`.
 
 ## Automatic commit and push

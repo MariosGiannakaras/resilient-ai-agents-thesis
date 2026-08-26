@@ -14,6 +14,7 @@ Record only material changes to the project source of truth. Detailed commit-by-
 - Implemented that selected set behind the strict common agent contract with versioned stable Q checkpoints/robust plans, deterministic seeded behavior, explicit terminal/truncation and convergence semantics, frozen-deployment guarantees, fail-closed model/information validation, and focused known-answer tests.
 - Defined and fail-closed validated `pilot-v0.1`: disjoint same-scale stage layouts, episode-block persistent change with matched nominal reference, bounded pre-outcome tuning and severities, fixed R0 prior, precommitted disjoint seeds, metric sensitivity, CPU resource/stopping rules, explicit failures/exclusions, and required artifacts; final-reserve execution and final claims remain forbidden.
 - Integrated a real CLI/core headless experiment path across GridWorld, F0/C0/R0, scoped RNG streams, matched curves, metrics, continuous run-bundle persistence, root-specific common checkpoints, fail-closed source/log/config validation, verified root-boundary resume, one finalization/index update, and one optional post-experiment publication.
+- Added deterministic finalized-bundle analysis with semantic metric/state reproduction, explicit noncompleted-run inventory, separate operational attempts, primary variance summaries, the complete predeclared sensitivity grid, immutable checksummed outputs, and corruption rejection.
 
 ## 2026-07-29 — Corrected bootstrap and thesis-completion-first scope
 

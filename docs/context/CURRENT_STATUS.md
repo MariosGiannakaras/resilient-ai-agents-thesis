@@ -19,9 +19,10 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-310`/`T-311` passed canonical CI/review and squash-merged through PR #64 (`e7d97a5`).
 - `T-312` passed canonical CI/review and squash-merged through PR #65 (`6f596a3`).
 - `T-400` passed canonical CI/review and squash-merged through PR #66 (`1502bfd`).
-- `T-401` is complete locally on `feat/headless-experiment-runner`: the CLI/core executes real multi-root F0/C0/R0 experiments, continuously persists matched curves/state, safely resumes verified root boundaries, finalizes one auditable bundle, and calls the publisher once after all roots.
-- Current task: **`T-402`**, ready after the headless-runner PR is CI-validated, objectively reviewed, squash-merged, and synchronized to main.
-- Exact next action: finish targeted validation/objective diff review, push/open the `T-401` PR, complete canonical CI/review/merge, then implement deterministic bundle-to-summary pilot analysis.
+- `T-401` passed canonical CI/review and squash-merged through PR #67 (`8ddfcc2`).
+- `T-402` is complete locally on `feat/reproducible-pilot-analysis`: finalized bundles deterministically reproduce validated scientific units, operational diagnostics, primary/variance summaries, and the complete predeclared metric-sensitivity grid into immutable checksummed outputs.
+- Current task: **`T-410`**, ready after the analysis PR is CI-validated, objectively reviewed, squash-merged, and synchronized to main.
+- Exact next action: finish documentation consistency/objective diff review, push/open the `T-402` PR, complete canonical CI/review/merge, then execute the predefined tuning/pilot campaign and record its feasibility evidence.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline
