@@ -172,6 +172,11 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **File:** `docs/decisions/DEC-032_GRIDWORLD_IMPLEMENTATION.md`.
 - **Decision:** Implement a small project-owned GridWorld using the locked Gymnasium 1.3.0 API through the accepted core contracts. Do not make MiniGrid a core dependency; it adds translation, dependency/platform, and tag-license uncertainty without a demonstrated required RQ capability. This selects the implementation strategy but leaves all scientific environment/protocol parameters unfrozen.
 
+## DEC-033 — Curve-based operational resilience estimands
+- **Date:** 2026-08-26
+- **Status:** Accepted and implemented by `T-300`/`T-301`; numeric parameters/statistical roles remain pilot/freeze decisions.
+- **Decision:** Use aligned higher-is-better disrupted and predeclared matched-reference curves to report separate nominal, signed immediate/worst/terminal gap, cumulative deficit, and stabilization-based recovery estimands. Preserve `NO_DEGRADATION`, `RECOVERED`, and `NOT_RECOVERED` as distinct outcomes; non-recovery has no fabricated horizon time. Do not create a composite resilience score. Detailed formulas and interpretation boundaries live in `docs/research/METRICS_CANDIDATES.md`.
+
 ## Pending decisions
 
 Future entries are still required for:
@@ -180,7 +185,7 @@ Future entries are still required for:
 - final GridWorld scientific parameters and validated specification;
 - final uncertainty taxonomy/severities/timing;
 - exact selected models/baselines, including whether robust-MDP comparison receives formal evidence support;
-- final primary/secondary/diagnostic metrics and statistical plan;
+- final primary/secondary/diagnostic metric roles, numeric parameters, and statistical plan;
 - seeds, repetitions, tuning/resource budgets, and stopping rules;
 - final pilot protocol and `protocol-v1.0` freeze/amendments;
 - pilot-derived optional dashboard feature budget beyond the accepted self-explanatory UX/onboarding baseline;

@@ -29,14 +29,14 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP3 — Metrics and agent/model selection
-- **Current task:** `T-300`
-- **State:** `READY` after `T-212`/`T-213` review/merge synchronization
-- **Active branch / PR:** `feat/gridworld-core`; PR not yet opened.
-- **Last validated point:** `T-212`/`T-213` are complete locally. The selected schema-v1 core has exact state/action/reward/lifecycle/change/disturbance/serialization semantics, no UI dependency, evaluator/agent isolation, and a deterministic final invariant suite.
-- **Tests already run:** native Windows locked core sync passed; 10 GridWorld known-answer/invariant tests and 16 directly affected research-architecture tests passed; targeted source/test compilation and lock/diff checks passed.
-- **Relevant files changed:** core GridWorld module/package exports, exact Gymnasium runtime dependency and lockfile, final known-answer/invariant tests, GridWorld/decision/context documentation, and task state.
-- **Uncommitted work:** final documentation and `T-212`/`T-213` completion reconciliation after pushed implementation checkpoint `7a9d487`.
-- **Exact next action:** rerun targeted validation and documentation consistency, review/push the final diff, open the coherent `T-212`/`T-213` PR, complete canonical CI/review/merge, synchronize main, then start `T-300`.
+- **Current task:** `T-310`
+- **State:** `READY` after `T-300`/`T-301` review/merge synchronization
+- **Active branch / PR:** `research/resilience-metrics`; PR not yet opened.
+- **Last validated point:** `T-212`/`T-213` passed canonical CI and squash-merged in PR #62 (`e7352d5`). Operational metric schema v1 now uses aligned higher-is-better observed/reference curves, explicit windows/tolerance/stability, signed degradation/terminal gaps, cumulative deficit, and distinct no-degradation/recovered/non-recovered states.
+- **Tests already run:** six deterministic metric known-answer/fail-closed tests plus 14 directly affected research-architecture tests pass on native Windows.
+- **Relevant files changed:** metric implementation/status aggregation, dedicated known-answer tests, operational metric authority/evidence mapping, decision/context/task reconciliation.
+- **Uncommitted work:** complete local `T-300`/`T-301` coherent package.
+- **Exact next action:** run targeted compile/documentation/lock/diff validation, objectively review and checkpoint/push the package, open its PR, complete canonical CI/review/merge, synchronize main, then start `T-310`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -119,10 +119,10 @@ Codex must assume a session can stop unexpectedly.
 
 ## WP3 — Metrics and agent/model selection
 
-- [ ] READY `T-300` — Finalize operational definitions/estimands for resilience, degradation, recovery, post-change performance, non-recovery, and supporting diagnostics.
+- [x] `T-300` — Finalize operational definitions/estimands for resilience, degradation, recovery, post-change performance, non-recovery, and supporting diagnostics.
   - Depends on: `T-200`, `T-212`.
   - Acceptance: every metric has a clear estimand, interpretation, required inputs, edge-case behavior, and RQ mapping.
-- [ ] BLOCKED `T-301` — Validate all selected metrics against synthetic known-answer trajectories.
+- [x] `T-301` — Validate all selected metrics against synthetic known-answer trajectories.
   - Depends on: `T-300`.
   - Acceptance: hand-checkable fixtures verify values and non-recovery is never converted into artificial horizon recovery.
 - [ ] READY `T-310` — Complete source-traceable comparison of scientifically distinct agent/model roles.

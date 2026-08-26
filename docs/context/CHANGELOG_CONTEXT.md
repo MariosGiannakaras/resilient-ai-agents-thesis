@@ -9,6 +9,7 @@ Record only material changes to the project source of truth. Detailed commit-by-
 - Accepted DEC-032: implement a small project-owned GridWorld using the locked Gymnasium 1.3.0 API through the existing core contracts; MiniGrid remains outside the core dependency path.
 - Kept prototype fixture values, timing, and all scientific environment/protocol parameters unfrozen.
 - Implemented schema-v1 core mechanics, fail-closed resolved configuration/serialization, explicit persistent change and independent disturbance streams, evaluator-only truth, and deterministic known-answer/invariant validation.
+- Implemented curve-based operational metric schema v1 with explicit matched references/windows/tolerance/stability, separated degradation/recovery/terminal outcomes, real non-recovery, outcome counts, and hand-calculated validation; no composite score or final numeric protocol values were introduced.
 
 ## 2026-07-29 — Corrected bootstrap and thesis-completion-first scope
 

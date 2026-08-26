@@ -37,7 +37,7 @@ This file defines project-level completion conditions. It is **not** the operati
 - [x] Selected GridWorld implementation and uncertainty schema validated with known-answer/reference-trace tests.
 - [ ] Main research question and minimal secondary questions/hypotheses approved.
 - [ ] Final model/baseline set justified by citation-ready evidence, environment fit, feasibility, and pilots.
-- [ ] Final resilience/recovery metrics/estimands operationalized and validated on known-answer fixtures.
+- [x] Resilience/recovery metric estimands operationalized and validated on known-answer fixtures; final protocol roles/parameters remain a later freeze gate.
 - [ ] Seeds, budgets, severities, tuning rules, and statistical plan justified for pilots/final protocol.
 - [ ] Full headless experiment completes with real selected environment/agents and auditable outputs.
 - [ ] Pilot report supports protocol freeze decisions.
