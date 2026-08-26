@@ -1,0 +1,42 @@
+{
+  "files": {
+    "events.jsonl": {
+      "sha256": "92f20ab16c50ba9f5b9c25ed6be934d8c84201603062f03a981183c571ba84b0",
+      "size_bytes": 2460465
+    },
+    "resolved-config.json": {
+      "sha256": "fa782c11e7c35fa9b966afe76e9f52e81bb7fc2986c82514a1351faa3af7adc0",
+      "size_bytes": 18902
+    },
+    "runner-state.json": {
+      "sha256": "4abeb49357a420223dae51c7066708e99b8b0c1af95dea14159b28fe5f71e39d",
+      "size_bytes": 223738
+    },
+    "summary.json": {
+      "sha256": "c46781036d27b3669c88404fd6b08d27ffe0095cec916a1730647d3ce09b4e61",
+      "size_bytes": 223749
+    },
+    "system-capability.json": {
+      "sha256": "33cfcc72adf38f12bae7f9ae61f2152b7b3442824878112c4e067e2d99d5f762",
+      "size_bytes": 2021
+    }
+  },
+  "finished_at_utc": "2026-08-26T17:37:25+00:00",
+  "protocol_version": "pilot-v0.1",
+  "retention_policy": "events",
+  "run_id": "PV01-TUNE-S1-00-L02",
+  "schema_version": 1,
+  "source": {
+    "git_commit": "c84f7a8fd73cb55944428c8226c92d71af8739c6",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python_implementation": "CPython",
+    "python_version": "3.12.13",
+    "tracked_changes_present": false,
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "untracked_nonoutput_present": false,
+    "untracked_nonoutput_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stage": "tuning",
+  "started_at_utc": "2026-08-26T17:37:03+00:00",
+  "status": "completed"
+}

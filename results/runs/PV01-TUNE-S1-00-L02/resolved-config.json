@@ -1,0 +1,735 @@
+{
+  "entrypoint": "resilient_agents.experiment_runner.v1",
+  "headless_runner_schema_version": 1,
+  "protocol": {
+    "agent_regimes": [
+      {
+        "agent_id": "f0",
+        "checkpoint_source": "common-selected-nominal-q-checkpoint",
+        "deployment_exploration": "selected-common-epsilon",
+        "method": "tabular_q_learning_v1",
+        "method_configuration": {
+          "bootstrap_on_truncation": false,
+          "discount_policy": "selected-common-discount",
+          "initial_q_value": 0.0,
+          "learning_rate_policy": "selected-tuning-value"
+        },
+        "post_change_learning": false
+      },
+      {
+        "agent_id": "c0",
+        "checkpoint_source": "common-selected-nominal-q-checkpoint",
+        "deployment_exploration": "selected-common-epsilon",
+        "method": "tabular_q_learning_v1",
+        "method_configuration": {
+          "bootstrap_on_truncation": false,
+          "discount_policy": "selected-common-discount",
+          "initial_q_value": 0.0,
+          "learning_rate_policy": "selected-tuning-value"
+        },
+        "post_change_learning": true
+      },
+      {
+        "agent_id": "r0",
+        "checkpoint_source": "fixed-declared-model-and-uncertainty-set",
+        "deployment_exploration": "selected-common-epsilon",
+        "method": "rectangular_robust_value_iteration_v1",
+        "method_configuration": {
+          "convergence_tolerance": 1e-10,
+          "discount_policy": "selected-common-discount",
+          "initial_value": 0.0,
+          "max_iterations": 10000
+        },
+        "post_change_learning": false
+      }
+    ],
+    "conditions": [
+      {
+        "action_failure_probability": 0.0,
+        "action_mapping": {
+          "down": "down",
+          "left": "left",
+          "right": "right",
+          "up": "up"
+        },
+        "condition_id": "nominal",
+        "mechanism": "nominal",
+        "observation_corruption_probability": 0.0,
+        "r0_set_membership": "not-applicable",
+        "remapped_actions": 0,
+        "scientific_role": "Matched reference and nominal cost"
+      },
+      {
+        "action_failure_probability": 0.0,
+        "action_mapping": {
+          "down": "down",
+          "left": "left",
+          "right": "up",
+          "up": "right"
+        },
+        "condition_id": "remap-min-in-set",
+        "mechanism": "action-remap",
+        "observation_corruption_probability": 0.0,
+        "r0_set_membership": "in-set",
+        "remapped_actions": 2,
+        "scientific_role": "Primary minimal non-identity persistent change represented in the declared robust set"
+      },
+      {
+        "action_failure_probability": 0.0,
+        "action_mapping": {
+          "down": "left",
+          "left": "up",
+          "right": "down",
+          "up": "right"
+        },
+        "condition_id": "remap-max-out-of-set",
+        "mechanism": "action-remap",
+        "observation_corruption_probability": 0.0,
+        "r0_set_membership": "out-of-set",
+        "remapped_actions": 4,
+        "scientific_role": "Primary maximal four-action derangement outside the declared robust set"
+      },
+      {
+        "action_failure_probability": 0.125,
+        "action_mapping": {
+          "down": "down",
+          "left": "left",
+          "right": "right",
+          "up": "up"
+        },
+        "condition_id": "action-failure-1of8",
+        "mechanism": "action-failure",
+        "observation_corruption_probability": 0.0,
+        "r0_set_membership": "not-applicable",
+        "remapped_actions": 0,
+        "scientific_role": "Supporting low single-factor action-execution diagnostic"
+      },
+      {
+        "action_failure_probability": 0.25,
+        "action_mapping": {
+          "down": "down",
+          "left": "left",
+          "right": "right",
+          "up": "up"
+        },
+        "condition_id": "action-failure-1of4",
+        "mechanism": "action-failure",
+        "observation_corruption_probability": 0.0,
+        "r0_set_membership": "not-applicable",
+        "remapped_actions": 0,
+        "scientific_role": "Supporting higher single-factor action-execution diagnostic"
+      },
+      {
+        "action_failure_probability": 0.0,
+        "action_mapping": {
+          "down": "down",
+          "left": "left",
+          "right": "right",
+          "up": "up"
+        },
+        "condition_id": "observation-corruption-1of8",
+        "mechanism": "observation-corruption",
+        "observation_corruption_probability": 0.125,
+        "r0_set_membership": "not-applicable",
+        "remapped_actions": 0,
+        "scientific_role": "Supporting low single-factor observation diagnostic"
+      },
+      {
+        "action_failure_probability": 0.0,
+        "action_mapping": {
+          "down": "down",
+          "left": "left",
+          "right": "right",
+          "up": "up"
+        },
+        "condition_id": "observation-corruption-1of4",
+        "mechanism": "observation-corruption",
+        "observation_corruption_probability": 0.25,
+        "r0_set_membership": "not-applicable",
+        "remapped_actions": 0,
+        "scientific_role": "Supporting higher single-factor observation diagnostic"
+      }
+    ],
+    "episode_horizon": {
+      "required_shortest_path_length": 12,
+      "rule": "shortest-path-multiple",
+      "shortest_path_multiplier": 4
+    },
+    "evaluation": {
+      "change_boundary": "between-episode-blocks",
+      "condition_ids": [
+        "nominal",
+        "remap-min-in-set",
+        "remap-max-out-of-set",
+        "action-failure-1of8",
+        "action-failure-1of4",
+        "observation-corruption-1of8",
+        "observation-corruption-1of4"
+      ],
+      "paired_reference": "same-checkpoint-layout-root-seed",
+      "post_change_episodes": 32,
+      "pre_change_episodes": 16,
+      "retention_policy": "events-plus-episode-curves",
+      "root_seeds": [
+        4030024779161028788,
+        8247446463945157321,
+        3326176413363819642,
+        9625101929286331622,
+        2959087522460842639,
+        1893904761135025643,
+        4623539936854817760,
+        1280444329130946648
+      ]
+    },
+    "failure_and_exclusion_policy": {
+      "analysis_exclusion_reasons": [
+        "confirmed implementation defect affecting the run",
+        "confirmed external interference affecting scientific validity",
+        "predeclared scenario or agent contract violation"
+      ],
+      "automatic_outlier_exclusion": false,
+      "completed_valid_runs_included_regardless_of_outcome": true,
+      "invalid_reasons": [
+        "schema or contract validation failure",
+        "source or run provenance mismatch",
+        "checksum or finalization inconsistency",
+        "agent information-boundary violation",
+        "non-finite scientific state"
+      ],
+      "non_recovery_is_valid": true,
+      "rerun_uses_new_run_id": true
+    },
+    "gridworld_schema_version": 1,
+    "information_policy": {
+      "expose_change_indicator": false,
+      "expose_disturbance_flags": false,
+      "expose_executed_action": false,
+      "expose_regime_id": false,
+      "expose_true_state": false
+    },
+    "layouts": [
+      {
+        "grid": {
+          "goal": [
+            6,
+            6
+          ],
+          "height": 7,
+          "obstacles": [
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              2,
+              5
+            ]
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "width": 7
+        },
+        "layout_id": "dev-l01",
+        "stage": "development"
+      },
+      {
+        "grid": {
+          "goal": [
+            6,
+            6
+          ],
+          "height": 7,
+          "obstacles": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              5,
+              3
+            ]
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "width": 7
+        },
+        "layout_id": "dev-l02",
+        "stage": "development"
+      },
+      {
+        "grid": {
+          "goal": [
+            6,
+            6
+          ],
+          "height": 7,
+          "obstacles": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              5
+            ]
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "width": 7
+        },
+        "layout_id": "tune-l01",
+        "stage": "tuning"
+      },
+      {
+        "grid": {
+          "goal": [
+            6,
+            6
+          ],
+          "height": 7,
+          "obstacles": [
+            [
+              1,
+              5
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              5,
+              1
+            ]
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "width": 7
+        },
+        "layout_id": "tune-l02",
+        "stage": "tuning"
+      },
+      {
+        "grid": {
+          "goal": [
+            6,
+            6
+          ],
+          "height": 7,
+          "obstacles": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              5,
+              5
+            ]
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "width": 7
+        },
+        "layout_id": "pilot-l01",
+        "stage": "pilot"
+      },
+      {
+        "grid": {
+          "goal": [
+            6,
+            6
+          ],
+          "height": 7,
+          "obstacles": [
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              5,
+              2
+            ]
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "width": 7
+        },
+        "layout_id": "pilot-l02",
+        "stage": "pilot"
+      },
+      {
+        "grid": {
+          "goal": [
+            6,
+            6
+          ],
+          "height": 7,
+          "obstacles": [
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              5
+            ]
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "width": 7
+        },
+        "layout_id": "final-l01",
+        "stage": "final"
+      },
+      {
+        "grid": {
+          "goal": [
+            6,
+            6
+          ],
+          "height": 7,
+          "obstacles": [
+            [
+              1,
+              5
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              5,
+              4
+            ]
+          ],
+          "start": [
+            0,
+            0
+          ],
+          "width": 7
+        },
+        "layout_id": "final-l02",
+        "stage": "final"
+      }
+    ],
+    "metric_sensitivity": {
+      "curve_unit": "episode-return",
+      "immediate_windows": [
+        1
+      ],
+      "recovery_stability_episodes": [
+        2,
+        4,
+        8
+      ],
+      "recovery_tolerances_step_reward_units": [
+        0.0,
+        1.0,
+        2.0
+      ],
+      "selection_use": "diagnostic-only-not-model-selection",
+      "terminal_windows": [
+        4,
+        8
+      ],
+      "worst_windows": [
+        2,
+        4,
+        8
+      ]
+    },
+    "partitions": {
+      "development": [
+        "dev-l01",
+        "dev-l02"
+      ],
+      "final": [
+        "final-l01",
+        "final-l02"
+      ],
+      "pilot": [
+        "pilot-l01",
+        "pilot-l02"
+      ],
+      "tuning": [
+        "tune-l01",
+        "tune-l02"
+      ]
+    },
+    "pilot_analysis": {
+      "aggregation": "retain per-unit distributions and recovery-status counts",
+      "failed_or_invalid_handling": "retain separately; never convert to poor completed outcome",
+      "inferential_claims_allowed": false,
+      "non_recovery_handling": "explicit NOT_RECOVERED with null recovery time",
+      "pairing_block": "same root seed, layout, checkpoint, and episode seed schedule",
+      "unit_of_analysis": "root-seed-layout-agent-condition"
+    },
+    "protocol_version": "pilot-v0.1",
+    "required_artifacts": [
+      "resolved protocol and scenario configuration",
+      "root and derived RNG seeds",
+      "source and runtime provenance",
+      "common Q checkpoint checksum or robust plan checksum",
+      "event log and per-episode return curves",
+      "execution outcome and failure or invalid reason",
+      "metric sensitivity summaries",
+      "manifest and file checksums"
+    ],
+    "resource_policy": {
+      "child_timeout_rule": {
+        "maximum_seconds": 7200,
+        "measured_preflight_multiplier": 20,
+        "minimum_seconds": 60,
+        "overflow_action": "protocol-amendment-before-pilot"
+      },
+      "gpu_required": false,
+      "initial_concurrency": 1,
+      "preflight_required": true,
+      "runtime_baseline": "native Windows CPython 3.12 locked uv environment on the accepted CPU baseline"
+    },
+    "reward_spec": {
+      "collision": -2.0,
+      "goal": 0.0,
+      "step": -1.0
+    },
+    "robust_prior": {
+      "candidate_action_mappings": [
+        {
+          "down": "down",
+          "left": "left",
+          "right": "right",
+          "up": "up"
+        },
+        {
+          "down": "down",
+          "left": "left",
+          "right": "up",
+          "up": "right"
+        }
+      ],
+      "fixed_before_pilot": true,
+      "set_id": "rectangular-remap-prior-v0.1",
+      "uncertainty_semantics": "state-action-rectangular-closure-of-candidate-mappings"
+    },
+    "schema_version": 1,
+    "scientific_scope": {
+      "final_evidence_use": false,
+      "pilot_purpose": "Measure feasibility, runtime, variance, censoring, metric sensitivity, and distinct agent behavior before protocol-v1.0 is frozen.",
+      "primary_question": "How do frozen nominal, continual tabular learning, and declared-set robust planning differ in resistance and recovery after an unannounced persistent action remap?"
+    },
+    "status": "pilot-unfrozen",
+    "stopping_policy": {
+      "early_success_stopping": false,
+      "evaluation": "fixed-pre-and-post-episode-blocks",
+      "invalid_or_nonfinite_state": "fail-immediately-and-retain",
+      "timeout": "finalize-failed-and-retain-partial-output",
+      "training": "fixed-configured-episode-count"
+    },
+    "tuning": {
+      "checkpoint_selection": [
+        "highest mean nominal episode return across tuning layouts and roots",
+        "highest worst-layout mean nominal episode return",
+        "lowest collision rate",
+        "lexicographically smallest canonical hyperparameter JSON"
+      ],
+      "nominal_evaluation_episodes_per_layout": 64,
+      "q_learning_search": {
+        "discount_factors": [
+          0.875,
+          0.9375,
+          0.96875
+        ],
+        "exploration_epsilons": [
+          0.03125,
+          0.0625,
+          0.125,
+          0.25
+        ],
+        "learning_rates": [
+          0.0625,
+          0.125,
+          0.25,
+          0.5
+        ],
+        "stage_one_discount_factor": 0.9375,
+        "stage_two_rule": "evaluate remaining discount factors only for the stage-one winner",
+        "strategy": "staged-dyadic-grid",
+        "total_unique_configurations": 18
+      },
+      "robust_set_policy": "fixed-declared-set-no-pilot-outcome-tuning",
+      "root_seeds": [
+        10940500274998661290,
+        13639469163949457533,
+        18377731416598846249,
+        5508570176503139448
+      ],
+      "training_episodes_per_layout": 512
+    }
+  },
+  "request": {
+    "agent_ids": [
+      "f0"
+    ],
+    "auto_publish": true,
+    "condition_id": "nominal",
+    "discount_factor": 0.9375,
+    "execution_timeout_seconds": 420.0,
+    "exploration_epsilon": 0.03125,
+    "immediate_window": 1,
+    "layout_id": "tune-l02",
+    "post_change_episodes": 48,
+    "pre_change_episodes": 16,
+    "q_learning_rate": 0.0625,
+    "recovery_stability_episodes": 4,
+    "recovery_tolerance": 1.0,
+    "retention_policy": "events",
+    "root_seeds": [
+      10940500274998661290,
+      13639469163949457533,
+      18377731416598846249,
+      5508570176503139448
+    ],
+    "run_id": "PV01-TUNE-S1-00-L02",
+    "stage": "tuning",
+    "terminal_window": 8,
+    "training_episodes_per_layout": 512,
+    "worst_window": 4
+  },
+  "seed_derivation": {
+    "independent_streams": "resilient-agents-v1",
+    "scoped_root": "resilient-agents-scoped-v1"
+  }
+}
