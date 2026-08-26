@@ -4,6 +4,7 @@ import json
 import sys
 import tempfile
 import unittest
+from dataclasses import replace
 from pathlib import Path
 from unittest.mock import patch
 
@@ -12,6 +13,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from resilient_agents.contracts import ProtocolStage, RetentionPolicy  # noqa: E402
 from resilient_agents.experiment_runner import (  # noqa: E402
+    ExperimentTimeoutError,
     HeadlessExperimentRequest,
     HeadlessExperimentRunner,
 )
@@ -52,6 +54,32 @@ def request(
 
 
 class HeadlessExperimentRunnerTests(unittest.TestCase):
+    def test_predeclared_timeout_finalizes_failed_bundle(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repo = Path(temporary)
+            timed = replace(
+                request(run_id="DEV-TIMEOUT", root_seeds=(7,)),
+                auto_publish=True,
+                execution_timeout_seconds=1e-12,
+            )
+            with (
+                patch(
+                    "resilient_agents.session.publish_finalized_run",
+                    return_value=PublishResult("failed123", "main", "origin"),
+                ) as publisher,
+                self.assertRaises(ExperimentTimeoutError),
+            ):
+                HeadlessExperimentRunner(repo_root=repo, protocol=PROTOCOL, request=timed).run()
+            manifest = json.loads(
+                (repo / "results" / "runs" / "DEV-TIMEOUT" / "manifest.json").read_text()
+            )
+            summary = json.loads(
+                (repo / "results" / "runs" / "DEV-TIMEOUT" / "summary.json").read_text()
+            )
+            self.assertEqual(manifest["status"], "failed")
+            self.assertEqual(summary["failure"]["type"], "ExperimentTimeoutError")
+            publisher.assert_called_once_with(repo_root=repo.resolve(), run_id="DEV-TIMEOUT")
+
     def test_multi_seed_all_agent_experiment_finalizes_one_auditable_bundle(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             repo = Path(temporary)

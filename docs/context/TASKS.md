@@ -30,13 +30,13 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 - **Current work package:** WP4 — Pilot protocol and headless experiment system
 - **Current task:** `T-410`
-- **State:** `READY` after `T-402` review/merge synchronization
-- **Active branch / PR:** `feat/reproducible-pilot-analysis`; validated implementation checkpoint `9cf12a9` is pushed; PR not yet opened.
-- **Last validated point:** `T-401` passed canonical CI/review and squash-merged in PR #67 (`8ddfcc2`). `T-402` now validates finalized run/index integrity, semantically reproduces stored scientific state/curves/metrics, separates operational attempts and noncompleted runs, derives primary/variance and full sensitivity diagnostics, and atomically finalizes immutable analysis bundles.
-- **Tests already run:** four focused analysis integration tests passed, covering deterministic derivation/output, semantic metric drift, finalized-bundle corruption, explicit failed-run inventory, analysis integrity validation, and overwrite refusal; targeted Ruff checks passed.
-- **Relevant files changed:** analysis core/CLI/export, read-only finalized-run validation, focused integration tests, analysis/runner/bundle documentation, DEC-037, and active task/context reconciliation.
-- **Uncommitted work:** T-402 documentation/task reconciliation after the pushed implementation checkpoint.
-- **Exact next action:** validate documentation consistency and the final diff, push the completed T-402 package, open its PR, complete canonical CI/review/merge, synchronize main, then execute the predefined tuning/pilot campaign under `T-410`.
+- **State:** `IN_PROGRESS`
+- **Active branch / PR:** `feat/execute-pilot-campaign`; validated campaign-driver checkpoint `f126b03` is pushed; PR not yet opened.
+- **Last validated point:** `T-402` passed canonical CI/review and squash-merged in PR #68 (`34ca10b`). The T-410 driver deterministically expands the 18-configuration staged tuning search and 14-run pilot matrix, derives a preflight-bounded graceful timeout, selects only from semantically reproduced tuning bundles, resumes stable identities, and auto-publishes each whole experiment from durable `main`.
+- **Tests already run:** 13 focused campaign/runner/analysis tests passed, covering exact matrix expansion and selection order, timeout bounds/finalized failure publication, existing headless recovery/publication, and deterministic analysis/corruption behavior; targeted Ruff checks passed for new campaign files.
+- **Relevant files changed:** pilot campaign core/CLI/tests, explicit headless child deadlines and failed-run publication, campaign/runner/protocol documentation, and active task/decision/context reconciliation.
+- **Uncommitted work:** T-410 campaign documentation/task reconciliation after the pushed implementation checkpoint.
+- **Exact next action:** validate documentation consistency and the campaign diff, push/open the driver PR, complete canonical CI/review/merge, synchronize clean `main`, then execute/resume the real tuning and 14-child pilot campaign; each child will publish its own durable result checkpoint before the next starts.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
