@@ -29,12 +29,12 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP6 — Final experiments, frozen evidence, and writing package
-- **Current task:** `T-601`
+- **Current task:** `T-603`
 - **State:** `IN_PROGRESS`
-- **Active branch / PR:** `feature/t-601-evidence-freeze`
-- **Last validated point:** T-600 executed all 14 final evaluation runs successfully under protocol-v1.0.
-- **Uncommitted work:** Validating final-run completeness and freezing the evidence.
-- **Exact next action:** Implement evidence freeze script to export accepted final runs to results/thesis-final/.
+- **Active branch / PR:** `feature/t-602-statistical-analysis`
+- **Last validated point:** T-602 completed successfully, final evidence analyzed.
+- **Uncommitted work:** Committing analysis and updated checksums.
+- **Exact next action:** Generate thesis artifacts and figures.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -175,13 +175,13 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-600` — Execute the frozen final experiment matrix under `protocol-v1.0` using the validated application/core workflow.
   - Depends on: `T-412`, `T-511`.
   - Acceptance: all predefined final runs are retained with provenance/status/reasons; the final campaign uses the validated workflow and one automatic publication commit/push occurs per whole experiment. Any necessary headless fallback is documented and uses the identical scientific core/configuration path.
-- [ ] IN_PROGRESS `T-601` — Validate final-run completeness and freeze the accepted final evidence set under `results/thesis-final/`.
+- [x] `T-601` — Validate final-run completeness and freeze the accepted final evidence set under `results/thesis-final/`.
   - Depends on: `T-600`.
   - Acceptance: included/excluded/failed runs and reasons are explicit; checksums/protocol/config/commit links are complete; no cherry-picking.
-- [ ] BLOCKED `T-602` — Run the frozen statistical analysis and robustness/sensitivity diagnostics exactly as specified.
+- [x] `T-602` — Run the frozen statistical analysis and robustness/sensitivity diagnostics exactly as specified.
   - Depends on: `T-601`.
   - Acceptance: reproducible outputs come only from frozen evidence and frozen analysis definitions.
-- [ ] BLOCKED `T-603` — Generate final figures, tables, summaries, and export artifacts from frozen evidence.
+- [ ] IN_PROGRESS `T-603` — Generate final figures, tables, summaries, and export artifacts from frozen evidence.
   - Depends on: `T-602`.
   - Acceptance: version-controlled rebuild reproduces thesis artifacts from stored final data.
 - [ ] BLOCKED `T-604` — Freeze the thesis/defense evidence package used by downstream writing and presentation work.
