@@ -29,12 +29,12 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP6 — Final experiments, frozen evidence, and writing package
-- **Current task:** `T-600`
+- **Current task:** `T-601`
 - **State:** `IN_PROGRESS`
-- **Active branch / PR:** `feature/t-600-final-campaign`
-- **Last validated point:** T-511 UX and end-to-end workflow validation completed successfully.
-- **Uncommitted work:** Launching the final campaign using run_final_campaign.py.
-- **Exact next action:** Execute run_final_campaign.py with --allow-final to run the final experiment matrix, then verify completion.
+- **Active branch / PR:** `feature/t-601-evidence-freeze`
+- **Last validated point:** T-600 executed all 14 final evaluation runs successfully under protocol-v1.0.
+- **Uncommitted work:** Validating final-run completeness and freezing the evidence.
+- **Exact next action:** Implement evidence freeze script to export accepted final runs to results/thesis-final/.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -172,10 +172,10 @@ Codex must assume a session can stop unexpectedly.
 
 ## WP6 — Final experiments, frozen evidence, and writing package
 
-- [ ] BLOCKED `T-600` — Execute the frozen final experiment matrix under `protocol-v1.0` using the validated application/core workflow.
+- [x] `T-600` — Execute the frozen final experiment matrix under `protocol-v1.0` using the validated application/core workflow.
   - Depends on: `T-412`, `T-511`.
   - Acceptance: all predefined final runs are retained with provenance/status/reasons; the final campaign uses the validated workflow and one automatic publication commit/push occurs per whole experiment. Any necessary headless fallback is documented and uses the identical scientific core/configuration path.
-- [ ] BLOCKED `T-601` — Validate final-run completeness and freeze the accepted final evidence set under `results/thesis-final/`.
+- [ ] IN_PROGRESS `T-601` — Validate final-run completeness and freeze the accepted final evidence set under `results/thesis-final/`.
   - Depends on: `T-600`.
   - Acceptance: included/excluded/failed runs and reasons are explicit; checksums/protocol/config/commit links are complete; no cherry-picking.
 - [ ] BLOCKED `T-602` — Run the frozen statistical analysis and robustness/sensitivity diagnostics exactly as specified.

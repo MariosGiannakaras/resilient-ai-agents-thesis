@@ -1,0 +1,120 @@
+{
+  "freeze_time_utc": "2026-08-26T21:16:35.496716+00:00",
+  "protocol_version": "protocol-v1.0",
+  "total_final_runs_found": 14,
+  "included_runs": 14,
+  "runs": [
+    {
+      "run_id": "FINAL-L01-C01",
+      "status": "completed",
+      "git_commit": "5cee5ef99fcbffb49d6b3a1c4c5b4e79fb869676",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    },
+    {
+      "run_id": "FINAL-L01-C02",
+      "status": "completed",
+      "git_commit": "23a051d64b6835096db80d7879aafa03cf102839",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    },
+    {
+      "run_id": "FINAL-L01-C03",
+      "status": "completed",
+      "git_commit": "19a74f817e2ce55fc6c50f4b26380f4d92ebcba9",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    },
+    {
+      "run_id": "FINAL-L01-C04",
+      "status": "completed",
+      "git_commit": "7f077a9de354e0305fbd0cbec21020932bf2c30b",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    },
+    {
+      "run_id": "FINAL-L01-C05",
+      "status": "completed",
+      "git_commit": "32bdda9502a9ce017d8999eb4bdbae040adb03ca",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    },
+    {
+      "run_id": "FINAL-L01-C06",
+      "status": "completed",
+      "git_commit": "c71f09598b343bee8cb7af2be36563c88d020527",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    },
+    {
+      "run_id": "FINAL-L01-C07",
+      "status": "completed",
+      "git_commit": "bc2bab51e11f43ce7ab7eb669d38531a8eaa9fce",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    },
+    {
+      "run_id": "FINAL-L02-C01",
+      "status": "completed",
+      "git_commit": "1b551d36996867a0160765076720340d3e8c625b",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    },
+    {
+      "run_id": "FINAL-L02-C02",
+      "status": "completed",
+      "git_commit": "d354a4348262061bea05d5b480b86524d20a0d2b",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    },
+    {
+      "run_id": "FINAL-L02-C03",
+      "status": "completed",
+      "git_commit": "f277f95d79b2b3f035584f41cb03b049e2d92cb5",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    },
+    {
+      "run_id": "FINAL-L02-C04",
+      "status": "completed",
+      "git_commit": "f7a25281a4643d598a5e3cf08468a0edee4436f8",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    },
+    {
+      "run_id": "FINAL-L02-C05",
+      "status": "completed",
+      "git_commit": "d061d15e4a7ee873697243ea2cc748c59c8ce194",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    },
+    {
+      "run_id": "FINAL-L02-C06",
+      "status": "completed",
+      "git_commit": "99218916c29ddede663085608e82a7c366b9876e",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    },
+    {
+      "run_id": "FINAL-L02-C07",
+      "status": "completed",
+      "git_commit": "8be9eedcf14a57b952111f0c70aa9890b44b2471",
+      "has_checksums": true,
+      "inclusion": "included",
+      "exclusion_reason": null
+    }
+  ]
+}
