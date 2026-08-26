@@ -49,7 +49,7 @@ The tolerance is an absolute value in the declared performance units, not a frac
 
 For each exact condition, retain every predefined independent run and its per-run metric record. `summarize_recovery_statuses` reports counts of all three recovery outcomes and `non_recovery_rate = NOT_RECOVERED / valid_runs`. Execution failures, invalid runs, cancellations, interruptions, and later analysis exclusions are not passed off as valid metric rows: they remain explicit in run lifecycle/provenance and must accompany the valid-run denominator.
 
-Agent contrasts are formed from per-run estimands, paired/blocked only where seeds/scenarios are legitimately matched. The final interval/effect-size estimator, handling of censored recovery times, aggregation across layouts/severities, multiplicity strategy, and required independent-run count remain `T-400`/pilot/`T-412` freeze decisions. Raw distributions and uncertainty remain mandatory; no single-run or best-run conclusion is valid.
+Agent contrasts are formed from per-run estimands, paired/blocked only where seeds/scenarios are legitimately matched. `pilot-v0.1` predeclares matched root/layout/checkpoint/episode-seed branches and a diagnostic window/tolerance/stability sensitivity grid. The final interval/effect-size estimator, handling of censored recovery times, aggregation across layouts/severities, multiplicity strategy, and required independent-run count remain pilot/`T-412` freeze decisions. Raw distributions and uncertainty remain mandatory; no single-run or best-run conclusion is valid.
 
 ## Supporting diagnostics and interpretation limits
 

@@ -205,9 +205,51 @@
       "r0_set_membership": "not-applicable"
     }
   ],
+  "agent_regimes": [
+    {
+      "agent_id": "f0",
+      "method": "tabular_q_learning_v1",
+      "checkpoint_source": "common-selected-nominal-q-checkpoint",
+      "post_change_learning": false,
+      "deployment_exploration": "selected-common-epsilon",
+      "method_configuration": {
+        "learning_rate_policy": "selected-tuning-value",
+        "discount_policy": "selected-common-discount",
+        "bootstrap_on_truncation": false,
+        "initial_q_value": 0.0
+      }
+    },
+    {
+      "agent_id": "c0",
+      "method": "tabular_q_learning_v1",
+      "checkpoint_source": "common-selected-nominal-q-checkpoint",
+      "post_change_learning": true,
+      "deployment_exploration": "selected-common-epsilon",
+      "method_configuration": {
+        "learning_rate_policy": "selected-tuning-value",
+        "discount_policy": "selected-common-discount",
+        "bootstrap_on_truncation": false,
+        "initial_q_value": 0.0
+      }
+    },
+    {
+      "agent_id": "r0",
+      "method": "rectangular_robust_value_iteration_v1",
+      "checkpoint_source": "fixed-declared-model-and-uncertainty-set",
+      "post_change_learning": false,
+      "deployment_exploration": "selected-common-epsilon",
+      "method_configuration": {
+        "discount_policy": "selected-common-discount",
+        "initial_value": 0.0,
+        "convergence_tolerance": 1e-10,
+        "max_iterations": 10000
+      }
+    }
+  ],
   "robust_prior": {
     "set_id": "rectangular-remap-prior-v0.1",
     "fixed_before_pilot": true,
+    "uncertainty_semantics": "state-action-rectangular-closure-of-candidate-mappings",
     "candidate_action_mappings": [
       {"up": "up", "right": "right", "down": "down", "left": "left"},
       {"up": "right", "right": "up", "down": "down", "left": "left"}
@@ -226,7 +268,10 @@
       "strategy": "staged-dyadic-grid",
       "learning_rates": [0.0625, 0.125, 0.25, 0.5],
       "exploration_epsilons": [0.03125, 0.0625, 0.125, 0.25],
-      "discount_factors": [0.875, 0.9375, 0.96875]
+      "discount_factors": [0.875, 0.9375, 0.96875],
+      "stage_one_discount_factor": 0.9375,
+      "stage_two_rule": "evaluate remaining discount factors only for the stage-one winner",
+      "total_unique_configurations": 18
     },
     "robust_set_policy": "fixed-declared-set-no-pilot-outcome-tuning",
     "checkpoint_selection": [
@@ -275,9 +320,39 @@
     "runtime_baseline": "native Windows CPython 3.12 locked uv environment on the accepted CPU baseline",
     "initial_concurrency": 1,
     "preflight_required": true,
-    "child_timeout_rule": "twenty times measured preflight estimate; minimum 60 seconds; protocol amendment required if estimate exceeds 7200 seconds",
+    "child_timeout_rule": {
+      "measured_preflight_multiplier": 20,
+      "minimum_seconds": 60,
+      "maximum_seconds": 7200,
+      "overflow_action": "protocol-amendment-before-pilot"
+    },
     "gpu_required": false
   },
+  "stopping_policy": {
+    "training": "fixed-configured-episode-count",
+    "evaluation": "fixed-pre-and-post-episode-blocks",
+    "early_success_stopping": false,
+    "invalid_or_nonfinite_state": "fail-immediately-and-retain",
+    "timeout": "finalize-failed-and-retain-partial-output"
+  },
+  "pilot_analysis": {
+    "unit_of_analysis": "root-seed-layout-agent-condition",
+    "pairing_block": "same root seed, layout, checkpoint, and episode seed schedule",
+    "aggregation": "retain per-unit distributions and recovery-status counts",
+    "inferential_claims_allowed": false,
+    "non_recovery_handling": "explicit NOT_RECOVERED with null recovery time",
+    "failed_or_invalid_handling": "retain separately; never convert to poor completed outcome"
+  },
+  "required_artifacts": [
+    "resolved protocol and scenario configuration",
+    "root and derived RNG seeds",
+    "source and runtime provenance",
+    "common Q checkpoint checksum or robust plan checksum",
+    "event log and per-episode return curves",
+    "execution outcome and failure or invalid reason",
+    "metric sensitivity summaries",
+    "manifest and file checksums"
+  ],
   "failure_and_exclusion_policy": {
     "completed_valid_runs_included_regardless_of_outcome": true,
     "non_recovery_is_valid": true,

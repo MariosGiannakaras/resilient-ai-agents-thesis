@@ -185,11 +185,15 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
             "reward_spec",
             "episode_horizon",
             "conditions",
+            "agent_regimes",
             "robust_prior",
             "tuning",
             "evaluation",
             "metric_sensitivity",
             "resource_policy",
+            "stopping_policy",
+            "pilot_analysis",
+            "required_artifacts",
             "failure_and_exclusion_policy",
         },
         field="pilot protocol",
@@ -388,15 +392,99 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
     if nominal_count != 1:
         raise ValueError("conditions must contain exactly one nominal condition")
 
+    regimes = _sequence(payload["agent_regimes"], field="agent_regimes")
+    regime_ids: set[str] = set()
+    expected_regimes = {
+        "f0": ("tabular_q_learning_v1", False),
+        "c0": ("tabular_q_learning_v1", True),
+        "r0": ("rectangular_robust_value_iteration_v1", False),
+    }
+    for index, raw_regime in enumerate(regimes):
+        regime = _object(raw_regime, field=f"agent_regimes[{index}]")
+        _exact_keys(
+            regime,
+            {
+                "agent_id",
+                "method",
+                "checkpoint_source",
+                "post_change_learning",
+                "deployment_exploration",
+                "method_configuration",
+            },
+            field=f"agent_regimes[{index}]",
+        )
+        agent_id = _nonempty_string(regime["agent_id"], field="agent_id")
+        if agent_id not in expected_regimes or agent_id in regime_ids:
+            raise ValueError("agent_regimes must contain unique f0, c0, and r0 entries")
+        regime_ids.add(agent_id)
+        expected_method, expected_learning = expected_regimes[agent_id]
+        if regime["method"] != expected_method:
+            raise ValueError("agent regime method does not match DEC-034")
+        if regime["post_change_learning"] is not expected_learning:
+            raise ValueError("agent post-change learning regime does not match DEC-034")
+        _nonempty_string(regime["checkpoint_source"], field="checkpoint_source")
+        if regime["deployment_exploration"] != "selected-common-epsilon":
+            raise ValueError("all pilot regimes must share selected deployment epsilon")
+        method_configuration = _object(
+            regime["method_configuration"], field="method_configuration"
+        )
+        if agent_id in {"f0", "c0"}:
+            expected_configuration = {
+                "learning_rate_policy": "selected-tuning-value",
+                "discount_policy": "selected-common-discount",
+                "bootstrap_on_truncation": False,
+                "initial_q_value": 0.0,
+            }
+            if method_configuration != expected_configuration:
+                raise ValueError("pilot Q-learning method configuration is inconsistent")
+        else:
+            _exact_keys(
+                method_configuration,
+                {
+                    "discount_policy",
+                    "initial_value",
+                    "convergence_tolerance",
+                    "max_iterations",
+                },
+                field="R0 method_configuration",
+            )
+            if method_configuration["discount_policy"] != "selected-common-discount":
+                raise ValueError("R0 must use the common selected discount")
+            if method_configuration["initial_value"] != 0.0:
+                raise ValueError("R0 initial_value must be explicit zero")
+            tolerance = method_configuration["convergence_tolerance"]
+            if (
+                not isinstance(tolerance, (int, float))
+                or isinstance(tolerance, bool)
+                or not math.isfinite(float(tolerance))
+                or float(tolerance) <= 0.0
+            ):
+                raise ValueError("R0 convergence_tolerance must be finite and positive")
+            _positive_integer(
+                method_configuration["max_iterations"], field="R0 max_iterations"
+            )
+    if regime_ids != set(expected_regimes):
+        raise ValueError("agent_regimes must exactly cover f0, c0, and r0")
+
     robust = _object(payload["robust_prior"], field="robust_prior")
     _exact_keys(
         robust,
-        {"set_id", "fixed_before_pilot", "candidate_action_mappings"},
+        {
+            "set_id",
+            "fixed_before_pilot",
+            "uncertainty_semantics",
+            "candidate_action_mappings",
+        },
         field="robust_prior",
     )
     _nonempty_string(robust["set_id"], field="robust_prior.set_id")
     if robust["fixed_before_pilot"] is not True:
         raise ValueError("robust uncertainty set must be fixed before pilot outcomes")
+    if (
+        robust["uncertainty_semantics"]
+        != "state-action-rectangular-closure-of-candidate-mappings"
+    ):
+        raise ValueError("robust prior must declare s,a-rectangular closure semantics")
     robust_mappings = tuple(
         _mapping(item, field="robust candidate mapping")
         for item in _sequence(
@@ -440,7 +528,15 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
     search = _object(tuning["q_learning_search"], field="q_learning_search")
     _exact_keys(
         search,
-        {"strategy", "learning_rates", "exploration_epsilons", "discount_factors"},
+        {
+            "strategy",
+            "learning_rates",
+            "exploration_epsilons",
+            "discount_factors",
+            "stage_one_discount_factor",
+            "stage_two_rule",
+            "total_unique_configurations",
+        },
         field="q_learning_search",
     )
     if search["strategy"] != "staged-dyadic-grid":
@@ -450,6 +546,18 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
         values = tuple(_probability(item, field=field, allow_one=False) for item in candidates)
         if not values or len(set(values)) != len(values):
             raise ValueError(f"q_learning_search.{field} must be non-empty and unique")
+    if search["stage_one_discount_factor"] not in search["discount_factors"]:
+        raise ValueError("stage-one discount must be in discount_factors")
+    if (
+        search["stage_two_rule"]
+        != "evaluate remaining discount factors only for the stage-one winner"
+    ):
+        raise ValueError("unsupported staged Q-learning search rule")
+    expected_search_count = len(search["learning_rates"]) * len(
+        search["exploration_epsilons"]
+    ) + len(search["discount_factors"]) - 1
+    if search["total_unique_configurations"] != expected_search_count:
+        raise ValueError("total_unique_configurations does not match staged search")
     if tuning["robust_set_policy"] != "fixed-declared-set-no-pilot-outcome-tuning":
         raise ValueError("robust_set_policy must forbid pilot-outcome tuning")
     _unique_strings(tuning["checkpoint_selection"], field="checkpoint_selection")
@@ -544,7 +652,72 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
     _positive_integer(resources["initial_concurrency"], field="initial_concurrency")
     if resources["preflight_required"] is not True or resources["gpu_required"] is not False:
         raise ValueError("pilot resource policy must require CPU preflight without GPU")
-    _nonempty_string(resources["child_timeout_rule"], field="child_timeout_rule")
+    timeout = _object(resources["child_timeout_rule"], field="child_timeout_rule")
+    _exact_keys(
+        timeout,
+        {
+            "measured_preflight_multiplier",
+            "minimum_seconds",
+            "maximum_seconds",
+            "overflow_action",
+        },
+        field="child_timeout_rule",
+    )
+    _positive_integer(
+        timeout["measured_preflight_multiplier"], field="measured_preflight_multiplier"
+    )
+    minimum_timeout = _positive_integer(timeout["minimum_seconds"], field="minimum_seconds")
+    maximum_timeout = _positive_integer(timeout["maximum_seconds"], field="maximum_seconds")
+    if maximum_timeout <= minimum_timeout:
+        raise ValueError("maximum timeout must exceed minimum timeout")
+    if timeout["overflow_action"] != "protocol-amendment-before-pilot":
+        raise ValueError("timeout overflow must require a protocol amendment")
+
+    stopping = _object(payload["stopping_policy"], field="stopping_policy")
+    _exact_keys(
+        stopping,
+        {
+            "training",
+            "evaluation",
+            "early_success_stopping",
+            "invalid_or_nonfinite_state",
+            "timeout",
+        },
+        field="stopping_policy",
+    )
+    if stopping != {
+        "training": "fixed-configured-episode-count",
+        "evaluation": "fixed-pre-and-post-episode-blocks",
+        "early_success_stopping": False,
+        "invalid_or_nonfinite_state": "fail-immediately-and-retain",
+        "timeout": "finalize-failed-and-retain-partial-output",
+    }:
+        raise ValueError("stopping_policy must match the bounded pilot lifecycle")
+
+    analysis = _object(payload["pilot_analysis"], field="pilot_analysis")
+    _exact_keys(
+        analysis,
+        {
+            "unit_of_analysis",
+            "pairing_block",
+            "aggregation",
+            "inferential_claims_allowed",
+            "non_recovery_handling",
+            "failed_or_invalid_handling",
+        },
+        field="pilot_analysis",
+    )
+    for field in (
+        "unit_of_analysis",
+        "pairing_block",
+        "aggregation",
+        "non_recovery_handling",
+        "failed_or_invalid_handling",
+    ):
+        _nonempty_string(analysis[field], field=f"pilot_analysis.{field}")
+    if analysis["inferential_claims_allowed"] is not False:
+        raise ValueError("pilot analysis cannot authorize inferential claims")
+    _unique_strings(payload["required_artifacts"], field="required_artifacts")
 
     failure = _object(
         payload["failure_and_exclusion_policy"], field="failure_and_exclusion_policy"
