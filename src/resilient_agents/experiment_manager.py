@@ -1,6 +1,3 @@
-"""Experiment management API for dashboard backend and batch execution."""
-from __future__ import annotations
-
 import json
 import logging
 import subprocess
@@ -10,9 +7,6 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
-
-from .run_bundle import FINALIZATION_MARKER
-from .pilot_protocol import load_pilot_protocol
 
 logger = logging.getLogger(__name__)
 
@@ -52,12 +46,21 @@ class ExperimentRegistry:
             for run_dir in sorted(self.runs_dir.iterdir()):
                 if run_dir.is_dir():
                     manifest_path = run_dir / "manifest.json"
-                    if manifest_path.exists():
-                        try:
-                            with open(manifest_path, "r", encoding="utf-8") as f:
-                                entries.append(json.load(f))
-                        except Exception as e:
-                            logger.warning("Failed to load manifest %s: %s", manifest_path, e)
+                    finalized_marker = run_dir / ".finalized"
+                    
+                    if not finalized_marker.exists():
+                        continue # Incomplete or interrupted run
+                    
+                    if not manifest_path.exists():
+                        raise ValueError(f"Finalized run {run_dir.name} is missing manifest.json")
+                        
+                    with open(manifest_path, "r", encoding="utf-8") as f:
+                        manifest = json.load(f)
+                    
+                    if "status" not in manifest or manifest.get("run_id") != run_dir.name:
+                        raise ValueError(f"Malformed manifest in {run_dir.name}")
+                        
+                    entries.append(manifest)
         
         with acquire_single_writer_lock(self.repo_root):
             self.index_path.parent.mkdir(parents=True, exist_ok=True)
@@ -116,9 +119,9 @@ class CampaignManager:
         
         for req in requests:
             run_id = req["run_id"]
-            manifest_path = self.repo_root / "results" / "runs" / run_id / "manifest.json"
-            if manifest_path.exists():
-                logger.info("Run %s already exists, skipping.", run_id)
+            finalized_marker = self.repo_root / "results" / "runs" / run_id / ".finalized"
+            if finalized_marker.exists():
+                logger.info("Run %s is already finalized, skipping.", run_id)
                 continue
             
             with acquire_single_writer_lock(self.repo_root):

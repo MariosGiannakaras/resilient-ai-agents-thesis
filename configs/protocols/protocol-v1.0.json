@@ -1,11 +1,10 @@
 {
   "schema_version": 1,
   "protocol_version": "protocol-v1.0",
-  "status": "pilot-unfrozen",
+  "status": "frozen",
   "scientific_scope": {
-    "primary_question": "How do frozen nominal, continual tabular learning, and declared-set robust planning differ in resistance and recovery after an unannounced persistent action remap?",
-    "pilot_purpose": "Measure feasibility, runtime, variance, censoring, metric sensitivity, and distinct agent behavior before protocol-v1.0 is frozen.",
-    "final_evidence_use": false
+    "primary_question": "How do frozen nominal and continual tabular Q-learning differ in resistance and recovery after an unannounced persistent action remap?",
+    "final_evidence_use": true
   },
   "gridworld_schema_version": 1,
   "information_policy": {
@@ -24,14 +23,11 @@
       "tune-l01",
       "tune-l02"
     ],
-    "pilot": [
-      "pilot-l01",
-      "pilot-l02"
-    ],
     "final": [
       "final-l01",
       "final-l02"
-    ]
+    ],
+    "pilot": []
   },
   "layouts": [
     {
@@ -203,90 +199,6 @@
       }
     },
     {
-      "layout_id": "pilot-l01",
-      "stage": "pilot",
-      "grid": {
-        "width": 7,
-        "height": 7,
-        "start": [
-          0,
-          0
-        ],
-        "goal": [
-          6,
-          6
-        ],
-        "obstacles": [
-          [
-            1,
-            1
-          ],
-          [
-            1,
-            2
-          ],
-          [
-            3,
-            3
-          ],
-          [
-            3,
-            4
-          ],
-          [
-            5,
-            1
-          ],
-          [
-            5,
-            5
-          ]
-        ]
-      }
-    },
-    {
-      "layout_id": "pilot-l02",
-      "stage": "pilot",
-      "grid": {
-        "width": 7,
-        "height": 7,
-        "start": [
-          0,
-          0
-        ],
-        "goal": [
-          6,
-          6
-        ],
-        "obstacles": [
-          [
-            1,
-            4
-          ],
-          [
-            2,
-            2
-          ],
-          [
-            2,
-            4
-          ],
-          [
-            4,
-            2
-          ],
-          [
-            4,
-            4
-          ],
-          [
-            5,
-            2
-          ]
-        ]
-      }
-    },
-    {
       "layout_id": "final-l01",
       "stage": "final",
       "grid": {
@@ -398,7 +310,7 @@
     },
     {
       "condition_id": "remap-min-in-set",
-      "scientific_role": "Primary minimal non-identity persistent change represented in the declared robust set",
+      "scientific_role": "Primary minimal non-identity persistent action remap",
       "mechanism": "action-remap",
       "action_mapping": {
         "up": "right",
@@ -412,7 +324,7 @@
     },
     {
       "condition_id": "remap-max-out-of-set",
-      "scientific_role": "Primary maximal four-action derangement outside the declared robust set",
+      "scientific_role": "Primary maximal four-action derangement",
       "mechanism": "action-remap",
       "action_mapping": {
         "up": "right",
@@ -511,10 +423,14 @@
   ],
   "tuning": {
     "root_seeds": [
-      10940500274998661290,
-      13639469163949457533,
-      18377731416598846249,
-      5508570176503139448
+      5503020672431200288,
+      16977019773666954562,
+      14091497793635932400,
+      16751190313276749006,
+      3740697667529417396,
+      12275801077733188051,
+      10163253341405411970,
+      2419429106513061577
     ],
     "training_episodes_per_layout": 512,
     "nominal_evaluation_episodes_per_layout": 64,
@@ -541,7 +457,6 @@
       "stage_two_rule": "evaluate remaining discount factors only for the stage-one winner",
       "total_unique_configurations": 18
     },
-    "robust_set_policy": "fixed-declared-set-no-pilot-outcome-tuning",
     "checkpoint_selection": [
       "highest mean nominal episode return across tuning layouts and roots",
       "highest worst-layout mean nominal episode return",
@@ -551,22 +466,38 @@
   },
   "evaluation": {
     "root_seeds": [
-      1026847926404610462,
-      6839596180442651346,
-      2258728696626565720,
-      1287010195568088799,
-      945351111358374058,
-      6831454145019129198,
-      5030118478018109777,
-      5446332115853614979,
-      293143515607798170,
-      864186096263678575,
-      2145917995920697484,
-      5552642720119322322,
-      5176572018665656244,
-      6604115266222097962,
-      6468581141273039754,
-      3869387381345962231
+      8555032160258737731,
+      306272420521999340,
+      17053583081442768967,
+      7328387268625033064,
+      7091102011837838809,
+      7869756354941686908,
+      3573301682757755832,
+      12192176586571581449,
+      3726260389596265252,
+      16689308005898093510,
+      7507884838469799488,
+      8826246144830268970,
+      4471291124374020047,
+      14601810308660981034,
+      6436433943772546935,
+      17614643066835405579,
+      6394792170107886275,
+      6535045821020350713,
+      1126278363240146695,
+      11806102082137757789,
+      13931780082255575515,
+      6731814002892498103,
+      14431546665965442511,
+      96541596338111770,
+      5290109970838443835,
+      17552869093764994384,
+      16279948895382398933,
+      18384533043252731945,
+      3333157123852873738,
+      11801489268725889253,
+      2518676339596954230,
+      4259600507992881793
     ],
     "pre_change_episodes": 16,
     "post_change_episodes": 32,
@@ -617,7 +548,7 @@
       "measured_preflight_multiplier": 20,
       "minimum_seconds": 60,
       "maximum_seconds": 7200,
-      "overflow_action": "protocol-amendment-before-pilot"
+      "overflow_action": "protocol-amendment-before-final"
     },
     "gpu_required": false
   },
@@ -628,19 +559,11 @@
     "invalid_or_nonfinite_state": "fail-immediately-and-retain",
     "timeout": "finalize-failed-and-retain-partial-output"
   },
-  "pilot_analysis": {
-    "unit_of_analysis": "root-seed-layout-agent-condition",
-    "pairing_block": "same root seed, layout, checkpoint, and episode seed schedule",
-    "aggregation": "retain per-unit distributions and recovery-status counts",
-    "inferential_claims_allowed": false,
-    "non_recovery_handling": "explicit NOT_RECOVERED with null recovery time",
-    "failed_or_invalid_handling": "retain separately; never convert to poor completed outcome"
-  },
   "required_artifacts": [
     "resolved protocol and scenario configuration",
     "root and derived RNG seeds",
     "source and runtime provenance",
-    "common Q checkpoint checksum or robust plan checksum",
+    "common Q checkpoint checksum",
     "event log and per-episode return curves",
     "execution outcome and failure or invalid reason",
     "metric sensitivity summaries",
@@ -664,5 +587,18 @@
       "predeclared scenario or agent contract violation"
     ]
   },
-  "tuning_policy": "reuse-v0.1-f0-selection-no-retuning"
+  "tuning_policy": "reuse-v0.1-f0-selection-no-retuning",
+  "statistical_analysis_plan": {
+    "unit_of_analysis": "root-seed-layout-agent-condition",
+    "pairing_block": "same root seed, layout, checkpoint, and episode seed schedule",
+    "aggregation": "mean and standard deviation of cumulative deficit and gap across 32 final roots",
+    "inferential_claims_allowed": true,
+    "non_recovery_handling": "explicit NOT_RECOVERED with null recovery time",
+    "failed_or_invalid_handling": "retain separately; never convert to poor completed outcome",
+    "estimands": [
+      "cumulative_deficit",
+      "immediate_degradation",
+      "recovery_count"
+    ]
+  }
 }

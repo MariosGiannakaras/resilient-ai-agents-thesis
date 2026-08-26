@@ -190,7 +190,6 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
         "metric_sensitivity",
         "resource_policy",
         "stopping_policy",
-        "pilot_analysis",
         "required_artifacts",
         "failure_and_exclusion_policy",
     }
@@ -199,6 +198,12 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
         expected_keys.add("robust_prior")
     if "tuning_policy" in actual_keys:
         expected_keys.add("tuning_policy")
+    if "pilot_analysis" in actual_keys:
+        expected_keys.add("pilot_analysis")
+    elif "statistical_analysis_plan" in actual_keys:
+        expected_keys.add("statistical_analysis_plan")
+    else:
+        raise ValueError("Must have pilot_analysis or statistical_analysis_plan")
 
     _exact_keys(payload, expected_keys, field="pilot protocol")
     if payload["schema_version"] != PILOT_PROTOCOL_SCHEMA_VERSION:
@@ -206,18 +211,24 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
     if payload["gridworld_schema_version"] != GRIDWORLD_SCHEMA_VERSION:
         raise ValueError("pilot protocol GridWorld schema version mismatch")
     _nonempty_string(payload["protocol_version"], field="protocol_version")
-    if payload["status"] != "pilot-unfrozen":
-        raise ValueError("pilot protocol status must be pilot-unfrozen")
+    if payload["status"] not in ("pilot-unfrozen", "frozen"):
+        raise ValueError("pilot protocol status must be pilot-unfrozen or frozen")
     scope = _object(payload["scientific_scope"], field="scientific_scope")
+    expected_scope_keys = {"primary_question", "final_evidence_use"}
+    if "pilot_purpose" in scope:
+        expected_scope_keys.add("pilot_purpose")
     _exact_keys(
         scope,
-        {"primary_question", "pilot_purpose", "final_evidence_use"},
+        expected_scope_keys,
         field="scientific_scope",
     )
     _nonempty_string(scope["primary_question"], field="primary_question")
-    _nonempty_string(scope["pilot_purpose"], field="pilot_purpose")
-    if scope["final_evidence_use"] is not False:
+    if "pilot_purpose" in scope:
+        _nonempty_string(scope["pilot_purpose"], field="pilot_purpose")
+    if payload["status"] == "pilot-unfrozen" and scope["final_evidence_use"] is not False:
         raise ValueError("pilot protocol cannot authorize final evidence use")
+    if payload["status"] == "frozen" and scope["final_evidence_use"] is not True:
+        raise ValueError("frozen protocol must authorize final evidence use")
 
     policy_payload = _object(payload["information_policy"], field="information_policy")
     _exact_keys(
@@ -238,7 +249,7 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
     partition_payload = _object(payload["partitions"], field="partitions")
     _exact_keys(partition_payload, set(_STAGES), field="partitions")
     partition_values = {
-        stage: _unique_strings(partition_payload[stage], field=f"partitions.{stage}")
+        stage: tuple(_nonempty_string(x, field=f"partitions.{stage}") for x in partition_payload.get(stage, []))
         for stage in _STAGES
     }
     partition = ProtocolPartition(
@@ -517,18 +528,16 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
                     raise ValueError("out-of-set condition mapping appears in robust prior")
 
     tuning = _object(payload["tuning"], field="tuning")
-    _exact_keys(
-        tuning,
-        {
+    expected_tuning_keys = {
             "root_seeds",
             "training_episodes_per_layout",
             "nominal_evaluation_episodes_per_layout",
             "q_learning_search",
-            "robust_set_policy",
             "checkpoint_selection",
-        },
-        field="tuning",
-    )
+    }
+    if "robust_set_policy" in tuning:
+        expected_tuning_keys.add("robust_set_policy")
+    _exact_keys(tuning, expected_tuning_keys, field="tuning")
     tuning_seeds = _seeds(tuning["root_seeds"], field="tuning.root_seeds")
     _positive_integer(
         tuning["training_episodes_per_layout"], field="training_episodes_per_layout"
@@ -570,7 +579,7 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
     ) + len(search["discount_factors"]) - 1
     if search["total_unique_configurations"] != expected_search_count:
         raise ValueError("total_unique_configurations does not match staged search")
-    if tuning["robust_set_policy"] != "fixed-declared-set-no-pilot-outcome-tuning":
+    if "robust_set_policy" in tuning and tuning["robust_set_policy"] != "fixed-declared-set-no-pilot-outcome-tuning":
         raise ValueError("robust_set_policy must forbid pilot-outcome tuning")
     _unique_strings(tuning["checkpoint_selection"], field="checkpoint_selection")
 
@@ -682,7 +691,7 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
     maximum_timeout = _positive_integer(timeout["maximum_seconds"], field="maximum_seconds")
     if maximum_timeout <= minimum_timeout:
         raise ValueError("maximum timeout must exceed minimum timeout")
-    if timeout["overflow_action"] != "protocol-amendment-before-pilot":
+    if timeout["overflow_action"] not in ("protocol-amendment-before-pilot", "protocol-amendment-before-final"):
         raise ValueError("timeout overflow must require a protocol amendment")
 
     stopping = _object(payload["stopping_policy"], field="stopping_policy")
@@ -706,7 +715,8 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
     }:
         raise ValueError("stopping_policy must match the bounded pilot lifecycle")
 
-    analysis = _object(payload["pilot_analysis"], field="pilot_analysis")
+    analysis_key = "pilot_analysis" if "pilot_analysis" in payload else "statistical_analysis_plan"
+    analysis = _object(payload[analysis_key], field=analysis_key)
     _exact_keys(
         analysis,
         {
@@ -716,8 +726,8 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
             "inferential_claims_allowed",
             "non_recovery_handling",
             "failed_or_invalid_handling",
-        },
-        field="pilot_analysis",
+        } | ({"estimands"} if analysis_key == "statistical_analysis_plan" else set()),
+        field=analysis_key,
     )
     for field in (
         "unit_of_analysis",
@@ -726,8 +736,8 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
         "non_recovery_handling",
         "failed_or_invalid_handling",
     ):
-        _nonempty_string(analysis[field], field=f"pilot_analysis.{field}")
-    if analysis["inferential_claims_allowed"] is not False:
+        _nonempty_string(analysis[field], field=f"{analysis_key}.{field}")
+    if analysis_key == "pilot_analysis" and analysis["inferential_claims_allowed"] is not False:
         raise ValueError("pilot analysis cannot authorize inferential claims")
     _unique_strings(payload["required_artifacts"], field="required_artifacts")
 
