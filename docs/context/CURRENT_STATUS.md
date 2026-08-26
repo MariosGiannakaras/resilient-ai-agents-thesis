@@ -26,8 +26,8 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-411` freshness review completed in canonical `ThesisBibliography`; no new citation-ready evidence required promotion. `bibliography-integration-v3` remains the immutable baseline.
 - `T-412` completed; frozen `protocol-v1.0` removed the conservative `R0` role (DEC-041).
 - Current work package: **WP5 — Experiment management and dashboard**.
-- Current task: **`T-510`**, ready. Exact next action: Begin implementing the local Streamlit dashboard (T-510) using `src/app/` following `UI_INFORMATION_ARCHITECTURE.md`.
-- `T-500` completed; implemented `experiment_manager.py` with RunRegistry, batch campaign lock, and resource snapshot.
+- Current task: **`T-512`**, ready. Exact next action: Add lightweight UX polish and onboarding.
+- `T-510` completed; created Streamlit baseline (Dashboard, New Experiment, Runs, Compare, Artifacts).
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline
