@@ -83,6 +83,8 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-008` — Optimize the canonical Codex bootstrap for minimal context use and reliable bounded execution.
   - Depends on: `T-006`, `T-007`.
   - Acceptance: every session starts from the three-file session-start core (`AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md`); further reading is task-specific; the canonical prompt does not duplicate domain policy; “execute completely” is bounded by task dependencies/review/external gates; quota recovery, documentation reconciliation, testing, and final reporting remain explicit; full repository CI passes.
+- [x] `T-009` — Scope the OpenAI developer-documentation MCP server to this trusted project.
+  - Acceptance: the project-local `.codex/config.toml` uses the supported streamable HTTP MCP configuration without secrets; Codex discovers the server inside this repository, does not expose it globally on the current machine, and a live documentation search succeeds.
 
 ## WP1 — Target-machine baseline
 
