@@ -29,12 +29,12 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP5 — Experiment management and dashboard
-- **Current task:** `T-510`
+- **Current task:** `T-512`
 - **State:** `IN_PROGRESS`
-- **Active branch / PR:** `fix/t-500-t-510-corrective-repair`
-- **Last validated point:** T-500 experiment_manager uses canonical FINALIZATION_MARKER and full integrity validation; tests use real RunBundle.
-- **Uncommitted work:** Repairing UI pages, run_final_campaign, lifecycle gate, doc consistency.
-- **Exact next action:** Validate tests, push, open PR, wait for green CI, merge.
+- **Active branch / PR:** `feature/t-512-ux-polish`
+- **Last validated point:** T-510 Streamlit dashboard repair completed and verified by CI.
+- **Uncommitted work:** Implementing tooltips, concise contextual help, semantic statuses, and lightweight onboarding.
+- **Exact next action:** Audit Streamlit UI components and add tooltips, descriptions, and the onboarding flow as per UI_INFORMATION_ARCHITECTURE.md.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -159,10 +159,10 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-500` — Implement only the pilot-proven experiment-management features needed for final work: truthful lifecycle state, history/registry, batch execution, interruption/recovery where safe, and current resource snapshot.
   - Depends on: `T-412`.
   - Acceptance: features use filesystem run bundles as source of truth; any index/database is rebuildable with strict integrity semantics; batch/concurrent execution serializes shared `run-index` and Git publication through a single-writer boundary; unsafe publication fails closed; unittest CI passes.
-- [ ] IN_PROGRESS `T-510` — Implement the bounded local Streamlit dashboard as a thin layer over the same validated core.
+- [x] `T-510` — Implement the bounded local Streamlit dashboard as a thin layer over the same validated core.
   - Depends on: `T-500`.
   - Acceptance: New Experiment actually launches validated core; Runs, Compare, Artifacts operate on real core data with no duplicated logic; root `run_app.bat` implemented; follows `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`.
-- [ ] BLOCKED `T-512` — Complete self-explanatory UX polish and lightweight onboarding after the final dashboard structure is stable.
+- [ ] IN_PROGRESS `T-512` — Complete self-explanatory UX polish and lightweight onboarding after the final dashboard structure is stable.
   - Depends on: `T-510`.
   - Acceptance: confirmed self-explanatory UX requirements in `CONFIRMED_REQUIREMENTS.md` and `UI_INFORMATION_ARCHITECTURE.md` are implemented, including concise contextual help/tooltips, pre-run review, consistent semantic statuses, actionable states, proportionate confirmations, and a short skippable/replayable Previous/Next/Skip/Finish onboarding without unnecessary frontend infrastructure.
 - [ ] BLOCKED `T-511` — Validate the complete application/user workflow, UX, truthful state, screenshots, exports, onboarding/help, and end-to-end consistency.

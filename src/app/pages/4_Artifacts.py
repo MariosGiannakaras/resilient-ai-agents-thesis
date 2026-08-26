@@ -29,15 +29,15 @@ registry = ExperimentRegistry(repo_root)
 runs = registry.list_runs()
 
 # Evidence inventory
-st.subheader("Evidence Inventory")
+st.subheader("Evidence Inventory", help="A count of indexed runs across all protocol stages.")
 
 completed = [r for r in runs if r.get("status") == "completed"]
 failed = [r for r in runs if r.get("status") == "failed"]
 
 col1, col2, col3 = st.columns(3)
-col1.metric("Completed Runs", len(completed))
-col2.metric("Failed Runs", len(failed))
-col3.metric("Total Indexed", len(runs))
+col1.metric("Completed Runs", len(completed), help="Runs that finished without fatal errors.")
+col2.metric("Failed Runs", len(failed), help="Runs that threw unhandled exceptions or failed finalization.")
+col3.metric("Total Indexed", len(runs), help="Total number of finalized runs tracked by the experiment registry.")
 
 # Partition-based inventory
 if completed:
@@ -49,7 +49,7 @@ if completed:
         st.markdown(f"**{stage_name}:** {len(stage_runs)} completed runs")
 
 # Analysis summaries
-st.subheader("Analysis Summaries")
+st.subheader("Analysis Summaries", help="Browse and export aggregated statistical analysis outputs.")
 summaries_dir = repo_root / "results" / "summaries"
 
 if summaries_dir.exists():
@@ -84,6 +84,7 @@ if summaries_dir.exists():
                             overview_json,
                             file_name=f"{analysis_dir.name}-overview.json",
                             mime="application/json",
+                            help="Download the summary JSON file containing the high-level metrics for this analysis."
                         )
 
                         # Show full analysis files
@@ -96,14 +97,14 @@ if summaries_dir.exists():
                                     f"({f.stat().st_size:,} bytes)"
                                 )
                 except (json.JSONDecodeError, OSError) as exc:
-                    st.warning(f"Could not load analysis: {exc}")
+                    st.warning(f"Could not load analysis: {exc}", icon="⚠️")
     else:
-        st.info("No analysis summaries have been generated yet.")
+        st.info("No analysis summaries have been generated yet.", icon="ℹ️")
 else:
-    st.info("No analysis directory found at `results/summaries/`.")
+    st.info("No analysis directory found at `results/summaries/`.", icon="ℹ️")
 
 # Campaign state
-st.subheader("Campaign State")
+st.subheader("Campaign State", help="Browse campaign configurations and selected tuning parameters.")
 campaigns_dir = repo_root / "results" / "campaigns"
 if campaigns_dir.exists():
     for campaign_dir in sorted(campaigns_dir.iterdir()):
@@ -153,29 +154,31 @@ if campaigns_dir.exists():
                             state_json,
                             file_name=f"{campaign_dir.name}-state.json",
                             mime="application/json",
+                            help="Download the campaign configuration JSON."
                         )
                 except (json.JSONDecodeError, OSError) as exc:
-                    st.warning(f"Could not load campaign state: {exc}")
+                    st.warning(f"Could not load campaign state: {exc}", icon="⚠️")
 else:
-    st.info("No campaign data found.")
+    st.info("No campaign data found.", icon="ℹ️")
 
 # Frozen evidence
 st.divider()
-st.subheader("Thesis Evidence Package")
+st.subheader("Thesis Evidence Package", help="The final, frozen evidence bundle used for the thesis publication.")
 thesis_final = repo_root / "results" / "thesis-final"
 if thesis_final.exists() and any(thesis_final.iterdir()):
-    st.success("Frozen thesis evidence is available.")
+    st.success("Frozen thesis evidence is available.", icon="✅")
     for item in sorted(thesis_final.iterdir()):
         st.markdown(f"- `{item.name}`")
 else:
     st.info(
         "No frozen thesis evidence package yet. "
-        "This is generated after T-601 (final evidence freeze) is completed."
+        "This is generated after T-601 (final evidence freeze) is completed.",
+        icon="ℹ️"
     )
 
 # Protocol reference
 st.divider()
-st.subheader("Protocol Reference")
+st.subheader("Protocol Reference", help="The canonical JSON protocol that defines the scientific rules for the final evaluation.")
 protocol_path = repo_root / "configs" / "protocols" / "protocol-v1.0.json"
 if protocol_path.exists():
     try:
@@ -199,8 +202,9 @@ if protocol_path.exists():
             json.dumps(protocol_data, indent=2, ensure_ascii=False),
             file_name="protocol-v1.0.json",
             mime="application/json",
+            help="Download the active scientific protocol."
         )
     except (json.JSONDecodeError, OSError):
-        st.warning("Could not load protocol file.")
+        st.warning("Could not load protocol file.", icon="⚠️")
 else:
-    st.info("No frozen protocol found.")
+    st.info("No frozen protocol found.", icon="ℹ️")

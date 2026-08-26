@@ -35,7 +35,8 @@ if not completed_runs:
     st.info(
         "No completed runs available for comparison. "
         "Complete experiments in the **New Experiment** tab first, "
-        "then return here to compare results."
+        "then return here to compare results.",
+        icon="ℹ️"
     )
     st.stop()
 
@@ -45,7 +46,7 @@ for col in ("run_id", "status", "protocol_version", "stage", "started_at_utc"):
     if col not in df.columns:
         df[col] = "Unknown"
 
-st.subheader("Select Runs to Compare")
+st.subheader("Select Runs to Compare", help="Only completed runs can be compared. Select runs from the same protocol version and stage to ensure scientific validity.")
 selected_ids = st.multiselect(
     "Select two or more completed runs",
     options=df["run_id"].tolist(),
@@ -53,7 +54,7 @@ selected_ids = st.multiselect(
 )
 
 if len(selected_ids) < 2:
-    st.info("Select at least two runs to compare.")
+    st.info("Select at least two runs to compare.", icon="ℹ️")
     st.stop()
 
 # Compatibility check
@@ -63,23 +64,25 @@ stages = selected_df["stage"].unique()
 
 if len(protocols) > 1:
     st.warning(
-        f"⚠️ Selected runs use different protocol versions: {', '.join(protocols)}. "
-        "Cross-protocol comparison may not be scientifically meaningful."
+        f"Selected runs use different protocol versions: {', '.join(protocols)}. "
+        "Cross-protocol comparison may not be scientifically meaningful.",
+        icon="⚠️"
     )
 if len(stages) > 1:
     st.warning(
-        f"⚠️ Selected runs span different stages: {', '.join(stages)}. "
-        "Pilot and final evidence should not be mixed for inferential claims."
+        f"Selected runs span different stages: {', '.join(stages)}. "
+        "Pilot and final evidence should not be mixed for inferential claims.",
+        icon="⚠️"
     )
 
 # Display comparison table
-st.subheader("Run Summary")
+st.subheader("Run Summary", help="A high-level overview of the selected runs.")
 display_cols = ["run_id", "protocol_version", "stage", "started_at_utc", "finished_at_utc"]
 available_cols = [c for c in display_cols if c in selected_df.columns]
 st.dataframe(selected_df[available_cols], use_container_width=True)
 
 # Load summaries for selected runs
-st.subheader("Run Details")
+st.subheader("Run Details", help="Expand each run to view its specific manifest details and aggregate summary metrics.")
 for run_id in selected_ids:
     details = registry.get_run(run_id)
     if details:
@@ -100,13 +103,13 @@ for run_id in selected_ids:
                     summary = json.loads(summary_path.read_text(encoding="utf-8"))
                     st.json(summary)
                 except (json.JSONDecodeError, OSError):
-                    st.warning("Could not load run summary.")
+                    st.warning("Could not load run summary.", icon="⚠️")
             else:
-                st.info("No summary file available for this run.")
+                st.info("No summary file available for this run.", icon="ℹ️")
 
 # Link to analysis
 st.divider()
-st.subheader("Analysis Summaries")
+st.subheader("Analysis Summaries", help="Aggregated statistical analyses generated from campaigns.")
 
 summaries_dir = repo_root / "results" / "summaries"
 if summaries_dir.exists():
@@ -134,9 +137,9 @@ if summaries_dir.exists():
                 except (json.JSONDecodeError, OSError):
                     pass
     else:
-        st.info("No analysis summaries generated yet.")
+        st.info("No analysis summaries generated yet.", icon="ℹ️")
 else:
     st.info(
         "No analysis summaries found. Run experiments and generate analyses "
-        "to see comparisons here."
+        "to see comparisons here.", icon="ℹ️"
     )

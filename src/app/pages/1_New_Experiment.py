@@ -37,6 +37,7 @@ selected_protocol = st.selectbox(
     "Protocol Version",
     options=protocol_files,
     format_func=lambda p: p.name,
+    help="Select the canonical JSON protocol defining the scientific boundaries of the experiment."
 )
 
 if selected_protocol:
@@ -52,7 +53,7 @@ if selected_protocol:
 
     st.success(f"Protocol **{protocol_version}** loaded. Status: `{protocol_status}`")
 
-    st.subheader("Pre-run Review")
+    st.subheader("Pre-run Review", help="Review the resolved protocol configuration before launching.")
 
     col1, col2 = st.columns(2)
     with col1:
@@ -92,24 +93,27 @@ if selected_protocol:
     if not is_frozen:
         st.warning(
             f"Protocol status is `{protocol_status}`. "
-            "Only frozen protocols can be used for final campaigns."
+            "Only frozen protocols can be used for final campaigns.",
+            icon="⚠️"
         )
 
     if is_frozen and has_final_partition and not t511_complete:
         st.warning(
-            "⚠️ **Final-reserve partition is protected.** "
+            "**Final-reserve partition is protected.** "
             "Final experiment execution requires T-511 (application validation) "
             "to be completed first. This lifecycle gate protects the "
-            "uncontaminated evaluation partition."
+            "uncontaminated evaluation partition.",
+            icon="⚠️"
         )
         st.info(
             "💡 You can validate the dashboard/workflow using "
-            "development or tuning partitions with the same scientific core."
+            "development or tuning partitions with the same scientific core.",
+            icon="💡"
         )
 
     if is_frozen and has_final_partition and t511_complete:
-        st.success("✅ Protocol is frozen and lifecycle gate T-511 is satisfied.")
-        if st.button("🚀 Launch Final Campaign"):
+        st.success("Protocol is frozen and lifecycle gate T-511 is satisfied.", icon="✅")
+        if st.button("🚀 Launch Final Campaign", help="Launch the experiment batch in the background."):
             script_path = repo_root / "scripts" / "run_final_campaign.py"
             cmd = [
                 sys.executable,
@@ -124,12 +128,14 @@ if selected_protocol:
                 subprocess.Popen(cmd, start_new_session=True)
             st.info(
                 "Campaign launch requested. The campaign is running in a "
-                "separate process. Active runs will appear in the Runs tab."
+                "separate process. Active runs will appear in the Runs tab.",
+                icon="ℹ️"
             )
     elif not is_frozen:
-        st.info("Configure and validate using this pilot/development protocol.")
+        st.info("Configure and validate using this pilot/development protocol.", icon="ℹ️")
     else:
         st.info(
             "Final campaign is locked. Use development/tuning partitions "
-            "for workflow validation."
+            "for workflow validation.",
+            icon="🔒"
         )
