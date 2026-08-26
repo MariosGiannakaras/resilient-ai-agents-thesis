@@ -1,0 +1,21 @@
+T-511 POST-EXECUTION UI VALIDATION LOG
+========================================
+
+MAIN PAGE RENDER:
+- Markdown: ### Getting Started
+- Markdown: **1. Dashboard**
+- Markdown: This main page gives you a snapshot of your system resources and the most recent experiment runs. It's your starting point.
+- Markdown: Welcome to the experiment dashboard for the resilient AI agents thesis.
+
+Use the sidebar to navigate to:
+- **New Experiment**: Configure and launch valid experiment campaigns.
+- **Runs**: Monitor active runs, inspect history, and view details.
+- **Compare**: Compare completed runs against each other.
+- **Artifacts**: Generate thesis artifacts and figures.
+- Markdown: ✅ **`FINAL-L02-C07`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`
+- Markdown: ✅ **`FINAL-L02-C06`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`
+- Markdown: ✅ **`FINAL-L02-C05`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`
+- Markdown: ✅ **`FINAL-L02-C04`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`
+- Markdown: ✅ **`FINAL-L02-C03`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`
+
+SUCCESS: The application started cleanly without exceptions.

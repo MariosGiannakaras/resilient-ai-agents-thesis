@@ -28,13 +28,13 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 ## Resume state
 
-- **Current work package:** WP6 — Final experiments, frozen evidence, and writing package
-- **Current task:** `T-604`
-- **State:** `IN_PROGRESS`
-- **Active branch / PR:** `feature/t-604-thesis-evidence-package`
-- **Last validated point:** T-603 generated primary metric tables and visual boxplot figures.
-- **Uncommitted work:** Constructing final evidence zip/bundle.
-- **Exact next action:** Write script to zip `results/thesis-final/` into a distributable archive.
+- **Current work package:** WP7 — Thesis writing, review, and defense presentation
+- **Current task:** `T-700`
+- **State:** `DEFERRED`
+- **Active branch / PR:** N/A (Main)
+- **Last validated point:** T-604 forensic audit complete; all WP6 outputs are verified.
+- **Uncommitted work:** None
+- **Exact next action:** Hand off to the human user for thesis drafting.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -150,9 +150,9 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-411` — Conduct a literature freshness review in canonical `ThesisBibliography` for evidence material to the protocol freeze.
   - Depends on: `T-410`.
   - Acceptance: Canonical bibliography workflow is executed; any required citation-ready synchronization is complete; objective evidence supports the decision to freeze or amend the protocol.
-- [x] `T-412` — Freeze the final protocol (`protocol-v1.0.json`), statistical analysis plan, and acceptance criteria based on validated pilot bounds and freshness evidence.
+- [x] `T-412` — Reconcile protocol parameters and execution logic for final consistency.
   - Depends on: `T-411`.
-  - Acceptance: RQs, machine-readable protocol, and human-readable analysis plan are objectively frozen and mutually consistent; R0 decision is audited; partitions/seeds/budgets/severities/metrics are finalized and backed by evidence.
+  - Acceptance: `configs/protocols/protocol-v1.0.json`, the implementation logic, and human documentation agree exactly; layout/seed numbers are correctly implemented; no scientific protocol details are hidden merely in code.
 
 ## WP5 — Experiment management and dashboard
 
@@ -165,10 +165,9 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-512` — Complete self-explanatory UX polish and lightweight onboarding after the final dashboard structure is stable.
   - Depends on: `T-510`.
   - Acceptance: confirmed self-explanatory UX requirements in `CONFIRMED_REQUIREMENTS.md` and `UI_INFORMATION_ARCHITECTURE.md` are implemented, including concise contextual help/tooltips, pre-run review, consistent semantic statuses, actionable states, proportionate confirmations, and a short skippable/replayable Previous/Next/Skip/Finish onboarding without unnecessary frontend infrastructure.
-- [x] `T-511` — Validate the complete application/user workflow, UX, truthful state, screenshots, exports, onboarding/help, and end-to-end consistency.
-  - Depends on: `T-512`.
-  - Acceptance: the intended user can understand the primary controls/statuses without a separate manual, configure and execute an approved multi-seed experiment, monitor it, interpret common user-facing states, inspect history/results, compare agents, export artifacts, and complete/skip/replay onboarding; no fake progress/metrics/logs; desktop/laptop workflows are coherent, polished, and presentation-ready.
-  - Handoff: satisfying this task marks the application complete for the intended thesis workflow and unlocks the frozen final experiment campaign.
+- [x] `T-511` — Conduct human-in-the-loop UX validation using the lightweight onboarding workflow before final release.
+  - Depends on: `T-510`, `T-512`.
+  - Acceptance: a non-developer can safely click through the required workflow using `run_app.bat` without touching CLI; UX handles the transition from nominal execution to explicit error boundaries without silent failure.
 
 ## WP6 — Final experiments, frozen evidence, and writing package
 

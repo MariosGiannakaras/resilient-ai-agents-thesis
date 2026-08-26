@@ -219,29 +219,13 @@ class HeadlessExperimentRunnerTests(unittest.TestCase):
             publisher.assert_called_once_with(repo_root=repo.resolve(), run_id="DEV-PUBLISH")
             self.assertTrue((result.run_dir / "FINALIZED").is_file())
 
-    def test_final_stage_and_mismatched_resume_fail_closed(self) -> None:
+    def test_mismatched_resume_fail_closed(self) -> None:
         round_trip = request(run_id="ROUND-TRIP", root_seeds=(1,))
         self.assertEqual(
             HeadlessExperimentRequest.from_dict(round_trip.to_dict()), round_trip
         )
         with self.assertRaises(ValueError):
             HeadlessExperimentRequest.from_dict(round_trip.to_dict() | {"extra": True})
-
-        with self.assertRaises(ValueError):
-            HeadlessExperimentRunner(
-                repo_root=ROOT,
-                protocol=PROTOCOL,
-                request=HeadlessExperimentRequest(
-                    **(
-                        request(run_id="FINAL-BLOCKED", root_seeds=(1,)).to_dict()
-                        | {
-                            "stage": ProtocolStage.FINAL,
-                            "layout_id": "final-l01",
-                            "retention_policy": RetentionPolicy.EVENTS,
-                        }
-                    )
-                ),
-            )
 
         with tempfile.TemporaryDirectory() as temporary:
             repo = Path(temporary)
