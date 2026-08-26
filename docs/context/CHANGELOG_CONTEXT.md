@@ -6,7 +6,8 @@ Record only material changes to the project source of truth. Detailed commit-by-
 
 - Validated project-owned Gymnasium and MiniGrid-adaptation mechanics against the same explicit research/information contract and deterministic fixture on the accepted native Windows runtime.
 - Recorded semantic parity, independent RNG and information-boundary checks, implementation/dependency surface, clean-source headless feasibility, and the MiniGrid v3.1.0 tag-level license inconsistency.
-- Kept formal implementation selection at the explicit `T-211` ADR gate; prototype fixture values and timing remain engineering evidence rather than frozen experiment parameters.
+- Accepted DEC-032: implement a small project-owned GridWorld using the locked Gymnasium 1.3.0 API through the existing core contracts; MiniGrid remains outside the core dependency path.
+- Kept prototype fixture values, timing, and all scientific environment/protocol parameters unfrozen.
 
 ## 2026-07-29 — Corrected bootstrap and thesis-completion-first scope
 

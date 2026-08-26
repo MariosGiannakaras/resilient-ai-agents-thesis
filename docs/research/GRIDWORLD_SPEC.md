@@ -1,8 +1,8 @@
 # GridWorld Specification Workspace
 
-**Status:** Active; final GridWorld implementation/scientific parameters are not yet selected.
+**Status:** Active; DEC-032 selects a project-owned environment using the locked Gymnasium 1.3.0 API, while scientific parameters remain unfrozen.
 
-The technical pre-screen in `docs/research/GRIDWORLD_LANDSCAPE_REVIEW.md` and completed comparison in `docs/research/GRIDWORLD_PROTOTYPE_COMPARISON.md` provide evidence for, but do not replace, the final `T-211` ADR. DEC-023 already establishes the shared environment/information/randomness/run architecture in `src/resilient_agents/`; GridWorld work must use those contracts rather than create parallel interfaces.
+The technical pre-screen in `docs/research/GRIDWORLD_LANDSCAPE_REVIEW.md` and completed comparison in `docs/research/GRIDWORLD_PROTOTYPE_COMPARISON.md` support DEC-032's selection of a small project-owned Gymnasium environment. DEC-023 already establishes the shared environment/information/randomness/run architecture in `src/resilient_agents/`; GridWorld work must use those contracts rather than create parallel interfaces.
 
 ## Confirmed purpose
 
@@ -10,14 +10,14 @@ The environment must be simple, controlled, and suitable for comparative evaluat
 
 Official examples include observation/data noise, rule changes, and action-execution failures. These remain scope examples rather than a frozen factorial design.
 
-## Candidates evaluated for the implementation decision
+## Evaluated implementation candidates
 
 The completed bounded comparison evaluated:
 
 | Strategy | Current role | Required evidence before selection |
 |---|---|---|
-| Project-owned Gymnasium-compatible environment | Leading minimal/custom path | Known-answer semantics, small implementation surface, deterministic seeding, disturbance extensibility, easy provenance/tests. |
-| Thin MiniGrid adaptation | Conditional reuse/adapt path | License/version review, transparent inherited semantics, no unnecessary orientation/partial-observation/action confounds, deterministic/testable wrapper boundary. |
+| Project-owned Gymnasium-compatible environment | **Selected by DEC-032** | Direct accepted semantics, smaller dependency/reasoning surface, deterministic tests, and target-machine feasibility. |
+| Thin MiniGrid adaptation | Rejected for the core path | Equivalent fixture behavior required project translation/bypass and added dependency/platform/tag-license uncertainty without a required capability advantage. |
 
 Gymnasium Toy Text environments may serve as reference fixtures. Other engines/frameworks are not added unless they solve a concrete requirement the retained prototype paths cannot satisfy.
 
@@ -73,4 +73,4 @@ No grid size, reward value, severity, changepoint, horizon, or recovery threshol
 
 ## ADR gate
 
-The GridWorld ADR is accepted only after both retained prototype paths are compared on scientific semantic transparency, implementation/dependency cost, deterministic testability, disturbance extensibility, information-access correctness, and measured feasibility. The simplest adequate option wins; feature richness is not a selection criterion by itself.
+DEC-032 satisfies the implementation ADR gate after both retained paths were compared on scientific semantic transparency, implementation/dependency cost, deterministic testability, disturbance extensibility, information-access correctness, and measured feasibility. `T-212`/`T-213` must now implement and validate the selected path without treating the prototype fixture as frozen scientific configuration.

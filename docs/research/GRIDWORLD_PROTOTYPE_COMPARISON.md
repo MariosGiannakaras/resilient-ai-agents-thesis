@@ -1,6 +1,6 @@
 # GridWorld Prototype Comparison
 
-**Status:** Completed evidence for `T-210`; implementation selection remains the `T-211` ADR.
+**Status:** Completed evidence for `T-210`; DEC-032 subsequently selected the project-owned Gymnasium strategy.
 **Comparison date:** 2026-08-26
 **Validated source:** `a22508dc3c78fd1af0729737234b31736dc1e87b` (clean working tree)
 
@@ -57,4 +57,4 @@ The benchmark recorded Windows 10, AMD64, CPython 3.12.13, Gymnasium 1.3.0, Mini
 
 Both candidates can satisfy the accepted external contract. The project-owned Gymnasium mechanics are smaller, faster in this bounded smoke check, semantically direct, and avoid MiniGrid's extra dependency/support/license uncertainty. The MiniGrid adaptation supplies no demonstrated scientific capability that the retained RQ needs and still requires project-owned code to neutralize inherited semantics.
 
-This comparison does not itself select the implementation. `T-211` applies the accepted simplicity-under-scientific-equivalence rule, records consequences and reopening conditions, and is the formal selection gate.
+This comparison did not itself select the implementation. DEC-032 applies the accepted simplicity-under-scientific-equivalence rule and records the formal selection, consequences, and reopening conditions.

@@ -114,14 +114,14 @@ Decision-driving citation-ready evidence currently includes `SRC-70772C0629`, `S
 
 ## GridWorld — current state
 
-GridWorld remains the confirmed simple controlled environment direction. The final implementation is **not yet selected**.
+GridWorld remains the confirmed simple controlled environment direction. DEC-032 selects a small project-owned implementation using the locked Gymnasium 1.3.0 API through the accepted core contracts; exact scientific parameters remain unfrozen.
 
 The completed bounded comparison evaluated two prototype paths against the same accepted contract and fixed fixture:
 
 1. a small project-owned Gymnasium-compatible environment;
 2. a MiniGrid adaptation that translated or bypassed inherited orientation, mission, observation, action, and reward conventions.
 
-Both passed deterministic semantic parity checks on the native target baseline. The project-owned mechanics were smaller and semantically direct, while MiniGrid added dependency/platform/license uncertainty without a demonstrated RQ capability advantage. `GRIDWORLD_PROTOTYPE_COMPARISON.md` records the evidence; `T-211` remains the formal ADR selection gate. Current shared contracts in `src/resilient_agents/` must be reused rather than creating a second environment interface.
+Both passed deterministic semantic parity checks on the native target baseline. The project-owned mechanics were smaller and semantically direct, while MiniGrid added dependency/platform/license uncertainty without a demonstrated RQ capability advantage. `GRIDWORLD_PROTOTYPE_COMPARISON.md` records the evidence, and DEC-032 applies it to select the project-owned path. Current shared contracts in `src/resilient_agents/` must be reused rather than creating a second environment interface.
 
 ## Models and metrics — current state
 
@@ -161,7 +161,7 @@ The final presentation is a distinct downstream deliverable after thesis stabili
 
 ## Current genuine gates
 
-The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline and durable snapshot provenance (`T-100` through `T-102`), research framing (`T-200`), and bounded GridWorld comparison (`T-210`) are complete. The GridWorld ADR (`T-211`) is the next dependency-valid research gate. Metrics, model selection, pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
+The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline and durable snapshot provenance (`T-100` through `T-102`), research framing (`T-200`), bounded GridWorld comparison (`T-210`), and implementation ADR (`T-211`) are complete. Implementing and validating the selected environment (`T-212`/`T-213`) are the next dependency-valid research gates. Metrics, model selection, pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
 
 Deferred, non-blocking inputs remain later supervisor corrections, eventual submission/presentation dates, a current official Word template, exact defense duration/file rules, and optional contextual example theses supplied near writing.
 
