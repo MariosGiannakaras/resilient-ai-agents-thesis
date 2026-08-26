@@ -23,6 +23,7 @@ class RetentionPolicy(str, Enum):
     SUMMARY = "summary"
     EVENTS = "events"
     FULL_TRACE = "full-trace"
+    EVENTS_PLUS_EPISODE_CURVES = "events-plus-episode-curves"
 
 
 @dataclass(frozen=True)

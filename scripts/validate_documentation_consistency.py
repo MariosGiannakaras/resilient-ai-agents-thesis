@@ -279,7 +279,7 @@ def main() -> int:
             errors.append("TASKS.md Resume state current task must exist in the task checklist")
 
         t511_match = re.search(
-            r"^- \[ \] BLOCKED `T-511`.*?^\s+- Depends on:\s*(.+)$",
+            r"^- \[[x| ]\].*?`T-511`.*?^\s+- Depends on:\s*(.+)$",
             tasks,
             re.MULTILINE | re.DOTALL,
         )

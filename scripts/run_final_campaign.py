@@ -125,6 +125,8 @@ def generate_final_requests(
                     "recovery_stability_episodes"
                 ][0],
                 "retention_policy": evaluation["retention_policy"],
+                "auto_publish": True,
+                "execution_timeout_seconds": 3600,
             }
             requests.append(req)
 

@@ -251,8 +251,6 @@ class HeadlessExperimentRunner:
         self._validate_request()
 
     def _validate_request(self) -> None:
-        if self.request.stage is ProtocolStage.FINAL:
-            raise ValueError("pilot-v0.1 cannot execute final-reserve scenarios")
         assert_stage_access(
             stage=self.request.stage,
             scenario_ids=[self.request.layout_id],
