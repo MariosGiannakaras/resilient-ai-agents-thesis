@@ -1,0 +1,408 @@
+{
+  "amendment": {
+    "base_protocol": "pilot-v0.1",
+    "pilot_seed_bank_reused_for_paired_implementation_retry": true,
+    "prior_attempts": [
+      {
+        "failure": null,
+        "run_id": "PV01-PILOT-L01-C01",
+        "status": "completed",
+        "supersession_reason": "pilot-v0.2 reruns the complete matrix after the confirmed R0 terminal-observation alias implementation defect"
+      },
+      {
+        "failure": null,
+        "run_id": "PV01-PILOT-L01-C02",
+        "status": "completed",
+        "supersession_reason": "pilot-v0.2 reruns the complete matrix after the confirmed R0 terminal-observation alias implementation defect"
+      },
+      {
+        "failure": null,
+        "run_id": "PV01-PILOT-L01-C03",
+        "status": "completed",
+        "supersession_reason": "pilot-v0.2 reruns the complete matrix after the confirmed R0 terminal-observation alias implementation defect"
+      },
+      {
+        "failure": null,
+        "run_id": "PV01-PILOT-L01-C04",
+        "status": "completed",
+        "supersession_reason": "pilot-v0.2 reruns the complete matrix after the confirmed R0 terminal-observation alias implementation defect"
+      },
+      {
+        "failure": null,
+        "run_id": "PV01-PILOT-L01-C05",
+        "status": "completed",
+        "supersession_reason": "pilot-v0.2 reruns the complete matrix after the confirmed R0 terminal-observation alias implementation defect"
+      },
+      {
+        "failure": {
+          "message": "cannot act from a terminal state",
+          "traceback": "Traceback (most recent call last):\n  File \"E:\\SystemFiles\\Desktop\\resilient-ai-agents-thesis\\src\\resilient_agents\\experiment_runner.py\", line 455, in run\n    result = self._run_root(bundle=bundle, root_seed=root_seed)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\SystemFiles\\Desktop\\resilient-ai-agents-thesis\\src\\resilient_agents\\experiment_runner.py\", line 515, in _run_root\n    self._evaluate_agent(\n  File \"E:\\SystemFiles\\Desktop\\resilient-ai-agents-thesis\\src\\resilient_agents\\experiment_runner.py\", line 592, in _evaluate_agent\n    observed, observed_state = self._run_branch(\n                               ^^^^^^^^^^^^^^^^^\n  File \"E:\\SystemFiles\\Desktop\\resilient-ai-agents-thesis\\src\\resilient_agents\\experiment_runner.py\", line 664, in _run_branch\n    episode_return, _, _ = self._run_episode(\n                           ^^^^^^^^^^^^^^^^^^\n  File \"E:\\SystemFiles\\Desktop\\resilient-ai-agents-thesis\\src\\resilient_agents\\experiment_runner.py\", line 720, in _run_episode\n    action_name = agent.act(observation)\n                  ^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\SystemFiles\\Desktop\\resilient-ai-agents-thesis\\src\\resilient_agents\\agents.py\", line 574, in act\n    raise ValueError(\"cannot act from a terminal state\")\nValueError: cannot act from a terminal state\n",
+          "type": "ValueError"
+        },
+        "run_id": "PV01-PILOT-L01-C06",
+        "status": "failed",
+        "supersession_reason": "pilot-v0.2 reruns the complete matrix after the confirmed R0 terminal-observation alias implementation defect"
+      }
+    ],
+    "reason": "R0 rejected an active corrupted observation that aliased the modeled goal",
+    "tuning_reused": true
+  },
+  "campaign_id": "pilot-v0.2",
+  "interpretation_boundary": "diagnostic pilot evidence only; no inferential or final claim",
+  "pilot": {
+    "analysis_id": "PV02-PILOT-ANALYSIS",
+    "run_ids": [
+      "PV02-PILOT-L01-C01",
+      "PV02-PILOT-L01-C02",
+      "PV02-PILOT-L01-C03",
+      "PV02-PILOT-L01-C04",
+      "PV02-PILOT-L01-C05",
+      "PV02-PILOT-L01-C06",
+      "PV02-PILOT-L01-C07",
+      "PV02-PILOT-L02-C01",
+      "PV02-PILOT-L02-C02",
+      "PV02-PILOT-L02-C03",
+      "PV02-PILOT-L02-C04",
+      "PV02-PILOT-L02-C05",
+      "PV02-PILOT-L02-C06",
+      "PV02-PILOT-L02-C07"
+    ],
+    "sensitivity_record_count": 18144,
+    "status_counts": {
+      "completed": 14
+    },
+    "total_bundle_size_bytes": 92311912,
+    "total_wall_clock_seconds": 890.0,
+    "valid_unit_count": 336
+  },
+  "pilot_campaign_schema_version": 1,
+  "preflight": {
+    "derived_child_timeout_seconds": 420,
+    "measured_seconds": 21.0,
+    "run_id": "PV01-TUNE-S1-00-L01"
+  },
+  "protocol_version": "pilot-v0.2",
+  "tuning": {
+    "configuration_count": 18,
+    "run_ids": [
+      "PV01-TUNE-S1-00-L01",
+      "PV01-TUNE-S1-00-L02",
+      "PV01-TUNE-S1-01-L01",
+      "PV01-TUNE-S1-01-L02",
+      "PV01-TUNE-S1-02-L01",
+      "PV01-TUNE-S1-02-L02",
+      "PV01-TUNE-S1-03-L01",
+      "PV01-TUNE-S1-03-L02",
+      "PV01-TUNE-S1-04-L01",
+      "PV01-TUNE-S1-04-L02",
+      "PV01-TUNE-S1-05-L01",
+      "PV01-TUNE-S1-05-L02",
+      "PV01-TUNE-S1-06-L01",
+      "PV01-TUNE-S1-06-L02",
+      "PV01-TUNE-S1-07-L01",
+      "PV01-TUNE-S1-07-L02",
+      "PV01-TUNE-S1-08-L01",
+      "PV01-TUNE-S1-08-L02",
+      "PV01-TUNE-S1-09-L01",
+      "PV01-TUNE-S1-09-L02",
+      "PV01-TUNE-S1-10-L01",
+      "PV01-TUNE-S1-10-L02",
+      "PV01-TUNE-S1-11-L01",
+      "PV01-TUNE-S1-11-L02",
+      "PV01-TUNE-S1-12-L01",
+      "PV01-TUNE-S1-12-L02",
+      "PV01-TUNE-S1-13-L01",
+      "PV01-TUNE-S1-13-L02",
+      "PV01-TUNE-S1-14-L01",
+      "PV01-TUNE-S1-14-L02",
+      "PV01-TUNE-S1-15-L01",
+      "PV01-TUNE-S1-15-L02",
+      "PV01-TUNE-S2-16-L01",
+      "PV01-TUNE-S2-16-L02",
+      "PV01-TUNE-S2-17-L01",
+      "PV01-TUNE-S2-17-L02"
+    ],
+    "scores": [
+      {
+        "collision_rate_per_transition": 0.6949833231230005,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.03125,
+          "learning_rate": 0.0625
+        },
+        "mean_nominal_return": -48.044921875,
+        "run_ids": [
+          "PV01-TUNE-S1-00-L01",
+          "PV01-TUNE-S1-00-L02"
+        ],
+        "worst_layout_mean_nominal_return": -69.42578125
+      },
+      {
+        "collision_rate_per_transition": 0.46755299367794717,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.0625,
+          "learning_rate": 0.0625
+        },
+        "mean_nominal_return": -30.0390625,
+        "run_ids": [
+          "PV01-TUNE-S1-01-L01",
+          "PV01-TUNE-S1-01-L02"
+        ],
+        "worst_layout_mean_nominal_return": -48.0703125
+      },
+      {
+        "collision_rate_per_transition": 0.39773171685569025,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.125,
+          "learning_rate": 0.0625
+        },
+        "mean_nominal_return": -34.109375,
+        "run_ids": [
+          "PV01-TUNE-S1-02-L01",
+          "PV01-TUNE-S1-02-L02"
+        ],
+        "worst_layout_mean_nominal_return": -49.79296875
+      },
+      {
+        "collision_rate_per_transition": 0.28415250344510795,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.25,
+          "learning_rate": 0.0625
+        },
+        "mean_nominal_return": -26.41796875,
+        "run_ids": [
+          "PV01-TUNE-S1-03-L01",
+          "PV01-TUNE-S1-03-L02"
+        ],
+        "worst_layout_mean_nominal_return": -36.171875
+      },
+      {
+        "collision_rate_per_transition": 0.6229997703085521,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.03125,
+          "learning_rate": 0.125
+        },
+        "mean_nominal_return": -40.765625,
+        "run_ids": [
+          "PV01-TUNE-S1-04-L01",
+          "PV01-TUNE-S1-04-L02"
+        ],
+        "worst_layout_mean_nominal_return": -70.0625
+      },
+      {
+        "collision_rate_per_transition": 0.2701688555347092,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.0625,
+          "learning_rate": 0.125
+        },
+        "mean_nominal_return": -20.240234375,
+        "run_ids": [
+          "PV01-TUNE-S1-05-L01",
+          "PV01-TUNE-S1-05-L02"
+        ],
+        "worst_layout_mean_nominal_return": -28.56640625
+      },
+      {
+        "collision_rate_per_transition": 0.5645024099801531,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.125,
+          "learning_rate": 0.125
+        },
+        "mean_nominal_return": -42.44921875,
+        "run_ids": [
+          "PV01-TUNE-S1-06-L01",
+          "PV01-TUNE-S1-06-L02"
+        ],
+        "worst_layout_mean_nominal_return": -71.875
+      },
+      {
+        "collision_rate_per_transition": 0.36668834335880346,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.25,
+          "learning_rate": 0.125
+        },
+        "mean_nominal_return": -32.017578125,
+        "run_ids": [
+          "PV01-TUNE-S1-07-L01",
+          "PV01-TUNE-S1-07-L02"
+        ],
+        "worst_layout_mean_nominal_return": -48.31640625
+      },
+      {
+        "collision_rate_per_transition": 0.6213341437471509,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.03125,
+          "learning_rate": 0.25
+        },
+        "mean_nominal_return": -41.03515625,
+        "run_ids": [
+          "PV01-TUNE-S1-08-L01",
+          "PV01-TUNE-S1-08-L02"
+        ],
+        "worst_layout_mean_nominal_return": -70.578125
+      },
+      {
+        "collision_rate_per_transition": 0.5503355704697986,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.0625,
+          "learning_rate": 0.25
+        },
+        "mean_nominal_return": -37.65625,
+        "run_ids": [
+          "PV01-TUNE-S1-09-L01",
+          "PV01-TUNE-S1-09-L02"
+        ],
+        "worst_layout_mean_nominal_return": -63.453125
+      },
+      {
+        "collision_rate_per_transition": 0.3502597784530928,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.125,
+          "learning_rate": 0.25
+        },
+        "mean_nominal_return": -26.025390625,
+        "run_ids": [
+          "PV01-TUNE-S1-10-L01",
+          "PV01-TUNE-S1-10-L02"
+        ],
+        "worst_layout_mean_nominal_return": -38.61328125
+      },
+      {
+        "collision_rate_per_transition": 0.3629165291982844,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.25,
+          "learning_rate": 0.25
+        },
+        "mean_nominal_return": -31.41796875,
+        "run_ids": [
+          "PV01-TUNE-S1-11-L01",
+          "PV01-TUNE-S1-11-L02"
+        ],
+        "worst_layout_mean_nominal_return": -46.9921875
+      },
+      {
+        "collision_rate_per_transition": 0.34462901439645627,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.03125,
+          "learning_rate": 0.5
+        },
+        "mean_nominal_return": -22.841796875,
+        "run_ids": [
+          "PV01-TUNE-S1-12-L01",
+          "PV01-TUNE-S1-12-L02"
+        ],
+        "worst_layout_mean_nominal_return": -33.72265625
+      },
+      {
+        "collision_rate_per_transition": 0.44388482371947163,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.0625,
+          "learning_rate": 0.5
+        },
+        "mean_nominal_return": -28.849609375,
+        "run_ids": [
+          "PV01-TUNE-S1-13-L01",
+          "PV01-TUNE-S1-13-L02"
+        ],
+        "worst_layout_mean_nominal_return": -45.80078125
+      },
+      {
+        "collision_rate_per_transition": 0.11102278749337573,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.125,
+          "learning_rate": 0.5
+        },
+        "mean_nominal_return": -15.388671875,
+        "run_ids": [
+          "PV01-TUNE-S1-14-L01",
+          "PV01-TUNE-S1-14-L02"
+        ],
+        "worst_layout_mean_nominal_return": -17.30078125
+      },
+      {
+        "collision_rate_per_transition": 0.1801744309721336,
+        "configuration": {
+          "discount_factor": 0.9375,
+          "exploration_epsilon": 0.25,
+          "learning_rate": 0.5
+        },
+        "mean_nominal_return": -20.705078125,
+        "run_ids": [
+          "PV01-TUNE-S1-15-L01",
+          "PV01-TUNE-S1-15-L02"
+        ],
+        "worst_layout_mean_nominal_return": -25.45703125
+      },
+      {
+        "collision_rate_per_transition": 0.1759598923942284,
+        "configuration": {
+          "discount_factor": 0.875,
+          "exploration_epsilon": 0.125,
+          "learning_rate": 0.5
+        },
+        "mean_nominal_return": -17.822265625,
+        "run_ids": [
+          "PV01-TUNE-S2-16-L01",
+          "PV01-TUNE-S2-16-L02"
+        ],
+        "worst_layout_mean_nominal_return": -22.54296875
+      },
+      {
+        "collision_rate_per_transition": 0.10632911392405063,
+        "configuration": {
+          "discount_factor": 0.96875,
+          "exploration_epsilon": 0.125,
+          "learning_rate": 0.5
+        },
+        "mean_nominal_return": -15.2265625,
+        "run_ids": [
+          "PV01-TUNE-S2-17-L01",
+          "PV01-TUNE-S2-17-L02"
+        ],
+        "worst_layout_mean_nominal_return": -17.3828125
+      }
+    ],
+    "selected": {
+      "collision_rate_per_transition": 0.10632911392405063,
+      "configuration": {
+        "discount_factor": 0.96875,
+        "exploration_epsilon": 0.125,
+        "learning_rate": 0.5
+      },
+      "mean_nominal_return": -15.2265625,
+      "run_ids": [
+        "PV01-TUNE-S2-17-L01",
+        "PV01-TUNE-S2-17-L02"
+      ],
+      "worst_layout_mean_nominal_return": -17.3828125
+    },
+    "stage_one_winner": {
+      "collision_rate_per_transition": 0.11102278749337573,
+      "configuration": {
+        "discount_factor": 0.9375,
+        "exploration_epsilon": 0.125,
+        "learning_rate": 0.5
+      },
+      "mean_nominal_return": -15.388671875,
+      "run_ids": [
+        "PV01-TUNE-S1-14-L01",
+        "PV01-TUNE-S1-14-L02"
+      ],
+      "worst_layout_mean_nominal_return": -17.30078125
+    }
+  }
+}

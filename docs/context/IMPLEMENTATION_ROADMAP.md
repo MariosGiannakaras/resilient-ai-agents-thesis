@@ -31,15 +31,15 @@ Phases are checkpoints, not the concrete execution checklist and not mandatory s
 
 ## Phase 5 — Small model-role selection
 
-- F0/C0 common tabular Q-learning and R0 rectangular robust value iteration are implemented with versioned state and focused correctness tests; final retention follows pilots.
+- F0/C0 common tabular Q-learning and R0 rectangular robust value iteration are implemented with versioned state and focused correctness tests. Completed pilots retain C0/F0 as feasible candidates but prohibit freezing the current nominally saturated R0 configuration unchanged.
 - All selected agents use the same strict information-limited contract.
 - **Gate:** no privileged ground truth and no model without a distinct research role.
 
 ## Phase 6 — Pilot protocol
 
-- `pilot-v0.1` defines explicit disjoint development/tuning/pilot/final-reserve layouts and a validated stage firewall.
-- Precommitted seeds, bounded diagnostic budgets/severities, tuning/checkpoint rules, metric sensitivity, resources, failures, exclusions, and preliminary analysis units are explicit; pilots determine later final values.
-- Refresh relevant literature in `ThesisBibliography` before freeze.
+- `pilot-v0.1` defines explicit disjoint development/tuning/pilot/final-reserve layouts and a validated stage firewall; `pilot-v0.2` preserves that authority while correcting one information-safe R0 observation boundary.
+- The complete amended matrix and analysis now provide diagnostic runtime, storage, variance, censoring, recovery-sensitivity, and role-feasibility evidence; they do not become final results.
+- Refresh decision-driving literature in `ThesisBibliography`, then resolve the recorded R0/metric/sample-size gates before freeze.
 
 ## Phase 7 — Headless experiment core
 

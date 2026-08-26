@@ -1,6 +1,6 @@
 # Agent and Model Role Selection
 
-**Status:** `T-310`/`T-311` selection/evidence and `T-312` correctness implementation are complete. Exact hyperparameters/budgets and final post-pilot freeze remain open.
+**Status:** `T-310`/`T-311` selection/evidence, `T-312` correctness implementation, and `T-410` pilot diagnosis are complete. Exact final retention/hyperparameters/budgets remain open for `T-411`/`T-412`.
 
 ## Selection outcome
 
@@ -12,7 +12,7 @@ The smallest set that answers the retained provisional RQs uses two implementati
 | C0 | The same `tabular_q_learning_v1` checkpoint and action-selection schedule, Q updates continued through the persistent change | Naive model-free online adaptation baseline | **RETAIN** |
 | R0 | `rectangular_robust_value_iteration_v1`, planned before deployment over an explicit finite s,a-rectangular transition uncertainty set, then frozen | Declared-set robustness and nominal-conservativeness comparator | **RETAIN** |
 
-Pilot execution refined only R0's observation-boundary handling: when an active episode delivers a corrupted observation that aliases a modeled terminal state, robust-plan schema v2 uses the recorded zero-value seeded action tie. It never consults evaluator truth to decide whether the apparent terminal state is real. The uncertainty set, robust Bellman method, frozen role, and information policy are unchanged; `pilot-v0.2` reruns the complete pilot matrix consistently.
+Pilot execution refined R0's observation-boundary handling: when an active episode delivers a corrupted observation that aliases a modeled terminal state, robust-plan schema v2 uses the recorded zero-value seeded action tie. It never consults evaluator truth to decide whether the apparent terminal state is real. The complete `pilot-v0.2` retry then executed consistently, but approximately 96% of R0's nominal evaluation episodes truncated. The current R0 prior/policy/horizon combination therefore cannot be frozen unchanged even though its implementation and information boundary are correct.
 
 F0 and C0 are separate evaluation regimes of one implementation, not inflated algorithm count. Their identical nominal checkpoint, action-selection schedule, exploration RNG policy, and agent-visible information isolate the effect of permitting post-change updates. R0 is intentionally a different information regime: its model and uncertainty family are declared prior knowledge and must be reported as such.
 
@@ -100,4 +100,4 @@ R0's stronger prior means the thesis compares declared capability/assumption reg
 
 ## Remaining freeze gates
 
-`T-312` implements and validates these gates in `src/resilient_agents/agents.py` and `tests/test_agents.py`: eight focused tests cover exact Q updates, terminal behavior, common checkpoint/frozen mutation, deterministic replay/round-trip state, hidden-information rejection, singleton and worst-row robust backups, frozen deployment, and invalid model/probability failure. `T-400` now fixes a bounded pre-outcome Q search, common deployment exploration policy, and R0 prior in `pilot-v0.1`; pilots determine feasibility, selected pilot configuration behavior, and whether every role remains informative. `T-412` freezes the final set and fair statistical protocol before final results are inspected.
+`T-312` implements and validates these gates in `src/resilient_agents/agents.py` and `tests/test_agents.py`: focused tests cover exact Q updates, terminal behavior, common checkpoint/frozen mutation, deterministic replay/round-trip state, hidden-information rejection, singleton and worst-row robust backups, frozen deployment, and invalid model/probability failure. `T-410` confirms C0/F0 execution feasibility and finds distinct R0 in-set/out-of-set behavior, but its nominal censoring fails the unchanged-retention gate. `T-411` refreshes decision-driving evidence; `T-412` must then objectively validate a bounded non-final R0 revision or remove/reframe that role before freezing the fair statistical protocol and before any final outcomes are inspected.
