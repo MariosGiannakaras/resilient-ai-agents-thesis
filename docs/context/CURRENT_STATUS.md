@@ -28,9 +28,10 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-500` corrective audit completed: experiment_manager uses canonical FINALIZATION_MARKER from run_bundle.py, full integrity validation (checksums, marker-manifest agreement, run-id identity), tests use real RunBundle finalization semantics.
 - `T-510` corrective repair completed: Compare/Artifacts pages operate on real data, lifecycle gate protects final reserve, protocol eligibility is validated, and resource telemetry uses the actual schema.
 - `T-511` completed: self-explanatory UX polish and lightweight onboarding verified.
-- `T-600` completed: 14 final evaluation runs successfully executed, verified clean, and auto-published to main.
+- `T-601` completed: Final-run completeness validated and frozen in `results/thesis-final/freeze-manifest.json`.
+- `T-602` completed: Frozen statistical analysis and sensitivity diagnostics executed.
 - Current work package: **WP6 — Final experiments, frozen evidence, and writing package**.
-- Current task: **`T-601`**, in progress. Exact next action: Validate final-run completeness against the protocol matrix, gather all final runs, and freeze the accepted evidence set under results/thesis-final/.
+- Current task: **`T-603`**, in progress. Exact next action: Generate final figures, tables, summaries, and export artifacts.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline
