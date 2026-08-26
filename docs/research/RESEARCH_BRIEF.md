@@ -52,7 +52,7 @@ Recurring-context recall and detector quality remain method-conditional diagnost
 
 ### Provisional, falsifiable hypothesis candidates
 
-These are pre-protocol candidates, not confirmed directional findings. `T-300` and `T-310` now provide validated estimands and selected implementation/pilot roles; `T-400` and the pilots must supply numeric parameters, unit-of-analysis details, practical-effect or equivalence bounds, final role retention, and decision rules before final evaluation is inspected.
+These are not confirmed directional findings. `T-300`/`T-310` provide validated estimands and selected roles, while `pilot-v0.1` supplies bounded diagnostic parameters, units, and decision inputs. Pilot evidence and `T-412` must still establish practical-effect/equivalence bounds, final role retention, and final decision rules before final evaluation is inspected.
 
 - **H-P1 — online-adaptation recovery:** for at least one validated primary persistent-change condition, an information-matched role permitted to update online will have a more favorable post-change recovery profile than its corresponding frozen evaluation after nominal-performance cost is reported. It is falsified if the predeclared recovery and post-change estimands show no practically meaningful advantage, or show a disadvantage, across the retained primary conditions.
 - **H-P2 — phase-dependent capability trade-off:** comparative conclusions will depend on evaluation phase: nominal performance, immediate resistance, and later recovery/post-change performance will not collapse into one invariant agent ordering. It is falsified if the predeclared role-by-phase contrasts are practically equivalent and ordering remains stable across the retained primary conditions.
@@ -75,7 +75,7 @@ No hypothesis asserts that ordinary Q-learning must fail, that a detector must a
 - `T-210`–`T-213`: select and validate a GridWorld whose hidden truth, agent observation, intended/executed actions, persistent change, and deterministic traces match the framing.
 - `T-300`–`T-301` complete operational schema-v1 estimands and known-answer validation; pilots/freeze still select numeric windows/tolerance/stability, metric roles, and statistical aggregation.
 - `T-310`–`T-312` select and correctness-validate F0 frozen/C0 continual common tabular Q-learning plus R0 rectangular robust value iteration, including strict information/fairness boundaries and sufficient citation-ready robust-DP support.
-- `T-400`–`T-410`: predeclare disjoint development/tuning/pilot/final partitions and use pilots to determine feasible budgets, severities, repetitions, variance handling, recovery behavior, and practical-effect criteria.
+- `T-400` completes disjoint partitions and the validated `pilot-v0.1` diagnostic contract; `T-401`–`T-410` implement it and use pilots to determine feasible final budgets, severities, repetitions, variance handling, recovery behavior, and practical-effect criteria.
 - `T-411`–`T-412`: refresh decision-driving literature, then freeze the final protocol, research questions, hypotheses, and statistical analysis plan before final results are inspected.
 
 If prototypes or pilots cannot support scientifically distinct roles, identifiable recovery, or a feasible repeated-run design, the main question must be narrowed rather than forcing the current candidate framing.

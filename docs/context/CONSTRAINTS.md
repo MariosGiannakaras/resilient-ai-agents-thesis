@@ -52,7 +52,7 @@
 ## Research scope
 
 - The official topic requires a simple simulated environment, comparison under uncertainty/dynamic change, resilience, and recovery speed.
-- Exact research question, GridWorld scientific specification, model set, metrics, severities, seeds, budgets, hyperparameters, thresholds, and statistical protocol remain unfrozen.
+- Final research question, final GridWorld/model/metric roles and values, final severities/seeds/budgets/hyperparameters/thresholds, and statistical protocol remain unfrozen. Versioned `pilot-v0.1` values are explicit diagnostic inputs only and cannot be relabelled as final evidence.
 - Old conversations are not shortlists/defaults.
 - Every scientific selection requires current bibliography evidence, environment validity, feasibility, and/or pilot justification.
 - The final matrix must remain small enough to explain and complete.

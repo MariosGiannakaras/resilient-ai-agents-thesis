@@ -182,6 +182,11 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **Status:** Accepted and implemented by `T-312` for pilots; final role retention and hyperparameters remain pilot/protocol-freeze decisions.
 - **Decision:** Implement one tabular Q-learning method evaluated from a common nominal checkpoint as F0 frozen and C0 continual regimes, plus R0 frozen finite s,a-rectangular robust value iteration with explicit stronger model/uncertainty-set prior. Exclude context-memory, detector-reset, oracle, duplicate tabular, deep/function-approximation, and diagnostic-specific agents unless their recorded reopening conditions are met. Citation-ready `SRC-52E62452B8` sufficiently supports the retained robust Bellman claims, so conditional `T-311` requires no upstream promotion. Detailed method/fairness/evidence boundaries live in `docs/research/MODEL_CANDIDATES.md`.
 
+## DEC-035 — Versioned pre-final pilot protocol
+- **Date:** 2026-08-26
+- **Status:** Accepted and validated for headless-runner implementation/pilots; not final evidence and amendable before `protocol-v1.0`.
+- **Decision:** Use machine-readable `pilot-v0.1` with two disjoint same-scale layouts per development/tuning/pilot/final-reserve stage; a matched 16-episode nominal plus 32-episode post-change block lifecycle; minimal in-set and maximal out-of-set action remaps; bounded single-factor diagnostics; precommitted disjoint seeds; an 18-configuration staged dyadic Q search; fixed pre-pilot R0 prior; explicit metric sensitivity, CPU preflight/timeout, failure/exclusion, and artifact rules. Final-reserve execution remains forbidden. The complete rationale and config contract live in `docs/experiments/PILOT_PROTOCOL_V0_1.md` and `configs/protocols/pilot-v0.1.json`.
+
 ## Pending decisions
 
 Future entries are still required for:
@@ -192,7 +197,7 @@ Future entries are still required for:
 - final post-pilot retention and hyperparameters of the selected model/baseline regimes;
 - final primary/secondary/diagnostic metric roles, numeric parameters, and statistical plan;
 - seeds, repetitions, tuning/resource budgets, and stopping rules;
-- final pilot protocol and `protocol-v1.0` freeze/amendments;
+- pilot-derived amendments and final `protocol-v1.0` freeze;
 - pilot-derived optional dashboard feature budget beyond the accepted self-explanatory UX/onboarding baseline;
 - optional AI, if ever justified;
 - final citation style/Word template/submission specifics near writing/delivery;

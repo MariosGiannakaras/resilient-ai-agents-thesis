@@ -29,14 +29,14 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP4 — Pilot protocol and headless experiment system
-- **Current task:** `T-400`
-- **State:** `READY` after `T-312` review/merge synchronization
-- **Active branch / PR:** `feat/tabular-agent-set`; implementation checkpoint `4cf953d` is pushed; PR not yet opened.
-- **Last validated point:** `T-310`/`T-311` passed canonical CI/review and squash-merged in PR #64 (`e7d97a5`). `T-312` now implements F0/C0 common tabular Q-learning and R0 finite rectangular robust value iteration behind the strict common agent contract.
-- **Tests already run:** eight deterministic agent contract/known-answer/fail-closed tests, targeted source/test compilation, and diff whitespace validation pass on native Windows.
-- **Relevant files changed:** versioned tabular checkpoint/robust plan implementation, public core exports, focused agent tests, and active documentation/task reconciliation.
-- **Uncommitted work:** `T-312` documentation/task reconciliation after pushed implementation checkpoint `4cf953d`.
-- **Exact next action:** run documentation consistency and objective full-diff review, checkpoint/push the reconciliation, open the `T-312` PR, complete canonical CI/review/merge, synchronize main, then define the disjoint versioned pilot protocol under `T-400`.
+- **Current task:** `T-401`
+- **State:** `READY` after `T-400` review/merge synchronization
+- **Active branch / PR:** `research/pilot-protocol-v0`; validated machine-readable checkpoint `657de30` is pushed; PR not yet opened.
+- **Last validated point:** `T-312` passed canonical CI/review and squash-merged in PR #65 (`6f596a3`). `pilot-v0.1` now defines disjoint stage layouts, episode-block change semantics, bounded tuning/evaluation, severities, seeds, metrics, resources, failures, exclusions, and required artifacts.
+- **Tests already run:** five deterministic pilot-protocol load/canonicalization/leakage/drift/fail-closed tests and targeted compilation/diff validation pass on native Windows.
+- **Relevant files changed:** versioned pilot config, core fail-closed loader, protocol contract tests, scientific rationale/lifecycle, and active task/decision/context reconciliation.
+- **Uncommitted work:** T-400 rationale, exact tuning/analysis/stopping additions, and documentation/task reconciliation after pushed checkpoint `657de30`.
+- **Exact next action:** run protocol/documentation/bibliography consistency and objective full-diff review, checkpoint/push the completed T-400 package, open its PR, complete canonical CI/review/merge, synchronize main, then implement the headless multi-seed experiment path under `T-401`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -138,10 +138,10 @@ Codex must assume a session can stop unexpectedly.
 
 ## WP4 — Pilot protocol and headless experiment system
 
-- [ ] READY `T-400` — Define development/tuning/pilot/final scenario partitions and versioned pilot protocol.
+- [x] `T-400` — Define development/tuning/pilot/final scenario partitions and versioned pilot protocol.
   - Depends on: `T-213`, `T-301`, `T-312`.
   - Acceptance: partitions do not overlap; seeds/budgets/severities/tuning/failure/exclusion rules are explicit and justified rather than convenience defaults.
-- [ ] BLOCKED `T-401` — Complete the headless experiment runner/orchestration path for the selected environment/agents/metrics.
+- [ ] READY `T-401` — Complete the headless experiment runner/orchestration path for the selected environment/agents/metrics.
   - Depends on: `T-400`.
   - Acceptance: a full experiment with multiple seeds runs without UI, persists continuously, resumes safely where supported, finalizes one auditable bundle, and uses the existing publisher correctly.
 - [ ] BLOCKED `T-402` — Complete reproducible analysis pipeline for experiment summaries and pilot diagnostics.

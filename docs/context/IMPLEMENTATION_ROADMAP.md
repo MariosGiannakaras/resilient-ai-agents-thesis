@@ -37,8 +37,8 @@ Phases are checkpoints, not the concrete execution checklist and not mandatory s
 
 ## Phase 6 — Pilot protocol
 
-- Define explicit development/tuning/pilot/final scenario partitions.
-- Define seeds, budgets, severities, tuning rules, failure rules, and preliminary statistics from evidence/pilots rather than convenience defaults.
+- `pilot-v0.1` defines explicit disjoint development/tuning/pilot/final-reserve layouts and a validated stage firewall.
+- Precommitted seeds, bounded diagnostic budgets/severities, tuning/checkpoint rules, metric sensitivity, resources, failures, exclusions, and preliminary analysis units are explicit; pilots determine later final values.
 - Refresh relevant literature in `ThesisBibliography` before freeze.
 
 ## Phase 7 — Headless experiment core

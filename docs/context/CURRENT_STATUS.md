@@ -17,9 +17,10 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-212`/`T-213` passed canonical CI/review and squash-merged through PR #62 (`e7352d5`).
 - `T-300`/`T-301` passed canonical CI/review and squash-merged through PR #63 (`25f67bb`).
 - `T-310`/`T-311` passed canonical CI/review and squash-merged through PR #64 (`e7d97a5`).
-- `T-312` is complete locally on `feat/tabular-agent-set`: strict, versioned implementations cover F0/C0 common tabular Q-learning and R0 finite rectangular robust value iteration with eight focused contract/known-answer/fail-closed tests.
-- Current task: **`T-400`**, ready after the agent implementation PR is CI-validated, objectively reviewed, squash-merged, and synchronized to main.
-- Exact next action: finish documentation validation/objective diff review, push/open the `T-312` PR, complete canonical CI/review/merge, then define the disjoint versioned pilot protocol.
+- `T-312` passed canonical CI/review and squash-merged through PR #65 (`6f596a3`).
+- `T-400` is complete locally on `research/pilot-protocol-v0`: validated `pilot-v0.1` defines the stage firewall, explicit layouts/conditions/seeds/budgets, episode-block changepoint, tuning/checkpoint policy, metric sensitivity, resource/stopping rules, and failure/exclusion/artifact contracts.
+- Current task: **`T-401`**, ready after the pilot-protocol PR is CI-validated, objectively reviewed, squash-merged, and synchronized to main.
+- Exact next action: complete protocol/documentation validation and objective diff review, push/open the `T-400` PR, complete canonical CI/review/merge, then implement the headless multi-seed experiment path.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline

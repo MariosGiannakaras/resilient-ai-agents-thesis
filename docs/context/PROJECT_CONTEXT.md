@@ -114,7 +114,7 @@ Decision-driving citation-ready evidence currently includes `SRC-70772C0629`, `S
 
 ## GridWorld — current state
 
-GridWorld remains the confirmed simple controlled environment direction. DEC-032's project-owned schema-v1 implementation now uses locked Gymnasium 1.3.0 through the accepted core contracts and passes deterministic known-answer/invariant validation; exact experiment scenario values remain unfrozen.
+GridWorld remains the confirmed simple controlled environment direction. DEC-032's project-owned schema-v1 implementation now uses locked Gymnasium 1.3.0 through the accepted core contracts and passes deterministic known-answer/invariant validation. `pilot-v0.1` fixes pre-final diagnostic layouts/conditions only; final scenario values remain unfrozen until `protocol-v1.0`.
 
 The completed bounded comparison evaluated two prototype paths against the same accepted contract and fixed fixture:
 
@@ -143,6 +143,8 @@ The user should not manually stage, commit, move, or upload routine experiment a
 
 Development, tuning, pilot, exploratory, and final evidence remain separated. Final figures/tables are generated only from real stored data by version-controlled code. Final experiment execution is followed by explicit run-completeness validation and evidence freeze before statistical interpretation/writing.
 
+The validated `pilot-v0.1` authority uses two disjoint 7x7 layouts per stage, fixed shortest-path scale, 16 nominal plus 32 post-change episodes, matched nominal branches, precommitted disjoint tuning/pilot seeds, a bounded staged Q search, an R0 uncertainty set fixed before outcomes, single-factor severities, diagnostic metric sensitivity, CPU preflight, and explicit failure/exclusion/artifact rules. Final-reserve layouts cannot be executed before the later freeze/application gates.
+
 ## Dashboard, thesis writing, and defense
 
 The dashboard is a supporting local single-user tool, not the scientific contribution. A small debug surface may be used during environment/core validation; the polished Streamlit dashboard follows pilot-established workflows and must not duplicate scientific logic.
@@ -161,7 +163,7 @@ The final presentation is a distinct downstream deliverable after thesis stabili
 
 ## Current genuine gates
 
-The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline/provenance, research-framing/GridWorld, metric, and bounded agent selection/implementation tasks (`T-100` through `T-312`) are complete. Pilot protocol definition (`T-400`) is next. Pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
+The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline/provenance, research-framing/GridWorld, metric, bounded agent, and pre-final pilot-protocol tasks (`T-100` through `T-400`) are complete. Headless experiment orchestration (`T-401`) is next. Pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
 
 Deferred, non-blocking inputs remain later supervisor corrections, eventual submission/presentation dates, a current official Word template, exact defense duration/file rules, and optional contextual example theses supplied near writing.
 

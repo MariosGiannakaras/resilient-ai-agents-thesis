@@ -6,11 +6,13 @@ Protocol versions progress from exploratory/pilot versions to a frozen final ver
 
 Pilot and tuning outputs remain useful for feasibility/protocol design but are never silently relabelled as final thesis evidence.
 
+The active pre-final design is `pilot-v0.1`, specified in `PILOT_PROTOCOL_V0_1.md` and validated from `configs/protocols/pilot-v0.1.json`. It uses disjoint development/tuning/pilot/final-reserve layouts and an episode-block changepoint; it does not authorize execution of final-reserve scenarios or final claims.
+
 ## Metrics before complex agents
 
 Metric primitives are implemented and tested before model-specific implementations. Recovery thresholds are explicit protocol inputs. If recovery is not observed within the available horizon, recovery time is represented as `None`, not as the final timestep.
 
-The current primitives cover nominal mean, immediate degradation, worst degradation, post-change mean, cumulative loss, and observed recovery step. Their final scientific use remains subject to research/pilot validation.
+The current primitives cover matched-reference nominal/post-change performance, signed immediate/worst/terminal gaps, cumulative deficit, and explicit no-degradation/recovered/non-recovered outcomes. Their final parameters and scientific roles remain subject to pilot validation and final freeze.
 
 ## Matrix bound
 

@@ -1,6 +1,6 @@
 # GridWorld Specification Workspace
 
-**Status:** Schema-v1 core and scientific invariant suite implemented; experiment scenario values remain unfrozen.
+**Status:** Schema-v1 core/invariants and validated `pilot-v0.1` diagnostic scenarios implemented; final experiment values remain unfrozen.
 
 The technical pre-screen in `docs/research/GRIDWORLD_LANDSCAPE_REVIEW.md` and completed comparison in `docs/research/GRIDWORLD_PROTOTYPE_COMPARISON.md` support DEC-032's selection of a small project-owned Gymnasium environment. DEC-023 already establishes the shared environment/information/randomness/run architecture in `src/resilient_agents/`; GridWorld work must use those contracts rather than create parallel interfaces.
 
@@ -49,12 +49,16 @@ These are implementation invariants, not final scientific parameter choices.
 - Canonical serialization carries `gridworld_schema_version: 1`, rejects missing/unknown state, and round-trips the resolved scenario.
 - The environment is headless. Evaluator-only debug state exists for trace parity and is not an agent or UI execution path.
 
-## Scientific specification decisions still required
+## Pilot-v0.1 diagnostic specification
+
+The pre-final pilot protocol now fixes eight disjoint same-scale 7x7 layouts (two per lifecycle stage), six obstacles, shortest-path length 12, step/collision/goal rewards `-1/-2/0`, and a 48-step episode cap. Its primary episode-block change uses minimal in-set and maximal out-of-set action remaps; dyadic action/observation disturbances remain supporting single-factor diagnostics. Exact layouts and rationale are validated from `configs/protocols/pilot-v0.1.json` and documented in `docs/experiments/PILOT_PROTOCOL_V0_1.md`. These values are pilot inputs, not final thesis parameters.
+
+## Final scientific specification decisions still required
 
 1. Final grid dimensions, layout/scenario families, and concrete start/goal instances or distributions.
 2. Final reward values, horizons, and comparability rules across retained changes.
 3. Which supported disturbance/change conditions enter primary versus supporting analyses.
-4. Exact probabilities, severities, onset, persistence/combination matrix, and scenario partitions.
+4. Final probabilities, severities, onset, persistence/combination matrix, and whether the pilot partitions survive freeze.
 5. Whether formal partial observability is scientifically required; schema v1 otherwise retains position observation plus controlled corruption.
 6. Any versioned scenario generator needed beyond explicit resolved layouts.
 7. Training/adaptation/evaluation regime and final experiment reference scenarios.
