@@ -1,0 +1,456 @@
+{
+  "runs_audited": 14,
+  "files_audited": 70,
+  "semantic_equivalence_confirmed": true,
+  "mismatches": [],
+  "details": {
+    "FINAL-L01-C01": {
+      "events.jsonl": {
+        "local_hash": "9750e2b93e07e7f77f6551c0fbb06c9001eff1434b069a2f8865555b4b99987c",
+        "blob_hash": "9750e2b93e07e7f77f6551c0fbb06c9001eff1434b069a2f8865555b4b99987c",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "9f7c4bc89782d5b3c0a51bbc94049d3e9d25fdadf3aa6452d1e01ebb40b87ac7",
+        "blob_hash": "9f7c4bc89782d5b3c0a51bbc94049d3e9d25fdadf3aa6452d1e01ebb40b87ac7",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "329f8cf04b5d589ba4b292d39b8efdb444435eead91b508cba5f0f6cb816fdc6",
+        "blob_hash": "329f8cf04b5d589ba4b292d39b8efdb444435eead91b508cba5f0f6cb816fdc6",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "f939e56de73fc5e4f71b6008923d92ca1995a4506e88981851e76cba3f1cf1cb",
+        "blob_hash": "f939e56de73fc5e4f71b6008923d92ca1995a4506e88981851e76cba3f1cf1cb",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "1313397d07e153ff2fd98b3cd90db914d37f7feff6c13c8f9c1d2b67d5045e3a",
+        "blob_hash": "1313397d07e153ff2fd98b3cd90db914d37f7feff6c13c8f9c1d2b67d5045e3a",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    },
+    "FINAL-L01-C02": {
+      "events.jsonl": {
+        "local_hash": "272a63c6f119d2dda63e92428c619bc29c174838ab8132195c11c5e4b2b99249",
+        "blob_hash": "272a63c6f119d2dda63e92428c619bc29c174838ab8132195c11c5e4b2b99249",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "606c4a9335fbae4f908d3205db98f1c291b4fc6cc68aaa74a5883f5c6d2efaa2",
+        "blob_hash": "606c4a9335fbae4f908d3205db98f1c291b4fc6cc68aaa74a5883f5c6d2efaa2",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "a7637521ee625b7b616577710726cea5935e6c2165d3f0c4eebd32134b483aa2",
+        "blob_hash": "a7637521ee625b7b616577710726cea5935e6c2165d3f0c4eebd32134b483aa2",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "c3af16942cd504e2d0285b12e02898af5b1e4fe9755070d512909248cce0f251",
+        "blob_hash": "c3af16942cd504e2d0285b12e02898af5b1e4fe9755070d512909248cce0f251",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "01e8c4376e8a73f9d1dfd372ff56b55e198ad51cbf3b4a13dfcab048a63e10e0",
+        "blob_hash": "01e8c4376e8a73f9d1dfd372ff56b55e198ad51cbf3b4a13dfcab048a63e10e0",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    },
+    "FINAL-L01-C03": {
+      "events.jsonl": {
+        "local_hash": "aa824ddef12ee040e181c9e0aa22d479a7fe93da1a1a13bff976e496121b633f",
+        "blob_hash": "aa824ddef12ee040e181c9e0aa22d479a7fe93da1a1a13bff976e496121b633f",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "1d1592142e5f47458d4179990cd87b174795bc5275512b955df4afc9a9def98c",
+        "blob_hash": "1d1592142e5f47458d4179990cd87b174795bc5275512b955df4afc9a9def98c",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "57a4a36b8ca5736cfbad7ed387a29be5871917243942caf3fbcfd3209479bb9a",
+        "blob_hash": "57a4a36b8ca5736cfbad7ed387a29be5871917243942caf3fbcfd3209479bb9a",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "41b6f40565bcd46ed0a6029fd490d146ee472ba65b6a30b94962698826857a92",
+        "blob_hash": "41b6f40565bcd46ed0a6029fd490d146ee472ba65b6a30b94962698826857a92",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "1d79a07923701c094ddbecbb692356b809f04f6587eeac52c67a209faeae96a4",
+        "blob_hash": "1d79a07923701c094ddbecbb692356b809f04f6587eeac52c67a209faeae96a4",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    },
+    "FINAL-L01-C04": {
+      "events.jsonl": {
+        "local_hash": "62ac7e5e4e5d6d2ef8bcab5231d815696c045c600682d012f9bf75269e2849e8",
+        "blob_hash": "62ac7e5e4e5d6d2ef8bcab5231d815696c045c600682d012f9bf75269e2849e8",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "b57ef8ff8cff611d9cdb849109f46e98df230bfe488ce92cf3cc1297a0213e29",
+        "blob_hash": "b57ef8ff8cff611d9cdb849109f46e98df230bfe488ce92cf3cc1297a0213e29",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "394e9ce712d6177ad36385622f03ba5a9d5cd0c39dec869526b768134cdaa017",
+        "blob_hash": "394e9ce712d6177ad36385622f03ba5a9d5cd0c39dec869526b768134cdaa017",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "eb7636fbe20eba090232c179b56f0f793414d6e02bbf472dc16ed7163f8865a8",
+        "blob_hash": "eb7636fbe20eba090232c179b56f0f793414d6e02bbf472dc16ed7163f8865a8",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "6d89a557780f96e0ee72dc3b4bf1c69fde9eecd1e1259af683b3e33d34c27c62",
+        "blob_hash": "6d89a557780f96e0ee72dc3b4bf1c69fde9eecd1e1259af683b3e33d34c27c62",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    },
+    "FINAL-L01-C05": {
+      "events.jsonl": {
+        "local_hash": "248b61de7f20fb086daa9e1e5280d15301fd1d3c288fa3dd9d19bade86dd1daa",
+        "blob_hash": "248b61de7f20fb086daa9e1e5280d15301fd1d3c288fa3dd9d19bade86dd1daa",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "d5e67e73e475f97c0288661f40c2defe015bff58a520fe3298c6abcc1137fd4b",
+        "blob_hash": "d5e67e73e475f97c0288661f40c2defe015bff58a520fe3298c6abcc1137fd4b",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "bf5829dfcae20c1596c1bfcc1f908d5a5234ac379100465fd4b1ecbbc49cfe60",
+        "blob_hash": "bf5829dfcae20c1596c1bfcc1f908d5a5234ac379100465fd4b1ecbbc49cfe60",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "420e5bddf44c9097b4dcc9f087733978ce091bd4d6b4ae559ed3d49619fe13d3",
+        "blob_hash": "420e5bddf44c9097b4dcc9f087733978ce091bd4d6b4ae559ed3d49619fe13d3",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "a08b82b3178cd6535d10f677c42ffd973b9ff08e19adb6c6f663c3c6e8416db0",
+        "blob_hash": "a08b82b3178cd6535d10f677c42ffd973b9ff08e19adb6c6f663c3c6e8416db0",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    },
+    "FINAL-L01-C06": {
+      "events.jsonl": {
+        "local_hash": "30f54353e88fedcd8527a6783b510e123be0d426008057b769b3425a49ff5870",
+        "blob_hash": "30f54353e88fedcd8527a6783b510e123be0d426008057b769b3425a49ff5870",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "c54cf1b92ba9a2913445cd2c2abef8f157c992c2099734c7eda95d04420ff510",
+        "blob_hash": "c54cf1b92ba9a2913445cd2c2abef8f157c992c2099734c7eda95d04420ff510",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "a5fa7c76d45ed88c26727b0686805799cad568bfb0e084728a49267a5b1f27fe",
+        "blob_hash": "a5fa7c76d45ed88c26727b0686805799cad568bfb0e084728a49267a5b1f27fe",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "b2632dad6c4be2fdfd34a4034ac40e68b390f16a005c83c6da58e0673a4792f0",
+        "blob_hash": "b2632dad6c4be2fdfd34a4034ac40e68b390f16a005c83c6da58e0673a4792f0",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "b0c23663998aeda1900c0faa37922a9261005bff4a5420430a9dc6413b78ff74",
+        "blob_hash": "b0c23663998aeda1900c0faa37922a9261005bff4a5420430a9dc6413b78ff74",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    },
+    "FINAL-L01-C07": {
+      "events.jsonl": {
+        "local_hash": "206725a95b236142f4ef7f5b7fb91162b505a3fbc0c0ec4eb6e5c9371edb09c1",
+        "blob_hash": "206725a95b236142f4ef7f5b7fb91162b505a3fbc0c0ec4eb6e5c9371edb09c1",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "9d21ed55bdc5e555442d3bf9a23dc6de66b217c0e81fcf56f6d10b99a78763f2",
+        "blob_hash": "9d21ed55bdc5e555442d3bf9a23dc6de66b217c0e81fcf56f6d10b99a78763f2",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "cf8f5d769dc21fffe440528c1ed8371be2c50eac631ab20cfe8f1cb90da30805",
+        "blob_hash": "cf8f5d769dc21fffe440528c1ed8371be2c50eac631ab20cfe8f1cb90da30805",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "e786190b901345cbd4412d19bc5a210608057f201ba679442424263bb350ce4c",
+        "blob_hash": "e786190b901345cbd4412d19bc5a210608057f201ba679442424263bb350ce4c",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "3086ee53729f63e0a094e1f35d52efc1b336e83815e29864cad6cc24f11e643b",
+        "blob_hash": "3086ee53729f63e0a094e1f35d52efc1b336e83815e29864cad6cc24f11e643b",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    },
+    "FINAL-L02-C01": {
+      "events.jsonl": {
+        "local_hash": "5d4c6e14da79b0909427ad6aa668c462bbf4105cf995f4a55f0362f42cb8e116",
+        "blob_hash": "5d4c6e14da79b0909427ad6aa668c462bbf4105cf995f4a55f0362f42cb8e116",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "ba10fee642272ef6fad97579b859b8ece570aa30428b13fce317edf29fbd935d",
+        "blob_hash": "ba10fee642272ef6fad97579b859b8ece570aa30428b13fce317edf29fbd935d",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "b05a473ca6b5e2a11a996cec424d238a6491a5a282ddb9a371f438ffd0b5023b",
+        "blob_hash": "b05a473ca6b5e2a11a996cec424d238a6491a5a282ddb9a371f438ffd0b5023b",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "9610b4cec1b0187da67f1554edbf9460f6c22927585c24ab014cce78d482a58b",
+        "blob_hash": "9610b4cec1b0187da67f1554edbf9460f6c22927585c24ab014cce78d482a58b",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "ea09a9de6763d64b80bdf021f97cd33e6dbfcc5a0dad9b489f04a119f0447c5d",
+        "blob_hash": "ea09a9de6763d64b80bdf021f97cd33e6dbfcc5a0dad9b489f04a119f0447c5d",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    },
+    "FINAL-L02-C02": {
+      "events.jsonl": {
+        "local_hash": "0a34f21f8999ef0d80247581410b524d48dba2eff2e8d83bfe9fa502524bff31",
+        "blob_hash": "0a34f21f8999ef0d80247581410b524d48dba2eff2e8d83bfe9fa502524bff31",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "18d83d342a108e8ac2910c9b34e9b8a28336eb4cae78d6935351e62ada18db60",
+        "blob_hash": "18d83d342a108e8ac2910c9b34e9b8a28336eb4cae78d6935351e62ada18db60",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "12eeb969424d71ae7e42775061e1b84cf74fe1ecfe25b23b1d348e7411541e37",
+        "blob_hash": "12eeb969424d71ae7e42775061e1b84cf74fe1ecfe25b23b1d348e7411541e37",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "4219e17b2e9f83230b681d57ef3d182e854da45d3dda8b3299be0c8a3cde945d",
+        "blob_hash": "4219e17b2e9f83230b681d57ef3d182e854da45d3dda8b3299be0c8a3cde945d",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "310d7a77c06c57504bedca5c707791f7c33335d0fb68fcf1f8c936a0399d5018",
+        "blob_hash": "310d7a77c06c57504bedca5c707791f7c33335d0fb68fcf1f8c936a0399d5018",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    },
+    "FINAL-L02-C03": {
+      "events.jsonl": {
+        "local_hash": "f862bf499f61959507ca4470fb662b8172aec3b1d390f856a14722755ed2ffeb",
+        "blob_hash": "f862bf499f61959507ca4470fb662b8172aec3b1d390f856a14722755ed2ffeb",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "62de31cbd1b0f98635f18884b7d292105a93c4ddc2d2233c2f9708502485b40f",
+        "blob_hash": "62de31cbd1b0f98635f18884b7d292105a93c4ddc2d2233c2f9708502485b40f",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "a07d40b17ab196a0e31aaf8d55a6275d4a0970b61d430d893fbf6d0c61903dbf",
+        "blob_hash": "a07d40b17ab196a0e31aaf8d55a6275d4a0970b61d430d893fbf6d0c61903dbf",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "81e7cace00eca8e51a753c3908212624c9648f23b8e482b71fdb826805598724",
+        "blob_hash": "81e7cace00eca8e51a753c3908212624c9648f23b8e482b71fdb826805598724",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "21068b2321e1de59d0c3022113e285cd75a056a25ce865d09f825f5863197ea3",
+        "blob_hash": "21068b2321e1de59d0c3022113e285cd75a056a25ce865d09f825f5863197ea3",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    },
+    "FINAL-L02-C04": {
+      "events.jsonl": {
+        "local_hash": "11858643f7d36af251ecb03f7cde68148e0cd8f0205438883a6a3de9539aa057",
+        "blob_hash": "11858643f7d36af251ecb03f7cde68148e0cd8f0205438883a6a3de9539aa057",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "70c6ac1a5050872a8b7543405e0ca8c840e109fe3260aede8487ea36f8356220",
+        "blob_hash": "70c6ac1a5050872a8b7543405e0ca8c840e109fe3260aede8487ea36f8356220",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "32593765c70836652ba5b7a995e7e60bb00eaeaaeb5228ff0885beb70a580da6",
+        "blob_hash": "32593765c70836652ba5b7a995e7e60bb00eaeaaeb5228ff0885beb70a580da6",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "2d64a037747641bbcd5eab307013a6055bfae2e4a19ef136de93e22058524924",
+        "blob_hash": "2d64a037747641bbcd5eab307013a6055bfae2e4a19ef136de93e22058524924",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "552f89829aab726110017d307008e07af6d1f2065238da625d439a711398c74c",
+        "blob_hash": "552f89829aab726110017d307008e07af6d1f2065238da625d439a711398c74c",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    },
+    "FINAL-L02-C05": {
+      "events.jsonl": {
+        "local_hash": "3286cbc5a3085efc98c18178347c3006c8c0381a2573ec0cca8e503b1bf70259",
+        "blob_hash": "3286cbc5a3085efc98c18178347c3006c8c0381a2573ec0cca8e503b1bf70259",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "2ec5b0db7718778591c2d1df1e536819d63f8ed73efd57b423e107968828586d",
+        "blob_hash": "2ec5b0db7718778591c2d1df1e536819d63f8ed73efd57b423e107968828586d",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "6ae4a98cb56771021c861841b69e74d07730d11a88ec1af2c3e7510f80c591b8",
+        "blob_hash": "6ae4a98cb56771021c861841b69e74d07730d11a88ec1af2c3e7510f80c591b8",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "02956dcac1e0639f396bd7a8786a75f8526668ce1909c1e898a5aeef6a75c95b",
+        "blob_hash": "02956dcac1e0639f396bd7a8786a75f8526668ce1909c1e898a5aeef6a75c95b",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "344c23f1b20f750e7b61de2589654e73721d8d406d28b70646300f8883a1e5e0",
+        "blob_hash": "344c23f1b20f750e7b61de2589654e73721d8d406d28b70646300f8883a1e5e0",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    },
+    "FINAL-L02-C06": {
+      "events.jsonl": {
+        "local_hash": "7a6b49f81e559a5950dd36884f98b3b34c5bfec90077a3ee3c7cc1a8aa936a23",
+        "blob_hash": "7a6b49f81e559a5950dd36884f98b3b34c5bfec90077a3ee3c7cc1a8aa936a23",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "eb1a516b102180424796351bf0b066d57a681895d6462e2db9aa952d5a507fdf",
+        "blob_hash": "eb1a516b102180424796351bf0b066d57a681895d6462e2db9aa952d5a507fdf",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "d508fc958128a884a6939f11ae655369e686171e77fd2265fb6f390856d7fcab",
+        "blob_hash": "d508fc958128a884a6939f11ae655369e686171e77fd2265fb6f390856d7fcab",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "8018a2aee4d29eec60b4ca94835be8f4653b72b63610384083e7a6eee6e51c2c",
+        "blob_hash": "8018a2aee4d29eec60b4ca94835be8f4653b72b63610384083e7a6eee6e51c2c",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "e37ed495298045182b4f163b00dd514e33200a915077af78bf8ba4c3ba29656b",
+        "blob_hash": "e37ed495298045182b4f163b00dd514e33200a915077af78bf8ba4c3ba29656b",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    },
+    "FINAL-L02-C07": {
+      "events.jsonl": {
+        "local_hash": "23b6ac864236418b04d549ea196a9a7bf6aa04289af19a5a5276b967753c4a2e",
+        "blob_hash": "23b6ac864236418b04d549ea196a9a7bf6aa04289af19a5a5276b967753c4a2e",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "resolved-config.json": {
+        "local_hash": "5ab7773eef4e047182bdd4d1000861fd81629dc98b22200e385af5191674447e",
+        "blob_hash": "5ab7773eef4e047182bdd4d1000861fd81629dc98b22200e385af5191674447e",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "runner-state.json": {
+        "local_hash": "7993d3dcf297f26c5333fd2b7aa5394a7e5f78fb0de0a27712b24b4fe6dddb76",
+        "blob_hash": "7993d3dcf297f26c5333fd2b7aa5394a7e5f78fb0de0a27712b24b4fe6dddb76",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "summary.json": {
+        "local_hash": "c4ba365f01c81b09e7ccee2ed59f08c0df924af21d3a032660eb707773c1d6dd",
+        "blob_hash": "c4ba365f01c81b09e7ccee2ed59f08c0df924af21d3a032660eb707773c1d6dd",
+        "semantic_match": true,
+        "bytes_differ": false
+      },
+      "system-capability.json": {
+        "local_hash": "9dca192de3146f48e0df9b0df85fd7715fbb1f6573974a2c541881201f452490",
+        "blob_hash": "9dca192de3146f48e0df9b0df85fd7715fbb1f6573974a2c541881201f452490",
+        "semantic_match": true,
+        "bytes_differ": false
+      }
+    }
+  }
+}
