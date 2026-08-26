@@ -3,7 +3,7 @@ name: Repository checks
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, fix/final-acceptance-gate]
     paths-ignore:
       - "results/**"
       - "artifacts/**"
