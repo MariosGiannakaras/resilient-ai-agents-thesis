@@ -16,6 +16,7 @@ Record only material changes to the project source of truth. Detailed commit-by-
 - Integrated a real CLI/core headless experiment path across GridWorld, F0/C0/R0, scoped RNG streams, matched curves, metrics, continuous run-bundle persistence, root-specific common checkpoints, fail-closed source/log/config validation, verified root-boundary resume, one finalization/index update, and one optional post-experiment publication.
 - Added deterministic finalized-bundle analysis with semantic metric/state reproduction, explicit noncompleted-run inventory, separate operational attempts, primary variance summaries, the complete predeclared sensitivity grid, immutable checksummed outputs, and corruption rejection.
 - Added the pre-outcome T-410 campaign driver: exact staged tuning/pilot expansion, semantic tuning selection, measured graceful child deadlines, stable-identity recovery, and durable-main publication after every whole child.
+- Real T-410 execution published all tuning runs and exposed two fail-closed defects: sequential Git porcelain parsing (fixed in PR #70) and R0's active terminal-observation alias under corruption. Preserved every bundle and introduced the bounded v0.2 full-pilot retry amendment without retuning or outcome-driven matrix changes.
 
 ## 2026-07-29 — Corrected bootstrap and thesis-completion-first scope
 

@@ -21,8 +21,9 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-400` passed canonical CI/review and squash-merged through PR #66 (`1502bfd`).
 - `T-401` passed canonical CI/review and squash-merged through PR #67 (`8ddfcc2`).
 - `T-402` passed canonical CI/review and squash-merged through PR #68 (`34ca10b`).
-- Current task: **`T-410`**, in progress on `feat/execute-pilot-campaign`; the deterministic driver now expands the predefined staged tuning and pilot matrices, enforces measured graceful child deadlines, selects from reproduced evidence, resumes stable run identities, and publishes every whole child from durable `main`.
-- Exact next action: merge the CI-validated campaign-driver PR, synchronize clean `main`, then execute/resume the real tuning/pilot campaign and derive its diagnostic report.
+- Current task: **`T-410`**, in progress. All 36 tuning runs and five v0.1 pilot runs completed; `PV01-PILOT-L01-C06` then finalized failed when observation corruption made R0's delivered observation alias the modeled goal during an active episode. Evidence remains published and explicit.
+- The bounded `pilot-v0.2` amendment fixes the information-safe active terminal-observation policy, reuses unaffected F0 tuning evidence, preserves the same pilot seeds, and reruns the complete 14-child pilot matrix under new identities for implementation consistency.
+- Exact next action: CI-review/merge the v0.2 amendment, execute all `PV02-*` pilot children from clean `main`, then validate and report the amended diagnostic evidence.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline

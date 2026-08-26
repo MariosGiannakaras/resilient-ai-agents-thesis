@@ -31,12 +31,12 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 - **Current work package:** WP4 — Pilot protocol and headless experiment system
 - **Current task:** `T-410`
 - **State:** `IN_PROGRESS`
-- **Active branch / PR:** `feat/execute-pilot-campaign`; validated campaign-driver checkpoint `f126b03` is pushed; PR not yet opened.
-- **Last validated point:** `T-402` passed canonical CI/review and squash-merged in PR #68 (`34ca10b`). The T-410 driver deterministically expands the 18-configuration staged tuning search and 14-run pilot matrix, derives a preflight-bounded graceful timeout, selects only from semantically reproduced tuning bundles, resumes stable identities, and auto-publishes each whole experiment from durable `main`.
-- **Tests already run:** 13 focused campaign/runner/analysis tests passed, covering exact matrix expansion and selection order, timeout bounds/finalized failure publication, existing headless recovery/publication, and deterministic analysis/corruption behavior; targeted Ruff checks passed for new campaign files.
-- **Relevant files changed:** pilot campaign core/CLI/tests, explicit headless child deadlines and failed-run publication, campaign/runner/protocol documentation, and active task/decision/context reconciliation.
-- **Uncommitted work:** T-410 campaign documentation/task reconciliation after the pushed implementation checkpoint.
-- **Exact next action:** validate documentation consistency and the campaign diff, push/open the driver PR, complete canonical CI/review/merge, synchronize clean `main`, then execute/resume the real tuning and 14-child pilot campaign; each child will publish its own durable result checkpoint before the next starts.
+- **Active branch / PR:** `fix/robust-terminal-observation-alias`; amendment/fix not yet checkpointed or opened as a PR.
+- **Last validated point:** all 36 tuning runs and five complete v0.1 pilot children were automatically published; `PV01-PILOT-L01-C06` was finalized/published as failed after R0 rejected an active corrupted observation aliasing the goal. PR #70 (`ee751d8`) fixed the earlier sequential-publication parser discovery. The bounded `pilot-v0.2` amendment preserves all evidence, reuses unaffected F0 tuning selection, records robust-plan schema v2's nonprivileged terminal-alias policy, and assigns new identities to a complete 14-child retry.
+- **Tests already run:** five focused R0 tests pass including deterministic active terminal-like observation handling; before the discovery, canonical campaign/runner/analysis and sequential-publication regression suites passed.
+- **Relevant files changed:** R0 active terminal-observation policy/schema, bounded v0.2 protocol overlay/validation, amended campaign execution/state, focused tests, protocol/model/campaign decisions, and active state reconciliation.
+- **Uncommitted work:** v0.2 amendment implementation, tests, and documentation.
+- **Exact next action:** finish targeted amended-protocol/campaign/agent validation, checkpoint/push/open the fix PR, complete CI/review/merge, synchronize `main`, then execute all 14 `PV02-*` pilot children and derive the amended analysis/report.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 

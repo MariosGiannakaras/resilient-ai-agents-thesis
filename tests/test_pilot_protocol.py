@@ -15,6 +15,7 @@ from resilient_agents.pilot_protocol import (  # noqa: E402
 )
 
 PROTOCOL_PATH = ROOT / "configs" / "protocols" / "pilot-v0.1.json"
+AMENDED_PROTOCOL_PATH = ROOT / "configs" / "protocols" / "pilot-v0.2.json"
 
 
 class PilotProtocolTests(unittest.TestCase):
@@ -38,6 +39,21 @@ class PilotProtocolTests(unittest.TestCase):
         self.assertEqual(
             PilotProtocol.from_dict(protocol.to_dict()).canonical_json(),
             protocol.canonical_json(),
+        )
+
+    def test_v02_overlay_is_bounded_and_expands_to_a_complete_protocol(self) -> None:
+        protocol = load_pilot_protocol(AMENDED_PROTOCOL_PATH)
+        self.assertEqual(protocol.protocol_version, "pilot-v0.2")
+        r0 = next(
+            item for item in protocol.to_dict()["agent_regimes"] if item["agent_id"] == "r0"
+        )
+        self.assertEqual(
+            r0["method_configuration"]["active_terminal_observation_policy"],
+            "zero-value-seeded-action-tie",
+        )
+        self.assertEqual(
+            protocol.to_dict()["evaluation"]["root_seeds"],
+            self.payload["evaluation"]["root_seeds"],
         )
 
     def test_partition_overlap_and_privileged_information_fail_closed(self) -> None:

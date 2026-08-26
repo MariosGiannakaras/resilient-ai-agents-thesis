@@ -1,0 +1,9 @@
+{
+  "base_protocol": "pilot-v0.1.json",
+  "protocol_version": "pilot-v0.2",
+  "amendments": {
+    "r0_active_terminal_observation_policy": "zero-value-seeded-action-tie",
+    "pilot_seed_policy": "retain-v0.1-seeds-for-paired-implementation-retry",
+    "tuning_policy": "reuse-v0.1-f0-selection-no-retuning"
+  }
+}

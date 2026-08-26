@@ -5,6 +5,8 @@
 **Machine-readable authority:** `configs/protocols/pilot-v0.1.json`  
 **Validator:** `src/resilient_agents/pilot_protocol.py`
 
+**Amendment notice:** Real execution exposed the R0 terminal-observation alias defect recorded in `PILOT_PROTOCOL_V0_2.md`. All v0.1 evidence remains immutable; the complete included pilot matrix continues under `pilot-v0.2`.
+
 This protocol controls tuning and diagnostic pilots only. Its outputs may inform a later protocol version but are never final thesis evidence. Any material change creates a new pilot protocol version, preserves earlier runs under their original identity, and requires the affected pilot checks to be rerun.
 
 ## Pilot questions

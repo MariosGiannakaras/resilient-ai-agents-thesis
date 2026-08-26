@@ -46,6 +46,17 @@ class PilotCampaignTests(unittest.TestCase):
             },
         )
         self.assertTrue(all(item.auto_publish for item in requests))
+        amended = load_pilot_protocol(
+            ROOT / "configs" / "protocols" / "pilot-v0.2.json"
+        )
+        amended_requests = pilot_requests(
+            protocol=amended,
+            configuration=stage_one[5],
+            timeout_seconds=60.0,
+        )
+        self.assertTrue(
+            all(item.run_id.startswith("PV02-PILOT-") for item in amended_requests)
+        )
 
     def test_tuning_selection_applies_predeclared_lexicographic_criteria(self) -> None:
         first = QConfiguration(0.125, 0.9375, 0.125)
