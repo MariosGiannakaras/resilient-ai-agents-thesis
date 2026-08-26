@@ -18,9 +18,10 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-300`/`T-301` passed canonical CI/review and squash-merged through PR #63 (`25f67bb`).
 - `T-310`/`T-311` passed canonical CI/review and squash-merged through PR #64 (`e7d97a5`).
 - `T-312` passed canonical CI/review and squash-merged through PR #65 (`6f596a3`).
-- `T-400` is complete locally on `research/pilot-protocol-v0`: validated `pilot-v0.1` defines the stage firewall, explicit layouts/conditions/seeds/budgets, episode-block changepoint, tuning/checkpoint policy, metric sensitivity, resource/stopping rules, and failure/exclusion/artifact contracts.
-- Current task: **`T-401`**, ready after the pilot-protocol PR is CI-validated, objectively reviewed, squash-merged, and synchronized to main.
-- Exact next action: complete protocol/documentation validation and objective diff review, push/open the `T-400` PR, complete canonical CI/review/merge, then implement the headless multi-seed experiment path.
+- `T-400` passed canonical CI/review and squash-merged through PR #66 (`1502bfd`).
+- `T-401` is complete locally on `feat/headless-experiment-runner`: the CLI/core executes real multi-root F0/C0/R0 experiments, continuously persists matched curves/state, safely resumes verified root boundaries, finalizes one auditable bundle, and calls the publisher once after all roots.
+- Current task: **`T-402`**, ready after the headless-runner PR is CI-validated, objectively reviewed, squash-merged, and synchronized to main.
+- Exact next action: finish targeted validation/objective diff review, push/open the `T-401` PR, complete canonical CI/review/merge, then implement deterministic bundle-to-summary pilot analysis.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline

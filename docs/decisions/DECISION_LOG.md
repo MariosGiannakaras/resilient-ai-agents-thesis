@@ -187,6 +187,11 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **Status:** Accepted and validated for headless-runner implementation/pilots; not final evidence and amendable before `protocol-v1.0`.
 - **Decision:** Use machine-readable `pilot-v0.1` with two disjoint same-scale layouts per development/tuning/pilot/final-reserve stage; a matched 16-episode nominal plus 32-episode post-change block lifecycle; minimal in-set and maximal out-of-set action remaps; bounded single-factor diagnostics; precommitted disjoint seeds; an 18-configuration staged dyadic Q search; fixed pre-pilot R0 prior; explicit metric sensitivity, CPU preflight/timeout, failure/exclusion, and artifact rules. Final-reserve execution remains forbidden. The complete rationale and config contract live in `docs/experiments/PILOT_PROTOCOL_V0_1.md` and `configs/protocols/pilot-v0.1.json`.
 
+## DEC-036 — One resumable headless scientific execution path
+- **Date:** 2026-08-26
+- **Status:** Accepted and implemented by `T-401`; pilot execution awaits reproducible analysis (`T-402`).
+- **Decision:** Resolve the validated protocol through one CLI/core path that trains a root-specific nominal Q checkpoint shared by F0/C0, derives R0 from the fixed rectangular prior, executes matched reference/disrupted episode branches, computes schema-v1 metrics, persists events per episode and state atomically per completed root, and finalizes one whole-experiment bundle. Resume is supported only at verified root boundaries with identical config/source/content/log integrity; an incomplete root is deterministically rerun. Publication occurs at most once after all roots and bundle finalization. Detailed contract lives in `docs/experiments/HEADLESS_RUNNER.md`.
+
 ## Pending decisions
 
 Future entries are still required for:

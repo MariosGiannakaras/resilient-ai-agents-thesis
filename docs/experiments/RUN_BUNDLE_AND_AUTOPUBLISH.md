@@ -11,6 +11,7 @@ results/runs/<run-id>/
   manifest.json
   resolved-config.json
   system-capability.json
+  runner-state.json
   events.jsonl
   trace.jsonl
   summary.json
@@ -18,9 +19,11 @@ results/runs/<run-id>/
   FINALIZED
 ```
 
-`results/run-index.jsonl` is updated once per finalized run. The manifest records protocol version/stage, timestamps, source Git commit, Python/platform provenance, final status, retention policy, file sizes, and SHA-256 digests. Source provenance separately records tracked modifications and whether untracked **non-output** files were present when the run started. Untracked files under `results/**` and `artifacts/**` are treated as generated/local output and do not by themselves make the scientific source tree dirty; untracked code, config, data, scripts, or other repository inputs do. The existing privacy-minimal system-inventory collector records the same booleans without exposing untracked filenames and is stored with the run.
+`results/run-index.jsonl` is updated once per finalized run. The manifest records protocol version/stage, timestamps, source Git commit, Python/platform provenance, final status, retention policy, file sizes, and SHA-256 digests. Source provenance separately records tracked/untracked-non-output booleans plus privacy-preserving content fingerprints so a resume cannot silently continue after source-input drift. Untracked files under `results/**` and `artifacts/**` are treated as generated/local output and do not by themselves make the scientific source tree dirty; untracked code, config, data, scripts, or other repository inputs do. The existing privacy-minimal system-inventory collector records the booleans without exposing untracked filenames and is stored with the run.
 
 `FINALIZED` is a completion sentinel, not a scientific data file. It is written **last**, only after the final manifest, checksum manifest, and run-index update succeed. If finalization is interrupted before that point the marker is absent, so the bundle cannot be mistaken for a valid finalized publication candidate. Event/trace mutation is rejected after finalization.
+
+The headless runner atomically checkpoints completed root-seed units in `runner-state.json`. An unfinished bundle may resume only with identical resolved configuration, source commit/content fingerprints, running manifest identity, supported runner-state schema, and complete valid event/trace JSONL. Resume restarts a partial root deterministically; it never guesses or fabricates unsupported mid-root learning state. See `HEADLESS_RUNNER.md`.
 
 ## Automatic commit and push
 

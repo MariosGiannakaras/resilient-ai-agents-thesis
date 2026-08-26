@@ -49,7 +49,7 @@ The scientific changepoint is between episode blocks, not late within one goal-t
 
 Each post-change GridWorld episode encodes an action remap at local step zero, so the new dynamics remain active throughout every post-change episode. The runner records one global changepoint at episode index 16 for metric computation; repeated local environment event emission is provenance, not a sequence of new scientific changes. This design gives a meaningful pre/post episode-return curve while preserving the GridWorld's correct goal termination semantics.
 
-F0 and C0 use the identical selected Q checkpoint and deployment exploration schedule. F0 never updates after checkpoint load; C0 continues its standard update across episode boundaries. R0 is planned from the recorded nominal model and fixed uncertainty set, uses the common deployment epsilon, and never replans or learns from pilot outcomes.
+For each root seed, nominal training produces a root-specific checkpoint so training variability remains part of the independent unit. F0 and C0 use that identical checkpoint/checksum and deployment exploration schedule within the root. F0 never updates after checkpoint load; C0 continues its standard update across episode boundaries. R0 is planned from the recorded nominal model and fixed uncertainty set, uses the common deployment epsilon, and never replans or learns from pilot outcomes.
 
 ## Conditions and severity rationale
 
@@ -107,4 +107,4 @@ Every valid completed run is included regardless of poor return, truncation, or 
 
 Invalid execution is limited to recorded schema/contract, provenance, checksum/finalization, information-boundary, or non-finite-state violations. Later analysis exclusion requires a confirmed implementation defect, confirmed external interference affecting scientific validity, or a predeclared scenario/agent contract violation. Execution outcome remains unchanged and visible when an analysis exclusion is added.
 
-Each child/whole experiment preserves the resolved protocol/scenario, all root/derived seeds, source/runtime provenance, Q checkpoint or robust-plan checksum, event log, episode-return curves, execution outcome/reason, metric sensitivity summaries, manifest, and checksums. `T-401` must enforce this protocol through the headless runner before `T-410` pilots execute.
+Each child/whole experiment preserves the resolved protocol/scenario, all root/derived seeds, source/runtime provenance, Q checkpoint or robust-plan checksum, event log, episode-return curves, execution outcome/reason, metric sensitivity summaries, manifest, and checksums. `T-401` now enforces this protocol through the resumable CLI/core path documented in `HEADLESS_RUNNER.md`; `T-402` must derive reproducible summaries before `T-410` pilots execute.

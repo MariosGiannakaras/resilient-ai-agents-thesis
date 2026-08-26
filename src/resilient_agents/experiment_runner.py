@@ -287,10 +287,39 @@ class HeadlessExperimentRunner:
         elif self.request.stage is ProtocolStage.TUNING:
             if tuple(self.request.root_seeds) != tuple(tuning["root_seeds"]):
                 raise ValueError("tuning execution must use the complete tuning seed bank")
+            if self.request.training_episodes_per_layout != tuning[
+                "training_episodes_per_layout"
+            ]:
+                raise ValueError("tuning training budget differs from pilot-v0.1")
+            if (
+                self.request.pre_change_episodes + self.request.post_change_episodes
+                != tuning["nominal_evaluation_episodes_per_layout"]
+            ):
+                raise ValueError("tuning nominal evaluation budget differs from pilot-v0.1")
+            if self.request.condition_id != "nominal" or self.request.agent_ids != ("f0",):
+                raise ValueError("Q tuning must evaluate the frozen checkpoint nominally")
+            search = tuning["q_learning_search"]
+            if (
+                self.request.q_learning_rate not in search["learning_rates"]
+                or self.request.discount_factor not in search["discount_factors"]
+                or self.request.exploration_epsilon
+                not in search["exploration_epsilons"]
+            ):
+                raise ValueError("tuning hyperparameters are outside the predeclared search")
+        if self.request.stage is ProtocolStage.PILOT:
+            if self.request.agent_ids != ("f0", "c0", "r0"):
+                raise ValueError("pilot experiments must execute the complete agent set")
+            if self.request.retention_policy is not RetentionPolicy.EVENTS:
+                raise ValueError("pilot-v0.1 requires events plus persisted episode curves")
 
     def _resolved_config(self) -> dict[str, Any]:
         return {
             "headless_runner_schema_version": HEADLESS_RUNNER_SCHEMA_VERSION,
+            "entrypoint": "resilient_agents.experiment_runner.v1",
+            "seed_derivation": {
+                "scoped_root": "resilient-agents-scoped-v1",
+                "independent_streams": "resilient-agents-v1",
+            },
             "protocol": self._payload,
             "request": self.request.to_dict(),
         }
@@ -495,6 +524,7 @@ class HeadlessExperimentRunner:
                     branch="nominal",
                     agent_id="nominal-trainer",
                     episode_index=episode,
+                    agent_seeds=seeds,
                 )
                 checkpoint = agent.checkpoint()
                 returns.append(episode_return)
@@ -599,6 +629,7 @@ class HeadlessExperimentRunner:
                 branch=branch,
                 agent_id=agent_id,
                 episode_index=episode,
+                agent_seeds=seeds,
             )
             curve.append(episode_return)
             if agent_id in {"f0", "c0"}:
@@ -626,6 +657,7 @@ class HeadlessExperimentRunner:
         branch: str,
         agent_id: str,
         episode_index: int,
+        agent_seeds: Mapping[str, int],
     ) -> tuple[float, int, str]:
         streams = RandomStreams(derive_scoped_seed(root_seed, scope)).derived_seeds()
         environment = GridWorldEnvironment(scenario)
@@ -686,6 +718,16 @@ class HeadlessExperimentRunner:
                 "length": length,
                 "outcome": outcome,
                 "scenario_id": scenario.scenario_id,
+                "agent_initialization_seed": agent_seeds["agent_initialization"],
+                "agent_exploration_seed": agent_seeds["agent_exploration"],
+                "environment_seeds": {
+                    "scenario": streams["scenario"],
+                    "environment": streams["environment"],
+                    "action_disturbance": streams["action_disturbance"],
+                    "observation_disturbance": streams[
+                        "observation_disturbance"
+                    ],
+                },
             }
         )
         return total_reward, length, outcome

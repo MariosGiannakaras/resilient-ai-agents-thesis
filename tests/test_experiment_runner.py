@@ -93,7 +93,23 @@ class HeadlessExperimentRunnerTests(unittest.TestCase):
                 repo / "results" / "run-index.jsonl"
             ).read_text(encoding="utf-8").splitlines()
             self.assertEqual(len(index_lines), 1)
-            self.assertIn("root_completed", (result.run_dir / "events.jsonl").read_text())
+            events_text = (result.run_dir / "events.jsonl").read_text()
+            self.assertIn("root_completed", events_text)
+            first_episode = next(
+                json.loads(line)
+                for line in events_text.splitlines()
+                if json.loads(line).get("event") == "episode_completed"
+            )
+            self.assertIn("agent_exploration_seed", first_episode)
+            self.assertEqual(
+                set(first_episode["environment_seeds"]),
+                {
+                    "scenario",
+                    "environment",
+                    "action_disturbance",
+                    "observation_disturbance",
+                },
+            )
 
             with tempfile.TemporaryDirectory() as repeat_temporary:
                 repeated = HeadlessExperimentRunner(
@@ -216,6 +232,26 @@ class HeadlessExperimentRunnerTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 HeadlessExperimentRunner(
                     repo_root=repo, protocol=PROTOCOL, request=changed
+                ).run()
+
+    def test_corrupted_resume_log_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repo = Path(temporary)
+            run_request = request(
+                run_id="DEV-CORRUPT", root_seeds=(1001,), agent_ids=("f0",)
+            )
+            runner = HeadlessExperimentRunner(
+                repo_root=repo, protocol=PROTOCOL, request=run_request
+            )
+            with patch.object(runner, "_run_root", side_effect=KeyboardInterrupt()):
+                with self.assertRaises(KeyboardInterrupt):
+                    runner.run()
+            events = repo / "results" / "runs" / "DEV-CORRUPT" / "events.jsonl"
+            with events.open("a", encoding="utf-8") as handle:
+                handle.write("{incomplete")
+            with self.assertRaises(RuntimeError):
+                HeadlessExperimentRunner(
+                    repo_root=repo, protocol=PROTOCOL, request=run_request
                 ).run()
 
 

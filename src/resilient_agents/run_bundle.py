@@ -70,6 +70,34 @@ def _untracked_nonoutput_present(repo_root: Path) -> bool | None:
     return any(not path.startswith(GENERATED_OUTPUT_PREFIXES) for path in paths)
 
 
+def _tracked_diff_sha256(repo_root: Path) -> str | None:
+    output = _git(repo_root, "diff", "--binary", "HEAD")
+    if output is None:
+        return None
+    return hashlib.sha256(output.encode("utf-8")).hexdigest()
+
+
+def _untracked_nonoutput_sha256(repo_root: Path) -> str | None:
+    output = _git(repo_root, "ls-files", "-z", "--others", "--exclude-standard")
+    if output is None:
+        return None
+    paths = sorted(
+        path
+        for path in output.split("\0")
+        if path and not path.startswith(GENERATED_OUTPUT_PREFIXES)
+    )
+    digest = hashlib.sha256()
+    try:
+        for relative in paths:
+            path = repo_root / relative
+            digest.update(relative.encode("utf-8"))
+            digest.update(b"\0")
+            digest.update(bytes.fromhex(sha256_file(path)))
+    except OSError:
+        return None
+    return digest.hexdigest()
+
+
 def source_provenance(repo_root: Path) -> dict[str, Any]:
     commit = _git(repo_root, "rev-parse", "HEAD")
     tracked_status = _git(repo_root, "status", "--porcelain", "--untracked-files=no")
@@ -77,6 +105,8 @@ def source_provenance(repo_root: Path) -> dict[str, Any]:
         "git_commit": commit,
         "tracked_changes_present": bool(tracked_status) if tracked_status is not None else None,
         "untracked_nonoutput_present": _untracked_nonoutput_present(repo_root),
+        "tracked_diff_sha256": _tracked_diff_sha256(repo_root),
+        "untracked_nonoutput_sha256": _untracked_nonoutput_sha256(repo_root),
         "python_version": platform.python_version(),
         "python_implementation": platform.python_implementation(),
         "platform": platform.platform(),
@@ -205,6 +235,16 @@ class RunBundle:
             "untracked_nonoutput_present"
         ):
             raise RuntimeError("untracked non-output source state changed since run start")
+        if current_source.get("tracked_diff_sha256") != stored_source.get(
+            "tracked_diff_sha256"
+        ):
+            raise RuntimeError("tracked source content changed since the run started")
+        if current_source.get("untracked_nonoutput_sha256") != stored_source.get(
+            "untracked_nonoutput_sha256"
+        ):
+            raise RuntimeError("untracked non-output inputs changed since run start")
+        cls._validate_resumable_jsonl(run_dir / "events.jsonl")
+        cls._validate_resumable_jsonl(run_dir / "trace.jsonl")
 
         bundle = cls.__new__(cls)
         bundle.repo_root = root
@@ -214,6 +254,28 @@ class RunBundle:
         bundle.provenance = stored_source
         bundle.manifest = manifest
         return bundle
+
+    @staticmethod
+    def _validate_resumable_jsonl(path: Path) -> None:
+        if not path.exists():
+            return
+        try:
+            content = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeError) as exc:
+            raise RuntimeError(f"resume log is unreadable: {path.name}") from exc
+        if content and not content.endswith("\n"):
+            raise RuntimeError(f"resume log has an incomplete final line: {path.name}")
+        for number, line in enumerate(content.splitlines(), start=1):
+            try:
+                value = json.loads(line)
+            except json.JSONDecodeError as exc:
+                raise RuntimeError(
+                    f"resume log contains invalid JSON at {path.name}:{number}"
+                ) from exc
+            if not isinstance(value, dict):
+                raise RuntimeError(
+                    f"resume log entry must be an object at {path.name}:{number}"
+                )
 
     def _require_running(self) -> None:
         if self.manifest.get("status") != "running":

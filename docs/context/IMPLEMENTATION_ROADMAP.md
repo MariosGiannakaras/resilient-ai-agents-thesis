@@ -43,8 +43,8 @@ Phases are checkpoints, not the concrete execution checklist and not mandatory s
 
 ## Phase 7 — Headless experiment core
 
-- Complete the environment, agent implementations, orchestration, persistence, manifests, and recovery behavior inside `src/resilient_agents/`.
-- A whole experiment may contain many seeds; it finalizes once and optionally creates one automatic Git commit/push.
+- Environment, agents, metrics, multi-seed orchestration, continuous persistence, root-boundary recovery, manifests, CLI, and fail-closed lifecycle behavior are integrated inside `src/resilient_agents/`.
+- A whole experiment may contain many seeds; the validated path finalizes once and optionally invokes one automatic Git commit/push after all seeds.
 - **Gate:** full experiments run without the UI and produce auditable bundles.
 
 ## Phase 8 — Pilots and protocol freeze
