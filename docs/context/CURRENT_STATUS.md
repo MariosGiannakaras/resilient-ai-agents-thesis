@@ -23,7 +23,8 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-402` passed canonical CI/review and squash-merged through PR #68 (`34ca10b`).
 - `T-410` completed the bounded pilot lifecycle. PR #71 (`1b94ebb`) merged the v0.2 amendment; all 14 PV02 children are published and the validated analysis contains 336 units plus 18,144 sensitivity records with no v0.2 failure/exclusion. The retained v0.1 failure and superseded attempts remain explicit.
 - Pilot evidence confirms CPU/runtime/storage feasibility but makes two final-freeze constraints mandatory: R0's current configuration has approximately 96% nominal truncation and recovery classification varies across metric settings in 33/42 agent-condition-layout cells. No final claim or favorable threshold/model selection is allowed from these diagnostics.
-- Current task: **`T-411`**, ready. Exact next action: perform the decision-driving freshness review in canonical `ThesisBibliography`, promote evidence there if required, and immutably synchronize the accepted export before `T-412`.
+- `T-411` freshness review completed in canonical `ThesisBibliography`; no new citation-ready evidence required promotion. `bibliography-integration-v3` remains the immutable baseline.
+- Current task: **`T-412`**, ready. Exact next action: Freeze `protocol-v1.0` and the statistical analysis plan.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline

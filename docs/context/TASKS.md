@@ -29,14 +29,14 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP4 — Pilot protocol and headless experiment system
-- **Current task:** `T-411`
+- **Current task:** `T-412`
 - **State:** `READY`
-- **Active branch / PR:** `research/report-pilot-v02`; T-410 evidence/report completion PR pending.
-- **Last validated point:** PR #71 (`1b94ebb`) merged the v0.2 amendment; all 14 amended pilot children completed and auto-published. `PV02-PILOT-ANALYSIS` validates 336 units and 18,144 sensitivity records with no v0.2 failure/exclusion. The T-410 report records runtime/storage, variance, censoring, recovery sensitivity, the retained v0.1 failure, and the mandatory R0 post-pilot decision.
-- **Tests already run:** amended agent/protocol/campaign/analysis focused suite passed (18 tests); PR #71 canonical CI passed; the completed analysis bundle passes its integrity/semantic validator.
-- **Relevant files changed:** immutable PV02 analysis/campaign outputs, pilot report, post-pilot decisions, and active task/state documents.
-- **Uncommitted work:** T-410 analysis/campaign output and report/state reconciliation on `research/report-pilot-v02`.
-- **Exact next action:** validate documentation, checkpoint/push and CI-review/merge the T-410 report PR, synchronize `main`, then begin T-411's upstream bibliography freshness review and immutable sync if required.
+- **Active branch / PR:** none
+- **Last validated point:** T-411 freshness review completed in `ThesisBibliography`; no new evidence required protocol changes. `bibliography-integration-v3` remains the canonical baseline.
+- **Tests already run:** N/A
+- **Relevant files changed:** `TASKS.md`, `CURRENT_STATUS.md`
+- **Uncommitted work:** none
+- **Exact next action:** Freeze `protocol-v1.0` and the statistical analysis plan.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -150,10 +150,10 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-410` — Execute pilots and record runtime, variance, failures, recovery/metric behavior, storage volume, and agent-specific issues.
   - Depends on: `T-401`, `T-402`.
   - Acceptance: pilot evidence answers the predefined feasibility/protocol questions without contaminating final evaluation.
-- [ ] READY `T-411` — Refresh decision-driving bibliography before final protocol freeze.
+- [x] `T-411` — Refresh decision-driving bibliography before final protocol freeze.
   - Depends on: `T-410`.
   - Acceptance: freshness review occurs in `ThesisBibliography`; any required promotion/new evidence is synchronized immutably before freeze.
-- [ ] BLOCKED `T-412` — Freeze `protocol-v1.0` and the statistical analysis plan.
+- [ ] READY `T-412` — Freeze `protocol-v1.0` and the statistical analysis plan.
   - Depends on: `T-410`, `T-411`.
   - Acceptance: final RQs/hypotheses, model set, scenario matrix, severities, seeds/repetitions, budgets, tuning rules, primary/secondary metrics, recovery definition, exclusions, and statistical estimands are versioned before final results are inspected.
 
