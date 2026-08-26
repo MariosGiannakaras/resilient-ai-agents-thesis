@@ -29,14 +29,14 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP2 — Research framing
-- **Current task:** `T-200` complete on the review branch
-- **State:** `UNDER REVIEW`
-- **Active branch / PR:** `research/rq-hypothesis-framing`; PR #58.
-- **Last validated point:** the bounded main RQ, two secondary questions, two falsifiable construct-level hypothesis candidates, source/limitation map, and downstream feasibility/freeze gates are documented without freezing exact methods, parameters, metrics, or protocol choices. The accepted v3 bibliography state and promoted robust-MDP evidence boundary are reconciled across active research/context files.
-- **Tests already run:** documentation consistency passed; targeted bibliography-use validation found 27 citation-ready references; normal full repository checks passed (56 tests, 1 skipped), including locked environment, compile, bibliography integrity/use, and both checksum manifests.
-- **Relevant files changed:** active research brief/evidence/model workspaces, affected context/status/changelog/task authorities, and the documentation validator's citation-ready-anchor check.
-- **Uncommitted work:** PR-number/status reconciliation only.
-- **Exact next action:** push this PR-state checkpoint, require canonical CI plus objective diff review, squash-merge PR #58, then start ready task `T-210`.
+- **Current task:** `T-210`
+- **State:** `IN_PROGRESS`
+- **Active branch / PR:** `research/gridworld-prototype-comparison`; PR not yet opened.
+- **Last validated point:** the active GridWorld specification, landscape review, research framing, shared environment/information/randomness contracts, and current upstream package/license evidence were inspected. Gymnasium 1.3.0 and MiniGrid 3.1.0 are pinned only in the `gridworld-prototype` dependency group and sync/import successfully on the accepted native Windows CPython 3.12 baseline; MiniGrid's v3.1.0 root Apache-2.0 license conflicts with its MIT package metadata and remains an explicit reuse risk.
+- **Tests already run:** native Windows `uv sync --locked --group gridworld-prototype` passed; the locked Python 3.12 environment imported Gymnasium 1.3.0 and MiniGrid 3.1.0; the bounded dependency tree resolved to eight packages.
+- **Relevant files changed:** `docs/context/TASKS.md`, `docs/context/CURRENT_STATUS.md`, `pyproject.toml`, `uv.lock`.
+- **Uncommitted work:** validated prototype-only dependency pins and updated resume state; no prototype implementation exists yet.
+- **Exact next action:** implement the smallest same-fixture custom-Gymnasium and thin-MiniGrid prototypes under `prototypes/gridworld/`, then add deterministic parity/audit checks and a measured comparison against the T-210 acceptance criteria.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -102,7 +102,7 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-200` — Complete source-traceable research-question and hypothesis framing from citation-ready evidence, while keeping feasibility-dependent choices provisional.
   - Depends on: `T-102` for durable feasibility evidence; bibliography baseline already complete.
   - Acceptance: bounded main RQ, minimal secondary RQs/hypotheses, evidence mapping, limitations, and open feasibility gates are documented.
-- [ ] READY `T-210` — Complete bounded GridWorld prototype comparison (minimal custom implementation versus justified reuse/adaptation candidates).
+- [ ] IN_PROGRESS `T-210` — Complete bounded GridWorld prototype comparison (minimal custom implementation versus justified reuse/adaptation candidates).
   - Depends on: `T-102`.
   - Acceptance: prototypes/audit compare semantics, determinism, seeding, disturbance extensibility, testability, maintenance/license/dependency cost, and fit to the RQ.
 - [ ] BLOCKED `T-211` — Record the final GridWorld implementation ADR.
