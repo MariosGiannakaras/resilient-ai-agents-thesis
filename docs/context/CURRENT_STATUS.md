@@ -13,7 +13,7 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - Current work package: **WP2 — Research framing**.
 - `T-200` passed canonical CI and objective diff review, then squash-merged through PR #58 (`67bb423`).
 - Current task: **`T-210`** on `research/gridworld-prototype-comparison`, the bounded minimal-custom versus justified reuse/adaptation GridWorld prototype comparison.
-- Exact next action: implement the smallest same-fixture custom-Gymnasium and thin-MiniGrid prototypes, then compare deterministic parity, semantic transparency, disturbance extensibility, dependency/license cost, and native-Windows feasibility.
+- Exact next action: checkpoint the passing same-fixture prototypes, run their explicit native-Windows benchmark from a clean source commit, then record the semantic, dependency/license, maintenance, and RQ-fit comparison for T-210.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline

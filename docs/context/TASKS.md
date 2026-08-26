@@ -32,11 +32,11 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 - **Current task:** `T-210`
 - **State:** `IN_PROGRESS`
 - **Active branch / PR:** `research/gridworld-prototype-comparison`; PR not yet opened.
-- **Last validated point:** the active GridWorld specification, landscape review, research framing, shared environment/information/randomness contracts, and current upstream package/license evidence were inspected. Gymnasium 1.3.0 and MiniGrid 3.1.0 are pinned only in the `gridworld-prototype` dependency group and sync/import successfully on the accepted native Windows CPython 3.12 baseline; MiniGrid's v3.1.0 root Apache-2.0 license conflicts with its MIT package metadata and remains an explicit reuse risk.
-- **Tests already run:** native Windows `uv sync --locked --group gridworld-prototype` passed; the locked Python 3.12 environment imported Gymnasium 1.3.0 and MiniGrid 3.1.0; the bounded dependency tree resolved to eight packages.
-- **Relevant files changed:** `docs/context/TASKS.md`, `docs/context/CURRENT_STATUS.md`, `pyproject.toml`, `uv.lock`.
-- **Uncommitted work:** validated prototype-only dependency pins and updated resume state; no prototype implementation exists yet.
-- **Exact next action:** implement the smallest same-fixture custom-Gymnasium and thin-MiniGrid prototypes under `prototypes/gridworld/`, then add deterministic parity/audit checks and a measured comparison against the T-210 acceptance criteria.
+- **Last validated point:** the custom-Gymnasium and thin-MiniGrid candidates now expose the same accepted research/information contract over one explicit known-answer fixture. Both pass deterministic parity checks for exact persistent-change onset, seeded replay and independent disturbance streams, intended/executed action separation, observation isolation, collisions, goal termination versus truncation, serialization, debug/trace parity, and fail-closed reset seeding.
+- **Tests already run:** native Windows `uv sync --locked --group gridworld-prototype` and locked imports passed; `uv run --locked --group gridworld-prototype python -m unittest tests.test_gridworld_prototypes -v` passed 9 tests; targeted prototype/test compilation passed.
+- **Relevant files changed:** prototype candidates/fixtures/comparison runner, targeted tests, repository-check dependency/compile scope, `pyproject.toml`, `uv.lock`, `docs/context/TASKS.md`, and `docs/context/CURRENT_STATUS.md`.
+- **Uncommitted work:** validated same-fixture prototype implementation and tests; measured benchmark/audit synthesis is not yet recorded.
+- **Exact next action:** checkpoint/push the validated prototypes, run the explicit native-Windows benchmark from that clean source commit, then record the semantic/dependency/license/maintenance/RQ-fit comparison and reconcile T-210 completion.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
