@@ -162,9 +162,9 @@ class ResolvedGridWorldScenario:
             _coordinate(raw_vectors[name], field=f"action_vectors.{name}")
             for name in ACTION_NAMES
         )
-        cardinal_vectors = {(0, -1), (1, 0), (0, 1), (-1, 0)}
-        if set(action_vectors) != cardinal_vectors:
-            raise ValueError("action vectors must be a permutation of four-neighbour moves")
+        canonical_vectors = ((0, -1), (1, 0), (0, 1), (-1, 0))
+        if action_vectors != canonical_vectors:
+            raise ValueError("action vectors must use the canonical up/right/down/left moves")
 
         if spec.observation_spec != {
             "type": "position",
@@ -541,6 +541,8 @@ class GridWorldEnvironment:
         self.information_policy = self.gym_env.scenario.information_policy
 
     def reset(self, *, seeds: EnvironmentSeeds) -> Coordinate:
+        if not isinstance(seeds, EnvironmentSeeds):
+            raise ValueError("reset requires explicit EnvironmentSeeds")
         observation, info = self.gym_env.reset(
             seed=seeds.environment,
             options={"environment_seeds": seeds},

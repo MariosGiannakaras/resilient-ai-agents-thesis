@@ -355,11 +355,18 @@ class GridWorldContractTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 environment.step(GridAction.RIGHT)
             environment.reset(seed=202, options={"environment_seeds": fixture_seeds()})
+            with self.assertRaises(ValueError):
+                environment.step(True)
+            with self.assertRaises(ValueError):
+                environment.step(4)
             environment.step(GridAction.RIGHT)
             with self.assertRaises(RuntimeError):
                 environment.step(GridAction.RIGHT)
         finally:
             environment.close()
+
+        with self.assertRaises(ValueError):
+            EnvironmentSeeds(True, 2, 3, 4)
 
 
 if __name__ == "__main__":

@@ -14,6 +14,17 @@ class EnvironmentSeeds:
     action_disturbance: int
     observation_disturbance: int
 
+    def __post_init__(self) -> None:
+        for name in (
+            "scenario",
+            "environment",
+            "action_disturbance",
+            "observation_disturbance",
+        ):
+            value = getattr(self, name)
+            if not isinstance(value, int) or isinstance(value, bool):
+                raise ValueError(f"environment seed {name} must be an integer")
+
 
 class ResearchEnvironment(Protocol):
     environment_id: str

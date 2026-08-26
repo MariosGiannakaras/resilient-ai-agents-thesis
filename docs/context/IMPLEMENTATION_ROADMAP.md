@@ -20,9 +20,8 @@ Phases are checkpoints, not the concrete execution checklist and not mandatory s
 ## Phase 3 — Environment contract and GridWorld decision
 
 - Use the common environment/ground-truth contracts in `src/resilient_agents/`.
-- Implement DEC-032's selected project-owned Gymnasium path through the accepted core contracts.
-- Define explicit scenario, change, disturbance, reward, termination, and information-access schemas.
-- **Gate:** known-answer transition/reference-trace tests pass.
+- DEC-032's project-owned Gymnasium path and explicit schema-v1 contracts are implemented.
+- **Gate passed:** deterministic known-answer transition/reference-trace and information-boundary tests pass.
 
 ## Phase 4 — Reproducibility and metric fixtures
 
