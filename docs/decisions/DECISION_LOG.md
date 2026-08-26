@@ -204,6 +204,12 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **Status:** Accepted for T-410 execution; real outcomes remain pending campaign execution.
 - **Decision:** Expand `pilot-v0.1` deterministically into 36 tuning and 14 pilot whole-experiment children; use one full tuning child as preflight for the declared timeout rule; enforce graceful recorded deadlines inside the runner; select tuning configurations only through semantically reproduced completed bundles and the predeclared ordered score; and automatically commit/push every child from durable `main`. Stable identities plus exact-request/integrity validation provide resume without overwrite. The central stored metric setting is fixed pre-outcome while all 54 sensitivity definitions remain mandatory. Detailed contract lives in `docs/experiments/PILOT_CAMPAIGN_EXECUTION.md`.
 
+## DEC-039 — R0 active terminal-observation alias amendment
+
+- **Date:** 2026-08-26
+- **Status:** Accepted during T-410 after an explicit retained pilot failure; implementation and full amended pilot rerun in progress.
+- **Decision:** A delivered observation equal to a modeled terminal state cannot prove true termination under observation corruption. When the runner asks R0 to act in an active episode, robust-plan schema v2 assigns the absorbing value zero to every action and applies the existing seeded tie rule, without evaluator truth. Preserve all v0.1 attempts; reuse the unaffected F0-only tuning evidence and selected configuration; retain the pilot seed bank for a paired implementation retry; and rerun the complete 14-child matrix under `pilot-v0.2`/`PV02-*` identities. Only the complete v0.2 matrix enters amended pilot analysis; the v0.1 failure remains explicit operational evidence. Detailed amendment is `docs/experiments/PILOT_PROTOCOL_V0_2.md`.
+
 ## Pending decisions
 
 Future entries are still required for:

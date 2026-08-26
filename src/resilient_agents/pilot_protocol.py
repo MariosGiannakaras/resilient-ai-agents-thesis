@@ -1,6 +1,7 @@
 """Fail-closed loader for the versioned pre-final pilot protocol."""
 from __future__ import annotations
 
+import copy
 import json
 import math
 from collections import deque
@@ -438,16 +439,23 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
             if method_configuration != expected_configuration:
                 raise ValueError("pilot Q-learning method configuration is inconsistent")
         else:
+            expected_r0_keys = {
+                "discount_policy",
+                "initial_value",
+                "convergence_tolerance",
+                "max_iterations",
+            }
+            if payload["protocol_version"] == "pilot-v0.2":
+                expected_r0_keys.add("active_terminal_observation_policy")
             _exact_keys(
                 method_configuration,
-                {
-                    "discount_policy",
-                    "initial_value",
-                    "convergence_tolerance",
-                    "max_iterations",
-                },
+                expected_r0_keys,
                 field="R0 method_configuration",
             )
+            if payload["protocol_version"] == "pilot-v0.2" and method_configuration[
+                "active_terminal_observation_policy"
+            ] != "zero-value-seeded-action-tie":
+                raise ValueError("pilot-v0.2 requires the amended R0 alias policy")
             if method_configuration["discount_policy"] != "selected-common-discount":
                 raise ValueError("R0 must use the common selected discount")
             if method_configuration["initial_value"] != 0.0:
@@ -758,4 +766,32 @@ def load_pilot_protocol(path: Path) -> PilotProtocol:
             payload = json.load(handle)
     except (OSError, UnicodeError, json.JSONDecodeError) as exc:
         raise ValueError(f"cannot read pilot protocol: {path}") from exc
+    if isinstance(payload, dict) and set(payload) == {
+        "base_protocol",
+        "protocol_version",
+        "amendments",
+    }:
+        base_name = payload["base_protocol"]
+        amendments = payload["amendments"]
+        if (
+            base_name != "pilot-v0.1.json"
+            or payload["protocol_version"] != "pilot-v0.2"
+            or amendments
+            != {
+                "r0_active_terminal_observation_policy": "zero-value-seeded-action-tie",
+                "pilot_seed_policy": "retain-v0.1-seeds-for-paired-implementation-retry",
+                "tuning_policy": "reuse-v0.1-f0-selection-no-retuning",
+            }
+        ):
+            raise ValueError("unsupported pilot protocol amendment overlay")
+        base = load_pilot_protocol(path.with_name(base_name)).to_dict()
+        expanded = copy.deepcopy(base)
+        expanded["protocol_version"] = "pilot-v0.2"
+        r0 = next(
+            item for item in expanded["agent_regimes"] if item["agent_id"] == "r0"
+        )
+        r0["method_configuration"]["active_terminal_observation_policy"] = (
+            "zero-value-seeded-action-tie"
+        )
+        payload = expanded
     return PilotProtocol.from_dict(payload)

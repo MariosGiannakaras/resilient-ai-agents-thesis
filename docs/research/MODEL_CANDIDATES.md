@@ -12,6 +12,8 @@ The smallest set that answers the retained provisional RQs uses two implementati
 | C0 | The same `tabular_q_learning_v1` checkpoint and action-selection schedule, Q updates continued through the persistent change | Naive model-free online adaptation baseline | **RETAIN** |
 | R0 | `rectangular_robust_value_iteration_v1`, planned before deployment over an explicit finite s,a-rectangular transition uncertainty set, then frozen | Declared-set robustness and nominal-conservativeness comparator | **RETAIN** |
 
+Pilot execution refined only R0's observation-boundary handling: when an active episode delivers a corrupted observation that aliases a modeled terminal state, robust-plan schema v2 uses the recorded zero-value seeded action tie. It never consults evaluator truth to decide whether the apparent terminal state is real. The uncertainty set, robust Bellman method, frozen role, and information policy are unchanged; `pilot-v0.2` reruns the complete pilot matrix consistently.
+
 F0 and C0 are separate evaluation regimes of one implementation, not inflated algorithm count. Their identical nominal checkpoint, action-selection schedule, exploration RNG policy, and agent-visible information isolate the effect of permitting post-change updates. R0 is intentionally a different information regime: its model and uncertainty family are declared prior knowledge and must be reported as such.
 
 This is the implementation/pilot set, not a promise that every role survives final protocol freeze. A role is removed if correctness, assumption fit, fairness, repeated-run feasibility, or distinct empirical behavior fails the later gates.

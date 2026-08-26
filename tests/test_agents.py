@@ -306,6 +306,30 @@ class RobustValueIterationAgentTests(unittest.TestCase):
                 )
             )
 
+    def test_active_terminal_like_observation_uses_seeded_nonprivileged_action(self) -> None:
+        first = RectangularRobustValueIterationAgent(self._config(uncertain=True))
+        second = RectangularRobustValueIterationAgent(self._config(uncertain=True))
+        for agent in (first, second):
+            agent.reset(initialization_seed=10, exploration_seed=20)
+        first_action = first.act("goal")
+        second_action = second.act("goal")
+        self.assertEqual(first_action, second_action)
+        self.assertIn(first_action, ("safe", "ambitious"))
+        first.observe(
+            transition(
+                step=0,
+                observation="s",
+                action=first_action,
+                reward=0.0,
+                terminated=False,
+            )
+        )
+        self.assertEqual(first.get_state()["observed_transition_count"], 1)
+        self.assertEqual(
+            first.plan()["model"]["active_terminal_observation_policy"],
+            "zero-value-seeded-action-tie",
+        )
+
     def test_invalid_probability_row_and_incomplete_model_fail_closed(self) -> None:
         with self.assertRaises(ValueError):
             row(outcome("goal", 0.9, 1.0, terminal=True))

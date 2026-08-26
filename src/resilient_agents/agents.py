@@ -17,7 +17,7 @@ from typing import Any, Mapping, Sequence
 from .contracts import AgentTransition
 
 TABULAR_Q_CHECKPOINT_SCHEMA_VERSION = 1
-ROBUST_PLAN_SCHEMA_VERSION = 1
+ROBUST_PLAN_SCHEMA_VERSION = 2
 _PROBABILITY_TOLERANCE = 1e-12
 
 
@@ -570,13 +570,19 @@ class RectangularRobustValueIterationAgent:
         state_key = _canonical_json(observation, field="observation")
         if state_key not in self._state_by_key:
             raise ValueError("observation is not in the robust planning state space")
-        if state_key in self._terminal_keys:
-            raise ValueError("cannot act from a terminal state")
         action_keys = tuple(self._action_by_key)
         if rng.random() < float(self.config.exploration_epsilon):
             action_key = rng.choice(action_keys)
         else:
-            values = [self._q_values[(state_key, key)] for key in action_keys]
+            # The caller asks for an action only while the episode is active.
+            # A corrupted observation may alias a modeled terminal state, so
+            # all actions receive the absorbing-state value and use the same
+            # seeded tie rule instead of consulting evaluator ground truth.
+            values = (
+                [0.0 for _ in action_keys]
+                if state_key in self._terminal_keys
+                else [self._q_values[(state_key, key)] for key in action_keys]
+            )
             best = max(values)
             tied = tuple(
                 key for key, value in zip(action_keys, values, strict=True) if value == best
@@ -663,6 +669,7 @@ class RectangularRobustValueIterationAgent:
                 "max_iterations": self.config.max_iterations,
                 "initial_value": float(self.config.initial_value),
                 "exploration_epsilon": float(self.config.exploration_epsilon),
+                "active_terminal_observation_policy": "zero-value-seeded-action-tie",
             },
             "iterations": self._iterations,
             "residual": self._residual,

@@ -35,3 +35,7 @@ The headless request records the operational child timeout. The runner checks it
 Every child has a stable run ID and `auto_publish=true`. A finalized existing child is skipped only after its full request, marker, manifest, checksums, and run-index record match the campaign plan. Each newly completed child is committed and pushed from `main` before the next begins. This keeps every substantial real result remotely recoverable and preserves its source commit as a durable ancestor. Unfinished root-boundary state continues to use the headless runner's existing verified recovery contract.
 
 Campaign analysis and the final pilot interpretation/report are committed only after all planned children complete. Pilot outputs remain diagnostic evidence and cannot be used as final thesis results.
+
+## v0.2 implementation amendment
+
+The first real v0.1 observation-corruption child exposed the R0 terminal-observation alias defect described in `PILOT_PROTOCOL_V0_2.md`. The original failed and completed pilot attempts remain published. The v0.2 driver reuses only the unaffected F0 tuning evidence, recomputes the same selection, and executes all 14 pilot children under new `PV02-*` identities and the same precommitted pilot seeds. The final amended analysis excludes no poor outcome; it selects the complete consistent v0.2 matrix while campaign state separately inventories every superseded v0.1 attempt and its reason.

@@ -17,12 +17,14 @@ from .analysis import build_analysis_payload, validate_analysis, write_analysis
 from .contracts import ProtocolStage, RetentionPolicy
 from .experiment_runner import HeadlessExperimentRequest, HeadlessExperimentRunner
 from .git_publish import validate_finalized_run
-from .pilot_protocol import PilotProtocol
+from .pilot_protocol import PilotProtocol, load_pilot_protocol
 from .run_bundle import source_provenance
 
 PILOT_CAMPAIGN_SCHEMA_VERSION = 1
 PILOT_ANALYSIS_ID = "PV01-PILOT-ANALYSIS"
 PILOT_CAMPAIGN_ID = "pilot-v0.1"
+AMENDED_PILOT_ANALYSIS_ID = "PV02-PILOT-ANALYSIS"
+AMENDED_PILOT_CAMPAIGN_ID = "pilot-v0.2"
 
 
 @dataclass(frozen=True, order=True)
@@ -171,13 +173,19 @@ def pilot_requests(
     tuning = payload["tuning"]
     evaluation = payload["evaluation"]
     requests: list[HeadlessExperimentRequest] = []
+    try:
+        run_prefix = {"pilot-v0.1": "PV01", "pilot-v0.2": "PV02"}[
+            protocol.protocol_version
+        ]
+    except KeyError as exc:
+        raise ValueError("unsupported pilot campaign protocol version") from exc
     for layout_number, layout_id in enumerate(payload["partitions"]["pilot"], start=1):
         for condition_number, condition_id in enumerate(
             evaluation["condition_ids"], start=1
         ):
             requests.append(
                 HeadlessExperimentRequest(
-                    run_id=f"PV01-PILOT-L{layout_number:02d}-C{condition_number:02d}",
+                    run_id=f"{run_prefix}-PILOT-L{layout_number:02d}-C{condition_number:02d}",
                     stage=ProtocolStage.PILOT,
                     layout_id=layout_id,
                     condition_id=condition_id,
@@ -381,8 +389,10 @@ def _require_durable_main(repo_root: Path) -> None:
         )
 
 
-def _write_state(repo_root: Path, payload: Mapping[str, Any]) -> Path:
-    directory = repo_root / "results" / "campaigns" / PILOT_CAMPAIGN_ID
+def _write_state(
+    repo_root: Path, payload: Mapping[str, Any], *, campaign_id: str
+) -> Path:
+    directory = repo_root / "results" / "campaigns" / campaign_id
     directory.mkdir(parents=True, exist_ok=True)
     destination = directory / "campaign-state.json"
     temporary = directory / ".campaign-state.tmp"
@@ -400,6 +410,8 @@ def execute_pilot_campaign(*, repo_root: Path, protocol: PilotProtocol) -> Path:
 
     root = repo_root.resolve()
     payload = protocol.to_dict()
+    if protocol.protocol_version == AMENDED_PILOT_CAMPAIGN_ID:
+        return _execute_amended_pilot_campaign(repo_root=root, protocol=protocol)
     if protocol.protocol_version != PILOT_CAMPAIGN_ID:
         raise ValueError("campaign driver supports only pilot-v0.1")
     _require_durable_main(root)
@@ -537,4 +549,159 @@ def execute_pilot_campaign(*, repo_root: Path, protocol: PilotProtocol) -> Path:
         },
         "interpretation_boundary": "diagnostic pilot evidence only; no inferential or final claim",
     }
-    return _write_state(root, state)
+    return _write_state(root, state, campaign_id=PILOT_CAMPAIGN_ID)
+
+
+def _baseline_tuning_selection(
+    repo_root: Path, protocol: PilotProtocol
+) -> tuple[float, TuningScore, TuningScore, list[TuningScore], list[str], float]:
+    payload = protocol.to_dict()
+    layouts = tuple(payload["partitions"]["tuning"])
+    rule = payload["resource_policy"]["child_timeout_rule"]
+    preflight = validate_finalized_run(
+        repo_root=repo_root, run_id="PV01-TUNE-S1-00-L01"
+    )
+    preflight_seconds = _elapsed_seconds(preflight)
+    timeout = max(
+        float(rule["minimum_seconds"]),
+        math.ceil(float(rule["measured_preflight_multiplier"]) * preflight_seconds),
+    )
+    stage_one_scores: list[TuningScore] = []
+    all_scores: list[TuningScore] = []
+    run_ids: list[str] = []
+    stage_one = stage_one_configurations(protocol)
+    for index, configuration in enumerate(stage_one):
+        config_runs = tuple(
+            f"PV01-TUNE-S1-{index:02d}-L{layout_number:02d}"
+            for layout_number, _ in enumerate(layouts, start=1)
+        )
+        score = collect_tuning_score(
+            repo_root=repo_root, configuration=configuration, run_ids=config_runs
+        )
+        stage_one_scores.append(score)
+        all_scores.append(score)
+        run_ids.extend(config_runs)
+    stage_one_winner = select_tuning_winner(stage_one_scores)
+    for index, configuration in enumerate(
+        stage_two_configurations(protocol, stage_one_winner.configuration), start=16
+    ):
+        config_runs = tuple(
+            f"PV01-TUNE-S2-{index:02d}-L{layout_number:02d}"
+            for layout_number, _ in enumerate(layouts, start=1)
+        )
+        all_scores.append(
+            collect_tuning_score(
+                repo_root=repo_root,
+                configuration=configuration,
+                run_ids=config_runs,
+            )
+        )
+        run_ids.extend(config_runs)
+    return (
+        timeout,
+        stage_one_winner,
+        select_tuning_winner(all_scores),
+        all_scores,
+        run_ids,
+        preflight_seconds,
+    )
+
+
+def _execute_amended_pilot_campaign(
+    *, repo_root: Path, protocol: PilotProtocol
+) -> Path:
+    _require_durable_main(repo_root)
+    baseline_path = repo_root / "configs" / "protocols" / "pilot-v0.1.json"
+    baseline = load_pilot_protocol(baseline_path)
+    (
+        timeout,
+        stage_one_winner,
+        selected,
+        tuning_scores,
+        tuning_run_ids,
+        preflight_seconds,
+    ) = _baseline_tuning_selection(repo_root, baseline)
+    requests = pilot_requests(
+        protocol=protocol,
+        configuration=selected.configuration,
+        timeout_seconds=timeout,
+    )
+    manifests = [
+        _execute_or_validate(repo_root=repo_root, protocol=protocol, request=request)
+        for request in requests
+    ]
+    run_ids = [request.run_id for request in requests]
+    analysis_dir = repo_root / "results" / "summaries" / AMENDED_PILOT_ANALYSIS_ID
+    if analysis_dir.exists():
+        analysis = validate_analysis(analysis_dir=analysis_dir)
+        if analysis["input_run_ids"] != sorted(run_ids):
+            raise ValueError("existing amended pilot analysis input inventory differs")
+    else:
+        write_analysis(
+            repo_root=repo_root,
+            analysis_id=AMENDED_PILOT_ANALYSIS_ID,
+            run_ids=run_ids,
+        )
+        analysis = validate_analysis(analysis_dir=analysis_dir)
+
+    prior_attempts: list[dict[str, Any]] = []
+    for layout_number in (1, 2):
+        for condition_number in range(1, 8):
+            run_id = f"PV01-PILOT-L{layout_number:02d}-C{condition_number:02d}"
+            if not (repo_root / "results" / "runs" / run_id).exists():
+                continue
+            manifest = validate_finalized_run(repo_root=repo_root, run_id=run_id)
+            summary = _read_json(repo_root / "results" / "runs" / run_id / "summary.json")
+            prior_attempts.append(
+                {
+                    "run_id": run_id,
+                    "status": manifest["status"],
+                    "failure": summary.get("failure"),
+                    "supersession_reason": (
+                        "pilot-v0.2 reruns the complete matrix after the confirmed "
+                        "R0 terminal-observation alias implementation defect"
+                    ),
+                }
+            )
+    state = {
+        "pilot_campaign_schema_version": PILOT_CAMPAIGN_SCHEMA_VERSION,
+        "campaign_id": AMENDED_PILOT_CAMPAIGN_ID,
+        "protocol_version": protocol.protocol_version,
+        "amendment": {
+            "base_protocol": PILOT_CAMPAIGN_ID,
+            "reason": "R0 rejected an active corrupted observation that aliased the modeled goal",
+            "tuning_reused": True,
+            "pilot_seed_bank_reused_for_paired_implementation_retry": True,
+            "prior_attempts": prior_attempts,
+        },
+        "preflight": {
+            "run_id": "PV01-TUNE-S1-00-L01",
+            "measured_seconds": preflight_seconds,
+            "derived_child_timeout_seconds": timeout,
+        },
+        "tuning": {
+            "configuration_count": len(tuning_scores),
+            "run_ids": tuning_run_ids,
+            "stage_one_winner": stage_one_winner.to_dict(),
+            "selected": selected.to_dict(),
+            "scores": [score.to_dict() for score in tuning_scores],
+        },
+        "pilot": {
+            "run_ids": run_ids,
+            "status_counts": dict(
+                sorted(Counter(str(item["status"]) for item in manifests).items())
+            ),
+            "total_wall_clock_seconds": sum(_elapsed_seconds(item) for item in manifests),
+            "total_bundle_size_bytes": sum(
+                int(item["bundle_size_bytes"])
+                for item in analysis["operational_diagnostics"]
+            ),
+            "analysis_id": AMENDED_PILOT_ANALYSIS_ID,
+            "valid_unit_count": analysis["valid_unit_count"],
+            "sensitivity_record_count": analysis["sensitivity_record_count"],
+        },
+        "interpretation_boundary": "diagnostic pilot evidence only; no inferential or final claim",
+    }
+    return _write_state(
+        repo_root, state, campaign_id=AMENDED_PILOT_CAMPAIGN_ID
+    )
