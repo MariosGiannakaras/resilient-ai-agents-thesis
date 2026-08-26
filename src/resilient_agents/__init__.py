@@ -32,6 +32,11 @@ from .gridworld import (
     gridworld_scenario_json,
     gridworld_scenario_to_dict,
 )
+from .pilot_protocol import (
+    PILOT_PROTOCOL_SCHEMA_VERSION,
+    PilotProtocol,
+    load_pilot_protocol,
+)
 
 __all__ = [
     "ROBUST_PLAN_SCHEMA_VERSION",
@@ -60,4 +65,7 @@ __all__ = [
     "gridworld_scenario_from_dict",
     "gridworld_scenario_json",
     "gridworld_scenario_to_dict",
+    "PILOT_PROTOCOL_SCHEMA_VERSION",
+    "PilotProtocol",
+    "load_pilot_protocol",
 ]
