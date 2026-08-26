@@ -10,15 +10,16 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - Canonical concrete ledger: `docs/context/TASKS.md`.
 - `T-100` and `T-101` were accepted and squash-merged in PR #55 (`45e04cd`).
 - `T-102` was objectively reviewed, CI-validated, and squash-merged in PR #57 (`48f7124`); the accepted snapshot now cites durable merged-main source provenance.
-- Current work package: **WP3 — Metrics and agent/model selection**.
+- Current work package: **WP4 — Pilot protocol and headless experiment system**.
 - `T-200` passed canonical CI and objective diff review, then squash-merged through PR #58 (`67bb423`).
 - `T-210` passed canonical CI and objective review, then squash-merged through PR #60 (`ff3b970`).
 - DEC-032 completed `T-211`, passed canonical CI/review, and squash-merged through PR #61 (`9df6787`).
 - `T-212`/`T-213` passed canonical CI/review and squash-merged through PR #62 (`e7352d5`).
 - `T-300`/`T-301` passed canonical CI/review and squash-merged through PR #63 (`25f67bb`).
-- `T-310`/`T-311` are complete locally on `research/agent-role-selection`: retain F0 frozen/C0 continual common tabular Q-learning and R0 frozen finite rectangular robust value iteration; citation-ready robust-DP support is sufficient, so no upstream bibliography action is needed.
-- Current task: **`T-312`**, ready after the agent-selection PR is CI-validated, objectively reviewed, squash-merged, and synchronized to main.
-- Exact next action: checkpoint/push/open the validated research PR, complete canonical CI/review/merge, then implement the two methods and three information-declared regimes.
+- `T-310`/`T-311` passed canonical CI/review and squash-merged through PR #64 (`e7d97a5`).
+- `T-312` is complete locally on `feat/tabular-agent-set`: strict, versioned implementations cover F0/C0 common tabular Q-learning and R0 finite rectangular robust value iteration with eight focused contract/known-answer/fail-closed tests.
+- Current task: **`T-400`**, ready after the agent implementation PR is CI-validated, objectively reviewed, squash-merged, and synchronized to main.
+- Exact next action: finish documentation validation/objective diff review, push/open the `T-312` PR, complete canonical CI/review/merge, then define the disjoint versioned pilot protocol.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline

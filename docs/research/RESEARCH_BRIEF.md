@@ -68,13 +68,13 @@ No hypothesis asserts that ordinary Q-learning must fail, that a detector must a
 | Treat ordinary continual learning as a legitimate empirical comparator. | `SRC-70772C0629`. | Structured switching results prevent a blanket claim that ordinary Q-learning is inherently incapable under all non-stationarity. | Its assumptions and infinite-horizon convergence target do not predict rapid recovery after the thesis changepoint. |
 | Validate detector behavior separately from return if a detector is retained. | `SRC-9464421E55`. | Requires finite-horizon activation, delay, and error diagnostics. | Its empirical results are from piecewise-stationary bandits and do not establish GridWorld superiority. |
 | Separate development/tuning/pilots from frozen final evaluation. | `SRC-76B2247457`. | Prevents final-lifetime/change-schedule leakage into hyperparameter selection. | No universal tuning fraction or budget is imported from the paper. |
-| Separate robustness within a declared uncertainty set from online changepoint adaptation. | `SRC-FC42D9798A`; `SRC-3C0F7CC819`. | Supports the frozen-robustness versus online-recovery construct distinction and conservativeness reporting. | Neither source detects changepoints or proves faster recovery; robust-comparator inclusion remains conditional. |
+| Separate robustness within a declared uncertainty set from online changepoint adaptation. | `SRC-52E62452B8`; `SRC-FC42D9798A`; `SRC-3C0F7CC819`. | Supports finite rectangular robust dynamic programming, the frozen-robustness versus online-recovery construct distinction, and conservativeness reporting. | These sources do not detect this thesis's changepoint or prove faster recovery; R0's stronger prior remains explicit. |
 
 ### Open feasibility and freeze gates
 
 - `T-210`–`T-213`: select and validate a GridWorld whose hidden truth, agent observation, intended/executed actions, persistent change, and deterministic traces match the framing.
 - `T-300`–`T-301` complete operational schema-v1 estimands and known-answer validation; pilots/freeze still select numeric windows/tolerance/stability, metric roles, and statistical aggregation.
-- `T-310`/`T-311` select F0 frozen/C0 continual common tabular Q-learning plus R0 rectangular robust value iteration and establish sufficient citation-ready robust-DP support; `T-312` must validate their declared information/fairness boundaries before pilots.
+- `T-310`–`T-312` select and correctness-validate F0 frozen/C0 continual common tabular Q-learning plus R0 rectangular robust value iteration, including strict information/fairness boundaries and sufficient citation-ready robust-DP support.
 - `T-400`–`T-410`: predeclare disjoint development/tuning/pilot/final partitions and use pilots to determine feasible budgets, severities, repetitions, variance handling, recovery behavior, and practical-effect criteria.
 - `T-411`–`T-412`: refresh decision-driving literature, then freeze the final protocol, research questions, hypotheses, and statistical analysis plan before final results are inspected.
 
@@ -95,8 +95,7 @@ Already complete:
 
 Still required before final freeze:
 
-1. correctness/feasibility validation of the selected agent implementations (`T-312`);
-2. pilot evidence for runtime, variance, storage, recovery behavior, tuning budget, final role retention, metric parameters/roles, and statistical choices.
+1. pilot evidence for runtime, variance, storage, recovery behavior, tuning budget, final role retention, metric parameters/roles, and statistical choices.
 
 ## Valid research-question form
 

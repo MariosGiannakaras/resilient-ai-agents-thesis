@@ -28,15 +28,15 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 ## Resume state
 
-- **Current work package:** WP3 — Metrics and agent/model selection
-- **Current task:** `T-312`
-- **State:** `READY` after `T-310`/`T-311` review/merge synchronization
-- **Active branch / PR:** `research/agent-role-selection`; PR not yet opened.
-- **Last validated point:** `T-300`/`T-301` passed canonical CI and squash-merged in PR #63 (`25f67bb`). The bounded implementation/pilot agent set is F0 frozen and C0 continual regimes of one common tabular Q-learning implementation plus R0 frozen finite rectangular robust value iteration.
-- **Tests already run:** documentation consistency, bibliography-usage validation (40 references: 38 citation-ready and 2 research-material), and diff whitespace validation pass; all decision-driving citations for this scope are in the accepted citation-ready layer.
-- **Relevant files changed:** exact agent-role/evidence/fairness/exclusion matrix, DEC-034 and robust citation sufficiency, research/context/task reconciliation.
-- **Uncommitted work:** completed local `T-310`/`T-311` research selection package.
-- **Exact next action:** checkpoint/push, open the `T-310`/`T-311` PR, complete canonical CI/review/merge, synchronize main, then implement the selected methods under `T-312`.
+- **Current work package:** WP4 — Pilot protocol and headless experiment system
+- **Current task:** `T-400`
+- **State:** `READY` after `T-312` review/merge synchronization
+- **Active branch / PR:** `feat/tabular-agent-set`; implementation checkpoint `4cf953d` is pushed; PR not yet opened.
+- **Last validated point:** `T-310`/`T-311` passed canonical CI/review and squash-merged in PR #64 (`e7d97a5`). `T-312` now implements F0/C0 common tabular Q-learning and R0 finite rectangular robust value iteration behind the strict common agent contract.
+- **Tests already run:** eight deterministic agent contract/known-answer/fail-closed tests, targeted source/test compilation, and diff whitespace validation pass on native Windows.
+- **Relevant files changed:** versioned tabular checkpoint/robust plan implementation, public core exports, focused agent tests, and active documentation/task reconciliation.
+- **Uncommitted work:** `T-312` documentation/task reconciliation after pushed implementation checkpoint `4cf953d`.
+- **Exact next action:** run documentation consistency and objective full-diff review, checkpoint/push the reconciliation, open the `T-312` PR, complete canonical CI/review/merge, synchronize main, then define the disjoint versioned pilot protocol under `T-400`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -132,13 +132,13 @@ Codex must assume a session can stop unexpectedly.
   - Depends on: `T-310` deciding that robust MDP remains necessary.
   - External action if required: verify/promote appropriate robust-MDP evidence upstream in `ThesisBibliography`, then perform a new immutable bibliography synchronization.
   - Acceptance: final robust-MDP claims/selection are supported by citation-ready evidence, or the comparator is explicitly excluded.
-- [ ] READY `T-312` — Implement the selected small agent set behind the common information-limited `Agent` contract.
+- [x] `T-312` — Implement the selected small agent set behind the common information-limited `Agent` contract.
   - Depends on: `T-310`; `T-311` if robust MDP is retained.
   - Acceptance: agent contract tests and tiny known-MDP/reference tests pass; no privileged hidden information.
 
 ## WP4 — Pilot protocol and headless experiment system
 
-- [ ] BLOCKED `T-400` — Define development/tuning/pilot/final scenario partitions and versioned pilot protocol.
+- [ ] READY `T-400` — Define development/tuning/pilot/final scenario partitions and versioned pilot protocol.
   - Depends on: `T-213`, `T-301`, `T-312`.
   - Acceptance: partitions do not overlap; seeds/budgets/severities/tuning/failure/exclusion rules are explicit and justified rather than convenience defaults.
 - [ ] BLOCKED `T-401` — Complete the headless experiment runner/orchestration path for the selected environment/agents/metrics.
