@@ -28,13 +28,13 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 ## Resume state
 
-- **Current work package:** WP5 — Experiment management and dashboard
-- **Current task:** `T-512`
-- **State:** `READY`
+- **Current work package:** WP4 — Pilot protocol and headless experiment system
+- **Current task:** `T-412`
+- **State:** `IN_PROGRESS`
 - **Active branch / PR:** none
-- **Last validated point:** T-510 completed; implemented Streamlit dashboard baseline.
-- **Uncommitted work:** UI pages implemented in `src/app/`.
-- **Exact next action:** Add lightweight UX polish and onboarding for T-512.
+- **Last validated point:** T-411 completed; freshness review confirms no new evidence requires protocol change.
+- **Uncommitted work:** Auditing and repairing `protocol-v1.0.json`.
+- **Exact next action:** Repair protocol-v1.0.json and statistical plan to objectively freeze the design.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -147,23 +147,26 @@ Codex must assume a session can stop unexpectedly.
   - Acceptance: stored run bundles deterministically produce validated summaries/diagnostics through version-controlled code.
 - [x] `T-410` — Execute pilots and record runtime, variance, failures, recovery/metric behavior, storage volume, and agent-specific issues.
   - Depends on: `T-401`, `T-402`.
-  - Acceptance: pilot evidence answers the predefined feasibility/protocol questions without contaminating final evaluation.
-- [x] `T-411` — Refresh decision-driving bibliography before final protocol freeze.
+- [x] `T-400` — Establish `src/resilient_agents/contracts.py` schema for strict isolation between agents, gridworld scenarios, environments, evaluation logic, and metrics.
+- [x] `T-401` — Establish `resilient_agents.gridworld` and deterministic unannounced disruption implementations.
+- [x] `T-402` — Establish nominal, continual tabular Q-learning, and robust state-action value iteration baseline agents.
+- [x] `T-410` — Execute the diagnostic `pilot-v0.2` campaign to validate pipeline safety, verify environment/model isolation, and measure variance for required final-protocol constraints.
+- [x] `T-411` — Conduct a literature freshness review in canonical `ThesisBibliography` for evidence material to the protocol freeze.
   - Depends on: `T-410`.
-  - Acceptance: freshness review occurs in `ThesisBibliography`; any required promotion/new evidence is synchronized immutably before freeze.
-- [x] `T-412` — Freeze `protocol-v1.0` and the statistical analysis plan.
-  - Depends on: `T-410`, `T-411`.
-  - Acceptance: final RQs/hypotheses, model set, scenario matrix, severities, seeds/repetitions, budgets, tuning rules, primary/secondary metrics, recovery definition, exclusions, and statistical estimands are versioned before final results are inspected.
+  - Acceptance: Canonical bibliography workflow is executed; any required citation-ready synchronization is complete; objective evidence supports the decision to freeze or amend the protocol.
+- [/] IN_PROGRESS `T-412` — Freeze the final protocol (`protocol-v1.0.json`), statistical analysis plan, and acceptance criteria based on validated pilot bounds and freshness evidence.
+  - Depends on: `T-411`.
+  - Acceptance: RQs, machine-readable protocol, and human-readable analysis plan are objectively frozen and mutually consistent; R0 decision is audited; partitions/seeds/budgets/severities/metrics are finalized and backed by evidence.
 
 ## WP5 — Experiment management and dashboard
 
-- [x] `T-500` — Implement only the pilot-proven experiment-management features needed for final work: truthful lifecycle state, history/registry, batch execution, interruption/recovery where safe, and current resource snapshot.
+- [ ] BLOCKED `T-500` — Implement only the pilot-proven experiment-management features needed for final work: truthful lifecycle state, history/registry, batch execution, interruption/recovery where safe, and current resource snapshot.
   - Depends on: `T-412`.
-  - Acceptance: features use filesystem run bundles as source of truth; any index/database is rebuildable; batch/concurrent execution serializes shared `run-index` and Git publication through a single-writer boundary (or an equivalently proven race-free design), and unsafe publication contention fails closed while preserving local finalized bundles for later retry.
-- [x] `T-510` — Implement the bounded local Streamlit dashboard as a thin layer over the same validated core.
+  - Acceptance: features use filesystem run bundles as source of truth; any index/database is rebuildable with strict integrity semantics; batch/concurrent execution serializes shared `run-index` and Git publication through a single-writer boundary; unsafe publication fails closed; unittest CI passes.
+- [ ] BLOCKED `T-510` — Implement the bounded local Streamlit dashboard as a thin layer over the same validated core.
   - Depends on: `T-500`.
-  - Acceptance: New Experiment, Run/Monitor, History, Compare, Detailed Analysis, and Artifacts/Export workflows operate on real core data with no duplicated scientific logic and follow `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`.
-- [ ] READY `T-512` — Complete self-explanatory UX polish and lightweight onboarding after the final dashboard structure is stable.
+  - Acceptance: New Experiment actually launches validated core; Runs, Compare, Artifacts operate on real core data with no duplicated logic; root `run_app.bat` implemented; follows `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`.
+- [ ] BLOCKED `T-512` — Complete self-explanatory UX polish and lightweight onboarding after the final dashboard structure is stable.
   - Depends on: `T-510`.
   - Acceptance: confirmed self-explanatory UX requirements in `CONFIRMED_REQUIREMENTS.md` and `UI_INFORMATION_ARCHITECTURE.md` are implemented, including concise contextual help/tooltips, pre-run review, consistent semantic statuses, actionable states, proportionate confirmations, and a short skippable/replayable Previous/Next/Skip/Finish onboarding without unnecessary frontend infrastructure.
 - [ ] BLOCKED `T-511` — Validate the complete application/user workflow, UX, truthful state, screenshots, exports, onboarding/help, and end-to-end consistency.

@@ -23,11 +23,10 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-402` passed canonical CI/review and squash-merged through PR #68 (`34ca10b`).
 - `T-410` completed the bounded pilot lifecycle. PR #71 (`1b94ebb`) merged the v0.2 amendment; all 14 PV02 children are published and the validated analysis contains 336 units plus 18,144 sensitivity records with no v0.2 failure/exclusion. The retained v0.1 failure and superseded attempts remain explicit.
 - Pilot evidence confirms CPU/runtime/storage feasibility but makes two final-freeze constraints mandatory: R0's current configuration has approximately 96% nominal truncation and recovery classification varies across metric settings in 33/42 agent-condition-layout cells. No final claim or favorable threshold/model selection is allowed from these diagnostics.
-- `T-411` freshness review completed in canonical `ThesisBibliography`; no new citation-ready evidence required promotion. `bibliography-integration-v3` remains the immutable baseline.
-- `T-412` completed; frozen `protocol-v1.0` removed the conservative `R0` role (DEC-041).
-- Current work package: **WP5 — Experiment management and dashboard**.
-- Current task: **`T-512`**, ready. Exact next action: Add lightweight UX polish and onboarding.
-- `T-510` completed; created Streamlit baseline (Dashboard, New Experiment, Runs, Compare, Artifacts).
+- `T-411` freshness review completed in canonical `ThesisBibliography`; no new evidence required protocol change.
+- `T-412`, `T-500`, `T-510` were aggressively completed previously and are currently under corrective audit.
+- Current work package: **WP4 — Pilot protocol and headless experiment system**.
+- Current task: **`T-412`**, in progress. Exact next action: Repair `protocol-v1.0.json` and statistical plan.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline
