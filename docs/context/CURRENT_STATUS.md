@@ -13,9 +13,10 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - Current work package: **WP2 — Research framing**.
 - `T-200` passed canonical CI and objective diff review, then squash-merged through PR #58 (`67bb423`).
 - `T-210` passed canonical CI and objective review, then squash-merged through PR #60 (`ff3b970`).
-- DEC-032 completes `T-211` locally on `research/gridworld-implementation-adr`: the selected path is a small project-owned GridWorld using the locked Gymnasium 1.3.0 API through the accepted core contracts; MiniGrid is not a core dependency, and scientific parameters remain unfrozen.
-- Current task: **`T-212`**, ready after the `T-211` PR is CI-validated, objectively reviewed, squash-merged, and synchronized to main.
-- Exact next action: validate/review the `T-211` decision reconciliation, push/open its PR, complete canonical CI/review/merge, then implement the selected GridWorld in `src/resilient_agents/`.
+- DEC-032 completed `T-211`, passed canonical CI/review, and squash-merged through PR #61 (`9df6787`).
+- Current task: **`T-212` with coherent adjacent `T-213` validation** on `feat/gridworld-core`.
+- The schema-v1 core environment and 10 known-answer/invariant tests are passing on native Windows; all scientific scenario values remain explicit inputs rather than defaults.
+- Exact next action: checkpoint the validated core, reconcile the GridWorld specifications/task state, rerun targeted validation, then complete canonical PR CI/review/merge.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline

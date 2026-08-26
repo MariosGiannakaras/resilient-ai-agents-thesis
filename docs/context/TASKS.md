@@ -29,14 +29,14 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP2 — Research framing
-- **Current task:** `T-212`
-- **State:** `READY` after `T-211` review/merge synchronization
-- **Active branch / PR:** `research/gridworld-implementation-adr`; PR not yet opened.
-- **Last validated point:** `T-210` passed canonical CI and was squash-merged in PR #60 (`ff3b970`). DEC-032 completes `T-211` by selecting a small project-owned environment using the locked Gymnasium 1.3.0 API, with MiniGrid rejected from the core path and all scientific parameters still unfrozen.
-- **Tests already run:** `T-210` canonical CI passed; `T-211` is a documentation/decision-only scope awaiting consistency validation.
-- **Relevant files changed:** DEC-032 and decision index, GridWorld comparison/spec/landscape authorities, active context/status/task/roadmap/open-question/definition-of-done/changelog reconciliation.
-- **Uncommitted work:** accepted ADR and `T-211` completion reconciliation.
-- **Exact next action:** run documentation consistency and diff review, checkpoint/push, open the `T-211` PR, complete canonical CI/review/merge, synchronize main, then begin `T-212` implementation on a new branch.
+- **Current task:** `T-212` with coherent adjacent validation `T-213`
+- **State:** `IN_PROGRESS`
+- **Active branch / PR:** `feat/gridworld-core`; PR not yet opened.
+- **Last validated point:** the selected project-owned Gymnasium core is implemented with exact schema-v1 configuration validation, four-neighbour mechanics, explicit rewards/termination/truncation, one persistent action-remap change, independent no-op action failure and position-mislocalization streams, versioned serialization, evaluator-only truth, and a `ResearchEnvironment` adapter.
+- **Tests already run:** native Windows locked core sync passed; 10 GridWorld known-answer/invariant tests and 16 directly affected research-architecture tests passed; targeted source/test compilation and lock/diff checks passed.
+- **Relevant files changed:** core GridWorld module/package exports, exact Gymnasium runtime dependency and lockfile, final known-answer/invariant tests, task/status resume state.
+- **Uncommitted work:** validated implementation/tests plus active task resume reconciliation.
+- **Exact next action:** checkpoint/push this validated implementation slice, reconcile GridWorld specifications and active docs, rerun targeted validation, review the final diff, then open one coherent `T-212`/`T-213` PR for canonical CI/review/merge.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -110,7 +110,7 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-211` — Record the final GridWorld implementation ADR.
   - Depends on: `T-210` and current research framing from `T-200`.
   - Acceptance: one option is selected with evidence, alternatives, consequences, and reopening conditions.
-- [ ] READY `T-212` — Implement the selected GridWorld in `src/resilient_agents/` using the existing environment/information contracts.
+- [ ] IN_PROGRESS `T-212` — Implement the selected GridWorld in `src/resilient_agents/` using the existing environment/information contracts.
   - Depends on: `T-211`.
   - Acceptance: explicit state/action/reward/termination/change/disturbance semantics; no UI dependency.
 - [ ] BLOCKED `T-213` — Add known-answer, reference-trace, deterministic replay, disturbance-isolation, termination, and information-leakage tests for the GridWorld.
