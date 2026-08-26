@@ -31,7 +31,7 @@ Phases are checkpoints, not the concrete execution checklist and not mandatory s
 
 ## Phase 5 — Small model-role selection
 
-- Select only scientifically distinct baseline/adaptive/robust roles supported by evidence and feasible on the target machine.
+- Implement the selected F0/C0 common tabular Q-learning and R0 rectangular robust-value-iteration roles; final retention follows pilots.
 - Implement all agents behind the same information-limited contract.
 - **Gate:** no privileged ground truth and no model without a distinct research role.
 

@@ -10,7 +10,7 @@
 3. **Research materials:** 19 `MAT-*` files may support internal research and provenance but are not formal citations.
 4. **Author notes:** searchable without mandatory bibliographic identity; factual final claims still require citation-ready support.
 5. **Rejected/theory-only records:** accessible for negative evidence and scope context without automatic promotion.
-6. **Unresolved decisions:** exact model set, environment implementation, severities, final metrics, tuning boundary, seeds, budgets, thresholds, and statistical plan remain open.
+6. **Unresolved decisions:** final post-pilot role retention/hyperparameters, scenario severities/matrix, metric parameters/roles, tuning boundary, seeds, budgets, and statistical plan remain open.
 
 ## Decision-driving citation-ready anchors
 
@@ -23,12 +23,12 @@
 ## Robust-MDP evidence boundary after v3 promotion
 
 - `SRC-FC42D9798A` and `SRC-3C0F7CC819` are citation-ready in the accepted v3 baseline. They may formally support the conceptual distinction between robustness within a declared uncertainty set and recovery after an unknown change.
-- Their promotion removes the earlier source-status blocker; it does not select a robust-MDP comparator, validate its assumptions against the future GridWorld, or support a claim of changepoint-recovery superiority.
-- `T-310` must still decide whether the role is scientifically necessary and feasible. `T-311` remains conditional: it is required only if retained claims exceed the verified scope of the current records or need additional upstream evidence.
+- Their promotion removed the earlier source-status blocker but still does not support a claim of changepoint-recovery superiority.
+- DEC-034 retains finite rectangular robust value iteration only for declared-set frozen robustness. Citation-ready `SRC-52E62452B8` provides the exact robust-DP support required by that bounded role, so `T-311` is complete without upstream promotion; in-set/out-of-set assumptions and conservativeness remain explicit.
 
 ## Current synthesis
 
-The bounded direction remains persistent rule/dynamics change as the primary recovery axis, with observation corruption and action-execution failure as supporting robustness diagnostics. Candidate agents are compared by capability role rather than algorithm count: frozen nominal reference, naive continual learner, conditional robustness-oriented comparator, explicit change/context-aware adaptive comparator, and an optional detector/reset decomposition only if prototypes establish a distinct research question.
+The bounded direction remains persistent rule/dynamics change as the primary recovery axis, with observation corruption and action-execution failure as supporting robustness diagnostics. DEC-034 selects two implementations in three capability regimes: common tabular Q-learning as F0 frozen and C0 continual, plus R0 frozen rectangular robust value iteration. Context-memory and detector/reset methods are excluded unless a distinct RQ and their recorded reopening conditions arise before freeze.
 
 DEC-023 now provides the implementation infrastructure for information isolation, deterministic RNG streams, protocol partitions, run bundles, and known-answer metric primitives. Those engineering decisions do not freeze the scientific model/metric/protocol choices above.
 

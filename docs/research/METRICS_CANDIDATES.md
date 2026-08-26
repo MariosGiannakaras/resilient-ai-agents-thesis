@@ -55,7 +55,7 @@ Agent contrasts are formed from per-run estimands, paired/blocked only where see
 
 - Observation corruption and action-execution failure conditions use nominal, immediate, worst, terminal, and cumulative-deficit outputs as robustness diagnostics.
 - Recovery status/time is interpreted as adaptation only for a persistent change with post-change updates permitted. A frozen policy meeting the criterion demonstrates resistance, not learning-based recovery.
-- Detector delay/error metrics are method-specific and added only if `T-310` retains an explicit detector role; evaluator change truth must never be exposed to the agent.
+- DEC-034 retains no detector role, so detector metrics are outside schema v1; adding them requires a recorded pre-freeze role/RQ amendment, and evaluator change truth must never be exposed to the agent.
 - Resource use, tuning interactions, safety costs/violations, and execution failures remain separate diagnostics rather than ingredients of a composite score.
 - Metrics are compared within compatible reward/reference/evaluation-unit definitions. Cross-scenario pooling requires a predeclared validated normalization and may not silently mix scales or horizons.
 
