@@ -114,7 +114,7 @@ Decision-driving citation-ready evidence currently includes `SRC-70772C0629`, `S
 
 ## GridWorld — current state
 
-GridWorld remains the confirmed simple controlled environment direction. DEC-032's project-owned schema-v1 implementation now uses locked Gymnasium 1.3.0 through the accepted core contracts and passes deterministic known-answer/invariant validation. `pilot-v0.1` fixes pre-final diagnostic layouts/conditions only; final scenario values remain unfrozen until `protocol-v1.0`.
+GridWorld remains the confirmed simple controlled environment direction. DEC-032's project-owned schema-v1 implementation now uses locked Gymnasium 1.3.0 through the accepted core contracts and passes deterministic known-answer/invariant validation. The completed `pilot-v0.2` matrix diagnoses pre-final layouts/conditions only; final scenario values remain unfrozen until `protocol-v1.0`.
 
 The completed bounded comparison evaluated two prototype paths against the same accepted contract and fixed fixture:
 
@@ -125,7 +125,7 @@ Both prototypes passed deterministic semantic parity checks on the native target
 
 ## Models and metrics — current state
 
-The implementation/pilot algorithm shortlist and operational metric schema are selected and validated. Final post-pilot retention, metric roles/parameters, seed count, severity set, hyperparameters, and statistical plan remain unfrozen.
+The implementation/pilot algorithm shortlist and operational metric schema are selected and validated. The completed pilot keeps C0/F0 feasible for freeze consideration but shows that R0's current prior/policy/horizon combination cannot be retained unchanged because approximately 96% of its nominal evaluation episodes truncate. Final post-pilot retention, metric roles/parameters, seed count, severity set, hyperparameters, and statistical plan remain unfrozen.
 
 The bounded implementation/pilot set is implemented as two methods in three roles: one versioned common tabular Q-learning checkpoint evaluated as F0 frozen and C0 continual, plus R0 frozen finite s,a-rectangular robust value iteration with its stronger model/uncertainty-set prior declared. Deterministic replay, exact updates/backups, checkpoint/plan stability, frozen-state behavior, probability/model validation, and strict rejection of evaluator-only information have focused tests. Context-memory, detector-reset, extra tabular variants, deep methods, and dedicated diagnostic-specific agents are excluded unless a recorded reopening condition is met. Final retention and all hyperparameters/budgets remain pilot/freeze decisions.
 
@@ -135,7 +135,7 @@ Operational metric schema v1 and hand-calculated tests now define matched-refere
 
 A run ID represents one whole experiment and may contain many seeds/episodes.
 
-The validated headless CLI/core now resolves `pilot-v0.1` into root-specific common Q checkpoints, layout-specific R0 plans, matched nominal/disrupted branches, schema-v1 metrics, continuously appended events, and atomic completed-root state. External interruption resumes only with identical config/source/log integrity and reruns an incomplete root deterministically; ordinary failure is finalized and retained. Successful multi-root execution finalizes one bundle and optionally invokes the guarded publisher once after all roots.
+The validated headless CLI/core resolves the full `pilot-v0.1` authority and bounded `pilot-v0.2` amendment into root-specific common Q checkpoints, layout-specific R0 plans, matched nominal/disrupted branches, schema-v1 metrics, continuously appended events, and atomic completed-root state. External interruption resumes only with identical config/source/log integrity and reruns an incomplete root deterministically; ordinary failure is finalized and retained. Successful multi-root execution finalizes one bundle and optionally invokes the guarded publisher once after all roots.
 
 The validated analysis core consumes only finalized, checksum/index-consistent bundles; semantically reconstructs completed requests, checkpoints, matched curves, and primary metrics; and deterministically emits immutable unit, aggregate, operational, and predeclared sensitivity diagnostics. Noncompleted runs remain explicit without becoming scientific units, and these pre-final outputs carry no inferential or final-claim status.
 
@@ -147,7 +147,7 @@ The user should not manually stage, commit, move, or upload routine experiment a
 
 Development, tuning, pilot, exploratory, and final evidence remain separated. Final figures/tables are generated only from real stored data by version-controlled code. Final experiment execution is followed by explicit run-completeness validation and evidence freeze before statistical interpretation/writing.
 
-The validated `pilot-v0.1` authority uses two disjoint 7x7 layouts per stage, fixed shortest-path scale, 16 nominal plus 32 post-change episodes, matched nominal branches, precommitted disjoint tuning/pilot seeds, a bounded staged Q search, an R0 uncertainty set fixed before outcomes, single-factor severities, diagnostic metric sensitivity, CPU preflight, and explicit failure/exclusion/artifact rules. Final-reserve layouts cannot be executed before the later freeze/application gates.
+The completed `pilot-v0.2` campaign reused the unaffected 36-run F0 tuning evidence and reran all 14 pilot children under one corrected implementation. Its validated report records 336 units, 18,144 sensitivity records, runtime/storage feasibility, strong F0 layout variance, widespread recovery-parameter sensitivity, and R0 nominal censoring. Final-reserve layouts remain unexecuted and forbidden before the later freeze/application gates.
 
 ## Dashboard, thesis writing, and defense
 
@@ -167,7 +167,7 @@ The final presentation is a distinct downstream deliverable after thesis stabili
 
 ## Current genuine gates
 
-The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline/provenance, research framing/GridWorld, metrics, bounded agents, pilot protocol, headless orchestration, and reproducible analysis tasks (`T-100` through `T-402`) are complete. Pilot execution (`T-410`) is next. Application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
+The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline/provenance, research framing/GridWorld, metrics, bounded agents, pilot protocol, headless orchestration, reproducible analysis, and pilot execution tasks (`T-100` through `T-410`) are complete. The decision-driving bibliography refresh (`T-411`) is next, followed by the evidence-backed final protocol/statistical freeze. Application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
 
 Deferred, non-blocking inputs remain later supervisor corrections, eventual submission/presentation dates, a current official Word template, exact defense duration/file rules, and optional contextual example theses supplied near writing.
 

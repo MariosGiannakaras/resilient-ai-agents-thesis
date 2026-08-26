@@ -17,6 +17,7 @@ Record only material changes to the project source of truth. Detailed commit-by-
 - Added deterministic finalized-bundle analysis with semantic metric/state reproduction, explicit noncompleted-run inventory, separate operational attempts, primary variance summaries, the complete predeclared sensitivity grid, immutable checksummed outputs, and corruption rejection.
 - Added the pre-outcome T-410 campaign driver: exact staged tuning/pilot expansion, semantic tuning selection, measured graceful child deadlines, stable-identity recovery, and durable-main publication after every whole child.
 - Real T-410 execution published all tuning runs and exposed two fail-closed defects: sequential Git porcelain parsing (fixed in PR #70) and R0's active terminal-observation alias under corruption. Preserved every bundle and introduced the bounded v0.2 full-pilot retry amendment without retuning or outcome-driven matrix changes.
+- Completed and published all 14 amended pilot children, validated 336 scientific units and 18,144 sensitivity records, and recorded runtime/storage, layout/seed variance, censoring, recovery sensitivity, and agent-specific feasibility. Pilot evidence keeps C0/F0 feasible but prohibits freezing R0's approximately 96%-truncated nominal configuration unchanged.
 
 ## 2026-07-29 — Corrected bootstrap and thesis-completion-first scope
 

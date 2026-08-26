@@ -29,14 +29,14 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP4 — Pilot protocol and headless experiment system
-- **Current task:** `T-410`
-- **State:** `IN_PROGRESS`
-- **Active branch / PR:** `fix/robust-terminal-observation-alias`; amendment/fix not yet checkpointed or opened as a PR.
-- **Last validated point:** all 36 tuning runs and five complete v0.1 pilot children were automatically published; `PV01-PILOT-L01-C06` was finalized/published as failed after R0 rejected an active corrupted observation aliasing the goal. PR #70 (`ee751d8`) fixed the earlier sequential-publication parser discovery. The bounded `pilot-v0.2` amendment preserves all evidence, reuses unaffected F0 tuning selection, records robust-plan schema v2's nonprivileged terminal-alias policy, and assigns new identities to a complete 14-child retry.
-- **Tests already run:** five focused R0 tests pass including deterministic active terminal-like observation handling; before the discovery, canonical campaign/runner/analysis and sequential-publication regression suites passed.
-- **Relevant files changed:** R0 active terminal-observation policy/schema, bounded v0.2 protocol overlay/validation, amended campaign execution/state, focused tests, protocol/model/campaign decisions, and active state reconciliation.
-- **Uncommitted work:** v0.2 amendment implementation, tests, and documentation.
-- **Exact next action:** finish targeted amended-protocol/campaign/agent validation, checkpoint/push/open the fix PR, complete CI/review/merge, synchronize `main`, then execute all 14 `PV02-*` pilot children and derive the amended analysis/report.
+- **Current task:** `T-411`
+- **State:** `READY`
+- **Active branch / PR:** `research/report-pilot-v02`; T-410 evidence/report completion PR pending.
+- **Last validated point:** PR #71 (`1b94ebb`) merged the v0.2 amendment; all 14 amended pilot children completed and auto-published. `PV02-PILOT-ANALYSIS` validates 336 units and 18,144 sensitivity records with no v0.2 failure/exclusion. The T-410 report records runtime/storage, variance, censoring, recovery sensitivity, the retained v0.1 failure, and the mandatory R0 post-pilot decision.
+- **Tests already run:** amended agent/protocol/campaign/analysis focused suite passed (18 tests); PR #71 canonical CI passed; the completed analysis bundle passes its integrity/semantic validator.
+- **Relevant files changed:** immutable PV02 analysis/campaign outputs, pilot report, post-pilot decisions, and active task/state documents.
+- **Uncommitted work:** T-410 analysis/campaign output and report/state reconciliation on `research/report-pilot-v02`.
+- **Exact next action:** validate documentation, checkpoint/push and CI-review/merge the T-410 report PR, synchronize `main`, then begin T-411's upstream bibliography freshness review and immutable sync if required.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -147,10 +147,10 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-402` — Complete reproducible analysis pipeline for experiment summaries and pilot diagnostics.
   - Depends on: `T-401`.
   - Acceptance: stored run bundles deterministically produce validated summaries/diagnostics through version-controlled code.
-- [ ] READY `T-410` — Execute pilots and record runtime, variance, failures, recovery/metric behavior, storage volume, and agent-specific issues.
+- [x] `T-410` — Execute pilots and record runtime, variance, failures, recovery/metric behavior, storage volume, and agent-specific issues.
   - Depends on: `T-401`, `T-402`.
   - Acceptance: pilot evidence answers the predefined feasibility/protocol questions without contaminating final evaluation.
-- [ ] BLOCKED `T-411` — Refresh decision-driving bibliography before final protocol freeze.
+- [ ] READY `T-411` — Refresh decision-driving bibliography before final protocol freeze.
   - Depends on: `T-410`.
   - Acceptance: freshness review occurs in `ThesisBibliography`; any required promotion/new evidence is synchronized immutably before freeze.
 - [ ] BLOCKED `T-412` — Freeze `protocol-v1.0` and the statistical analysis plan.

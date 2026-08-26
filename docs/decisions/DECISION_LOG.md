@@ -189,7 +189,7 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 
 ## DEC-036 — One resumable headless scientific execution path
 - **Date:** 2026-08-26
-- **Status:** Accepted and implemented by `T-401`; pilot execution awaits reproducible analysis (`T-402`).
+- **Status:** Accepted and implemented by `T-401`; exercised by the completed T-410 campaign.
 - **Decision:** Resolve the validated protocol through one CLI/core path that trains a root-specific nominal Q checkpoint shared by F0/C0, derives R0 from the fixed rectangular prior, executes matched reference/disrupted episode branches, computes schema-v1 metrics, persists events per episode and state atomically per completed root, and finalizes one whole-experiment bundle. Resume is supported only at verified root boundaries with identical config/source/content/log integrity; an incomplete root is deterministically rerun. Publication occurs at most once after all roots and bundle finalization. Detailed contract lives in `docs/experiments/HEADLESS_RUNNER.md`.
 
 ## DEC-037 — Deterministic finalized-bundle pilot analysis
@@ -201,14 +201,20 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 ## DEC-038 — Durable-main predeclared pilot campaign execution
 
 - **Date:** 2026-08-26
-- **Status:** Accepted for T-410 execution; real outcomes remain pending campaign execution.
+- **Status:** Accepted and fully exercised by the completed T-410 campaign.
 - **Decision:** Expand `pilot-v0.1` deterministically into 36 tuning and 14 pilot whole-experiment children; use one full tuning child as preflight for the declared timeout rule; enforce graceful recorded deadlines inside the runner; select tuning configurations only through semantically reproduced completed bundles and the predeclared ordered score; and automatically commit/push every child from durable `main`. Stable identities plus exact-request/integrity validation provide resume without overwrite. The central stored metric setting is fixed pre-outcome while all 54 sensitivity definitions remain mandatory. Detailed contract lives in `docs/experiments/PILOT_CAMPAIGN_EXECUTION.md`.
 
 ## DEC-039 — R0 active terminal-observation alias amendment
 
 - **Date:** 2026-08-26
-- **Status:** Accepted during T-410 after an explicit retained pilot failure; implementation and full amended pilot rerun in progress.
+- **Status:** Accepted and fully exercised by the completed 14-child amended pilot rerun.
 - **Decision:** A delivered observation equal to a modeled terminal state cannot prove true termination under observation corruption. When the runner asks R0 to act in an active episode, robust-plan schema v2 assigns the absorbing value zero to every action and applies the existing seeded tie rule, without evaluator truth. Preserve all v0.1 attempts; reuse the unaffected F0-only tuning evidence and selected configuration; retain the pilot seed bank for a paired implementation retry; and rerun the complete 14-child matrix under `pilot-v0.2`/`PV02-*` identities. Only the complete v0.2 matrix enters amended pilot analysis; the v0.1 failure remains explicit operational evidence. Detailed amendment is `docs/experiments/PILOT_PROTOCOL_V0_2.md`.
+
+## DEC-040 — Post-pilot freeze constraints
+
+- **Date:** 2026-08-26
+- **Status:** Accepted diagnostic conclusion from `T-410`; final choices remain reserved for `T-411`/`T-412`.
+- **Decision:** Accept the complete `pilot-v0.2` matrix and validated analysis as feasibility/protocol evidence only. C0 and F0 remain feasible final candidates, with both layouts required because F0 shows material layout/seed variance. Do not freeze the current R0 prior/policy/horizon combination unchanged because approximately 96% of its nominal evaluation episodes truncate. Do not select a favorable recovery threshold because recovery counts vary across predeclared settings in 33 of 42 agent-condition-layout cells. Preserve full curves, explicit censored non-recovery, component estimands, and the final-reserve firewall. T-411 must refresh decision-driving evidence; T-412 must then justify/validate any bounded R0 revision or remove/reframe the role and predeclare the metric/sample-size/statistical decisions before final outcomes. Detailed evidence is `docs/experiments/PILOT_REPORT_V0_2.md`.
 
 ## Pending decisions
 

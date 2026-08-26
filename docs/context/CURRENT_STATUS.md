@@ -21,9 +21,9 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-400` passed canonical CI/review and squash-merged through PR #66 (`1502bfd`).
 - `T-401` passed canonical CI/review and squash-merged through PR #67 (`8ddfcc2`).
 - `T-402` passed canonical CI/review and squash-merged through PR #68 (`34ca10b`).
-- Current task: **`T-410`**, in progress. All 36 tuning runs and five v0.1 pilot runs completed; `PV01-PILOT-L01-C06` then finalized failed when observation corruption made R0's delivered observation alias the modeled goal during an active episode. Evidence remains published and explicit.
-- The bounded `pilot-v0.2` amendment fixes the information-safe active terminal-observation policy, reuses unaffected F0 tuning evidence, preserves the same pilot seeds, and reruns the complete 14-child pilot matrix under new identities for implementation consistency.
-- Exact next action: CI-review/merge the v0.2 amendment, execute all `PV02-*` pilot children from clean `main`, then validate and report the amended diagnostic evidence.
+- `T-410` completed the bounded pilot lifecycle. PR #71 (`1b94ebb`) merged the v0.2 amendment; all 14 PV02 children are published and the validated analysis contains 336 units plus 18,144 sensitivity records with no v0.2 failure/exclusion. The retained v0.1 failure and superseded attempts remain explicit.
+- Pilot evidence confirms CPU/runtime/storage feasibility but makes two final-freeze constraints mandatory: R0's current configuration has approximately 96% nominal truncation and recovery classification varies across metric settings in 33/42 agent-condition-layout cells. No final claim or favorable threshold/model selection is allowed from these diagnostics.
+- Current task: **`T-411`**, ready. Exact next action: perform the decision-driving freshness review in canonical `ThesisBibliography`, promote evidence there if required, and immutably synchronize the accepted export before `T-412`.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline
