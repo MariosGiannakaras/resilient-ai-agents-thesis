@@ -20,7 +20,7 @@ Phases are checkpoints, not the concrete execution checklist and not mandatory s
 ## Phase 3 — Environment contract and GridWorld decision
 
 - Use the common environment/ground-truth contracts in `src/resilient_agents/`.
-- Complete bounded custom-versus-reuse prototypes and the GridWorld ADR.
+- Use the completed bounded custom-versus-reuse comparison to record the GridWorld ADR, then implement the selected path.
 - Define explicit scenario, change, disturbance, reward, termination, and information-access schemas.
 - **Gate:** known-answer transition/reference-trace tests pass.
 

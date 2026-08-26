@@ -29,14 +29,14 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP2 — Research framing
-- **Current task:** `T-200` complete on the review branch
-- **State:** `UNDER REVIEW`
-- **Active branch / PR:** `research/rq-hypothesis-framing`; PR #58.
-- **Last validated point:** the bounded main RQ, two secondary questions, two falsifiable construct-level hypothesis candidates, source/limitation map, and downstream feasibility/freeze gates are documented without freezing exact methods, parameters, metrics, or protocol choices. The accepted v3 bibliography state and promoted robust-MDP evidence boundary are reconciled across active research/context files.
-- **Tests already run:** documentation consistency passed; targeted bibliography-use validation found 27 citation-ready references; normal full repository checks passed (56 tests, 1 skipped), including locked environment, compile, bibliography integrity/use, and both checksum manifests.
-- **Relevant files changed:** active research brief/evidence/model workspaces, affected context/status/changelog/task authorities, and the documentation validator's citation-ready-anchor check.
-- **Uncommitted work:** PR-number/status reconciliation only.
-- **Exact next action:** push this PR-state checkpoint, require canonical CI plus objective diff review, squash-merge PR #58, then start ready task `T-210`.
+- **Current task:** `T-211`
+- **State:** `READY` after `T-210` review/merge synchronization
+- **Active branch / PR:** `research/gridworld-prototype-comparison`; PR not yet opened.
+- **Last validated point:** `T-210` is complete locally. Both candidates passed nine deterministic parity/invariant tests, and the clean-source native-Windows benchmark plus semantic, dependency, maintenance, licensing, and RQ-fit audit are recorded in `GRIDWORLD_PROTOTYPE_COMPARISON.md`.
+- **Tests already run:** native Windows locked sync/imports passed; `uv run --locked --group gridworld-prototype python -m unittest tests.test_gridworld_prototypes -v` passed 9 tests; prototype/test compilation passed; the clean-source benchmark at `a22508d` completed 5 repeats of 4,000 transitions per candidate.
+- **Relevant files changed:** bounded prototypes/fixtures/comparison runner, targeted tests, prototype-only locked dependencies and CI scope, comparison/research/context documentation, and task state.
+- **Uncommitted work:** final `T-210` comparison and task-state reconciliation only.
+- **Exact next action:** validate documentation and the final diff, checkpoint/push, open the `T-210` PR, use canonical CI and objective review, squash-merge, synchronize main, then start `T-211` on a new branch.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -104,10 +104,10 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-200` — Complete source-traceable research-question and hypothesis framing from citation-ready evidence, while keeping feasibility-dependent choices provisional.
   - Depends on: `T-102` for durable feasibility evidence; bibliography baseline already complete.
   - Acceptance: bounded main RQ, minimal secondary RQs/hypotheses, evidence mapping, limitations, and open feasibility gates are documented.
-- [ ] READY `T-210` — Complete bounded GridWorld prototype comparison (minimal custom implementation versus justified reuse/adaptation candidates).
+- [x] `T-210` — Complete bounded GridWorld prototype comparison (minimal custom implementation versus justified reuse/adaptation candidates).
   - Depends on: `T-102`.
   - Acceptance: prototypes/audit compare semantics, determinism, seeding, disturbance extensibility, testability, maintenance/license/dependency cost, and fit to the RQ.
-- [ ] BLOCKED `T-211` — Record the final GridWorld implementation ADR.
+- [ ] READY `T-211` — Record the final GridWorld implementation ADR.
   - Depends on: `T-210` and current research framing from `T-200`.
   - Acceptance: one option is selected with evidence, alternatives, consequences, and reopening conditions.
 - [ ] BLOCKED `T-212` — Implement the selected GridWorld in `src/resilient_agents/` using the existing environment/information contracts.

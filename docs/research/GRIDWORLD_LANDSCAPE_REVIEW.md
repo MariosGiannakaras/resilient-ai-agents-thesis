@@ -1,6 +1,6 @@
 # GridWorld Landscape Review
 
-**Status:** `PROPOSED` technical pre-screen; no GridWorld implementation is selected.  
+**Status:** Technical pre-screen complete; the bounded prototypes are compared in `GRIDWORLD_PROTOTYPE_COMPARISON.md`, and no implementation is selected before the `T-211` ADR.
 **Review date:** 2026-08-03  
 **Scope:** current technical candidates for the controlled uncertainty/resilience environment required by the thesis.
 
@@ -28,7 +28,7 @@ Versions and maintenance status must be rechecked immediately before dependency 
 | Candidate | Current evidence | Fit for this thesis | Main risk | Pre-screen result |
 |---|---|---|---|---|
 | Project-owned custom `gymnasium.Env` | Gymnasium 1.3.0 is current in 2026; official API supports explicit spaces, `terminated`/`truncated`, environment-owned RNG and deterministic `reset(seed=...)`; official custom-environment guidance exists. | Very high control over exact state/action/reward/change semantics and trace schema; minimal hidden behavior; naturally CPU-friendly. | We own all environment invariants and must test them thoroughly. | **Prototype A — retain** |
-| MiniGrid 3.1.x + thin project wrappers/subclass | MiniGrid 3.1.0 released 2026-05-11; active Farama project; Gymnasium API; wrappers include stochastic actions, observation transforms, full/partial observability and reseeding; dynamic-obstacle environments exist. Root repository license is Apache-2.0. | Strong ready-made grid mechanics and rendering; good candidate if required changes remain thin and explicit. | Built-in orientation, mission strings, object encoding and broader action semantics may introduce unnecessary experimental semantics; mid-episode rule/topology changes still require project code and parity tests. | **Prototype B — retain** |
+| MiniGrid 3.1.x + thin project wrappers/subclass | MiniGrid 3.1.0 released 2026-05-11; active Farama project; Gymnasium API; wrappers include stochastic actions, observation transforms, full/partial observability and reseeding; dynamic-obstacle environments exist. The v3.1.0 project metadata declares MIT while its root license identifies Apache-2.0 and appears malformed/truncated. | Strong ready-made grid mechanics and rendering; usable as the strongest bounded reuse candidate. | Built-in orientation, mission strings, object encoding and broader action semantics require translation/bypass for the accepted thesis contract; mid-episode changes remain project code; Windows is not an officially supported upstream platform; tagged license evidence conflicts. | **Prototype B — completed** |
 | Gymnasium FrozenLake / CliffWalking reused directly | Maintained Toy Text environments with small discrete spaces; FrozenLake supports custom maps, configurable slipperiness/success probability and reward schedule; CliffWalking has simple known semantics. | Excellent known-behavior fixtures and smoke-test references for tabular agents and stochastic actions. | Too narrow as the final environment: not designed around scheduled dynamic rule/topology changes, observation corruption, multiple disturbance mechanisms, or explicit recovery-event traces. | **Reference fixtures only** |
 | Griddly 1.6.x | Flexible YAML/GDY game definition, stochastic mechanics, configurable partial observability, event history, fast C++ engine; MIT license. Public release line is from 2023. Native development involves C++/CMake/Conan and Vulkan-related dependencies. | Technically expressive enough for complex grid research. | Much larger engine/dependency surface than the thesis requires; maintenance/release recency is weaker; more build/platform risk and more hidden engine semantics to validate. | **Do not prototype unless a later requirement demands it** |
 
@@ -162,13 +162,8 @@ The default decision rule is simplicity under scientific equivalence:
 
 This ordering is not a final selection. It reflects current technical evidence: a minimal Gymnasium environment appears most likely to match the thesis requirement for a deliberately small, explicit, reproducible dynamic GridWorld, while MiniGrid remains the strongest maintained reuse/adaptation alternative.
 
-## Remaining gates before an ADR
+## Prototype outcome and remaining ADR gate
 
-- Successful controlled import of the 109-source verified bibliography package.
-- Mapping of selected bibliography evidence to the disturbance/observability taxonomy.
-- Automated inventory of the actual target system; MiniGrid currently states official Python support on Linux/macOS while Windows support is accepted but not officially supported, so the real OS matters.
-- Bounded implementation prototypes described above.
-- Determinism, parity and headless-speed results on the real system.
-- Final research-question and observability framing.
+The controlled bibliography baseline, construct-level research framing, accepted native-Windows inventory, bounded implementations, deterministic parity suite, and clean-source headless benchmark are complete. `GRIDWORLD_PROTOTYPE_COMPARISON.md` records the measured result and the MiniGrid tag-level license conflict.
 
-Until these gates are complete, `GRIDWORLD_SPEC.md` remains `RESEARCH_REQUIRED` and no environment dependency is approved for the core.
+The remaining gate is `T-211`: apply the selection rule in an explicit ADR with consequences and reopening conditions. Prototype-only dependencies are not approved for the thesis core merely because they were evaluated.
