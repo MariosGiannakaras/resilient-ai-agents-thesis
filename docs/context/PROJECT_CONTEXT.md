@@ -129,7 +129,7 @@ There is no final algorithm shortlist, metric set, seed count, severity set, hyp
 
 Selection remains evidence/pilot driven. Candidate roles are intentionally small: nominal/reference behavior, a naive continual learner, a robustness-oriented comparator only if its assumptions/evidence fit, an explicit change/context-aware adaptive comparator, and an optional detector/reset decomposition only if it answers a distinct question.
 
-Metric primitives and known-answer test infrastructure now exist, but final estimands/thresholds/windows are not frozen. Non-recovery must remain explicit rather than being replaced with the experiment horizon.
+Operational metric schema v1 and hand-calculated tests now define matched-reference nominal performance, signed immediate/worst/terminal gaps, cumulative deficit, stabilization-based recovery, `NO_DEGRADATION`, `RECOVERED`, and real `NOT_RECOVERED` with no artificial horizon time. Numeric windows/tolerance/stability, primary/secondary roles, aggregation, intervals, and final statistical plan remain pilot/freeze decisions.
 
 ## Experiments and repository automation
 
@@ -161,7 +161,7 @@ The final presentation is a distinct downstream deliverable after thesis stabili
 
 ## Current genuine gates
 
-The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline/provenance (`T-100` through `T-102`) and all research-framing/GridWorld tasks (`T-200` through `T-213`) are complete. Metrics (`T-300`) is the first next dependency-valid task, with model-role selection (`T-310`) independently ready. Pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
+The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline/provenance (`T-100` through `T-102`), research-framing/GridWorld tasks (`T-200` through `T-213`), and metric operationalization/validation (`T-300`/`T-301`) are complete. Model-role selection (`T-310`) is next. Pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
 
 Deferred, non-blocking inputs remain later supervisor corrections, eventual submission/presentation dates, a current official Word template, exact defense duration/file rules, and optional contextual example theses supplied near writing.
 

@@ -73,7 +73,7 @@ No hypothesis asserts that ordinary Q-learning must fail, that a detector must a
 ### Open feasibility and freeze gates
 
 - `T-210`–`T-213`: select and validate a GridWorld whose hidden truth, agent observation, intended/executed actions, persistent change, and deterministic traces match the framing.
-- `T-300`–`T-301`: define and validate the exact estimands, recovery reference/threshold/stabilization rule, non-recovery handling, and supporting diagnostics.
+- `T-300`–`T-301` complete operational schema-v1 estimands and known-answer validation; pilots/freeze still select numeric windows/tolerance/stability, metric roles, and statistical aggregation.
 - `T-310`–`T-312`: select a small feasible agent-role set, resolve any remaining citation gate, and validate information-matched implementations. A robust-MDP role may still be excluded even though conceptual support is now citation-ready.
 - `T-400`–`T-410`: predeclare disjoint development/tuning/pilot/final partitions and use pilots to determine feasible budgets, severities, repetitions, variance handling, recovery behavior, and practical-effect criteria.
 - `T-411`–`T-412`: refresh decision-driving literature, then freeze the final protocol, research questions, hypotheses, and statistical analysis plan before final results are inspected.
@@ -89,14 +89,13 @@ Already complete:
 - initial post-import evidence synthesis;
 - technical architecture for information isolation, deterministic randomness, protocol partitions, run provenance, and automatic publication.
 - accepted target-machine inventory and CPU-first runtime/tooling constraints (DEC-031).
+- bounded GridWorld comparison/ADR/core/invariant validation (DEC-032; `T-210`–`T-213`).
+- operational resilience estimands and synthetic known-answer validation (`T-300`/`T-301`).
 
 Still required before final freeze:
 
-1. bounded GridWorld prototype/ADR decision;
-2. explicit environment/observability/change semantics;
-3. exact small model-role/method set with evidence/feasibility rationale;
-4. operational metric estimands and known-answer validation;
-5. pilot evidence for runtime, variance, storage, recovery behavior, tuning budget, and statistical choices.
+1. exact small model-role/method set with evidence/feasibility rationale;
+2. pilot evidence for runtime, variance, storage, recovery behavior, tuning budget, metric parameters/roles, and statistical choices.
 
 ## Valid research-question form
 

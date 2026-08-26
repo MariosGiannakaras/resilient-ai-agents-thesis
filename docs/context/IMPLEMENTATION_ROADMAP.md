@@ -26,7 +26,7 @@ Phases are checkpoints, not the concrete execution checklist and not mandatory s
 ## Phase 4 — Reproducibility and metric fixtures
 
 - Validate independent RNG streams, deterministic replay, provenance, run bundles, and storage.
-- Define metric estimands and test them on synthetic known-answer trajectories before complex agents.
+- Operational metric schema v1 and synthetic hand-calculated tests are complete; pilot-derived numeric/statistical choices remain later freeze inputs.
 - Explicitly represent non-recovery rather than substituting the horizon.
 
 ## Phase 5 — Small model-role selection

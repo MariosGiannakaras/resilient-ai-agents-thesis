@@ -17,7 +17,6 @@ from resilient_agents.contracts import (  # noqa: E402
     project_for_agent,
 )
 from resilient_agents.git_publish import PublishError, publish_finalized_run  # noqa: E402
-from resilient_agents.metrics import compute_resilience_metrics  # noqa: E402
 from resilient_agents.protocol import ProtocolPartition, assert_stage_access  # noqa: E402
 from resilient_agents.randomness import RandomStreams, derive_seed  # noqa: E402
 from resilient_agents.run_bundle import RunBundle  # noqa: E402
@@ -81,29 +80,6 @@ class RandomStreamTests(unittest.TestCase):
     def test_unknown_stream_is_rejected(self) -> None:
         with self.assertRaises(ValueError):
             derive_seed(1, "shared-randomness")
-
-
-class MetricTests(unittest.TestCase):
-    def test_known_answer_recovery(self) -> None:
-        metrics = compute_resilience_metrics(
-            [10.0, 10.0, 4.0, 7.0, 9.0, 10.0],
-            change_index=2,
-            recovery_fraction=0.9,
-            reference_value=None,
-        )
-        self.assertEqual(metrics.nominal_mean, 10.0)
-        self.assertEqual(metrics.immediate_degradation, 6.0)
-        self.assertEqual(metrics.worst_degradation, 6.0)
-        self.assertEqual(metrics.recovery_step, 4)
-
-    def test_non_recovery_is_none_not_horizon(self) -> None:
-        metrics = compute_resilience_metrics(
-            [10.0, 10.0, 4.0, 5.0, 6.0],
-            change_index=2,
-            recovery_fraction=0.9,
-            reference_value=None,
-        )
-        self.assertIsNone(metrics.recovery_step)
 
 
 class ProtocolFirewallTests(unittest.TestCase):
