@@ -22,6 +22,12 @@ from .contracts import (
     RetentionPolicy,
     ScenarioSpec,
 )
+from .experiment_runner import (
+    HEADLESS_RUNNER_SCHEMA_VERSION,
+    HeadlessExperimentRequest,
+    HeadlessExperimentRunner,
+    HeadlessRunResult,
+)
 from .gridworld import (
     GRIDWORLD_SCHEMA_VERSION,
     GridAction,
@@ -37,6 +43,7 @@ from .pilot_protocol import (
     PilotProtocol,
     load_pilot_protocol,
 )
+from .randomness import derive_scoped_seed
 
 __all__ = [
     "ROBUST_PLAN_SCHEMA_VERSION",
@@ -57,6 +64,10 @@ __all__ = [
     "ProtocolStage",
     "RetentionPolicy",
     "ScenarioSpec",
+    "HEADLESS_RUNNER_SCHEMA_VERSION",
+    "HeadlessExperimentRequest",
+    "HeadlessExperimentRunner",
+    "HeadlessRunResult",
     "GRIDWORLD_SCHEMA_VERSION",
     "GridAction",
     "GridWorldEnvironment",
@@ -68,4 +79,5 @@ __all__ = [
     "PILOT_PROTOCOL_SCHEMA_VERSION",
     "PilotProtocol",
     "load_pilot_protocol",
+    "derive_scoped_seed",
 ]

@@ -153,6 +153,68 @@ class RunBundle:
         _write_json(self.run_dir / "system-capability.json", capture_system_inventory(self.repo_root))
         _write_json(self.run_dir / "manifest.json", self.manifest)
 
+    @classmethod
+    def resume(
+        cls,
+        *,
+        repo_root: Path,
+        run_id: str,
+        resolved_config: Mapping[str, Any],
+        protocol_version: str,
+        stage: str,
+        retention_policy: str,
+    ) -> "RunBundle":
+        """Reopen an unfinished bundle only when identity/provenance still agree."""
+
+        root = repo_root.resolve()
+        run_dir = root / "results" / "runs" / run_id
+        if not run_dir.is_dir():
+            raise FileNotFoundError(f"run bundle does not exist: {run_dir}")
+        if (run_dir / FINALIZATION_MARKER).exists():
+            raise RuntimeError("finalized run bundles cannot be resumed")
+        try:
+            manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+            stored_config = json.loads(
+                (run_dir / "resolved-config.json").read_text(encoding="utf-8")
+            )
+        except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+            raise RuntimeError("unfinished run bundle metadata is unreadable") from exc
+        if not isinstance(manifest, dict) or manifest.get("status") != "running":
+            raise RuntimeError("only an explicitly running bundle can be resumed")
+        expected_identity = {
+            "run_id": run_id,
+            "protocol_version": protocol_version,
+            "stage": stage,
+            "retention_policy": retention_policy,
+        }
+        if any(manifest.get(key) != value for key, value in expected_identity.items()):
+            raise RuntimeError("resume identity does not match the stored manifest")
+        if _jsonable(resolved_config) != stored_config:
+            raise RuntimeError("resume resolved configuration does not match")
+        stored_source = manifest.get("source")
+        if not isinstance(stored_source, dict):
+            raise RuntimeError("resume source provenance is unavailable")
+        current_source = source_provenance(root)
+        if current_source.get("git_commit") != stored_source.get("git_commit"):
+            raise RuntimeError("source Git commit changed since the run started")
+        if current_source.get("tracked_changes_present") != stored_source.get(
+            "tracked_changes_present"
+        ):
+            raise RuntimeError("tracked source state changed since the run started")
+        if current_source.get("untracked_nonoutput_present") != stored_source.get(
+            "untracked_nonoutput_present"
+        ):
+            raise RuntimeError("untracked non-output source state changed since run start")
+
+        bundle = cls.__new__(cls)
+        bundle.repo_root = root
+        bundle.run_id = run_id
+        bundle.run_dir = run_dir
+        bundle.started_at = str(manifest.get("started_at_utc"))
+        bundle.provenance = stored_source
+        bundle.manifest = manifest
+        return bundle
+
     def _require_running(self) -> None:
         if self.manifest.get("status") != "running":
             raise RuntimeError("run bundle is already finalized and cannot be mutated")
@@ -164,6 +226,23 @@ class RunBundle:
     def append_trace(self, record: Mapping[str, Any]) -> None:
         self._require_running()
         self._append_jsonl("trace.jsonl", record)
+
+    def write_json_artifact(self, filename: str, payload: Mapping[str, Any]) -> Path:
+        """Atomically replace one top-level JSON checkpoint while running."""
+
+        self._require_running()
+        if (
+            not isinstance(filename, str)
+            or not filename.endswith(".json")
+            or Path(filename).name != filename
+            or filename in {"manifest.json", "resolved-config.json", "system-capability.json"}
+        ):
+            raise ValueError("artifact filename must be a safe non-reserved .json name")
+        if not isinstance(payload, Mapping):
+            raise ValueError("JSON artifact payload must be an object")
+        path = self.run_dir / filename
+        _write_json(path, payload)
+        return path
 
     def _append_jsonl(self, filename: str, payload: Mapping[str, Any]) -> None:
         path = self.run_dir / filename

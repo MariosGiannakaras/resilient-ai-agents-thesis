@@ -22,6 +22,19 @@ def derive_seed(master_seed: int, stream_name: str) -> int:
     return int.from_bytes(hashlib.sha256(payload).digest()[:8], "big", signed=False)
 
 
+def derive_scoped_seed(master_seed: int, scope: str) -> int:
+    """Derive a deterministic child root for an explicit episode/task scope."""
+
+    if not isinstance(master_seed, int) or isinstance(master_seed, bool):
+        raise ValueError("master_seed must be an integer")
+    if not 0 <= master_seed < 2**64:
+        raise ValueError("master_seed must be in [0, 2**64)")
+    if not isinstance(scope, str) or not scope.strip():
+        raise ValueError("scope must be a non-empty string")
+    payload = f"resilient-agents-scoped-v1\0{master_seed}\0{scope}".encode("utf-8")
+    return int.from_bytes(hashlib.sha256(payload).digest()[:8], "big", signed=False)
+
+
 @dataclass
 class RandomStreams:
     master_seed: int
