@@ -233,3 +233,5 @@ Future entries are still required for:
 - exact current defense duration, required slide/file rules, and administrative presentation/submission procedure near delivery.
 
 The general Python/core/storage/result-publication/dashboard architectural baseline, accepted target-machine/runtime baseline, task-governance mechanism, lean Goal-mode Codex bootstrap, proportional testing discipline, quota-efficient fail-fast validation, end-to-end handoff model, and self-explanatory UI/onboarding baseline are **not** pending decisions unless later requirements justify explicit amendments.
+## DEC-041 - Protocol v1.0 Freeze and R0 Removal
+- **File:** `docs/decisions/DEC-041_PROTOCOL_V1_0_FREEZE.md`.

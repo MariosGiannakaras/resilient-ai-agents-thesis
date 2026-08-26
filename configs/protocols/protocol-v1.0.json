@@ -1,0 +1,668 @@
+{
+  "schema_version": 1,
+  "protocol_version": "protocol-v1.0",
+  "status": "pilot-unfrozen",
+  "scientific_scope": {
+    "primary_question": "How do frozen nominal, continual tabular learning, and declared-set robust planning differ in resistance and recovery after an unannounced persistent action remap?",
+    "pilot_purpose": "Measure feasibility, runtime, variance, censoring, metric sensitivity, and distinct agent behavior before protocol-v1.0 is frozen.",
+    "final_evidence_use": false
+  },
+  "gridworld_schema_version": 1,
+  "information_policy": {
+    "expose_executed_action": false,
+    "expose_disturbance_flags": false,
+    "expose_change_indicator": false,
+    "expose_regime_id": false,
+    "expose_true_state": false
+  },
+  "partitions": {
+    "development": [
+      "dev-l01",
+      "dev-l02"
+    ],
+    "tuning": [
+      "tune-l01",
+      "tune-l02"
+    ],
+    "pilot": [
+      "pilot-l01",
+      "pilot-l02"
+    ],
+    "final": [
+      "final-l01",
+      "final-l02"
+    ]
+  },
+  "layouts": [
+    {
+      "layout_id": "dev-l01",
+      "stage": "development",
+      "grid": {
+        "width": 7,
+        "height": 7,
+        "start": [
+          0,
+          0
+        ],
+        "goal": [
+          6,
+          6
+        ],
+        "obstacles": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            2,
+            5
+          ]
+        ]
+      }
+    },
+    {
+      "layout_id": "dev-l02",
+      "stage": "development",
+      "grid": {
+        "width": 7,
+        "height": 7,
+        "start": [
+          0,
+          0
+        ],
+        "goal": [
+          6,
+          6
+        ],
+        "obstacles": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            5,
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "layout_id": "tune-l01",
+      "stage": "tuning",
+      "grid": {
+        "width": 7,
+        "height": 7,
+        "start": [
+          0,
+          0
+        ],
+        "goal": [
+          6,
+          6
+        ],
+        "obstacles": [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            5,
+            5
+          ]
+        ]
+      }
+    },
+    {
+      "layout_id": "tune-l02",
+      "stage": "tuning",
+      "grid": {
+        "width": 7,
+        "height": 7,
+        "start": [
+          0,
+          0
+        ],
+        "goal": [
+          6,
+          6
+        ],
+        "obstacles": [
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            5,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "layout_id": "pilot-l01",
+      "stage": "pilot",
+      "grid": {
+        "width": 7,
+        "height": 7,
+        "start": [
+          0,
+          0
+        ],
+        "goal": [
+          6,
+          6
+        ],
+        "obstacles": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            5,
+            5
+          ]
+        ]
+      }
+    },
+    {
+      "layout_id": "pilot-l02",
+      "stage": "pilot",
+      "grid": {
+        "width": 7,
+        "height": 7,
+        "start": [
+          0,
+          0
+        ],
+        "goal": [
+          6,
+          6
+        ],
+        "obstacles": [
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "layout_id": "final-l01",
+      "stage": "final",
+      "grid": {
+        "width": 7,
+        "height": 7,
+        "start": [
+          0,
+          0
+        ],
+        "goal": [
+          6,
+          6
+        ],
+        "obstacles": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            5,
+            5
+          ]
+        ]
+      }
+    },
+    {
+      "layout_id": "final-l02",
+      "stage": "final",
+      "grid": {
+        "width": 7,
+        "height": 7,
+        "start": [
+          0,
+          0
+        ],
+        "goal": [
+          6,
+          6
+        ],
+        "obstacles": [
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            5,
+            4
+          ]
+        ]
+      }
+    }
+  ],
+  "reward_spec": {
+    "step": -1.0,
+    "collision": -2.0,
+    "goal": 0.0
+  },
+  "episode_horizon": {
+    "rule": "shortest-path-multiple",
+    "shortest_path_multiplier": 4,
+    "required_shortest_path_length": 12
+  },
+  "conditions": [
+    {
+      "condition_id": "nominal",
+      "scientific_role": "Matched reference and nominal cost",
+      "mechanism": "nominal",
+      "action_mapping": {
+        "up": "up",
+        "right": "right",
+        "down": "down",
+        "left": "left"
+      },
+      "remapped_actions": 0,
+      "action_failure_probability": 0.0,
+      "observation_corruption_probability": 0.0
+    },
+    {
+      "condition_id": "remap-min-in-set",
+      "scientific_role": "Primary minimal non-identity persistent change represented in the declared robust set",
+      "mechanism": "action-remap",
+      "action_mapping": {
+        "up": "right",
+        "right": "up",
+        "down": "down",
+        "left": "left"
+      },
+      "remapped_actions": 2,
+      "action_failure_probability": 0.0,
+      "observation_corruption_probability": 0.0
+    },
+    {
+      "condition_id": "remap-max-out-of-set",
+      "scientific_role": "Primary maximal four-action derangement outside the declared robust set",
+      "mechanism": "action-remap",
+      "action_mapping": {
+        "up": "right",
+        "right": "down",
+        "down": "left",
+        "left": "up"
+      },
+      "remapped_actions": 4,
+      "action_failure_probability": 0.0,
+      "observation_corruption_probability": 0.0
+    },
+    {
+      "condition_id": "action-failure-1of8",
+      "scientific_role": "Supporting low single-factor action-execution diagnostic",
+      "mechanism": "action-failure",
+      "action_mapping": {
+        "up": "up",
+        "right": "right",
+        "down": "down",
+        "left": "left"
+      },
+      "remapped_actions": 0,
+      "action_failure_probability": 0.125,
+      "observation_corruption_probability": 0.0
+    },
+    {
+      "condition_id": "action-failure-1of4",
+      "scientific_role": "Supporting higher single-factor action-execution diagnostic",
+      "mechanism": "action-failure",
+      "action_mapping": {
+        "up": "up",
+        "right": "right",
+        "down": "down",
+        "left": "left"
+      },
+      "remapped_actions": 0,
+      "action_failure_probability": 0.25,
+      "observation_corruption_probability": 0.0
+    },
+    {
+      "condition_id": "observation-corruption-1of8",
+      "scientific_role": "Supporting low single-factor observation diagnostic",
+      "mechanism": "observation-corruption",
+      "action_mapping": {
+        "up": "up",
+        "right": "right",
+        "down": "down",
+        "left": "left"
+      },
+      "remapped_actions": 0,
+      "action_failure_probability": 0.0,
+      "observation_corruption_probability": 0.125
+    },
+    {
+      "condition_id": "observation-corruption-1of4",
+      "scientific_role": "Supporting higher single-factor observation diagnostic",
+      "mechanism": "observation-corruption",
+      "action_mapping": {
+        "up": "up",
+        "right": "right",
+        "down": "down",
+        "left": "left"
+      },
+      "remapped_actions": 0,
+      "action_failure_probability": 0.0,
+      "observation_corruption_probability": 0.25
+    }
+  ],
+  "agent_regimes": [
+    {
+      "agent_id": "f0",
+      "method": "tabular_q_learning_v1",
+      "checkpoint_source": "common-selected-nominal-q-checkpoint",
+      "post_change_learning": false,
+      "deployment_exploration": "selected-common-epsilon",
+      "method_configuration": {
+        "learning_rate_policy": "selected-tuning-value",
+        "discount_policy": "selected-common-discount",
+        "bootstrap_on_truncation": false,
+        "initial_q_value": 0.0
+      }
+    },
+    {
+      "agent_id": "c0",
+      "method": "tabular_q_learning_v1",
+      "checkpoint_source": "common-selected-nominal-q-checkpoint",
+      "post_change_learning": true,
+      "deployment_exploration": "selected-common-epsilon",
+      "method_configuration": {
+        "learning_rate_policy": "selected-tuning-value",
+        "discount_policy": "selected-common-discount",
+        "bootstrap_on_truncation": false,
+        "initial_q_value": 0.0
+      }
+    }
+  ],
+  "tuning": {
+    "root_seeds": [
+      10940500274998661290,
+      13639469163949457533,
+      18377731416598846249,
+      5508570176503139448
+    ],
+    "training_episodes_per_layout": 512,
+    "nominal_evaluation_episodes_per_layout": 64,
+    "q_learning_search": {
+      "strategy": "staged-dyadic-grid",
+      "learning_rates": [
+        0.0625,
+        0.125,
+        0.25,
+        0.5
+      ],
+      "exploration_epsilons": [
+        0.03125,
+        0.0625,
+        0.125,
+        0.25
+      ],
+      "discount_factors": [
+        0.875,
+        0.9375,
+        0.96875
+      ],
+      "stage_one_discount_factor": 0.9375,
+      "stage_two_rule": "evaluate remaining discount factors only for the stage-one winner",
+      "total_unique_configurations": 18
+    },
+    "robust_set_policy": "fixed-declared-set-no-pilot-outcome-tuning",
+    "checkpoint_selection": [
+      "highest mean nominal episode return across tuning layouts and roots",
+      "highest worst-layout mean nominal episode return",
+      "lowest collision rate",
+      "lexicographically smallest canonical hyperparameter JSON"
+    ]
+  },
+  "evaluation": {
+    "root_seeds": [
+      1026847926404610462,
+      6839596180442651346,
+      2258728696626565720,
+      1287010195568088799,
+      945351111358374058,
+      6831454145019129198,
+      5030118478018109777,
+      5446332115853614979,
+      293143515607798170,
+      864186096263678575,
+      2145917995920697484,
+      5552642720119322322,
+      5176572018665656244,
+      6604115266222097962,
+      6468581141273039754,
+      3869387381345962231
+    ],
+    "pre_change_episodes": 16,
+    "post_change_episodes": 32,
+    "change_boundary": "between-episode-blocks",
+    "paired_reference": "same-checkpoint-layout-root-seed",
+    "condition_ids": [
+      "nominal",
+      "remap-min-in-set",
+      "remap-max-out-of-set",
+      "action-failure-1of8",
+      "action-failure-1of4",
+      "observation-corruption-1of8",
+      "observation-corruption-1of4"
+    ],
+    "retention_policy": "events-plus-episode-curves"
+  },
+  "metric_sensitivity": {
+    "curve_unit": "episode-return",
+    "immediate_windows": [
+      1
+    ],
+    "worst_windows": [
+      2,
+      4,
+      8
+    ],
+    "terminal_windows": [
+      4,
+      8
+    ],
+    "recovery_tolerances_step_reward_units": [
+      0.0,
+      1.0,
+      2.0
+    ],
+    "recovery_stability_episodes": [
+      2,
+      4,
+      8
+    ],
+    "selection_use": "diagnostic-only-not-model-selection"
+  },
+  "resource_policy": {
+    "runtime_baseline": "native Windows CPython 3.12 locked uv environment on the accepted CPU baseline",
+    "initial_concurrency": 1,
+    "preflight_required": true,
+    "child_timeout_rule": {
+      "measured_preflight_multiplier": 20,
+      "minimum_seconds": 60,
+      "maximum_seconds": 7200,
+      "overflow_action": "protocol-amendment-before-pilot"
+    },
+    "gpu_required": false
+  },
+  "stopping_policy": {
+    "training": "fixed-configured-episode-count",
+    "evaluation": "fixed-pre-and-post-episode-blocks",
+    "early_success_stopping": false,
+    "invalid_or_nonfinite_state": "fail-immediately-and-retain",
+    "timeout": "finalize-failed-and-retain-partial-output"
+  },
+  "pilot_analysis": {
+    "unit_of_analysis": "root-seed-layout-agent-condition",
+    "pairing_block": "same root seed, layout, checkpoint, and episode seed schedule",
+    "aggregation": "retain per-unit distributions and recovery-status counts",
+    "inferential_claims_allowed": false,
+    "non_recovery_handling": "explicit NOT_RECOVERED with null recovery time",
+    "failed_or_invalid_handling": "retain separately; never convert to poor completed outcome"
+  },
+  "required_artifacts": [
+    "resolved protocol and scenario configuration",
+    "root and derived RNG seeds",
+    "source and runtime provenance",
+    "common Q checkpoint checksum or robust plan checksum",
+    "event log and per-episode return curves",
+    "execution outcome and failure or invalid reason",
+    "metric sensitivity summaries",
+    "manifest and file checksums"
+  ],
+  "failure_and_exclusion_policy": {
+    "completed_valid_runs_included_regardless_of_outcome": true,
+    "non_recovery_is_valid": true,
+    "automatic_outlier_exclusion": false,
+    "rerun_uses_new_run_id": true,
+    "invalid_reasons": [
+      "schema or contract validation failure",
+      "source or run provenance mismatch",
+      "checksum or finalization inconsistency",
+      "agent information-boundary violation",
+      "non-finite scientific state"
+    ],
+    "analysis_exclusion_reasons": [
+      "confirmed implementation defect affecting the run",
+      "confirmed external interference affecting scientific validity",
+      "predeclared scenario or agent contract violation"
+    ]
+  },
+  "tuning_policy": "reuse-v0.1-f0-selection-no-retuning"
+}

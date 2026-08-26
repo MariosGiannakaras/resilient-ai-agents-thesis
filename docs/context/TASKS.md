@@ -28,15 +28,15 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 ## Resume state
 
-- **Current work package:** WP4 — Pilot protocol and headless experiment system
-- **Current task:** `T-412`
+- **Current work package:** WP5 — Experiment management and dashboard
+- **Current task:** `T-500`
 - **State:** `READY`
 - **Active branch / PR:** none
-- **Last validated point:** T-411 freshness review completed in `ThesisBibliography`; no new evidence required protocol changes. `bibliography-integration-v3` remains the canonical baseline.
+- **Last validated point:** T-412 completed; `protocol-v1.0` frozen, removing `R0` role (DEC-041).
 - **Tests already run:** N/A
-- **Relevant files changed:** `TASKS.md`, `CURRENT_STATUS.md`
+- **Relevant files changed:** `protocol-v1.0.json`, `PROTOCOL_V1_0.md`, `DEC-041_PROTOCOL_V1_0_FREEZE.md`, `DECISION_LOG.md`
 - **Uncommitted work:** none
-- **Exact next action:** Freeze `protocol-v1.0` and the statistical analysis plan.
+- **Exact next action:** Implement pilot-proven experiment-management features using filesystem run bundles.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -153,13 +153,13 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-411` — Refresh decision-driving bibliography before final protocol freeze.
   - Depends on: `T-410`.
   - Acceptance: freshness review occurs in `ThesisBibliography`; any required promotion/new evidence is synchronized immutably before freeze.
-- [ ] READY `T-412` — Freeze `protocol-v1.0` and the statistical analysis plan.
+- [x] `T-412` — Freeze `protocol-v1.0` and the statistical analysis plan.
   - Depends on: `T-410`, `T-411`.
   - Acceptance: final RQs/hypotheses, model set, scenario matrix, severities, seeds/repetitions, budgets, tuning rules, primary/secondary metrics, recovery definition, exclusions, and statistical estimands are versioned before final results are inspected.
 
 ## WP5 — Experiment management and dashboard
 
-- [ ] BLOCKED `T-500` — Implement only the pilot-proven experiment-management features needed for final work: truthful lifecycle state, history/registry, batch execution, interruption/recovery where safe, and current resource snapshot.
+- [ ] READY `T-500` — Implement only the pilot-proven experiment-management features needed for final work: truthful lifecycle state, history/registry, batch execution, interruption/recovery where safe, and current resource snapshot.
   - Depends on: `T-412`.
   - Acceptance: features use filesystem run bundles as source of truth; any index/database is rebuildable; batch/concurrent execution serializes shared `run-index` and Git publication through a single-writer boundary (or an equivalently proven race-free design), and unsafe publication contention fails closed while preserving local finalized bundles for later retry.
 - [ ] BLOCKED `T-510` — Implement the bounded local Streamlit dashboard as a thin layer over the same validated core.
