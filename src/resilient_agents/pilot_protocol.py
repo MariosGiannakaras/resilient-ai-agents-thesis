@@ -172,33 +172,35 @@ class PilotProtocol:
 
 
 def _validate_payload(payload: Mapping[str, Any]) -> None:
-    _exact_keys(
-        payload,
-        {
-            "schema_version",
-            "protocol_version",
-            "status",
-            "scientific_scope",
-            "gridworld_schema_version",
-            "information_policy",
-            "partitions",
-            "layouts",
-            "reward_spec",
-            "episode_horizon",
-            "conditions",
-            "agent_regimes",
-            "robust_prior",
-            "tuning",
-            "evaluation",
-            "metric_sensitivity",
-            "resource_policy",
-            "stopping_policy",
-            "pilot_analysis",
-            "required_artifacts",
-            "failure_and_exclusion_policy",
-        },
-        field="pilot protocol",
-    )
+    expected_keys = {
+        "schema_version",
+        "protocol_version",
+        "status",
+        "scientific_scope",
+        "gridworld_schema_version",
+        "information_policy",
+        "partitions",
+        "layouts",
+        "reward_spec",
+        "episode_horizon",
+        "conditions",
+        "agent_regimes",
+        "tuning",
+        "evaluation",
+        "metric_sensitivity",
+        "resource_policy",
+        "stopping_policy",
+        "pilot_analysis",
+        "required_artifacts",
+        "failure_and_exclusion_policy",
+    }
+    actual_keys = set(payload.keys())
+    if "robust_prior" in actual_keys:
+        expected_keys.add("robust_prior")
+    if "tuning_policy" in actual_keys:
+        expected_keys.add("tuning_policy")
+
+    _exact_keys(payload, expected_keys, field="pilot protocol")
     if payload["schema_version"] != PILOT_PROTOCOL_SCHEMA_VERSION:
         raise ValueError("unsupported pilot protocol schema_version")
     if payload["gridworld_schema_version"] != GRIDWORLD_SCHEMA_VERSION:
@@ -321,18 +323,20 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
     nominal_count = 0
     for index, raw_condition in enumerate(condition_rows):
         condition = _object(raw_condition, field=f"conditions[{index}]")
+        cond_expected_keys = {
+            "condition_id",
+            "scientific_role",
+            "mechanism",
+            "action_mapping",
+            "remapped_actions",
+            "action_failure_probability",
+            "observation_corruption_probability",
+        }
+        if "r0_set_membership" in condition:
+            cond_expected_keys.add("r0_set_membership")
         _exact_keys(
             condition,
-            {
-                "condition_id",
-                "scientific_role",
-                "mechanism",
-                "action_mapping",
-                "remapped_actions",
-                "action_failure_probability",
-                "observation_corruption_probability",
-                "r0_set_membership",
-            },
+            cond_expected_keys,
             field=f"conditions[{index}]",
         )
         condition_id = _nonempty_string(condition["condition_id"], field="condition_id")
@@ -370,25 +374,23 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
                 observation_corruption > 0.0,
             )
         )
+        r0_membership = condition.get("r0_set_membership", "not-applicable")
         if mechanism == "nominal":
             nominal_count += 1
-            if active_factors != 0 or condition["r0_set_membership"] != "not-applicable":
+            if active_factors != 0 or r0_membership != "not-applicable":
                 raise ValueError("nominal condition must have no disturbance")
         elif active_factors != 1:
             raise ValueError("pilot conditions must perturb exactly one factor")
         if mechanism == "action-remap":
-            if mapping == identity or condition["r0_set_membership"] not in {
-                "in-set",
-                "out-of-set",
-            }:
-                raise ValueError("action-remap conditions require declared R0 set membership")
+            if mapping == identity or (r0_membership not in {"in-set", "out-of-set"} and "robust_prior" in payload):
+                raise ValueError("action-remap conditions require declared R0 set membership when robust_prior is active")
         elif mechanism == "action-failure" and action_failure <= 0.0:
             raise ValueError("action-failure condition requires positive failure probability")
         elif mechanism == "observation-corruption" and observation_corruption <= 0.0:
             raise ValueError(
                 "observation-corruption condition requires positive corruption probability"
             )
-        elif condition["r0_set_membership"] != "not-applicable":
+        elif r0_membership != "not-applicable":
             raise ValueError("only action-remap conditions have R0 set membership")
     if nominal_count != 1:
         raise ValueError("conditions must contain exactly one nominal condition")
@@ -471,46 +473,48 @@ def _validate_payload(payload: Mapping[str, Any]) -> None:
             _positive_integer(
                 method_configuration["max_iterations"], field="R0 max_iterations"
             )
-    if regime_ids != set(expected_regimes):
-        raise ValueError("agent_regimes must exactly cover f0, c0, and r0")
+    if not (regime_ids == {"f0", "c0", "r0"} or regime_ids == {"f0", "c0"}):
+        raise ValueError("agent_regimes must exactly cover f0, c0, and r0 (or f0, c0 for v1.0)")
 
-    robust = _object(payload["robust_prior"], field="robust_prior")
-    _exact_keys(
-        robust,
-        {
-            "set_id",
-            "fixed_before_pilot",
-            "uncertainty_semantics",
-            "candidate_action_mappings",
-        },
-        field="robust_prior",
-    )
-    _nonempty_string(robust["set_id"], field="robust_prior.set_id")
-    if robust["fixed_before_pilot"] is not True:
-        raise ValueError("robust uncertainty set must be fixed before pilot outcomes")
-    if (
-        robust["uncertainty_semantics"]
-        != "state-action-rectangular-closure-of-candidate-mappings"
-    ):
-        raise ValueError("robust prior must declare s,a-rectangular closure semantics")
-    robust_mappings = tuple(
-        _mapping(item, field="robust candidate mapping")
-        for item in _sequence(
-            robust["candidate_action_mappings"], field="candidate_action_mappings"
+    if "robust_prior" in payload:
+        robust = _object(payload["robust_prior"], field="robust_prior")
+        _exact_keys(
+            robust,
+            {
+                "set_id",
+                "fixed_before_pilot",
+                "uncertainty_semantics",
+                "candidate_action_mappings",
+            },
+            field="robust_prior",
         )
-    )
-    if not robust_mappings or len(set(robust_mappings)) != len(robust_mappings):
-        raise ValueError("robust candidate mappings must be non-empty and unique")
-    if identity not in robust_mappings:
-        raise ValueError("robust uncertainty set must include nominal identity")
-    for raw_condition in condition_rows:
-        condition = _object(raw_condition, field="condition")
-        membership = condition["r0_set_membership"]
-        mapping = condition_mappings[str(condition["condition_id"])]
-        if membership == "in-set" and mapping not in robust_mappings:
-            raise ValueError("in-set condition mapping is absent from robust prior")
-        if membership == "out-of-set" and mapping in robust_mappings:
-            raise ValueError("out-of-set condition mapping appears in robust prior")
+        _nonempty_string(robust["set_id"], field="robust_prior.set_id")
+        if robust["fixed_before_pilot"] is not True:
+            raise ValueError("robust uncertainty set must be fixed before pilot outcomes")
+        if (
+            robust["uncertainty_semantics"]
+            != "state-action-rectangular-closure-of-candidate-mappings"
+        ):
+            raise ValueError("robust prior must declare s,a-rectangular closure semantics")
+        robust_mappings = tuple(
+            _mapping(item, field="robust candidate mapping")
+            for item in _sequence(
+                robust["candidate_action_mappings"], field="candidate_action_mappings"
+            )
+        )
+        if not robust_mappings or len(set(robust_mappings)) != len(robust_mappings):
+            raise ValueError("robust candidate mappings must be non-empty and unique")
+        if identity not in robust_mappings:
+            raise ValueError("robust uncertainty set must include nominal identity")
+        for raw_condition in condition_rows:
+            condition = _object(raw_condition, field="condition")
+            if "r0_set_membership" in condition:
+                membership = condition["r0_set_membership"]
+                mapping = condition_mappings[str(condition["condition_id"])]
+                if membership == "in-set" and mapping not in robust_mappings:
+                    raise ValueError("in-set condition mapping is absent from robust prior")
+                if membership == "out-of-set" and mapping in robust_mappings:
+                    raise ValueError("out-of-set condition mapping appears in robust prior")
 
     tuning = _object(payload["tuning"], field="tuning")
     _exact_keys(
