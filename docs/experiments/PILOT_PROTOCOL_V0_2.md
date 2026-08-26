@@ -1,7 +1,8 @@
 # Pilot Protocol v0.2 Amendment
 
-**Protocol identity:** `pilot-v0.2`  
-**Lifecycle state:** pilot-unfrozen amendment; diagnostic evidence only  
+**Protocol identity:** `pilot-v0.2`
+
+**Lifecycle state:** pilot-unfrozen amendment; diagnostic evidence only
 **Machine-readable authority:** `configs/protocols/pilot-v0.2.json`
 
 ## Trigger and preserved evidence
