@@ -1,5 +1,16 @@
 """Independent research core for the resilient AI agents thesis."""
 
+from .agents import (
+    ROBUST_PLAN_SCHEMA_VERSION,
+    TABULAR_Q_CHECKPOINT_SCHEMA_VERSION,
+    RectangularRobustValueIterationAgent,
+    RobustStateAction,
+    RobustTransitionOutcome,
+    RobustTransitionRow,
+    RobustValueIterationConfig,
+    TabularQLearningAgent,
+    TabularQLearningConfig,
+)
 from .contracts import (
     Agent,
     AgentTransition,
@@ -23,6 +34,15 @@ from .gridworld import (
 )
 
 __all__ = [
+    "ROBUST_PLAN_SCHEMA_VERSION",
+    "TABULAR_Q_CHECKPOINT_SCHEMA_VERSION",
+    "RectangularRobustValueIterationAgent",
+    "RobustStateAction",
+    "RobustTransitionOutcome",
+    "RobustTransitionRow",
+    "RobustValueIterationConfig",
+    "TabularQLearningAgent",
+    "TabularQLearningConfig",
     "Agent",
     "AgentTransition",
     "ChangeEvent",
