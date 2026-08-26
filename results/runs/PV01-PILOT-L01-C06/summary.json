@@ -1,0 +1,13 @@
+{
+  "failure": {
+    "message": "cannot act from a terminal state",
+    "traceback": "Traceback (most recent call last):\n  File \"E:\\SystemFiles\\Desktop\\resilient-ai-agents-thesis\\src\\resilient_agents\\experiment_runner.py\", line 455, in run\n    result = self._run_root(bundle=bundle, root_seed=root_seed)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\SystemFiles\\Desktop\\resilient-ai-agents-thesis\\src\\resilient_agents\\experiment_runner.py\", line 515, in _run_root\n    self._evaluate_agent(\n  File \"E:\\SystemFiles\\Desktop\\resilient-ai-agents-thesis\\src\\resilient_agents\\experiment_runner.py\", line 592, in _evaluate_agent\n    observed, observed_state = self._run_branch(\n                               ^^^^^^^^^^^^^^^^^\n  File \"E:\\SystemFiles\\Desktop\\resilient-ai-agents-thesis\\src\\resilient_agents\\experiment_runner.py\", line 664, in _run_branch\n    episode_return, _, _ = self._run_episode(\n                           ^^^^^^^^^^^^^^^^^^\n  File \"E:\\SystemFiles\\Desktop\\resilient-ai-agents-thesis\\src\\resilient_agents\\experiment_runner.py\", line 720, in _run_episode\n    action_name = agent.act(observation)\n                  ^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\SystemFiles\\Desktop\\resilient-ai-agents-thesis\\src\\resilient_agents\\agents.py\", line 574, in act\n    raise ValueError(\"cannot act from a terminal state\")\nValueError: cannot act from a terminal state\n",
+    "type": "ValueError"
+  },
+  "runner_state": {
+    "completed_root_seeds": [],
+    "resume_generation": 0,
+    "root_results": [],
+    "schema_version": 1
+  }
+}
