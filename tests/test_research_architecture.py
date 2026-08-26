@@ -209,6 +209,32 @@ class GitPublicationTests(unittest.TestCase):
             self.assertIn("Run-ID: EXP-001", message)
             self.assertIn(f"Source-Commit: {source_commit}", message)
 
+    def test_sequential_publication_accepts_modified_tracked_run_index(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repo, source_commit = self._initialize_repo(Path(temporary))
+            published = []
+            for number in (1, 2):
+                run_id = f"EXP-SEQUENTIAL-{number}"
+                bundle = RunBundle(
+                    repo_root=repo,
+                    run_id=run_id,
+                    resolved_config={"sequence": number},
+                    protocol_version="protocol-v0.1",
+                    stage="tuning",
+                    retention_policy="events",
+                )
+                bundle.append_event({"sequence": number, "event": "completed"})
+                bundle.finalize(status="completed", summary={"sequence": number})
+                published.append(publish_finalized_run(repo_root=repo, run_id=run_id))
+
+            self.assertEqual(
+                self._git(repo, "rev-list", "--count", f"{source_commit}..HEAD"), "2"
+            )
+            self.assertEqual(self._git(repo, "rev-parse", "origin/main"), published[-1].commit)
+            self.assertEqual(
+                len((repo / "results" / "run-index.jsonl").read_text().splitlines()), 2
+            )
+
     def test_untracked_nonoutput_source_is_not_published(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             repo, source_commit = self._initialize_repo(Path(temporary))
