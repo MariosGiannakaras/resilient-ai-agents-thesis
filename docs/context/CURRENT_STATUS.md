@@ -30,8 +30,9 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-511` completed: self-explanatory UX polish and lightweight onboarding verified.
 - `T-601` completed: Final-run completeness validated and frozen in `results/thesis-final/freeze-manifest.json`.
 - `T-602` completed: Frozen statistical analysis and sensitivity diagnostics executed.
+- `T-603` completed: Generated final figures, tables, and artifacts from frozen evidence.
 - Current work package: **WP6 — Final experiments, frozen evidence, and writing package**.
-- Current task: **`T-603`**, in progress. Exact next action: Generate final figures, tables, summaries, and export artifacts.
+- Current task: **`T-604`**, in progress. Exact next action: Freeze the thesis/defense evidence package into a distributable archive.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline

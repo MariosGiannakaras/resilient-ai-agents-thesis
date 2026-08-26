@@ -29,12 +29,12 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP6 — Final experiments, frozen evidence, and writing package
-- **Current task:** `T-603`
+- **Current task:** `T-604`
 - **State:** `IN_PROGRESS`
-- **Active branch / PR:** `feature/t-602-statistical-analysis`
-- **Last validated point:** T-602 completed successfully, final evidence analyzed.
-- **Uncommitted work:** Committing analysis and updated checksums.
-- **Exact next action:** Generate thesis artifacts and figures.
+- **Active branch / PR:** `feature/t-604-thesis-evidence-package`
+- **Last validated point:** T-603 generated primary metric tables and visual boxplot figures.
+- **Uncommitted work:** Constructing final evidence zip/bundle.
+- **Exact next action:** Write script to zip `results/thesis-final/` into a distributable archive.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -181,12 +181,12 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-602` — Run the frozen statistical analysis and robustness/sensitivity diagnostics exactly as specified.
   - Depends on: `T-601`.
   - Acceptance: reproducible outputs come only from frozen evidence and frozen analysis definitions.
-- [ ] IN_PROGRESS `T-603` — Generate final figures, tables, summaries, and export artifacts from frozen evidence.
+- [x] `T-603` — Generate final figures, tables, summaries, and export artifacts from frozen evidence.
   - Depends on: `T-602`.
   - Acceptance: version-controlled rebuild reproduces thesis artifacts from stored final data.
-- [ ] BLOCKED `T-604` — Freeze the thesis/defense evidence package used by downstream writing and presentation work.
+- [ ] IN_PROGRESS `T-604` — Freeze the thesis/defense evidence package used by downstream writing and presentation work.
   - Depends on: `T-603`.
-  - Output: versioned RQ/protocol summary, method/config references, included/excluded run manifest, statistical outputs, figure/table/caption registry, and claim-to-result/source/run mapping.
+  - Acceptance: final evidence zip/bundle is constructed and archived following LFS boundaries; no non-frozen changes remaining; includes manifest, statistical outputs, figure/table/caption registry, and claim-to-result/source/run mapping.
   - Acceptance: a future writer/presentation builder can trace every planned method/result claim to citation-ready literature or frozen experiment evidence without reinterpreting raw runs ad hoc.
 
 ## WP7 — Thesis writing, review, and defense presentation

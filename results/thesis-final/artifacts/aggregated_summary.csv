@@ -1,0 +1,17 @@
+,,nominal_mean,nominal_mean,post_change_mean,post_change_mean,cumulative_deficit,cumulative_deficit,immediate_degradation,immediate_degradation
+,,mean,std,mean,std,mean,std,mean,std
+agent_id,condition_id,,,,,,,,
+c0,action-failure-1of4,-12.992,0.633,-18.973,2.931,172.609,31.827,5.328,3.964
+c0,action-failure-1of8,-12.992,0.633,-14.957,1.38,70.781,12.242,1.875,1.996
+c0,nominal,-12.992,0.633,-13.055,0.988,0.0,0.0,0.0,0.0
+c0,observation-corruption-1of4,-12.992,0.633,-45.863,7.95,792.234,145.267,4.438,7.876
+c0,observation-corruption-1of8,-12.992,0.633,-30.93,9.355,426.266,144.041,1.031,1.952
+c0,remap-max-out-of-set,-12.992,0.633,-14.102,2.206,128.266,34.874,50.844,6.142
+c0,remap-min-in-set,-12.992,0.633,-13.418,1.992,113.469,21.092,41.531,4.028
+f0,action-failure-1of4,-13.016,0.614,-17.734,1.953,146.125,18.874,4.969,3.45
+f0,action-failure-1of8,-13.016,0.614,-14.762,1.312,63.469,10.345,1.797,1.774
+f0,nominal,-13.016,0.614,-12.938,0.902,0.0,0.0,0.0,0.0
+f0,observation-corruption-1of4,-13.016,0.614,-15.195,1.35,65.875,15.928,2.406,3.531
+f0,observation-corruption-1of8,-13.016,0.614,-13.891,1.06,29.344,9.642,0.844,1.417
+f0,remap-max-out-of-set,-13.016,0.614,-90.254,2.222,2458.812,52.065,77.156,3.7
+f0,remap-min-in-set,-13.016,0.614,-61.477,12.727,1556.953,369.513,49.688,16.85
