@@ -11,7 +11,7 @@ if str(repo_root / "src") not in sys.path:
 
 from resilient_agents.pilot_protocol import load_pilot_protocol
 
-st.set_page_config(page_title="New Experiment", page_icon="🧪")
+st.set_page_config(page_title="New Experiment", page_icon="??")
 
 st.title("Configure New Experiment")
 
@@ -36,14 +36,17 @@ if selected_protocol:
     try:
         protocol = load_pilot_protocol(selected_protocol)
         payload = json.loads(selected_protocol.read_text(encoding="utf-8"))
-        st.success(f"Protocol **{payload.get('protocol_version', 'Unknown')}** loaded successfully.")
+        st.success(f"Protocol **{payload.get('protocol_version', 'Unknown')}** loaded successfully. Status: {payload.get('status', 'Unknown')}")
         
         st.subheader("Pre-run Review")
         
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown(f"**Agents:** {', '.join(payload.get('agent_regimes', []))}")
-            st.markdown(f"**Layouts:** {', '.join(payload.get('layouts', {}).keys()) if 'layouts' in payload else 'See partitions'}")
+            agents = [a.get("agent_id", "Unknown") for a in payload.get('agent_regimes', [])]
+            st.markdown(f"**Agents:** {', '.join(agents)}")
+            layouts = payload.get('layouts', [])
+            layout_ids = [l.get("layout_id", "Unknown") for l in layouts]
+            st.markdown(f"**Layouts:** {', '.join(layout_ids) if layout_ids else 'See partitions'}")
         
         with col2:
             st.markdown(f"**Conditions:** {len(payload.get('conditions', []))}")
@@ -52,10 +55,20 @@ if selected_protocol:
         st.warning("Ensure that your target machine has enough resources for batch execution before launching.")
         
         if st.button("Launch Campaign"):
-            # In a real UI, this would use a background task manager.
-            # For now, we will create a dummy script or invoke run_headless_experiment directly.
-            # T-500 says: use filesystem run bundles.
-            st.info("Campaign launch requested. Active runs will appear in the Runs tab.")
+            script_path = repo_root / "scripts" / "run_final_campaign.py"
+            # Launch detached so UI doesn't hang
+            if sys.platform == "win32":
+                subprocess.Popen(
+                    [sys.executable, str(script_path), "--repo-root", str(repo_root), "--protocol", str(selected_protocol)],
+                    creationflags=subprocess.CREATE_NEW_CONSOLE
+                )
+            else:
+                subprocess.Popen(
+                    [sys.executable, str(script_path), "--repo-root", str(repo_root), "--protocol", str(selected_protocol)],
+                    start_new_session=True
+                )
+            
+            st.info("Campaign launch requested. The campaign is running in the background. Active runs will appear in the Runs tab.")
             
     except Exception as e:
         st.error(f"Failed to load protocol: {e}")

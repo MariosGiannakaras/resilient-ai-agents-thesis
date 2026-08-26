@@ -24,9 +24,10 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-410` completed the bounded pilot lifecycle. PR #71 (`1b94ebb`) merged the v0.2 amendment; all 14 PV02 children are published and the validated analysis contains 336 units plus 18,144 sensitivity records with no v0.2 failure/exclusion. The retained v0.1 failure and superseded attempts remain explicit.
 - Pilot evidence confirms CPU/runtime/storage feasibility but makes two final-freeze constraints mandatory: R0's current configuration has approximately 96% nominal truncation and recovery classification varies across metric settings in 33/42 agent-condition-layout cells. No final claim or favorable threshold/model selection is allowed from these diagnostics.
 - `T-411` freshness review completed in canonical `ThesisBibliography`; no new evidence required protocol change.
-- `T-412`, `T-500`, `T-510` were aggressively completed previously and are currently under corrective audit.
-- Current work package: **WP4 — Pilot protocol and headless experiment system**.
-- Current task: **`T-412`**, in progress. Exact next action: Repair `protocol-v1.0.json` and statistical plan.
+- `T-412` completed; protocol is objectively frozen.
+- `T-500` completed; headless experiment runner and registry validated.
+- Current work package: **WP5 — Platform telemetry and UI presentation**.
+- Current task: **`T-510`**, in progress. Exact next action: Repair Streamlit UI to correctly launch experiments and add `run_app.bat`.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline
