@@ -31,10 +31,10 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 - **Current work package:** WP5 — Experiment management and dashboard
 - **Current task:** `T-510`
 - **State:** `IN_PROGRESS`
-- **Active branch / PR:** none
-- **Last validated point:** T-500 completed; headless experiment registry and batch execution are validated.
-- **Uncommitted work:** Auditing and repairing Streamlit baseline for T-510.
-- **Exact next action:** Repair Streamlit UI to correctly launch `CampaignManager` and implement `run_app.bat`.
+- **Active branch / PR:** `fix/t-500-t-510-corrective-repair`
+- **Last validated point:** T-500 experiment_manager uses canonical FINALIZATION_MARKER and full integrity validation; tests use real RunBundle.
+- **Uncommitted work:** Repairing UI pages, run_final_campaign, lifecycle gate, doc consistency.
+- **Exact next action:** Validate tests, push, open PR, wait for green CI, merge.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -159,7 +159,7 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-500` — Implement only the pilot-proven experiment-management features needed for final work: truthful lifecycle state, history/registry, batch execution, interruption/recovery where safe, and current resource snapshot.
   - Depends on: `T-412`.
   - Acceptance: features use filesystem run bundles as source of truth; any index/database is rebuildable with strict integrity semantics; batch/concurrent execution serializes shared `run-index` and Git publication through a single-writer boundary; unsafe publication fails closed; unittest CI passes.
-- [/] IN_PROGRESS `T-510` — Implement the bounded local Streamlit dashboard as a thin layer over the same validated core.
+- [ ] IN_PROGRESS `T-510` — Implement the bounded local Streamlit dashboard as a thin layer over the same validated core.
   - Depends on: `T-500`.
   - Acceptance: New Experiment actually launches validated core; Runs, Compare, Artifacts operate on real core data with no duplicated logic; root `run_app.bat` implemented; follows `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`.
 - [ ] BLOCKED `T-512` — Complete self-explanatory UX polish and lightweight onboarding after the final dashboard structure is stable.
