@@ -184,7 +184,7 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-603` — Generate final figures, tables, summaries, and export artifacts from frozen evidence.
   - Depends on: `T-602`.
   - Acceptance: version-controlled rebuild reproduces thesis artifacts from stored final data.
-- [ ] IN_PROGRESS `T-604` — Freeze the thesis/defense evidence package used by downstream writing and presentation work.
+- [x] `T-604` — Freeze the thesis/defense evidence package used by downstream writing and presentation work.
   - Depends on: `T-603`.
   - Acceptance: final evidence zip/bundle is constructed and archived following LFS boundaries; no non-frozen changes remaining; includes manifest, statistical outputs, figure/table/caption registry, and claim-to-result/source/run mapping.
   - Acceptance: a future writer/presentation builder can trace every planned method/result claim to citation-ready literature or frozen experiment evidence without reinterpreting raw runs ad hoc.
