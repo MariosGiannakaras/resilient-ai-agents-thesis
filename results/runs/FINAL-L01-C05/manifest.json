@@ -1,0 +1,42 @@
+{
+  "files": {
+    "events.jsonl": {
+      "sha256": "248b61de7f20fb086daa9e1e5280d15301fd1d3c288fa3dd9d19bade86dd1daa",
+      "size_bytes": 12035679
+    },
+    "resolved-config.json": {
+      "sha256": "6afaa4b4d06c5306c5755dcabc19466521224acd091871bf6b58396946a4167f",
+      "size_bytes": 17609
+    },
+    "runner-state.json": {
+      "sha256": "b5412a41a07d77db26f90e78c88c64c827ee280346f428a2f6e598a155802056",
+      "size_bytes": 1426373
+    },
+    "summary.json": {
+      "sha256": "7ebe3002c983e498dfcf633a0da85ad0f1842a4a700a7962b8580888e5eb91c4",
+      "size_bytes": 1425667
+    },
+    "system-capability.json": {
+      "sha256": "1aeea4f642ad5cb6d8aa5f7567ff96ea0490fca4f5f63fb6d77f7a615e54ffe2",
+      "size_bytes": 2024
+    }
+  },
+  "finished_at_utc": "2026-08-26T20:53:38+00:00",
+  "protocol_version": "protocol-v1.0",
+  "retention_policy": "events-plus-episode-curves",
+  "run_id": "FINAL-L01-C05",
+  "schema_version": 1,
+  "source": {
+    "git_commit": "32bdda9502a9ce017d8999eb4bdbae040adb03ca",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python_implementation": "CPython",
+    "python_version": "3.12.13",
+    "tracked_changes_present": false,
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "untracked_nonoutput_present": false,
+    "untracked_nonoutput_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stage": "final",
+  "started_at_utc": "2026-08-26T20:51:40+00:00",
+  "status": "completed"
+}
