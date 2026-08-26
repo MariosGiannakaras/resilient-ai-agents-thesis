@@ -28,13 +28,13 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 ## Resume state
 
-- **Current work package:** WP7 — Thesis writing, review, and defense presentation
+- **Current work package:** Pre-WP7 user-directed refinement and acceptance gate
 - **Current task:** `T-700`
-- **State:** `DEFERRED`
+- **State:** `BLOCKED`
 - **Active branch / PR:** N/A (Main)
-- **Last validated point:** T-604 forensic audit complete; all WP6 outputs are verified.
+- **Last validated point:** PR #84 restored the original pre-writing acceptance contracts and left `T-511` explicitly requiring real user validation. Existing experiments/evidence remain preserved, but the user has explicitly not accepted the current application, agents, runs, or results as the final desired thesis state.
 - **Uncommitted work:** None
-- **Exact next action:** Hand off to the human user for thesis drafting.
+- **Exact next action:** Do not start `T-700` or any later task. Execute only user-directed refinements to the application, agent choices/behavior, experiments/runs, analysis, or evidence. After the user indicates that the pre-writing state is satisfactory, explicitly ask whether they approve starting WP7. Only a direct, unambiguous affirmative answer unlocks `T-700+`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -188,47 +188,60 @@ Codex must assume a session can stop unexpectedly.
   - Acceptance: final evidence zip/bundle is constructed and archived following LFS boundaries; no non-frozen changes remaining; includes manifest, statistical outputs, figure/table/caption registry, and claim-to-result/source/run mapping.
   - Acceptance: a future writer/presentation builder can trace every planned method/result claim to citation-ready literature or frozen experiment evidence without reinterpreting raw runs ad hoc.
 
+## Mandatory pre-WP7 user approval gate
+
+This gate overrides ordinary task readiness for every `T-700+` task in WP7 and WP8.
+
+- **Current gate state: NOT APPROVED.** On 2026-08-27 the user explicitly stated that the current application, agent choices/behavior, experiments/runs, and related results are not satisfactory as the final thesis state and that further refinement is required before writing.
+- `T-511` remains `USER_VALIDATION_REQUIRED`; do not reinterpret automated checks or historical final runs as the user's acceptance of the current application.
+- Existing WP5/WP6 implementation and frozen evidence must be preserved as a technical/historical baseline. Their existence does **not** mean the user has accepted those choices or outputs as the final thesis design/deliverables.
+- Before any `T-700+` work, complete whatever pre-writing refinements the user explicitly requests. Earlier tasks may be reopened, superseded, amended, or supplemented by stable task IDs when the requested refinement requires it.
+- If a requested refinement changes scientific design after frozen evidence exists, preserve the existing frozen evidence/history and use an explicit amendment or new protocol version plus new Run-IDs as required. Never silently mutate finalized evidence to make it match a revised design.
+- When, and only when, the user indicates that the pre-writing application/agent/experiment/result state is satisfactory, explicitly ask: **“Do you approve starting WP7 thesis-writing/defense work now?”**
+- Only a direct, unambiguous affirmative answer to that explicit question in the current conversation satisfies this gate. Silence, implied consent, prior approvals, technical completion, a checked task, a `/goal` command, or a request to inspect future writing requirements does not satisfy it.
+- Until that affirmative answer is received, do not start, draft, research for, generate artifacts for, mark `READY`/`IN_PROGRESS`, or otherwise advance any `T-700+` task.
+
 ## WP7 — Thesis writing, review, and defense presentation
 
-- [ ] DEFERRED `T-700` — Recheck current Department/University thesis, Word template, citation, submission, defense/presentation, duration, and required-file rules.
-  - Depends on: research sufficiently mature for writing; must be repeated near submission/defense.
+- [ ] BLOCKED `T-700` — Recheck current Department/University thesis, Word template, citation, submission, defense/presentation, duration, and required-file rules.
+  - Depends on: explicit satisfaction of the mandatory pre-WP7 user approval gate above; research sufficiently mature for writing; must be repeated near submission/defense.
   - Acceptance: current official guidance is recorded and supersedes examples/historical guidance.
 - [ ] DEFERRED `T-701` — Review any completed theses later supplied by the user as contextual structure/presentation examples only.
-  - Depends on: user supplying them near writing phase.
+  - Depends on: user supplying them near writing phase and the mandatory pre-WP7 user approval gate being satisfied.
   - Acceptance: useful conventions are identified without treating examples as scientific or official authority.
 - [ ] DEFERRED `T-710` — Draft the complete Greek thesis from citation-ready bibliography and the frozen evidence package.
-  - Depends on: `T-604`, `T-700`.
+  - Depends on: `T-604`, `T-700`, and the mandatory pre-WP7 user approval gate being satisfied.
   - Acceptance: every material scientific claim traces to citation-ready evidence or frozen experiment artifacts; methodology matches the executed protocol; no result is reconstructed from memory or ad-hoc raw-run inspection.
 - [ ] DEFERRED `T-711` — Produce a review-ready Word thesis with validated figures/tables/cross-references, bilingual front matter, citations, and current required formatting.
-  - Depends on: `T-710`.
+  - Depends on: `T-710` and the mandatory pre-WP7 user approval gate being satisfied.
   - Acceptance: coherent `.docx` suitable for supervisor/reviewer review and current official requirements.
 - [ ] DEFERRED `T-712` — Incorporate supervisor/reviewer corrections and revalidate affected claims, citations, figures, tables, and methodology.
-  - Depends on: `T-711` plus actual feedback if a review cycle is requested.
+  - Depends on: `T-711` plus actual feedback if a review cycle is requested; the mandatory pre-WP7 user approval gate must already be satisfied.
   - Acceptance: received feedback is dispositioned and implemented where appropriate, or the absence of a required review cycle is explicitly recorded; no correction silently breaks evidence/protocol consistency.
 - [ ] DEFERRED `T-713` — Freeze the final thesis deliverable and required submission copies.
-  - Depends on: `T-711`, `T-800`, and `T-712` when feedback exists.
+  - Depends on: `T-711`, `T-800`, and `T-712` when feedback exists; the mandatory pre-WP7 user approval gate must already be satisfied.
   - Acceptance: final `.docx` and any officially required exports are validated, versioned, and tied to the final evidence/citation state.
 - [ ] DEFERRED `T-720` — Build the defense narrative, slide outline, and slide-to-thesis/result/source evidence map.
-  - Depends on: `T-713`, `T-604`, `T-511`.
+  - Depends on: `T-713`, `T-604`, `T-511`; the mandatory pre-WP7 user approval gate must already be satisfied.
   - Acceptance: slide plan covers only the material required to defend the thesis within the official duration and every substantive claim/visual has a traceable source.
 - [ ] DEFERRED `T-721` — Produce the final PowerPoint deck plus speaker material according to `docs/thesis/PRESENTATION_WORKFLOW.md`.
-  - Depends on: `T-720`.
+  - Depends on: `T-720` and the mandatory pre-WP7 user approval gate being satisfied.
   - Output: final `.pptx`, embedded slide speaker notes, separate full spoken Greek script, and repository-backed presentation assets.
   - Acceptance: slides and spoken script agree with the final thesis and frozen evidence; the script is detailed enough for rehearsal/following/reading during preparation.
 - [ ] DEFERRED `T-722` — Validate and rehearse the defense package.
-  - Depends on: `T-721`.
+  - Depends on: `T-721` and the mandatory pre-WP7 user approval gate being satisfied.
   - Acceptance: PowerPoint rendering/media/notes are correct; timing fits official limits with margin; graphs/text are legible; demo/screenshots have a tested fallback; thesis/slides/script numerical and factual consistency checks pass.
 
 ## WP8 — Final audits and completion
 
 - [ ] DEFERRED `T-800` — Perform final bibliography freshness/citation and official-guidance audit before thesis freeze.
-  - Depends on: `T-711` nearing final form.
+  - Depends on: `T-711` nearing final form and the mandatory pre-WP7 user approval gate being satisfied.
   - Acceptance: citations/claims map to current verified citation-ready evidence; any approved bibliography update is synchronized immutably; current submission/defense guidance has been rechecked.
 - [ ] DEFERRED `T-801` — Perform final reproducibility, protocol, results, privacy, licensing, documentation, thesis, and defense-package audit.
-  - Depends on: `T-713`, `T-722`, `T-800`.
+  - Depends on: `T-713`, `T-722`, `T-800`; the mandatory pre-WP7 user approval gate must already be satisfied.
   - Acceptance: no unresolved scientific/provenance/privacy/licensing/delivery blocker remains; active docs agree; thesis and presentation agree with frozen evidence.
 - [ ] DEFERRED `T-802` — Final delivery readiness.
-  - Depends on: `T-801`.
+  - Depends on: `T-801` and the mandatory pre-WP7 user approval gate being satisfied.
   - Acceptance: thesis answers the approved research question with reproducible evidence; the application supports the real workflow; final thesis, PowerPoint, speaker script/notes, and required delivery/demo materials are ready.
 
 ## Task maintenance rule
