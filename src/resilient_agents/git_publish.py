@@ -39,7 +39,8 @@ def _run(repo_root: Path, args: Sequence[str], *, check: bool = True) -> str:
     if check and result.returncode != 0:
         message = result.stderr.strip() or result.stdout.strip() or "git command failed"
         raise PublishError(message)
-    return result.stdout.strip()
+    # Preserve porcelain's leading status column; trim line terminators only.
+    return result.stdout.rstrip("\r\n")
 
 
 def _sha256_file(path: Path) -> str:
