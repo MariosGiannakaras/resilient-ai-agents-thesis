@@ -1,21 +1,64 @@
-T-511 POST-EXECUTION UI VALIDATION LOG
-========================================
+T-511 COMPREHENSIVE UI VALIDATION LOG
+=======================================
 
-MAIN PAGE RENDER:
-- Markdown: ### Getting Started
-- Markdown: **1. Dashboard**
-- Markdown: This main page gives you a snapshot of your system resources and the most recent experiment runs. It's your starting point.
-- Markdown: Welcome to the experiment dashboard for the resilient AI agents thesis.
+TESTING main.py:
+SUCCESS: Rendered cleanly.
+  - Markdown: '### Getting Started'
+  - Markdown: '**1. Dashboard**'
+  - Markdown: "This main page gives you a snapshot of your system resources and the most recent experiment runs. I
+  - Markdown: 'Welcome to the experiment dashboard for the resilient AI agents thesis.\n\nUse the sidebar to navig
+  - Markdown: "✅ **`FINAL-L02-C07`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`"
+  - Markdown: "✅ **`FINAL-L02-C06`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`"
+  - Markdown: "✅ **`FINAL-L02-C05`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`"
+  - Markdown: "✅ **`FINAL-L02-C04`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`"
+  - Markdown: "✅ **`FINAL-L02-C03`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`"
 
-Use the sidebar to navigate to:
-- **New Experiment**: Configure and launch valid experiment campaigns.
-- **Runs**: Monitor active runs, inspect history, and view details.
-- **Compare**: Compare completed runs against each other.
-- **Artifacts**: Generate thesis artifacts and figures.
-- Markdown: ✅ **`FINAL-L02-C07`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`
-- Markdown: ✅ **`FINAL-L02-C06`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`
-- Markdown: ✅ **`FINAL-L02-C05`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`
-- Markdown: ✅ **`FINAL-L02-C04`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`
-- Markdown: ✅ **`FINAL-L02-C03`** — <span style='color:green'>completed</span> — Protocol: `protocol-v1.0`
+TESTING 1_New_Experiment.py:
+SUCCESS: Rendered cleanly.
+  - Markdown: 'Select a validated protocol to configure and launch an experiment campaign.'
+  - Markdown: '**Agents:** f0, c0, r0'
+  - Markdown: '**Layouts:** dev-l01, dev-l02, tune-l01, tune-l02, pilot-l01, pilot-l02, final-l01, final-l02'
+  - Markdown: '**Conditions:** 7'
+  - Markdown: '**Root Seeds:** 8'
+  - Markdown: '**Partitions:**'
+  - Markdown: '- development: 2 layout(s)'
+  - Markdown: '- tuning: 2 layout(s)'
+  - Markdown: '- pilot: 2 layout(s)'
+  - Markdown: '- final: 2 layout(s)'
+  - Warning: Protocol status is `pilot-unfrozen`. Only frozen protocols can be used for final campaigns.
+  - Info: Configure and validate using this pilot/development protocol.
 
-SUCCESS: The application started cleanly without exceptions.
+TESTING 2_Runs.py:
+SUCCESS: Rendered cleanly.
+  - Markdown: 'Monitor active experiments, view historical run metadata, and inspect configurations.'
+  - Markdown: 'Cryptographic checksums and output inventory.'
+  - Markdown: 'Exact parameters used for execution.'
+
+TESTING 3_Compare.py:
+SUCCESS: Rendered cleanly.
+  - Markdown: 'Select completed runs to compare performance, degradation, recovery, and variability\nacross agents
+  - Info: Select at least two runs to compare.
+
+TESTING 4_Artifacts.py:
+SUCCESS: Rendered cleanly.
+  - Markdown: 'Generate figures, tables, CSV/JSON exports, and manifests for the thesis.\nArtifacts are produced f
+  - Markdown: '**final:** 14 completed runs'
+  - Markdown: '**pilot:** 19 completed runs'
+  - Markdown: '**tuning:** 36 completed runs'
+  - Markdown: '**Campaign ID:** pilot-v0.2'
+  - Markdown: '**Protocol:** pilot-v0.2'
+  - Markdown: '**Selected configuration:**'
+  - Markdown: '**Pilot runs:** 14'
+  - Markdown: '**Valid units:** 336'
+  - Markdown: '- `.gitkeep`'
+  - Markdown: '- `artifacts`'
+  - Markdown: '- `freeze-manifest.json`'
+  - Markdown: '- `README.md`'
+  - Markdown: '**Protocol version:** protocol-v1.0'
+  - Markdown: '**Status:** frozen'
+  - Markdown: '**Primary question:** How do frozen nominal and continual tabular Q-learning differ in resistance a
+
+
+SUCCESS: All pages validated successfully without exceptions.
+
+NOTE: Human smoke test remains inherently required for subjective UX factors.

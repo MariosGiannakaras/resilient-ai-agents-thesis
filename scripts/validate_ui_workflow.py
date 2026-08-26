@@ -1,5 +1,4 @@
 import sys
-import json
 from pathlib import Path
 from streamlit.testing.v1 import AppTest
 
@@ -9,33 +8,55 @@ def main():
     if str(repo_root / "src") not in sys.path:
         sys.path.insert(0, str(repo_root / "src"))
         
-    print("Starting T-511 Post-Execution UI Validation...")
+    print("Starting T-511 Comprehensive UI Validation...")
     
-    # We will test the main app
-    app_path = repo_root / "src" / "app" / "main.py"
-    if not app_path.exists():
-        print(f"App not found at {app_path}")
-        return 1
-        
-    at = AppTest.from_file(str(app_path))
-    at.run(timeout=10)
-    
-    assert not at.exception, f"App crashed on startup: {at.exception}"
-    
-    # Save a representation of the UI to a durable log
     log_path = repo_root / "results" / "t511_ui_validation_log.txt"
     log_path.parent.mkdir(parents=True, exist_ok=True)
     
-    with log_path.open("w", encoding="utf-8") as f:
-        f.write("T-511 POST-EXECUTION UI VALIDATION LOG\n")
-        f.write("========================================\n\n")
-        f.write("MAIN PAGE RENDER:\n")
-        for markdown in at.markdown:
-            f.write(f"- Markdown: {markdown.value}\n")
-            
-        f.write("\nSUCCESS: The application started cleanly without exceptions.\n")
+    app_dir = repo_root / "src" / "app"
+    pages_dir = app_dir / "pages"
+    
+    files_to_test = [app_dir / "main.py"]
+    if pages_dir.exists():
+        files_to_test.extend(sorted(pages_dir.glob("*.py")))
         
-    print("UI validation log written to results/t511_ui_validation_log.txt")
+    with log_path.open("w", encoding="utf-8") as f:
+        f.write("T-511 COMPREHENSIVE UI VALIDATION LOG\n")
+        f.write("=======================================\n\n")
+        
+        for file_path in files_to_test:
+            f.write(f"TESTING {file_path.name}:\n")
+            print(f"Testing {file_path.name}...")
+            
+            at = AppTest.from_file(str(file_path))
+            try:
+                at.run(timeout=10)
+            except Exception as e:
+                f.write(f"EXCEPTION DURING EXECUTION: {e}\n\n")
+                print(f"Failed executing {file_path.name}: {e}")
+                return 1
+                
+            if at.exception:
+                f.write(f"APP CRASHED ON STARTUP: {at.exception}\n\n")
+                print(f"App crashed on {file_path.name}: {at.exception}")
+                return 1
+                
+            f.write("SUCCESS: Rendered cleanly.\n")
+            for markdown in at.markdown:
+                f.write(f"  - Markdown: {repr(markdown.value)[:100]}\n")
+            for warning in at.warning:
+                f.write(f"  - Warning: {warning.value}\n")
+            for error in at.error:
+                f.write(f"  - Error: {error.value}\n")
+            for info in at.info:
+                f.write(f"  - Info: {info.value}\n")
+                
+            f.write("\n")
+            
+        f.write("\nSUCCESS: All pages validated successfully without exceptions.\n")
+        f.write("\nNOTE: Human smoke test remains inherently required for subjective UX factors.\n")
+        
+    print(f"UI validation log written to {log_path.relative_to(repo_root)}")
     print("T-511 objective validation successfully simulated.")
     return 0
 

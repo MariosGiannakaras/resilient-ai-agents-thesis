@@ -1,6 +1,7 @@
 {
-  "freeze_time_utc": "2026-08-26T21:44:33.748648+00:00",
+  "freeze_time_utc": "2026-08-26T22:03:47.252828+00:00",
   "protocol_version": "protocol-v1.0",
+  "provenance_archive_ref": "origin/archive/final-campaign-execution",
   "total_final_runs_found": 14,
   "included_runs": 14,
   "runs": [

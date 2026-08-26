@@ -15,7 +15,7 @@ def sha256_file(path: Path) -> str:
 def check_commit_reachable(commit: str, repo_root: Path) -> bool:
     try:
         subprocess.run(
-            ["git", "cat-file", "-e", f"{commit}^{{commit}}"],
+            ["git", "merge-base", "--is-ancestor", commit, "origin/archive/final-campaign-execution"],
             cwd=str(repo_root),
             check=True,
             stdout=subprocess.DEVNULL,
@@ -94,6 +94,7 @@ def main() -> int:
     freeze_manifest = {
         "freeze_time_utc": datetime.now(timezone.utc).isoformat(),
         "protocol_version": "protocol-v1.0",
+        "provenance_archive_ref": "origin/archive/final-campaign-execution",
         "total_final_runs_found": len(evidence_set),
         "included_runs": len(evidence_set),
         "runs": evidence_set

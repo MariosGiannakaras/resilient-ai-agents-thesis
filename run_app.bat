@@ -13,4 +13,5 @@ if %ERRORLEVEL% neq 0 (
 )
 
 REM Run the Streamlit app
-uv run streamlit run src/app/main.py
+set STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+uv run streamlit run src/app/main.py --server.headless=false --browser.gatherUsageStats=false
