@@ -198,6 +198,12 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **Status:** Accepted and implemented by `T-402`; inferential roles and final statistical plan remain unfrozen.
 - **Decision:** Analyze only finalized, integrity-consistent run bundles through one version-controlled core path that semantically reconstructs completed requests, state/checkpoint invariants, matched curves, and schema-v1 metrics. Treat one run/layout/condition/root/agent as the preliminary scientific unit; keep operational attempts and noncompleted runs explicit but outside scientific aggregates; reproduce the entire predeclared metric-sensitivity grid; and write immutable checksummed analysis bundles. Pilot summaries are diagnostic only and cannot support final claims or silently freeze post-pilot statistical choices. Detailed contract lives in `docs/experiments/ANALYSIS_PIPELINE.md`.
 
+## DEC-038 — Durable-main predeclared pilot campaign execution
+
+- **Date:** 2026-08-26
+- **Status:** Accepted for T-410 execution; real outcomes remain pending campaign execution.
+- **Decision:** Expand `pilot-v0.1` deterministically into 36 tuning and 14 pilot whole-experiment children; use one full tuning child as preflight for the declared timeout rule; enforce graceful recorded deadlines inside the runner; select tuning configurations only through semantically reproduced completed bundles and the predeclared ordered score; and automatically commit/push every child from durable `main`. Stable identities plus exact-request/integrity validation provide resume without overwrite. The central stored metric setting is fixed pre-outcome while all 54 sensitivity definitions remain mandatory. Detailed contract lives in `docs/experiments/PILOT_CAMPAIGN_EXECUTION.md`.
+
 ## Pending decisions
 
 Future entries are still required for:

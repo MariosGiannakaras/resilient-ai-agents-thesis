@@ -18,6 +18,7 @@ from .contracts import ProtocolStage, RetentionPolicy
 from .experiment_runner import HeadlessExperimentRequest, HeadlessExperimentRunner
 from .git_publish import validate_finalized_run
 from .pilot_protocol import PilotProtocol
+from .run_bundle import source_provenance
 
 PILOT_CAMPAIGN_SCHEMA_VERSION = 1
 PILOT_ANALYSIS_ID = "PV01-PILOT-ANALYSIS"
@@ -341,6 +342,45 @@ def _git_branch(repo_root: Path) -> str:
     return result.stdout.strip()
 
 
+def _require_durable_main(repo_root: Path) -> None:
+    if _git_branch(repo_root) != "main":
+        raise RuntimeError("pilot-v0.1 execution must publish from durable main")
+    provenance = source_provenance(repo_root)
+    if (
+        provenance.get("git_commit") is None
+        or provenance.get("tracked_changes_present") is not False
+        or provenance.get("untracked_nonoutput_present") is not False
+    ):
+        raise RuntimeError(
+            "pilot-v0.1 execution requires a clean committed source tree"
+        )
+    subprocess.run(
+        ["git", "-C", str(repo_root), "fetch", "origin", "main"],
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=60,
+    )
+    local = subprocess.run(
+        ["git", "-C", str(repo_root), "rev-parse", "HEAD"],
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=10,
+    ).stdout.strip()
+    remote = subprocess.run(
+        ["git", "-C", str(repo_root), "rev-parse", "origin/main"],
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=10,
+    ).stdout.strip()
+    if local != remote:
+        raise RuntimeError(
+            "local main must exactly match origin/main before the campaign"
+        )
+
+
 def _write_state(repo_root: Path, payload: Mapping[str, Any]) -> Path:
     directory = repo_root / "results" / "campaigns" / PILOT_CAMPAIGN_ID
     directory.mkdir(parents=True, exist_ok=True)
@@ -362,8 +402,7 @@ def execute_pilot_campaign(*, repo_root: Path, protocol: PilotProtocol) -> Path:
     payload = protocol.to_dict()
     if protocol.protocol_version != PILOT_CAMPAIGN_ID:
         raise ValueError("campaign driver supports only pilot-v0.1")
-    if _git_branch(root) != "main":
-        raise RuntimeError("pilot-v0.1 execution must publish from durable main")
+    _require_durable_main(root)
     tuning_layouts = tuple(payload["partitions"]["tuning"])
     rule = payload["resource_policy"]["child_timeout_rule"]
     stage_one = stage_one_configurations(protocol)

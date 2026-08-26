@@ -24,6 +24,7 @@ All three paths are required. The request is exact-key/fail-closed JSON with:
 | metric window/tolerance/stability fields | One explicit schema-v1 summary setting; the analysis pipeline derives the full predeclared sensitivity grid from stored curves |
 | `retention_policy` | `events` or `full-trace`; pilot-v0.1 requires events plus persisted episode curves |
 | `auto_publish` | One optional publication only after whole-experiment finalization |
+| `execution_timeout_seconds` | Optional positive wall-clock deadline; mandatory within the protocol bounds for tuning/pilot children |
 
 For tuning/pilot stages the runner rejects dirty/uncommitted source, out-of-partition layouts, non-precommitted seed banks, budgets or hyperparameters outside `pilot-v0.1`, incomplete agent sets, or final-reserve access. Development requests may use smaller explicit fixtures but receive no final/pilot evidentiary status.
 
@@ -44,7 +45,7 @@ Reference/disrupted branches reuse the same root/layout and per-episode environm
 
 An external interruption such as process termination or `KeyboardInterrupt` leaves the bundle in `running` state without `FINALIZED`. Reinvoking the exact request resumes only at a verified root boundary. Source commit/content fingerprints, resolved config, manifest identity, checkpoint schema, and complete valid JSONL logs must still agree. A partially attempted root is deterministically rerun and its earlier events remain visible; completed roots are never rerun. Unsupported mid-root state mutation is not advertised as resumable.
 
-Ordinary execution exceptions finalize the one bundle as `failed` with type, message, traceback, partial events, and the last atomic runner state. Provenance-invalid tuning/pilot starts finalize as `invalid`. Successful execution finalizes exactly one auditable bundle and updates the run index once. If `auto_publish` is true, the existing guarded publisher is called once after all roots and finalization; no seed or episode can publish independently.
+Ordinary execution exceptions finalize the one bundle as `failed` with type, message, traceback, partial events, and the last atomic runner state. A predeclared deadline is checked between roots, episodes, and transitions and produces an explicit `ExperimentTimeoutError`; it never converts partial work into completion. Provenance-invalid tuning/pilot starts finalize as `invalid`. Execution finalizes exactly one auditable bundle and updates the run index once. If `auto_publish` is true, the existing guarded publisher is called once after completed or failed whole-experiment finalization; no seed or episode can publish independently.
 
 ## T-401 validation
 

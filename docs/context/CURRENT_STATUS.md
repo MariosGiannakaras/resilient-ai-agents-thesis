@@ -20,9 +20,9 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-312` passed canonical CI/review and squash-merged through PR #65 (`6f596a3`).
 - `T-400` passed canonical CI/review and squash-merged through PR #66 (`1502bfd`).
 - `T-401` passed canonical CI/review and squash-merged through PR #67 (`8ddfcc2`).
-- `T-402` is complete locally on `feat/reproducible-pilot-analysis`: finalized bundles deterministically reproduce validated scientific units, operational diagnostics, primary/variance summaries, and the complete predeclared metric-sensitivity grid into immutable checksummed outputs.
-- Current task: **`T-410`**, ready after the analysis PR is CI-validated, objectively reviewed, squash-merged, and synchronized to main.
-- Exact next action: finish documentation consistency/objective diff review, push/open the `T-402` PR, complete canonical CI/review/merge, then execute the predefined tuning/pilot campaign and record its feasibility evidence.
+- `T-402` passed canonical CI/review and squash-merged through PR #68 (`34ca10b`).
+- Current task: **`T-410`**, in progress on `feat/execute-pilot-campaign`; the deterministic driver now expands the predefined staged tuning and pilot matrices, enforces measured graceful child deadlines, selects from reproduced evidence, resumes stable run identities, and publishes every whole child from durable `main`.
+- Exact next action: merge the CI-validated campaign-driver PR, synchronize clean `main`, then execute/resume the real tuning/pilot campaign and derive its diagnostic report.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline
