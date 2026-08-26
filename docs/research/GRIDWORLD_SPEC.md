@@ -2,7 +2,7 @@
 
 **Status:** Active; final GridWorld implementation/scientific parameters are not yet selected.
 
-The technical pre-screen in `docs/research/GRIDWORLD_LANDSCAPE_REVIEW.md` retained bounded prototype paths but is not a final ADR. DEC-023 already establishes the shared environment/information/randomness/run architecture in `src/resilient_agents/`; GridWorld work must use those contracts rather than create parallel interfaces.
+The technical pre-screen in `docs/research/GRIDWORLD_LANDSCAPE_REVIEW.md` and completed comparison in `docs/research/GRIDWORLD_PROTOTYPE_COMPARISON.md` provide evidence for, but do not replace, the final `T-211` ADR. DEC-023 already establishes the shared environment/information/randomness/run architecture in `src/resilient_agents/`; GridWorld work must use those contracts rather than create parallel interfaces.
 
 ## Confirmed purpose
 
@@ -10,9 +10,9 @@ The environment must be simple, controlled, and suitable for comparative evaluat
 
 Official examples include observation/data noise, rule changes, and action-execution failures. These remain scope examples rather than a frozen factorial design.
 
-## Current prototype decision to make
+## Candidates evaluated for the implementation decision
 
-The bounded next comparison is between:
+The completed bounded comparison evaluated:
 
 | Strategy | Current role | Required evidence before selection |
 |---|---|---|

@@ -116,12 +116,12 @@ Decision-driving citation-ready evidence currently includes `SRC-70772C0629`, `S
 
 GridWorld remains the confirmed simple controlled environment direction. The final implementation is **not yet selected**.
 
-The technical landscape pre-screen retained two bounded prototype paths:
+The completed bounded comparison evaluated two prototype paths against the same accepted contract and fixed fixture:
 
 1. a small project-owned Gymnasium-compatible environment;
-2. a thin MiniGrid adaptation if inherited semantics do not introduce unnecessary confounds.
+2. a MiniGrid adaptation that translated or bypassed inherited orientation, mission, observation, action, and reward conventions.
 
-The final choice requires the bounded prototype/ADR gate. Current shared contracts in `src/resilient_agents/` should be reused rather than creating a second environment interface.
+Both passed deterministic semantic parity checks on the native target baseline. The project-owned mechanics were smaller and semantically direct, while MiniGrid added dependency/platform/license uncertainty without a demonstrated RQ capability advantage. `GRIDWORLD_PROTOTYPE_COMPARISON.md` records the evidence; `T-211` remains the formal ADR selection gate. Current shared contracts in `src/resilient_agents/` must be reused rather than creating a second environment interface.
 
 ## Models and metrics — current state
 
@@ -161,7 +161,7 @@ The final presentation is a distinct downstream deliverable after thesis stabili
 
 ## Current genuine gates
 
-The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine inventory/runtime baseline is accepted by `T-100`/`T-101` and DEC-031 and PR #55 is merged. `T-102` completes the bounded correction that moves the generated snapshot from squash-discarded branch provenance to a durable merged-main source commit; it is validated on PR #57. Research framing (`T-200`) is the first dependency-valid task and the bounded GridWorld comparison (`T-210`) is also unlocked. Metrics, model selection, pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
+The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline and durable snapshot provenance (`T-100` through `T-102`), research framing (`T-200`), and bounded GridWorld comparison (`T-210`) are complete. The GridWorld ADR (`T-211`) is the next dependency-valid research gate. Metrics, model selection, pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
 
 Deferred, non-blocking inputs remain later supervisor corrections, eventual submission/presentation dates, a current official Word template, exact defense duration/file rules, and optional contextual example theses supplied near writing.
 

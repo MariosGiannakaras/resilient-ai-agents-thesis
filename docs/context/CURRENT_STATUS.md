@@ -12,8 +12,9 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-102` was objectively reviewed, CI-validated, and squash-merged in PR #57 (`48f7124`); the accepted snapshot now cites durable merged-main source provenance.
 - Current work package: **WP2 — Research framing**.
 - `T-200` passed canonical CI and objective diff review, then squash-merged through PR #58 (`67bb423`).
-- Current task: **`T-210`** on `research/gridworld-prototype-comparison`, the bounded minimal-custom versus justified reuse/adaptation GridWorld prototype comparison.
-- Exact next action: checkpoint the passing same-fixture prototypes, run their explicit native-Windows benchmark from a clean source commit, then record the semantic, dependency/license, maintenance, and RQ-fit comparison for T-210.
+- `T-210` is complete locally on `research/gridworld-prototype-comparison`: the same-fixture project-owned Gymnasium and MiniGrid-adaptation prototypes passed nine deterministic parity/invariant tests, and their clean-source native-Windows feasibility benchmark and audit are recorded.
+- Current task: **`T-211`**, ready after the `T-210` PR is CI-validated, objectively reviewed, squash-merged, and synchronized to main.
+- Exact next action: validate the final `T-210` documentation/diff, push the completion checkpoint, open the PR, complete canonical CI/review/merge, then record the GridWorld implementation ADR on a new branch.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline

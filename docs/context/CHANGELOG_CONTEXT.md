@@ -2,6 +2,12 @@
 
 Record only material changes to the project source of truth. Detailed commit-by-commit history remains in Git; accepted decisions remain indexed in `docs/decisions/DECISION_LOG.md`.
 
+## 2026-08-26 — Bounded GridWorld prototype comparison
+
+- Validated project-owned Gymnasium and MiniGrid-adaptation mechanics against the same explicit research/information contract and deterministic fixture on the accepted native Windows runtime.
+- Recorded semantic parity, independent RNG and information-boundary checks, implementation/dependency surface, clean-source headless feasibility, and the MiniGrid v3.1.0 tag-level license inconsistency.
+- Kept formal implementation selection at the explicit `T-211` ADR gate; prototype fixture values and timing remain engineering evidence rather than frozen experiment parameters.
+
 ## 2026-07-29 — Corrected bootstrap and thesis-completion-first scope
 
 - Established the repository as the thesis project source of truth and preserved the official Greek/English thesis identity.
