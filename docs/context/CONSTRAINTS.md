@@ -62,7 +62,7 @@
 - There is no requirement to recover an old codebase.
 - Third-party code is integrated only after source, license, maintenance, security, API, testability, determinism, and suitability review.
 - Every dependency or copied/adapted component requires a pinned version/commit and attribution where applicable.
-- A project-owned minimal Gymnasium-compatible environment remains a valid option and is preferred if it reduces total complexity without scientific loss.
+- DEC-032 selects the project-owned schema-v1 GridWorld using locked Gymnasium 1.3.0; MiniGrid/Pygame remain prototype-only rather than core dependencies.
 - Any selected environment must use the shared contracts rather than introducing a second scientific execution interface.
 
 ## Reproducibility, results, and large files

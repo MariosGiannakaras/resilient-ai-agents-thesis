@@ -1,7 +1,7 @@
 # DEC-032 — Project-Owned Gymnasium GridWorld Implementation
 
 - **Date:** 2026-08-26
-- **Status:** Accepted
+- **Status:** Accepted and implemented by `T-212`/`T-213`
 - **Decision owners:** Implementation team under the evidence-backed autonomous decision boundary
 - **Related requirements:** REQ-RES-002, REQ-RES-008, REQ-ARCH-005, REQ-TEST-001
 - **Related research questions:** Provisional main RQ and secondary questions in `docs/research/RESEARCH_BRIEF.md`
@@ -28,7 +28,7 @@ This selects the implementation strategy only. It does not freeze grid dimension
 - **Implementation surface:** 28 candidate-owned source lines for custom mechanics versus 60 for the MiniGrid translation, excluding their shared 238-line feasibility harness.
 - **Dependency/licensing evidence:** MiniGrid additionally brings Pygame, is not officially supported on Windows, and its v3.1.0 tag has conflicting MIT project metadata versus a malformed/truncated root Apache-2.0 license artifact.
 - **Assumption:** the final bounded research design continues to require transparent four-neighbor controlled mechanics rather than MiniGrid-native orientation, mission, object, or partial-view semantics.
-- **Open uncertainties:** scientific environment parameters remain subject to `T-212`/`T-213`, metrics/agent work, and pilots.
+- **Open uncertainties:** scientific environment values and final matrix remain subject to metrics/agent work and pilots.
 
 ## Alternatives considered
 

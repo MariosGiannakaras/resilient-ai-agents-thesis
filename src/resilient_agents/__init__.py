@@ -11,6 +11,16 @@ from .contracts import (
     RetentionPolicy,
     ScenarioSpec,
 )
+from .gridworld import (
+    GRIDWORLD_SCHEMA_VERSION,
+    GridAction,
+    GridWorldEnvironment,
+    GridWorldGymEnv,
+    ResolvedGridWorldScenario,
+    gridworld_scenario_from_dict,
+    gridworld_scenario_json,
+    gridworld_scenario_to_dict,
+)
 
 __all__ = [
     "Agent",
@@ -22,4 +32,12 @@ __all__ = [
     "ProtocolStage",
     "RetentionPolicy",
     "ScenarioSpec",
+    "GRIDWORLD_SCHEMA_VERSION",
+    "GridAction",
+    "GridWorldEnvironment",
+    "GridWorldGymEnv",
+    "ResolvedGridWorldScenario",
+    "gridworld_scenario_from_dict",
+    "gridworld_scenario_json",
+    "gridworld_scenario_to_dict",
 ]

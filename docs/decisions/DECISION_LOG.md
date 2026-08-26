@@ -168,7 +168,7 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 
 ## DEC-032 — Project-owned Gymnasium GridWorld implementation
 - **Date:** 2026-08-26
-- **Status:** Accepted; implementation and invariant validation follow in `T-212`/`T-213`.
+- **Status:** Accepted and implemented; `T-212`/`T-213` core and invariant validation complete.
 - **File:** `docs/decisions/DEC-032_GRIDWORLD_IMPLEMENTATION.md`.
 - **Decision:** Implement a small project-owned GridWorld using the locked Gymnasium 1.3.0 API through the accepted core contracts. Do not make MiniGrid a core dependency; it adds translation, dependency/platform, and tag-license uncertainty without a demonstrated required RQ capability. This selects the implementation strategy but leaves all scientific environment/protocol parameters unfrozen.
 

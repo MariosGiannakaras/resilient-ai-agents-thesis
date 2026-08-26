@@ -166,4 +166,4 @@ This ordering is not a final selection. It reflects current technical evidence: 
 
 The controlled bibliography baseline, construct-level research framing, accepted native-Windows inventory, bounded implementations, deterministic parity suite, and clean-source headless benchmark are complete. `GRIDWORLD_PROTOTYPE_COMPARISON.md` records the measured result and the MiniGrid tag-level license conflict.
 
-DEC-032 applies the selection rule and chooses the small project-owned Gymnasium path. Only Gymnasium is eligible for promotion to the core runtime dependency during `T-212`; MiniGrid and Pygame remain prototype-only and unapproved for the production path.
+DEC-032 applies the selection rule and chooses the small project-owned Gymnasium path. `T-212` promotes locked Gymnasium 1.3.0 to the core runtime and implements schema v1; MiniGrid and Pygame remain confined to the reproducible prototype dependency group.

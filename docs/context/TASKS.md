@@ -28,15 +28,15 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 ## Resume state
 
-- **Current work package:** WP2 — Research framing
-- **Current task:** `T-212`
-- **State:** `READY` after `T-211` review/merge synchronization
-- **Active branch / PR:** `research/gridworld-implementation-adr`; PR not yet opened.
-- **Last validated point:** `T-210` passed canonical CI and was squash-merged in PR #60 (`ff3b970`). DEC-032 completes `T-211` by selecting a small project-owned environment using the locked Gymnasium 1.3.0 API, with MiniGrid rejected from the core path and all scientific parameters still unfrozen.
-- **Tests already run:** `T-210` canonical CI passed; `T-211` is a documentation/decision-only scope awaiting consistency validation.
-- **Relevant files changed:** DEC-032 and decision index, GridWorld comparison/spec/landscape authorities, active context/status/task/roadmap/open-question/definition-of-done/changelog reconciliation.
-- **Uncommitted work:** accepted ADR and `T-211` completion reconciliation.
-- **Exact next action:** run documentation consistency and diff review, checkpoint/push, open the `T-211` PR, complete canonical CI/review/merge, synchronize main, then begin `T-212` implementation on a new branch.
+- **Current work package:** WP3 — Metrics and agent/model selection
+- **Current task:** `T-300`
+- **State:** `READY` after `T-212`/`T-213` review/merge synchronization
+- **Active branch / PR:** `feat/gridworld-core`; PR not yet opened.
+- **Last validated point:** `T-212`/`T-213` are complete locally. The selected schema-v1 core has exact state/action/reward/lifecycle/change/disturbance/serialization semantics, no UI dependency, evaluator/agent isolation, and a deterministic final invariant suite.
+- **Tests already run:** native Windows locked core sync passed; 10 GridWorld known-answer/invariant tests and 16 directly affected research-architecture tests passed; targeted source/test compilation and lock/diff checks passed.
+- **Relevant files changed:** core GridWorld module/package exports, exact Gymnasium runtime dependency and lockfile, final known-answer/invariant tests, GridWorld/decision/context documentation, and task state.
+- **Uncommitted work:** final documentation and `T-212`/`T-213` completion reconciliation after pushed implementation checkpoint `7a9d487`.
+- **Exact next action:** rerun targeted validation and documentation consistency, review/push the final diff, open the coherent `T-212`/`T-213` PR, complete canonical CI/review/merge, synchronize main, then start `T-300`.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -110,22 +110,22 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-211` — Record the final GridWorld implementation ADR.
   - Depends on: `T-210` and current research framing from `T-200`.
   - Acceptance: one option is selected with evidence, alternatives, consequences, and reopening conditions.
-- [ ] READY `T-212` — Implement the selected GridWorld in `src/resilient_agents/` using the existing environment/information contracts.
+- [x] `T-212` — Implement the selected GridWorld in `src/resilient_agents/` using the existing environment/information contracts.
   - Depends on: `T-211`.
   - Acceptance: explicit state/action/reward/termination/change/disturbance semantics; no UI dependency.
-- [ ] BLOCKED `T-213` — Add known-answer, reference-trace, deterministic replay, disturbance-isolation, termination, and information-leakage tests for the GridWorld.
+- [x] `T-213` — Add known-answer, reference-trace, deterministic replay, disturbance-isolation, termination, and information-leakage tests for the GridWorld.
   - Depends on: `T-212`.
   - Acceptance: environment scientific invariants pass reproducibly.
 
 ## WP3 — Metrics and agent/model selection
 
-- [ ] BLOCKED `T-300` — Finalize operational definitions/estimands for resilience, degradation, recovery, post-change performance, non-recovery, and supporting diagnostics.
+- [ ] READY `T-300` — Finalize operational definitions/estimands for resilience, degradation, recovery, post-change performance, non-recovery, and supporting diagnostics.
   - Depends on: `T-200`, `T-212`.
   - Acceptance: every metric has a clear estimand, interpretation, required inputs, edge-case behavior, and RQ mapping.
 - [ ] BLOCKED `T-301` — Validate all selected metrics against synthetic known-answer trajectories.
   - Depends on: `T-300`.
   - Acceptance: hand-checkable fixtures verify values and non-recovery is never converted into artificial horizon recovery.
-- [ ] BLOCKED `T-310` — Complete source-traceable comparison of scientifically distinct agent/model roles.
+- [ ] READY `T-310` — Complete source-traceable comparison of scientifically distinct agent/model roles.
   - Depends on: `T-100`, `T-200`, `T-212`.
   - Acceptance: inclusion/exclusion matrix covers nominal baseline, continual/adaptive roles, robustness role, and any optional detector/reset decomposition only when scientifically distinct.
 - [ ] BLOCKED `T-311` — Resolve formal citation support for any robust-MDP comparator retained for final use.

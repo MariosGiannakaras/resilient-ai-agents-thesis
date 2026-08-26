@@ -87,20 +87,20 @@ wheels = [
 name = "resilient-ai-agents-thesis"
 version = "0.1.0"
 source = { editable = "." }
+dependencies = [
+    { name = "gymnasium" },
+]
 
 [package.dev-dependencies]
 gridworld-prototype = [
-    { name = "gymnasium" },
     { name = "minigrid" },
 ]
 
 [package.metadata]
+requires-dist = [{ name = "gymnasium", specifier = "==1.3.0" }]
 
 [package.metadata.requires-dev]
-gridworld-prototype = [
-    { name = "gymnasium", specifier = "==1.3.0" },
-    { name = "minigrid", specifier = "==3.1.0" },
-]
+gridworld-prototype = [{ name = "minigrid", specifier = "==3.1.0" }]
 
 [[package]]
 name = "typing-extensions"

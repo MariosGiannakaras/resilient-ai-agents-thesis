@@ -34,7 +34,7 @@ This file defines project-level completion conditions. It is **not** the operati
 
 - [x] Actual target-machine inventory run and accepted.
 - [x] Bounded GridWorld prototype comparison completed and ADR accepted.
-- [ ] Selected GridWorld implementation and uncertainty schema validated with known-answer/reference-trace tests.
+- [x] Selected GridWorld implementation and uncertainty schema validated with known-answer/reference-trace tests.
 - [ ] Main research question and minimal secondary questions/hypotheses approved.
 - [ ] Final model/baseline set justified by citation-ready evidence, environment fit, feasibility, and pilots.
 - [ ] Final resilience/recovery metrics/estimands operationalized and validated on known-answer fixtures.

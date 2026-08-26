@@ -1,6 +1,6 @@
 # GridWorld Specification Workspace
 
-**Status:** Active; DEC-032 selects a project-owned environment using the locked Gymnasium 1.3.0 API, while scientific parameters remain unfrozen.
+**Status:** Schema-v1 core and scientific invariant suite implemented; experiment scenario values remain unfrozen.
 
 The technical pre-screen in `docs/research/GRIDWORLD_LANDSCAPE_REVIEW.md` and completed comparison in `docs/research/GRIDWORLD_PROTOTYPE_COMPARISON.md` support DEC-032's selection of a small project-owned Gymnasium environment. DEC-023 already establishes the shared environment/information/randomness/run architecture in `src/resilient_agents/`; GridWorld work must use those contracts rather than create parallel interfaces.
 
@@ -35,25 +35,33 @@ The final GridWorld must integrate with the accepted core contracts:
 
 These are implementation invariants, not final scientific parameter choices.
 
+## Implemented schema-v1 semantics
+
+- State is an explicit `(x, y)` coordinate in a rectangular grid with explicit start, goal, and obstacle cells; nominal reachability is validated.
+- Actions are the stable `up`, `right`, `down`, and `left` identifiers with explicit canonical cardinal vectors; persistent remapping is represented only by a change event.
+- Boundaries and obstacles are collisions that preserve position. Explicit finite `step`, `collision`, and `goal` rewards apply with goal precedence.
+- Reaching the goal terminates; exhausting the explicit positive `max_steps` truncates only when the goal was not reached.
+- Reset returns the explicit true start state. Transition observations are explicit positions and may undergo a separately seeded position-mislocalization process that never changes truth.
+- No-op action-execution failure is separately seeded and preserves intended versus executed action.
+- Schema v1 supports zero or one exact-step persistent action-remap event. Its declared remap count must match the mapping; onset is emitted once and the regime persists.
+- Evaluator truth is stored as `GroundTruthTransition`; Gymnasium `info` stays empty and agent visibility is controlled only by `InformationPolicy`.
+- Reset requires all `EnvironmentSeeds` channels. Resolved fixed layouts retain the scenario seed for provenance/future versioned generation, Gymnasium receives the environment seed, and the two disturbance seeds drive only their named streams. Episodes cannot be stepped before reset or after termination/truncation.
+- Canonical serialization carries `gridworld_schema_version: 1`, rejects missing/unknown state, and round-trips the resolved scenario.
+- The environment is headless. Evaluator-only debug state exists for trace parity and is not an agent or UI execution path.
+
 ## Scientific specification decisions still required
 
-1. Grid dimensions/layout family and coordinate convention.
-2. Start/goal distribution or fixed scenario sets.
-3. Obstacle/collision semantics.
-4. Final action set and nominal transition semantics.
-5. Reward/penalty semantics and comparability across changes.
-6. Episode termination/truncation rules.
-7. Observation schema and final observability class.
-8. Reset/scenario-generation behavior.
-9. Exact disturbance/change mechanisms.
-10. Severity, onset, duration, persistence, and combination rules.
-11. Training/adaptation/evaluation regime.
-12. Serialization/version identifiers.
-13. Reference traces/known-answer fixtures.
+1. Final grid dimensions, layout/scenario families, and concrete start/goal instances or distributions.
+2. Final reward values, horizons, and comparability rules across retained changes.
+3. Which supported disturbance/change conditions enter primary versus supporting analyses.
+4. Exact probabilities, severities, onset, persistence/combination matrix, and scenario partitions.
+5. Whether formal partial observability is scientifically required; schema v1 otherwise retains position observation plus controlled corruption.
+6. Any versioned scenario generator needed beyond explicit resolved layouts.
+7. Training/adaptation/evaluation regime and final experiment reference scenarios.
 
 No grid size, reward value, severity, changepoint, horizon, or recovery threshold is accepted merely as a convenient default.
 
-## Required validation suite
+## Completed implementation validation
 
 - nominal deterministic reference trace;
 - boundary/invalid-action behavior;
@@ -67,10 +75,12 @@ No grid size, reward value, severity, changepoint, horizon, or recovery threshol
 - hidden regime/change metadata is not exposed to agents unless explicitly permitted;
 - serialization round trip;
 - state isolation between episodes;
-- renderer/trace parity where rendering exists;
-- wrapper parity tests if third-party code is used;
-- headless performance smoke benchmark on the actual target machine before final matrix freeze.
+- evaluator debug-state/trace parity (no renderer is implemented);
+- prototype wrapper parity for the rejected MiniGrid alternative;
+- headless performance smoke benchmark on the actual target machine.
+
+The 10 deterministic core tests in `tests/test_gridworld.py` cover these applicable conditions. The fixed fixture values are test evidence only, not experiment defaults.
 
 ## ADR gate
 
-DEC-032 satisfies the implementation ADR gate after both retained paths were compared on scientific semantic transparency, implementation/dependency cost, deterministic testability, disturbance extensibility, information-access correctness, and measured feasibility. `T-212`/`T-213` must now implement and validate the selected path without treating the prototype fixture as frozen scientific configuration.
+DEC-032 satisfies the implementation ADR gate, and `T-212`/`T-213` implement and validate the selected path. Later scientific parameter selection must use explicit schema-v1 scenarios and may reopen the decision only under DEC-032's recorded triggers.

@@ -10,12 +10,13 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - Canonical concrete ledger: `docs/context/TASKS.md`.
 - `T-100` and `T-101` were accepted and squash-merged in PR #55 (`45e04cd`).
 - `T-102` was objectively reviewed, CI-validated, and squash-merged in PR #57 (`48f7124`); the accepted snapshot now cites durable merged-main source provenance.
-- Current work package: **WP2 — Research framing**.
+- Current work package: **WP3 — Metrics and agent/model selection** after the active GridWorld PR merges.
 - `T-200` passed canonical CI and objective diff review, then squash-merged through PR #58 (`67bb423`).
 - `T-210` passed canonical CI and objective review, then squash-merged through PR #60 (`ff3b970`).
-- DEC-032 completes `T-211` locally on `research/gridworld-implementation-adr`: the selected path is a small project-owned GridWorld using the locked Gymnasium 1.3.0 API through the accepted core contracts; MiniGrid is not a core dependency, and scientific parameters remain unfrozen.
-- Current task: **`T-212`**, ready after the `T-211` PR is CI-validated, objectively reviewed, squash-merged, and synchronized to main.
-- Exact next action: validate/review the `T-211` decision reconciliation, push/open its PR, complete canonical CI/review/merge, then implement the selected GridWorld in `src/resilient_agents/`.
+- DEC-032 completed `T-211`, passed canonical CI/review, and squash-merged through PR #61 (`9df6787`).
+- `T-212`/`T-213` are complete locally on `feat/gridworld-core`: schema-v1 implements explicit validated mechanics/configuration and 10 deterministic known-answer/invariant tests, with all scientific scenario values remaining inputs rather than defaults.
+- Current task: **`T-300`**, ready after the coherent GridWorld PR is CI-validated, objectively reviewed, squash-merged, and synchronized to main.
+- Exact next action: complete targeted validation/documentation review, push/open the `T-212`/`T-213` PR, finish canonical CI/review/merge, then operationalize the resilience estimands.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline

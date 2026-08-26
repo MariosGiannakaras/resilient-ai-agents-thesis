@@ -114,14 +114,14 @@ Decision-driving citation-ready evidence currently includes `SRC-70772C0629`, `S
 
 ## GridWorld — current state
 
-GridWorld remains the confirmed simple controlled environment direction. DEC-032 selects a small project-owned implementation using the locked Gymnasium 1.3.0 API through the accepted core contracts; exact scientific parameters remain unfrozen.
+GridWorld remains the confirmed simple controlled environment direction. DEC-032's project-owned schema-v1 implementation now uses locked Gymnasium 1.3.0 through the accepted core contracts and passes deterministic known-answer/invariant validation; exact experiment scenario values remain unfrozen.
 
 The completed bounded comparison evaluated two prototype paths against the same accepted contract and fixed fixture:
 
 1. a small project-owned Gymnasium-compatible environment;
 2. a MiniGrid adaptation that translated or bypassed inherited orientation, mission, observation, action, and reward conventions.
 
-Both passed deterministic semantic parity checks on the native target baseline. The project-owned mechanics were smaller and semantically direct, while MiniGrid added dependency/platform/license uncertainty without a demonstrated RQ capability advantage. `GRIDWORLD_PROTOTYPE_COMPARISON.md` records the evidence, and DEC-032 applies it to select the project-owned path. Current shared contracts in `src/resilient_agents/` must be reused rather than creating a second environment interface.
+Both prototypes passed deterministic semantic parity checks on the native target baseline. `GRIDWORLD_PROTOTYPE_COMPARISON.md` records why DEC-032 selected the smaller project-owned path. The final core validates explicit layout/action/reward/lifecycle/change/disturbance configuration, independent seeds, versioned serialization, evaluator-only truth, and agent information projection; MiniGrid/Pygame remain prototype-only.
 
 ## Models and metrics — current state
 
@@ -161,7 +161,7 @@ The final presentation is a distinct downstream deliverable after thesis stabili
 
 ## Current genuine gates
 
-The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline and durable snapshot provenance (`T-100` through `T-102`), research framing (`T-200`), bounded GridWorld comparison (`T-210`), and implementation ADR (`T-211`) are complete. Implementing and validating the selected environment (`T-212`/`T-213`) are the next dependency-valid research gates. Metrics, model selection, pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
+The canonical concrete task/dependency list is `docs/context/TASKS.md`. The actual-machine baseline/provenance (`T-100` through `T-102`) and all research-framing/GridWorld tasks (`T-200` through `T-213`) are complete. Metrics (`T-300`) is the first next dependency-valid task, with model-role selection (`T-310`) independently ready. Pilots, application, final experiments/evidence, writing/review, presentation, and audits follow the registry's remaining dependencies and acceptance conditions. Routine PR/CI/merge boundaries do not interrupt the persistent goal; only controlling task/specification requirements for genuinely external/user-only input do.
 
 Deferred, non-blocking inputs remain later supervisor corrections, eventual submission/presentation dates, a current official Word template, exact defense duration/file rules, and optional contextual example theses supplied near writing.
 
