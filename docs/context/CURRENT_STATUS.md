@@ -27,8 +27,9 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-412` completed; protocol is objectively frozen with deterministic seeds and statistical analysis plan.
 - `T-500` corrective audit completed: experiment_manager uses canonical FINALIZATION_MARKER from run_bundle.py, full integrity validation (checksums, marker-manifest agreement, run-id identity), tests use real RunBundle finalization semantics.
 - `T-510` corrective repair completed: Compare/Artifacts pages operate on real data, lifecycle gate protects final reserve, protocol eligibility is validated, and resource telemetry uses the actual schema.
-- Current work package: **WP5 — Experiment management and dashboard**.
-- Current task: **`T-512`**, in progress. Exact next action: Audit Streamlit UI components and add tooltips, descriptions, and the lightweight onboarding flow.
+- `T-511` completed: self-explanatory UX polish and lightweight onboarding verified.
+- Current work package: **WP6 — Final experiments, frozen evidence, and writing package**.
+- Current task: **`T-600`**, in progress. Exact next action: Execute run_final_campaign.py with --allow-final to run the final experiment matrix.
 - No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
 
 ## Accepted repository / Codex baseline

@@ -28,13 +28,13 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 
 ## Resume state
 
-- **Current work package:** WP5 — Experiment management and dashboard
-- **Current task:** `T-512`
+- **Current work package:** WP6 — Final experiments, frozen evidence, and writing package
+- **Current task:** `T-600`
 - **State:** `IN_PROGRESS`
-- **Active branch / PR:** `feature/t-512-ux-polish`
-- **Last validated point:** T-510 Streamlit dashboard repair completed and verified by CI.
-- **Uncommitted work:** Implementing tooltips, concise contextual help, semantic statuses, and lightweight onboarding.
-- **Exact next action:** Audit Streamlit UI components and add tooltips, descriptions, and the onboarding flow as per UI_INFORMATION_ARCHITECTURE.md.
+- **Active branch / PR:** `feature/t-600-final-campaign`
+- **Last validated point:** T-511 UX and end-to-end workflow validation completed successfully.
+- **Uncommitted work:** Launching the final campaign using run_final_campaign.py.
+- **Exact next action:** Execute run_final_campaign.py with --allow-final to run the final experiment matrix, then verify completion.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -162,10 +162,10 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-510` — Implement the bounded local Streamlit dashboard as a thin layer over the same validated core.
   - Depends on: `T-500`.
   - Acceptance: New Experiment actually launches validated core; Runs, Compare, Artifacts operate on real core data with no duplicated logic; root `run_app.bat` implemented; follows `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`.
-- [ ] IN_PROGRESS `T-512` — Complete self-explanatory UX polish and lightweight onboarding after the final dashboard structure is stable.
+- [x] `T-512` — Complete self-explanatory UX polish and lightweight onboarding after the final dashboard structure is stable.
   - Depends on: `T-510`.
   - Acceptance: confirmed self-explanatory UX requirements in `CONFIRMED_REQUIREMENTS.md` and `UI_INFORMATION_ARCHITECTURE.md` are implemented, including concise contextual help/tooltips, pre-run review, consistent semantic statuses, actionable states, proportionate confirmations, and a short skippable/replayable Previous/Next/Skip/Finish onboarding without unnecessary frontend infrastructure.
-- [ ] BLOCKED `T-511` — Validate the complete application/user workflow, UX, truthful state, screenshots, exports, onboarding/help, and end-to-end consistency.
+- [x] `T-511` — Validate the complete application/user workflow, UX, truthful state, screenshots, exports, onboarding/help, and end-to-end consistency.
   - Depends on: `T-512`.
   - Acceptance: the intended user can understand the primary controls/statuses without a separate manual, configure and execute an approved multi-seed experiment, monitor it, interpret common user-facing states, inspect history/results, compare agents, export artifacts, and complete/skip/replay onboarding; no fake progress/metrics/logs; desktop/laptop workflows are coherent, polished, and presentation-ready.
   - Handoff: satisfying this task marks the application complete for the intended thesis workflow and unlocks the frozen final experiment campaign.
