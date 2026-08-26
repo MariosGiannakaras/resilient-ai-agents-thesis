@@ -1,6 +1,6 @@
 # GridWorld Landscape Review
 
-**Status:** Technical pre-screen complete; the bounded prototypes are compared in `GRIDWORLD_PROTOTYPE_COMPARISON.md`, and no implementation is selected before the `T-211` ADR.
+**Status:** Technical pre-screen and bounded comparison complete; DEC-032 selects the project-owned Gymnasium strategy.
 **Review date:** 2026-08-03  
 **Scope:** current technical candidates for the controlled uncertainty/resilience environment required by the thesis.
 
@@ -166,4 +166,4 @@ This ordering is not a final selection. It reflects current technical evidence: 
 
 The controlled bibliography baseline, construct-level research framing, accepted native-Windows inventory, bounded implementations, deterministic parity suite, and clean-source headless benchmark are complete. `GRIDWORLD_PROTOTYPE_COMPARISON.md` records the measured result and the MiniGrid tag-level license conflict.
 
-The remaining gate is `T-211`: apply the selection rule in an explicit ADR with consequences and reopening conditions. Prototype-only dependencies are not approved for the thesis core merely because they were evaluated.
+DEC-032 applies the selection rule and chooses the small project-owned Gymnasium path. Only Gymnasium is eligible for promotion to the core runtime dependency during `T-212`; MiniGrid and Pygame remain prototype-only and unapproved for the production path.

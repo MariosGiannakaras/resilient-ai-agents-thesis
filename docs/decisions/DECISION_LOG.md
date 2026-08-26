@@ -166,12 +166,18 @@ Use this file as the current project-wide decision index. Detailed dedicated dec
 - **File:** `docs/decisions/DEC-031_TARGET_MACHINE_BASELINE.md`.
 - **Decision:** Accept the actual Windows target-machine capability report; use native Windows CPython 3.12 via the locked `uv` environment; require CPU-compatible execution; do not infer a validated scientific-compute backend from the Radeon display adapter; use compatible Windows Git/Git LFS for LFS-sensitive operations.
 
+## DEC-032 — Project-owned Gymnasium GridWorld implementation
+- **Date:** 2026-08-26
+- **Status:** Accepted; implementation and invariant validation follow in `T-212`/`T-213`.
+- **File:** `docs/decisions/DEC-032_GRIDWORLD_IMPLEMENTATION.md`.
+- **Decision:** Implement a small project-owned GridWorld using the locked Gymnasium 1.3.0 API through the accepted core contracts. Do not make MiniGrid a core dependency; it adds translation, dependency/platform, and tag-license uncertainty without a demonstrated required RQ capability. This selects the implementation strategy but leaves all scientific environment/protocol parameters unfrozen.
+
 ## Pending decisions
 
 Future entries are still required for:
 
 - final research question and hypotheses;
-- final GridWorld implementation/scientific specification;
+- final GridWorld scientific parameters and validated specification;
 - final uncertainty taxonomy/severities/timing;
 - exact selected models/baselines, including whether robust-MDP comparison receives formal evidence support;
 - final primary/secondary/diagnostic metrics and statistical plan;

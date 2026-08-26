@@ -29,14 +29,14 @@ A task is checked only when its acceptance condition is satisfied. Partial work 
 ## Resume state
 
 - **Current work package:** WP2 — Research framing
-- **Current task:** `T-211`
-- **State:** `READY` after `T-210` review/merge synchronization
-- **Active branch / PR:** `research/gridworld-prototype-comparison`; PR not yet opened.
-- **Last validated point:** `T-210` is complete locally. Both candidates passed nine deterministic parity/invariant tests, and the clean-source native-Windows benchmark plus semantic, dependency, maintenance, licensing, and RQ-fit audit are recorded in `GRIDWORLD_PROTOTYPE_COMPARISON.md`.
-- **Tests already run:** native Windows locked sync/imports passed; `uv run --locked --group gridworld-prototype python -m unittest tests.test_gridworld_prototypes -v` passed 9 tests; prototype/test compilation passed; the clean-source benchmark at `a22508d` completed 5 repeats of 4,000 transitions per candidate.
-- **Relevant files changed:** bounded prototypes/fixtures/comparison runner, targeted tests, prototype-only locked dependencies and CI scope, comparison/research/context documentation, and task state.
-- **Uncommitted work:** final `T-210` comparison and task-state reconciliation only.
-- **Exact next action:** validate documentation and the final diff, checkpoint/push, open the `T-210` PR, use canonical CI and objective review, squash-merge, synchronize main, then start `T-211` on a new branch.
+- **Current task:** `T-212`
+- **State:** `READY` after `T-211` review/merge synchronization
+- **Active branch / PR:** `research/gridworld-implementation-adr`; PR not yet opened.
+- **Last validated point:** `T-210` passed canonical CI and was squash-merged in PR #60 (`ff3b970`). DEC-032 completes `T-211` by selecting a small project-owned environment using the locked Gymnasium 1.3.0 API, with MiniGrid rejected from the core path and all scientific parameters still unfrozen.
+- **Tests already run:** `T-210` canonical CI passed; `T-211` is a documentation/decision-only scope awaiting consistency validation.
+- **Relevant files changed:** DEC-032 and decision index, GridWorld comparison/spec/landscape authorities, active context/status/task/roadmap/open-question/definition-of-done/changelog reconciliation.
+- **Uncommitted work:** accepted ADR and `T-211` completion reconciliation.
+- **Exact next action:** run documentation consistency and diff review, checkpoint/push, open the `T-211` PR, complete canonical CI/review/merge, synchronize main, then begin `T-212` implementation on a new branch.
 
 Whenever a task becomes `IN_PROGRESS`, replace this section with:
 
@@ -107,10 +107,10 @@ Codex must assume a session can stop unexpectedly.
 - [x] `T-210` — Complete bounded GridWorld prototype comparison (minimal custom implementation versus justified reuse/adaptation candidates).
   - Depends on: `T-102`.
   - Acceptance: prototypes/audit compare semantics, determinism, seeding, disturbance extensibility, testability, maintenance/license/dependency cost, and fit to the RQ.
-- [ ] READY `T-211` — Record the final GridWorld implementation ADR.
+- [x] `T-211` — Record the final GridWorld implementation ADR.
   - Depends on: `T-210` and current research framing from `T-200`.
   - Acceptance: one option is selected with evidence, alternatives, consequences, and reopening conditions.
-- [ ] BLOCKED `T-212` — Implement the selected GridWorld in `src/resilient_agents/` using the existing environment/information contracts.
+- [ ] READY `T-212` — Implement the selected GridWorld in `src/resilient_agents/` using the existing environment/information contracts.
   - Depends on: `T-211`.
   - Acceptance: explicit state/action/reward/termination/change/disturbance semantics; no UI dependency.
 - [ ] BLOCKED `T-213` — Add known-answer, reference-trace, deterministic replay, disturbance-isolation, termination, and information-leakage tests for the GridWorld.
