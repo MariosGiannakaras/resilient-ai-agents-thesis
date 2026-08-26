@@ -27,13 +27,15 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 - `T-412` completed; protocol is objectively frozen with deterministic seeds and statistical analysis plan.
 - `T-500` corrective audit completed: experiment_manager uses canonical FINALIZATION_MARKER from run_bundle.py, full integrity validation (checksums, marker-manifest agreement, run-id identity), tests use real RunBundle finalization semantics.
 - `T-510` corrective repair completed: Compare/Artifacts pages operate on real data, lifecycle gate protects final reserve, protocol eligibility is validated, and resource telemetry uses the actual schema.
-- `T-511` completed: self-explanatory UX polish and lightweight onboarding verified.
-- `T-601` completed: Final-run completeness validated and frozen in `results/thesis-final/freeze-manifest.json`.
-- `T-602` completed: Frozen statistical analysis and sensitivity diagnostics executed.
-- `T-603` completed: Generated final figures, tables, and artifacts from frozen evidence.
-- Current work package: **WP6 — Final experiments, frozen evidence, and writing package**.
-- Current task: **`T-604`**, in progress. Exact next action: Freeze the thesis/defense evidence package into a distributable archive.
-- No scientific RQ/environment/model/metric/protocol choice was frozen by the hardware baseline.
+- `T-511` completed: post-execution UI validation verified and explicitly logged.
+- `T-600` completed: 14 execution commits preserved durably in `archive/final-campaign-execution`.
+- `T-601` completed: freeze manifest validates exact file bytes and provenance reachability.
+- `T-602` completed: reproducible analysis generated exactly 896 valid units.
+- `T-603` completed: generated artifacts and primary metric figures.
+- `T-604` completed: evidence package constructed with claim-to-result mapping.
+- Current work package: **WP7 — Thesis writing, review, and defense presentation** (DEFERRED).
+- Current task: **`T-700`**, deferred. Exact next action: Hand off to the human user for thesis drafting.
+- All autonomous execution work is completed.
 
 ## Accepted repository / Codex baseline
 

@@ -15,7 +15,9 @@ Following the results in docs/experiments/PILOT_REPORT_V0_2.md and the formal de
   - F0 (frozen reference)
   - C0 (adaptive role with online post-change learning)
 - **Conditions**: 7 conditions (nominal, 2 action remaps, 2 action failures, 2 observation corruptions)
-- **GridWorld Layouts**: 2 distinct layouts (pilot-l01, pilot-l02), retaining layout blocking due to observed F0 variance.
-- **Evaluation Matrix**: 16 distinct root seeds per condition per layout, totaling 32 scientific units per agent-condition pair.
-- **Tuning**: Reuses the validated F0 tuning configuration from pilot-v0.1; no final tuning is performed.
+- **GridWorld Layouts**: 2 distinct layouts (`final-l01`, `final-l02`), retaining layout blocking due to observed F0 variance.
+- **Evaluation Matrix**: 32 distinct root seeds per condition per layout, totaling 64 scientific units per agent-condition pair.
+- **Tuning**: Reuses the validated F0 tuning configuration from `pilot-v0.1` (`reuse-v0.1-f0-selection-no-retuning`); no final tuning is performed.
 - **Recovery & Metrics**: Recovery is defined without a single binary cutoff. Non-recovery is censored at the horizon with a null recovery time. The primary analysis will report component curve estimands and operational stability rather than a single collapsed resilience score.
+
+*(Note: Prior to final execution, this documentation historically referenced `pilot-l01`/`pilot-l02` and 16 roots. It has been reconciled here to reflect the actual frozen machine-readable authority `protocol-v1.0.json` which governed the accepted `FINAL-*` runs. No post-hoc scientific alteration occurred.)*
