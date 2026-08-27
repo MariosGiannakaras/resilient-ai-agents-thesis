@@ -14,13 +14,25 @@ This file is intentionally compact. `docs/context/TASKS.md` is the canonical tas
 
 ## Active pre-WP7 refinement
 
-- Decisions: `DEC-042` scientific refinement; historical `DEC-043` web-frontend exploration; superseding `DEC-044` native NiceGUI application; `DEC-045` visual analytics.
+- Decisions: `DEC-042` scientific refinement; historical `DEC-043` web-frontend exploration; superseding `DEC-044` native NiceGUI application; `DEC-045` visual analytics; `DEC-046` novice-first compact UX/presentation contract.
 - Single branch: `feat/pre-wp7-protocol-v1.1-ui-rebuild`.
 - Single draft integration PR: #92. Do not create parallel implementation branches or merge early.
 - Trackers: #87 master; #88 scientific; #89 runtime; #90 UI; #91 screenshots/CI/packaging.
 - `T-513` governance is complete; master tracker remains **1/8** until another whole milestone satisfies acceptance.
-- Current scientific task: `T-520 IN_PROGRESS` — complete and validate D0 integration into the versioned headless runner path.
+- Current task: `T-520 IN_PROGRESS` — complete and validate D0 integration into the versioned headless runner path.
 - NiceGUI migration work exists early on the same branch but does not make blocked T-530/T-531/T-532 complete.
+
+## Continuity / interruption audit
+
+A repository audit was performed specifically to detect work left half-finished by chat interruption or later instructions. Current findings are now durable in #87 and this file:
+
+1. **D0 runner integration is unfinished, not lost.** Standalone D0, serialization, episode-preserving deployment and an initial v1.1 runner exist. A development-only `V11DevelopmentProtocol` adapter was added because the historical `PilotProtocol` correctly rejects D0; the historical validator must not be weakened. Focused v1.1 runner tests and a current-head green CI run are still required before T-520 can close.
+2. **The framework migration is superseded cleanly at the source level.** The temporary React/Vite direction is retained only in DEC-043 history; active application files are NiceGUI. Historical Streamlit page files are removed from the active implementation. Any stale wording in docs/issues is cleanup work, not an alternative implementation path.
+3. **The NiceGUI shell is intentionally incomplete.** It already contains a read model, five-page shell, historical v1.0 Plotly views, agent infographics and an empty ECharts live surface. Real runtime DTOs, live GridWorld, real live charts, full experiment configurator, final novice-first help/error states, screenshots and packaging remain explicit future acceptance work.
+4. **Latest current-head CI did not reach Python compile/tests.** It failed at documentation validation because the compact Codex prompt lost required literal execution invariants. The prompt has now been repaired; a new current-head CI result must prove the scientific/application checkpoint rather than relying on earlier run 266.
+5. **Master issue #87 had stale Streamlit wording.** It has been reconciled to NiceGUI/DEC-044/045/046 and now contains a dedicated continuity checklist so future sessions cannot silently skip these unfinished items.
+
+No evidence was found of a second active React/Vite frontend project remaining in the branch. The remaining incomplete work is tracked explicitly rather than being assumed complete.
 
 ### Scientific direction
 
@@ -41,6 +53,19 @@ This file is intentionally compact. `docs/context/TASKS.md` is the canonical tas
 - `src/resilient_agents/` stays headless/UI-independent. T-530 provides the truthful Python active-run/runtime service and read-only GridWorld observer.
 - Unsupported lifecycle controls remain explicit. Visualization cadence never changes scientific timing/actions/RNG.
 - Historical runs without retained step trace display replay unavailable; never synthesize a trajectory.
+
+### Novice-first UX direction
+
+Per `DEC-046`, the application must be understandable by a non-programmer with no prior RL/model/configuration knowledge while remaining scientifically precise.
+
+- Use plain-language labels with technical IDs as secondary reproducibility detail.
+- Explain agents, uncertainty conditions, metrics, units, ranges and setting consequences through concise helper text, info icons/tooltips and progressive disclosure.
+- Show a readable resolved configuration before launch and actionable explanations for invalid/disallowed combinations.
+- Use consistent text + icon + semantic color statuses; color is never the sole signal.
+- Keep the interface modern and compact rather than sparse/oversized; use cards/tables/tabs/drawers/expanders to preserve density without hiding required information.
+- Use restrained micro-interactions and purposeful animations for hover/focus/selection/status/chart/GridWorld feedback; animation must never imply scientific progress or alter execution timing.
+- Keep onboarding skippable/replayable, but every page must remain understandable without it.
+- Empty/loading/error/disabled/unavailable states must say what happened and what the user can do next.
 
 ### Visual analytics direction
 
@@ -82,8 +107,12 @@ Current-head lock/import/tests/browser render must pass before this checkpoint i
 
 ## Still intentionally unfrozen
 
-D0 planning parameters, candidate `protocol-v1.1` freeze, fresh v1.1 final layouts/seeds, new final evidence, full active-run runtime behavior, final UI/screenshots and Windows packaged delivery remain intentionally unfrozen/unaccepted until their explicit dependency and validation gates pass.
+D0 planning parameters, candidate `protocol-v1.1` freeze, fresh v1.1 final layouts/seeds, new final evidence, full active-run runtime behavior, final novice-first UI/screenshots and Windows packaged delivery remain intentionally unfrozen/unaccepted until their explicit dependency and validation gates pass.
 
 ## Exact next action
 
-Inspect PR #92 current-head checks after these documentation corrections; then complete current-head D0/runner validation for `T-520`. Proceed only through dependency-valid `T-521` and `T-530`; live GridWorld/charts may attach only to real runtime observer data. Do not start `T-700+`.
+1. Obtain a current-head CI run after the repaired Codex prompt and confirm documentation validation now reaches compile/locked environment/tests.
+2. Add focused `V11DevelopmentProtocol`/`V11ExperimentRunner` tests and complete T-520 acceptance without changing historical `PilotProtocol` semantics.
+3. Reconcile #88/TASKS after T-520 evidence is green, then proceed dependency-valid T-521/T-530.
+4. Live GridWorld/charts may attach only to real T-530 runtime observer data.
+5. Do not start `T-700+`.
