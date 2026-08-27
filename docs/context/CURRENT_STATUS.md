@@ -17,8 +17,9 @@
 - Decisions: DEC-042 scientific refinement; DEC-043 historical/superseded React/Vite exploration; DEC-044 NiceGUI native application; DEC-045 visual analytics; DEC-046 novice-first compact UX; DEC-047 broadened agent comparison and human-readable naming.
 - Single branch/PR: `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft #92. No parallel implementation branch or early merge.
 - Trackers: #87 master; #88 scientific; #89 runtime; #90 UI; #91 screenshots/CI/packaging.
-- Progress: **2/8** major milestones. `T-520` and `T-523` are complete. Current scientific task is **`T-521 READY`**; `T-522` remains blocked on T-521.
-- PR CI run **396** validated the broadened agent implementation checkpoint: documentation consistency, committed JSON validation, Python compile, locked environment, complete **143-test** suite including SARSA/Dyna-Q/five-strategy/reference tests, and bibliography integrity.
+- Progress: **2/8** major milestones. `T-520`, `T-523` and **`T-521` are complete**. Current scientific task is **`T-522 READY`**.
+- PR CI run **409** validated the T-521 checkpoint: documentation consistency, committed JSON validation, Python compilation, locked environment, complete tests including candidate protocol/configuration runner/fresh-reserve/paired-statistics checks, and bibliography integrity.
+- Upstream `ThesisBibliography` now contains the strengthened agent-strategy theory package: Watkins–Dayan Q-learning, Sutton Dyna, Khetarpal continual RL and Padakandla dynamically varying RL are source-analysed/citation-ready; Rummery–Niranjan is retained conservatively as historical-lineage metadata where reliable complete-text verification was unavailable.
 
 ## Thesis framing
 
@@ -34,29 +35,42 @@ DEC-047 defines five main candidate strategies:
 4. **Dyna-Q** — online model learning plus planning over experienced state-action transitions, without Dyna-Q+ recency/untried-action bonuses.
 5. **Dyna-Q+** — Dyna planning plus directed re-exploration of long-untried actions; historical technical identity D0.
 
-The set isolates no adaptation, off-policy model-free adaptation, on-policy model-free adaptation, learned-model planning, and planning plus explicit change-seeking re-exploration. `T-523` implemented and validated SARSA and plain Dyna-Q with deterministic/serializable state, the same agent-visible information boundary, episode persistence, focused algorithmic tests and five-strategy runner/configuration identities.
-
 **Reference only:** deterministic Random Agent is a lower scale/correctness fixture. A nominal/fully-informed planner may only be a clearly privileged analytical/debug reference. Neither belongs in fair rankings.
 
 **Robust branch:** historical R0 remains negative/diagnostic pilot evidence. A redesigned Robust Planner can become a conditional sixth comparator only if a predeclared non-final nominal-viability/fairness/runtime gate passes; unchanged R0 is not reinstated.
 
-Preserve the validated Fixed/Adaptive Q-Learning base values unless an explicit evidence-backed amendment is made: alpha `0.5`, gamma `0.96875`, epsilon `0.125`, 512 nominal training episodes/layout, 16 pre-change, 32 post-change, horizon 48 and current target 32 paired final roots.
+## Completed T-521 candidate protocol
 
-Five-strategy matrix feasibility is bounded but not yet a runtime claim: 888,832 environment episodes for 4 layouts × 7 conditions × 32 roots versus 315,392 historical v1.0 episodes, about 2.82× before Dyna planning overhead. Real planning cost must be measured on non-final runs before freeze.
+The checked-in `configs/protocols/protocol-v1.1.json` is an explicit **candidate**, not a frozen/final protocol. Its separate fail-closed `V11CandidateProtocol` loader preserves historical `PilotProtocol` semantics and blocks pilot/final execution.
 
-## T-521 scope
+T-521 now provides:
 
-T-521 now owns the authoritative candidate `protocol-v1.1` definition before any selection evidence is inspected:
+- the five validated main strategies with user-facing names and stable technical identities;
+- preserved validated Q baseline: alpha `0.5`, gamma `0.96875`, epsilon `0.125`, 512 nominal training episodes/layout;
+- bounded non-final configuration catalog: two SARSA alpha candidates, two Dyna-Q planning budgets, four Dyna-Q+ planning/kappa combinations; F0/C0 remain fixed baselines;
+- four structurally controlled fresh held-out v1.1 final layouts and a fresh precommitted 32-root final bank, disjoint from development/tuning and historical tuning/final reserves;
+- seven single-factor conditions using structural remap IDs `action-remap-2-swap` and `action-remap-4-cycle`;
+- stable per-configuration and protocol SHA-256 provenance in the candidate runner;
+- tuning restricted to the complete predeclared root bank and nominal + two persistent-remap conditions, with no single-run/best-seed selection;
+- primary cumulative deficit, immediate degradation and terminal performance; recovery remains secondary/sensitivity and no composite resilience score exists;
+- predeclared mechanistic paired contrasts with equal-weight layout aggregation inside each root and deterministic 95% percentile-bootstrap CIs over root-level effects (10,000 resamples, fixed analysis seed);
+- explicit final-outcome access block until T-522 freeze plus later application/user gates.
 
-- five validated main strategies and stable human-readable/technical configuration identities;
-- exact small predeclared SARSA fairness-tuning and Dyna/Dyna-Q+ planning surfaces only where scientifically justified;
-- four fresh held-out final layouts and a fresh precommitted final seed bank;
-- seven single-factor conditions with structural remap IDs `action-remap-2-swap` and `action-remap-4-cycle`;
-- paired effects, 95% confidence intervals, explicit n and layout-aware aggregation;
-- primary cumulative deficit, immediate degradation and terminal performance/gap; recovery secondary/sensitivity;
-- no best-seed, best-final switching, opaque composite score or post-hoc favorable threshold.
+Candidate status **does not authorize final evidence**.
 
-Candidate status never authorizes final evidence. T-522 later uses only predeclared non-final evidence to freeze/amend/reject strategies and settings.
+## T-522 scope
+
+`T-522` may use only predeclared **non-final** development/tuning evidence to select/freeze/amend/reject candidate configurations. It must:
+
+- compare complete repeated/paired configuration evidence rather than single runs or best seeds;
+- retain failed/interrupted/poor/non-recovery outcomes transparently;
+- measure Dyna planning update counts, wall time and artifact/runtime cost on the validated thesis machine before freeze;
+- decide SARSA and Dyna/Dyna-Q+ retained configuration identities using the predeclared deterministic selection/tie rules;
+- evaluate a redesigned Robust Planner only through its separate bounded gate if that gate is actually implemented and scientifically worthwhile; otherwise retain historical R0 as negative evidence only;
+- inspect no v1.1 final-layout/final-seed outcomes;
+- produce an explicit freeze/amend/reject record before any final-v1.1 execution can become possible.
+
+If T-522 requires execution on the unavailable physical thesis machine in the current remote session, record that external execution boundary and continue the next dependency-valid repository task (`T-530`) rather than fabricating or moving the scientific runs into CI.
 
 ## User-facing naming and application
 
@@ -72,14 +86,14 @@ After acceptance, approved experiments run directly from the desktop application
 
 ## Bibliography and testing baseline
 
-`MariosGiannakaras/ThesisBibliography` remains canonical; accepted immutable thesis-repo import is `bibliography-integration-v3`. New research sources continue through the bibliography repository's canonical intake and are imported only through a later versioned synchronization.
+`MariosGiannakaras/ThesisBibliography` remains canonical. The upstream theory package has been strengthened and verified; it must enter the thesis repository only through the established versioned bibliography synchronization workflow, never by hand-copying formal citation evidence.
 
-Testing remains risk-based/proportional; PR CI is the canonical full-suite guard. Use progressive reading and targeted checks during implementation rather than coverage expansion.
+Testing remains risk-based/proportional; PR CI is the canonical full-suite guard. Experiment matrices are scientific work, not CI test matrices.
 
 ## Still intentionally unfrozen
 
-Exact T-521 tuning/fairness surfaces, candidate-v1.1 schema/fresh layouts/seeds/statistical implementation, T-522 retained strategy/settings outcome, conditional Robust Planner decision, actual Dyna planning runtime, new final evidence, active-run runtime behavior, final novice-first UI/screenshots/native package, current official WP7 formatting/defense rules and final thesis/presentation deliverables remain unfrozen until their explicit gates pass.
+T-522 retained strategy/settings outcomes, conditional Robust Planner decision, measured Dyna planning runtime, frozen v1.1 protocol, new final evidence, active-run runtime behavior, final novice-first UI/screenshots/native package, current official WP7 formatting/defense rules and final thesis/presentation deliverables remain unfrozen until their explicit gates pass.
 
 ## Exact next action
 
-Execute **T-521** as one bounded scientific scope. Define and implement the authoritative five-strategy candidate `protocol-v1.1`, predeclared bounded settings/fairness rules, fresh held-out layouts/seeds, configuration identity/provenance and paired statistical support. Do not inspect/generate final-v1.1 outcomes and do not start any `T-700+` task.
+Execute **T-522** only on predeclared non-final evidence. If the validated thesis-machine execution required for that gate is unavailable in this session, do not substitute GitHub-hosted CI; record the blocker and proceed with dependency-valid **T-530** runtime-service implementation on the same branch/PR. Do not inspect/generate final-v1.1 outcomes and do not start any `T-700+` task.
