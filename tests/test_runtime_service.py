@@ -9,11 +9,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from resilient_agents.contracts import ProtocolStage  # noqa: E402
 from resilient_agents.runtime_observer import RuntimeTelemetrySink  # noqa: E402
-from resilient_agents.runtime_service import (  # noqa: E402
-    RuntimeService,
-    RuntimeStatus,
-)
+from resilient_agents.runtime_service import RuntimeService, RuntimeStatus  # noqa: E402
+from resilient_agents.v11_protocol import load_v11_candidate_protocol  # noqa: E402
+
+PROTOCOL_PATH = ROOT / "configs" / "protocols" / "protocol-v1.1.json"
+PROTOCOL = load_v11_candidate_protocol(PROTOCOL_PATH)
+DEV_ROOTS = PROTOCOL.root_seeds_for(ProtocolStage.DEVELOPMENT)
 
 
 def minimal_request(run_id: str) -> dict[str, object]:
@@ -22,7 +25,7 @@ def minimal_request(run_id: str) -> dict[str, object]:
         "stage": "development",
         "layout_id": "dev-l01",
         "condition_id": "nominal",
-        "root_seeds": [11, 22],
+        "root_seeds": list(DEV_ROOTS),
         "agent_ids": ["f0"],
         "q_learning_rate": 0.5,
         "discount_factor": 0.96875,
@@ -43,17 +46,15 @@ def minimal_request(run_id: str) -> dict[str, object]:
 
 
 class RuntimeServiceTests(unittest.TestCase):
-    def _service_with_protocol(self, root: Path) -> tuple[RuntimeService, Path]:
-        protocol = root / "protocol.json"
-        protocol.write_text("{}\n", encoding="utf-8")
-        return RuntimeService(root), protocol
+    def _service(self, root: Path) -> RuntimeService:
+        return RuntimeService(root)
 
     def test_queue_cancel_restart_is_capability_based_and_persistent(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            service, protocol = self._service_with_protocol(root)
+            service = self._service(root)
             queued = service.enqueue_v11_candidate(
-                protocol_path=protocol,
+                protocol_path=PROTOCOL_PATH,
                 request=minimal_request("RUNTIME-QUEUE"),
             )
             self.assertEqual(queued.status, RuntimeStatus.QUEUED)
@@ -76,12 +77,24 @@ class RuntimeServiceTests(unittest.TestCase):
             reopened = RuntimeService(root).get_run("RUNTIME-QUEUE")
             self.assertEqual(reopened.status, RuntimeStatus.INTERRUPTED)
 
+    def test_invalid_candidate_request_fails_before_runtime_record_is_created(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            request = minimal_request("RUNTIME-INVALID")
+            request["root_seeds"] = list(DEV_ROOTS[:-1])
+            with self.assertRaises(ValueError):
+                RuntimeService(root).enqueue_v11_candidate(
+                    protocol_path=PROTOCOL_PATH,
+                    request=request,
+                )
+            self.assertFalse((root / "results" / "runtime" / "RUNTIME-INVALID").exists())
+
     def test_progress_comes_from_runner_state_and_latest_real_telemetry(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            service, protocol = self._service_with_protocol(root)
+            service = self._service(root)
             snapshot = service.enqueue_v11_candidate(
-                protocol_path=protocol,
+                protocol_path=PROTOCOL_PATH,
                 request=minimal_request("RUNTIME-PROGRESS"),
             )
             telemetry = Path(snapshot.telemetry_path or "")
@@ -102,8 +115,8 @@ class RuntimeServiceTests(unittest.TestCase):
                     {
                         "schema_version": 1,
                         "resume_generation": 0,
-                        "completed_root_seeds": [11],
-                        "root_results": [{"root_seed": 11}],
+                        "completed_root_seeds": [DEV_ROOTS[0]],
+                        "root_results": [{"root_seed": DEV_ROOTS[0]}],
                     }
                 )
                 + "\n",
@@ -112,8 +125,11 @@ class RuntimeServiceTests(unittest.TestCase):
 
             current = service.get_run("RUNTIME-PROGRESS")
             self.assertEqual(current.progress.completed_roots, 1)
-            self.assertEqual(current.progress.total_roots, 2)
-            self.assertEqual(current.progress.fraction_complete, 0.5)
+            self.assertEqual(current.progress.total_roots, len(DEV_ROOTS))
+            self.assertEqual(
+                current.progress.fraction_complete,
+                1 / len(DEV_ROOTS),
+            )
             self.assertEqual(current.progress.latest_phase, "post-change")
             self.assertEqual(current.progress.latest_episode_index, 4)
             self.assertEqual(current.progress.latest_step, 7)
