@@ -1,26 +1,27 @@
 # DEC-042 — Pre-WP7 protocol v1.1 and application refinement
 
 **Date:** 2026-08-27  
-**Status:** Accepted user-directed refinement; implementation in progress
+**Status:** Accepted user-directed scientific/application refinement; implementation in progress. Application-framework details in the original decision are superseded by DEC-044/045/046.
 
 ## Context
 
-The user has not accepted the existing application, agent set, experiment design, runs/results, or UI as the final thesis state. `protocol-v1.0`, the `FINAL-*` run bundles, and the existing thesis-final evidence package are real, finalized historical evidence and must remain immutable, but they do not satisfy the current pre-WP7 product/scientific acceptance gate.
+The user has not accepted the historical application, agent set, experiment design, runs/results, or UI as the final thesis state. `protocol-v1.0`, finalized `FINAL-*` run bundles and existing thesis-final evidence are real immutable historical evidence, but they do not satisfy the current pre-WP7 acceptance gate.
 
-A review of the repository and current RL methodology identified two material refinements:
+Repository review identified two material refinements:
 
-1. the final `protocol-v1.0` comparison is scientifically controlled but narrow because F0 and C0 are two deployment regimes of the same tabular Q-learning implementation; and
-2. the current Streamlit pages do not implement the intended configure → launch → live GridWorld → inspect → compare → export workflow, while the headless scientific core itself is reusable and should remain UI-independent.
+1. the v1.0 comparison is controlled but narrow because F0 and C0 are two deployment regimes of one tabular Q-learning implementation; and
+2. the historical Streamlit application did not implement the intended configure -> launch -> live GridWorld -> inspect -> compare -> export journey, while the validated headless scientific core is reusable and must remain UI-independent.
 
-The historical R0 robust-value-iteration role remains useful pilot evidence but is not suitable for unchanged reinstatement because its accepted pilot configuration exhibited approximately 96% nominal truncation.
+Historical R0 robust-value-iteration pilot evidence remains useful but its accepted configuration exhibited approximately 96% nominal truncation and must not be reinstated unchanged.
 
 ## Decision
 
 ### Evidence preservation and versioning
 
-- Preserve `protocol-v1.0`, every finalized historical run, and existing frozen analysis/artifacts byte-for-byte.
-- Any revised primary experiment uses a new protocol version, new run identities, fresh held-out final layouts, and a fresh precommitted final seed bank.
-- `protocol-v1.1` begins as **candidate**, not frozen. It may become frozen only after D0 implementation, bounded non-final tuning/pilot validation, protocol validation, and pre-final acceptance criteria are satisfied. No final-v1.1 run is launched merely to complete CI or UI work.
+- Preserve `protocol-v1.0`, every finalized historical run, and existing frozen analysis/artifacts unchanged.
+- Revised primary evidence uses a new protocol version, new run identities, fresh held-out final layouts and a fresh precommitted final seed bank.
+- `protocol-v1.1` begins as **candidate**, not frozen. It may freeze only after D0 implementation, bounded non-final tuning/pilot validation, protocol/statistical validation and the explicit pre-final gates pass.
+- Never launch a final-v1.1 run merely for CI/UI convenience.
 
 ### Agent set
 
@@ -31,15 +32,27 @@ Retain:
 
 Add:
 
-- **D0 — Dyna-Q+:** tabular model-based planning built on the same information-limited interaction surface. It learns its transition/reward model only from observations legitimately available to the agent, performs bounded planning updates, and uses the Dyna-Q+ recency bonus to support re-exploration in a changing environment.
+- **D0 — Dyna-Q+:** tabular learned-model planning on the same information-limited interaction surface. It learns transition/reward behavior only from agent-visible experience, performs bounded planning updates and uses Dyna-Q+ recency bonus for directed re-exploration.
 
-D0 must be deterministic under the established RNG/seed contracts and serializable/resumable where the common agent contract requires it. D0-specific planning parameters are selected only through a small predeclared development/tuning search; no D0 parameter is chosen from final evidence.
+D0 must remain deterministic under established RNG/seed contracts and serializable/resumable according to the validated agent/runner contract. D0-only planning parameters are selected only from a small predeclared development/tuning search. No D0 parameter is selected from final evidence.
 
 Do not add deep RL merely to increase model count. Do not reinstate R0 unchanged.
 
+### Multiple-settings policy
+
+Development/tuning may execute multiple **protocol-approved resolved configurations** for a model/regime. Each configuration has stable identity/provenance and multiple predefined root seeds; single-run/best-seed ranking is forbidden.
+
+- F0/C0 retain the accepted candidate-v1.1 base configuration unless an explicit scientific amendment reopens it.
+- D0 receives only the bounded D0-specific planning search declared by T-521.
+- Tuning/pilot/final stages remain separated and stage-validated.
+- Failed, interrupted, cancelled, invalid and poor-performing configuration attempts remain recorded.
+- Final model settings are frozen before final outcomes are inspected; final evidence cannot cherry-pick a development/tuning configuration after seeing final results.
+
+Detailed current model/settings authority is `docs/research/MODEL_CANDIDATES.md`.
+
 ### Candidate protocol v1.1
 
-Preserve the accepted F0/C0 base Q-learning configuration selected by existing tuning evidence:
+Preserve accepted F0/C0 base values:
 
 - learning rate `0.5`;
 - discount factor `0.96875`;
@@ -50,7 +63,7 @@ Preserve the accepted F0/C0 base Q-learning configuration selected by existing t
 - `48`-step evaluation horizon;
 - `32` paired final root seeds.
 
-Retain seven single-factor conditions, but use structural names in the new version:
+Retain seven single-factor conditions with structural names:
 
 1. `nominal`;
 2. `action-remap-2-swap`;
@@ -60,52 +73,68 @@ Retain seven single-factor conditions, but use structural names in the new versi
 6. `observation-corruption-1of8`;
 7. `observation-corruption-1of4`.
 
-Use four fresh held-out final layouts under the same GridWorld scale/structural constraints. Do not reuse already-inspected v1.0 final layouts as the new primary held-out set.
+Use four fresh held-out final layouts under the accepted GridWorld scale/structural constraints. Do not reuse already-inspected v1.0 final layouts as the new primary held-out set.
+
+T-521 owns the authoritative candidate schema, exact fresh layouts/seeds, bounded D0 search and paired-statistics implementation. T-522 owns non-final selection and freeze/amend/reject evidence.
 
 ### Statistical roles
 
-Primary outcome reporting emphasizes separate component estimands rather than a composite score:
+Primary outcome reporting keeps separate component estimands:
 
 - cumulative deficit;
 - immediate degradation;
 - terminal gap/performance.
 
-Recovery remains an explicit secondary/sensitivity outcome because accepted pilot evidence showed material threshold/stability sensitivity. Preserve `NO_DEGRADATION`, `RECOVERED`, and `NOT_RECOVERED`; never encode non-recovery as an artificial horizon recovery time.
+Recovery remains explicit secondary/sensitivity because accepted pilot evidence showed material threshold/stability sensitivity. Preserve `NO_DEGRADATION`, `RECOVERED` and `NOT_RECOVERED`; never encode non-recovery as artificial horizon recovery time.
 
-Add paired agent-effect reporting and 95% confidence intervals using the paired root/layout design, with explicit `n`, per-layout views, and aggregate views. Do not select favorable thresholds or metrics after inspecting outcomes.
+Add paired agent-effect reporting and 95% confidence intervals using the paired root/layout design, with explicit `n`, per-layout views and aggregate views. Do not select favorable thresholds, settings or interval methods after inspecting final outcomes. No composite resilience score.
 
-### Application architecture and UI
+### Application architecture — superseded details reconciled
 
-Keep the Python/Gymnasium scientific core headless. Add an application-facing runtime/service layer between Streamlit and the runner for truthful active-run state, progress/events, read-only live GridWorld observation, history, and capability-based lifecycle controls. Unsupported controls must be shown as unsupported rather than simulated.
+DEC-044 is the current framework authority and supersedes the temporary React/Vite exploration and historical Streamlit application direction.
 
-Rebuild the Streamlit application around the accepted information architecture:
+Current stack:
 
-- Dashboard;
-- New Experiment;
-- Runs / live GridWorld workspace;
-- Compare;
-- Artifacts.
+- **NiceGUI 3.16 native mode** (`pywebview`) as the Python-only local desktop UI;
+- UI-independent Python application/runtime service between NiceGUI and the validated scientific runner;
+- Plotly for stored/final scientific figures;
+- ECharts for real live/provisional telemetry;
+- Mermaid for explanatory model/experiment diagrams;
+- AG Grid Community for analytical tables;
+- final Windows NiceGUI/PyInstaller `onedir + windowed` delivery plus root `run_app.bat` for repository-checkout launch.
 
-The UI may significantly replace the existing `src/app/*` page implementation. It must not duplicate scientific execution logic or fabricate status, metrics, logs, progress, or historical replay. Existing finalized runs that lack a retained step trace explicitly show replay unavailable.
+T-530 provides truthful active-run state, heartbeat/progress/events/history/resources, read-only live GridWorld observation and capability-based lifecycle controls. Unsupported controls remain explicitly unsupported.
 
-Visualization speed controls affect presentation cadence only, never scientific execution timing or RNG.
+T-531 implements Dashboard, New Experiment, Runs/live GridWorld, Compare and Artifacts using the same scientific/runtime contracts. It may substantially replace historical application code but never duplicate scientific execution logic or fabricate status/metrics/logs/progress/replay.
+
+Historical finalized runs without retained step traces show replay unavailable. Visualization speed/interpolation affects presentation cadence only, never scientific execution timing/actions/seeds/RNG.
+
+DEC-046 additionally requires novice-first, compact, self-explanatory UX with accurate helper text/tooltips, progressive disclosure, semantic icon+text+color statuses, actionable states, modern micro-interactions/animations and reduced-motion-safe behavior where practical.
+
+### Normal experiment execution after application completion
+
+Once T-530/T-531/T-532/T-511 are complete, an already-approved experiment should be executable directly from the finished application on the validated thesis machine without Codex or console commands. The backend owns resolved config, seeds, execution, persistence/provenance, finalization, guarded Git publication and result availability for comparison/analysis.
+
+GitHub remains source of truth and CI/evidence coordination surface. GitHub-hosted CI does not automatically become the validated final scientific execution machine. A self-hosted runner on the thesis machine is technically possible but is not required by this architecture.
 
 ### UI review artifacts
 
-Create a repository-root `ui-screenshots/` directory. Stable CI-rendered application screenshots are committed there as review artifacts once the relevant UI milestone is stable. CI may also upload diagnostic screenshot artifacts, but screenshots are not scientific evidence. Deterministic UI fixtures may render chrome/empty/error states; they must never be presented as real experiment results.
+Create repository-root `ui-screenshots/`. Stable rendered screenshots are review artifacts, not scientific evidence. Deterministic UI fixtures may illustrate chrome/empty/error states only when clearly labelled and never as experiment results.
+
+Real user-captured screenshots/GIF/video for thesis/defense later follow the exact `ASSET-*` placement/provenance workflow in `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md`; essential claims always retain a static evidence fallback.
 
 ### Work branch and tracking
 
-All work governed by this decision uses the single implementation branch:
+All work uses:
 
 `feat/pre-wp7-protocol-v1.1-ui-rebuild`
 
-Master tracker: GitHub issue #87. Component trackers: #88–#91. Do not create a parallel implementation branch for this work package. Keep the canonical repository task/status handoff synchronized so a new Codex session can resume without chat history.
+Master tracker #87; component trackers #88–#91. Do not create a parallel implementation branch. Keep canonical task/status/docs synchronized so another Codex/chat session can resume from repository state alone.
 
 ### Testing and completion
 
-Testing remains risk-based and proportional. Focus on scientific/information-boundary/determinism/configuration/runtime-truthfulness regressions plus small representative UI/render checks. Never run pilot/final matrices as CI tests and do not expand into an arbitrary coverage project.
+Testing remains risk-based and proportional: scientific/information-boundary/determinism/configuration/runtime-truthfulness regressions plus small representative UI/render/native-package checks. Never run pilot/final matrices as CI tests and do not create a quota-expanding coverage project.
 
-Automated UI rendering or screenshots do not satisfy `T-511`. The application remains `USER_VALIDATION_REQUIRED` until the user performs/accepts the intended end-to-end workflow.
+Automated UI rendering/screenshots do not satisfy T-511. The application remains `USER_VALIDATION_REQUIRED` until intended-user E2E acceptance.
 
-WP7/WP8 remain blocked. Technical completion of this branch does not imply permission to begin thesis writing; explicit user approval is still required after pre-WP7 refinement and human UI review.
+WP7/WP8 remain blocked. Technical completion of this package does not authorize thesis writing; explicit user approval is still required after pre-WP7 refinement and final evidence/application acceptance.
