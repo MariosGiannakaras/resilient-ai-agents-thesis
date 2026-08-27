@@ -94,23 +94,26 @@ class V11CandidateRunnerTests(unittest.TestCase):
                     repo_root=Path(temporary), protocol=PROTOCOL, request=invalid
                 )
 
-    def test_tuning_rejects_configuration_outside_agent_tuning_surface(self) -> None:
-        payload = request(
-            run_id="TUNE-V11-INVALID",
+    def test_tuning_accepts_only_predeclared_conditions(self) -> None:
+        valid = request(
+            run_id="TUNE-V11-VALID",
             stage=ProtocolStage.TUNING,
             layout_id="tune-l01",
             condition_id="nominal",
             agent_ids=("s0",),
             configuration_ids={"s0": "s0-a025-v1"},
         )
-        # A valid tuning request constructs successfully.
         with tempfile.TemporaryDirectory() as temporary:
             V11CandidateExperimentRunner(
-                repo_root=Path(temporary), protocol=PROTOCOL, request=payload
+                repo_root=Path(temporary), protocol=PROTOCOL, request=valid
             )
 
-        invalid_map = dict(PROTOCOL.to_dict()["development"]["allowed_configuration_ids"])
-        self.assertTrue(invalid_map is not None)  # keep the test explicit without mutating protocol
+        invalid = replace(valid, run_id="TUNE-V11-UNDECLARED-CONDITION", condition_id="action-failure-1of8")
+        with tempfile.TemporaryDirectory() as temporary:
+            with self.assertRaisesRegex(ValueError, "outside the bounded predeclared tuning design"):
+                V11CandidateExperimentRunner(
+                    repo_root=Path(temporary), protocol=PROTOCOL, request=invalid
+                )
 
     def test_final_execution_is_blocked_before_any_run_bundle_is_created(self) -> None:
         final_request = replace(
