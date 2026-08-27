@@ -20,13 +20,14 @@
 - Project refinement progress: **2/8**. `T-520` is complete; current task is `T-521 READY`.
 - PR CI run **346** validated the D0/NiceGUI checkpoint through documentation consistency, JSON validation, Python compile, locked environment, complete tests including `test_v11_runner.py`, and bibliography integrity.
 
-## Continuity / interrupted-work audit
+## Continuity / interruption audit
 
 Known stale/interrupted areas have been reconciled rather than left only in chat:
 
 - D0 runner integration is complete and focused-tested; historical `PilotProtocol` semantics remain unchanged.
 - Active application direction is NiceGUI native; React/Vite and Streamlit are historical/superseded only.
 - `PROJECT_CONTEXT`, `EXECUTION_WORKFLOW`, DEC-042, `MODEL_CANDIDATES`, requirements/decisions/constraints/open questions/roadmap/definition-of-done and thesis/application workflow docs now use the current scientific/application/delivery direction.
+- Stable requirement IDs were preserved while current multiple-settings/application/WP7 requirements were appended; no historical requirement numbering was silently repurposed.
 - `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` durably records the future Word/PowerPoint/ChatGPT/Codex/optional-Canva/manual-asset workflow without unlocking WP7.
 
 ## Scientific direction
