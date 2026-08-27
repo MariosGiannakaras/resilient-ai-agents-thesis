@@ -1,6 +1,6 @@
 # UI Information Architecture
 
-This is the bounded page map for the polished local research application. It consolidates related workflows to avoid unnecessary screens and navigation complexity. DEC-044/045/046 define the current native framework, visual analytics and novice-first UX contracts.
+This is the bounded page map for the native NiceGUI research application. It keeps navigation small while exposing enough scientific context for a non-programmer/non-RL user to configure, observe and understand the research workflow.
 
 ## Primary navigation
 
@@ -10,165 +10,163 @@ This is the bounded page map for the polished local research application. It con
 4. Compare
 5. Artifacts
 
-System information, metric definitions and advanced settings use drawers, tabs, tooltips/popovers or contextual panels rather than extra top-level products unless later evidence justifies them.
+System details, metric definitions and advanced settings use drawers/tabs/contextual panels rather than extra top-level products unless later evidence requires otherwise.
 
 ## Self-explanatory UX contract
 
-The application must be usable by a non-programmer with no prior knowledge of the repository, RL agents, experiment settings or statistical metrics. Scientific complexity is explained, not hidden or replaced with vague language.
+The application must be usable without reading a separate manual. Scientific complexity is explained rather than hidden behind unexplained IDs.
 
-- Use clear plain-language primary labels, concise descriptions and visible units; technical IDs remain accessible as secondary reproducibility detail.
-- Use tooltips/info icons for non-obvious scientific terms, metrics, protocol concepts and controls. Information required to complete a workflow must not exist only in a tooltip.
-- Use popovers/expanders or “Learn more” detail when a tooltip is too short. Definitions must agree with the active protocol/metric definitions.
-- Explain what F0/C0/D0 do, what information they observe, whether/how they adapt, and why each is scientifically included.
-- Explain uncertainty conditions concretely: nominal, action remap, action failure and observation corruption, including severity/parameter meaning where applicable.
-- For statistical views, explain metric directionality, units, aggregation, sample count and whether bars/intervals represent SD, CI or another declared quantity.
-- Keep terminology consistent across configuration, monitoring, history, comparison and exports.
-- Every important status combines text with a stable icon/symbol and semantic visual treatment. Color alone never carries essential meaning.
-- Use an accessible semantic palette with sufficient contrast. Success/info/warning/error/disabled/selected and LIVE/FINALIZED/EVIDENCE classes must remain distinguishable.
-- Warnings/errors state what happened, what is affected and what the user can do next; place them near the affected control/action where practical.
-- Empty/loading/disabled/unavailable states explain why the state exists and the next useful action when non-obvious.
-- Use confirmations only for destructive/high-impact actions; routine navigation/configuration remains friction-light.
-- Show a recommended next action at important workflow boundaries when one objectively exists.
+- Use human-readable primary labels; technical IDs remain secondary reproducibility detail.
+- Explain F0/C0/D0 roles, uncertainty conditions, settings, repetitions/seeds, metrics, aggregation and SD/CI/error semantics.
+- Use concise info-icon/tooltips for non-obvious concepts and contextual/expandable help for longer explanations.
+- Tooltips supplement rather than replace information required to make a safe configuration decision.
+- Use consistent terminology across configuration, live runs, history, comparison and exports.
+- Every important status combines understandable text + stable icon/symbol + semantic visual treatment; color alone never carries essential meaning.
+- Warnings/errors state what happened, what is affected and the useful next action.
+- Empty/loading/disabled/unavailable states explain why and what can be done next.
+- Use confirmations only for destructive/high-impact actions.
 - Progressive disclosure hides irrelevant implementation detail, not scientific meaning or required decisions.
 
-## Modern compact interaction contract
+## Configuration-identity and multiple-settings contract
 
-The UI is information-dense but not cryptic or oversized.
+The application supports multiple **protocol-approved resolved configurations/settings** where the active stage declares them.
 
-- Prefer compact cards, tables, tabs, split areas, drawers and expandable detail over large decorative surfaces and excessive scrolling.
-- Use consistent icons and restrained hover/focus/selection feedback to make affordances clear.
-- Smooth transitions may be used for status changes, chart updates and GridWorld movement when they improve comprehension.
-- Animation speed is presentation-only and never affects experiment timing, agent decisions, RNG or stored evidence.
-- Never animate fake progress or interpolate a historical trajectory that was not retained.
-- Keep essential states understandable without animation; respect reduced-motion preferences where practical.
-- Responsive desktop/laptop layouts are required; mobile parity is not.
+- Every resolved configuration has a stable identity/hash and stored provenance.
+- Show which settings are fixed, tunable, advanced or unavailable and why.
+- Development/tuning may expose multiple approved variants; final-evidence mode exposes only frozen allowed configurations.
+- Every compared setting/configuration is backed by the required predefined repetitions/seeds; no single-run “best setting” ranking.
+- New Experiment previews the number of whole experiments/roots implied by the selected configuration plan.
+- Runs and Compare carry the configuration identity alongside agent, layout, condition and stage.
+- Compatibility logic prevents or clearly warns about scientifically invalid cross-protocol/stage/configuration comparisons.
+- Technical parameter differences can be expanded without cluttering the primary comparison view.
 
 ## Lightweight onboarding
 
-After the application structure is stable, provide a short first-run tutorial using the selected NiceGUI/local application primitives rather than a second frontend/tour subsystem.
+After the final screen structure is stable, provide a short first-run flow (approximately 5–7 steps): orientation, configure, validate/launch, monitor, inspect results, compare, export/help.
 
-- Approximately 5–7 steps: orientation, configure, validate/launch, monitor, inspect results, compare, export/help.
-- Provide **Previous**, **Next**, **Skip** and **Finish**.
-- Tutorial is skippable and non-blocking.
-- Persistent Help/Getting Started entry can replay it.
-- Store only a lightweight local completion/preference flag; no account/profile/auth system.
-- Do not introduce a heavyweight separate JavaScript/DOM coach-mark framework merely for animation unless native NiceGUI primitives prove insufficient and a separate amendment justifies it.
-- Final wording is written against actual implemented screens.
-- Every page remains understandable if onboarding is skipped.
+- Previous / Next / Skip / Finish.
+- Skippable and non-blocking.
+- Replayable from Help / Getting Started.
+- Lightweight local NiceGUI/application state only; no account/profile/persistence subsystem.
+- Do not add a separate heavyweight JS/DOM tour framework without demonstrated need.
+- Every page remains understandable when onboarding is skipped.
 
 ## 1. Dashboard
 
-Purpose: immediate project/application status and next actions.
+Purpose: immediate project/application state and next actions.
 
 - Active and recent runs.
 - Recent failures/warnings.
-- Current candidate/frozen protocol state.
-- Lightweight CPU/RAM/disk and supported GPU status.
+- Current protocol/stage and evidence state.
+- Lightweight current CPU/RAM/disk/supported-GPU snapshot.
 - Quick actions: create experiment, open active run, compare results, export artifact.
-- Summary of frozen thesis evidence where available.
-- Clear next recommended action when the project state makes one obvious.
+- Summary of accepted/frozen evidence where relevant.
+- Clear recommended next action when objectively defined.
 
-Keep it screenshot-ready and focused; resource status is a current snapshot, not a historical observability product.
+Keep the page compact and screenshot-ready; resource status is a current snapshot, not a monitoring product.
 
 ## 2. New Experiment
 
 Purpose: configure and launch scientifically valid work without code.
 
-- Select validated agent(s) and environment/layout.
-- Select approved uncertainty condition/severity.
-- Set seed/repetition plan and approved parameters.
-- Explain each agent/configuration option with concise help and units.
-- Progressive disclosure for genuinely advanced/model-specific parameters.
-- Preview resolved configuration, run count and relevant resource estimate.
-- Pre-run review: agents, environment/layout, condition/severity, seeds/repetitions, episode budgets, relevant hyperparameters, protocol/stage, run count, retention/evidence classification and blocking issues.
-- Launch single or approved batch/sweep only after validation passes.
-- Save/clone a versioned configuration where supported.
+- Select protocol/stage.
+- Select permitted agent regime(s): F0/C0/D0 as defined by the active protocol.
+- Select one or more protocol-approved configuration/settings variants where the stage permits them.
+- Explain fixed vs tunable parameters and model-specific settings; hide invalid/unapproved internal switches.
+- Select environment/layout and uncertainty condition/severity allowed by the protocol.
+- Select or resolve the approved seed/repetition plan.
+- Show defaults, units, range/meaning/consequences and validation.
+- Progressive disclosure for advanced parameters.
+- Preview resolved configuration identity, run/root count, evidence class/retention and relevant estimated resources.
+- Present a pre-run review: agents, configuration IDs/settings, environment/condition, seeds/repetitions, protocol/stage, expected run count and blocking issues.
+- Launch single or approved batch/tuning plan only after validation passes.
+- Save/clone/version configuration only where the scientific workflow allows it.
 
-The UI prevents scientifically invalid/incompatible combinations and does not expose every internal implementation switch. Failures explain the corrective action rather than exposing raw exceptions.
+Invalid/incompatible combinations are blocked with an actionable explanation.
 
 ## 3. Runs
 
-Unified section with Active, Run detail and History.
+Unified section with Active, Run Detail and History.
 
 ### Active
 
-- Truthful status/progress/heartbeat.
+- Truthful queued/running/status/progress from T-530 runtime DTOs.
 - Essential lifecycle actions only when supported.
-- Warnings/errors and lightweight resources.
-- Stable text + icon + semantic status vocabulary.
-- Compatible active agent/settings comparisons when scientifically meaningful.
+- Warnings/errors/heartbeat/current resource snapshot.
+- Agent + configuration identity visible.
+- Compatible multi-agent/configuration live overlays only when the scientific comparison is meaningful.
 
 ### Run detail
 
-- Smooth **live GridWorld** using real read-only observer state: grid, obstacles, start/goal, current position, action/reward, episode/step and relevant evaluator-visible disturbance/event state.
-- Visualization speed controls presentation cadence only.
-- Event timeline and structured logs.
-- **ECharts live/provisional graphs** for real available telemetry such as episode return, rolling performance, cumulative measures/progress or other approved metrics; compatible agents/settings may share axes with clear identity/legend.
-- Clear `LIVE / PROVISIONAL` labeling separate from finalized evidence.
-- Resolved config and essential provenance: IDs, protocol/agent/environment versions/source commit.
-- Full software/hardware/checksum/manifest detail expandable.
-- Final outputs, failures and artifacts after completion.
-- Actionable recovery guidance for failed/interrupted runs.
+- Smooth live GridWorld driven by read-only observer state.
+- Current episode/step/action/reward and relevant evaluator-labelled disturbance state without leaking it back to agents.
+- Real event timeline, logs and `LIVE / PROVISIONAL` metrics.
+- ECharts live curves/overlays for compatible agents/settings.
+- Resolved configuration identity and readable primary settings; full technical config/provenance expandable.
+- Final outputs/artifacts after completion.
+- Actionable recovery guidance after failure/interruption.
+- Historical finalized runs without retained step trace explicitly show replay unavailable.
+
+Visualization speed/interpolation is presentation-only and never affects execution actions/timing/seeds/RNG.
 
 ### History
 
-- Search/filter by agent, condition, status, run type/stage, date and experiment.
+- Search/filter by agent, configuration/settings identity, layout, condition, status, stage/evidence class, date and experiment.
 - Completed/failed/cancelled/interrupted/excluded runs remain visible.
-- Clone/rerun/export where safe.
-- Historical run without retained step trace states **replay unavailable** rather than reconstructing a plausible path.
-- Empty history guides the user to create the first experiment.
-
-A separate queue page is unnecessary unless actual runtime requirements later prove it necessary.
+- Clone/rerun/export where scientifically valid.
+- Empty state directs the user to create an experiment.
 
 ## 4. Compare
 
-Purpose: understand scientifically compatible results.
+Purpose: understand compatible scientific results and configuration effects.
 
-- Select runs/experiments/agent groups with compatibility checks.
-- Performance, degradation, terminal behavior and secondary recovery/sensitivity views.
-- Plotly distributions, paired effects/95% CIs when available, heatmaps and repetition/sample counts.
-- Breakdown by layout/condition/severity/seed where approved.
-- Metric definitions, directionality, units, aggregation and uncertainty/error-bar semantics adjacent or contextually accessible.
-- Export comparison data/figure/artifact manifest.
-- Explain why a requested comparison is invalid and how to choose compatible evidence.
-- Never show a best-run-only view or unlabeled composite resilience score.
+- Select runs/experiments/agent groups/configuration identities.
+- Show compatibility status and reasons for incompatibility.
+- Performance, immediate degradation, cumulative deficit, terminal performance/gap and secondary recovery/sensitivity views as permitted by the evidence version.
+- Distribution plots, paired effects/95% CIs and explicit n where the final analysis supports them.
+- Layout/condition/seed breakdowns where approved.
+- Clear table of what differs between selected configurations/settings.
+- Plotly for stored/final scientific figures; historical v1.0 SD remains labelled SD rather than CI.
+- No best-run-only view, no unlabeled composite score and no post-hoc best-setting cherry-picking.
+- Export comparison data/artifact manifest.
 
-Figures should be clean enough for direct thesis/presentation screenshots while retaining titles/labels/units/n/uncertainty context needed for honest interpretation.
+If no valid comparison exists, explain what is incompatible and how to choose compatible evidence.
 
 ## 5. Artifacts
 
-Purpose: inspect and prepare real thesis/presentation material.
+Purpose: inspect/export thesis-ready evidence and application assets.
 
-- Figures, tables, CSV/JSON/HTML outputs and manifests.
-- Preview stored Plotly/HTML figures and screenshot-ready analytical views.
-- Friendly source-run, generation-script and metric-version summary.
-- Checksums/full provenance expandable or exported.
-- Approved/frozen status without deleting prior versions.
-- Download/export complete evidence bundles.
-- Empty state explains which compatible completed evidence is required.
+- Real figures/tables/CSV/JSON/HTML outputs and manifests.
+- Preview/download stored Plotly/static scientific figures.
+- Friendly summary of source runs/configuration identities/generation script/metric version.
+- Full checksums/provenance expandable.
+- Frozen/approved/provisional classification visible.
+- Complete evidence-bundle export.
+- Empty states explain what results are required first.
 
 ## Contextual panels
 
 Use contextual panels for:
 
-- metric definitions/formulas,
-- agent/uncertainty explanations,
-- system/runtime/Git detail,
-- checksums/provenance,
-- raw/processed file metadata,
-- advanced configuration explanations,
-- storage warnings,
-- application settings,
-- Help / Getting Started / replay onboarding.
+- agent/configuration explanations;
+- metric definitions/formulas/CI semantics;
+- system/runtime/Git details;
+- checksums/provenance manifests;
+- raw/processed data metadata;
+- advanced config explanations;
+- storage warnings;
+- application settings;
+- Help / Getting Started / onboarding replay.
 
 ## Navigation and visual principles
 
-- Keep primary navigation small/stable.
-- Hide internal architecture, not scientific meaning.
-- Make useful run/experiment/artifact IDs visible/copyable without making them primary labels.
-- Place warnings beside affected actions/comparisons.
-- Separate execution controls, live/provisional interpretation and frozen-evidence interpretation visibly.
-- Use consistent compact cards, charts, filters, tables, status chips, empty/error states and typography.
-- Detailed provenance stays accessible without dominating the main workflow.
+- Stable small navigation.
+- Modern compact desktop/laptop density rather than oversized decorative sections.
+- Consistent typography, spacing, iconography, cards, filters, tables and charts.
+- Agent identity remains visually consistent across GridWorld/charts/tables without relying on color alone.
+- Restrained hover/focus/selection micro-interactions and purposeful state/chart/GridWorld animations improve comprehension.
+- Animation never fabricates progress/trajectory/metrics and remains understandable with reduced motion where practical.
+- Separate execution controls, live/provisional interpretation and frozen-result interpretation.
 - Every visible scientific value comes from real data and a versioned definition.
-- UX polish, micro-interactions and animation must reduce cognitive load or improve state comprehension; decorative behavior with no concrete value is excluded.
+- Provenance remains accessible without dominating primary workflows.
+- UX polish reduces cognitive load; it does not add decorative machinery without a concrete usability benefit.
