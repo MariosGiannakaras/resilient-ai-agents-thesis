@@ -8,7 +8,7 @@ agent RNG seeds just like C0 gets a freshly seeded exploration RNG each
 episode.
 
 This small specialization makes that distinction explicit without weakening
-the generic Agent contract or changing the standalone Dyna-Q+ implementation.
+the generic Agent contract or changing the standalone Dyna-Q+ state schema.
 """
 from __future__ import annotations
 
@@ -39,6 +39,11 @@ class DynaQPlusDeploymentAgent(DynaQPlusAgent):
     ) -> None:
         super().__init__(config, checkpoint=checkpoint)
         self._episode_count = 0
+
+    @property
+    def deployment_episode_count(self) -> int:
+        """Number of episodes started in the current matched branch."""
+        return self._episode_count
 
     def start_branch(
         self, *, initialization_seed: int, exploration_seed: int
@@ -84,8 +89,3 @@ class DynaQPlusDeploymentAgent(DynaQPlusAgent):
             initialization_seed=initialization_seed,
             exploration_seed=exploration_seed,
         )
-
-    def get_state(self) -> dict[str, Any]:
-        state = dict(super().get_state())
-        state["deployment_episode_count"] = self._episode_count
-        return state
