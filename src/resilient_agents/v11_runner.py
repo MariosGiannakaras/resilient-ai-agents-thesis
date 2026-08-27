@@ -1,15 +1,13 @@
 """Protocol-v1.1 headless runner extension with explicit D0 parameters.
 
-The historical v1.0 runner remains unchanged so finalized v1.0 evidence keeps
-its original execution semantics.  This module is the versioned execution
-surface for candidate/future frozen protocol-v1.1 work.
-
-T-520 implements the D0 execution contract here.  T-521 supplies the validated
-candidate protocol and its bounded tuning/freeze rules; until then, this runner
-can be exercised only with development fixtures that explicitly declare D0.
+The historical v1.0/pilot protocol loader remains unchanged so historical
+validation and evidence semantics cannot drift. T-520 provides a deliberately
+non-final development adapter solely to prove D0 runner integration. T-521 owns
+the authoritative candidate-v1.1 schema, tuning plan and freeze lifecycle.
 """
 from __future__ import annotations
 
+import json
 import math
 from dataclasses import dataclass
 from pathlib import Path
@@ -25,6 +23,70 @@ from .protocol import assert_stage_access
 from .randomness import RandomStreams, derive_scoped_seed
 
 V11_RUNNER_SCHEMA_VERSION = 1
+V11_DEVELOPMENT_PROTOCOL_PREFIX = "v1.1-development-fixture"
+
+
+class V11DevelopmentProtocol(PilotProtocol):
+    """Non-final D0-capable adapter over an already validated historical protocol.
+
+    The historical :class:`PilotProtocol` intentionally accepts only the
+    historical F0/C0/R0 regimes. Relaxing that loader would alter old validation
+    semantics. Instead this adapter starts from a fully validated protocol,
+    replaces only its agent-regime declaration for a development-only D0
+    integration check, and marks the resulting payload as non-final.
+
+    `V11ExperimentRunner` independently blocks every stage except DEVELOPMENT
+    while this adapter is in use. T-521 must replace this fixture with the
+    authoritative candidate-v1.1 protocol representation before tuning/pilot or
+    final execution is possible.
+    """
+
+    @classmethod
+    def from_validated_base(cls, base: PilotProtocol) -> "V11DevelopmentProtocol":
+        if not isinstance(base, PilotProtocol):
+            raise ValueError("base must be an already validated PilotProtocol")
+        payload = base.to_dict()
+        base_version = str(payload["protocol_version"])
+        payload["protocol_version"] = f"{V11_DEVELOPMENT_PROTOCOL_PREFIX}-{base_version}"
+        payload["status"] = "pilot-unfrozen"
+        scope = dict(payload["scientific_scope"])
+        scope["final_evidence_use"] = False
+        payload["scientific_scope"] = scope
+
+        historical = {
+            str(item["agent_id"]): dict(item)
+            for item in payload.get("agent_regimes", [])
+            if isinstance(item, Mapping) and "agent_id" in item
+        }
+        if "f0" not in historical or "c0" not in historical:
+            raise ValueError("validated base must declare historical f0 and c0 regimes")
+        payload["agent_regimes"] = [
+            historical["f0"],
+            historical["c0"],
+            {
+                "agent_id": "d0",
+                "method": "dyna_q_plus_v1",
+                "checkpoint_source": "same-selected-common-q-checkpoint-as-f0-c0",
+                "post_change_learning": True,
+                "deployment_exploration": "selected-common-epsilon",
+                "method_configuration": {
+                    "learning_rate_policy": "selected-tuning-value",
+                    "discount_policy": "selected-common-discount",
+                    "bootstrap_on_truncation": False,
+                    "initial_q_value": 0.0,
+                    "planning_steps_policy": "explicit-development-request-only",
+                    "kappa_policy": "explicit-development-request-only",
+                },
+            },
+        ]
+        canonical = json.dumps(
+            payload,
+            allow_nan=False,
+            ensure_ascii=False,
+            separators=(",", ":"),
+            sort_keys=True,
+        )
+        return cls(canonical)
 
 
 def _probability(value: Any, *, field: str, allow_one: bool = False) -> float:
@@ -64,12 +126,7 @@ def _seed_sequence(value: Sequence[int], *, field: str) -> tuple[int, ...]:
 
 @dataclass(frozen=True)
 class V11ExperimentRequest(HeadlessExperimentRequest):
-    """v1.1 request: legacy fields plus explicit D0-only parameters.
-
-    `dyna_planning_steps` and `dyna_kappa` are mandatory exactly when D0 is in
-    the requested agent set.  This prevents hidden defaults and prevents
-    irrelevant Dyna parameters from silently contaminating F0/C0-only runs.
-    """
+    """v1.1 request: legacy fields plus explicit D0-only parameters."""
 
     dyna_planning_steps: int | None = None
     dyna_kappa: float | None = None
@@ -79,28 +136,13 @@ class V11ExperimentRequest(HeadlessExperimentRequest):
         if not isinstance(payload, Mapping):
             raise ValueError("v1.1 experiment request must be an object")
         expected = {
-            "run_id",
-            "stage",
-            "layout_id",
-            "condition_id",
-            "root_seeds",
-            "agent_ids",
-            "q_learning_rate",
-            "discount_factor",
-            "exploration_epsilon",
-            "training_episodes_per_layout",
-            "pre_change_episodes",
-            "post_change_episodes",
-            "immediate_window",
-            "worst_window",
-            "terminal_window",
-            "recovery_tolerance",
-            "recovery_stability_episodes",
-            "retention_policy",
-            "auto_publish",
-            "execution_timeout_seconds",
-            "dyna_planning_steps",
-            "dyna_kappa",
+            "run_id", "stage", "layout_id", "condition_id", "root_seeds",
+            "agent_ids", "q_learning_rate", "discount_factor",
+            "exploration_epsilon", "training_episodes_per_layout",
+            "pre_change_episodes", "post_change_episodes", "immediate_window",
+            "worst_window", "terminal_window", "recovery_tolerance",
+            "recovery_stability_episodes", "retention_policy", "auto_publish",
+            "execution_timeout_seconds", "dyna_planning_steps", "dyna_kappa",
         }
         if set(payload) != expected:
             raise ValueError(
@@ -131,26 +173,16 @@ class V11ExperimentRequest(HeadlessExperimentRequest):
         seeds = _seed_sequence(self.root_seeds, field="root_seeds")
         agents = tuple(self.agent_ids)
         allowed = {"f0", "c0", "d0"}
-        if (
-            not agents
-            or len(set(agents)) != len(agents)
-            or any(agent not in allowed for agent in agents)
-        ):
+        if not agents or len(set(agents)) != len(agents) or any(agent not in allowed for agent in agents):
             raise ValueError("agent_ids must be a unique non-empty subset of f0/c0/d0")
 
         _probability(self.q_learning_rate, field="q_learning_rate", allow_one=True)
         _probability(self.discount_factor, field="discount_factor")
-        _probability(
-            self.exploration_epsilon, field="exploration_epsilon", allow_one=True
-        )
+        _probability(self.exploration_epsilon, field="exploration_epsilon", allow_one=True)
         for field in (
-            "training_episodes_per_layout",
-            "pre_change_episodes",
-            "post_change_episodes",
-            "immediate_window",
-            "worst_window",
-            "terminal_window",
-            "recovery_stability_episodes",
+            "training_episodes_per_layout", "pre_change_episodes",
+            "post_change_episodes", "immediate_window", "worst_window",
+            "terminal_window", "recovery_stability_episodes",
         ):
             _positive_integer(getattr(self, field), field=field)
         if (
@@ -190,14 +222,12 @@ class V11ExperimentRequest(HeadlessExperimentRequest):
     def to_dict(self) -> dict[str, Any]:
         payload = super().to_dict()
         payload["dyna_planning_steps"] = self.dyna_planning_steps
-        payload["dyna_kappa"] = (
-            None if self.dyna_kappa is None else float(self.dyna_kappa)
-        )
+        payload["dyna_kappa"] = None if self.dyna_kappa is None else float(self.dyna_kappa)
         return payload
 
 
 class V11ExperimentRunner(HeadlessExperimentRunner):
-    """Versioned runner that adds D0 without changing v1.0 execution code."""
+    """Versioned development runner that adds D0 without changing v1.0 code."""
 
     request: V11ExperimentRequest
 
@@ -205,21 +235,19 @@ class V11ExperimentRunner(HeadlessExperimentRunner):
         self,
         *,
         repo_root: Path,
-        protocol: PilotProtocol,
+        protocol: V11DevelopmentProtocol,
         request: V11ExperimentRequest,
     ) -> None:
+        if not isinstance(protocol, V11DevelopmentProtocol):
+            raise ValueError(
+                "T-520 runner requires V11DevelopmentProtocol; T-521 will supply "
+                "the authoritative candidate-v1.1 protocol type"
+            )
         if not isinstance(request, V11ExperimentRequest):
             raise ValueError("request must be V11ExperimentRequest")
         super().__init__(repo_root=repo_root, protocol=protocol, request=request)
 
     def _validate_request(self) -> None:
-        """Validate the currently available v1.1 execution surface.
-
-        Full tuning/pilot/final candidate/freeze constraints are added by
-        T-521 together with the authoritative candidate protocol.  Until that
-        schema exists, non-development execution fails closed rather than
-        borrowing historical v0/v1.0 lifecycle assumptions.
-        """
         assert_stage_access(
             stage=self.request.stage,
             scenario_ids=[self.request.layout_id],
@@ -228,9 +256,7 @@ class V11ExperimentRunner(HeadlessExperimentRunner):
         if self.request.condition_id not in self.protocol.condition_ids():
             raise ValueError("condition_id is not defined by the protocol")
         for field in (
-            "immediate_window",
-            "worst_window",
-            "terminal_window",
+            "immediate_window", "worst_window", "terminal_window",
             "recovery_stability_episodes",
         ):
             if getattr(self.request, field) > self.request.post_change_episodes:
@@ -247,14 +273,9 @@ class V11ExperimentRunner(HeadlessExperimentRunner):
                 "requested agents are not declared by the protocol: "
                 + ", ".join(sorted(missing))
             )
-        if "d0" in self.request.agent_ids:
-            d0 = declared["d0"]
-            if d0.get("method") != "dyna_q_plus_v1":
-                raise ValueError("protocol d0 must declare method dyna_q_plus_v1")
+        if "d0" in self.request.agent_ids and declared["d0"].get("method") != "dyna_q_plus_v1":
+            raise ValueError("protocol d0 must declare method dyna_q_plus_v1")
 
-        # T-520 exposes only the development integration.  This prevents any
-        # accidental pilot/final use before T-521 commits the v1.1 protocol
-        # lifecycle, D0 search and fresh reserve firewalls.
         if self.request.stage is not ProtocolStage.DEVELOPMENT:
             raise ValueError(
                 "v1.1 non-development execution is blocked until T-521 "
@@ -265,11 +286,10 @@ class V11ExperimentRunner(HeadlessExperimentRunner):
         resolved = super()._resolved_config()
         resolved["headless_runner_schema_version"] = V11_RUNNER_SCHEMA_VERSION
         resolved["entrypoint"] = "resilient_agents.v11_runner.v1"
+        resolved["protocol_lifecycle"] = "development-fixture-only"
         return resolved
 
-    def _dyna_agent(
-        self, *, checkpoint: Mapping[str, Any]
-    ) -> DynaQPlusDeploymentAgent:
+    def _dyna_agent(self, *, checkpoint: Mapping[str, Any]) -> DynaQPlusDeploymentAgent:
         if self.request.dyna_planning_steps is None or self.request.dyna_kappa is None:
             raise RuntimeError("D0 parameters were not resolved")
         return DynaQPlusDeploymentAgent(
@@ -318,10 +338,7 @@ class V11ExperimentRunner(HeadlessExperimentRunner):
                 if branch == "disrupted" and after_change
                 else "nominal"
             )
-            scenario = self._scenario(
-                layout_id=self.request.layout_id,
-                condition_id=condition_id,
-            )
+            scenario = self._scenario(layout_id=self.request.layout_id, condition_id=condition_id)
             seeds = RandomStreams(
                 derive_scoped_seed(root_seed, f"evaluation-agent:{episode}")
             ).derived_seeds()
