@@ -111,6 +111,13 @@
   "metric_policy": {
     "primary": ["cumulative_deficit","immediate_degradation","terminal_performance"],
     "secondary": ["recovery_time","worst_window_degradation"],
+    "primary_windows": {"immediate_window":1,"worst_window":2,"terminal_window":4,"recovery_tolerance":0.0,"recovery_stability_episodes":2},
+    "definitions": {
+      "cumulative_deficit":{"source_field":"cumulative_deficit","orientation":"lower-is-better"},
+      "immediate_degradation":{"source_field":"immediate_degradation","orientation":"lower-is-better"},
+      "terminal_performance":{"source_field":"post_change_mean","orientation":"higher-is-better","meaning":"mean disrupted-branch episode return over the terminal window"}
+    },
+    "recovery_sensitivity": {"worst_windows":[2,4,8],"terminal_windows":[4,8],"recovery_tolerances_step_reward_units":[0.0,1.0,2.0],"recovery_stability_episodes":[2,4,8]},
     "composite_resilience_score": false,
     "recovery_is_sensitivity": true
   },
@@ -118,6 +125,7 @@
     "predeclared_contrasts": [["c0","f0"],["s0","f0"],["dq0","f0"],["d0","f0"],["s0","c0"],["dq0","c0"],["d0","dq0"]],
     "paired_unit": "same root seed within the same layout and condition",
     "layout_aggregation": "compute the paired agent effect within each root and layout, then average the four held-out layout effects equally within each root",
+    "effect_direction": "positive effect values always favor the first-listed agent; lower-is-better metrics reverse the raw first-minus-second sign",
     "primary_n": "32 root-level paired effects per condition and contrast after equal-weight four-layout aggregation",
     "confidence_interval": {"level":0.95,"method":"percentile-bootstrap-over-root-level-paired-effects","resamples":10000,"analysis_seed":110920260827},
     "reporting": ["report n=32 paired roots and 4 held-out layouts explicitly","report layout-specific effects alongside the four-layout aggregate","report effect estimate and 95% CI without post-hoc method switching","retain negative/null/unexpected effects"],
@@ -127,7 +135,11 @@
   "robust_planner_gate": {
     "status": "conditional-not-main",
     "historical_r0": "immutable-negative-diagnostic-evidence",
-    "promotion_rule": "A redesigned Robust Planner may become a sixth main comparator only after a separate predeclared non-final nominal-viability, information-fairness and runtime gate; otherwise it remains excluded."
+    "evidence_partition": {"layout_ids":["tune-l01","tune-l02"],"root_bank":"tuning.root_seeds","condition_ids":["nominal"],"final_access":false},
+    "information_fairness": {"same_all_hidden_policy":true,"uncertainty_set_fixed_and_hashed_before_outcomes":true,"outcome_dependent_set_changes":false},
+    "nominal_viability": {"minimum_overall_goal_rate":0.80,"minimum_each_layout_goal_rate":0.70,"allow_nonfinite_or_invalid_state":false},
+    "runtime": {"maximum_complete_gate_wall_seconds":600,"timeout_failures_allowed":0,"machine":"validated thesis machine"},
+    "promotion_rule": "Promote only if every information/fairness, nominal-viability and runtime criterion passes; otherwise retain historical/failed evidence and exclude the redesigned Robust Planner from the final ranked set."
   },
   "resource_policy": {
     "runtime_baseline": "validated thesis machine",
