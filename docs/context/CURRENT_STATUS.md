@@ -3,155 +3,57 @@
 **Date:** 2026-08-28  
 **Status:** Authoritative compact current-state summary
 
-`docs/context/TASKS.md` is the canonical execution ledger. Use DEC-048, DEC-049, DEC-050 and the protocol-v2 research records for detailed methodology/UI decisions.
+`docs/context/TASKS.md` is the canonical ledger. Use progressive task-specific reading of DEC-048/049/050 and `docs/research/` for detail.
 
 ## Current execution state
 
-- Historical accepted baseline through protocol-v1.0 and completed historical WP6 evidence remains immutable.
-- **Project: 4/8** master milestones complete (#87: 1, 2, 4, 5).
-- **Current task:** `T-524` IN_PROGRESS — source-backed protocol-v2 research contract and bibliography convergence.
-- Active protocol-v2 tracker #95 remains **2/10** until the bibliography/source-backed closure is actually complete. Historical #88 is closed/superseded; old `T-522` must not execute.
-- #93 final UI redesign remains PAUSED. Final frontend is rebuilt from scratch with a **different framework from NiceGUI** only after the framework-neutral v2 backend/scientific contract is stable.
-- Final standalone packaging remains post-thesis #94 / `T-803` and follows the later selected frontend rather than assuming NiceGUI/PyInstaller.
+- Historical accepted baseline includes `T-100` target-machine validation and `T-200` research framing through completed protocol-v1.0 WP6 evidence. Frozen `protocol-v1.0`, `FINAL-*` and R0 pilot evidence remain immutable.
+- **Project: 4/8** master milestones complete (#87: 1, 2, 4, 5). **Current task: `T-524` IN_PROGRESS.** Protocol-v2 tracker #95 remains 2/10 until bibliography convergence/sync closes T-524. Old `T-522` is superseded and must not execute.
+- #93 final UI redesign remains PAUSED. Per DEC-049, the final frontend is rebuilt from scratch with a **different framework from NiceGUI** only after the framework-neutral v2 backend is stable. #94 / `T-803` packaging remains post-thesis and follows that later framework.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` work.
 
-## Methodology closure state
+## Methodology closure
 
-The open-ended methodology exploration is considered saturated for the current thesis scope after:
+Open-ended methodology exploration is considered saturated after the 30-point audit fact-check, 20-check deep-chain pass, targeted closure audit and accepted DEC-050. New research reopens only for a concrete implementation/pilot validity problem.
 
-1. the 30-point audit fact-check (`PROTOCOL_V2_AUDIT_FACT_CHECK.md`);
-2. the second 20-check deep-chain validity pass (`PROTOCOL_V2_DEEP_CHAIN_2.md`);
-3. the targeted eight-part closure audit (`PROTOCOL_V2_CLOSURE_AUDIT.md`);
-4. accepted refinement decision DEC-050.
+### Phase A
 
-New methodology research is reopened only if implementation or a non-final pilot exposes a concrete unresolved validity problem.
+- Independently train each retained method under the same task/reward/action semantics, same semantic agent-visible information and a common task-level `gamma`.
+- Common learning resource = **actual environment interactions**, not episodes, optimizer updates, wall time or a library `total_timesteps` request.
+- Use isolated no-learning policy-quality probes on a common interaction-indexed grid compatible with method-native update boundaries. Probe interactions never enter training state/replay/model.
+- Feasibility pool: Q-Learning, SARSA, DQN, PPO, A2C, Dyna-Q+. Current core candidates: Q-Learning, SARSA, DQN, PPO, Dyna-Q+. Dyna-Q is ablation-only; A2C remains promotion/diagnostic only.
 
-## Protocol-v2 core design
+### Phase B
 
-### Phase A — nominal learning
+Each `method × root × layout` starts from its own exact Phase-A scientific checkpoint. If a pre-change prefix is needed, it is shared and no-learning. At the exact boundary clone identical learner/behavior/RNG state into Frozen nominal, Frozen disturbed, Adaptive nominal and Adaptive disturbed branches. Adaptive updates begin only from the first post-boundary transition; no epsilon/replay/optimizer/warm-up/recency/LR reset occurs at change onset.
 
-Each retained method trains independently using:
+Primary post-boundary opportunity is an exact common interaction budget. Primary component losses are immediate degradation, cumulative deficit and terminal gap relative to the same-regime nominal reference. Primary adaptation benefit is **Frozen loss − Adaptive loss**, i.e. the matched four-branch difference-in-differences interaction. Raw Adaptive-disturbed vs Frozen-disturbed performance remains a separate deployed-utility contrast. Recovery stays secondary/sensitivity; no composite resilience score.
 
-- the same project-owned task/reward/action semantics;
-- the same semantic agent-visible information;
-- a common task-level discount factor `gamma`;
-- actual environment interactions as the primary common learning budget;
-- algorithm-specific optimization/configuration settings under equivalent predeclared tuning opportunity;
-- periodic isolated no-learning policy-quality probes on a common interaction-indexed grid compatible with method-native update boundaries.
+## Objective, time-limit and checkpoint invariants
 
-Library `total_timesteps` is not scientific authority. Project-owned counters record requested and actual interactions.
+- GridWorld `max_steps` is administrative **truncation** in v2; goal arrival is termination. Value learners bootstrap through truncation. Remaining time is not added to the controlled position observation. Historical v1.x `bootstrap_on_truncation=False` without time in state is an explicit immutable limitation.
+- Reward semantics and `gamma` are common task-level parameters; no method-specific reward objective/shaping.
+- Scientific checkpoint = exact continuation state, not inference serialization. Q/SARSA preserve schedules/RNG/counters; Dyna-Q+ preserves its own learned model/recency/planning state; DQN preserves networks/optimizer/full replay/update/exploration state; PPO preserves policy/value/optimizer/schedules/RNG at legal rollout/update boundaries.
+- Every retained adapter must pass `train -> serialize -> destroy -> restore -> continue` plus exact branch-clone equality.
 
-The broader feasibility pool includes Q-Learning, SARSA, DQN, PPO, A2C and Dyna-Q+. Current bounded core candidates are Q-Learning, SARSA, DQN, PPO and Dyna-Q+. Dyna-Q is a targeted planning-vs-recency ablation. A2C remains promotion/diagnostic only unless the pilot establishes distinct thesis value at acceptable matrix cost.
+## Statistics, environment and uncertainty
 
-### Phase B — resilience/adaptation
+Root/run is the independent randomization unit; layouts/checkpoints/episodes are blocks/repeated observations. A synthetic closure stress test found root-level Student-t 95% intervals near nominal coverage across normal/skew/heavy-tail scenarios at indicative n=16–48, while simple percentile bootstrap under-covered; therefore t-CI is the current primary candidate, with root-bootstrap/robust sensitivity and final precision/runtime sizing deferred to `T-527`. No root count is frozen yet.
 
-For each retained `method × root × layout`, Phase B starts from that method/root/layout's own exact scientific checkpoint.
+Scientific failures remain outcomes and are never replaced by another seed. Infrastructure retries use the same root identity and retain provenance.
 
-If a pre-change prefix is required, it is executed once with learning disabled. At the declared change/branch boundary the exact learner/behavior/RNG state is cloned into:
+`T-526` selects the simplest predeclared GridWorld complexity level avoiding universal floor/ceiling behavior without using preferred method ranking. Final layouts are hidden from experimenter tuning but Phase-A may train on them after reserve opening because zero-shot layout generalization is not the RQ.
 
-- Frozen nominal;
-- Frozen disturbed;
-- Adaptive nominal;
-- Adaptive disturbed.
+Uncertainty claims remain separate: action remaps are categorical exact mappings; action-failure has explicit frequency; observation corruption requires both frequency **and support/magnitude**. The historical global-random valid-cell corruption is a harsh diagnostic, not generic local sensor noise.
 
-Adaptive updates begin only from the first post-boundary transition. Frozen and Adaptive inherit the same behavior-policy class/clock at the branch point. No epsilon, replay, optimizer, warm-up, recency or learning-rate schedule reset occurs merely because a change occurred.
+## Bibliography/provenance
 
-Primary post-boundary opportunity is an exact common environment-interaction budget, not equal episode count.
+`MariosGiannakaras/ThesisBibliography` is canonical. The currently accepted immutable consumer snapshot remains `bibliography-integration-v3` until a new validated sync is merged. Earlier protocol-v2 sources (Patterson, Henderson, Dohare, DQN re-evaluation, existing Steinparz) are upstream; package/corpus convergence is still active.
 
-### Primary Phase-B estimands
+Closure intake PR #143 was merged and triggered canonical processing for four additional methodology sources: Pardo (time limits), Engstrom (implementation sensitivity), Fedus (experience replay) and Nikishin (primacy bias). They are methodology sources, not new algorithm arms. T-524 remains open until canonical `SRC-*` IDs, analysis/evidence/selection, package/corpus convergence, all upstream validators and a new immutable consumer sync are complete.
 
-Within each regime, disturbance is measured relative to its matched nominal branch. Primary component measures remain:
+## Threat boundary and next action
 
-- immediate degradation;
-- cumulative deficit;
-- terminal gap/performance.
+Claims remain bounded to low-dimensional discrete project-owned GridWorld experiments on the validated Windows/CPU thesis machine. No universal resilience, autonomous change detection, specialized continual-RL, pixel/continuous-control, real-robot transfer or cross-platform bitwise reproducibility claim is authorized.
 
-For each component, the primary disturbance-specific adaptation benefit is the **Frozen loss minus Adaptive loss**, i.e. the four-branch matched difference-in-differences interaction. Positive adaptation benefit means online learning reduced the disturbance-specific loss.
-
-Raw Adaptive-disturbed minus Frozen-disturbed online performance is retained as an absolute deployment contrast but is not the sole causal adaptation estimand. Recovery remains secondary/sensitivity; no composite resilience score is used.
-
-## Time-limit and objective semantics
-
-- GridWorld `max_steps` is an **administrative truncation** in v2, not a hidden finite-horizon task objective.
-- Goal arrival is termination; administrative cutoff is truncation.
-- Value learners bootstrap through truncation.
-- Remaining time is not added to the controlled position observation.
-- A campaign interaction budget ending mid-episode is a measurement stop, not an injected terminal MDP transition.
-- Historical v1.0/v1.1 `bootstrap_on_truncation=False` without time in state is now an explicit immutable historical limitation, not a reason to alter frozen results.
-- Reward semantics and `gamma` are common task-level parameters; no method-specific reward shaping/objective is allowed.
-
-## Deep-method scientific identity/checkpoint contract
-
-A scientific checkpoint means exact continuation state, not inference serialization.
-
-- Q-Learning: Q values plus exploration/schedule/RNG/counters required for continuation.
-- SARSA: full corresponding state/restore semantics.
-- Dyna-Q(+): Q values, learned model, planning state/RNG, recency state, behavior state and counters. v2 Dyna-Q+ uses its full own Phase-A state; the historical v1.1 Q-table-only common-checkpoint path is not v2 evidence.
-- DQN: online/target networks, optimizer, replay contents/capacity/logical position/sampling RNG, `learning_starts`, batch/update/replay ratio, target cadence, exploration schedule/counters and preprocessing/software state.
-- PPO: policy/value/shared parameters, optimizer, LR/progress schedule, rollout/update-boundary state, normalization if used, RNG/counters and full implementation/library provenance.
-
-Every retained adapter must pass `train -> serialize -> destroy -> restore -> continue` conformance plus exact branch-point clone tests at legal method-native boundaries.
-
-## Online deployment versus no-learning probes
-
-Two evidence surfaces are mandatory:
-
-1. **online deployed utility**, including real exploration/adaptation costs;
-2. **standardized no-learning policy-quality probes**, isolated from training state/RNG and forbidden from entering replay/rollout/model updates.
-
-Value-based exploitation probes use the frozen greedy rule with deterministic tie semantics. PPO uses a frozen deterministic modal-action exploitation probe for the primary cross-method policy-quality surface; native stochastic-policy behavior/entropy may be reported secondarily. Online PPO deployment retains its actual policy-sampling semantics.
-
-## Statistical closure
-
-Root/run remains the independent randomization unit. Layouts/methods/branches/checkpoints/episodes are blocked/repeated/factor structure.
-
-A synthetic coverage stress test of root-level paired/DiD mean effects at indicative `n=16,24,32,48` found Student-t 95% intervals near nominal coverage across normal, skewed and heavy-tailed synthetic root effects (~0.94–0.97), while simple percentile bootstrap intervals systematically under-covered (~0.91–0.94). Therefore a root-level Student-t interval is the current default primary candidate, with root-bootstrap/robust sensitivity and final precision/runtime sizing frozen later at `T-527`. This is not final power analysis and does not freeze a root count.
-
-Scientific/algorithmic failures remain outcomes and are never replaced by another seed. Infrastructure failures may retry only the same registered root identity and retain attempt provenance. Performance denominators and failure rates remain explicit.
-
-## Environment and uncertainty closure
-
-The current project-owned GridWorld engine remains the controlled testbed. T-526 selects the simplest predeclared complexity level that avoids universal floor/ceiling behavior and remains CPU-feasible without using preferred method ordering.
-
-Final layouts are held out from experimenter tuning/selection before freeze. After reserve opening, Phase-A may train on each final layout because the target RQ is learning/resilience on that task, not zero-shot layout generalization.
-
-Uncertainty claims remain separate:
-
-- action remapping: categorical persistent dynamics/action-semantics change; exact mapping identity is retained and remapped-action count is not treated as a universal scalar severity;
-- action-execution failure: stochastic no-op actuation uncertainty with explicit frequency;
-- observation corruption: perceptual uncertainty with both explicit frequency **and support/magnitude**. The historical global-random valid-cell corruption is a harsh diagnostic, not generic local sensor noise. A bounded local mislocalization support is a pilot candidate for the primary perceptual diagnostic.
-
-No extra change classes are added merely for variety.
-
-## Threats-to-validity boundary
-
-The final thesis may claim only what the controlled design supports. It does not establish universal AI resilience, autonomous change detection, specialized continual-learning competence, pixel/continuous-control benchmark superiority, real-world robotic transfer, arbitrary POMDP robustness or cross-platform bitwise deep-learning reproducibility.
-
-The experiment intentionally targets low-dimensional discrete GridWorld behavior on the validated Windows/CPU thesis machine. Deep-framework reproducibility claims are scoped to the frozen software/platform/device contract; repeated roots remain necessary.
-
-## Bibliography/provenance state
-
-`MariosGiannakaras/ThesisBibliography` remains canonical. Earlier protocol-v2 methodology additions (Patterson `SRC-4ED8B918E3`, Henderson `SRC-8D4F62D85D`, Dohare `SRC-4C34DF3E17`, DQN re-evaluation, existing Steinparz `SRC-660560956D`) were promoted/selected in the upstream repository, but generated package/corpus convergence and the next immutable consumer sync are not yet complete.
-
-The methodology-closure pass found four further genuine source gaps and opened clean intake PR #143 from current bibliography `main`:
-
-- Pardo et al. (2018), *Time Limits in Reinforcement Learning*;
-- Engstrom et al. (2020), *Implementation Matters in Deep Policy Gradients*;
-- Fedus et al. (2020), *Revisiting Fundamentals of Experience Replay*;
-- Nikishin et al. (2022), *The Primacy Bias in Deep Reinforcement Learning*.
-
-These are methodology/implementation-validity sources, not new algorithm arms. They still require canonical intake IDs, analysis, evidence, selection, package/corpus convergence and later immutable thesis-repo sync before T-524 can close.
-
-The accidental temporary bibliography file created during branch setup has been removed from `main`; it contains no scientific content.
-
-## Frontend/backend boundary
-
-DEC-049 remains controlling: the final frontend is selected later and must be **different from NiceGUI**. Existing NiceGUI/Plotly/ECharts/Mermaid/AG Grid/PyInstaller assumptions are prototype/history, not final requirements. Scientific logic remains framework-neutral and backend-owned.
-
-## Still intentionally unfrozen
-
-Exact retained methods, A2C promotion/exclusion, final GridWorld complexity/layouts, interaction budgets, common gamma/reward numerical values, method-specific optimization settings, update/probe cadence, uncertainty probabilities/support radius, final root count, primary contrast subset/multiplicity rule, final frontend framework and final evidence remain pilot/freeze-gated.
-
-## Exact next action
-
-Finish `T-524` upstream bibliography convergence and immutable consumer sync, then mark the source-backed methodology contract complete. `T-525` then implements only the bounded v2 experiment schemas/adapters, exact interaction accounting, independent nominal learning, isolated probes, scientific checkpoint/restore and four-branch clone infrastructure. `T-526` runs the physical Windows feasibility/environment/severity pilot; `T-527` freezes tuning/statistics/machine-readable protocol before final reserve access; `T-528` then rebuilds the UI with the newly selected framework.
+**Next:** finish the finite T-524 bibliography/convergence/sync work. Then T-525 implements the bounded v2 adapters/checkpoints/branching; T-526 runs the physical Windows feasibility/severity pilot; T-527 freezes tuning/statistics/protocol; T-528 performs the new-framework UI rebuild.
