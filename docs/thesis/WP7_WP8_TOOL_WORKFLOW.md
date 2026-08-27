@@ -6,7 +6,7 @@
 
 ## Purpose
 
-Define exactly how repository evidence, ChatGPT, Codex, Microsoft Word, PowerPoint, optional Canva, and manual application captures will be used after the research/application/evidence gates are complete.
+Define exactly how repository evidence, ChatGPT, Codex, Microsoft Word, PowerPoint, optional Canva, official ICE authoring guidance, contextual example theses, and manual application captures will be used after the research/application/evidence gates are complete.
 
 The workflow is designed so the user does not have to reconstruct the thesis from repository internals or guess where screenshots/figures belong. Scientific claims remain grounded in citation-ready bibliography and frozen experiment evidence.
 
@@ -33,38 +33,103 @@ No writing tool may turn provisional/live/tuning values into final thesis result
 - ChatGPT/web research for current verification and synthesis;
 - Codex only for updating repository requirements/checklists after the verified guidance is known.
 
+### Known ICE references to re-verify
+
+`docs/thesis/THESIS_STRUCTURE_REFERENCE_POLICY.md` records the currently known `ice.uniwa.gr` references discovered on 2026-08-27:
+
+- the official ICE/TMPY Diploma Thesis writing guide;
+- the internal undergraduate-programme regulation, including Article 28 on the Diploma Thesis;
+- the five-year programme of studies;
+- the Department Technical Writing course specification as a supplementary writing-quality reference.
+
+These are **planning pointers, not permanent assumptions**. T-700 must re-fetch/re-verify the current official versions and any newer Department guidance before freezing the writing rules.
+
 ### Outputs
 
 - dated official-guidance snapshot;
 - exact current thesis/submission/defense requirements;
+- mandatory front-matter/structure requirements;
 - Word template/style requirements if available;
 - current citation style requirement/decision;
 - exact defense duration/file/template/live-demo rules if officially specified;
-- recorded differences from the historical requirements snapshot.
+- recorded differences from the historical requirements snapshot and from the 2026-08-27 planning references.
 
 ### User role
 
 Provide any private/current supervisor instruction or template that cannot be obtained from public/connected sources. Do not manually research details the tools can verify directly.
 
-## T-701 — Optional example-thesis review
+## T-701 — Comparative example-thesis review and derived structure/style guide
 
-If the user later supplies two or three completed theses, use them only for contextual structure/presentation conventions.
+The user intends to provide completed theses from friends as contextual references for how an ICE/UNIWA-style thesis is actually structured and presented. They are used **only** for structure/presentation/writing conventions, never for their subject-matter data or scientific claims.
 
-- They are not official requirements.
-- They are not scientific sources.
-- They cannot override current Department guidance.
-- Useful observations are recorded as presentation/structure preferences only.
+### Inputs
+
+- user-supplied thesis files stored locally under `local-inputs/example-theses/`;
+- any additional completed-thesis examples independently discovered only on `ice.uniwa.gr`, unless the user explicitly changes that restriction later;
+- the current official T-700 requirements and `docs/thesis/THESIS_STRUCTURE_REFERENCE_POLICY.md`.
+
+The actual user-supplied PDF/DOCX files are git-ignored and are not copied into `ThesisBibliography` or committed to GitHub by default.
+
+### Authority boundary
+
+- official current Department/University guidance always wins;
+- supervisor-specific instructions outrank contextual examples;
+- example theses are not official requirements;
+- example theses are not scientific sources;
+- no single example is treated as a template to imitate mechanically;
+- useful patterns are accepted only after cross-example comparison and conflict checking against current guidance.
+
+### Required comparative analysis
+
+Review all supplied examples across at least:
+
+- front-matter ordering, declarations, summaries/abstracts, contents and lists;
+- chapter/subchapter hierarchy and chapter balance;
+- introduction and contribution framing;
+- theoretical background and related-work organization;
+- methodology versus implementation separation;
+- experimental design, results, discussion and conclusions separation;
+- technical depth and how concepts are introduced to a non-specialist academic reader;
+- figure/table/chart/screenshot density, placement and explanatory role;
+- caption, numbering and cross-reference conventions;
+- equation/code/pseudocode treatment where present;
+- bibliography/references presentation;
+- glossary/acronym/index conventions;
+- appendix use;
+- limitations/validity-threat treatment;
+- academic register, paragraph length, transitions and explanatory pacing;
+- recurring page-layout/document conventions;
+- conventions that conflict with official current guidance and therefore must not be copied.
+
+Record comparative observations with explicit evidence such as `3/3 examples`, `2/3 examples`, or `1/3 example`; do not convert one thesis's choice into a general rule.
+
+### Required output
+
+Create `docs/thesis/THESIS_STRUCTURE_AND_STYLE_GUIDE.md` containing:
+
+1. mandatory current official structure from T-700;
+2. cross-example structural/style observations and counts;
+3. recommended chapter architecture for this thesis;
+4. purpose/evidence role of every planned chapter and major subsection;
+5. Word/document presentation conventions to reproduce;
+6. conventions explicitly rejected because they conflict with official rules, are obsolete, or are poor fits for this project;
+7. traceability marking every recommendation as official requirement, supervisor instruction, or contextual-example consensus.
+
+### Copyright / scientific-integrity boundary
+
+Do not copy prose, figures, tables, datasets, source code, results or scientific claims from example theses. Their subject matter is irrelevant to the thesis evidence base. The derived guide records only structural/style observations and must not republish third-party thesis content unnecessarily.
 
 ## T-710 — Draft the Greek thesis
 
-### Scientific source hierarchy
+### Scientific/source hierarchy
 
 1. frozen T-613 thesis/defense evidence package for experiment/results claims;
 2. citation-ready `ThesisBibliography` evidence for external scientific claims;
 3. accepted repository decisions/method/protocol documents for implementation/methodology descriptions;
-4. official academic guidance for required structure/format.
+4. current official academic guidance from T-700 for mandatory structure/format;
+5. `THESIS_STRUCTURE_AND_STYLE_GUIDE.md` from T-701 for contextual structure/presentation conventions only.
 
-Chat memory is never the authority for a technical/result claim.
+Chat memory is never the authority for a technical/result claim. The T-701 guide can shape presentation but cannot supply scientific facts.
 
 ### Recommended tool split
 
@@ -91,7 +156,7 @@ Preferred for:
 - complete Greek chapter drafting from the supplied evidence map;
 - restructuring and coherence across chapters;
 - translating technical source meaning into accurate Greek while preserving the original scientific meaning;
-- explaining F0/C0/D0, GridWorld, uncertainty mechanisms, settings and metrics at the appropriate academic level;
+- explaining the five final Agent strategies, GridWorld testbed, uncertainty mechanisms, settings and metrics at the appropriate academic level;
 - writing discussion/limitations/future-work text grounded in frozen evidence;
 - language/academic-register editing;
 - reducing repetition and improving transitions;
