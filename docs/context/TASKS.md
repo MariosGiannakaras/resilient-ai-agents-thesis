@@ -7,38 +7,38 @@
 
 ## Mandatory session rule
 
-Every Codex session MUST read the three-file session-start core:
+Every Codex session MUST read:
 
 1. `AGENTS.md`
 2. `docs/context/TASKS.md`
 3. `docs/context/CURRENT_STATUS.md`
 
-Use session memory together with repository/Git/GitHub/evidence. Repository evidence wins when memory or prose is stale. Inspect `git status`, branch, recent commits, PR #92 and any `IN_PROGRESS` work before modifying anything.
+Repository/Git/GitHub/evidence wins over stale memory or prose. Inspect the active branch, PR #92 and any `IN_PROGRESS` work before modification.
 
 Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED` gate/dependency unmet; `DEFERRED` intentionally later; `SUPERSEDED` retained history that must not execute. In-progress/failed work never counts as complete.
 
 ## Resume state
 
-- **Package:** DEC-048 protocol-v2 scientific redesign; DEC-042/047 and candidate v1.1 remain auditable predecessor design. Application DEC-044/045/046 and NiceGUI remain prototype/implementation history, not the accepted final UI architecture.
+- **Package:** DEC-048 protocol-v2 redesign refined by DEC-050 methodology closure. DEC-042/047 and candidate v1.1 remain auditable predecessor design. DEC-049 controls the later new-framework frontend rebuild.
 - **Project:** **4/8** master milestones complete (#87: 1, 2, 4, 5).
 - **Current task:** `T-524`.
-- **State:** `IN_PROGRESS`; 30-point methodology fact-check and chained research are complete, canonical bibliography promotion/selection/sync and source-backed reconciliation remain active.
+- **State:** `IN_PROGRESS`; methodology exploration/closure is complete, but the four new closure sources on ThesisBibliography PR #143 still require canonical intake/analysis/evidence/selection/package/corpus convergence and immutable consumer sync.
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no parallel main-repo implementation branch.
-- **Trackers:** #87 master **4/8**; #95 protocol-v2 **2/10**; #88 v1.1 closed/superseded at historical **9/12**; #89 runtime 6/6 complete/closed; #93 final UI redesign 0/8 PAUSED; #94 final Windows packaging DEFERRED post-thesis.
-- **Historical science:** protocol-v1.0 / FINAL-* / R0 evidence immutable. Candidate v1.1 remains non-final history; its T-522 tuning/freeze path is not executed.
-- **Frontend direction:** after the v2 backend/scientific redesign, the final frontend is rebuilt from scratch using a **different framework** selected at `T-528`; NiceGUI-specific choices are not final constraints.
-- **Pre-WP7 approval:** NOT APPROVED; `T-700+` execution remains blocked.
-- **Exact next action:** complete `T-524`: finish ThesisBibliography #135 analysis/evidence/thesis-selection and versioned sync, reconcile active source-of-truth docs, then close the source-backed RQs/estimand roles/method-role gates and hand off bounded pilot infrastructure to `T-525`. Do not access any v1.1/v2 final reserve and do not start UI implementation #93 yet.
+- **Trackers:** #87 master 4/8; #95 protocol-v2 2/10; #88 closed/superseded; #89 complete/closed; #93 PAUSED; #94 DEFERRED post-thesis.
+- **Historical science:** protocol-v1.0 / FINAL-* / R0 evidence immutable. Candidate v1.1 remains non-final history; old `T-522` must not execute.
+- **Frontend direction:** final frontend is rebuilt from scratch with a **different framework from NiceGUI** at `T-528` after v2 backend/scientific stability.
+- **Pre-WP7 approval:** NOT APPROVED; `T-700+` remains blocked.
+- **Exact next action:** complete the finite T-524 bibliography/convergence/sync work, then hand off to T-525. Do not access any final reserve, start old T-522, or resume UI implementation early.
 
 ## Quota/interruption resilience
 
-1. Resume valid unfinished local/remote work before starting something new.
-2. Never discard uncommitted/pushed/partial experiment evidence without inspection.
-3. Reconcile this ledger at coherent checkpoints, not after every child run.
-4. Preserve stable task/decision IDs; supersede explicitly rather than rewriting history.
-5. Use `Project: X/Y` only from finite canonical denominators.
+1. Resume valid unfinished work before starting a new package.
+2. Never discard partial experiment evidence without inspection.
+3. Reconcile this ledger at coherent checkpoints.
+4. Preserve stable task/decision IDs; supersede explicitly.
+5. Use `X/Y` only for objective finite denominators.
 6. Testing is risk-based/proportional; scientific experiment matrices are not CI test matrices.
-7. Never create another implementation branch for the active package unless a later explicit decision supersedes this rule.
+7. Do not create a parallel implementation branch for the active main-repo package.
 
 ## WP0 — Repository/research infrastructure
 
@@ -90,37 +90,47 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
 - [x] `T-513` — Refinement governance/single branch/PR/handoff.
 - [x] `T-520` — Information-limited deterministic Dyna-Q+ integration.
 - [x] `T-523` — SARSA + Dyna-Q + broader mechanism implementation foundation.
-- [x] `T-521` — Candidate protocol-v1.1/config identity/paired-statistics infrastructure. It remains valid non-final history but is not the future final protocol.
-- [ ] `T-522` — **SUPERSEDED. Do not execute.** Historical v1.1 tuning/freeze gate, superseded by DEC-048 / `T-524`–`T-527` before any v1.1 final access.
+- [x] `T-521` — Candidate protocol-v1.1/config identity/paired-statistics infrastructure; valid non-final history only.
+- [ ] `T-522` — **SUPERSEDED. Do not execute.** Historical v1.1 tuning/freeze gate superseded by DEC-048/050 and T-524–T-527.
 
 - [ ] IN_PROGRESS `T-524` — Freeze the source-backed protocol-v2 research contract.
   - Depends on: `T-521`.
-  - Acceptance: finish ThesisBibliography #135 source refresh/re-evaluation, scientific analysis/evidence, thesis-selection and versioned consumer sync; retain `docs/research/PROTOCOL_V2_AUDIT_FACT_CHECK.md` as the traceable 30-point audit→fact-check→repo-delta record; freeze RQ-A nominal learning vs RQ-B resilience/adaptation; distinguish the broader feasibility candidate pool from the minimum scientifically sufficient confirmatory core; define Phase-A and Phase-B primary/secondary estimand roles; retain and separately interpret the current uncertainty taxonomy unless evidence justifies amendment; freeze fair interaction/tuning/statistical principles, semantic-information fairness, experiment-lifecycle adapter boundary and environment-discrimination selection rule; document exact method-specific scientific checkpoint semantics; document what v1.0/v1.1 evidence remains historical/reusable and prohibit numerical pooling into v2 confirmatory estimates; reconcile DEC-041 historical counts and the new frontend-framework boundary. DEC-048, `docs/research/PROTOCOL_V2_RESEARCH_DESIGN.md` and the audit fact-check remain the durable research contract; exact machine-dependent values stay intentionally unfrozen.
+  - Research closure completed: 30-point audit fact-check, 20-check deep-chain pass, eight-part closure audit, DEC-050.
+  - Accepted scientific contract includes: Phase-A independent method training; actual interaction budgets; common semantic information/reward/gamma; isolated no-learning probes; administrative truncation with bootstrap; each method/root/layout own full scientific checkpoint; exact shared Phase-B branch point; Frozen nominal/Frozen disturbed/Adaptive nominal/Adaptive disturbed branches; Adaptive updates only after boundary; same behavior-policy state at fork; DiD adaptation-benefit estimands; root-level inference/failure policy; explicit observation-corruption frequency + support/magnitude; final-reserve leakage firewall; historical v1.x truncation limitation; DEC-049 frontend boundary.
+  - Remaining acceptance work: finish ThesisBibliography issue #135 plus closure intake PR #143 through canonical source IDs, scientific analysis/evidence, thesis selection, generated package/corpus convergence, all upstream validators green, and a new immutable thesis-repo bibliography sync; reconcile any generated source IDs/status into protocol docs; then mark T-524 complete.
 
 - [ ] BLOCKED `T-525` — Implement the bounded framework-neutral multimethod training/checkpoint/deployment foundation required for v2 pilots.
   - Depends on: `T-524`.
-  - Acceptance: new v2 method-discriminated experiment/config/result schemas; experiment-lifecycle/capability adapter boundary supporting independent training, standardized no-learning evaluation, method-specific scientific checkpoint/restore, exact Frozen/Continual cloning, algorithm-specific configuration, separate training/evaluation RNG and no evaluator leakage; reuse current GridWorld/RNG/run-bundle/runtime primitives without extending the legacy f0/c0/r0 request into an incoherent universal schema; integrate the minimum Q-Learning/SARSA/DQN/PPO/Dyna-Q+ pilot adapters needed to exercise the frozen contracts, reusing maintained deep-RL libraries where appropriate. Simple tabular methods may keep step-wise `act/observe` internally while deep adapters retain native replay/rollout/update semantics. Dyna-Q is a targeted ablation only when required to separate planning from recency. A2C may receive only the minimum feasibility adapter needed for its promotion decision, not an automatic full final arm. Do not optimize final hyperparameters, execute the final matrix or build the new UI here.
+  - Acceptance: v2 method-discriminated config/result schemas; project-owned actual interaction accounting; common task-level gamma/reward/truncation contract; experiment-lifecycle/capability adapter registry; independent Phase-A training; isolated interaction-indexed no-learning probes; full method-specific scientific state save/restore; process-destroy/restore/continue conformance; exact branch-point clone equality; Frozen/Adaptive behavior-policy-state semantics; four post-boundary branches; root/failure provenance; no evaluator leakage.
+  - Minimum pilot adapters: Q-Learning, SARSA, DQN, PPO, Dyna-Q+. Dyna-Q is ablation-only. A2C receives only bounded feasibility support if needed for its promotion decision.
+  - DQN adapter must persist networks/optimizer/replay/sampling RNG/warm-up/update ratio/target/exploration schedules. PPO adapter must persist full code-level configuration and checkpoint only at legal completed rollout/update boundaries. Dyna-Q+ must use full own model/recency/planning state rather than the historical Q-only checkpoint path.
+  - Do not perform final tuning, final matrix execution or UI work here.
 
-- [ ] BLOCKED `T-526` — Run bounded environment-discrimination + method-feasibility pilots on the validated thesis Windows machine.
+- [ ] BLOCKED `T-526` — Run bounded environment-discrimination + method/severity/CPU feasibility pilots on the validated Windows machine.
   - Depends on: `T-525`.
-  - Acceptance: use only a small **predeclared ordered** set of project-owned GridWorld complexity levels and a frozen discrimination rule; retain the simplest level that is not universally trivial or universally unsolved, preserves the semantic information/uncertainty contract and is CPU-feasible; measure CPU/wall runtime, nominal learning signal/variance, checkpoint fidelity, Frozen/Continual clone fidelity and artifact size for the core candidates; explicitly evaluate whether A2C adds a distinct thesis-relevant contrast beyond PPO at acceptable matrix cost before promotion/exclusion; retain failures/poor outcomes; use no final reserve. A method-specific poor outcome does not by itself justify selecting a different environment level.
-  - External boundary: GitHub-hosted CI does not substitute for required machine/runtime pilot evidence.
+  - Acceptance: small **predeclared ordered** GridWorld complexity ladder; common task semantics; simplest level that avoids universal floor/ceiling and is CPU-feasible; project-owned actual interaction/runtime measurements; checkpoint/clone fidelity; artifact size; learning signal/variance; method-native update-boundary feasibility.
+  - Calibrate action-failure frequencies and observation-corruption frequency + support/magnitude using semantics/non-degeneracy, never preferred method ranking. Exact action-remap identities remain categorical rather than falsely scalar severity.
+  - Evaluate A2C promotion only for distinct thesis value vs PPO at acceptable matrix cost. Retain poor/failing outcomes. No final reserve.
+  - External boundary: hosted CI does not substitute for the physical Windows runtime/feasibility evidence gate.
 
-- [ ] BLOCKED `T-527` — Fair tuning, precision/runtime sizing, statistics freeze and machine-readable protocol-v2 candidate/final firewall.
+- [ ] BLOCKED `T-527` — Fair tuning, precision/runtime sizing, statistical freeze and machine-readable protocol-v2 firewall.
   - Depends on: `T-526`.
-  - Acceptance: bounded algorithm-specific literature-backed tuning with equivalent predeclared configuration/search opportunity, common tuning-only roots/partitions and fixed selection/tie criteria; common Phase-A environment-interaction budget plus periodic standardized no-learning evaluation; final method/environment/condition/root counts selected from predeclared pilot evidence; exact checkpoint/Frozen/Continual/update semantics; root/run remains the independent randomization unit with layout/factor blocking and paired analysis where valid; effect sizes and 95% intervals; limited primary contrasts and predeclared multiplicity policy if p-values are used; Phase-B primaries are immediate degradation, cumulative same-regime-reference deficit and terminal performance/gap; recovery secondary/sensitivity; no composite resilience score; freeze before final access.
+  - Acceptance: bounded method-specific tuning with equivalent predeclared opportunity; common protocol-level gamma/reward/horizon values; fixed actual interaction budgets/probe grid compatible with retained update quanta; final retained methods/environment/severities/root count chosen only from non-final evidence; no best-seed/best-final-checkpoint selection.
+  - Statistical freeze: root/run independent; block/equal layout handling; paired/DiD primary effects; Student-t root-level mean CI as default candidate subject to final pilot diagnostics/precision sizing; root-bootstrap/robust sensitivity; explicit failure denominators; limited primary contrast family and frozen multiplicity rule if p-values are used.
+  - Freeze final layout/root reserve and exact Phase-B branch/update behavior before access.
 
 - [x] `T-530` — Truthful UI-independent Python runtime service/read-only observer foundation.
-- [x] `T-531` — Functional NiceGUI prototype over the validated backend. **Prototype/history only; not final frontend architecture.**
-- [x] `T-532` — Prototype screenshot/packaging feasibility work. **Not final delivery packaging or final UI acceptance.**
+- [x] `T-531` — Functional NiceGUI prototype over validated backend. **Prototype/history only.**
+- [x] `T-532` — Prototype screenshot/packaging feasibility work. **Not final UI/delivery packaging.**
 
 - [ ] BLOCKED `T-528` — Select a different frontend framework and rebuild the final v2-aware application UI/UX from scratch (#93).
   - Depends on: `T-527`.
-  - Acceptance: choose a **different framework from NiceGUI** only after the framework-neutral v2 backend contract is stable; document the selection against local desktop use, truthful live dual-GridWorld rendering, scientific charts/tables, accessibility, maintainability, integration with the Python scientific service and later standalone-delivery constraints; rebuild rather than incrementally restyle the NiceGUI prototype; consume backend DTOs/events without duplicating scientific execution; issue #93 8/8; final UI represents v2 nominal-learning and method-specific Frozen/Continual workflows truthfully; fresh screenshots replace/segregate obsolete prototype captures. Existing NiceGUI/Plotly/ECharts/Mermaid/AG Grid choices are prototype evidence, not immutable final-stack requirements.
+  - Acceptance: select a **different framework from NiceGUI** only after the framework-neutral v2 backend is stable; document selection for local desktop use, dual Frozen/Adaptive GridWorld rendering, scientific charts/tables, accessibility, maintainability, Python-service integration and later standalone delivery; rebuild rather than restyle the NiceGUI prototype; consume backend DTOs/events without duplicating scientific execution.
+  - Exact chart/table/diagram libraries and packaging technology are selected here/later, not inherited from the historical NiceGUI stack.
 
 - [ ] BLOCKED `T-511` — Intended-user application workflow/self-explanatory UX acceptance.
   - Depends on: `T-512`, `T-528`.
-  - Acceptance: user explicitly accepts the final v2-aware workflow, terminology, configuration, monitoring, comparison, errors/help and evidence surfaces. Automated checks never close this gate.
+  - Acceptance: user explicitly accepts final v2 configure/run/monitor/history/compare/export/error/help workflow. Automated checks never close this gate.
 
 ## WP6 — Final scientific evidence
 
@@ -130,26 +140,25 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
 - [x] `T-603` — Historical v1.0 figures/tables/artifacts.
 - [x] `T-604` — Historical v1.0 evidence package.
 
-- [ ] BLOCKED `T-610` — Execute the frozen protocol-v2 final matrix.
+- [ ] BLOCKED `T-610` — Execute frozen protocol-v2 final matrix.
   - Depends on: `T-527`, `T-511`.
 - [ ] BLOCKED `T-611` — Validate/freeze v2 final evidence.
   - Depends on: `T-610`.
-- [ ] BLOCKED `T-612` — Predeclared v2 learning/resilience statistical analysis and sensitivity diagnostics.
+- [ ] BLOCKED `T-612` — Predeclared v2 nominal-learning/resilience statistical analysis and sensitivity diagnostics.
   - Depends on: `T-611`.
 - [ ] BLOCKED `T-613` — Final v2 figures/tables/exports and thesis/defense evidence package.
   - Depends on: `T-612`.
 
 ## Mandatory pre-WP7 user approval gate
 
-**NOT APPROVED.** Completion of science, CI, screenshots or `T-613` does not authorize thesis writing. Only explicit user approval after accepted evidence/application can unlock WP7.
+**NOT APPROVED.** Completion of science, CI, screenshots or `T-613` does not authorize thesis writing. Only explicit user approval after accepted evidence/application unlocks WP7.
 
 ## WP7 — Thesis writing/review/defense
 
 - [ ] BLOCKED `T-700` — Recheck current Department/University submission/formatting/defense rules and current tool assumptions.
-  - Depends on: `T-613`, `T-511` and explicit pre-WP7 user approval.
-- [ ] DEFERRED `T-701` — Comparative review of completed example theses and derivation of `THESIS_STRUCTURE_AND_STYLE_GUIDE.md`.
+  - Depends on: `T-613`, `T-511`, explicit pre-WP7 user approval.
+- [ ] DEFERRED `T-701` — Review completed example theses and derive structure/style guide.
   - Depends on: `T-700`.
-  - Inputs: `local-inputs/example-theses/` plus independently discovered examples only from `ice.uniwa.gr` unless user changes that restriction. Examples are structural/contextual only, never scientific sources; current official guidance wins.
 - [ ] DEFERRED `T-710` — Draft complete Greek thesis from accepted evidence.
   - Depends on: `T-700`, `T-701`.
 - [ ] DEFERRED `T-711` — Produce review-ready Word thesis + manual ASSET placement register.
@@ -160,7 +169,7 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Depends on: `T-712`.
 - [ ] DEFERRED `T-720` — Defense narrative/slide outline/evidence map.
   - Depends on: `T-713`.
-- [ ] DEFERRED `T-721` — Final PowerPoint + speaker material per `docs/thesis/PRESENTATION_WORKFLOW.md`.
+- [ ] DEFERRED `T-721` — Final PowerPoint + speaker material.
   - Depends on: `T-720`.
 - [ ] DEFERRED `T-722` — Validate/rehearse defense package/demo fallback.
   - Depends on: `T-721`.
@@ -175,7 +184,7 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Depends on: `T-801`.
 - [ ] DEFERRED `T-803` — Final cleaned Windows standalone application package (#94).
   - Depends on: `T-713`, `T-511`.
-  - Acceptance: package the finally accepted UI after thesis freeze using the delivery technology appropriate to the frontend selected at `T-528`; native/local launch-close-restart, safe writable paths and privacy/licensing/reproducibility packaging audit. This is intentionally post-thesis and is not a pre-WP7 gate.
+  - Acceptance: package the accepted final frontend using delivery technology appropriate to the framework selected at T-528; validate local launch/close/restart, writable paths, privacy/licensing/reproducibility. Post-thesis and not a pre-WP7 gate.
 
 ## Task maintenance rule
 
