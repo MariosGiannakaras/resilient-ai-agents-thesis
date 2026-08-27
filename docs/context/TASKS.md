@@ -21,15 +21,15 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 
 - **Package:** DEC-042 + DEC-044 + DEC-045 + DEC-046 + DEC-047 pre-WP7 scientific/application refinement. DEC-043 is historical/superseded.
 - **Project:** **2/8** major refinement milestones complete.
-- **Current task:** `T-523`
+- **Current task:** `T-521`
 - **State:** `READY`
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; this is the single implementation branch/PR.
 - **Trackers:** #87 master; #88 scientific; #89 runtime; #90 UI; #91 screenshots/CI/packaging.
-- **Last validated checkpoint:** PR CI run **376** passed documentation consistency, JSON validation, Python compile, locked environment, complete tests and bibliography integrity before DEC-047 broadened the candidate agent set.
-- **Continuity reconciliation:** known stale architecture/delivery/workflow areas are reconciled. DEC-047 now supersedes the three-agent candidate direction with five mechanism-distinct user-facing strategies while preserving historical IDs/evidence.
+- **Last validated checkpoint:** PR CI run **396** passed documentation consistency, committed JSON validation, Python compilation, locked environment, the complete 143-test suite including SARSA/Dyna-Q/five-strategy integration/reference tests, and bibliography integrity.
+- **Continuity reconciliation:** DEC-047 supersedes the three-agent candidate direction with five mechanism-distinct user-facing strategies while preserving historical IDs/evidence; T-523 implementation/feasibility is complete.
 - **Downstream planning:** `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` records future Word/PowerPoint/ChatGPT/Codex/optional-Canva/manual-screenshot ownership without unlocking WP7.
 - **Uncommitted work:** unknown from remote handoff; every new session must inspect `git status` before assuming clean state.
-- **Exact next action:** execute `T-523`: implement/validate information-limited SARSA and plain Dyna-Q, add clearly labelled reference fixtures where useful, integrate runner/config identities, and measure bounded runtime feasibility. Then execute `T-521`; do not start final-v1.1 evidence or `T-700+`.
+- **Exact next action:** execute `T-521`: define and implement the authoritative five-strategy candidate `protocol-v1.1`, bounded fairness/tuning surfaces, fresh held-out layouts/seeds, stable configuration identities and paired statistical support. Do not inspect or generate final-v1.1 outcomes and do not start `T-700+`.
 
 ## Quota/interruption resilience
 
@@ -103,12 +103,13 @@ Current refinement:
   - Depends on: `T-513`.
   - Validated: uses only agent-visible observations/intended actions/rewards; deterministic Q/model/RNG serialization; common checkpoint; episode-preserving deployment; historical `PilotProtocol` unchanged; development-only `V11DevelopmentProtocol`; F0/C0/D0 runner deterministic; missing/irrelevant Dyna-specific parameters and non-development use fail closed.
 
-- [ ] READY `T-523` — Implement/validate the broadened DEC-047 agent strategy set before candidate-v1.1 freeze.
+- [x] `T-523` — Implement/validate the broadened DEC-047 agent strategy set before candidate-v1.1 freeze.
   - Depends on: `T-520`.
-  - Acceptance: deterministic information-limited **SARSA** implementation with explicit/versioned config/state and exact update tests; deterministic **Dyna-Q** implementation reusing the Dyna learned-model/planning machinery without recency bonus; focused test proving Dyna-Q vs Dyna-Q+ intended difference; runner/configuration identity integration for Fixed Q-Learning, Adaptive Q-Learning, SARSA, Dyna-Q and Dyna-Q+; Random Agent and nominal/fully-informed planner only as clearly labelled non-ranked reference fixtures where useful; user-facing names/descriptions independent of opaque F0/C0/D0 IDs; measured bounded runtime/matrix-size feasibility; historical v1.0/R0 evidence untouched.
-  - Fairness: same online information boundary for five scientific agents; no changepoint/evaluator truth; SARSA tuning surface is predeclared/minimal if fairness requires it; Dyna-Q/Dyna-Q+ planning budgets matched where appropriate; no final evidence inspected.
+  - Validated: deterministic information-limited **SARSA** with explicit/versioned config/state and hand-checked on-policy updates; deterministic **Dyna-Q** reusing the empirical learned-model/planning machinery while excluding Dyna-Q+ untried-action/recency semantics; focused Dyna-Q vs Dyna-Q+ contrast tests; episode-persistent deployment wrappers; development runner/config identities for Fixed Q-Learning, Adaptive Q-Learning, SARSA, Dyna-Q and Dyna-Q+; deterministic Random Agent non-ranked reference fixture; human-readable strategy metadata independent of opaque IDs; bounded matrix-size/runtime feasibility recorded; historical v1.0/R0 evidence untouched.
+  - Validation: PR CI run **396** passed the complete 143-test suite plus documentation/JSON/compile/lock/bibliography checks. Five-strategy candidate matrix is 888,832 environment episodes before Dyna planning overhead versus 315,392 historical v1.0 episodes; exact planning runtime remains a non-final T-522 feasibility measurement, not a final-evidence assumption.
+  - Fairness boundary preserved: same online agent-visible information; no changepoint/evaluator truth; final SARSA training/fairness choice and bounded planning settings remain explicit T-521/T-522 protocol decisions.
 
-- [ ] BLOCKED `T-521` — Implement authoritative candidate `protocol-v1.1`, bounded tuning design, fresh held-out layouts/seeds, approved configuration identity/settings policy, and paired statistical support.
+- [ ] READY `T-521` — Implement authoritative candidate `protocol-v1.1`, bounded tuning design, fresh held-out layouts/seeds, approved configuration identity/settings policy, and paired statistical support.
   - Depends on: `T-523`.
   - Acceptance: v1.0/final evidence untouched; candidate v1.1 contains the five validated main strategies **Fixed Q-Learning, Adaptive Q-Learning, SARSA, Dyna-Q, Dyna-Q+**; validated Q-learning budgets preserved; exact small predeclared SARSA fairness-tuning and Dyna planning/Dyna-Q+ `kappa` search only where justified; four fresh held-out final layouts + fresh precommitted final seeds; seven single-factor conditions with `action-remap-2-swap` / `action-remap-4-cycle`; stable resolved-configuration identity/provenance; multiple approved development/tuning configurations use multiple predefined roots and no single-run/best-seed cherry-picking; primary cumulative deficit/immediate degradation/terminal performance; recovery secondary/sensitivity; paired effects + 95% CIs with explicit n/layout aggregation; candidate status cannot authorize final evidence.
   - Conditional robust gate: a redesigned Robust Planner becomes a sixth main comparator only if a small predeclared non-final nominal-viability/fairness/runtime gate passes; otherwise historical R0 remains negative pilot evidence only.
@@ -120,7 +121,7 @@ Current refinement:
 - [ ] READY `T-530` — Add truthful UI-independent Python runtime service for live experiments.
   - Depends on: `T-520`.
   - Acceptance: versioned DTO/service contracts for queued/running/completed/failed/cancelled/interrupted state, heartbeat/progress/events/history/resources, unfinished runs, read-only live GridWorld observer proven not to alter RNG/actions, safe stop/cancel/restart only, unsupported controls explicit. NiceGUI framework plumbing is not the scientific runtime contract.
-  - Execution order: remain secondary to current scientific T-523/T-521 sequence; do not split into a parallel branch.
+  - Execution order: remain secondary to current scientific T-521/T-522 sequence; do not split into a parallel branch.
 
 - [ ] BLOCKED `T-531` — Complete native NiceGUI application with DEC-045 analytics, DEC-046 novice-first UX and DEC-047 human-readable agent strategies.
   - Depends on: `T-521`, `T-530`.
