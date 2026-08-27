@@ -1,103 +1,164 @@
 # Agent and Model Role Selection
 
-**Status:** `T-310`/`T-311` selection/evidence, `T-312` correctness implementation, and `T-410` pilot diagnosis are complete. Exact final retention/hyperparameters/budgets remain open for `T-411`/`T-412`.
+**Status:** Current pre-WP7 authority for the agent set. Historical F0/C0/R0 pilot evidence is preserved, `T-520` D0 implementation/integration is complete, and `T-521`/`T-522` own candidate-v1.1 tuning/freeze decisions.
 
-## Selection outcome
+## Current selection outcome
 
-The smallest set that answers the retained provisional RQs uses two implementations in three declared capability regimes:
+The current candidate `protocol-v1.1` uses three scientifically distinct deployment regimes:
 
-| ID | Exact method / regime | Scientific role | Inclusion |
+| ID | Exact method / regime | Scientific role | Current status |
 |---|---|---|---|
-| F0 | `tabular_q_learning_v1` loaded from the common nominal checkpoint, action selection active, Q updates disabled | Frozen nominal resistance reference | **RETAIN** |
-| C0 | The same `tabular_q_learning_v1` checkpoint and action-selection schedule, Q updates continued through the persistent change | Naive model-free online adaptation baseline | **RETAIN** |
-| R0 | `rectangular_robust_value_iteration_v1`, planned before deployment over an explicit finite s,a-rectangular transition uncertainty set, then frozen | Declared-set robustness and nominal-conservativeness comparator | **RETAIN** |
+| F0 | `tabular_q_learning_v1` from the common selected nominal checkpoint; evaluation updates disabled | Frozen nominal resistance reference | **RETAIN for v1.1 candidate** |
+| C0 | Same `tabular_q_learning_v1` checkpoint/base configuration; online Q updates continue after change | Model-free continual adaptation baseline | **RETAIN for v1.1 candidate** |
+| D0 | `dyna_q_plus_v1` from the same information-limited interaction surface; empirical model + bounded planning + recency bonus | Model-based continual adaptation / directed re-exploration comparator | **RETAIN for v1.1 candidate; D0-only planning settings still require bounded non-final selection** |
+| R0 | Historical `rectangular_robust_value_iteration_v1` pilot comparator | Declared-set frozen robustness / conservativeness | **HISTORICAL PILOT EVIDENCE ONLY; do not reinstate unchanged** |
 
-Pilot execution refined R0's observation-boundary handling: when an active episode delivers a corrupted observation that aliases a modeled terminal state, robust-plan schema v2 uses the recorded zero-value seeded action tie. It never consults evaluator truth to decide whether the apparent terminal state is real. The complete `pilot-v0.2` retry then executed consistently, but approximately 96% of R0's nominal evaluation episodes truncated. The current R0 prior/policy/horizon combination therefore cannot be frozen unchanged even though its implementation and information boundary are correct.
+F0 and C0 remain two deployment regimes of the same tabular Q-learning implementation, not an inflated algorithm count. D0 adds a genuinely distinct adaptation mechanism without introducing deep/function-approximation complexity. R0 remains scientifically useful historical evidence, but its accepted pilot configuration produced approximately 96% nominal truncation and therefore is not part of the current v1.1 candidate set.
 
-F0 and C0 are separate evaluation regimes of one implementation, not inflated algorithm count. Their identical nominal checkpoint, action-selection schedule, exploration RNG policy, and agent-visible information isolate the effect of permitting post-change updates. R0 is intentionally a different information regime: its model and uncertainty family are declared prior knowledge and must be reported as such.
+Do not add deep RL merely to increase the number of models. A new model family requires a distinct research-question role, information/fairness contract, bounded tuning budget, feasibility evidence, and an explicit protocol amendment before final evidence.
 
-This is the implementation/pilot set, not a promise that every role survives final protocol freeze. A role is removed if correctness, assumption fit, fairness, repeated-run feasibility, or distinct empirical behavior fails the later gates.
+## Exact current agent identities
 
-## Exact algorithm identities
+### F0 / C0 — tabular Q-learning
 
-### F0/C0 — tabular Q-learning
-
-Use the standard off-policy one-step update for delivered state/observation `s`, intended action `a`, reward `r`, and next delivered observation `s'`:
+For delivered observation/state `s`, intended action `a`, reward `r`, and next delivered observation `s'`:
 
 `Q(s,a) ← Q(s,a) + α [r + γ max_a' Q(s',a') − Q(s,a)]`
 
-Terminal/truncated episode handling, learning rate, discount, initialization, exploration schedule, tie breaking, budgets, and checkpoint lifecycle are explicit configuration with no library defaults. F0 and C0 start shifted evaluation from the same serialized nominal Q table. F0 suppresses all learning-state mutation; C0 applies the same update continuously. Both receive only the accepted `AgentTransition` projection and never true state, executed action, regime ID, disturbance flags, or changepoint truth under the strict policy.
+F0 and C0 share the selected nominal checkpoint and base evaluation configuration. F0 suppresses post-change learning-state mutation. C0 continues ordinary online Q-learning updates. Both receive only agent-visible information through the accepted transition contract and never true state, executed action, regime/change identifiers, disturbance flags, or evaluator truth.
 
-Citation-ready `SRC-D52DF7B9A4` supports Q-learning's tabular off-policy update and stationary convergence boundary. Citation-ready `SRC-70772C0629` prevents the false claim that ordinary Q-learning is universally incapable under all non-stationarity, while also showing that structured long-run switching convergence does not predict rapid recovery after this thesis's single persistent change.
+The candidate-v1.1 base values inherited from accepted tuning evidence are:
 
-### R0 — finite rectangular robust value iteration
+- learning rate `α = 0.5`;
+- discount factor `γ = 0.96875`;
+- exploration epsilon `ε = 0.125`;
+- `512` nominal training episodes per layout;
+- `16` pre-change evaluation episodes;
+- `32` post-change evaluation episodes;
+- `48`-step evaluation horizon.
 
-For each observable state/action pair, configure a non-empty finite set of explicit candidate next-state probability rows. Its convex hull is the local s,a-rectangular uncertainty set. Because the robust Bellman objective is linear in the row, the inner minimum is evaluated over the declared extreme rows:
+These values are the current candidate-v1.1 F0/C0 base configuration. They are not an invitation for unrestricted final-result tuning.
 
-`Q_R(s,a) = min_{p ∈ U(s,a)} Σ_s' p(s') [r(s,a,s') + γ V_R(s')]`
+### D0 — Dyna-Q+
 
-and `V_R(s) = max_a Q_R(s,a)` until the explicit convergence rule or iteration limit. Goal states are terminal. The uncertainty-set construction, candidate kernels, whether the realized post-change kernel is in-set, discount, convergence tolerance, iteration cap, model source, and planning cost are recorded. R0 is frozen during evaluation and receives no true active kernel or changepoint signal.
+D0 uses the same agent-visible observation/intended-action/reward surface and never receives evaluator-only state or changepoint information. It maintains:
 
-Citation-ready `SRC-52E62452B8` is sufficient formal support for rectangular transition uncertainty and robust Bellman dynamic programming. It explicitly distinguishes stationary/time-varying uncertainty and warns that broad sets can be overly conservative. Citation-ready `SRC-FC42D9798A` supports the robustness-versus-online-adaptation conceptual boundary but is not used to claim a need for function approximation. Citation-ready `SRC-3C0F7CC819` supports tabular robust-RL feasibility but does not establish changepoint detection or faster recovery. No further upstream bibliography promotion is required for the retained bounded claims, satisfying `T-311`.
+- tabular Q values;
+- an empirical stochastic transition/reward model learned only from experienced agent-visible transitions;
+- experienced state-action/model support required by the implementation;
+- deterministic exploration and planning RNG state under the established seed contracts;
+- Dyna-Q+ recency state used to support directed re-exploration;
+- explicit JSON-compatible serializable state/checksum semantics.
+
+During deployment, D0 preserves learned Q/model/recency state across evaluation episodes while episode-scoped RNG/pending-action state is reset according to the validated runner contract. Reference and disrupted matched branches begin from equivalent branch initialization and then evolve independently.
+
+D0 uses the common candidate-v1.1 Q-learning base values where applicable. Only genuinely D0-specific planning parameters are eligible for bounded non-final tuning:
+
+- `dyna_planning_steps`;
+- `dyna_kappa`.
+
+`T-521` must predeclare the small allowed development/tuning search before outcomes are used for selection. `T-522` selects/freeze-amends/rejects using non-final evidence only. No D0 planning value may be selected from v1.1 final outcomes.
+
+## Multiple-settings and repetition policy
+
+The application and runner must support **multiple approved configurations per model/regime** where the protocol allows them, but configuration exploration is stage-controlled rather than an unrestricted parameter playground.
+
+### Development / tuning
+
+- A configuration variant is a complete resolved parameter set with a stable configuration identity/hash and stored provenance.
+- Multiple approved variants may be launched for a model when the active development/tuning plan explicitly declares them.
+- Every compared variant uses multiple predefined root seeds/repetitions; single-run configuration ranking is forbidden.
+- D0 receives the bounded planning-parameter search defined by T-521.
+- F0/C0 candidate-v1.1 base hyperparameters remain fixed unless an explicit scientific amendment reopens them; do not silently retune them merely to match D0.
+- The UI may expose only protocol-approved values/ranges/combinations and must explain which settings are fixed, tunable, advanced, or unavailable and why.
+
+### Pilot / validation
+
+- Candidate settings are evaluated only on permitted non-final partitions.
+- Failed, interrupted, cancelled, invalid, non-recovery, and poor-performing configurations remain recorded.
+- Selection criteria and tie rules are predeclared; no best-seed/best-run cherry-picking.
+- Resource/runtime costs are recorded when useful to interpret feasibility.
+
+### Final evidence
+
+- Final model settings are frozen before final outcomes are inspected.
+- The final matrix uses the frozen configuration for each retained regime, the precommitted final root seeds, and all required layouts/conditions.
+- Final comparison reports the number of paired roots/units and preserves layout/condition breakdowns.
+- Exploratory/tuning configurations remain visible as non-final provenance and never become final evidence by relabeling.
+
+## Candidate-v1.1 experimental matrix
+
+Current direction from DEC-042/T-521:
+
+### Agents
+
+- F0 frozen Q-learning;
+- C0 continual Q-learning;
+- D0 Dyna-Q+.
+
+### Conditions
+
+1. `nominal`;
+2. `action-remap-2-swap`;
+3. `action-remap-4-cycle`;
+4. `action-failure-1of8`;
+5. `action-failure-1of4`;
+6. `observation-corruption-1of8`;
+7. `observation-corruption-1of4`.
+
+### Layouts and repetitions
+
+- four fresh held-out final layouts under the accepted GridWorld structural constraints;
+- fresh precommitted v1.1 final seed bank;
+- `32` paired final root seeds per final layout/condition experiment;
+- development/tuning/pilot/final partitions remain disjoint and stage-validated.
+
+The exact fresh layout definitions, final seed values, D0 search values, and candidate protocol schema are owned by T-521 and must be committed before the corresponding evidence is inspected.
 
 ## RQ and metric mapping
 
-| Contrast | Capability isolated | Required schema-v1 evidence |
+| Contrast | Capability isolated | Required evidence |
 |---|---|---|
-| F0 vs C0 | Benefit/cost of ordinary continued updating from the same nominal knowledge | nominal performance, immediate/worst degradation, recovery status/delay, terminal gap, cumulative deficit |
-| F0 vs R0 | Declared-set pre-deployment robustness and conservativeness versus nominal training | nominal performance/gap, immediate/worst degradation, terminal gap, in-set/out-of-set label |
-| C0 vs R0 | Online sample-driven adaptation versus stronger-prior frozen robustness | full post-change curves and all component estimands; no unqualified universal ranking |
+| F0 vs C0 | Cost/benefit of ordinary continual model-free updating from the same nominal checkpoint | nominal performance, immediate degradation, cumulative deficit, terminal performance/gap, secondary recovery outcome |
+| F0 vs D0 | Frozen nominal behavior versus model-based continual adaptation/re-exploration | same component outcomes + paired effect/CI and trajectory view |
+| C0 vs D0 | Ordinary model-free updating versus learned-model planning + recency-directed re-exploration | full post-change curves, component outcomes, paired effects/95% CIs, runtime/resource context where useful |
 
-Observation corruption and action failure reuse these roles as supporting robustness diagnostics. No extra observation/action-robust algorithm is added merely to enlarge the matrix.
+The primary candidate-v1.1 reporting roles are cumulative deficit, immediate degradation, and terminal gap/performance. Recovery remains secondary/sensitivity because accepted pilot evidence showed threshold/stability sensitivity. Preserve `NO_DEGRADATION`, `RECOVERED`, and `NOT_RECOVERED`; never encode non-recovery as a fabricated horizon recovery time. No composite resilience score is used.
+
+Observation corruption and action-execution failure remain single-factor supporting conditions using the same retained regimes rather than requiring a dedicated model for each disturbance type.
 
 ## Information and fairness contract
 
-| Property | F0 | C0 | R0 |
+| Property | F0 | C0 | D0 |
 |---|---|---|---|
-| Agent-visible online information | observation, intended action, reward, lifecycle | same | same |
-| True state/regime/change/disturbance/executed action | hidden | hidden | hidden |
-| Nominal checkpoint | common learned Q table | same common Q table | not applicable; planned model recorded |
-| Post-change learning | none | ordinary Q updates | none |
-| Prior transition model | none online beyond learned values | none online beyond learned values | explicit nominal model + declared uncertainty rows |
-| True realized post-change kernel | hidden | hidden | hidden; only in-set/out-of-set evaluated by evaluator |
-| Exploration/action selection | matched explicit schedule and RNG policy | identical to F0 | explicit comparable deployment action-selection policy |
+| Online agent-visible information | observation, intended action, reward, lifecycle | same | same |
+| True state / executed action / change / disturbance / regime | hidden | hidden | hidden |
+| Common selected nominal Q checkpoint | yes | yes | compatible starting checkpoint | 
+| Post-change learning | none | Q updates | Q updates + empirical-model/planning updates |
+| Prior privileged transition model | none | none | none; model is learned from permitted interaction |
+| Changepoint oracle | none | none | none |
+| Final configuration selection | frozen pre-final | frozen pre-final | bounded D0-only non-final tuning then frozen |
 
-R0's stronger prior means the thesis compares declared capability/assumption regimes, not equal-information algorithms. Interaction, planning/model queries, tuning trials, CPU time, and memory are controlled or reported separately. Hyperparameters are selected only on development/tuning/pilot partitions and frozen before final trajectories, following citation-ready `SRC-76B2247457`.
+Comparisons therefore study declared adaptation mechanisms under a common information boundary. Differences in computational planning cost are reported rather than hidden, but the scientific interface does not give D0 privileged evaluator knowledge.
+
+## Historical R0 boundary
+
+R0 remains in repository history/pilot evidence because it demonstrated a meaningful declared-set robustness contrast and exposed a real feasibility failure. Do not delete, rewrite, or relabel that evidence. Do not include R0 in current v1.1 agent selection, UI default final configuration, final-v1.1 matrices, or result rankings unless a future explicit protocol amendment scientifically reopens and revalidates it.
 
 ## Excluded or deferred candidates
 
-| Candidate | Decision | Evidence-backed reason / reopening condition |
+| Candidate | Decision | Reopening condition |
 |---|---|---|
-| Context Q-learning / context memory | **EXCLUDE from current set** | Citation-ready `SRC-E6A5B7584B` supports a change/context-aware method but assumes detectable structured contexts. The retained RQs contain one novel persistent change, not recurring-context recall; adding detector/context storage would introduce a new RQ, calibration surface, and matrix branch without current necessity. Reopen only if pilots or final framing retain recurring-context recall as distinct. |
-| Detector-triggered reset/restart | **EXCLUDE from current set** | Citation-ready `SRC-7456165CEA` shows detection delay/false alarms and relearning are distinct and explicitly recommends feasibility validation. Detector mechanism attribution is not a retained RQ. Reopen only if F0/C0/R0 results cannot explain adaptation mechanisms and a bounded detector question is formally added before protocol freeze. |
-| Changepoint oracle | **EXCLUDE as scientific agent** | Evaluator truth would violate the common information contract. It may be a clearly labelled debugging upper bound only, never mixed into agent rankings. |
-| Sarsa, Double Q-learning, recency/window variants | **EXCLUDE initially** | They duplicate the ordinary tabular role unless a concrete Q-learning regression/instability appears in pilots. Reopen only for a demonstrated failure that changes the scientific interpretation. |
-| Deep DQN/PPO/SAC, meta-learning, neural context/robust methods | **DEFER/EXCLUDE** | The finite observable GridWorld needs no function approximation; extra architecture/optimizer variance, tuning and compute would reduce independent-run evidence without a distinct RQ capability. Reopen only if tabular representation becomes inadequate under an accepted amendment. |
-| Dedicated action/observation robust agents | **EXCLUDE** | Those disturbances are supporting diagnostics, not separate primary agent-role questions. |
-| Random policy or optimal/oracle planner | **REFERENCE FIXTURE ONLY** | Useful for correctness/scale checks, not a scientifically comparable resilience capability role. |
+| Context Q-learning / recurring-context memory | **EXCLUDE** | Reopen only if recurring-context recall becomes a distinct accepted RQ. |
+| Detector-triggered reset/restart | **EXCLUDE** | Reopen only if changepoint detection itself becomes an accepted mechanism question. |
+| Changepoint oracle | **EXCLUDE as scientific agent** | Debug/reference fixture only; evaluator truth cannot enter scientific rankings. |
+| Sarsa / Double Q / extra recency-window tabular variants | **EXCLUDE** | Reopen only for a concrete scientifically material failure not answered by F0/C0/D0. |
+| DQN / PPO / SAC / meta-learning / neural context or robust methods | **DEFER/EXCLUDE** | Reopen only if the accepted representation/RQ requires function approximation and added tuning/compute is justified. |
+| Dedicated action/observation robust agents | **EXCLUDE** | Reopen only if those disturbances become separate primary agent-role RQs. |
+| Random/oracle/optimal planner | **REFERENCE FIXTURE ONLY** | Correctness/scale checks, not comparable resilience agents. |
 
-## T-312 correctness and feasibility results
+## Validation state and next gate
 
-### Common tabular implementation
+`T-520` is complete: standalone D0, deterministic serialization, episode-preserving deployment, development-only v1.1 adapter and F0/C0/D0 runner integration are covered by focused tests and PR CI run 346.
 
-- deterministic seeded tie-breaking/exploration and exact replay;
-- hand-computed one-step Q update and tiny-MDP optimal policy;
-- stable versioned Q-table serialization;
-- common nominal checkpoint checksum for F0/C0;
-- F0 mutation prohibition and C0 update confirmation;
-- terminal/truncation behavior explicit;
-- no evaluator-only information in action/update paths.
-
-### Robust planner
-
-- probability rows and uncertainty sets validate and fail closed;
-- singleton nominal uncertainty reduces to ordinary value iteration;
-- hand-computed robust Bellman backup matches exactly;
-- wider set changes only declared transition uncertainty;
-- in-set/out-of-set labeling remains evaluator-only;
-- frozen deployment cannot update planning state;
-- CPU runtime is measured before pilot matrix construction.
-
-## Remaining freeze gates
-
-`T-312` implements and validates these gates in `src/resilient_agents/agents.py` and `tests/test_agents.py`: focused tests cover exact Q updates, terminal behavior, common checkpoint/frozen mutation, deterministic replay/round-trip state, hidden-information rejection, singleton and worst-row robust backups, frozen deployment, and invalid model/probability failure. `T-410` confirms C0/F0 execution feasibility and finds distinct R0 in-set/out-of-set behavior, but its nominal censoring fails the unchanged-retention gate. `T-411` refreshes decision-driving evidence; `T-412` must then objectively validate a bounded non-final R0 revision or remove/reframe that role before freezing the fair statistical protocol and before any final outcomes are inspected.
+`T-521` is now the authoritative next scientific configuration task. It must commit the candidate-v1.1 protocol/schema, exact bounded D0-only search, fresh held-out layout definitions, fresh final seed bank, structural condition IDs, paired-effect/95% CI support and stage/firewall rules before `T-522` uses any non-final tuning/pilot evidence. Final evidence remains blocked until the protocol is frozen and the complete application is accepted.
