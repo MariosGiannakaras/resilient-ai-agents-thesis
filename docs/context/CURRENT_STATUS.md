@@ -10,70 +10,63 @@
 - Historical accepted baseline includes `T-100` target-machine validation and `T-200` research framing through completed historical WP6 v1.0 evidence.
 - `protocol-v1.0`, finalized `FINAL-*`, frozen historical analysis and R0 pilot evidence remain immutable.
 - **Project: 4/8** master milestones complete (#87: 1, 2, 4, 5).
-- **Current task:** `T-524 IN_PROGRESS` — source-backed protocol-v2 research contract.
-- Active tracker: #95 **1/10**. Historical #88 closed/superseded at 9/12; its unfinished T-522/v1.1 tuning/freeze work must not execute.
+- **Current task:** `T-524` IN_PROGRESS — source-backed protocol-v2 research contract.
+- Active tracker: #95 **2/10**. Historical #88 closed/superseded at 9/12; its unfinished T-522/v1.1 tuning/freeze work must not execute.
 - #93 radical UI redesign is PAUSED until the v2 scientific workflow stabilizes. The current NiceGUI UI/runtime is a technical prototype/foundation, not the accepted final interface.
 - Final standalone `.exe` packaging is post-thesis #94 / `T-803`, not a pre-WP7 gate.
 - **Pre-WP7 approval: NOT APPROVED.** All `T-700+` execution remains blocked.
 
-## Why protocol v2
+## Protocol-v2 methodology verdict
 
-Candidate v1.1 is a valid adaptation-mechanism experiment, but its strategies begin evaluation from the same selected tabular Q-learning checkpoint. It therefore cannot support genuine end-to-end claims about how different RL algorithms learn. DEC-048 supersedes future v1.1 final execution while preserving v1.1 as auditable non-final history.
+The 2026-08-27 chained methodology pass supports the two-phase decomposition with refinements:
 
-Protocol v2 separates two questions:
+1. **Nominal learning:** independently trained methods under a common semantic environment/information and environment-interaction budget, with periodic standardized no-learning evaluation.
+2. **Resilience/adaptation:** each method/root's own trained scientific checkpoint cloned into matched **Frozen** and ordinary-training **Continual** regimes, each with a same-regime no-change reference.
 
-1. **Nominal learning:** independently trained methods under a common semantic environment/information/resource contract.
-2. **Resilience/adaptation:** each method/root's trained checkpoint cloned into matched **Frozen** and **Continual** deployment regimes, each with a same-regime no-change reference.
+The exact four-branch Phase-B construction is a project experimental design for isolating change and continued-learning effects; literature supports the component principles but does not make this exact layout a universal standard.
 
-GridWorld remains the controlled testbed/visualization environment, not the thesis subject.
+Strong core candidates remain **Q-Learning, SARSA, DQN, PPO and Dyna-Q+**. **Dyna-Q** is a targeted planning-vs-recency ablation, not an automatic full arm. **A2C is not retained as a full final arm by default** because its mechanism-level contrast substantially overlaps PPO; it is only a bounded fallback/diagnostic if later pilot evidence establishes distinct value. Historical R0 remains negative/diagnostic.
 
-## Candidate method roles
+## Fair-learning and evaluation contract
 
-Strong core candidates, still pilot-gated:
+- Principal common training budget: **environment interactions/timesteps**, not equal episodes, optimizer updates or wall-clock time.
+- Tuning uses method-specific literature-backed ranges but a predeclared equivalent search/configuration opportunity, common tuning-only roots/partitions, fixed selection metric and deterministic tie rule. Seeds are randomization units, never tuning parameters; library defaults are not automatically fair.
+- Periodic standardized **no-learning evaluation** checkpoints separate learned policy quality from exploratory/stochastic training return. Evaluation interactions never update the learner and are accounted separately from the training budget.
+- Episodes nested in a run are not independent replicates. Use root-level paired differences where common randomness is scientifically valid, effect sizes and 95% intervals, and only limited predeclared primary contrasts.
+- Final root/layout/matrix size is selected from non-final variance/precision/runtime evidence rather than copied automatically from v1.1. No best-seed selection and no mechanical use of multi-task IQM as the single-testbed estimand.
 
-- **Q-Learning** — tabular off-policy value learning;
-- **SARSA** — tabular on-policy value learning;
-- **DQN** — neural off-policy value approximation;
-- **PPO** — neural on-policy policy-gradient/actor-critic optimization;
-- **Dyna-Q+** — learned-model planning plus directed re-exploration for change.
+## Continual-deployment and checkpoint contract
 
-**Dyna-Q** is a useful Dyna-Q+ planning ablation. **A2C** is a secondary actor-critic candidate; full final inclusion requires distinct-value evidence because it overlaps mechanistically with PPO. Historical R0 remains negative/diagnostic. No final method count is frozen yet.
+`Continual` means ordinary method-native continued training, not a claim that DQN/PPO/etc. are specialized continual-learning algorithms. Deep agents can lose plasticity or interfere with prior learning under non-stationarity; that is an interpretation/diagnostic issue, not justification to add continual-learning mitigations without a separate RQ.
 
-## Fair-learning contract
-
-- Principal common training budget: **environment interactions/timesteps**, not equal episodes or equal optimizer updates.
-- Each algorithm gets a small literature-backed configuration set and equivalent tuning opportunity on tuning-only partitions; library defaults are not automatically fair final settings.
-- Periodic standardized **no-learning evaluation** checkpoints separate learned policy quality from exploratory/stochastic training return.
-- Roots/seeds are randomization units, never tunable parameters; nested episodes are not independent replicates.
-- Final root/layout/matrix size is selected from non-final variance/precision/runtime evidence rather than copied automatically from v1.1.
-- Preserve effect sizes/95% intervals, negative/null/failed/non-recovery outcomes, paired designs where valid, recovery as secondary/sensitivity and no composite resilience score.
-
-## Continual-deployment contract
-
-`Continual` means ordinary method-native continued training, not a claim that DQN/PPO/etc. are specialized continual-learning algorithms. Deep RL can suffer forgetting/plasticity limitations under non-stationarity, so these effects are part of interpretation rather than hidden.
-
-Frozen and Continual branches for one method/root start from the exact same trained scientific state. Checkpoint semantics are algorithm-specific: DQN continuation includes network/target/optimizer/replay/exploration/RNG state; actor-critic continuation includes policy/value/optimizer/schedule/RNG state and clones only at valid update boundaries.
+Frozen and Continual branches for one method/root start from the exact same trained scientific state. DQN continuation includes online/target networks, optimizer, replay contents/capacity/cursor/sampling policy, exploration schedule/counters and RNG; replay reset/recency weighting is a separate intervention. PPO-like continuation includes policy/value parameters, optimizer/LR schedule, normalization state when used, counters/RNG and clones only at completed rollout/update boundaries. Tabular/planning agents similarly preserve Q/model/recency/schedule/counter/RNG state required for exact continuation.
 
 ## Environment and uncertainty
 
-Do not add pixels, partial observability or a large external benchmark merely to justify deep RL. `T-526` will pilot only a small bounded set of project-owned GridWorld complexity levels and keep the simplest one that avoids clear floor/ceiling effects while remaining CPU-feasible on the validated Windows thesis machine.
+Do not add pixels, partial observability or a large external benchmark merely to justify deep RL. `T-526` uses a small **ordered, predeclared** set of project-owned GridWorld complexity levels and a frozen discrimination rule. Retain the simplest level that is not universally trivial or universally unsolved, preserves the information/uncertainty contract and is CPU-feasible; do not select environment complexity because it produces a preferred method ranking.
 
-Current uncertainty taxonomy remains strong unless pilots justify amendment:
+The uncertainty conditions support separate claims:
 
-- primary persistent change: action remapping;
-- supporting actuation uncertainty: action-execution failure;
-- supporting perceptual uncertainty: observation corruption.
+- **action remapping:** abrupt persistent transition/action-semantics change; primary adaptation condition;
+- **action-execution failure:** stationary/stochastic actuation uncertainty; robustness diagnostic;
+- **observation corruption:** perceptual/information uncertainty that may introduce POMDP-like ambiguity; supporting diagnostic.
 
-Additional drift/dynamic-obstacle/reward-change conditions are not added for variety.
+Do not pool these into a single undifferentiated resilience claim. Additional drift/dynamic-obstacle/reward-change conditions are not added for variety.
+
+## Metrics and historical evidence
+
+Phase A retains standardized final nominal evaluation, learning curves/checkpoints, learning efficiency/AUC only alongside curves, variability and CPU/wall cost. Phase B primaries are immediate degradation, cumulative deficit versus the matched same-regime nominal reference, and terminal performance/gap. Recovery remains secondary/sensitivity; there is no composite resilience score.
+
+Protocol-v1.0 remains separately reportable foundational evidence. Candidate v1.1 remains auditable non-final adaptation-mechanism evidence. Neither is numerically pooled into protocol-v2 confirmatory estimates because the training provenance, estimands and protocol differ.
 
 ## Bibliography and provenance
 
-`MariosGiannakaras/ThesisBibliography` remains canonical. The accepted immutable consumer snapshot is still **`bibliography-integration-v3`**. Bibliography issue #135 now owns the v2 methodology refresh: re-evaluate existing DQN/plasticity/PPO/statistical records first, add only missing primary/methodology sources, then enter this repo through a later versioned synchronization.
+`MariosGiannakaras/ThesisBibliography` remains canonical. The accepted immutable consumer snapshot is still **`bibliography-integration-v3`**. Bibliography issue #135 owns the v2 methodology refresh. Content/identifier deduplication found four genuine methodology gaps — Patterson et al. (2024), Henderson et al. (2018), Steinparz et al. (2022), and Dohare et al. (2024) — and they have entered the upstream canonical intake workflow. Existing bsuite and DQN records are re-evaluated rather than duplicated. A later versioned bibliography sync is required after upstream analysis/evidence/selection is complete.
 
 ## Still intentionally unfrozen
 
-Exact v2 final methods, environment complexity, interaction budget, hyperparameters, checkpoint/update schedules, final roots/layouts, primary contrast set, final evidence, redesigned UI and final thesis/presentation remain intentionally unfrozen until their declared gates pass.
+Exact v2 final methods after pilot gates, environment complexity, interaction budget, hyperparameters, update schedules, final roots/layouts, exact primary contrast family, final evidence, redesigned UI and final thesis/presentation remain intentionally unfrozen until their declared gates pass.
 
 ## Exact next action
 
-Complete `T-524`: finish the canonical bibliography refresh and freeze the source-backed v2 RQs, estimand roles and method-role gates. Then `T-525` implements the common multimethod training/checkpoint foundation, followed by `T-526` Windows CPU/environment/method pilots and `T-527` fair tuning/statistics/protocol-v2 freeze. Do not run old T-522, access any final reserve, resume UI redesign #93, or start WP7.
+Complete `T-524` by finishing ThesisBibliography #135 canonical intake/re-evaluation and citation-ready evidence, then close the source-backed v2 RQ/method-role freeze. `T-525` is the next bounded implementation package: only the common multimethod training/evaluation/checkpoint/clone infrastructure and minimum pilot adapters, not final tuning or matrix expansion. `T-526` then requires the validated Windows CPU/environment/method pilot, followed by `T-527` fair tuning/statistics/protocol-v2 freeze. Do not run old T-522, access any final reserve, resume UI redesign #93, or start WP7.
