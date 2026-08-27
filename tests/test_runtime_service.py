@@ -5,6 +5,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -89,6 +90,39 @@ class RuntimeServiceTests(unittest.TestCase):
                 )
             self.assertFalse((root / "results" / "runtime" / "RUNTIME-INVALID").exists())
 
+    def test_start_next_uses_owned_entrypoint_without_shell(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            script = root / "scripts" / "run_v11_candidate_runtime.py"
+            script.parent.mkdir(parents=True)
+            script.write_text("# test fixture\n", encoding="utf-8")
+            service = self._service(root)
+            service.enqueue_v11_candidate(
+                protocol_path=PROTOCOL_PATH,
+                request=minimal_request("RUNTIME-START"),
+            )
+            process = Mock()
+            process.pid = 4321
+            process.poll.return_value = None
+            with patch(
+                "resilient_agents.runtime_service.subprocess.Popen",
+                return_value=process,
+            ) as popen:
+                started = service.start_next()
+
+            self.assertIsNotNone(started)
+            assert started is not None
+            self.assertEqual(started.status, RuntimeStatus.RUNNING)
+            self.assertEqual(started.process_id, 4321)
+            args, kwargs = popen.call_args
+            command = args[0]
+            self.assertIn(str(script), command)
+            self.assertIn("--protocol", command)
+            self.assertIn("--request", command)
+            self.assertIn("--telemetry", command)
+            self.assertFalse(kwargs["shell"])
+            self.assertEqual(kwargs["cwd"], root.resolve())
+
     def test_progress_comes_from_runner_state_and_latest_real_telemetry(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -163,6 +197,50 @@ class RuntimeServiceTests(unittest.TestCase):
             self.assertEqual(item.status, RuntimeStatus.INTERRUPTED)
             self.assertFalse(item.capabilities.can_cancel)
             self.assertFalse(item.capabilities.can_restart)
+
+    def test_orphaned_runtime_record_reconciles_finalized_bundle(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            service = self._service(root)
+            service.enqueue_v11_candidate(
+                protocol_path=PROTOCOL_PATH,
+                request=minimal_request("RUNTIME-FINISHED-WHILE-CLOSED"),
+            )
+            metadata_path = (
+                root
+                / "results"
+                / "runtime"
+                / "RUNTIME-FINISHED-WHILE-CLOSED"
+                / "runtime.json"
+            )
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+            metadata["status"] = "running"
+            metadata["process_id"] = 9999
+            metadata_path.write_text(
+                json.dumps(metadata) + "\n",
+                encoding="utf-8",
+            )
+            run_dir = root / "results" / "runs" / "RUNTIME-FINISHED-WHILE-CLOSED"
+            run_dir.mkdir(parents=True)
+            (run_dir / "manifest.json").write_text(
+                json.dumps(
+                    {
+                        "run_id": "RUNTIME-FINISHED-WHILE-CLOSED",
+                        "status": "completed",
+                        "started_at_utc": "2026-01-01T00:00:00+00:00",
+                        "finished_at_utc": "2026-01-01T00:01:00+00:00",
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (run_dir / "FINALIZED").write_text(
+                "schema_version=1\nstatus=completed\n",
+                encoding="utf-8",
+            )
+            reopened = RuntimeService(root).get_run("RUNTIME-FINISHED-WHILE-CLOSED")
+            self.assertEqual(reopened.status, RuntimeStatus.COMPLETED)
+            self.assertIsNone(reopened.process_id)
 
     def test_finalized_historical_status_is_not_rewritten_by_runtime_registry(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
