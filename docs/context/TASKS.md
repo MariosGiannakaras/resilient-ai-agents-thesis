@@ -28,14 +28,14 @@ In-progress/failed work never counts as complete. Newly discovered required work
 ## Resume state
 
 - **Current work package:** DEC-042 pre-WP7 protocol-v1.1 scientific + application refinement.
-- **Current task:** `T-513`
+- **Current task:** `T-520`
 - **State:** `IN_PROGRESS`
 - **Active branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92. This is the single implementation branch/PR for this package; do not create a parallel implementation branch.
 - **Trackers:** #87 master; #88 scientific; #89 runtime; #90 UI; #91 screenshots/CI/Codex handoff.
-- **Last validated point:** DEC-042, branch-pinned `CURRENT_STATUS.md`, branch-pinned Codex bootstrap, initial D0 implementation and focused D0 tests are committed. First PR CI failed at documentation consistency before compile/tests; the concrete validator findings are being reconciled in this checkpoint.
-- **Tests already run:** PR #92 CI run 261 reached documentation validation only and failed there; Python compile/tests were skipped, so D0 is not yet counted validated.
+- **Last validated point:** `T-513` completed. DEC-042, this canonical ledger, `CURRENT_STATUS.md`, and the Codex bootstrap are branch-pinned and mutually consistent. Initial D0 implementation plus focused determinism/information-boundary/state-round-trip tests are committed. PR #92 CI run 265 passed documentation consistency, JSON validation, Python compilation, locked-environment verification, the full test suite, and bibliography-integrity validation.
+- **Tests already run:** PR #92 Repository checks run 265 — SUCCESS.
 - **Uncommitted work:** unknown to remote handoff; next session must inspect `git status` before assuming clean state.
-- **Exact next action:** finish `T-513` by making documentation consistency green and reconciling #87/#91 progress; then start `T-520` on this same branch. Do not start `T-700+`.
+- **Exact next action:** continue `T-520` on this branch by integrating D0 into the headless runner/agent-construction path and adding only the focused integration/contract tests needed to prove no evaluator-information leakage and deterministic execution. Do not start `T-521` or `T-700+` until dependencies are satisfied.
 
 ## Quota/interruption resilience
 
@@ -100,11 +100,12 @@ Historical baseline:
 
 Active refinement tasks:
 
-- [ ] IN_PROGRESS `T-513` — Reconcile DEC-042 governance, single-branch/PR tracking, Codex handoff, and canonical task/status state.
-  - Acceptance: DEC-042/current status/Codex prompt/this ledger/issues #87–#91 agree; PR documentation validator passes; branch/PR/resume state is recoverable without chat history; WP7 hard gate remains explicit.
+- [x] `T-513` — Reconcile DEC-042 governance, single-branch/PR tracking, Codex handoff, and canonical task/status state.
+  - Acceptance satisfied: DEC-042/current status/Codex prompt/this ledger/issues identify the same branch/package; PR #92 documentation validator passed in CI run 265; WP7 hard gate remains explicit.
 
-- [ ] BLOCKED `T-520` — Implement/integrate D0 Dyna-Q+ as an information-limited deterministic third tabular agent.
+- [ ] IN_PROGRESS `T-520` — Implement/integrate D0 Dyna-Q+ as an information-limited deterministic third tabular agent.
   - Depends on: `T-513`.
+  - Progress: standalone D0 implementation and focused unit tests are green; headless runner/agent-factory integration remains.
   - Acceptance: D0 uses only agent-visible observations/intended actions/rewards; common selected Q checkpoint is supported; stochastic learned model + Dyna-Q+ planning/recency bonus are explicit; state/RNG/model serialization is deterministic; focused known-answer/information-boundary/round-trip tests pass; runner can execute D0 without special evaluator access.
 
 - [ ] BLOCKED `T-521` — Implement candidate `protocol-v1.1` design, bounded D0-specific tuning plan, fresh held-out layouts/seeds, and paired statistical support.
