@@ -2,157 +2,148 @@
 
 ## Operating model
 
-The user provides goals, observed behavior, genuinely non-objective academic/product choices, later supervisor feedback, and private material when required. The user is not responsible for routine branches, commits, tests, PRs, CI, review corrections, merges, experiment-result Git publication, or manually remembering unfinished Codex subtasks.
+The user provides goals, genuinely non-objective academic/product choices, observed application behavior, later supervisor/Department feedback and private material when actually required. The user is not the routine Git/CI/task-bookkeeping operator.
 
-Codex executes bounded work from the actual repository state, performs objective diff review, uses GitHub CI as the canonical full-suite guard, fixes failures/findings, and may squash-merge its own validated PR when repository policy does not require a distinct human approval. It must not submit an `APPROVE` review on its own PR. ChatGPT may provide independent review or scientific/writing support when useful, but routine ChatGPT review is not a mandatory stop gate for the long-running Goal. Passing CI is necessary but not sufficient: scope, diff, evidence, task acceptance, documentation, and unresolved review findings still matter.
+Codex executes bounded repository work from actual state, performs objective diff review, uses GitHub CI as the canonical full-suite implementation guard, fixes failures/findings and reconciles tasks/docs. This current pre-WP7 package stays on the single branch/PR declared in `TASKS.md` and must not be merged early merely because an intermediate checkpoint is green.
 
-Normal development flow:
+ChatGPT is used for independent research/review and, after the explicit WP7 approval gate, becomes the preferred Greek writing/narrative/user-instruction layer. It is not a mandatory stop after every technical checkpoint.
 
-> persistent goal -> task registry -> bounded scope -> branch/PR -> CI + objective diff review -> corrections -> squash merge -> task/status reconciliation -> next dependency-valid scope
+Normal implementation flow:
 
-Current supervisor identity, deadlines, and final Word formatting are not implementation blockers. Later feedback is recorded as an explicit change when received.
+> persistent goal -> canonical task registry -> bounded dependency-valid scope -> implementation -> targeted checks -> PR CI/objective review -> corrections -> durable reconciliation -> next allowed scope
 
-## Codex continuation and recovery
+## Session continuation and quota recovery
 
-The tracked canonical execution bootstrap is `docs/context/CODEX_EXECUTION_PROMPT.md`. The canonical concrete checklist/resume ledger is `docs/context/TASKS.md`; `AGENTS.md` is the project-policy authority.
+Every Codex session starts with exactly:
 
-After cloning/updating the repository on the thesis machine, start Codex with the `/goal` command under **User entrypoint** in `CODEX_EXECUTION_PROMPT.md`. Goal mode is the persistent long-horizon wrapper; the repository task ledger remains the authority for what may actually run.
+1. `AGENTS.md`;
+2. `docs/context/TASKS.md`;
+3. `docs/context/CURRENT_STATUS.md`.
 
-At the start of every Codex session:
+Before selecting work, inspect Git status/current branch/recent commits and PR/check state. Resume valid `IN_PROGRESS` work first. Repository evidence wins over stale/truncated session memory. Never discard useful branch/uncommitted work without inspection.
 
-1. inspect Git status/current branch/recent commits, uncommitted work, and relevant PR/check state;
-2. read only `AGENTS.md`, `TASKS.md`, and `CURRENT_STATUS.md` as the session-start core;
-3. inspect `Resume state` and resume any `IN_PROGRESS` task first unless genuinely blocked;
-4. use available session/conversation memory to understand prior work and verify it against durable repository evidence;
-5. reconcile stale handoff prose when actual branch/PR/merge evidence has already resolved it;
-6. otherwise select the first dependency-valid `READY` task, never a `BLOCKED` or `DEFERRED` task;
-7. read only the active task entry and its relevant task-specific active specifications/evidence, using repository search before broad reading.
+The tracked entrypoint is `docs/context/CODEX_EXECUTION_PROMPT.md`. Goal mode keeps the long-horizon objective active while `TASKS.md` controls what is actually dependency-valid. Routine task/PR/CI boundaries are not reasons to ask the user to say “continue”.
 
-The prompt is a lean bootstrap and must not duplicate the domain rules already maintained in `AGENTS.md` or task-specific specifications. Broad context/roadmap/requirements/workflow/governance/historical/generated files are read only when the active task requires them or when a cross-cutting reconciliation is explicitly underway.
+Checkpoint commits are allowed for recovery. Coherent work should still reach `main` as a small number of meaningful permanent commits when the governing acceptance/approval gates permit it.
 
-`Execute it completely` means progressing **one bounded task/coherent work package at a time** while Goal mode keeps the project-lifecycle objective active. When a bounded scope is validated, Codex performs the routine PR/CI/review/merge/reconciliation path itself when permissions and repository policy allow, then re-evaluates `TASKS.md` and continues automatically with the next dependency-valid `READY` work. A task, PR, CI, or merge boundary is not a reason to stop.
+## Testing / CI discipline
 
-Evidence-backed research, architecture, ADR, implementation, and test decisions are autonomous when the active task's evidence and acceptance criteria resolve them. The Goal pauses only where the controlling task/specification explicitly requires user/supervisor/external approval, required evidence exists only elsewhere, or the choice is genuinely non-objective. It never authorizes `BLOCKED`/`DEFERRED` work, fabricated evidence, or bypassing an explicit external approval requirement.
+Validation is risk-based and proportional.
 
-A separate startup `/plan` is normally unnecessary because the repository already contains the accepted roadmap, dependency graph, and task acceptance conditions. Use plan mode inside Goal mode only when a specific task has a genuinely unclear approach that benefits from investigation before edits.
+- During implementation, run the smallest deterministic checks that protect the changed acceptance condition or material scientific/reliability boundary.
+- Add tests for known-answer behavior, information isolation, determinism/serialization, configuration validation, lifecycle truthfulness and concrete regressions.
+- No arbitrary coverage target, broad fuzz/mutation project, exhaustive parameter matrix or pilot/final campaign as CI testing.
+- GitHub PR CI is the canonical complete repository check. Do not repeatedly duplicate successful full-suite runs locally.
+- On failure, inspect the narrowest failing step first. On success, record the result and continue.
+- Required scientific/provenance/configuration state fails closed; optional unavailability is explicit and never treated as affirmative evidence.
 
-If model quota or the session ends unexpectedly, the next session inspects branch history, working-tree diff, PR/tests, `Resume state`, and session memory if available. It does not restart the task merely because the previous chat/session ended. If the persistent goal can be resumed, resume it after reconciling repository state.
+## Bibliography flow
 
-Intermediate branch commits are valid recovery checkpoints. A coherent PR still normally reaches `main` through one squash merge, so quota resilience does not require noisy permanent main-branch history.
+All new source discovery/original PDFs/OCR/conversion/scientific source analysis belong to `MariosGiannakaras/ThesisBibliography`. This repository consumes only committed immutable generated corpus versions. Formal citation trust is limited to `research/bibliography/citation-ready/`.
 
-Adjacent dependency-valid tasks may share a branch/PR only when they are one coherent implementation unit and no explicit user/supervisor/external-machine/protocol-approval gate separates them. Separate task IDs do not by themselves justify micro-PRs.
+## Scientific implementation and model/settings flow
 
-## Progress reporting
+Current candidate-v1.1 scientific direction is maintained in `docs/research/MODEL_CANDIDATES.md`:
 
-Codex keeps long executions understandable with concise milestone reporting rather than continuous narration.
+- F0 frozen Q-learning;
+- C0 continual Q-learning;
+- D0 Dyna-Q+;
+- R0 preserved as historical pilot evidence only for the current direction.
 
-- Report after scope is established and after meaningful completed/validated checkpoints or a material genuine blocker; do not report every command or tiny edit.
-- Use `X/Y` only when the denominator is objectively defined. Completed/validated items count toward `X`; in-progress, failed, or merely attempted work does not.
-- The canonical task registry provides the durable high-level count: `Project: X/Y` may count checked versus total `T-*` entries in `TASKS.md`.
-- Also report the relevant current work package or major deliverable when useful, such as `WP5 Application: 2/4`, `Thesis: 3/6`, or `Presentation: 1/3`, using the corresponding canonical task entries rather than a second tracker.
-- Add an active-task fraction such as `T-510: 3/5` only when the task has a real finite substep set. If no stable denominator exists, report a concise textual state instead of inventing one.
-- Keep most updates to one progress line plus one sentence stating what just completed and what comes next. Recompute counts whenever task state changes.
+Development/tuning may contain multiple **approved resolved configurations** per regime. Each configuration has stored identity/provenance and multiple predefined root seeds; single-run/best-seed selection is forbidden. F0/C0 base values remain the accepted candidate configuration unless explicitly reopened. D0-only planning settings are selected from the predeclared bounded T-521/T-522 non-final search. Final settings are frozen before final outcomes are inspected.
 
-## Testing and CI flow
+## Application implementation handoff
 
-DEC-029 and DEC-030 keep validation proportional to actual risk while making failure detection early, explicit, and inexpensive.
+Historical Streamlit and temporary React/Vite surfaces are superseded. The authoritative application is NiceGUI native mode per DEC-044, with analytics per DEC-045 and novice-first UX per DEC-046.
 
-1. During implementation, Codex runs the smallest targeted test subset that validates the changed behavior.
-2. New tests are added only for task acceptance conditions, material scientific/reliability/security boundaries, or a concrete regression likely to recur.
-3. Tests use tiny deterministic fixtures, known-answer cases, contracts, or representative smoke/integration paths. Pilot and final experiment matrices are never used as CI tests.
-4. There is no arbitrary coverage target and no default mutation/fuzz/property/combinatorial/snapshot expansion.
-5. Before opening/updating a PR, Codex runs the documentation consistency validator and only the directly affected validators/targeted tests needed for review readiness.
-6. When GitHub Actions is available, PR CI is the canonical full-suite pre-merge runner. Codex does not run the full suite locally merely to duplicate it.
-7. On successful CI, record the conclusion and continue; do not tail, summarize, or repeatedly re-analyse successful logs. On failure, inspect only the failed step/log, reproduce narrowly when useful, fix the cause, and let CI rerun the complete repository checks.
-8. A local full-suite run is reserved for unavailable CI, changes to CI/test infrastructure where local reproduction is useful, or debugging a specific failure.
-9. Stop adding tests when the acceptance condition and material risks are covered; do not delay implementation for theoretical completeness.
+The scientific core remains UI-independent. T-530 owns the Python runtime/service boundary for real active-run status/events/heartbeat/history/resources, safe control capabilities and read-only live GridWorld observation. NiceGUI consumes those contracts and must never fabricate scientific execution state.
 
-The repository CI remains one bounded fail-fast job rather than a growing matrix. Cheap deterministic checks run before environment installation/tests where possible, superseded runs are cancelled, successful output is compact, and a timeout prevents a hung check from consuming unbounded Actions time. PRs always receive the complete repository validation. Pushes to `main` also receive it whenever source, config, protocol, bibliography, tests, or active documentation changes; a push that changes only generated `results/**` and/or `artifacts/**` may skip the duplicate full suite because the producing code was already validated and the publisher has its own fail-closed provenance safeguards.
+T-531 completes Dashboard, New Experiment, Runs, Compare and Artifacts. The UI exposes protocol-approved settings and configuration variants, explains their meaning, supports multiple seeds/repetitions and compatible comparisons, and distinguishes development/tuning/live-provisional/final evidence clearly.
 
-Temporary public repository visibility may be used at explicit user direction to obtain public-repository GitHub Actions. Visibility is an operational CI choice, not a release decision, and does not weaken secret/privacy/copyright/licensing or final-release audits.
+T-532 validates root screenshots, browser rendering, native Windows behavior and the cleaned NiceGUI/PyInstaller `onedir + windowed` delivery folder. T-511 remains a human end-to-end acceptance gate; automated rendering never substitutes for it.
 
-GitHub CI execution time is separate from model reasoning quota. The quota-sensitive waste to avoid is repeated test design, expansion, local/full-CI duplication, verbose success-log analysis, and reruns without a concrete risk or code change.
+## Where approved research runs execute
 
-## Fail-fast implementation behavior
+Once the application/runtime is complete, **ordinary approved experiments should not require Codex or console commands**. The intended path is the validated desktop application on the accepted thesis machine:
 
-Required configuration, contracts, schemas, provenance, lifecycle preconditions, and scientific invariants are validated at clear boundaries before expensive work starts. Invalid or ambiguous required state fails closed with an explicit exception/error or non-zero result; it must never be converted into an empty/default value that looks successful.
+> choose approved model/configuration/condition/seeds -> review resolved configuration -> launch -> monitor real live state/GridWorld/metrics -> finalize evidence/provenance -> guarded Git publication -> compare/analyze/export
 
-Broad exception swallowing and silent fallback are forbidden for required behavior. Optional probes may return an explicit `unavailable`/`unsupported` state only when the capability is genuinely optional, and downstream logic must not treat that state as affirmative evidence. Finalization is atomic/transactional where practical so partial output cannot masquerade as a valid finalized artifact. Validation is kept out of hot inner loops when one trusted boundary check is sufficient, preserving both correctness and runtime efficiency.
+The application/backend therefore becomes the normal research execution surface after acceptance.
 
-## Bibliography material flow
+### GitHub-hosted Actions
 
-PDFs, Markdown, NotebookLM exports, source lists, and other bibliography inputs go to `MariosGiannakaras/ThesisBibliography`. The thesis repository never writes back upstream. It receives only the committed complete research corpus through the immutable read-only PR-based synchronization contract in `docs/context/BIBLIOGRAPHY_INTEGRATION.md`.
+GitHub remains the repository, PR, CI and evidence coordination surface. GitHub-hosted runners are suitable for:
 
-The first complete import is already accepted. Formal citation trust remains confined to `research/bibliography/citation-ready/`; other imported content is internal research context unless promoted upstream and resynchronized.
+- repository/documentation/config validators;
+- deterministic unit/integration/smoke tests;
+- bounded browser/render checks;
+- reproducible analysis/artifact regeneration when the inputs are already frozen and the analysis contract allows it;
+- packaging/build automation that does not substitute for native target-machine validation.
 
-## Application-to-final-experiment handoff
+GitHub-hosted runners are **not automatically equivalent to the accepted thesis machine**. Final-v1.1 stochastic evidence remains on the validated thesis-machine execution path unless an explicit protocol amendment revalidates a different environment.
 
-The application is not considered complete merely because the Streamlit pages render. Application completion requires the real scientific core, frozen protocol, pilot-proven management behavior, and validated user-facing configure/run/monitor/history/compare/export workflow.
+### Optional self-hosted GitHub runner
 
-The final application also has to satisfy the self-explanatory UX baseline from DEC-027 and `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`: understandable labels/messages/units, accurate contextual help/tooltips, consistent text+icon+semantic-color states, actionable empty/loading/warning/error states, pre-run resolved-configuration/validation review, proportionate confirmations, and clear next actions where useful. Color must not be the only essential signal.
+A self-hosted GitHub Actions runner could technically be installed on the thesis Windows machine, allowing a workflow to be triggered from GitHub while computation still occurs locally. This is optional, not the default architecture: it adds runner/service/security/update complexity without removing the need for the physical machine. The finished desktop application is the simpler user-facing run surface.
 
-Onboarding is deliberately sequenced after the stable dashboard structure (`T-510 -> T-512 -> T-511`). It remains short, skippable and replayable with Previous/Next/Skip/Finish, uses lightweight local state, and must not create a new frontend/account/persistence subsystem without demonstrated need.
+### When local Codex is still needed
 
-Only after the complete `T-511` application gate should the frozen final experiment campaign begin in the normal user journey. The final campaign uses the same validated core/configuration path as pilots; a headless fallback is allowed only when needed and explicitly documented, never as a scientifically different execution path.
+Codex on the thesis machine is useful when code/protocol changes are required: debugging a real native issue, implementing a scientifically justified amendment, repairing packaging, or modifying analysis/runtime behavior. It should not be required merely to execute an already-approved configuration once the app is complete.
 
-## Experiment result flow
+## Final-v1.1 evidence flow
 
-A run ID means one whole experiment and may include many seeds/episodes.
+The normal final sequence remains gated:
 
-1. The experiment persists data/provenance safely while running.
-2. The run bundle is finalized at the whole-experiment lifecycle boundary.
-3. The guarded publisher stages only the finalized bundle and required run index/registry metadata.
-4. One informative commit is created and pushed for the whole experiment.
-5. No permanent commit is created per seed/episode.
-6. If publication is unsafe or fails, local result data is preserved and the Git action is blocked rather than forced.
-7. Configured large result/artifact formats use Git LFS; useful evidence is not manually discarded merely because it is large.
+1. T-521 candidate-v1.1 definition/statistics.
+2. T-522 bounded non-final D0 tuning/pilot and freeze/amend/reject.
+3. T-530/T-531/T-532 application/runtime/delivery completion.
+4. T-511 intended-user acceptance.
+5. T-610 frozen v1.1 final matrix on the approved execution path.
+6. T-611 evidence completeness/integrity freeze.
+7. T-612 predeclared paired analysis/sensitivity diagnostics.
+8. T-613 final figures/tables/exports + thesis/defense evidence package.
 
-After the final campaign, all predefined runs are accounted for before the accepted final evidence set is frozen.
+A run ID is one whole experiment and may contain many root seeds/episodes. Failed/cancelled/interrupted/invalid/non-recovery outcomes remain attributable. Successful finalization may create at most one guarded Git commit/push for the whole experiment.
 
-## Analysis-to-writing handoff
+## Mandatory pre-WP7 gate
 
-Frozen evidence is analyzed only through the version-controlled frozen analysis definitions. Final figures, tables, summaries, diagnostics, and captions are generated from that evidence.
+Application/evidence completion does not authorize writing. After T-613 and T-511 are satisfactory, the assistant may ask whether WP7 may start. Only an explicit user approval unlocks T-700+.
 
-Before normal thesis drafting, a thesis/defense evidence package is frozen. It maps research questions, protocol/method references, citation-ready sources, result/run IDs, figures/tables, and planned claims. This prevents the thesis or presentation from being reconstructed later from memory or ad-hoc raw-result browsing.
+Planning/documentation of the future workflow is allowed before that gate; thesis prose/result interpretation intended as final writing is not.
 
-## Thesis review and defense handoff
+## WP7/WP8 tool and responsibility handoff
 
-ChatGPT remains the preferred writing/restructuring/review layer for polished Greek thesis prose when that stage is reached, while Codex owns reproducible repository-backed figures, tables, evidence checks, technical drafts, and legitimate code/data corrections. Current official guidance is rechecked near writing/delivery. If the final narrative workflow explicitly requires user/supervisor review, that is a genuine later-stage gate; it is not an implementation-stage blocker.
+Detailed future ownership lives in `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` once present; `TASKS.md` remains the only task-status ledger.
 
-A review-ready thesis precedes final thesis freeze. Supervisor/reviewer corrections are incorporated when they are actually received, with affected evidence/citations/figures revalidated.
+High-level split:
 
-After the final thesis is stable, the defense package follows `docs/thesis/PRESENTATION_WORKFLOW.md`: evidence-mapped PowerPoint, embedded speaker notes, a separate full spoken Greek script, real screenshots/demo assets, and rehearsal/timing/factual-consistency validation.
+- **Repository/Codex:** evidence maps, reproducible figures/tables, technical/citation/result consistency, traceable asset manifests and legitimate code/data fixes.
+- **ChatGPT:** Greek thesis drafting/restructuring/review, explanatory wording, chapter coherence, slide narrative, speaker notes/full script and exact user-facing manual placement instructions.
+- **Microsoft Word:** final `.docx` composition/inspection, styles/automatic TOC, captions, cross-references, lists, equations, pagination and visual QA.
+- **PowerPoint:** final `.pptx` inspection/rehearsal, speaker notes/Presenter View, media/animation validation and presentation QA.
+- **Canva:** optional visual-polish only; never the source of scientific claims/data and every PPTX round-trip is revalidated in PowerPoint.
+- **User:** external/supervisor input, subjective academic review gates, selected real app screenshots/GIF/video capture, manual insertion where required using exact placement instructions, and final Word/PowerPoint/rehearsal inspection.
 
-## User journey summary
+The user should not have to infer where a manually captured image belongs. For every requested screenshot/GIF/video, the repository workflow must provide: asset ID, exact app state/run/config to capture, crop/content requirements, target thesis chapter/section and/or slide, intended claim/purpose, caption, size/alignment guidance, source/evidence identifiers, and a static fallback where animation cannot be embedded reliably.
 
-The intended user workflow is deliberately small:
+## Thesis writing/review handoff
 
-1. clone/update the repository on the thesis machine and start Codex from the canonical Goal-mode entrypoint;
-2. answer only genuinely non-objective academic/product questions or provide new official/supervisor/private input when actually required;
-3. otherwise let Codex continue through routine implementation, research, Git/PR/CI/merge, evidence generation, and task reconciliation autonomously;
-4. use the finished self-explanatory application, contextual help and optional/replayable onboarding without needing a separate usage manual;
-5. once the application is validated, execute the predefined final experiment campaign through the approved UI workflow;
-6. review the final scientific interpretation/thesis when the explicit downstream review gate is reached;
-7. review and rehearse the final PowerPoint and speaking script.
+Before T-710, T-700 rechecks current official Department/University Word/citation/submission/defense requirements and records anything that supersedes the current snapshot. T-701 may review user-supplied example theses as contextual presentation/structure references only.
 
-Routine Git, task bookkeeping, result-file movement, provenance, analysis regeneration, and presentation evidence mapping remain automated/repository-managed.
+T-710 drafts the Greek thesis from citation-ready bibliography plus the frozen T-613 evidence package. Quantitative/result claims must map to result/figure/table IDs and external factual claims to verified sources. Negative/null/unexpected results and limitations remain explicit.
 
-## Documentation and task reconciliation
+T-711 creates the review-ready Word artifact and a placement/QA register. T-712 incorporates real supervisor/reviewer corrections and revalidates every affected claim/citation/figure/table/method description. T-713 freezes the final thesis only after Word-level cross-reference/caption/TOC/formatting and evidence checks pass.
 
-Every material change follows `docs/context/DOCUMENTATION_GOVERNANCE.md`. A change is not ready to merge if related active docs/status/prompts/tasks/decisions still describe the previous state.
+## Defense handoff
 
-Every material PR reviews `TASKS.md`. Starting, completing, blocking, unblocking, superseding, or discovering work must update the corresponding task and `Resume state` in the same PR when applicable.
+T-720 creates the defense narrative, slide outline and evidence map from the final thesis/evidence. T-721 creates the PowerPoint, embedded speaker notes and separate full spoken Greek script. T-722 validates PowerPoint rendering, factual/numerical consistency, official timing/content requirements, rehearsal and demo/screenshot/video fallback.
 
-Delete obsolete files when they have no continuing value. Preserve useful historical records only with a clear historical/superseded notice. Generated bibliography files are never hand-edited for consistency.
+See `docs/thesis/PRESENTATION_WORKFLOW.md` for the detailed presentation contract.
 
-## Git and review rules
+## Final audits
 
-Use descriptive lowercase branches with `research/`, `feat/`, `fix/`, `test/`, `docs/`, or `chore/`. Branch tooling may create several mechanical/checkpoint commits, but one coherent PR should normally reach `main` as one squash commit.
+T-800 rechecks bibliography/citations/current official guidance. T-801 audits reproducibility, protocol/results, privacy/licensing, repository/docs/thesis/defense consistency. T-802 confirms final delivery readiness.
 
-Substantial PRs state task IDs, scope, rationale, validation, scientific/protocol impact, limitations, deferred work, and documentation/task reconciliation. Before merge, Codex reviews the actual diff and check state. If scope is correct, tests meaningfully cover the change, CI passes, review findings are resolved, source-of-truth docs agree, no external approval is required, and no data/results/logs/metrics/citations/progress are fabricated, Codex may squash-merge with available permissions and continue. It does not submit an `APPROVE` review on its own PR.
+## Documentation rule
 
-## Current project sequence
-
-The detailed concrete queue is maintained only in `docs/context/TASKS.md`. `IMPLEMENTATION_ROADMAP.md` explains the phase/dependency structure. This workflow records responsibilities and major handoffs without becoming a second checklist.
-
-Structured research notes, decisions, evidence mappings, figures, captions, task progress, presentation mappings, and implementation explanations are preserved throughout so later work and thesis/defense preparation are not reconstructed from memory.
+Every material architecture/science/tool/ownership/task change reconciles affected active documents in the same branch checkpoint. Historical records may remain only when clearly labelled historical/superseded. Generated bibliography content is never hand-edited for consistency.
