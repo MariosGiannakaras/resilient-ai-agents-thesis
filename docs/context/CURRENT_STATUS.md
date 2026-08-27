@@ -15,14 +15,14 @@ This file is intentionally short. Detailed policy/history live in the routed sou
 
 ## Active pre-WP7 refinement
 
-- Accepted decision: `DEC-042`.
+- Accepted decisions: `DEC-042` scientific/application refinement and `DEC-043` application-framework reopening.
 - Single implementation branch: `feat/pre-wp7-protocol-v1.1-ui-rebuild`.
 - Single draft integration PR: #92.
 - Trackers: master #87; scientific #88; runtime #89; UI #90; screenshots/CI/Codex handoff #91.
 - Do not create a parallel implementation branch for this work package.
 - `T-513` governance/Codex handoff is complete. Master tracker #87 is **1/8**.
-- Current task: `T-520 IN_PROGRESS` — integrate D0 into the headless runner/agent-construction path.
-- Standalone D0 implementation and focused tests are committed. PR CI run 266 on branch head `e4b95c24cb191233b6a82190dcb81d0a3b4bcd57` completed successfully after the canonical task-ledger reconciliation.
+- Current task: `T-520 IN_PROGRESS` — integrate D0 into the headless runner/agent-construction path. Framework migration may proceed as an adjacent application checkpoint on the same branch but does not make blocked runtime/UI acceptance tasks complete.
+- Standalone D0, episode-preserving deployment semantics, and an initial versioned v1.1 runner extension are committed; their current branch CI must be checked before `T-520` can close.
 
 ### Scientific direction
 
@@ -36,14 +36,15 @@ This file is intentionally short. Detailed policy/history live in the routed sou
 
 ### Application direction
 
-- Keep `src/resilient_agents/` headless and UI-independent.
-- Add an application/runtime service for truthful active-run state, heartbeat/progress/events, read-only live GridWorld observation, history, and only lifecycle controls that can actually be honored safely.
-- Rebuild Streamlit around Dashboard → New Experiment → Runs/live GridWorld → Compare → Artifacts. Current page code may be substantially replaced.
-- Status/progress/logs/metrics are backend-derived; unsupported controls remain explicit.
-- Visualization speed changes presentation cadence only, never experiment timing/RNG.
+- `DEC-043` supersedes the historical Streamlit-specific application-layer choice after comparing current Streamlit, Dash 4.2 + FastAPI, NiceGUI, Panel, and a dedicated web frontend.
+- Target frontend: **React + TypeScript + Vite**. Target application/runtime backend: **FastAPI + Uvicorn** with explicit REST/WebSocket contracts.
+- Dash 4.2 + FastAPI is the preferred Python-only alternative, but the dedicated React frontend is selected because smooth GridWorld animation, custom model infographics, onboarding, rich interaction state, accessibility, browser validation, and screenshot-level polish are first-class requirements.
+- Keep `src/resilient_agents/` headless and UI-independent. FastAPI is an adapter over a truthful application/runtime service, never a second scientific runner.
+- WebSocket live state covers real active-run status/events/logs and a read-only GridWorld observer. Unsupported lifecycle controls remain explicit.
+- Visualization interpolation/speed is client presentation only and never changes experiment timing, actions, or RNG streams.
 - Historical finalized runs without retained step trace display replay unavailable; never synthesize a path.
-- Keep root `run_app.bat` functional.
-- Create repository-root `ui-screenshots/` for stable CI-rendered review screenshots; screenshot fixtures are not scientific evidence.
+- Node/Vite is build-time only for the normal supported user path. Root `run_app.bat` must launch one FastAPI/Uvicorn process serving prebuilt frontend assets through the locked Python environment.
+- Create repository-root `ui-screenshots/` for stable accepted browser screenshots; screenshot fixtures are not scientific evidence.
 
 ## Accepted repository / Codex baseline
 
@@ -59,10 +60,10 @@ This file is intentionally short. Detailed policy/history live in the routed sou
 
 ## Still intentionally unfrozen
 
-The v1.1 D0-specific planning parameters, final v1.1 freeze, and any new v1.1 final evidence remain intentionally unfrozen until the bounded non-final tuning/pilot and protocol acceptance gates are satisfied. Later supervisor/deadline/template/defense inputs remain deferred and do not block this package.
+The v1.1 D0-specific planning parameters, final v1.1 freeze, and any new v1.1 final evidence remain intentionally unfrozen until bounded non-final tuning/pilot and protocol acceptance gates are satisfied. Application implementation details below the DEC-043 boundary may evolve during the prototype, but switching frameworks again requires measured evidence. Later supervisor/deadline/template/defense inputs remain deferred and do not block this package.
 
 ## Exact next action
 
-Continue `T-520` on the existing branch: integrate D0 into the headless runner while preserving learned Q/model/recency state across evaluation episodes and reseeding only agent RNG streams at episode boundaries; add focused integration tests proving deterministic matched pre-change behavior and no evaluator-information leakage. Then advance to `T-521` only after `T-520` acceptance passes. No `T-700+` action is permitted.
+Continue `T-520` on the existing branch and validate the D0/v1.1 runner checkpoint. In parallel only where it does not bypass dependencies, replace the historical Streamlit shell with the DEC-043 React/Vite + FastAPI scaffold, update the locked build/runtime dependencies and active application documentation, and keep the UI connected only to truthful backend data. `T-530`/`T-531` remain incomplete until their acceptance conditions are actually satisfied. No `T-700+` action is permitted.
 
 After technical refinement and user review are complete, explicitly ask whether the user approves starting WP7. Only a direct affirmative answer unlocks writing/defense work.
