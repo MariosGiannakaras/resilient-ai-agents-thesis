@@ -1,67 +1,76 @@
-import streamlit as st
+"""Small self-explanatory onboarding surface for the NiceGUI application."""
+from __future__ import annotations
 
-def show_onboarding():
-    """Displays a lightweight skippable onboarding tutorial.
-    Uses session state to remember completion."""
-    if "onboarding_completed" not in st.session_state:
-        st.session_state.onboarding_completed = False
+from nicegui import ui
 
-    if not st.session_state.onboarding_completed:
-        with st.expander("👋 Welcome to the Resilient Agents Dashboard! (Click to start tutorial)", expanded=True):
-            st.markdown("### Getting Started")
-            
-            step = st.session_state.get("onboarding_step", 0)
-            
-            steps = [
-                {
-                    "title": "1. Dashboard",
-                    "content": "This main page gives you a snapshot of your system resources and the most recent experiment runs. It's your starting point."
-                },
-                {
-                    "title": "2. New Experiment",
-                    "content": "Navigate here to configure and launch a new campaign. You must select an approved protocol. The system validates whether you can launch a final campaign or just a pilot."
-                },
-                {
-                    "title": "3. Runs",
-                    "content": "Monitor active experiments and view history. You can inspect logs, see live progress, and review completed or failed run metadata."
-                },
-                {
-                    "title": "4. Compare",
-                    "content": "Once you have completed runs, use this tab to compare their performance. The system will warn you if you try to compare incompatible protocols."
-                },
-                {
-                    "title": "5. Artifacts",
-                    "content": "Generate and export thesis-ready figures, tables, and JSON manifests. This relies on the validated analysis data."
-                }
-            ]
-            
-            st.markdown(f"**{steps[step]['title']}**")
-            st.write(steps[step]["content"])
-            
-            col1, col2, col3 = st.columns([1, 1, 1])
-            with col1:
-                if step > 0:
-                    if st.button("Previous"):
-                        st.session_state.onboarding_step = step - 1
-                        st.rerun()
-            with col2:
-                if step < len(steps) - 1:
-                    if st.button("Next"):
-                        st.session_state.onboarding_step = step + 1
-                        st.rerun()
-                else:
-                    if st.button("Finish"):
-                        st.session_state.onboarding_completed = True
-                        st.session_state.onboarding_step = 0
-                        st.rerun()
-            with col3:
-                if st.button("Skip Tutorial"):
-                    st.session_state.onboarding_completed = True
-                    st.rerun()
 
-def onboarding_replay_button():
-    """Provides a button in the sidebar to replay the tutorial."""
-    if st.sidebar.button("💡 Replay Tutorial"):
-        st.session_state.onboarding_completed = False
-        st.session_state.onboarding_step = 0
-        st.rerun()
+STEPS = (
+    (
+        "Dashboard",
+        "See real workspace state, finalized experiments, protocol status and current machine resources.",
+    ),
+    (
+        "New Experiment",
+        "Understand F0/C0/D0 and configure only protocol-approved agents, layouts, uncertainty conditions, seeds and parameters. The exact resolved request is reviewed before launch.",
+    ),
+    (
+        "Runs",
+        "Watch truthful active-run status, the live GridWorld observer, provisional telemetry and lifecycle controls that the runtime can actually honor. Finalized history remains separate.",
+    ),
+    (
+        "Compare",
+        "Compare compatible runs with distributions, paired effects, uncertainty and layout/condition breakdowns. Live values are never silently promoted into final evidence.",
+    ),
+    (
+        "Artifacts",
+        "Inspect and export stored figures, tables and manifests with provenance. Screenshots are presentation artifacts; scientific results remain the underlying versioned evidence.",
+    ),
+)
+
+
+def open_onboarding() -> None:
+    """Open a skippable in-app guide without mutating scientific state."""
+    dialog = ui.dialog()
+    state = {"index": 0}
+    with dialog, ui.card().classes('w-[680px] max-w-[92vw] rounded-2xl p-5'):
+        with ui.row().classes('w-full items-start'):
+            with ui.column().classes('gap-0'):
+                ui.label('Application guide').classes('text-xl font-semibold')
+                ui.label('Five surfaces, one evidence boundary').classes('text-sm text-slate-500')
+            ui.space()
+            ui.button(icon='close', on_click=dialog.close).props('flat round dense')
+
+        progress = ui.linear_progress(value=1 / len(STEPS)).props('rounded')
+        step_label = ui.label().classes('text-xs text-primary font-semibold uppercase tracking-wide')
+        title = ui.label().classes('text-lg font-semibold')
+        body = ui.label().classes('text-sm leading-relaxed text-slate-600')
+
+        def render() -> None:
+            index = state['index']
+            name, text = STEPS[index]
+            step_label.set_text(f'Step {index + 1} of {len(STEPS)}')
+            title.set_text(name)
+            body.set_text(text)
+            progress.set_value((index + 1) / len(STEPS))
+            previous.set_enabled(index > 0)
+            next_button.set_text('Finish' if index == len(STEPS) - 1 else 'Next')
+
+        def go_previous() -> None:
+            state['index'] = max(0, state['index'] - 1)
+            render()
+
+        def go_next() -> None:
+            if state['index'] >= len(STEPS) - 1:
+                dialog.close()
+                return
+            state['index'] += 1
+            render()
+
+        with ui.row().classes('w-full items-center mt-3'):
+            ui.button('Skip', on_click=dialog.close).props('flat no-caps')
+            ui.space()
+            previous = ui.button('Previous', on_click=go_previous).props('outline no-caps')
+            next_button = ui.button('Next', on_click=go_next).props('unelevated no-caps color=primary')
+
+        render()
+    dialog.open()
