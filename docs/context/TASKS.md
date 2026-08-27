@@ -25,10 +25,11 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 - **State:** `READY`
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; this is the single implementation branch/PR.
 - **Trackers:** #87 master; #88 scientific; #89 runtime; #90 UI; #91 screenshots/CI/packaging.
-- **Last validated point:** `T-520` completed. PR CI run **346** passed documentation consistency, JSON validation, Python compile, locked environment, full tests including `test_v11_runner.py`, and bibliography integrity.
-- **Continuity audit:** temporary React/Vite and historical Streamlit application files are removed from the active implementation. Remaining stale source-of-truth wording is reconciliation work, not an alternate architecture. NiceGUI shell work exists early but T-530/T-531/T-532 remain incomplete.
+- **Last validated code point:** `T-520` complete; PR CI run **346** passed documentation consistency, JSON validation, Python compile, locked environment, full tests including `test_v11_runner.py`, and bibliography integrity.
+- **Continuity reconciliation:** completed for the known interrupted/stale areas. `PROJECT_CONTEXT`, `EXECUTION_WORKFLOW`, `MODEL_CANDIDATES`, DEC-042, current requirements/decisions/constraints/open-questions/roadmap/definition-of-done and application/thesis workflow docs now use NiceGUI/F0-C0-D0/current delivery semantics rather than stale active Streamlit/R0/v1.0-only wording. Historical records remain explicitly historical/superseded.
+- **Downstream planning:** `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` records the future Word/PowerPoint/ChatGPT/Codex/optional-Canva/manual-screenshot ownership model without unlocking WP7.
 - **Uncommitted work:** unknown from remote handoff; every new session must inspect `git status` before assuming clean state.
-- **Exact next action:** reconcile remaining active Streamlit/standalone contradictions, then execute `T-521` as one bounded scope: authoritative candidate-v1.1 schema, bounded D0-only tuning plan, fresh held-out layouts/seeds, structural remap IDs, and paired statistical support. Do not start final v1.1 evidence or `T-700+`.
+- **Exact next action:** execute `T-521` as one bounded scientific scope: authoritative candidate-v1.1 schema, exact bounded D0-only tuning plan, fresh held-out layouts/seeds, structural remap IDs, approved configuration identity/settings rules, and paired statistical support. Do not start final-v1.1 evidence or `T-700+`.
 
 ## Quota/interruption resilience
 
@@ -36,7 +37,7 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 2. Resume `IN_PROGRESS` work first unless genuinely blocked.
 3. Never discard branch/uncommitted work before inspection.
 4. Preserve recoverable checkpoint commits for substantial validated slices.
-5. Reconcile this Resume state whenever a newer instruction supersedes architecture, research design, UI behavior, or next action.
+5. Reconcile this Resume state whenever a newer instruction supersedes architecture, research design, UI behavior, tool ownership, or next action.
 6. Use `Project: X/Y` and issue X/Y only from finite canonical denominators.
 7. Testing remains risk-based/proportional; pilot/final matrices are never CI tests.
 8. Do not create another implementation branch for this package.
@@ -67,13 +68,13 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 - [x] `T-212` — Project-owned Gymnasium GridWorld.
 - [x] `T-213` — GridWorld known-answer/determinism/disturbance/information tests.
 
-## WP3 — Completed original metrics/agent selection
+## WP3 — Completed historical metrics/agent selection
 
 - [x] `T-300` — Resilience/degradation/recovery estimands.
 - [x] `T-301` — Known-answer metric validation.
-- [x] `T-310` — Original bounded agent-role comparison.
+- [x] `T-310` — Historical bounded agent-role comparison.
 - [x] `T-311` — Robust-MDP citation decision.
-- [x] `T-312` — Historical F0/C0/R0-capable agent implementation.
+- [x] `T-312` — Historical F0/C0/R0-capable implementation.
 
 ## WP4 — Completed historical pilot/protocol system
 
@@ -99,13 +100,13 @@ Current refinement:
   - Depends on: `T-513`.
   - Validated: D0 uses only agent-visible observations/intended actions/rewards; deterministic Q/model/RNG serialization; common checkpoint; episode-preserving deployment; historical `PilotProtocol` unchanged; development-only `V11DevelopmentProtocol`; F0/C0/D0 runner deterministic; missing/irrelevant D0 parameters and non-development use fail closed. CI run 346 green.
 
-- [ ] READY `T-521` — Implement authoritative candidate `protocol-v1.1`, bounded D0 tuning design, fresh held-out layouts/seeds, and paired statistical support.
+- [ ] READY `T-521` — Implement authoritative candidate `protocol-v1.1`, bounded D0 tuning design, fresh held-out layouts/seeds, approved configuration identity/settings policy, and paired statistical support.
   - Depends on: `T-520`.
-  - Acceptance: v1.0/final evidence untouched; candidate v1.1 contains F0/C0/D0; validated F0/C0 budgets preserved; four fresh held-out final layouts + fresh precommitted final seeds; seven single-factor conditions with `action-remap-2-swap` / `action-remap-4-cycle`; small predeclared D0-only planning search; primary cumulative deficit/immediate degradation/terminal performance; recovery secondary/sensitivity; paired effects + 95% CIs; candidate status cannot authorize final evidence.
+  - Acceptance: v1.0/final evidence untouched; candidate v1.1 contains F0/C0/D0; validated F0/C0 budgets preserved; four fresh held-out final layouts + fresh precommitted final seeds; seven single-factor conditions with `action-remap-2-swap` / `action-remap-4-cycle`; exact small predeclared D0-only `planning_steps`/`kappa` search; stable resolved-configuration identity/provenance; multiple approved development/tuning configurations supported with multiple predefined roots and no single-run/best-seed cherry-picking; primary cumulative deficit/immediate degradation/terminal performance; recovery secondary/sensitivity; paired effects + 95% CIs with explicit n/layout aggregation; candidate status cannot authorize final evidence.
 
 - [ ] BLOCKED `T-522` — Execute bounded non-final D0 tuning/pilot and freeze/amend/reject v1.1.
   - Depends on: `T-521`.
-  - Acceptance: D0 parameters selected only from predeclared non-final evidence; runtime/informativeness validated; failures/non-recovery retained; no final-v1.1 results inspected before freeze.
+  - Acceptance: D0 parameters selected only from predeclared non-final evidence; candidate configurations compared using the approved repeated/paired design and predeclared selection rule; runtime/informativeness validated; failed/interrupted/non-recovery/poor configurations retained; no final-v1.1 results inspected before freeze; final retained configuration for each agent is explicit and versioned.
 
 - [ ] READY `T-530` — Add truthful UI-independent Python runtime service for live experiments.
   - Depends on: `T-520`.
@@ -115,8 +116,8 @@ Current refinement:
 - [ ] BLOCKED `T-531` — Complete native NiceGUI application with DEC-045 analytics and DEC-046 novice-first UX.
   - Depends on: `T-521`, `T-530`.
   - Existing early work: NiceGUI shell/read model/visualization builders/onboarding; historical v1.0 Plotly views; intentionally empty live ECharts surface.
-  - Functional acceptance: Dashboard; validated New Experiment + resolved-config review; Runs active/history/detail with smooth live GridWorld, event timeline, real metrics/logs and compatible live overlays; Compare with compatibility/distributions/paired CIs/counts/layout-condition views; Artifacts real CSV/JSON/HTML/provenance preview/export; Plotly/ECharts/Mermaid/AG Grid integration.
-  - Self-explanatory UX acceptance: non-programmer/non-RL user understands agents, conditions, settings, units, metrics and statuses via plain-language labels, secondary technical IDs, helper text, info icons/tooltips, progressive disclosure, metric/uncertainty explanations and actionable invalid/empty/loading/error/disabled states.
+  - Functional acceptance: Dashboard; New Experiment supports protocol-approved agent/configuration variants, multiple seeds/repetitions and scientifically allowed bounded settings/sweeps with resolved-config review; Runs active/history/detail with smooth live GridWorld, event timeline, real metrics/logs and compatible live agent/configuration overlays; Compare supports compatible agents **and settings/configuration identities** with distributions/paired CIs/counts/layout-condition views; Artifacts real CSV/JSON/HTML/provenance preview/export; Plotly/ECharts/Mermaid/AG Grid integration.
+  - Self-explanatory UX acceptance: non-programmer/non-RL user understands agents, conditions, settings, fixed-vs-tunable configuration, units, metrics, repetition meaning and statuses via plain-language labels, secondary technical IDs, helper text, info icons/tooltips, progressive disclosure, metric/uncertainty explanations and actionable invalid/empty/loading/error/disabled states.
   - Visual acceptance: modern compact hierarchy; consistent icons; accessible semantic text+icon+color states; restrained hover/focus/selection micro-interactions; purposeful chart/status/GridWorld animations; reduced-motion-safe where practical; skippable/replayable onboarding. Animation never implies fake progress.
   - Runtime acceptance: root `run_app.bat` opens the NiceGUI native desktop window; same pages work in CI browser mode; no active Node/Vite/Streamlit stack; no fabricated state/data/replay.
 
@@ -126,7 +127,7 @@ Current refinement:
 
 - [ ] USER_VALIDATION_REQUIRED `T-511` — Validate the complete intended application workflow and self-explanatory UX.
   - Depends on: `T-512`, `T-531`, `T-532`.
-  - Acceptance: a non-technical intended user can understand/configure an approved experiment, launch/monitor truthful live GridWorld/charts, compare compatible live and finalized behavior, inspect/export/screenshot results, understand help/status/errors/disabled states and onboarding, and use the standalone app. Automated screenshots/package checks never close this gate.
+  - Acceptance: a non-technical intended user can understand/configure an approved experiment/configuration set, launch/monitor truthful live GridWorld/charts, compare compatible live and finalized agent/settings behavior, inspect/export/screenshot results, understand help/status/errors/disabled states and onboarding, and use the standalone app. Automated screenshots/package checks never close this gate.
 
 ## WP6 — Historical v1.0 evidence and future v1.1 evidence
 
@@ -136,35 +137,56 @@ Current refinement:
 - [x] `T-603` — Historical v1.0 figures/tables/artifacts.
 - [x] `T-604` — Historical thesis/defense evidence package.
 
-- [ ] BLOCKED `T-610` — Execute frozen v1.1 final matrix with new run IDs.
+- [ ] BLOCKED `T-610` — Execute frozen v1.1 final matrix with new run IDs through the accepted thesis-machine/application execution path.
   - Depends on: `T-522`, `T-511`.
+  - Acceptance: frozen retained agent settings/config IDs only; all required fresh layouts/conditions/32 paired roots executed or transparently accounted for; no post-final configuration switching; ordinary approved execution requires no Codex/console intervention.
 - [ ] BLOCKED `T-611` — Validate/freeze v1.1 final evidence.
   - Depends on: `T-610`.
 - [ ] BLOCKED `T-612` — Predeclared v1.1 paired statistical analysis/sensitivity diagnostics.
   - Depends on: `T-611`.
 - [ ] BLOCKED `T-613` — v1.1 figures/tables/exports and superseding thesis/defense evidence package.
   - Depends on: `T-612`.
+  - Acceptance: claim-ready evidence map includes final model/config identities, runs, paired statistics, figures/tables/captions and source/protocol references; no provisional/tuning values promoted to final evidence.
 
 ## Mandatory pre-WP7 user approval gate
 
 **NOT APPROVED.** Technical completion, green CI, screenshots, packaged app or completed `T-613` do not authorize writing. Only after refinement/evidence and `T-511` acceptance may the assistant ask whether WP7 may begin; only a direct affirmative unlocks it.
 
+Planning files such as `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` may be prepared before the gate so future execution is unambiguous; final thesis prose/defense production remains blocked.
+
 ## WP7 — Thesis writing/review/defense
 
-- [ ] BLOCKED `T-700` — Recheck current Department/University thesis/submission/defense rules.
+- [ ] BLOCKED `T-700` — Recheck current Department/University thesis/submission/defense rules and current tool assumptions.
+  - Depends on: mandatory pre-WP7 approval gate and accepted final evidence state.
+  - Acceptance: dated authoritative guidance snapshot; current Word/template/citation/submission/defense requirements; explicit differences from historical snapshot; `WP7_WP8_TOOL_WORKFLOW.md` revalidated against current Word/PowerPoint/ChatGPT/Canva capabilities where material.
 - [ ] DEFERRED `T-701` — Review later supplied completed theses as contextual examples only.
+  - Acceptance: structural/presentation observations only; never scientific/official authority.
 - [ ] DEFERRED `T-710` — Draft complete Greek thesis from accepted evidence.
-- [ ] DEFERRED `T-711` — Produce review-ready Word thesis.
+  - Depends on: `T-700`; final evidence package.
+  - Acceptance: chapter evidence maps; every quantitative/result claim maps to frozen result/figure/table IDs; external claims map to citation-ready evidence; negative/null/unexpected results and limitations retained; current F0/C0/D0/settings/protocol terminology used consistently.
+- [ ] DEFERRED `T-711` — Produce review-ready Word thesis and manual asset-placement register.
+  - Depends on: `T-710`.
+  - Acceptance: `.docx` uses Word heading styles/automatic TOC/caption fields/cross-references/lists; validated figures/tables; every user-captured screenshot/GIF/video request has an `ASSET-*` record with exact page/state/run/config/crop, target chapter/section, caption, placement/size guidance, evidence identity and static fallback.
 - [ ] DEFERRED `T-712` — Incorporate supervisor/reviewer corrections and revalidate.
+  - Depends on: `T-711` and actual feedback when provided.
+  - Acceptance: feedback-to-change register; every affected citation/result/figure/table/method statement revalidated; scientific changes reopen the proper evidence/protocol task rather than being hidden in prose.
 - [ ] DEFERRED `T-713` — Freeze final thesis deliverable.
+  - Depends on: `T-712` or documented absence/completion of required review cycle.
+  - Acceptance: Word fields/TOC/captions/cross-references/lists updated; final formatting/evidence/citation/asset QA passed; controlled `.docx` + required exports frozen.
 - [ ] DEFERRED `T-720` — Defense narrative/slide outline/evidence map.
+  - Depends on: stable/final thesis.
+  - Acceptance: examiner-facing narrative; slide-to-thesis/result/source map; generated-vs-user-captured asset plan; live-demo/static fallback plan.
 - [ ] DEFERRED `T-721` — Final PowerPoint + speaker material per `docs/thesis/PRESENTATION_WORKFLOW.md`.
+  - Depends on: `T-720`.
+  - Acceptance: final `.pptx`, embedded notes, separate full spoken Greek script, evidence IDs preserved, exact `ASSET-*` instructions for manual app media; Canva optional only; PowerPoint remains final inspection surface.
 - [ ] DEFERRED `T-722` — Validate/rehearse defense package/demo fallback.
+  - Depends on: `T-721`.
+  - Acceptance: current official duration/content/file rules; numerical/citation consistency; PowerPoint rendering/media/notes/Presenter View; rehearsal timing; live demo plus tested static/screenshot/GIF/video fallback.
 
 ## WP8 — Final audits/completion
 
 - [ ] DEFERRED `T-800` — Final bibliography/citation/official-guidance audit.
-- [ ] DEFERRED `T-801` — Final reproducibility/privacy/licensing/docs/thesis/defense audit.
+- [ ] DEFERRED `T-801` — Final reproducibility/privacy/licensing/docs/thesis/defense/application-asset audit.
 - [ ] DEFERRED `T-802` — Final delivery readiness.
 
 ## Task maintenance rule
