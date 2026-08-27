@@ -4,87 +4,132 @@
 
 After cloning/updating the repository on the actual thesis machine, give Codex only this Goal-mode command:
 
-> `/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely. Complete the canonical project task registry autonomously, one bounded dependency-valid task or coherent work package at a time. Treat routine Git, PR creation, CI, objective diff review, corrections, squash merge, task reconciliation, and selection of the next READY task as work to perform—not reasons to stop. Continue until the project lifecycle is complete or continuation genuinely requires user/supervisor/external input that cannot be resolved from repository evidence and accepted rules. Never bypass BLOCKED or DEFERRED work, fabricate evidence, or cross an explicit external approval gate.`
+> `/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely. Complete the canonical project task registry autonomously, one bounded dependency-valid task or coherent work package at a time. Treat routine Git, PR creation, CI, objective diff review, corrections, task reconciliation, and selection of the next READY task as work to perform—not reasons to stop. Never bypass BLOCKED or DEFERRED work, fabricate evidence, cross an explicit external approval gate, or create a parallel branch when the active work package pins a branch.`
 
-This file is the single tracked execution bootstrap. Do not copy it into disposable task prompts. A separate startup `/plan` is not required because the repository already contains the accepted roadmap, dependency ledger, and task acceptance conditions; use plan mode only when a specific task has a genuinely unclear approach that benefits from investigation before editing.
+This file is the single tracked execution bootstrap. `AGENTS.md` contains the always-on rules and routing map; do not reconstruct project policy from chat history.
 
-## Execute from repository state
+## Active-package override — 2026-08-27
 
-Goal mode is the persistent long-horizon wrapper. Within it, work **one bounded scope at a time**: one task or one genuinely coherent adjacent task package. After each validated scope, resolve routine repository/PR/CI/merge work with available permissions, reconcile the task ledger, then continue automatically with the next dependency-valid `READY` work.
+The current package is the user-approved **pre-WP7 protocol-v1.1 + application refinement**, governed by `DEC-042` and GitHub issues #87–#91.
 
-“Execute it completely” means continuing through the canonical project lifecycle as far as the actual evidence and accepted rules permit. It does not mean treating the whole thesis as one undifferentiated edit, bypassing `BLOCKED`/`DEFERRED` dependencies, reopening accepted work without evidence, or inventing missing academic/external input.
+For this package only:
 
-Evidence-backed research, architecture, implementation, test, and ADR decisions that the active task can resolve from its acceptance criteria and available sources are normal autonomous work. Do not turn them into artificial user gates merely because they involve scientific or architectural judgment. Pause only when the controlling task/specification explicitly requires external/user/supervisor approval or the choice cannot be resolved objectively from accepted evidence and constraints.
+- work **only** on `feat/pre-wp7-protocol-v1.1-ui-rebuild`;
+- do not create a second implementation branch or split the package into parallel PR branches;
+- preserve `protocol-v1.0`, every finalized historical run, and existing frozen evidence immutably;
+- `protocol-v1.1` remains candidate until D0-specific non-final tuning/pilot evidence and validation justify a freeze;
+- do not run a v1.1 final campaign merely to satisfy implementation, UI, tests, or CI;
+- do not start `T-700+`, thesis prose, defense work, or later writing stages;
+- keep `TASKS.md`, `CURRENT_STATUS.md`, decisions, issue checklists, and this handoff synchronized at meaningful checkpoints;
+- stable UI screenshots belong under repository-root `ui-screenshots/` and are review artifacts, never scientific evidence;
+- `T-511` remains `USER_VALIDATION_REQUIRED` until real human E2E acceptance.
 
-`AGENTS.md` contains the always-on project rules and routing map. Do not duplicate or reconstruct those rules from chat history.
+If a fresh Codex session starts while this branch is open, it must resume this package before selecting any unrelated work.
 
 ## Startup / resume
 
-1. Inspect `git status`, branch, recent commits, uncommitted work, and relevant open PR/check state.
-2. Read only the session-start core:
+1. Inspect `git status`, current branch, recent commits, open PR/check state, and the branch diff.
+2. Read exactly the session-start core:
    - `AGENTS.md`
    - `docs/context/TASKS.md`
    - `docs/context/CURRENT_STATUS.md`
-3. Inspect `Resume state` and any `IN_PROGRESS` task. Repository/Git evidence wins if memory or stale handoff prose conflicts with actual merged PR/check state; reconcile stale state before continuing.
-4. Resume valid `IN_PROGRESS` work first. Otherwise select the first dependency-valid `READY` task. Never start `BLOCKED`/`DEFERRED` work just because it is next numerically.
-5. Define one bounded scope: one task or one genuinely coherent adjacent task package permitted by `AGENTS.md`.
-6. Read only the task entry, explicitly referenced files, and the smallest relevant active specifications/evidence. Search before broad reading.
-7. For substantial work, create/reuse a descriptive branch and make the task recoverable in `TASKS.md` no later than the first meaningful checkpoint.
+3. If the current package is the DEC-042 refinement, verify the branch is exactly `feat/pre-wp7-protocol-v1.1-ui-rebuild`; switch to/update that existing branch rather than creating another one.
+4. Inspect the `Resume state`, DEC-042, and issues #87–#91 only as needed to resolve current progress. Repository/Git evidence wins over stale prose.
+5. Resume valid `IN_PROGRESS` work first. Otherwise select the first dependency-valid READY refinement subtask. Never start BLOCKED/DEFERRED work.
+6. Read only the task-specific specifications/evidence needed for the bounded scope. Search before broad reading.
+7. Preserve a recoverable checkpoint after each substantial validated slice.
 
-Do not spend the session summarizing context already established. Once scope/dependencies are clear, execute.
+Do not spend the session re-summarizing established context once dependencies and scope are clear. Execute.
+
+## Current refinement execution order
+
+The intended dependency order is:
+
+1. **Governance/handoff:** canonical task/status/decision state points to this branch/package.
+2. **Scientific implementation:** add deterministic information-limited D0 Dyna-Q+, a bounded D0-specific tuning surface, candidate protocol-v1.1 with four fresh held-out final layouts/fresh final seed bank/structural remap names, and paired-effect 95% CI analysis support.
+3. **Runtime service:** application-facing active-run registry/status/heartbeat/events/read-only live GridWorld observation plus only lifecycle controls the backend can safely honor.
+4. **UI rebuild:** Dashboard, New Experiment, Runs/live GridWorld, Compare, Artifacts using real backend/stored data; self-explanatory helper text/tooltips/units/statuses/empty-loading-error-disabled states and lightweight onboarding.
+5. **UI screenshot/CI review:** repository-root `ui-screenshots/`, bounded deterministic browser/render capture, and CI diagnostics without fabricated scientific results.
+6. **Human acceptance:** expose the completed screenshots/application to the user and keep T-511 open until explicit E2E acceptance.
+
+Do not skip ahead if an earlier step supplies a contract needed by the next one.
+
+## Scientific contract for this package
+
+- Retain F0 frozen Q-learning and C0 continual Q-learning from the common selected nominal checkpoint.
+- Add D0 Dyna-Q+ as a third scientifically distinct tabular agent. D0 learns/plans only from agent-visible interaction data; evaluator-only executed-action, disturbance, change-indicator, regime, or true-state information is prohibited.
+- Preserve the validated common F0/C0 values: alpha `0.5`, gamma `0.96875`, epsilon `0.125`, training `512` episodes/layout, pre-change `16`, post-change `32`, horizon `48`, and `32` paired final roots.
+- Tune only genuinely D0-specific parameters through a small predeclared development/tuning search. Never invent a selected planning-step count or kappa.
+- New v1.1 final layouts/seeds must be fresh and precommitted before any new final evidence is inspected.
+- New condition names are `action-remap-2-swap` and `action-remap-4-cycle`; historical v1.0 identifiers remain unchanged in old evidence.
+- Primary reporting emphasizes cumulative deficit, immediate degradation, terminal gap/performance. Recovery is secondary/sensitivity; preserve explicit non-recovery and all predeclared sensitivity settings.
+- Add paired agent effects and 95% confidence intervals with explicit n and layout-aware views. Do not add a composite resilience score or post-hoc favorable threshold.
+- Keep R0 pilot evidence; do not reinstate the accepted R0 construction unchanged and do not add deep RL just to increase model count.
+
+## Application/UI contract for this package
+
+- `src/resilient_agents/` must remain functional without Streamlit.
+- Put active-experiment orchestration/observation behind an application-facing service/facade; do not implement scientific execution semantics in Streamlit callbacks.
+- Every status/progress/log/metric/control is backend-derived. If pause/resume or another control is unsafe/unsupported, advertise that capability truthfully and disable/omit the control.
+- Live GridWorld observation is read-only and must be proved not to change scientific RNG/state/action choices.
+- Visualization speed changes only rendering cadence.
+- Existing finalized runs without retained step trace must display “replay unavailable”; never reconstruct a plausible path.
+- Compare/Artifacts must consume real result bundles/analysis/artifacts rather than dumping raw JSON as the primary experience.
+- Keep root `run_app.bat` functional and local single-user architecture; no cloud/auth/microservices/custom frontend rewrite unless a measured requirement forces an explicit amendment.
 
 ## Execution contract
 
-For each active bounded scope:
+For each bounded scope:
 
-1. Confirm dependencies, acceptance condition, constraints, and evidence needed.
-2. Implement/research the smallest complete solution that satisfies the acceptance condition. Follow all scientific, bibliography, provenance, UI, lifecycle, and scope rules routed by `AGENTS.md`.
-3. Fail closed on invalid/ambiguous required state; do not fabricate fallbacks or apparent success.
-4. Validate with the smallest relevant deterministic checks during implementation.
-5. Keep `TASKS.md`, `Resume state`, and affected active source-of-truth docs consistent in the same change.
-6. Before PR/update, run the documentation consistency validator and directly affected targeted checks. Do not duplicate an available PR full-suite CI run locally.
-7. Mark a task complete only when its acceptance condition is actually satisfied and validated; otherwise keep it `IN_PROGRESS` or correctly blocked.
-8. Create/update a coherent PR with task IDs, scope/rationale, validation, scientific/protocol impact, and deferred/excluded work.
-9. Use GitHub PR CI as the canonical full-suite pre-merge guard when available. On success, record the conclusion without rereading logs. On failure, inspect only the failing step/log, reproduce narrowly when useful, fix, and let CI verify the whole repository again.
-10. Review the actual diff before merge. Do not submit an `APPROVE` review on your own PR. When CI is green, the diff is sound, no unresolved review finding exists, and repository policy does not require a distinct human approval, squash-merge with available permissions. A routine own-PR merge is not “self-approval”; it is an execution step after objective review. If branch protection or an explicit task/policy genuinely requires another human's approval, that external approval is a real gate.
-11. After merge, synchronize the local repository to the resulting `main`, verify task/status state against the merge, select the next dependency-valid task, and continue under the same active goal.
+1. Confirm dependencies, acceptance conditions, scientific/provenance/UI constraints, and the smallest evidence needed.
+2. Implement the smallest complete solution that satisfies the active acceptance condition.
+3. Fail closed on invalid or ambiguous required state; never fabricate fallbacks or apparent success.
+4. Run only targeted deterministic tests/validators while implementing.
+5. Reconcile affected active source-of-truth docs and issue/task progress in the same checkpoint.
+6. Before PR/checkpoint review, run the documentation consistency validator and directly affected targeted checks. Let GitHub PR CI be the canonical full-suite guard when available; do not duplicate it for reassurance.
+7. Mark progress complete only when its acceptance condition is objectively satisfied.
+8. Review the actual diff. Fix concrete findings before proceeding.
+9. Keep the single branch recoverable with meaningful commits. Do not merge it early merely because one milestone is green.
 
-## Progress and quota discipline
+For this user-directed package, the normal autonomous own-PR merge rule is superseded: keep the implementation branch/PR open through the integrated scientific + application + screenshot refinement and user-facing acceptance checkpoint. Do not squash-merge the branch into `main` before that package-level gate.
 
-- Give concise user updates after scope is set and at meaningful completed/validated checkpoints or genuine blockers—not after routine commands.
-- Use `X/Y` only for objective finite denominators. `Project: X/Y` comes from checked/all canonical `T-*` entries in `TASKS.md`; add the current work-package/deliverable count when useful. Add active-task `X/Y` only if real finite substeps exist.
-- In-progress/failed work never counts as complete. Do not create another tracker or invented percentage.
-- Prefer targeted search/ranges and bounded outputs; avoid broad repository/corpus dumps and unnecessary successful-log reading.
-- Preserve recoverable checkpoint commits/state after substantial validated substeps when practical, especially before long experiments or major context switches.
-- Do not clear or declare the persistent goal complete merely because one task, branch, PR, CI run, merge, or work package completed while another dependency-valid scope can proceed.
+## Testing / quota discipline
+
+Testing is risk-based and proportional:
+
+- prefer known-answer, deterministic, information-boundary, serialization, configuration, lifecycle-truthfulness, artifact-loading, and representative render tests;
+- no arbitrary coverage target;
+- no broad mutation/fuzz/property/combinatorial/snapshot expansion without a concrete risk;
+- no pilot/final experiment matrix in CI;
+- do not repeatedly run the full suite locally when PR CI is available;
+- screenshots validate UI rendering only and never promote fixtures to scientific evidence.
+
+## Progress reporting and recovery
+
+- Use `X/Y` only from finite checklist denominators in `TASKS.md`/issues #87–#91.
+- Preserve intermediate branch commits after substantial validated substeps.
+- If a session stops unexpectedly, inspect the existing branch diff/commits/check state before assuming work is absent.
+- Never discard prior branch work solely because session memory is missing.
+- Add newly discovered required work to the canonical task ledger and the relevant issue before it can be forgotten.
 
 ## Stop conditions
 
-Continue without asking the user for routine repository, Git, PR, CI, diff review, merge, validation, evidence-retrieval, task-selection, research synthesis, implementation, or next-task work that can be resolved from available sources and accepted rules.
+Continue without asking the user for routine implementation, repository reading, Git, CI, objective review, evidence retrieval, or task selection that accepted rules can resolve.
 
-Pause/stop Goal mode and report only when continuation genuinely requires one of these:
+Stop/report only for a genuine blocker such as unavailable credentials/access, required execution on another physical machine, unresolved safety/privacy/legal/licensing constraints, a non-objective academic/product choice explicitly reserved for the user, or the mandatory human application/WP7 approval gates.
 
-- a non-objective academic/product choice that the task/specification reserves for the user;
-- new supervisor/Department guidance or private input available only from the user and required now;
-- execution on another physical machine when the current environment cannot provide evidence required by the next task;
-- an unrecoverable access/credential, safety, privacy, legal, or licensing blocker;
-- an explicit external approval required by a frozen-protocol amendment, repository protection, or controlling task/specification;
-- all canonical tasks that can proceed without one of the above external inputs are complete.
+Technical completion, a successful test, screenshot capture, or green CI is not permission for WP7.
 
-A task boundary, successful validation, PR creation, green CI, objective self-review, own-PR squash merge, evidence-backed research/ADR decision, or newly unblocked next task is **not** by itself a stop condition.
-
-Before an intentional pause/stop, leave branch/task/resume state internally consistent and recoverable.
-
-## Final report
+## Final report for this package
 
 Report only:
 
-- final objective progress line;
-- completed/`IN_PROGRESS` task IDs;
-- material work completed;
-- branch/PR/merge/checkpoint state;
-- validators/tests/CI conclusions;
-- accepted or still-unfrozen scientific/architecture decisions;
-- genuine external blockers/approval gates;
-- exact next task/action from `TASKS.md`;
-- major artifact produced, if any.
+- objective milestone/task progress;
+- material code/scientific/UI changes;
+- branch/PR/checkpoint state;
+- targeted test/CI conclusions;
+- protocol-v1.1 candidate/frozen state and any non-final experiment still required;
+- UI screenshots/artifacts available for user review;
+- remaining human E2E acceptance items;
+- exact next action;
+- explicit confirmation that WP7 remains blocked unless/until the user approves it.
