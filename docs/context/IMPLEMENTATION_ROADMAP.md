@@ -1,109 +1,126 @@
 # Implementation Roadmap
 
-The roadmap is phase-gated and optimized for thesis completion, scientific adequacy, reproducibility, and bounded engineering complexity.
+The roadmap is phase-gated for thesis completion, scientific adequacy, reproducibility and bounded engineering. `TASKS.md` is the concrete task/status/resume registry; roadmap phases do not override its current state.
 
-## Working rule
+## Completed foundation
 
-Phases are checkpoints, not the concrete execution checklist and not mandatory separate PRs. `docs/context/TASKS.md` is the canonical task/status/resume registry. Combine adjacent work when it remains reviewable, but do not skip task acceptance conditions or scientific gates merely because infrastructure already exists.
+The following baseline is already implemented/validated and remains reusable:
 
-## Phase 1 — Context, bibliography, and target machine
+1. Project/bibliography ownership, immutable corpus consumer and provenance.
+2. Actual-machine capability inventory; Python 3.12 + `uv` locked environment.
+3. Source-traceable research framing and project-owned Gymnasium GridWorld with deterministic information/RNG contracts.
+4. Resilience/degradation/recovery metric primitives and known-answer fixtures.
+5. Historical F0/C0/R0 implementation, pilot protocols, headless runner and reproducible analysis.
+6. Historical frozen `protocol-v1.0` final evidence and thesis-final artifact package.
+7. Canonical Codex task registry, documentation governance and interruption recovery.
 
-- Confirm the immutable bibliography baseline and current project context.
-- Run/accept the privacy-minimal system inventory on the actual experiment machine.
-- **Gate:** no compute-dependent dependency, model-budget, or acceleration decision before the real inventory.
+Historical v1.0 evidence remains immutable; current refinement is versioned rather than retroactively rewriting it.
 
-## Phase 2 — Research framing
+## Current pre-WP7 refinement
 
-- Define the bounded main research question, minimal secondary questions, and hypotheses from citation-ready evidence.
-- Keep final model/environment/protocol choices unfrozen until feasibility evidence exists.
+### Phase R1 — D0 integration — COMPLETE
 
-## Phase 3 — Environment contract and GridWorld decision
+- Add D0 Dyna-Q+ as the third scientifically distinct current comparator beside F0 frozen and C0 continual Q-learning.
+- Preserve strict agent-visible/evaluator-only information boundary and deterministic state/RNG serialization.
+- Preserve learned Dyna state across evaluation episodes while reseeding episode-local RNG correctly.
+- Keep historical `PilotProtocol` semantics unchanged; use a versioned development-only v1.1 adapter until the real candidate schema exists.
+- **Gate passed:** focused F0/C0/D0 runner tests + PR CI run 346 are green (`T-520`).
 
-- Use the common environment/ground-truth contracts in `src/resilient_agents/`.
-- DEC-032's project-owned Gymnasium path and explicit schema-v1 contracts are implemented.
-- **Gate passed:** deterministic known-answer transition/reference-trace and information-boundary tests pass.
+### Phase R2 — Candidate protocol-v1.1 and statistics — CURRENT
 
-## Phase 4 — Reproducibility and metric fixtures
+- Build authoritative candidate `protocol-v1.1`; it must not authorize final evidence.
+- Keep validated F0/C0 alpha `0.5`, gamma `0.96875`, epsilon `0.125`, 512 training episodes/layout, 16 pre-change, 32 post-change, horizon 48 and 32 paired final roots.
+- Define a small predeclared search only for D0-specific `planning_steps`/`kappa`.
+- Keep seven single-factor conditions; structural remap IDs are `action-remap-2-swap` and `action-remap-4-cycle`.
+- Generate/validate four fresh held-out final layouts and a fresh precommitted final seed bank before any new final outcomes can be inspected.
+- Primary analysis: cumulative deficit, immediate degradation, terminal performance/gap. Recovery remains secondary/sensitivity.
+- Implement paired effects + 95% confidence intervals, explicit n and layout-aware views; no unlabeled composite resilience score or post-hoc favorable threshold.
+- **Gate:** T-521 complete before non-final tuning/pilot.
 
-- Validate independent RNG streams, deterministic replay, provenance, run bundles, and storage.
-- Operational metric schema v1 and synthetic hand-calculated tests are complete; pilot-derived numeric/statistical choices remain later freeze inputs.
-- Explicitly represent non-recovery rather than substituting the horizon.
+### Phase R3 — Non-final D0 tuning and v1.1 freeze
 
-## Phase 5 — Small model-role selection
+- Execute only bounded development/tuning/pilot evidence defined by candidate v1.1.
+- Select D0-specific parameters from predeclared non-final evidence only.
+- Validate runtime/informativeness/failure/non-recovery behavior and retain unsuccessful outcomes.
+- Freeze, amend or reject candidate v1.1 before any final reserve is executed.
+- **Gate:** T-522.
 
-- F0/C0 common tabular Q-learning and R0 rectangular robust value iteration are implemented with versioned state and focused correctness tests. Completed pilots retain C0/F0 as feasible candidates but prohibit freezing the current nominally saturated R0 configuration unchanged.
-- All selected agents use the same strict information-limited contract.
-- **Gate:** no privileged ground truth and no model without a distinct research role.
+### Phase A1 — Truthful active-run runtime service
 
-## Phase 6 — Pilot protocol
+- Add a UI-independent Python runtime registry/service, separate from NiceGUI and scientific execution.
+- Expose real queued/running/completed/failed/cancelled/interrupted state, heartbeat/progress/events/history/resources.
+- Provide a read-only live GridWorld observer proven not to alter agent information, actions, timing or RNG.
+- Support stop/cancel/restart only where safe; unsupported pause/resume/control capabilities remain explicit.
+- Preserve unfinished/failed/cancelled/interrupted runs without corrupting finalized registry semantics.
+- **Gate:** T-530.
 
-- `pilot-v0.1` defines explicit disjoint development/tuning/pilot/final-reserve layouts and a validated stage firewall; `pilot-v0.2` preserves that authority while correcting one information-safe R0 observation boundary.
-- The complete amended matrix and analysis now provide diagnostic runtime, storage, variance, censoring, recovery-sensitivity, and role-feasibility evidence; they do not become final results.
-- Refresh decision-driving literature in `ThesisBibliography`, then resolve the recorded R0/metric/sample-size gates before freeze.
+### Phase A2 — Native polished thesis application
 
-## Phase 7 — Headless experiment core
+DEC-044/045/046 are authoritative.
 
-- Environment, agents, metrics, multi-seed orchestration, continuous persistence, root-boundary recovery, manifests, CLI, and fail-closed lifecycle behavior are integrated inside `src/resilient_agents/`.
-- A whole experiment may contain many seeds; the validated path finalizes once and optionally invokes one automatic Git commit/push after all seeds.
-- Finalized bundles deterministically produce integrity-validated unit records, primary aggregates, operational diagnostics, and the predeclared metric-sensitivity grid through the same version-controlled core.
-- **Gate:** full experiments run without the UI and produce auditable bundles.
+- **Framework:** NiceGUI 3.16 native mode (`pywebview`) over the same Python core/runtime services. No active Streamlit or React/Vite frontend.
+- **Navigation:** Dashboard, New Experiment, Runs, Compare, Artifacts.
+- Dashboard: active/recent state, warnings, protocol status, resource snapshot, quick actions.
+- New Experiment: F0/C0/D0 explanations; approved layout/condition/seeds/repetitions/settings; progressive advanced options; readable resolved-config review before launch.
+- Runs: active/history/detail, smooth live GridWorld, event timeline, real logs/metrics and compatible live model/settings overlays.
+- Compare: scientifically compatible selection, distributions, paired effects/CIs, counts and condition/layout breakdowns.
+- Artifacts: real figures/tables/CSV/JSON/HTML/provenance preview/export and thesis/presentation-ready views.
 
-## Phase 8 — Pilots and protocol freeze
+Visual roles:
 
-- Measure runtime, variance, detector/adaptation behavior, failure modes, storage volume, and metric behavior.
-- Freeze `protocol-v1.0` only after pilot questions are answered.
-- Any later scientific change requires an explicit protocol amendment/version.
+- Plotly — stored scientific/thesis-ready figures.
+- ECharts — live/provisional animated telemetry.
+- Mermaid — agent/experiment/information-flow infographics.
+- AG Grid Community — analytical tables.
 
-## Phase 9 — Minimal experiment management
+Novice-first UX:
 
-- Add only the run registry, truthful lifecycle state, interruption/recovery, batch support, and current resource snapshot required by the frozen workflow.
-- Filesystem run bundles remain the source of truth; any database/index is rebuildable cache.
+- Plain-language primary labels; technical IDs secondary.
+- Tooltips/info icons/contextual explanations, visible units/ranges/consequences, progressive disclosure.
+- Explain agents, uncertainty conditions, metrics, aggregation and error-bar/CI semantics.
+- Semantic text + icon + accessible color statuses; color never sole signal.
+- Actionable empty/loading/error/disabled/unavailable states.
+- Modern compact hierarchy rather than oversized decorative layouts.
+- Restrained hover/focus/selection micro-interactions and purposeful GridWorld/chart/status animations; animation never fabricates scientific progress and remains understandable with reduced motion where practical.
+- Short skippable/replayable onboarding, but normal pages remain understandable without it.
+- **Gate:** T-531 and later T-511 intended-user validation.
 
-## Phase 10 — Polished bounded application
+### Phase A3 — Screenshots and standalone Windows delivery
 
-- Implement the final dashboard as a thin local Streamlit layer unless a concrete pilot-derived requirement disproves that choice.
-- Required workflows: New Experiment, Run/Monitor, History, Compare, Detailed Analysis, and Artifacts/Export.
-- Make the UI self-explanatory using clear labels/helper text/units, concise tooltips and contextual help for non-obvious scientific concepts, consistent text+icon+semantic-color statuses, actionable empty/warning/error states, and clear next actions where useful.
-- Add a concise pre-run resolved-configuration/validation summary so the user knows what will actually execute.
-- After the final dashboard structure is stable, add lightweight first-run onboarding for the essential flow with Previous/Next/Skip/Finish plus replay from Help/Getting Started. Prefer native/lightweight Streamlit mechanisms and a local completion flag; do not add a heavyweight custom frontend tour framework without demonstrated need.
-- Use proportionate confirmation only for destructive/high-impact actions and keep routine navigation/configuration friction low.
-- Validate a real end-to-end multi-seed workflow through the user-facing application before the final experiment campaign.
-- No scientific logic may be duplicated in Streamlit callbacks.
-- **Gate:** application completion means the intended user workflow is truthful, tested, self-explanatory, accessible in normal use, polished, and uses the same frozen scientific core.
+- Root `ui-screenshots/` stores stable accepted review screenshots, including useful help/status/empty/error states; screenshots are not scientific evidence.
+- Bounded CI browser rendering uses the same NiceGUI pages and deterministic labelled fixtures only where needed for chrome/state validation.
+- Validate native Windows launch/close/restart and pywebview/WebView2 behavior on the target machine.
+- Produce/validate NiceGUI/PyInstaller `onedir + windowed` cleaned application folder with safe writable data paths.
+- Recipient should not need Python/Node/browser/visible terminal interaction.
+- Root `run_app.bat` remains the repository-checkout launcher.
+- **Gate:** T-532 followed by T-511 human E2E.
 
-## Phase 11 — Final experiment campaign
+## New final evidence path
 
-- Execute the frozen matrix only after `protocol-v1.0` and the validated application workflow are ready.
-- Use automatic provenance, storage, checksums, and one commit/push per whole experiment.
-- Retain failed/cancelled/invalid/excluded runs with reasons.
-- Large thesis-produced artifacts may use Git LFS; bibliography LFS/PDF objects remain upstream.
+Only after frozen v1.1 and application acceptance:
 
-## Phase 12 — Statistical analysis and frozen evidence package
+1. `T-610` execute the frozen v1.1 final matrix with new run IDs.
+2. `T-611` validate/freeze accepted final evidence.
+3. `T-612` execute predeclared paired statistical analysis/sensitivity diagnostics.
+4. `T-613` generate final v1.1 figures/tables/exports and the superseding thesis/defense evidence package.
 
-- Freeze the accepted final run set under `results/thesis-final/`.
-- Produce reproducible summaries, intervals/effect sizes/diagnostics as justified, figures, tables, captions, and exports from frozen evidence only.
-- Produce a versioned thesis/defense evidence package mapping RQs, protocol/method references, source IDs, result/run IDs, figures/tables, and planned claims.
-- **Gate:** writing/presentation must not require ad-hoc reinterpretation of raw final runs.
+Failed/cancelled/invalid/excluded runs remain visible and attributable. Final figures/tables derive only from frozen real data.
 
-## Phase 13 — Thesis writing and review
+## Mandatory pre-WP7 approval
 
-- Refresh current official thesis/template/submission guidance.
-- Write the Greek Word thesis from citation-ready bibliography evidence and the frozen evidence package.
-- Produce a review-ready `.docx`, incorporate supervisor/reviewer corrections when received, and revalidate affected claims/figures/citations.
-- Perform final bibliography/guidance audit and freeze the final thesis deliverable.
+Completing application/evidence does **not** authorize thesis writing. T-511 must be accepted and the user must explicitly approve starting WP7. Until then all `T-700+` work remains blocked.
 
-## Phase 14 — Defense presentation
+## Deferred downstream phases
 
-- Follow `docs/thesis/PRESENTATION_WORKFLOW.md` only after the final thesis is stable.
-- Build the defense narrative and slide evidence map from the final thesis and frozen evidence.
-- Produce the final PowerPoint `.pptx`, embedded speaker notes, and a separate full spoken Greek script.
-- Validate application screenshots/demo fallback, factual consistency, PowerPoint rendering, and rehearsal timing.
+After explicit approval:
 
-## Phase 15 — Final audit and delivery
-
-- Audit claims, citations, protocol versions, included/excluded runs, figures, cross-references, privacy, licensing, reproducibility, thesis/presentation consistency, and official required files.
-- Confirm the final repository/application, thesis, PowerPoint, speaker material, and demo/delivery package are ready.
+- Recheck current official thesis/Word/submission/defense requirements.
+- Draft/review/freeze the Greek Word thesis from citation-ready bibliography + frozen evidence.
+- Incorporate supervisor/reviewer corrections with affected-evidence revalidation.
+- Build the final PowerPoint defense narrative/deck/evidence map, embedded speaker notes and separate full spoken Greek script per `docs/thesis/PRESENTATION_WORKFLOW.md`.
+- Validate PowerPoint rendering, factual consistency, rehearsal timing and demo/screenshot fallback.
+- Final bibliography/reproducibility/privacy/licensing/delivery audits.
 
 ## Completion rule
 
-The project is complete when the research question is answered with reliable reproducible evidence, the bounded local application supports the real experiment workflow, and the final thesis and defense package faithfully communicate the same frozen evidence. Production-platform engineering is not required. Concrete completion is tracked through task acceptance conditions in `TASKS.md`.
+The project is complete only when the research question is answered with reliable reproducible evidence, the bounded standalone application supports the real experiment workflow, and the final thesis/defense package communicates the same frozen evidence. Production-platform engineering is not required; concrete progress is governed by `TASKS.md`.
