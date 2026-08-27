@@ -27,15 +27,15 @@ In-progress/failed work never counts as complete. Newly discovered required work
 
 ## Resume state
 
-- **Current work package:** DEC-042/DEC-043 pre-WP7 scientific + application refinement.
+- **Current work package:** DEC-042 + DEC-044 + DEC-045 pre-WP7 scientific/application refinement. DEC-043 is retained only as the superseded React/Vite exploration record.
 - **Current task:** `T-520`
 - **State:** `IN_PROGRESS`
 - **Active branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92. This is the single implementation branch/PR for this package; do not create a parallel implementation branch.
 - **Trackers:** #87 master; #88 scientific; #89 runtime; #90 UI; #91 screenshots/CI/Codex handoff.
-- **Last validated point:** `T-513` completed; PR CI run 266 was green after canonical ledger reconciliation. DEC-043 now supersedes the historical Streamlit-specific application-layer choice with React + TypeScript + Vite served by FastAPI/Uvicorn; the Python scientific core/storage/provenance boundaries are unchanged. D0 standalone and episode-preserving deployment code plus the initial v1.1 runner extension are committed after that earlier green checkpoint and require current-head validation before `T-520` closes.
-- **Tests already run:** PR #92 Repository checks run 266 — SUCCESS on the pre-latest-D0-runner checkpoint. Never treat later unvalidated commits as covered by that run.
+- **Last validated point:** `T-513` completed and PR CI run 266 was green before the latest scientific/application commits. D0 standalone, episode-preserving deployment and initial v1.1 runner integration remain committed. The application architecture has since been superseded by DEC-044: NiceGUI 3.16 native mode, with DEC-045 assigning Plotly/ECharts/Mermaid/AG Grid roles. Historical Streamlit pages and temporary React/Vite files are removed. Current-head lock/import/tests/render are required before claiming this newer checkpoint validated.
+- **Tests already run:** PR #92 Repository checks run 266 — SUCCESS on an earlier checkpoint only. Never treat later commits as covered by that run.
 - **Uncommitted work:** unknown to remote handoff; next session must inspect `git status` before assuming clean state.
-- **Exact next action:** continue `T-520` by validating/completing D0 runner integration and focused contract tests. The adjacent DEC-043 framework scaffold may be migrated on this same branch, but `T-530`/`T-531` remain incomplete until dependencies and acceptance pass. Do not start `T-521` final-evidence work or `T-700+` prematurely.
+- **Exact next action:** inspect PR #92 current head/checks, diagnose any NiceGUI lock/import/render regressions, and complete focused D0/v1.1 runner validation for `T-520`. Then proceed dependency-valid `T-521`/`T-530`; do not populate live UI with invented data and do not start `T-700+`.
 
 ## Quota/interruption resilience
 
@@ -46,7 +46,7 @@ In-progress/failed work never counts as complete. Newly discovered required work
 5. Update this Resume state when the next action would otherwise be ambiguous.
 6. Use issue `X/Y` and `Project: X/Y` only from real finite denominators; In-progress/failed work never counts as complete.
 7. Testing remains risk-based/proportional; pilot/final experiment matrices are never CI tests.
-8. Keep this one implementation branch for the DEC-042/DEC-043 package. Do not create another implementation branch merely because Codex resumes the work.
+8. Keep this one implementation branch for the DEC-042/044/045 package. Do not create another implementation branch merely because Codex resumes the work.
 
 ## WP0 — Completed repository/research infrastructure
 
@@ -91,7 +91,7 @@ In-progress/failed work never counts as complete. Newly discovered required work
 - [x] `T-411` — Pre-freeze bibliography freshness review.
 - [x] `T-412` — Historical `protocol-v1.0` freeze/statistical plan. This remains immutable baseline evidence, not a prohibition on DEC-042 versioned refinement.
 
-## WP5 — Historical application baseline and active DEC-042/DEC-043 refinement
+## WP5 — Historical application baseline and active DEC-042/044/045 refinement
 
 Historical baseline:
 
@@ -117,21 +117,22 @@ Active refinement tasks:
   - Depends on: `T-521`; execution on the actual thesis machine when required.
   - Acceptance: D0 planning parameters selected from predeclared non-final evidence only; non-final pilot confirms execution/informativeness/runtime bounds; failed/non-recovery outcomes retained; no final-v1.1 evidence inspected; freeze/amend/reject decision evidence-backed and versioned.
 
-- [ ] BLOCKED `T-530` — Add truthful FastAPI application/runtime service independent of the frontend.
+- [ ] BLOCKED `T-530` — Add truthful UI-independent Python application/runtime service for live experiments.
   - Depends on: `T-520`.
-  - Acceptance: explicit versioned REST/WebSocket contracts expose real queued/running/completed/failed/cancelled/interrupted state, heartbeat/progress/events, history/resources, and read-only live GridWorld observation proven not to alter scientific RNG/actions; unfinished runs visible; stop/cancel/restart only when safe; unsupported pause/resume/control capabilities explicit; no scientific execution logic duplicated in FastAPI routes.
+  - Acceptance: explicit versioned Python DTO/service contracts expose real queued/running/completed/failed/cancelled/interrupted state, heartbeat/progress/events, history/resources, and read-only live GridWorld observation proven not to alter scientific RNG/actions; unfinished runs visible; stop/cancel/restart only when safe; unsupported pause/resume/control capabilities explicit; no scientific execution logic duplicated in UI callbacks. NiceGUI's internal FastAPI/Uvicorn/Socket.IO plumbing is framework infrastructure, not the scientific runtime service contract.
 
-- [ ] BLOCKED `T-531` — Build the React + TypeScript + Vite research application selected by DEC-043 over the validated FastAPI/runtime service.
+- [ ] BLOCKED `T-531` — Build the native NiceGUI research application selected by DEC-044 with visual analytics per DEC-045.
   - Depends on: `T-530`, `T-521`.
-  - Acceptance: Dashboard; real New Experiment configuration/resolved-config review; Runs active/history/detail with smooth live GridWorld/event timeline/metrics/logs; Compare with compatibility checks/distributions/paired CIs/counts/layout-condition breakdowns; Artifacts real CSV/JSON/HTML/provenance preview/export; model/agent infographics; self-explanatory UX/help/tooltips/units/status semantics/accessibility/empty-loading-error-disabled states and lightweight onboarding; responsive desktop/laptop presentation; root `run_app.bat` launches one FastAPI/Uvicorn server serving prebuilt frontend assets; no fabricated state/data/replay. Node/Vite is build-time only for the normal supported user runtime unless target-machine requirements are explicitly amended.
+  - Progress: in-progress NiceGUI shell/read model/visualization builders and cleanup are committed early on the same branch, but this task remains BLOCKED/incomplete until dependencies and all acceptance criteria are satisfied.
+  - Acceptance: Dashboard; real New Experiment configuration/resolved-config review; Runs active/history/detail with smooth live GridWorld/event timeline/metrics/logs and compatible live agent/settings comparisons; Compare with compatibility checks/distributions/paired CIs/counts/layout-condition breakdowns; Artifacts real CSV/JSON/HTML/provenance preview/export; F0/C0/D0 model infographics; Plotly stored-evidence figures; ECharts live/provisional telemetry; Mermaid explanations; AG Grid Community tables; self-explanatory UX/help/tooltips/units/status semantics/accessibility/empty-loading-error-disabled states and lightweight onboarding; responsive desktop/laptop presentation; root `run_app.bat` launches a NiceGUI native desktop window through the locked Python environment; browser-mode rendering uses the same pages; no fabricated state/data/replay; no active Node/Vite/Streamlit application stack.
 
-- [ ] BLOCKED `T-532` — Add repository-root UI screenshots and bounded CI browser/render validation.
+- [ ] BLOCKED `T-532` — Add repository-root UI screenshots, bounded browser/render validation, and native Windows application packaging validation.
   - Depends on: `T-531`.
-  - Acceptance: root `ui-screenshots/` documents committed stable page screenshots; CI capture is deterministic/bounded; diagnostic artifacts may be uploaded; fixtures never masquerade as scientific results; historical no-trace runs show replay unavailable.
+  - Acceptance: root `ui-screenshots/` documents committed stable page screenshots; CI/browser capture is deterministic and bounded; diagnostic fixtures never masquerade as scientific results; historical no-trace runs show replay unavailable; NiceGUI native launch/close/restart passes on Windows; validated PyInstaller/NiceGUI `onedir` + `windowed` output opens in its own window without requiring Python/Node/browser interaction; mutable run/output paths do not rely on temporary frozen paths; packaged folder contents are documented for final cleanup/delivery.
 
 - [ ] USER_VALIDATION_REQUIRED `T-511` — Validate the complete intended application workflow and UX.
   - Depends on: `T-512`, `T-531`, `T-532`.
-  - Acceptance: intended user can configure an approved multi-seed experiment, launch/monitor truthful state and live GridWorld, inspect history/results, compare agents, export artifacts, understand help/status/error/disabled states, and complete/skip/replay onboarding; UI is coherent and presentation-ready; no fake progress/metrics/logs. Automated render/screenshot checks never close this task.
+  - Acceptance: intended user can configure an approved multi-seed experiment, launch/monitor truthful state and live GridWorld, compare compatible live model/settings behavior, inspect history/results, compare finalized agents/statistics, export/screenshot artifacts, understand help/status/error/disabled states, and complete/skip/replay onboarding; application opens as the intended standalone desktop experience and is coherent/presentation-ready; no fake progress/metrics/logs. Automated render/screenshot/package checks never close this task.
 
 ## WP6 — Historical v1.0 evidence plus future v1.1 evidence
 
@@ -156,7 +157,7 @@ DEC-042 replacement evidence path:
 
 ## Mandatory pre-WP7 user approval gate
 
-**Current gate state: NOT APPROVED.** Existing technical/final evidence, a green PR, screenshots, or completed `T-613` do not authorize writing.
+**Current gate state: NOT APPROVED.** Existing technical/final evidence, a green PR, screenshots, packaged application, or completed `T-613` do not authorize writing.
 
 Only after the requested scientific/application refinement, new evidence path where applicable, and `T-511` human acceptance are satisfactory may the assistant explicitly ask: **“Do you approve starting WP7 thesis-writing/defense work now?”** Only a direct affirmative answer in the current conversation unlocks `T-700+`.
 
