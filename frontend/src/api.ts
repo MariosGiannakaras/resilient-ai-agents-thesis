@@ -10,8 +10,7 @@ export type RunRecord = {
   status: string
   protocol_version: string
   stage: string
-  started_at_utc: string | null
-  finished_at_utc: string | null
+  recorded_at_utc: string
   source_git_commit: string | null
 }
 
