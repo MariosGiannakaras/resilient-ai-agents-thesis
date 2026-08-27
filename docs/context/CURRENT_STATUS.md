@@ -20,7 +20,9 @@ This file is intentionally short. Detailed policy/history live in the routed sou
 - Single draft integration PR: #92.
 - Trackers: master #87; scientific #88; runtime #89; UI #90; screenshots/CI/Codex handoff #91.
 - Do not create a parallel implementation branch for this work package.
-- Current objective progress: governance/handoff is not yet complete until `TASKS.md` is reconciled; D0 implementation/tests exist on the branch and are under CI validation.
+- `T-513` governance/Codex handoff is complete. Master tracker #87 is **1/8**.
+- Current task: `T-520 IN_PROGRESS` — integrate D0 into the headless runner/agent-construction path.
+- Standalone D0 implementation and focused tests are committed. PR CI run 266 on branch head `e4b95c24cb191233b6a82190dcb81d0a3b4bcd57` completed successfully after the canonical task-ledger reconciliation.
 
 ### Scientific direction
 
@@ -61,6 +63,6 @@ The v1.1 D0-specific planning parameters, final v1.1 freeze, and any new v1.1 fi
 
 ## Exact next action
 
-Reconcile the canonical `TASKS.md` Resume state and add stable pre-WP7 refinement task IDs tied to #87–#91 on the existing branch. Then finish D0 runner/protocol/tuning/analysis integration, validate it through targeted/PR CI, and continue in dependency order to runtime service → UI rebuild → screenshots → human E2E acceptance. No `T-700+` action is permitted.
+Continue `T-520` on the existing branch: integrate D0 into the headless runner while preserving learned Q/model/recency state across evaluation episodes and reseeding only agent RNG streams at episode boundaries; add focused integration tests proving deterministic matched pre-change behavior and no evaluator-information leakage. Then advance to `T-521` only after `T-520` acceptance passes. No `T-700+` action is permitted.
 
 After technical refinement and user review are complete, explicitly ask whether the user approves starting WP7. Only a direct affirmative answer unlocks writing/defense work.
