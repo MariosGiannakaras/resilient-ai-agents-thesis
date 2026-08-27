@@ -213,12 +213,13 @@ class BroadenedV11ExperimentRunner(V11ExperimentRunner):
         repo_root: Path,
         protocol: BroadenedV11DevelopmentProtocol,
         request: BroadenedV11ExperimentRequest,
+        writable_root: Path | None = None,
     ) -> None:
         if not isinstance(protocol, BroadenedV11DevelopmentProtocol):
             raise ValueError("protocol must be BroadenedV11DevelopmentProtocol")
         if not isinstance(request, BroadenedV11ExperimentRequest):
             raise ValueError("request must be BroadenedV11ExperimentRequest")
-        super().__init__(repo_root=repo_root, protocol=protocol, request=request)
+        super().__init__(repo_root=repo_root, protocol=protocol, request=request, writable_root=writable_root)
 
     def _validate_request(self) -> None:
         assert_stage_access(

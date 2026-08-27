@@ -168,12 +168,13 @@ class V11CandidateExperimentRunner(HeadlessExperimentRunner):
         repo_root: Path,
         protocol: V11CandidateProtocol,
         request: V11CandidateExperimentRequest,
+        writable_root: Path | None = None,
     ) -> None:
         if not isinstance(protocol, V11CandidateProtocol):
             raise ValueError("protocol must be V11CandidateProtocol")
         if not isinstance(request, V11CandidateExperimentRequest):
             raise ValueError("request must be V11CandidateExperimentRequest")
-        super().__init__(repo_root=repo_root, protocol=protocol, request=request)
+        super().__init__(repo_root=repo_root, protocol=protocol, request=request, writable_root=writable_root)
 
     def _validate_request(self) -> None:
         self.protocol.assert_execution_allowed(self.request.stage)

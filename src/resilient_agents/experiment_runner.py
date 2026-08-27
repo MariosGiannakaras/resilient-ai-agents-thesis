@@ -236,6 +236,7 @@ class HeadlessExperimentRunner:
         repo_root: Path,
         protocol: PilotProtocol,
         request: HeadlessExperimentRequest,
+        writable_root: Path | None = None,
     ) -> None:
         if not isinstance(repo_root, Path):
             raise ValueError("repo_root must be pathlib.Path")
@@ -244,6 +245,7 @@ class HeadlessExperimentRunner:
         if not isinstance(request, HeadlessExperimentRequest):
             raise ValueError("request must be HeadlessExperimentRequest")
         self.repo_root = repo_root.resolve()
+        self.writable_root = Path(writable_root).resolve() if writable_root else self.repo_root
         self.protocol = protocol
         self.request = request
         self._payload = protocol.to_dict()
@@ -349,9 +351,10 @@ class HeadlessExperimentRunner:
 
     def _new_or_resumed_bundle(self) -> tuple[RunBundle, bool]:
         resolved = self._resolved_config()
-        run_dir = self.repo_root / "results" / "runs" / self.request.run_id
+        run_dir = self.writable_root / "results" / "runs" / self.request.run_id
         common = dict(
             repo_root=self.repo_root,
+            writable_root=self.writable_root,
             run_id=self.request.run_id,
             resolved_config=resolved,
             protocol_version=self.protocol.protocol_version,

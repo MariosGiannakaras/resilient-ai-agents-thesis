@@ -18,6 +18,7 @@ from resilient_agents.v11_protocol import load_v11_candidate_protocol
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo-root", type=Path, required=True)
+    parser.add_argument("--writable-root", type=Path, default=None)
     parser.add_argument("--protocol", type=Path, required=True)
     parser.add_argument("--request", type=Path, required=True)
     parser.add_argument("--telemetry", type=Path, required=True)
@@ -36,6 +37,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         protocol=load_v11_candidate_protocol(args.protocol),
         request=request,
         runtime_telemetry_sink=RuntimeTelemetrySink(args.telemetry),
+        writable_root=args.writable_root,
     ).run()
     print(
         json.dumps(

@@ -168,10 +168,11 @@ SETTING_PRESENTATION: Mapping[str, Mapping[str, str]] = {
 class ApplicationReadModel:
     """Truthful query/control facade for the current local thesis workspace."""
 
-    def __init__(self, repo_root: Path) -> None:
+    def __init__(self, repo_root: Path, writable_root: Path | None = None) -> None:
         self.repo_root = Path(repo_root).resolve()
-        self.registry = ExperimentRegistry(self.repo_root)
-        self.runtime = RuntimeService(self.repo_root)
+        self.writable_root = Path(writable_root).resolve() if writable_root else self.repo_root
+        self.registry = ExperimentRegistry(self.writable_root)
+        self.runtime = RuntimeService(self.writable_root)
         self.v11_protocol_path = self.repo_root / "configs" / "protocols" / "protocol-v1.1.json"
         self._v11_protocol: V11CandidateProtocol | None = None
 

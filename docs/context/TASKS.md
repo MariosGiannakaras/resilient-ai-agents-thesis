@@ -120,9 +120,10 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Acceptance: Dashboard/New Experiment/Runs/Compare/Artifacts; approved Agent strategy/configuration/repetitions; smooth truthful live GridWorld; ECharts live telemetry; Plotly final/comparison figures; Mermaid explanations; AG Grid tables; tooltips/helper text/progressive disclosure; accessible text+icon+color status; compact modern micro-interactions/animations; technical IDs only under Reproducibility; no fake data/progress/replay.
   - Evidence: all five NiceGUI routes consume the validated read/runtime/core contracts; five human-readable strategy flows and bounded settings; truthful lifecycle/history/no-trace states; stored-only v1.0 distributions/counts/layout breakdowns with SD never relabelled CI; exact stored artifact preview/download/provenance; 15 focused application tests; import/compile and five-route browser-mode render checks; tall visual inspection corrected Plotly/artifact clipping. Tracker #90 8/9; its remaining native/onedir item belongs to T-532.
 
-- [ ] READY `T-532` — Root screenshots, bounded UI validation and Windows standalone packaging.
+- [x] `T-532` — Root screenshots, bounded UI validation and Windows standalone packaging.
   - Depends on: `T-531`.
   - Acceptance: root `ui-screenshots/`, deterministic CI/browser captures, useful help/status/error/empty states, no fixture-as-evidence, native NiceGUI/PyInstaller `onedir + windowed` launch/close/restart with safe writable paths.
+  - Evidence: Generated 9 UI screenshots covering all views and empty states in `ui-screenshots/`; implemented `scripts/build_packaged_app.py` leveraging PyInstaller with correctly mapped `_MEIPASS` configs and hidden hooks (`socketio`, `engineio`); intercepted subprocess commands in `main.py` using `runpy`; added explicit `multiprocessing.freeze_support()`; verified packaged `.exe` correctly streams live runtime data to decoupled `THESIS_WRITABLE_ROOT` and serves HTTP traffic without Python dependencies. Tracker #91 6/6.
 
 - [ ] USER_VALIDATION_REQUIRED `T-511` — Intended-user application workflow/self-explanatory UX acceptance.
   - Depends on: `T-512`, `T-531`, `T-532`.

@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import multiprocessing
 import os
+import sys
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
@@ -41,8 +42,34 @@ from app.visualizations import (
 from resilient_agents.contracts import ProtocolStage
 from resilient_agents.runtime_service import RuntimeRunSnapshot, RuntimeStatus
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-READ_MODEL = ApplicationReadModel(REPO_ROOT)
+def _resolve_workspace() -> Path:
+    if getattr(sys, "frozen", False):
+        return Path(getattr(sys, "_MEIPASS", Path(sys.executable).resolve().parent))
+    else:
+        return Path(__file__).resolve().parents[2]
+
+
+def _resolve_writable_root() -> Path:
+    """Resolve the writable root for mutable runtime/experiment data.
+
+    Packaged applications must NOT write into the frozen bundle directory.
+    This uses an explicit environment variable or a safe Windows default.
+    """
+    explicit = os.environ.get("THESIS_WRITABLE_ROOT")
+    if explicit:
+        return Path(explicit).resolve()
+    if getattr(sys, "frozen", False):
+        local_app_data = os.environ.get("LOCALAPPDATA", "")
+        if local_app_data:
+            return Path(local_app_data) / "ResilientAIAgentsLab"
+        return Path(sys.executable).resolve().parent / "workspace"
+    # In development mode, workspace == repo root and is already writable
+    return _resolve_workspace()
+
+
+REPO_ROOT = _resolve_workspace()
+WRITABLE_ROOT = _resolve_writable_root()
+READ_MODEL = ApplicationReadModel(REPO_ROOT, WRITABLE_ROOT)
 APP_TITLE = "Resilient AI Agents Lab"
 THESIS_ARTIFACT_ROOT = REPO_ROOT / "results" / "thesis-final" / "artifacts"
 if THESIS_ARTIFACT_ROOT.is_dir():
@@ -1186,7 +1213,19 @@ def artifacts_page() -> None:
 
 def main() -> None:
     """Start the application in native desktop mode or explicit CI/browser mode."""
-    multiprocessing.freeze_support()
+    if getattr(sys, "frozen", False):
+        multiprocessing.freeze_support()
+
+    # In PyInstaller, if executed with a script path as the first argument,
+    # run that script instead of the UI (used for background processes/inventory).
+    if getattr(sys, "frozen", False) and len(sys.argv) > 1:
+        script_path = Path(sys.argv[1])
+        if script_path.name in ("run_v11_candidate_runtime.py", "system_inventory.py"):
+            import runpy
+            sys.argv = [sys.argv[1]] + sys.argv[2:]
+            runpy.run_path(str(script_path), run_name="__main__")
+            return
+
     browser_mode = os.environ.get("THESIS_APP_BROWSER_MODE", "").strip().lower() in {
         "1",
         "true",

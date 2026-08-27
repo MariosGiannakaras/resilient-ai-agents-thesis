@@ -1,0 +1,81 @@
+{
+  "description": "UI screenshot manifest for the Resilient AI Agents thesis application.",
+  "scientific_evidence": false,
+  "note": "All screenshots are presentation/review artifacts. No screenshot is scientific evidence.",
+  "capture_branch": "feat/pre-wp7-protocol-v1.1-ui-rebuild",
+  "task": "T-532",
+  "screenshots": [
+    {
+      "filename": "01-dashboard.png",
+      "page": "/",
+      "state": "Dashboard overview",
+      "capture_source": "browser-ci-playwright-chromium-headless",
+      "scientific_evidence": false,
+      "purpose": "presentation-review"
+    },
+    {
+      "filename": "02-new-experiment.png",
+      "page": "/experiment",
+      "state": "New Experiment configurator",
+      "capture_source": "browser-ci-playwright-chromium-headless",
+      "scientific_evidence": false,
+      "purpose": "presentation-review"
+    },
+    {
+      "filename": "03-new-experiment-settings.png",
+      "page": "/experiment",
+      "state": "New Experiment \u2014 expanded help/settings",
+      "capture_source": "browser-ci-playwright-chromium-headless",
+      "scientific_evidence": false,
+      "purpose": "presentation-review"
+    },
+    {
+      "filename": "04-runs-empty.png",
+      "page": "/runs",
+      "state": "Runs workspace \u2014 empty state",
+      "capture_source": "browser-ci-playwright-chromium-headless",
+      "scientific_evidence": false,
+      "purpose": "presentation-review"
+    },
+    {
+      "filename": "05-compare-empty.png",
+      "page": "/compare",
+      "state": "Compare \u2014 no stored evidence",
+      "capture_source": "browser-ci-playwright-chromium-headless",
+      "scientific_evidence": false,
+      "purpose": "presentation-review"
+    },
+    {
+      "filename": "06-artifacts-empty.png",
+      "page": "/artifacts",
+      "state": "Artifacts \u2014 empty state",
+      "capture_source": "browser-ci-playwright-chromium-headless",
+      "scientific_evidence": false,
+      "purpose": "presentation-review"
+    },
+    {
+      "filename": "07-dashboard-help.png",
+      "page": "/",
+      "state": "Dashboard \u2014 Getting Started dialog",
+      "capture_source": "browser-ci-playwright-chromium-headless",
+      "scientific_evidence": false,
+      "purpose": "presentation-review"
+    },
+    {
+      "filename": "08-experiment-tooltips.png",
+      "page": "/experiment",
+      "state": "New Experiment \u2014 tooltip/hover state",
+      "capture_source": "browser-ci-playwright-chromium-headless",
+      "scientific_evidence": false,
+      "purpose": "presentation-review"
+    },
+    {
+      "filename": "09-sidebar-navigation.png",
+      "page": "/",
+      "state": "Sidebar \u2014 workspace navigation and scientific state",
+      "capture_source": "browser-ci-playwright-chromium-headless",
+      "scientific_evidence": false,
+      "purpose": "presentation-review"
+    }
+  ]
+}

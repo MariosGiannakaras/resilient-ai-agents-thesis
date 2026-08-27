@@ -171,12 +171,13 @@ class RuntimeService:
     entrypoint is added explicitly only after T-522 freezes one.
     """
 
-    def __init__(self, repo_root: Path, *, python_executable: str | None = None) -> None:
+    def __init__(self, repo_root: Path, writable_root: Path | None = None, *, python_executable: str | None = None) -> None:
         if not isinstance(repo_root, Path):
             repo_root = Path(repo_root)
         self.repo_root = repo_root.resolve()
-        self.runtime_root = self.repo_root / "results" / "runtime"
-        self.runs_root = self.repo_root / "results" / "runs"
+        self.writable_root = Path(writable_root).resolve() if writable_root else self.repo_root
+        self.runtime_root = self.writable_root / "results" / "runtime"
+        self.runs_root = self.writable_root / "results" / "runs"
         self.python_executable = python_executable or sys.executable
         self.runner_script = self.repo_root / "scripts" / "run_v11_candidate_runtime.py"
         self._managed: dict[str, _ManagedProcess] = {}
@@ -331,6 +332,8 @@ class RuntimeService:
             str(self.runner_script),
             "--repo-root",
             str(self.repo_root),
+            "--writable-root",
+            str(self.writable_root),
             "--protocol",
             str(metadata["protocol_path"]),
             "--request",

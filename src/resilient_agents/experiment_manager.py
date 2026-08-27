@@ -32,10 +32,10 @@ _FINAL_STATUSES = {"completed", "failed", "cancelled", "invalid"}
 
 @contextmanager
 def acquire_single_writer_lock(
-    repo_root: Path, timeout: float = 300.0
+    writable_root: Path, timeout: float = 300.0
 ) -> Iterator[None]:
     """Provides a safe single-writer boundary using a directory lock."""
-    lock_path = repo_root / "results" / ".publish.lock"
+    lock_path = writable_root / "results" / ".publish.lock"
     start = time.monotonic()
     while True:
         try:
@@ -195,10 +195,11 @@ class ExperimentRegistry:
     Finalized bundles with integrity failures raise ValueError (fail closed).
     """
 
-    def __init__(self, repo_root: Path) -> None:
-        self.repo_root = repo_root
-        self.runs_dir = self.repo_root / "results" / "runs"
-        self.index_path = self.repo_root / "results" / "run-index.jsonl"
+    def __init__(self, repo_root: Path, writable_root: Path | None = None) -> None:
+        self.repo_root = Path(repo_root).resolve()
+        self.writable_root = Path(writable_root).resolve() if writable_root else self.repo_root
+        self.runs_dir = self.writable_root / "results" / "runs"
+        self.index_path = self.writable_root / "results" / "run-index.jsonl"
 
     def rebuild_index(self) -> None:
         """Rebuild the index from individual finalized run bundles.
@@ -234,7 +235,7 @@ class ExperimentRegistry:
                     json.dumps(record, ensure_ascii=False, sort_keys=True)
                 )
 
-        with acquire_single_writer_lock(self.repo_root):
+        with acquire_single_writer_lock(self.writable_root):
             self.index_path.parent.mkdir(parents=True, exist_ok=True)
             self.index_path.write_text(
                 "\n".join(records) + ("\n" if records else ""),
