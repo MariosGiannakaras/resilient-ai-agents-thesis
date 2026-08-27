@@ -52,8 +52,10 @@ Uncertainty claims remain separate: action remaps are categorical exact mappings
 
 Closure intake PR #143 was merged and triggered canonical processing for four additional methodology sources: Pardo (time limits), Engstrom (implementation sensitivity), Fedus (experience replay) and Nikishin (primacy bias). They are methodology sources, not new algorithm arms. T-524 remains open until canonical `SRC-*` IDs, analysis/evidence/selection, package/corpus convergence, all upstream validators and a new immutable consumer sync are complete.
 
-## Threat boundary and next action
+## Still intentionally unfrozen
 
-Claims remain bounded to low-dimensional discrete project-owned GridWorld experiments on the validated Windows/CPU thesis machine. No universal resilience, autonomous change detection, specialized continual-RL, pixel/continuous-control, real-robot transfer or cross-platform bitwise reproducibility claim is authorized.
+Exact retained methods/A2C decision, final GridWorld level/layouts, numeric interaction budgets, common gamma/reward values, method-specific optimization settings, probe/update cadence, uncertainty probabilities/support, final root count, multiplicity rule, final frontend framework and final evidence remain pilot/freeze-gated. Claims remain bounded to the controlled low-dimensional GridWorld and validated Windows/CPU contract; no universal resilience, autonomous change-detection, specialized continual-RL, real-robot or cross-platform bitwise claim is authorized.
 
-**Next:** finish the finite T-524 bibliography/convergence/sync work. Then T-525 implements the bounded v2 adapters/checkpoints/branching; T-526 runs the physical Windows feasibility/severity pilot; T-527 freezes tuning/statistics/protocol; T-528 performs the new-framework UI rebuild.
+## Exact next action
+
+Finish the finite T-524 bibliography/convergence/sync work. Then T-525 implements the bounded v2 adapters/checkpoints/branching; T-526 runs the physical Windows feasibility/severity pilot; T-527 freezes tuning/statistics/protocol; T-528 performs the new-framework UI rebuild.
