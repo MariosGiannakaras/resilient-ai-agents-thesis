@@ -1,9 +1,9 @@
 """UI-independent runtime registry/service for truthful live experiments.
 
-The service owns only operational process state and read-only live telemetry.
-Scientific execution remains in the validated runners and run bundles. Runtime
-metadata lives under ``results/runtime`` so interrupted/cancelled application
-sessions never masquerade as finalized scientific bundles.
+The service owns operational process state and read-only live telemetry only.
+Scientific execution remains in validated runners/run bundles. Runtime metadata
+is separate under ``results/runtime`` so application interruptions never
+masquerade as finalized scientific evidence.
 """
 from __future__ import annotations
 
@@ -17,7 +17,14 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+from .experiment_manager import get_resource_snapshot
 from .run_bundle import FINALIZATION_MARKER
+from .runtime_observer import RUNTIME_TELEMETRY_SCHEMA_VERSION
+from .v11_candidate_runner import (
+    V11CandidateExperimentRequest,
+    V11CandidateExperimentRunner,
+)
+from .v11_protocol import load_v11_candidate_protocol
 
 RUNTIME_SERVICE_SCHEMA_VERSION = 1
 _RUNTIME_METADATA = "runtime.json"
@@ -53,6 +60,41 @@ def _safe_run_id(value: Any) -> str:
     if not isinstance(value, str) or not value.strip() or Path(value).name != value:
         raise ValueError("run_id must be a non-empty path-safe string")
     return value
+
+
+def _telemetry_rows(path: Path) -> tuple[dict[str, Any], ...]:
+    """Read only complete NDJSON rows; tolerate one concurrently-written tail."""
+    if not path.is_file():
+        return ()
+    try:
+        content = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as exc:
+        raise RuntimeError("runtime telemetry is unreadable") from exc
+    if not content:
+        return ()
+    lines = content.splitlines(keepends=True)
+    if lines and not lines[-1].endswith(("\n", "\r")):
+        lines = lines[:-1]
+    rows: list[dict[str, Any]] = []
+    previous = -1
+    for raw in lines:
+        line = raw.strip()
+        if not line:
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise RuntimeError("runtime telemetry contains invalid JSON") from exc
+        if not isinstance(row, dict):
+            raise RuntimeError("runtime telemetry row must be an object")
+        if row.get("runtime_telemetry_schema_version") != RUNTIME_TELEMETRY_SCHEMA_VERSION:
+            raise RuntimeError("runtime telemetry schema mismatch")
+        sequence = row.get("sequence")
+        if not isinstance(sequence, int) or isinstance(sequence, bool) or sequence <= previous:
+            raise RuntimeError("runtime telemetry sequence must be strictly increasing")
+        previous = sequence
+        rows.append(row)
+    return tuple(rows)
 
 
 class RuntimeStatus(str, Enum):
@@ -124,9 +166,9 @@ class _ManagedProcess:
 class RuntimeService:
     """Single-application runtime registry over scientific child processes.
 
-    The service intentionally does not expose arbitrary commands. It launches
-    only the repository-owned protocol-v1.1 candidate runtime entrypoint. A
-    future frozen-v1.1 entrypoint can be added explicitly after T-522.
+    Arbitrary commands are intentionally unsupported. The current launcher is
+    only the repository-owned protocol-v1.1 candidate entrypoint. A frozen-v1.1
+    entrypoint is added explicitly only after T-522 freezes one.
     """
 
     def __init__(self, repo_root: Path, *, python_executable: str | None = None) -> None:
@@ -139,7 +181,7 @@ class RuntimeService:
         self.runner_script = self.repo_root / "scripts" / "run_v11_candidate_runtime.py"
         self._managed: dict[str, _ManagedProcess] = {}
         self.runtime_root.mkdir(parents=True, exist_ok=True)
-        self._mark_orphaned_active_records_interrupted()
+        self._reconcile_orphaned_records()
 
     def _runtime_dir(self, run_id: str) -> Path:
         return self.runtime_root / _safe_run_id(run_id)
@@ -165,9 +207,22 @@ class RuntimeService:
         run_id = _safe_run_id(payload.get("run_id"))
         _write_json_atomic(self._metadata_path(run_id), dict(payload))
 
-    def _mark_orphaned_active_records_interrupted(self) -> None:
-        if not self.runtime_root.exists():
-            return
+    def _final_bundle_status(self, run_id: str) -> tuple[RuntimeStatus, str | None] | None:
+        run_dir = self.runs_root / run_id
+        if not (run_dir / FINALIZATION_MARKER).is_file():
+            return None
+        manifest = _read_json_object(run_dir / "manifest.json")
+        status = str(manifest.get("status", ""))
+        if status == "completed":
+            return RuntimeStatus.COMPLETED, None
+        if status == "cancelled":
+            return RuntimeStatus.CANCELLED, None
+        if status in {"failed", "invalid"}:
+            return RuntimeStatus.FAILED, f"Scientific bundle finalized with status {status}."
+        raise RuntimeError(f"unknown finalized scientific status: {status}")
+
+    def _reconcile_orphaned_records(self) -> None:
+        """Reconcile persisted active records when a new app session starts."""
         for directory in self.runtime_root.iterdir():
             if not directory.is_dir():
                 continue
@@ -175,12 +230,23 @@ class RuntimeService:
             if not path.is_file():
                 continue
             payload = _read_json_object(path)
-            if payload.get("status") in {RuntimeStatus.RUNNING.value, RuntimeStatus.QUEUED.value}:
+            if payload.get("status") not in {
+                RuntimeStatus.RUNNING.value,
+                RuntimeStatus.QUEUED.value,
+            }:
+                continue
+            finalized = self._final_bundle_status(directory.name)
+            if finalized is not None:
+                payload["status"] = finalized[0].value
+                payload["message"] = finalized[1]
+            else:
                 payload["status"] = RuntimeStatus.INTERRUPTED.value
-                payload["updated_at_utc"] = _utc_now()
-                payload["process_id"] = None
-                payload["message"] = "Application/runtime session ended before this run finalized."
-                self._save_metadata(payload)
+                payload["message"] = (
+                    "Application/runtime session ended before this run finalized."
+                )
+            payload["updated_at_utc"] = _utc_now()
+            payload["process_id"] = None
+            self._save_metadata(payload)
 
     def enqueue_v11_candidate(
         self,
@@ -188,17 +254,30 @@ class RuntimeService:
         protocol_path: Path,
         request: Mapping[str, Any],
     ) -> RuntimeRunSnapshot:
+        """Validate and queue one approved non-final candidate request."""
         if not isinstance(request, Mapping):
             raise ValueError("request must be an object")
-        run_id = _safe_run_id(request.get("run_id"))
+        protocol_path = Path(protocol_path).resolve()
+        if not protocol_path.is_file():
+            raise FileNotFoundError(protocol_path)
+        protocol = load_v11_candidate_protocol(protocol_path)
+        validated = V11CandidateExperimentRequest.from_dict(request)
+        # Constructor validation is side-effect free and catches protocol/config
+        # mismatches before the application creates a queued runtime record.
+        V11CandidateExperimentRunner(
+            repo_root=self.repo_root,
+            protocol=protocol,
+            request=validated,
+        )
+        run_id = _safe_run_id(validated.run_id)
         directory = self._runtime_dir(run_id)
         if directory.exists():
             raise FileExistsError(f"runtime record already exists: {run_id}")
-        protocol = Path(protocol_path).resolve()
-        if not protocol.is_file():
-            raise FileNotFoundError(protocol)
+        if (self.runs_root / run_id / FINALIZATION_MARKER).is_file():
+            raise FileExistsError(f"scientific run is already finalized: {run_id}")
+
         directory.mkdir(parents=True)
-        _write_json_atomic(self._request_path(run_id), dict(request))
+        _write_json_atomic(self._request_path(run_id), validated.to_dict())
         now = _utc_now()
         metadata = {
             "schema_version": RUNTIME_SERVICE_SCHEMA_VERSION,
@@ -207,7 +286,7 @@ class RuntimeService:
             "created_at_utc": now,
             "updated_at_utc": now,
             "heartbeat_at_utc": None,
-            "protocol_path": str(protocol),
+            "protocol_path": str(protocol_path),
             "attempt": 1,
             "process_id": None,
             "return_code": None,
@@ -245,8 +324,6 @@ class RuntimeService:
             return None
         run_id = queued[0]
         metadata = self._load_metadata(run_id)
-        request_path = self._request_path(run_id)
-        telemetry_path = Path(str(metadata["telemetry_path"]))
         if not self.runner_script.is_file():
             raise RuntimeError(f"runtime runner script is missing: {self.runner_script}")
         cmd = [
@@ -257,9 +334,9 @@ class RuntimeService:
             "--protocol",
             str(metadata["protocol_path"]),
             "--request",
-            str(request_path),
+            str(self._request_path(run_id)),
             "--telemetry",
-            str(telemetry_path),
+            str(metadata["telemetry_path"]),
         ]
         process = subprocess.Popen(
             cmd,
@@ -284,23 +361,8 @@ class RuntimeService:
         self._managed[run_id] = _ManagedProcess(process=process, run_id=run_id)
         return self.get_run(run_id)
 
-    def _final_bundle_status(self, run_id: str) -> tuple[RuntimeStatus, str | None] | None:
-        run_dir = self.runs_root / run_id
-        if not (run_dir / FINALIZATION_MARKER).is_file():
-            return None
-        manifest_path = run_dir / "manifest.json"
-        manifest = _read_json_object(manifest_path)
-        status = str(manifest.get("status", ""))
-        if status == "completed":
-            return RuntimeStatus.COMPLETED, None
-        if status == "cancelled":
-            return RuntimeStatus.CANCELLED, None
-        if status in {"failed", "invalid"}:
-            return RuntimeStatus.FAILED, f"Scientific bundle finalized with status {status}."
-        raise RuntimeError(f"unknown finalized scientific status: {status}")
-
     def refresh(self) -> None:
-        """Refresh child states and activity-derived heartbeat/progress metadata."""
+        """Refresh child state and activity-derived heartbeat metadata."""
         for run_id, managed in list(self._managed.items()):
             metadata = self._load_metadata(run_id)
             previous_sequence = metadata.get("latest_telemetry_sequence")
@@ -326,7 +388,9 @@ class RuntimeService:
                 metadata["message"] = finalized[1]
             else:
                 metadata["status"] = RuntimeStatus.INTERRUPTED.value
-                metadata["message"] = "Child process ended without a finalized scientific bundle."
+                metadata["message"] = (
+                    "Child process ended without a finalized scientific bundle."
+                )
             metadata["updated_at_utc"] = _utc_now()
             self._save_metadata(metadata)
             del self._managed[run_id]
@@ -339,27 +403,8 @@ class RuntimeService:
         value = metadata.get("telemetry_path")
         if not isinstance(value, str):
             return None
-        path = Path(value)
-        if not path.is_file():
-            return None
-        last: dict[str, Any] | None = None
-        try:
-            lines = path.read_text(encoding="utf-8").splitlines()
-        except (OSError, UnicodeError) as exc:
-            raise RuntimeError("runtime telemetry is unreadable") from exc
-        for line in lines:
-            if not line.strip():
-                continue
-            try:
-                row = json.loads(line)
-            except json.JSONDecodeError as exc:
-                raise RuntimeError("runtime telemetry contains invalid JSON") from exc
-            if not isinstance(row, dict):
-                raise RuntimeError("runtime telemetry row must be an object")
-            if row.get("runtime_telemetry_schema_version") != 1:
-                raise RuntimeError("runtime telemetry schema mismatch")
-            last = row
-        return last
+        rows = _telemetry_rows(Path(value))
+        return None if not rows else rows[-1]
 
     def tail_telemetry(
         self, run_id: str, *, after_sequence: int = -1, limit: int = 500
@@ -370,30 +415,27 @@ class RuntimeService:
             raise ValueError("limit must be a positive integer")
         metadata = self._load_metadata(run_id)
         value = metadata.get("telemetry_path")
-        if not isinstance(value, str) or not Path(value).is_file():
+        if not isinstance(value, str):
             return ()
-        rows: list[dict[str, Any]] = []
-        for line in Path(value).read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            row = json.loads(line)
-            if not isinstance(row, dict) or row.get("runtime_telemetry_schema_version") != 1:
-                raise RuntimeError("runtime telemetry row is invalid")
-            sequence = row.get("sequence")
-            if not isinstance(sequence, int):
-                raise RuntimeError("runtime telemetry sequence is invalid")
-            if sequence > after_sequence:
-                rows.append(row)
-                if len(rows) >= limit:
-                    break
-        return tuple(rows)
+        selected = [
+            row
+            for row in _telemetry_rows(Path(value))
+            if int(row["sequence"]) > after_sequence
+        ]
+        return tuple(selected[:limit])
 
-    def _progress(self, run_id: str, request: Mapping[str, Any], latest: Mapping[str, Any] | None) -> RuntimeProgress:
+    def _progress(
+        self,
+        run_id: str,
+        request: Mapping[str, Any],
+        latest: Mapping[str, Any] | None,
+    ) -> RuntimeProgress:
         roots = request.get("root_seeds")
-        if not isinstance(roots, Sequence) or isinstance(roots, (str, bytes)):
-            total = 0
-        else:
-            total = len(roots)
+        total = (
+            len(roots)
+            if isinstance(roots, Sequence) and not isinstance(roots, (str, bytes))
+            else 0
+        )
         completed = 0
         state_path = self.runs_root / run_id / "runner-state.json"
         if state_path.is_file():
@@ -403,9 +445,21 @@ class RuntimeService:
                 completed = len(values)
         completed = min(completed, total)
         fraction = 0.0 if total == 0 else completed / total
-        phase = latest.get("phase") if latest is not None and isinstance(latest.get("phase"), str) else None
-        episode = latest.get("episode_index") if latest is not None and isinstance(latest.get("episode_index"), int) else None
-        step = latest.get("step") if latest is not None and isinstance(latest.get("step"), int) else None
+        phase = (
+            latest.get("phase")
+            if latest is not None and isinstance(latest.get("phase"), str)
+            else None
+        )
+        episode = (
+            latest.get("episode_index")
+            if latest is not None and isinstance(latest.get("episode_index"), int)
+            else None
+        )
+        step = (
+            latest.get("step")
+            if latest is not None and isinstance(latest.get("step"), int)
+            else None
+        )
         return RuntimeProgress(
             completed_roots=completed,
             total_roots=total,
@@ -418,7 +472,10 @@ class RuntimeService:
     @staticmethod
     def _capabilities(status: RuntimeStatus, *, managed: bool) -> RuntimeCapabilities:
         return RuntimeCapabilities(
-            can_cancel=status in {RuntimeStatus.QUEUED, RuntimeStatus.RUNNING} and (status is RuntimeStatus.QUEUED or managed),
+            can_cancel=(
+                status is RuntimeStatus.QUEUED
+                or (status is RuntimeStatus.RUNNING and managed)
+            ),
             can_restart=status in {RuntimeStatus.CANCELLED, RuntimeStatus.INTERRUPTED},
             can_pause=False,
             can_resume=False,
@@ -445,7 +502,9 @@ class RuntimeService:
             return_code=metadata.get("return_code"),
             progress=self._progress(run_id, request, latest),
             capabilities=self._capabilities(status, managed=managed),
-            latest_telemetry_sequence=None if latest is None else int(latest["sequence"]),
+            latest_telemetry_sequence=(
+                None if latest is None else int(latest["sequence"])
+            ),
             telemetry_path=metadata.get("telemetry_path"),
             run_dir=str(run_dir) if run_dir.is_dir() else None,
             message=metadata.get("message"),
@@ -461,7 +520,11 @@ class RuntimeService:
             self._save_metadata(metadata)
             return self.get_run(run_id)
         managed = self._managed.get(run_id)
-        if status is not RuntimeStatus.RUNNING or managed is None or managed.process.poll() is not None:
+        if (
+            status is not RuntimeStatus.RUNNING
+            or managed is None
+            or managed.process.poll() is not None
+        ):
             raise RuntimeError("run cannot be cancelled by this runtime session")
         managed.process.terminate()
         try:
@@ -473,7 +536,10 @@ class RuntimeService:
         metadata["updated_at_utc"] = _utc_now()
         metadata["process_id"] = None
         metadata["return_code"] = managed.process.returncode
-        metadata["message"] = "Runtime process cancelled; unfinished scientific bundle is retained for audit/restart."
+        metadata["message"] = (
+            "Runtime process cancelled; unfinished scientific bundle is retained "
+            "for audit/restart."
+        )
         self._save_metadata(metadata)
         del self._managed[run_id]
         return self.get_run(run_id)
@@ -495,7 +561,9 @@ class RuntimeService:
                 "process_id": None,
                 "return_code": None,
                 "latest_telemetry_sequence": None,
-                "telemetry_path": str(self._runtime_dir(run_id) / f"telemetry-attempt-{attempt}.ndjson"),
+                "telemetry_path": str(
+                    self._runtime_dir(run_id) / f"telemetry-attempt-{attempt}.ndjson"
+                ),
                 "message": None,
             }
         )
@@ -504,11 +572,19 @@ class RuntimeService:
 
     def pause(self, run_id: str) -> None:
         _safe_run_id(run_id)
-        raise NotImplementedError("pause is intentionally unsupported by the scientific runtime")
+        raise NotImplementedError(
+            "pause is intentionally unsupported by the scientific runtime"
+        )
 
     def resume(self, run_id: str) -> None:
         _safe_run_id(run_id)
-        raise NotImplementedError("resume is intentionally unsupported; use restart for unfinished runs")
+        raise NotImplementedError(
+            "resume is intentionally unsupported; use restart for unfinished runs"
+        )
+
+    def resource_snapshot(self) -> dict[str, Any]:
+        """Return the existing canonical system inventory snapshot for the UI."""
+        return get_resource_snapshot(self.repo_root)
 
     def list_runs(self) -> tuple[RuntimeRunSnapshot, ...]:
         self.refresh()
@@ -520,8 +596,9 @@ class RuntimeService:
                 known.add(directory.name)
 
         # Preserve scientific bundles that predate runtime metadata. Finalized
-        # status remains authoritative; unfinished running manifests are shown as
-        # interrupted instead of being hidden from application history.
+        # status stays authoritative; an unfinished running manifest is visible
+        # as interrupted, but no restart button is advertised without a stored
+        # request/protocol identity.
         if self.runs_root.exists():
             for directory in sorted(self.runs_root.iterdir()):
                 if not directory.is_dir() or directory.name in known:
@@ -557,17 +634,24 @@ class RuntimeService:
                         progress=RuntimeProgress(0, 0, 0.0),
                         capabilities=RuntimeCapabilities(
                             can_cancel=False,
-                            can_restart=status is RuntimeStatus.INTERRUPTED,
+                            can_restart=False,
                             can_pause=False,
                             can_resume=False,
                         ),
                         latest_telemetry_sequence=None,
                         telemetry_path=None,
                         run_dir=str(directory),
-                        message="Historical/externally-created run; no runtime metadata." if not finalized else None,
+                        message=(
+                            "Historical/externally-created unfinished run; no "
+                            "runtime request is available for restart."
+                            if not finalized
+                            else None
+                        ),
                     )
                 )
-        snapshots.sort(key=lambda item: (item.created_at_utc, item.run_id), reverse=True)
+        snapshots.sort(
+            key=lambda item: (item.created_at_utc, item.run_id), reverse=True
+        )
         return tuple(snapshots)
 
 
