@@ -1,245 +1,98 @@
-# Agent Strategy Selection
+# Agent / Method Candidate Selection
 
-**Status:** Current pre-WP7 authority after DEC-047. GridWorld is the controlled experimental testbed/visualization surface; the thesis subject is the comparison and evaluation of resilient AI agent strategies under uncertainty and environmental change.
+**Status:** Current pre-WP7 method-role authority under DEC-048 / issue #95.  
+**Exact final set:** intentionally unfrozen until bounded literature, environment-discrimination and Windows CPU feasibility pilots complete.
 
-## Current candidate direction
+GridWorld is the controlled experimental testbed and visualization surface. The thesis subject is the comparison/evaluation of resilient RL agents under uncertainty and environmental change.
 
-Candidate `protocol-v1.1` now targets **five main agent strategies**, subject to focused implementation and non-final validation before freeze:
+## Method is not deployment regime
 
-| User-facing name | Technical identity | Mechanism isolated | Candidate status |
-|---|---|---|---|
-| **Fixed Q-Learning** | historical `F0` / `tabular_q_learning_v1`, post-change updates disabled | No online adaptation; reuse nominal learned policy | RETAIN |
-| **Adaptive Q-Learning** | historical `C0` / same `tabular_q_learning_v1`, updates continue | Off-policy model-free continual adaptation | RETAIN |
-| **SARSA** | new v1.1 implementation | On-policy model-free continual adaptation | IMPLEMENT/VALIDATE before protocol freeze |
-| **Dyna-Q** | new v1.1 implementation sharing Dyna learned-model machinery without recency bonus | Model-based learning + planning | IMPLEMENT/VALIDATE before protocol freeze |
-| **Dyna-Q+** | historical technical identity `D0` / `dyna_q_plus_v1` | Model-based planning + directed re-exploration | RETAIN; Dyna-specific non-final settings still require selection |
+Protocol v2 separates the learning **method** from post-training **deployment/adaptation regime**.
 
-This is a mechanism-driven set, not a target model count. It gives the thesis a controlled comparison across no adaptation, two model-free adaptation policies, learned-model planning, and planning with explicit change-seeking re-exploration.
+For every retained method:
 
-F0/C0/D0 remain valid historical/reproducibility IDs but **must not be the primary names shown to ordinary users**.
+1. train independently from method-appropriate fresh initialization;
+2. freeze a reproducible method-specific trained checkpoint;
+3. clone that exact checkpoint into matched `Frozen` and `Continual` branches;
+4. evaluate both under the same uncertainty/change design and same-regime nominal references.
 
-## Why the set was broadened
+`Frozen Q-Learning` and `Adaptive Q-Learning` remain valid historical/user-facing descriptions for protocol-v1.0/v1.1 contexts. In v2, Q-Learning is the method and Frozen/Continual are deployment regimes.
 
-The earlier F0/C0/D0 set was scientifically controlled but narrow: Fixed and Adaptive Q-Learning are two deployment regimes of one Q-learning implementation, and Dyna-Q+ was the only planning family. Broader non-stationary/continual RL literature commonly compares ordinary temporal-difference learners with planning/adaptation variants. Classical changing-environment Dyna experiments compare Dyna-Q directly with Dyna-Q+, allowing the effect of directed re-exploration to be separated from planning itself. Related empirical work also compares SARSA/Q-learning/Dyna variants over many runs.
+## Strong core candidates — pilot-gated
 
-Adding SARSA and Dyna-Q therefore answers concrete mechanism questions rather than merely enlarging the matrix.
+| Method | Family | Policy relation | Representation | Distinct scientific role |
+|---|---|---|---|---|
+| **Q-Learning** | value learning | off-policy | tabular | classical low-complexity value-learning baseline |
+| **SARSA** | value learning | on-policy | tabular | isolates on-policy tabular learning/exploration behavior |
+| **DQN** | deep value learning | off-policy | neural | adds function approximation, replay and target-network dynamics |
+| **PPO** | policy optimization / actor-critic | on-policy | neural | adds policy-gradient/actor-critic optimization with clipped updates |
+| **Dyna-Q+** | learned-model planning | Q/value based | tabular + empirical model | adds planning plus recency-directed re-exploration, directly relevant to change |
 
-## Main strategy definitions
+These five are **candidates**, not a target count. A method reaches the confirmatory matrix only if it adds a useful distinct contrast and passes feasibility/discrimination/fair-tuning gates.
 
-### Fixed Q-Learning
-
-User explanation: **“Uses what it learned before the change; it does not learn during evaluation.”**
-
-- Starts from the selected common nominal Q checkpoint.
-- Uses the validated Q-learning action-selection configuration.
-- Suppresses all post-change learning-state mutation.
-- Serves as the non-adaptive resistance/reference strategy.
-
-### Adaptive Q-Learning
-
-User explanation: **“Keeps updating its learned action values from new experience.”**
-
-- Starts from the same selected nominal checkpoint/base configuration as Fixed Q-Learning.
-- Continues ordinary off-policy one-step Q-learning updates online.
-- Isolates the value/cost of simply permitting continual model-free learning.
-
-Current inherited candidate base values remain:
-
-- learning rate `α = 0.5`;
-- discount factor `γ = 0.96875`;
-- exploration epsilon `ε = 0.125`;
-- `512` nominal training episodes per layout;
-- `16` pre-change evaluation episodes;
-- `32` post-change evaluation episodes;
-- `48`-step evaluation horizon.
-
-These values stay fixed for the two Q-learning strategies unless an explicit evidence-backed amendment reopens them.
-
-### SARSA
-
-User explanation: **“Learns from the actions it actually follows, including exploratory actions.”**
-
-SARSA adds an on-policy model-free adaptation mechanism. Its update uses the next action selected by the behavior policy rather than the greedy maximum used by Q-learning. This makes the comparison scientifically useful under stochastic action/observation conditions and exploration.
-
-Requirements before inclusion in candidate v1.1:
-
-- information-limited deterministic implementation under the same `AgentTransition` boundary;
-- versioned serializable state/checkpoint semantics;
-- matched nominal-training/evaluation budget;
-- bounded predeclared non-final tuning only where SARSA-specific fairness requires it;
-- no evaluator changepoint/disturbance/true-state information;
-- focused exact-update/determinism/serialization tests.
-
-Do not blindly force every Q-learning-selected hyperparameter onto SARSA if non-final evidence shows that doing so is an unfair algorithmic handicap. Any SARSA-specific tuning surface must remain small and predeclared before selection evidence.
+## Secondary candidates / ablations
 
 ### Dyna-Q
 
-User explanation: **“Learns from real experience and also plans using an internal model it learns.”**
+Retained implementation and scientifically useful ablation:
 
-Dyna-Q should reuse the same information-limited empirical learned-model/planning machinery as Dyna-Q+ as far as scientifically possible, but without the recency-directed exploration bonus. Its central role is an ablation/control for Dyna-Q+:
+> Does Dyna-Q+ benefit from planning itself or specifically from directed recency-based re-exploration?
 
-> Does improvement come from model-based planning itself, or from Dyna-Q+'s explicit re-exploration mechanism?
+It need not automatically double the full final matrix. Depending on pilot results, it may remain a focused ablation/non-final mechanism comparison while Dyna-Q+ represents planning/change-directed behavior in the main matrix.
 
-Requirements:
+### A2C
 
-- same agent-visible information boundary as all scientific agents;
-- deterministic learned-model/planning RNG state;
-- matched planning-step budget with Dyna-Q+ where appropriate;
-- no recency bonus (`kappa = 0` or equivalent explicit no-bonus semantics);
-- same serialization/resume guarantees as Dyna-Q+;
-- focused tests proving the only intended algorithmic difference from Dyna-Q+ is directed re-exploration behavior.
+Technically compatible with discrete actions and CPU execution through maintained RL libraries. It is a valid actor-critic method, but it overlaps substantially with PPO at the family/mechanism level. Promote it to the full final matrix only if literature/pilots show a distinct useful RQ/contrast that justifies the additional tuning, roots and Frozen/Continual runs.
 
-### Dyna-Q+
+### Historical R0 Robust Planner
 
-User explanation: **“Plans like Dyna-Q and deliberately re-checks actions that have not been tried recently.”**
+Historical robust value iteration remains immutable negative/diagnostic pilot evidence. The accepted pilot suffered severe nominal truncation. Protocol v2 does not require redesigning it. Reopen only if a distinct pre-deployment-robustness RQ is justified before protocol freeze.
 
-The already validated D0 implementation uses:
+## Reference strategies
 
-- common candidate Q-learning base values where applicable;
-- empirical stochastic model learned only from agent-visible transitions;
-- bounded planning updates;
-- deterministic independent exploration/planning RNG state;
-- recency state and bonus for long-untried state/action pairs;
-- episode-preserving learned Q/model/recency deployment state.
+- **Random Agent:** lower behavioral/correctness reference only; never fair-ranked.
+- **Privileged/oracle planner:** optional analytical/debug upper reference only; never fair-ranked if it receives evaluator/model knowledge unavailable to scientific agents.
 
-Dyna-specific non-final selection remains bounded to the predeclared planning surface, principally `planning_steps` and Dyna-Q+ `kappa`.
+## Why deep methods are candidates, not automatic winners
 
-## Reference strategies — not equivalent ranked agents
+DQN/PPO/A2C are technically compatible with the discrete GridWorld action space, but technical compatibility is insufficient scientific justification.
 
-Reference fixtures help interpret scale/correctness but must not inflate the main agent count or appear in fair rankings.
+The current 7×7 position-state task may be too small/easy to reveal meaningful representation/optimization differences. Conversely, increasing environment complexity solely to make neural methods look useful would bias the study. Protocol v2 therefore pilots a small number of project-owned complexity levels and keeps the **simplest** one that avoids obvious floor/ceiling effects and remains interpretable/CPU-feasible.
 
-### Random Agent
+Neural methods receive a deterministic numeric/one-hot encoding of the same semantic observation available to tabular methods. They do not receive pixels, hidden map truth, disturbance flags or extra evaluator information merely because they use a neural network.
 
-- Simple lower behavioral reference and correctness fixture.
-- No claim that it is a resilient learning strategy.
-- May appear in optional scale/reference plots with clear labelling.
+## Fair comparison contract
 
-### Nominal / fully informed planner
+Do **not** force identical hyperparameters across algorithms.
 
-- Optional upper/scale/debug reference where useful.
-- Any privileged transition model, true environment state, or evaluator knowledge must be explicit.
-- Never mixed into a fair agent ranking because its information contract differs.
+Fairness is instead defined by:
 
-## Robust-planning branch
+- same environment semantics, action/reward and agent-visible information;
+- common main environment-interaction/timestep budget;
+- matched environment/root schedules where meaningful;
+- bounded literature-backed algorithm-specific configuration candidates;
+- equivalent predeclared tuning opportunity and tuning partitions;
+- multiple independent roots for every candidate configuration;
+- standardized periodic no-learning evaluation checkpoints;
+- separate wall-clock/CPU reporting;
+- no final-reserve access during tuning/model selection.
 
-Historical `R0` robust value iteration remains immutable pilot evidence. It represents the distinct scientific idea of **pre-deployment robustness to an uncertainty set**, but the accepted pilot configuration had approximately 96% nominal truncation and cannot be reinstated unchanged.
+Historical Q-learning hyperparameters remain valid for historical v1.0. For v2 they are not treated as an unfair permanent advantage: the v2 tuning policy decides whether the historical Q configuration is one candidate or whether Q receives a bounded fresh tuning allowance equivalent to other methods.
 
-A revised **Robust Planner** may become a sixth main comparator only through a small predeclared non-final gate demonstrating:
+## Continual deployment caveat
 
-1. acceptable nominal viability;
-2. explicit uncertainty-set construction and prior-model disclosure;
-3. bounded tuning/runtime cost;
-4. fair interpretation despite stronger prior information;
-5. a distinct robustness question not already answered by the five main strategies.
+`Continual` means ordinary continued learning by the base method under a predeclared update schedule. It does **not** mean the method is a purpose-built continual-learning algorithm.
 
-If this gate fails, the negative R0 evidence remains a valid thesis result/limitation and the five-agent design proceeds without it.
+Deep agents can suffer catastrophic interference/forgetting or loss of plasticity under non-stationarity. These are legitimate findings, not implementation failures to hide through post-hoc resets.
 
-## Multiple-settings and repetition policy
+Method-specific scientific checkpoints preserve whatever is required for exact continuation. DQN replay buffer/target network/optimizer/exploration state and actor-critic optimizer/schedule/update-boundary state are therefore part of the deployment contract. Resetting replay/optimizer/network state after change is a separate intervention and must not happen silently.
 
-The application and runner support **multiple protocol-approved resolved configurations**, not an unrestricted hyperparameter playground.
+## Historical candidate-v1.1 status
 
-### Development / tuning
+The former five-strategy v1.1 set — Fixed Q-Learning, Adaptive Q-Learning, SARSA, Dyna-Q, Dyna-Q+ — remains a valid **adaptation-mechanism candidate design** because all agents began from common selected tabular-Q knowledge. It is not deleted or reinterpreted as an independent-learning benchmark.
 
-- Every configuration is a complete resolved parameter set with stable identity/hash/provenance.
-- Every compared configuration uses multiple predefined root seeds/repetitions; single-run ranking is forbidden.
-- Fixed/Adaptive Q-Learning remain on the validated shared base configuration unless formally reopened.
-- SARSA receives only the smallest predeclared fairness-relevant tuning surface justified before outcomes.
-- Dyna-Q/Dyna-Q+ planning settings are predeclared and selected from non-final evidence only.
-- UI explains which values are fixed, tunable, advanced or unavailable and why.
+Old T-522/v1.1 tuning/freeze execution is superseded. Future confirmatory evidence is governed by protocol v2 after its pilot gates.
 
-### Pilot / validation
+## Current gate
 
-- Candidate settings are evaluated only on permitted non-final partitions.
-- Failed/interrupted/cancelled/invalid/non-recovery/poor configurations remain recorded.
-- Selection and tie rules are predeclared; no best-seed/best-run cherry-picking.
-- Runtime/planning cost is recorded where interpretation or feasibility needs it.
-
-### Final evidence
-
-- Retained agents and their configurations freeze before final outcomes are inspected.
-- Final matrix uses the frozen configuration for each retained strategy, precommitted final roots and every required layout/condition.
-- Exploratory/tuning variants remain labelled non-final and cannot be promoted by renaming.
-
-## Candidate-v1.1 experimental direction
-
-### Main agents
-
-1. Fixed Q-Learning;
-2. Adaptive Q-Learning;
-3. SARSA;
-4. Dyna-Q;
-5. Dyna-Q+.
-
-A revised Robust Planner is conditional, not assumed.
-
-### Conditions
-
-1. `nominal`;
-2. `action-remap-2-swap`;
-3. `action-remap-4-cycle`;
-4. `action-failure-1of8`;
-5. `action-failure-1of4`;
-6. `observation-corruption-1of8`;
-7. `observation-corruption-1of4`.
-
-### Layouts and repetitions
-
-- four fresh held-out final layouts under the accepted controlled-environment structural constraints;
-- fresh precommitted v1.1 final seed bank;
-- current target `32` paired final root seeds per layout/condition experiment;
-- development/tuning/pilot/final partitions remain disjoint.
-
-T-523 must implement/validate the newly added SARSA and Dyna-Q strategies before T-521 can freeze the authoritative candidate schema. T-521 then re-estimates matrix runtime/size and may adjust only with an explicit evidence-backed amendment, not to make inconvenient results disappear.
-
-## Capability contrasts
-
-| Contrast | Capability isolated |
-|---|---|
-| Fixed Q-Learning vs Adaptive Q-Learning | Effect of continuing off-policy model-free learning |
-| Adaptive Q-Learning vs SARSA | Off-policy vs on-policy continual model-free adaptation |
-| Adaptive Q-Learning vs Dyna-Q | Real-experience-only learning vs learned-model planning |
-| Dyna-Q vs Dyna-Q+ | Planning alone vs planning plus directed re-exploration |
-| Fixed Q-Learning vs each adaptive strategy | Resistance without adaptation vs post-change adaptation/recovery |
-| Conditional Robust Planner vs adaptive strategies | Pre-deployment worst-case robustness vs online adaptation, with stronger prior disclosed |
-
-Primary reporting remains cumulative deficit, immediate degradation and terminal performance/gap. Recovery remains secondary/sensitivity because the historical pilot showed threshold/stability sensitivity. Paired effects, 95% CIs, explicit `n`, layout/condition views and failures/non-recovery remain required. No opaque composite resilience score.
-
-## Information and fairness contract
-
-All five main scientific agents receive the same permitted online surface: observation, intended action, reward and lifecycle information. True state, executed action, changepoint/regime identity and disturbance flags remain hidden.
-
-Technical implementation differences are allowed only when they are the mechanism under study. Computational/planning cost and stronger priors are reported rather than hidden.
-
-## User-facing naming contract
-
-Primary UI label: **Agent strategy**.
-
-Do not expect users to understand `F0`, `C0`, `D0`, schema names or config hashes. Main cards, selectors, charts, live overlays, Compare and exported thesis-facing visuals use the human-readable names above plus one-sentence explanations and mechanism badges such as:
-
-- `Does not adapt`;
-- `Model-free`;
-- `On-policy` / `Off-policy`;
-- `Learns online`;
-- `Uses planning`;
-- `Re-explores for change`.
-
-Internal IDs/checkpoint schemas/config hashes remain available under **Technical details / Reproducibility** only. The thesis may introduce stable abbreviations after full names, but unexplained repository IDs are not presentation terminology.
-
-## Excluded/deferred candidates
-
-| Candidate | Decision | Reason / reopening condition |
-|---|---|---|
-| Expected SARSA | **DEFER** | Similar on-policy TD family; add only if SARSA non-final evidence raises a distinct variance/stability question worth a separate RQ/contrast. |
-| Double Q-learning / Q(λ) / SARSA(λ) | **DEFER** | Useful variants but no current distinct resilience mechanism justifies matrix growth. |
-| Detector-triggered reset/context memory | **EXCLUDE currently** | Requires a separate changepoint/context-recognition research question. |
-| Changepoint oracle | **REFERENCE ONLY** | Evaluator truth violates fair scientific-agent information boundary. |
-| DQN/PPO/SAC/deep actor-critic/meta-learning/neural robust methods | **DEFER/EXCLUDE** | Added representation/optimizer/tuning variance is not justified by the finite controlled testbed or current RQ. |
-| Dedicated action/observation-specific robust agents | **DEFER** | Reopen only if those disturbance types become separate primary capability questions. |
-
-## Validation state and next gate
-
-`T-520` remains complete: Dyna-Q+ implementation/integration is validated.
-
-DEC-047 introduces `T-523` as the immediate scientific implementation gate: deterministic information-limited SARSA + plain Dyna-Q, focused tests, runner integration, reference fixtures where useful, and updated runtime-feasibility estimate.
-
-Only after T-523 passes does `T-521` own the authoritative candidate-v1.1 schema, exact bounded tuning surfaces, fresh held-out layouts/seeds, structural condition IDs, paired-effect/95% CI support and final stage/firewall rules. Final evidence remains blocked until non-final validation/freeze and application acceptance.
+`T-524` / issue #95 must finish source-backed RQ/estimand/method-role definition before `T-525` implements deep-method adapters. The final method set is frozen only after `T-526` environment/method feasibility pilots and `T-527` fair tuning/statistical/resource review.
