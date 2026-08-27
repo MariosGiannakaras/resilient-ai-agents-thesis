@@ -18,7 +18,7 @@
 - Single branch/PR: `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft #92. No parallel implementation branch or early merge.
 - Trackers: #87 master; #88 scientific; #89 runtime; #90 UI; #91 screenshots/CI/packaging.
 - Progress: **2/8** major milestones. `T-520` complete; current task `T-521 READY`.
-- PR CI run 346 validated the last D0/NiceGUI code checkpoint through documentation, JSON, compile, locked environment, complete tests and bibliography integrity. Newer documentation reconciliation requires its own current-head CI confirmation before being called validated.
+- PR CI run **346** validated the T-520 D0 code checkpoint. PR CI run **376** validated the subsequent continuity/documentation reconciliation: documentation consistency, JSON validation, Python compile, locked environment, complete tests and bibliography integrity all passed.
 
 ## Continuity / interruption audit
 
@@ -70,4 +70,4 @@ Exact D0 planning grid/selection, candidate-v1.1 freeze, exact fresh layouts/see
 
 ## Exact next action
 
-Obtain current-head CI for this reconciliation, then execute `T-521`: authoritative candidate-v1.1 schema, exact bounded D0 tuning plan, fresh layouts/seeds, structural condition IDs, resolved configuration identity rules and paired effect/95% CI support. Keep final evidence and every `T-700+` task blocked.
+Execute `T-521`: authoritative candidate-v1.1 schema, exact bounded D0 tuning plan, fresh layouts/seeds, structural condition IDs, resolved configuration identity rules and paired effect/95% CI support. Keep final evidence and every `T-700+` task blocked.
