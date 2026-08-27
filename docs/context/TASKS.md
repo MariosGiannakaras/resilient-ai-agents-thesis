@@ -21,14 +21,14 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 
 - **Package:** DEC-048 protocol-v2 redesign refined by DEC-050 methodology closure. DEC-042/047 and candidate v1.1 remain auditable predecessor design. DEC-049 controls the later new-framework frontend rebuild.
 - **Project:** **4/8** master milestones complete (#87: 1, 2, 4, 5).
-- **Current task:** `T-524`.
-- **State:** `IN_PROGRESS`; methodology exploration/closure is complete, but the four new closure sources merged through ThesisBibliography PR #143 still require canonical intake/analysis/evidence/selection/package/corpus convergence and immutable consumer sync.
+- **Current task:** `T-525`.
+- **State:** `IN_PROGRESS`; T-524 source/bibliography/methodology closure is complete. The immutable protocol-v2 bibliography consumer snapshot is upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`, merged through thesis PR #96 and validated on the current PR #92 merge state.
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no parallel main-repo implementation branch.
-- **Trackers:** #87 master 4/8; #95 protocol-v2 2/10; #88 closed/superseded; #89 complete/closed; #93 PAUSED; #94 DEFERRED post-thesis.
+- **Trackers:** #87 master 4/8; #95 protocol-v2 3/10; #88 closed/superseded; #89 complete/closed; #93 PAUSED; #94 DEFERRED post-thesis.
 - **Historical science:** protocol-v1.0 / FINAL-* / R0 evidence immutable. Candidate v1.1 remains non-final history; old `T-522` must not execute.
 - **Frontend direction:** final frontend is rebuilt from scratch with a **different framework from NiceGUI** at `T-528` after v2 backend/scientific stability.
 - **Pre-WP7 approval:** NOT APPROVED; `T-700+` remains blocked.
-- **Exact next action:** complete the finite T-524 bibliography/convergence/sync work, then hand off to T-525. Do not access any final reserve, start old T-522, or resume UI implementation early.
+- **Exact next action:** implement T-525 framework-neutral protocol-v2 lifecycle/checkpoint/branching and minimum method adapters. Do not access any final reserve, tune methods, start old T-522, or resume UI implementation early.
 
 ## Quota/interruption resilience
 
@@ -93,17 +93,18 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
 - [x] `T-521` — Candidate protocol-v1.1/config identity/paired-statistics infrastructure; valid non-final history only.
 - [ ] `T-522` — **SUPERSEDED. Do not execute.** Historical v1.1 tuning/freeze gate superseded by DEC-048/050 and T-524–T-527.
 
-- [ ] IN_PROGRESS `T-524` — Freeze the source-backed protocol-v2 research contract.
+- [x] `T-524` — Freeze the source-backed protocol-v2 research contract.
   - Depends on: `T-521`.
-  - Research closure completed: 30-point audit fact-check, 20-check deep-chain pass, eight-part closure audit, DEC-050.
-  - Accepted scientific contract includes: Phase-A independent method training; actual interaction budgets; common semantic information/reward/gamma; isolated no-learning probes; administrative truncation with bootstrap; each method/root/layout own full scientific checkpoint; exact shared Phase-B branch point; Frozen nominal/Frozen disturbed/Adaptive nominal/Adaptive disturbed branches; Adaptive updates only after boundary; same behavior-policy state at fork; DiD adaptation-benefit estimands; root-level inference/failure policy; explicit observation-corruption frequency + support/magnitude; final-reserve leakage firewall; historical v1.x truncation limitation; DEC-049 frontend boundary.
-  - Remaining acceptance work: finish ThesisBibliography issue #135 plus closure intake merged from PR #143 through canonical source IDs, scientific analysis/evidence, thesis selection, generated package/corpus convergence, all upstream validators green, and a new immutable thesis-repo bibliography sync; reconcile generated source IDs/status into protocol docs; then mark T-524 complete.
+  - Completed research closure: 30-point audit fact-check, 20-check deep-chain pass, eight-part closure audit and DEC-050.
+  - Frozen scientific contract includes: Phase-A independent method training; actual interaction budgets; common semantic information/reward/gamma; isolated no-learning probes; administrative truncation with bootstrap; each method/root/layout own full scientific checkpoint; exact shared Phase-B branch point; Frozen nominal/Frozen disturbed/Adaptive nominal/Adaptive disturbed branches; Adaptive updates only after boundary; same behavior-policy state at fork; DiD adaptation-benefit estimands; root-level inference/failure policy; explicit observation-corruption frequency + support/magnitude; final-reserve leakage firewall; historical v1.x truncation limitation; DEC-049 frontend boundary.
+  - Bibliography closure: ThesisBibliography issue #135 completed; canonical methodology analyses/evidence/selection converged; 121 citation-ready sources; later-writing crosswalk retained in the corpus; upstream immutable SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`; thesis consumer sync PR #96 merged and current PR #92 repository checks passed after sync.
 
-- [ ] BLOCKED `T-525` — Implement the bounded framework-neutral multimethod training/checkpoint/deployment foundation required for v2 pilots.
+- [ ] IN_PROGRESS `T-525` — Implement the bounded framework-neutral multimethod training/checkpoint/deployment foundation required for v2 pilots.
   - Depends on: `T-524`.
   - Acceptance: v2 method-discriminated config/result schemas; project-owned actual interaction accounting; common task-level gamma/reward/truncation contract; experiment-lifecycle/capability adapter registry; independent Phase-A training; isolated interaction-indexed no-learning probes; full method-specific scientific state save/restore; process-destroy/restore/continue conformance; exact branch-point clone equality; Frozen/Adaptive behavior-policy-state semantics; four post-boundary branches; root/failure provenance; no evaluator leakage.
   - Minimum pilot adapters: Q-Learning, SARSA, DQN, PPO, Dyna-Q+. Dyna-Q is ablation-only. A2C receives only bounded feasibility support if needed for its promotion decision.
   - DQN adapter persists networks/optimizer/replay/sampling RNG/warm-up/update ratio/target/exploration schedules. PPO adapter persists full code-level configuration and checkpoints only at legal completed rollout/update boundaries. Dyna-Q+ uses full own model/recency/planning state rather than the historical Q-only checkpoint path.
+  - First implementation slice: add a protocol-v2 lifecycle/adapter layer beside the legacy v1.x runner; preserve historical Q-only checkpoint artifacts while providing exact Q scientific continuation; add conformance tests for serialization/destruction/restoration/continuation, branch cloning, interaction accounting, probe non-mutation, truncation semantics and information boundaries.
   - Do not perform final tuning, final matrix execution or UI work here.
 
 - [ ] BLOCKED `T-526` — Run bounded environment-discrimination + method/severity/CPU feasibility pilots on the validated Windows machine.
