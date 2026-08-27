@@ -153,9 +153,13 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
 
 - [ ] BLOCKED `T-700` — Recheck current Department/University submission/formatting/defense rules and current tool assumptions.
   - Depends on: `T-613`, `T-511` and explicit pre-WP7 user approval.
-- [ ] DEFERRED `T-701` — Review later supplied completed theses as contextual examples only.
-- [ ] DEFERRED `T-710` — Draft complete Greek thesis from accepted evidence.
+  - Planning reference: re-verify the known `ice.uniwa.gr` writing guide, programme regulation, programme-of-studies and Technical Writing references catalogued in `docs/thesis/THESIS_STRUCTURE_REFERENCE_POLICY.md`; current official guidance always wins.
+- [ ] DEFERRED `T-701` — Comparative review of completed example theses and derivation of the thesis structure/style guide.
   - Depends on: `T-700`.
+  - Inputs: user-supplied examples from `local-inputs/example-theses/` plus any independently discovered examples only from `ice.uniwa.gr` unless the user later changes that restriction.
+  - Acceptance: examples are contextual structure/presentation references only, never scientific sources or official requirements; compare all supplied examples across front matter, chapter hierarchy/balance, background/related-work/methodology/implementation/results/discussion separation, technical depth, figures/tables/screenshots, captions/cross-references, bibliography, glossary/appendices, academic register, limitations and layout conventions; record cross-example counts rather than copying one thesis; explicitly reject conventions conflicting with current official guidance; produce `docs/thesis/THESIS_STRUCTURE_AND_STYLE_GUIDE.md` with source-role traceability and a recommended chapter/document architecture for this thesis; do not copy example prose/data/results/figures/code.
+- [ ] DEFERRED `T-710` — Draft complete Greek thesis from accepted evidence.
+  - Depends on: `T-700`, `T-701`.
 - [ ] DEFERRED `T-711` — Produce review-ready Word thesis + manual `ASSET-*` placement register.
   - Depends on: `T-710`.
 - [ ] DEFERRED `T-712` — Incorporate supervisor/reviewer corrections and revalidate.
