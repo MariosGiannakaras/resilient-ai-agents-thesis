@@ -14,8 +14,8 @@ Pre-WP7 refinement is governed by DEC-042/044/045/046/047 and issues #87–#91.
 
 - Use only `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; do not merge early or create a parallel implementation branch.
 - Preserve v1.0/final historical evidence and R0 pilot evidence immutably.
-- `T-520` is complete. Current primary task: `T-523 READY`. `T-521` is blocked on T-523; `T-530` remains secondary dependency-valid work.
-- Never generate v1.1 final evidence for CI/UI convenience.
+- `T-520` and `T-523` are complete. Current primary task: **`T-521 READY`**. `T-530` remains secondary dependency-valid work; `T-522` is blocked on T-521.
+- Never generate or inspect v1.1 final outcomes for CI/UI/protocol-selection convenience.
 - `T-511` remains USER_VALIDATION_REQUIRED; all `T-700+` execution is blocked until explicit user approval.
 
 ## Startup / resume
@@ -26,30 +26,31 @@ Pre-WP7 refinement is governed by DEC-042/044/045/046/047 and issues #87–#91.
    - `docs/context/TASKS.md`
    - `docs/context/CURRENT_STATUS.md`
 3. Inspect/resume IN_PROGRESS work before READY work.
-4. Follow canonical scientific order: T-523 → T-521 → T-522; then runtime/UI dependencies; never bypass gates.
+4. Follow canonical scientific order: **T-521 → T-522**; then runtime/UI dependencies; never bypass gates.
 5. Preserve recoverable validated checkpoints and reconcile durable status/issues.
 
 ## Current scientific contract
 
 The thesis compares resilient AI agent strategies under uncertainty/change. GridWorld is the controlled experimental/visualization testbed, not the thesis subject.
 
-Main candidate strategies after DEC-047:
-
-- **Fixed Q-Learning** — historical F0; common nominal checkpoint, no post-change updates.
-- **Adaptive Q-Learning** — historical C0; same checkpoint/base config, continual off-policy Q updates.
-- **SARSA** — on-policy continual model-free strategy; T-523 implementation/validation.
-- **Dyna-Q** — learned-model planning without recency bonus; T-523 implementation/validation.
+Validated main strategies:
+- **Fixed Q-Learning** — historical F0; common learned nominal checkpoint, no post-change updates.
+- **Adaptive Q-Learning** — historical C0; continual off-policy Q updates.
+- **SARSA** — on-policy continual model-free TD control.
+- **Dyna-Q** — empirical learned-model planning over experienced state-action pairs; no Dyna-Q+ recency/untried-action bonus.
 - **Dyna-Q+** — historical D0; learned model + planning + recency-directed re-exploration.
 
-Random Agent and nominal/fully-informed planner are optional labelled reference fixtures, never equivalent fair-ranked agents. Historical R0 stays immutable diagnostic evidence; a redesigned Robust Planner is a conditional sixth comparator only if its explicit non-final viability/fairness/runtime gate passes.
+T-523 validated deterministic/serializable SARSA and Dyna-Q, episode persistence, five-strategy runner/config identities, the Dyna-Q/Dyna-Q+ mechanism contrast, Random Agent reference fixture and bounded matrix-size feasibility. PR CI run 396 passed the complete 143-test suite plus documentation/JSON/compile/lock/bibliography checks.
+
+Random Agent and any nominal/fully-informed planner are clearly labelled reference fixtures, never equivalent fair-ranked agents. Historical R0 remains immutable diagnostic/negative pilot evidence; a redesigned Robust Planner becomes a conditional sixth comparator only if its explicit T-521/T-522 non-final nominal-viability/fairness/runtime gate passes.
 
 All five scientific agents receive only agent-visible observations, intended actions, rewards and lifecycle information. Never expose evaluator-only executed action, disturbance/change flags, regime or true state.
 
 Preserve Fixed/Adaptive Q-Learning alpha `0.5`, gamma `0.96875`, epsilon `0.125`, 512 training episodes/layout, 16 pre-change, 32 post-change, horizon 48 and current target 32 paired final roots unless an explicit evidence-backed amendment changes the matrix.
 
-T-523 adds deterministic/versioned SARSA and plain Dyna-Q, exact-update/determinism/serialization/information-boundary tests, runner/config identities and bounded runtime estimate. SARSA may receive only a small predeclared fairness-relevant non-final tuning surface. Dyna-Q/Dyna-Q+ share model/planning machinery and matched planning-step budgets where appropriate; Dyna-Q has no recency bonus.
+T-521 must define **before selection evidence is examined**: authoritative candidate-v1.1 schema; exact bounded SARSA fairness-tuning and Dyna/Dyna-Q+ planning surfaces; four fresh held-out final layouts; fresh precommitted final seed bank; structural remap IDs; stable configuration identity/provenance; paired effects/95% CIs/explicit n/layout aggregation; primary cumulative deficit/immediate degradation/terminal performance and secondary/sensitivity recovery. No composite score, best-seed selection, best-final switching or post-hoc favorable threshold.
 
-T-521 then owns the authoritative five-agent candidate schema, small predeclared tuning surfaces, four fresh held-out final layouts, fresh final seed bank, structural remap IDs, stable configuration identity/provenance, paired effects/95% CIs/explicit n/layout views, primary cumulative deficit/immediate degradation/terminal performance and secondary/sensitivity recovery. No composite score, best-seed selection or post-hoc favorable threshold.
+T-522 then runs only bounded non-final tuning/pilot evidence and freezes/amends/rejects strategies/settings before final outcomes. Actual Dyna planning runtime is measured there; the current 888,832-episode matrix accounting is feasibility only, not a runtime guarantee.
 
 ## Application / UX contract
 
@@ -60,19 +61,18 @@ T-521 then owns the authoritative five-agent candidate schema, small predeclared
 - T-531 handles strategy/configuration/settings identity, repeated roots, fixed-vs-tunable explanations and compatible live/final comparisons.
 - Plotly = stored/final figures; ECharts = real LIVE/PROVISIONAL telemetry; Mermaid = explanations; AG Grid Community = analytical tables.
 - Novice-first compact UX: plain labels, accurate tooltips/help, units/consequences, progressive disclosure, resolved-config review, semantic icon+text+color states and actionable errors/empty states.
-- Purposeful animation is presentation-only and never changes timing/actions/seeds/RNG or fabricates progress/replay.
+- GridWorld/chart/status animation is presentation-only and never changes timing/actions/seeds/RNG or fabricates progress/replay.
 - `run_app.bat` remains checkout launcher; final Windows delivery is validated NiceGUI/PyInstaller `onedir + windowed`.
-- After acceptance, approved experiments run directly from the desktop app on the validated thesis machine; Codex/console is not needed merely to execute frozen configurations.
 
 ## Validation and Git
 
-For **one bounded scope**: verify dependencies/acceptance, implement the smallest complete solution, run the smallest relevant deterministic checks, review the actual diff, and reconcile docs/issues.
+For each **one bounded scope**: verify dependencies/acceptance, implement the smallest complete solution, run the smallest relevant deterministic checks, review the actual diff, and reconcile docs/issues.
 
 Testing is proportional: known-answer, determinism, information-boundary, serialization, configuration, lifecycle truthfulness and representative render/native checks. No arbitrary coverage project or pilot/final matrices in CI. PR CI is the canonical full-suite guard.
 
-Do not submit an `APPROVE` review on your own PR. The normal workflow may permit an **own-PR squash merge**, but this package defers own-PR squash merge until integrated user-facing acceptance.
+Do not submit an `APPROVE` review on your own PR. The normal workflow may permit an **own-PR squash merge**, but this package explicitly defers own-PR squash merge until integrated user-facing acceptance.
 
-Report `Project: X/Y` only from canonical finite state. **In-progress/failed work never counts as complete**.
+Report `Project: X/Y` only from canonical finite state. In-progress/failed work never counts as complete.
 
 `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` is future planning only; it does not authorize writing.
 
