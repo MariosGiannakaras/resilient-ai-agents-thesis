@@ -2,204 +2,160 @@
 
 ## Status taxonomy
 
-- **CONFIRMED:** established by the approved application, current explicit user direction, accepted repository decision, or validated evidence.
-- **RESEARCH_REQUIRED:** requires current evidence before selection.
-- **PROPOSED / CANDIDATE:** defined but not yet frozen for final evidence.
-- **OPEN:** unresolved and genuinely needed later.
+- **CONFIRMED:** established by approved application, explicit user direction, accepted decision or validated evidence.
+- **RESEARCH_REQUIRED:** needs evidence before selection.
+- **CANDIDATE:** defined but not yet frozen for final evidence.
+- **SUPERSEDED:** preserved history that no longer controls future execution.
 - **DEFERRED:** intentionally later and non-blocking now.
-- **HISTORICAL_CONTEXT_ONLY:** retained for auditability, not active guidance.
 
 ## Project identity
 
-This repository is the permanent source of truth for the thesis lifecycle:
+Official thesis titles:
 
-> **Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα**
+- Greek: **Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα**
+- English: **Comparison and Evaluation of Resilient AI Agents in Uncertain Environments**
 
-Official English title: **Comparison and Evaluation of Resilient AI Agents in Uncertain Environments**.
-
-Confirmed academic context:
-
-- University of West Attica, School of Engineering, Department of Informatics and Computer Engineering.
-- Topic approved.
-- Final thesis language is Greek and the required final thesis artifact is Microsoft Word (`.docx`) unless current official guidance later changes this.
-- No current supervisor-specific correction or submission deadline blocks research/application work.
-- WP7/WP8 thesis-writing/defense work remains blocked until the explicit pre-WP7 user approval gate in `TASKS.md` is satisfied.
+GridWorld is the controlled experimental testbed and visualization environment, not the thesis subject. Final thesis language is Greek and the final academic document is Microsoft Word unless later official guidance changes this.
 
 ## Bibliography boundary
 
-`MariosGiannakaras/ThesisBibliography` is canonical for source discovery, originals/PDFs, OCR/conversion, canonical Markdown, scientific analysis, evidence verification, source selection and generated corpus exports.
+`MariosGiannakaras/ThesisBibliography` owns discovery, originals, conversion/OCR, scientific analysis, evidence verification and citation-ready corpus generation. This repo consumes versioned generated output read-only.
 
-This thesis repository consumes the verified generated corpus read-only. `research/bibliography/citation-ready/` is the formal automatic citation surface; other imported material remains internal research context unless promoted upstream and resynchronized.
+Current accepted immutable import: **`bibliography-integration-v3`**. New protocol-v2 methodology sources are being refreshed upstream in ThesisBibliography issue #135 and must later enter through a new versioned sync rather than hand edits here.
 
-Current accepted immutable consumer baseline: `bibliography-integration-v3`. Bibliography originals/PDF/LFS objects are not copied into this repository and generated bibliography content is never edited here for convenience.
+## Immutable historical science
 
-## Scientific core — accepted baseline
+- `protocol-v1.0`, FINAL-* bundles and frozen v1.0 analysis/evidence are immutable.
+- v1.0 is a valid within-Q-learning experiment: Fixed and Continual Q-learning start from the same selected nominal Q checkpoint, isolating the effect of post-change online learning.
+- Historical R0 robust-value-iteration pilot evidence remains negative/diagnostic; its severe nominal truncation is not hidden or rewritten.
+- Candidate protocol-v1.1 remains auditable non-final research history. It broadened adaptation mechanisms to Fixed Q-Learning, Adaptive Q-Learning, SARSA, Dyna-Q and Dyna-Q+, but all begin evaluation from common selected tabular-Q knowledge. Therefore it is not an end-to-end algorithm-learning benchmark.
+- Old `T-522` v1.1 tuning/freeze execution is **SUPERSEDED** and must not run.
 
-The accepted implementation baseline remains:
+## Current science — protocol v2
 
-- Python 3.12;
-- `uv`, `pyproject.toml`, `.python-version`, committed `uv.lock`;
-- UI-independent package `src/resilient_agents/`;
-- project-owned Gymnasium-compatible GridWorld;
-- explicit separation of evaluator ground truth from agent-visible information;
-- independently derived deterministic RNG streams;
-- versioned configuration/protocol contracts with fail-closed validation;
-- filesystem-first run bundles with resolved config, provenance, checksums, events/results and lifecycle state;
-- at most one guarded automatic Git commit/push per finalized whole experiment, never one per seed;
-- large thesis-produced artifacts retained when useful under the configured Git LFS policy.
+DEC-048 / issue #95 defines the successor direction.
 
-The user should not manually stage/move/publish routine experiment evidence.
+### RQ-A — nominal learning
 
-## Historical v1.0 evidence
+Compare independently trained RL methods under the same semantic environment, information, action/reward and principal **environment-interaction/timestep budget**. Separate learning dynamics, standardized nominal policy performance, variability and CPU cost.
 
-Historical `protocol-v1.0`, all finalized `FINAL-*` bundles, frozen v1.0 analysis and thesis-final evidence remain immutable real evidence. They are not deleted or rewritten by the current refinement.
+### RQ-B — resilience/adaptation
 
-Historical R0 robust-value-iteration pilot evidence is also preserved. Its accepted configuration showed approximately 96% nominal truncation, so it must not be reinstated unchanged in the new primary protocol.
+For each method/root/layout, clone the exact trained checkpoint into:
 
-## Current pre-WP7 scientific refinement
+- **Frozen:** no deployment learning-state mutation;
+- **Continual:** ordinary method-native continued learning under a predeclared schedule.
 
-DEC-042 defines a versioned candidate `protocol-v1.1` path. `T-520` is complete; `T-521` is the current READY scientific task.
+Each regime also gets a matched no-change reference. This enables within-method adaptation effects and cross-method resistance/adaptation comparisons without confusing learning with deployment regime.
 
-### Current candidate agent set
+### Candidate methods
 
-- **F0 — Frozen Q-learning:** common selected nominal checkpoint; post-change updates disabled.
-- **C0 — Continual Q-learning:** same checkpoint/base configuration; online Q updates continue.
-- **D0 — Dyna-Q+:** information-limited tabular learned-model planning with recency-directed re-exploration; no evaluator/change oracle.
+Strong core candidates, still pilot-gated:
 
-R0 is historical pilot evidence only for the current direction.
+1. Q-Learning — tabular off-policy value learning;
+2. SARSA — tabular on-policy value learning;
+3. DQN — neural off-policy value approximation;
+4. PPO — neural on-policy policy-gradient/actor-critic optimization;
+5. Dyna-Q+ — learned-model planning + directed recency-based re-exploration.
 
-Candidate-v1.1 preserves the accepted F0/C0 base configuration:
+Secondary candidates:
 
-- alpha `0.5`;
-- gamma `0.96875`;
-- epsilon `0.125`;
-- 512 nominal training episodes/layout;
-- 16 pre-change episodes;
-- 32 post-change episodes;
-- evaluation horizon 48;
-- 32 paired final root seeds.
+- Dyna-Q — planning ablation for Dyna-Q+;
+- A2C — valid discrete actor-critic candidate, promoted to full final only if it adds distinct scientific value beyond PPO at acceptable cost;
+- historical R0 — negative/diagnostic, not automatically redesigned.
 
-D0-only `planning_steps` and `kappa` require a small predeclared development/tuning search in T-521 and non-final selection in T-522. Final settings are frozen before final outcomes are inspected.
+No final method count is frozen before pilots.
 
-The runner/application may execute multiple **approved** settings/configuration variants during development/tuning. Every configuration has a complete resolved identity/provenance and multiple predefined repetitions; single-run/best-seed cherry-picking is forbidden. Final evidence uses only the frozen configuration per retained regime.
+## Fair experimental contract
 
-### Candidate-v1.1 conditions and design
+Fairness does not mean equal hyperparameters or equal optimizer updates.
 
-Seven single-factor conditions:
+- same project-owned environment semantics and agent-visible information;
+- common main interaction/timestep learning budget;
+- bounded algorithm-specific literature-backed tuning spaces;
+- equivalent predeclared tuning opportunity on tuning-only partitions;
+- multiple independent roots for every candidate configuration;
+- periodic standardized **no-learning evaluation** checkpoints so exploratory/stochastic training returns are not treated as directly comparable policy quality;
+- wall-clock/CPU cost reported separately;
+- no final-reserve/lifetime tuning;
+- seeds are randomization units, never tunable parameters;
+- episodes nested within a root are not independent replicates.
 
-1. `nominal`;
-2. `action-remap-2-swap`;
-3. `action-remap-4-cycle`;
-4. `action-failure-1of8`;
-5. `action-failure-1of4`;
-6. `observation-corruption-1of8`;
-7. `observation-corruption-1of4`.
+Deep `Continual` branches are ordinary continued-training baselines, not claims of specialized continual-learning algorithms. DQN replay/target/optimizer/exploration state and actor-critic optimizer/schedule/RNG/update-boundary state are part of the scientific checkpoint semantics when exact continuation requires them.
 
-T-521 owns four fresh held-out final layouts, a fresh precommitted final seed bank, exact bounded D0 tuning values, protocol schema/firewall and paired statistical implementation.
+## Environment and uncertainty
 
-Primary reporting: cumulative deficit, immediate degradation and terminal gap/performance. Recovery remains secondary/sensitivity with explicit `NO_DEGRADATION`, `RECOVERED` and `NOT_RECOVERED`. Paired effects, 95% CIs, explicit n and layout-aware views are required. No composite resilience score or post-hoc favorable threshold.
+Do not add pixels, partial observability or a large external benchmark merely to justify deep learning.
 
-## Application architecture — current authority
+Protocol-v2 pilots test a small bounded number of project-owned GridWorld complexity levels and retain the simplest environment family that avoids clear floor/ceiling effects while remaining interpretable and CPU-feasible on the validated Windows thesis machine. Neural agents receive a deterministic numeric/one-hot representation of the same semantic observation, not extra evaluator truth.
 
-DEC-044 supersedes the temporary React/Vite exploration and the historical Streamlit UI implementation.
+Current uncertainty classes remain strong candidates:
 
-Current application stack:
+- primary persistent dynamics/rule change: action remapping;
+- supporting actuation uncertainty: action-execution failure;
+- supporting perceptual uncertainty: observation corruption.
 
-- **NiceGUI 3.16 native mode** (`pywebview`) as the Python-only desktop UI;
-- Python application/runtime service between UI and scientific runner;
-- Plotly for stored/final scientific figures;
-- ECharts for real live/provisional telemetry;
-- Mermaid for explanatory agent/experiment diagrams;
-- AG Grid Community for analytical tables;
-- root `run_app.bat` for repository-checkout launch;
-- final Windows delivery target: validated NiceGUI/PyInstaller `onedir + windowed` folder requiring no Python/Node/browser interaction from the recipient.
+Additional dynamic obstacles/reward shifts/gradual drift/recurring changes require a distinct research question before inclusion.
 
-`src/resilient_agents/` remains headless and usable without NiceGUI. No scientific execution logic belongs in UI callbacks.
+## Metrics/statistics
 
-T-530 must provide real active-run DTOs/status/events/heartbeat/history/resources, capability-based controls and a read-only live GridWorld observer proven not to alter actions/RNG. Historical runs without retained step traces display replay unavailable rather than synthetic reconstruction.
+Historical component resilience estimands remain useful: immediate degradation, cumulative deficit, terminal/post-change performance/gap, explicit recovery/no-recovery. Recovery remains secondary/sensitivity and no composite resilience score is permitted.
 
-## Novice-first UI contract
+Protocol v2 adds learning estimands: standardized final nominal evaluation and learning efficiency over a fixed interaction budget, with curves/checkpoint summaries and independent-root uncertainty. Final root count, layouts, method count and contrast family are selected from non-final variance/precision/runtime evidence before final access rather than copied automatically from v1.1.
 
-DEC-046 requires the application to be understandable by a non-programmer with no prior RL/model/configuration knowledge while remaining scientifically precise.
+Use paired/common-randomness comparisons where construction permits without leaking hidden information. Emphasize effect sizes and 95% intervals. Any formal p-value/multiplicity family must be predeclared.
 
-Required behavior includes:
+## Scientific implementation foundation
 
-- human-readable primary labels and secondary technical IDs;
-- concise helper text and info-icon/tooltips for non-obvious concepts;
-- explanations of agents, uncertainty conditions, settings, units/ranges/consequences, metrics, aggregation and CI/error-bar semantics;
-- approved-setting controls only, with progressive disclosure for advanced settings;
-- readable resolved-configuration review before launch;
-- truthful live GridWorld, event timeline, logs/metrics and compatible live model/settings overlays;
-- semantic status using text + icon + accessible color, never color alone;
-- actionable empty/loading/error/disabled/unavailable states;
-- modern compact desktop/laptop density, consistent icons, restrained micro-interactions and purposeful animations;
-- visualization animation/speed affects presentation only and never scientific timing, actions, seeds or RNG;
-- short skippable/replayable onboarding, while every page remains usable without it.
+Validated reusable infrastructure includes:
 
-The active navigation remains Dashboard, New Experiment, Runs, Compare and Artifacts.
+- Python 3.12 + locked `uv` environment;
+- project-owned Gymnasium GridWorld;
+- strict evaluator-vs-agent information boundary;
+- deterministic separated RNG streams;
+- versioned protocols/configuration identity;
+- filesystem run bundles/provenance/checksums/events/results;
+- tabular Q/SARSA and Dyna implementations;
+- paired-statistics components;
+- UI-independent runtime service and read-only observer.
 
-## Experiment execution and GitHub boundary
+Protocol v2 must add a method-agnostic independent training/checkpoint/deployment lifecycle and maintained-library adapters for complex neural algorithms where appropriate. It must not force neural methods into a Q-table abstraction.
 
-The finished application is the normal user-facing execution surface for approved experiments on the validated thesis machine. A standard research/final run should not require Codex or console commands once the app/runtime path is complete.
+## Application status
 
-Expected normal flow:
+NiceGUI/runtime work is a functional technical prototype. The user explicitly rejected the current visual/UX design as final. Issue #93 tracks a radical redesign but is **PAUSED until protocol-v2 science stabilizes** so the interface is not redesigned twice.
 
-> select approved configuration in app -> review resolved config -> launch -> monitor real run/GridWorld/metrics -> persist provenance/results -> finalize whole experiment -> guarded Git commit/push -> compare/analyze/export
-
-GitHub remains the repository/PR/CI/evidence source of truth. GitHub-hosted Actions are appropriate for deterministic CI, validators, small fixtures, analysis/artifact regeneration where scientifically valid and documentation checks, but they are **not automatically the validated machine for final stochastic evidence**. Final-v1.1 execution remains on the accepted thesis-machine path unless an explicit protocol amendment validates another execution environment.
-
-A GitHub self-hosted runner on the thesis machine is technically possible, but it would still compute on that machine and adds runner/security/maintenance complexity; it is not the default requirement. The completed application is the simpler normal execution surface.
-
-Codex on the thesis machine remains useful for code/protocol fixes, debugging, migrations or a scientifically required amendment. It should not be required merely to press Run for an already-approved experiment.
+Earlier screenshots/PyInstaller work is prototype/feasibility evidence only. Final Windows standalone packaging is deferred until after final thesis freeze through issue #94 / `T-803`.
 
 ## Current lifecycle
 
-Canonical task state is only in `docs/context/TASKS.md`.
+Canonical concrete state is in `TASKS.md`.
 
-Current refinement progress: **5/8** major milestones. Current repository task: `T-532 READY`; `T-522` remains the separate validated-thesis-machine scientific gate.
+1. `T-524` — protocol-v2 source/RQ/estimand/method-role freeze (**current**).
+2. `T-525` — common multimethod training/checkpoint implementation.
+3. `T-526` — bounded environment/method Windows CPU feasibility pilots.
+4. `T-527` — fair tuning, precision/runtime sizing, statistics and protocol-v2 freeze.
+5. `T-528` — v2-aware radical UI redesign.
+6. `T-511` — explicit intended-user acceptance.
+7. `T-610..T-613` — frozen v2 final execution, validation, analysis and evidence package.
+8. Explicit user approval before any WP7 writing.
+9. T-700+ thesis/review/defense workflow.
+10. `T-803` post-thesis standalone Windows package.
 
-High-level order:
-
-1. T-521 candidate-v1.1 schema/tuning/statistics (complete).
-2. T-522 bounded non-final D0 tuning/pilot and freeze/amend/reject decision.
-3. T-530 truthful active-run runtime service (complete).
-4. T-531 complete NiceGUI research application (complete).
-5. T-532 screenshots/render/native Windows packaging validation.
-6. T-511 intended-user human E2E acceptance.
-7. T-610–T-613 frozen v1.1 final execution, evidence freeze, paired analysis and final evidence package.
-8. Explicit user approval before any T-700+ work.
-
-No green CI, screenshot, packaged app or completed final analysis alone authorizes WP7.
-
-## WP7/WP8 downstream ownership model
-
-After explicit approval, current official thesis/submission/defense guidance is rechecked before writing. The frozen thesis/defense evidence package — not chat memory or ad-hoc raw-run browsing — becomes the scientific source for prose and presentation claims.
-
-Planned responsibilities:
-
-- **Codex/repository automation:** evidence maps, reproducible figures/tables, technical consistency, citation/result IDs, generated asset validation and legitimate code/data corrections.
-- **ChatGPT:** Greek thesis drafting/restructuring/review, explanations, chapter coherence, slide narrative, Greek slide copy, speaker notes/full script and user-facing placement instructions.
-- **Microsoft Word:** final thesis composition/inspection with heading styles, automatic TOC, captions, cross-references, lists of figures/tables, equations, pagination and final visual QA.
-- **PowerPoint:** final defense inspection/rehearsal, embedded notes, Presenter View, animation/media validation and final `.pptx` QA.
-- **Canva:** optional visual-polish tool only when it adds value; never scientific source of truth and any PPTX export is revalidated in PowerPoint.
-- **User:** provide genuine external/supervisor input, review subjective academic wording/interpretation at explicit gates, capture selected real app screenshots/GIF/video when requested, place/approve them using an exact repository-generated placement guide, and perform final Word/PowerPoint visual/rehearsal checks.
-
-The user should receive exact placement instructions for every manually captured application asset: target chapter/section or slide, intended purpose, crop/state to capture, caption/label, size/alignment guidance, evidence/run/config identity, and whether a static figure or animation fallback is required.
+No green CI, pilot, screenshot, packaged app or completed final analysis alone authorizes WP7.
 
 ## Current authority
 
 Use:
 
-- `AGENTS.md` — project/Codex policy;
+- `AGENTS.md` — always-on project/Codex policy;
 - `docs/context/TASKS.md` — concrete task/resume state;
-- `docs/context/CURRENT_STATUS.md` — compact current status;
-- `docs/context/CODEX_EXECUTION_PROMPT.md` — Goal-mode bootstrap;
-- `docs/research/MODEL_CANDIDATES.md` — current F0/C0/D0/settings policy;
-- `docs/context/IMPLEMENTATION_ROADMAP.md` — phase order;
-- `docs/context/EXECUTION_WORKFLOW.md` — responsibility/handoff model;
-- `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` — application information/UX contract;
-- `docs/thesis/THESIS_REQUIREMENTS.md` — thesis format/evidence requirements;
-- `docs/thesis/PRESENTATION_WORKFLOW.md` — defense workflow;
-- dedicated `DEC-*` files — accepted decisions and supersession history.
+- `docs/context/CURRENT_STATUS.md` — compact status;
+- `docs/context/CODEX_EXECUTION_PROMPT.md` — Codex bootstrap;
+- `docs/decisions/DEC-048_PROTOCOL_V2_INDEPENDENT_LEARNING_AND_MATCHED_RESILIENCE.md` — current scientific direction;
+- `docs/research/PROTOCOL_V2_RESEARCH_DESIGN.md` — current methodology contract;
+- `docs/research/MODEL_CANDIDATES.md` — current method-role policy;
+- `docs/thesis/THESIS_REQUIREMENTS.md` — thesis evidence/format requirements;
+- `docs/thesis/PRESENTATION_WORKFLOW.md` — future defense workflow.
 
-Historical documents remain useful for auditability only where their status explicitly says historical/superseded.
+Earlier decisions/documents remain auditable historical context where explicitly superseded.
