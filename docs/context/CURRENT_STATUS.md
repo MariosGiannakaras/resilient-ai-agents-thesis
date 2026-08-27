@@ -8,13 +8,13 @@
 ## Current execution state
 
 - Historical accepted baseline includes `T-100` target-machine validation and `T-200` research framing through completed protocol-v1.0 WP6 evidence. Frozen `protocol-v1.0`, `FINAL-*` and R0 pilot evidence remain immutable.
-- **Project: 4/8** master milestones complete (#87: 1, 2, 4, 5). **Current task: `T-524` IN_PROGRESS.** Protocol-v2 tracker #95 remains 2/10 until bibliography convergence/sync closes T-524. Old `T-522` is superseded and must not execute.
+- **Project: 4/8** master milestones complete (#87: 1, 2, 4, 5). **`T-524` is COMPLETE; current task: `T-525` IN_PROGRESS.** Protocol-v2 tracker #95 advances to 3/10. Old `T-522` is superseded and must not execute.
 - #93 final UI redesign remains PAUSED. Per DEC-049, the final frontend is rebuilt from scratch with a **different framework from NiceGUI** only after the framework-neutral v2 backend is stable. #94 / `T-803` packaging remains post-thesis and follows that later framework.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` work.
 
-## Methodology closure
+## Protocol-v2 methodology closure
 
-Open-ended methodology exploration is considered saturated after the 30-point audit fact-check, 20-check deep-chain pass, targeted closure audit and accepted DEC-050. New research reopens only for a concrete implementation/pilot validity problem.
+Open-ended methodology exploration is saturated after the 30-point audit fact-check, 20-check deep-chain pass, targeted closure audit and accepted DEC-050. New literature work reopens only for a concrete implementation/pilot validity problem.
 
 ### Phase A
 
@@ -48,9 +48,15 @@ Uncertainty claims remain separate: action remaps are categorical exact mappings
 
 ## Bibliography/provenance
 
-`MariosGiannakaras/ThesisBibliography` is canonical. The currently accepted immutable consumer snapshot remains `bibliography-integration-v3` until a new validated sync is merged. Earlier protocol-v2 sources (Patterson, Henderson, Dohare, DQN re-evaluation, existing Steinparz) are upstream; package/corpus convergence is still active.
+`MariosGiannakaras/ThesisBibliography` remains canonical. Protocol-v2 methodology issue #135 is complete. The converged upstream corpus is pinned by immutable full SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5` and contains **597 canonical sources, 121 citation-ready sources and 19 research materials**, including `research-notes/protocol-v2-writing-crosswalk-2026-08-28.md` for later claim-to-source drafting discipline.
 
-Closure intake PR #143 was merged and triggered canonical processing for four additional methodology sources: Pardo (time limits), Engstrom (implementation sensitivity), Fedus (experience replay) and Nikishin (primacy bias). They are methodology sources, not new algorithm arms. T-524 remains open until canonical `SRC-*` IDs, analysis/evidence/selection, package/corpus convergence, all upstream validators and a new immutable consumer sync are complete.
+The generated consumer sync was validated upstream and in this repository, merged through PR #96, and synchronized into the single pre-WP7 integration branch. PR #92 then passed its full repository checks, including tests and installed-bibliography validation. `bibliography-integration-v3` remains immutable historical provenance; it was not moved.
+
+## T-525 implementation focus
+
+Implement a new protocol-v2 lifecycle layer beside, not inside, the legacy v1.x `HeadlessExperimentRequest` path. Preserve historical execution semantics while adding framework-neutral method/capability registration, actual-interaction accounting, no-learning probe isolation, exact scientific checkpoint envelopes, branch-point clone semantics and method adapters.
+
+First conformance work: exact Q-Learning scientific continuation without changing the historical Q-only checkpoint artifact; then Q/SARSA/Dyna-Q+ adapters and generic lifecycle tests; then bounded DQN/PPO adapter support suitable for T-526 feasibility. No tuning, final matrix, final reserve or UI work is authorized in T-525.
 
 ## Still intentionally unfrozen
 
@@ -58,4 +64,4 @@ Exact retained methods/A2C decision, final GridWorld level/layouts, numeric inte
 
 ## Exact next action
 
-Finish the finite T-524 bibliography/convergence/sync work. Then T-525 implements the bounded v2 adapters/checkpoints/branching; T-526 runs the physical Windows feasibility/severity pilot; T-527 freezes tuning/statistics/protocol; T-528 performs the new-framework UI rebuild.
+Continue `T-525`: implement and test framework-neutral protocol-v2 lifecycle/checkpoint/branching primitives and minimum method adapters. `T-526` remains the physical-Windows feasibility/severity gate; `T-527` freezes tuning/statistics/protocol; `T-528` later performs the different-framework UI rebuild.
