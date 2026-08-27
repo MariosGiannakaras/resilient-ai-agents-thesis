@@ -1,13 +1,69 @@
-# Dashboard application
+# Local thesis application
 
-The dashboard is intentionally a thin presentation/control layer over `src/resilient_agents/`.
+The application is the local execution, monitoring, analysis, and presentation surface for the validated headless research core. It is not a second implementation of the scientific logic.
 
-The research core, experiment lifecycle, metrics, storage, provenance, and Git publication must work without the UI. The planned final implementation is a bounded local Streamlit dashboard unless pilots establish a concrete reason to choose another UI stack.
+## Architecture
 
-Dashboard implementation remains gated behind a validated headless core and real pilot workflow. A lightweight debug view may be added earlier, but it must call the same core APIs and must not duplicate scientific logic.
+`DEC-043` selects the application stack for the current pre-WP7 refinement:
 
-The final dashboard must be self-explanatory rather than merely visually polished. Use clear labels/helper text, visible units, concise tooltips and contextual explanations for non-obvious scientific/technical concepts, consistent status text/icons/semantic colors, actionable empty/warning/error states, and pre-run configuration validation/summary. Color must never be the only carrier of essential meaning.
+```text
+React + TypeScript + Vite frontend
+        │
+        ├── REST
+        └── WebSocket
+        │
+FastAPI + Uvicorn application/runtime service
+        │
+existing src/resilient_agents headless core
+        │
+filesystem run bundles / artifacts / provenance
+```
 
-After the final dashboard structure is stable, add a lightweight first-run onboarding/tutorial covering the essential workflow with Previous/Next/Skip/Finish controls and a replay option under Help/Getting Started. Prefer native Streamlit/lightweight state/dialog/popover primitives and a local completion flag; do not introduce a heavyweight custom JavaScript/DOM tour framework without a separately demonstrated need.
+The historical Streamlit dashboard remains in Git history as the previous baseline but is not the target implementation.
 
-The completed application must also provide a root-level `run_app.bat` as the normal one-click Windows launcher. A standalone executable is not required. The launcher must start the validated application through the locked `uv` environment without requiring typed terminal commands, resolve repository paths robustly, surface actionable startup failures, and remain a thin launcher with no duplicated scientific/application logic. Whenever the application entry point, launch command, dependency bootstrap, or relevant path changes, update and revalidate `run_app.bat` in the same coherent change so the launcher cannot silently become stale.
+### Boundary rules
+
+- Scientific configuration, agent/environment execution, metrics, result persistence, provenance, and protocol validation stay in Python under `src/resilient_agents/`.
+- FastAPI routes/WebSockets adapt application/runtime services; they do not reimplement the runner.
+- The browser receives only truthful backend-derived state. No mock final metrics, fabricated progress/logs, or invented historical replay.
+- Live GridWorld data is read-only observer state. Client animation/interpolation and visualization speed never affect experiment timing, actions, seeds, or RNG streams.
+- Historical finalized runs without retained step traces show replay unavailable.
+- Lifecycle controls are capability-based. Unsupported pause/resume/stop/cancel/restart operations are shown as unsupported rather than simulated.
+
+## User information architecture
+
+The primary navigation remains intentionally small:
+
+1. **Dashboard** — active/recent runs, warnings, protocol state, current resources, quick actions.
+2. **New Experiment** — validated configuration, agents/layouts/conditions/seeds, resolved-config review, launch.
+3. **Runs** — active/history/detail workspace, live GridWorld, event timeline, logs/metrics, truthful lifecycle state.
+4. **Compare** — compatible run/model comparisons, distributions, paired effects/CIs, counts and condition/layout breakdowns.
+5. **Artifacts** — real figures/tables/CSV/JSON/HTML outputs, provenance and exports.
+
+The UI must remain self-explanatory through precise labels, units, contextual help/tooltips, semantic text+icon statuses, accessible colors, actionable empty/loading/error/disabled states, and lightweight onboarding.
+
+## Runtime and frontend build
+
+The final supported user path is root `run_app.bat`. It must start one local FastAPI/Uvicorn process through the locked `uv` environment and serve the prebuilt frontend assets.
+
+Node/Vite is a **build-time dependency**. Normal application use on the validated thesis machine must not silently require Node unless the target-machine contract is explicitly amended. Frontend source and its package lock are versioned; CI builds the frontend and performs bounded browser validation.
+
+During frontend development, a Vite development server may be used as a developer convenience, but that is not the normal thesis-user launch path.
+
+## Repository layout target
+
+- `src/app/` — FastAPI application/runtime API adapter and static-SPA serving.
+- `frontend/` — React/TypeScript/Vite source, package manifest/lock, tests and build configuration.
+- `frontend/dist/` — prebuilt runtime assets according to the accepted build/packaging policy.
+- `ui-screenshots/` — stable accepted UI screenshots captured through the bounded browser-validation workflow.
+- `run_app.bat` — one-click Windows launcher.
+
+## Validation
+
+Application validation is layered and proportional:
+
+- Python contract/integration tests protect the runtime API and scientific boundary.
+- Frontend type/build checks protect the React application.
+- A small set of browser tests protects the critical configure → launch → live run → history → compare → export journey and screenshot rendering.
+- CI fixtures are diagnostic only and never scientific evidence.
+- `T-511` remains a human acceptance gate; automated rendering or screenshots cannot close it.
