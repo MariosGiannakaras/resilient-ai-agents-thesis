@@ -195,11 +195,13 @@ class RunBundle:
         protocol_version: str,
         stage: str,
         retention_policy: str,
+        writable_root: Path | None = None,
     ) -> "RunBundle":
         """Reopen an unfinished bundle only when identity/provenance still agree."""
 
         root = repo_root.resolve()
-        run_dir = root / "results" / "runs" / run_id
+        w_root = Path(writable_root).resolve() if writable_root else root
+        run_dir = w_root / "results" / "runs" / run_id
         if not run_dir.is_dir():
             raise FileNotFoundError(f"run bundle does not exist: {run_dir}")
         if (run_dir / FINALIZATION_MARKER).exists():
@@ -250,6 +252,7 @@ class RunBundle:
 
         bundle = cls.__new__(cls)
         bundle.repo_root = root
+        bundle.writable_root = w_root
         bundle.run_id = run_id
         bundle.run_dir = run_dir
         bundle.started_at = str(manifest.get("started_at_utc"))
