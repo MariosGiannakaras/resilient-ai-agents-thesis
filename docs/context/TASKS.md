@@ -27,15 +27,15 @@ In-progress/failed work never counts as complete. Newly discovered required work
 
 ## Resume state
 
-- **Current work package:** DEC-042 pre-WP7 protocol-v1.1 scientific + application refinement.
+- **Current work package:** DEC-042/DEC-043 pre-WP7 scientific + application refinement.
 - **Current task:** `T-520`
 - **State:** `IN_PROGRESS`
 - **Active branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92. This is the single implementation branch/PR for this package; do not create a parallel implementation branch.
 - **Trackers:** #87 master; #88 scientific; #89 runtime; #90 UI; #91 screenshots/CI/Codex handoff.
-- **Last validated point:** `T-513` completed. DEC-042, this canonical ledger, `CURRENT_STATUS.md`, and the Codex bootstrap are branch-pinned and mutually consistent. Initial D0 implementation plus focused determinism/information-boundary/state-round-trip tests are committed. PR #92 CI run 265 passed documentation consistency, JSON validation, Python compilation, locked-environment verification, the full test suite, and bibliography-integrity validation.
-- **Tests already run:** PR #92 Repository checks run 265 — SUCCESS.
+- **Last validated point:** `T-513` completed; PR CI run 266 was green after canonical ledger reconciliation. DEC-043 now supersedes the historical Streamlit-specific application-layer choice with React + TypeScript + Vite served by FastAPI/Uvicorn; the Python scientific core/storage/provenance boundaries are unchanged. D0 standalone and episode-preserving deployment code plus the initial v1.1 runner extension are committed after that earlier green checkpoint and require current-head validation before `T-520` closes.
+- **Tests already run:** PR #92 Repository checks run 266 — SUCCESS on the pre-latest-D0-runner checkpoint. Never treat later unvalidated commits as covered by that run.
 - **Uncommitted work:** unknown to remote handoff; next session must inspect `git status` before assuming clean state.
-- **Exact next action:** continue `T-520` on this branch by integrating D0 into the headless runner/agent-construction path and adding only the focused integration/contract tests needed to prove no evaluator-information leakage and deterministic execution. Do not start `T-521` or `T-700+` until dependencies are satisfied.
+- **Exact next action:** continue `T-520` by validating/completing D0 runner integration and focused contract tests. The adjacent DEC-043 framework scaffold may be migrated on this same branch, but `T-530`/`T-531` remain incomplete until dependencies and acceptance pass. Do not start `T-521` final-evidence work or `T-700+` prematurely.
 
 ## Quota/interruption resilience
 
@@ -44,8 +44,9 @@ In-progress/failed work never counts as complete. Newly discovered required work
 3. Never discard useful prior branch/uncommitted work without inspecting it.
 4. Preserve a recoverable checkpoint after substantial validated substeps when practical.
 5. Update this Resume state when the next action would otherwise be ambiguous.
-6. Use issue `X/Y` and task status only from real finite denominators; failed/partial work does not count.
+6. Use issue `X/Y` and `Project: X/Y` only from real finite denominators; In-progress/failed work never counts as complete.
 7. Testing remains risk-based/proportional; pilot/final experiment matrices are never CI tests.
+8. Keep this one implementation branch for the DEC-042/DEC-043 package. Do not create another implementation branch merely because Codex resumes the work.
 
 ## WP0 — Completed repository/research infrastructure
 
@@ -90,7 +91,7 @@ In-progress/failed work never counts as complete. Newly discovered required work
 - [x] `T-411` — Pre-freeze bibliography freshness review.
 - [x] `T-412` — Historical `protocol-v1.0` freeze/statistical plan. This remains immutable baseline evidence, not a prohibition on DEC-042 versioned refinement.
 
-## WP5 — Historical application baseline and active DEC-042 refinement
+## WP5 — Historical application baseline and active DEC-042/DEC-043 refinement
 
 Historical baseline:
 
@@ -100,33 +101,33 @@ Historical baseline:
 
 Active refinement tasks:
 
-- [x] `T-513` — Reconcile DEC-042 governance, single-branch/PR tracking, Codex handoff, and canonical task/status state.
-  - Acceptance satisfied: DEC-042/current status/Codex prompt/this ledger/issues identify the same branch/package; PR #92 documentation validator passed in CI run 265; WP7 hard gate remains explicit.
+- [x] `T-513` — Reconcile refinement governance, single-branch/PR tracking, Codex handoff, and canonical task/status state.
+  - Acceptance satisfied: decisions/current status/Codex prompt/this ledger/issues identify the same package; documentation validator passed in PR CI; WP7 hard gate remains explicit.
 
 - [ ] IN_PROGRESS `T-520` — Implement/integrate D0 Dyna-Q+ as an information-limited deterministic third tabular agent.
   - Depends on: `T-513`.
-  - Progress: standalone D0 implementation and focused unit tests are green; headless runner/agent-factory integration remains.
-  - Acceptance: D0 uses only agent-visible observations/intended actions/rewards; common selected Q checkpoint is supported; stochastic learned model + Dyna-Q+ planning/recency bonus are explicit; state/RNG/model serialization is deterministic; focused known-answer/information-boundary/round-trip tests pass; runner can execute D0 without special evaluator access.
+  - Progress: standalone D0, episode-preserving deployment boundary, and initial versioned v1.1 runner extension are committed; current-head integration validation remains.
+  - Acceptance: D0 uses only agent-visible observations/intended actions/rewards; common selected Q checkpoint is supported; stochastic learned model + Dyna-Q+ planning/recency bonus are explicit; state/RNG/model serialization is deterministic; focused known-answer/information-boundary/round-trip tests pass; runner can execute D0 without special evaluator access and preserve learning correctly across evaluation episodes.
 
 - [ ] BLOCKED `T-521` — Implement candidate `protocol-v1.1` design, bounded D0-specific tuning plan, fresh held-out layouts/seeds, and paired statistical support.
   - Depends on: `T-520`.
-  - Acceptance: v1.0/final evidence unchanged; candidate v1.1 contains F0/C0/D0; preserves F0/C0 alpha `0.5`, gamma `0.96875`, epsilon `0.125`, 512 training episodes/layout, 16 pre-change, 32 post-change, horizon 48, 32 paired final roots; uses four fresh held-out final layouts + fresh precommitted final seeds; structural remap IDs; small predeclared D0-only planning search; primary component metrics + secondary recovery sensitivity; paired effects + 95% CIs; candidate status cannot authorize final evidence.
+  - Acceptance: v1.0/final evidence unchanged; candidate v1.1 contains F0/C0/D0; preserves validated F0/C0 configuration/budgets; uses four fresh held-out final layouts + fresh precommitted final seeds; structural remap IDs; small predeclared D0-only planning search; primary component metrics + secondary recovery sensitivity; paired effects + 95% CIs; candidate status cannot authorize final evidence.
 
 - [ ] BLOCKED `T-522` — Execute bounded non-final D0 tuning/pilot validation and freeze `protocol-v1.1` only if acceptance gates pass.
   - Depends on: `T-521`; execution on the actual thesis machine when required.
-  - Acceptance: D0 planning parameters are selected from predeclared development/tuning evidence only; non-final pilot confirms execution/informativeness/runtime bounds; failed/non-recovery outcomes retained; no final-v1.1 evidence inspected; freeze/amend/reject decision is evidence-backed and versioned.
+  - Acceptance: D0 planning parameters selected from predeclared non-final evidence only; non-final pilot confirms execution/informativeness/runtime bounds; failed/non-recovery outcomes retained; no final-v1.1 evidence inspected; freeze/amend/reject decision evidence-backed and versioned.
 
-- [ ] BLOCKED `T-530` — Add truthful application runtime/service layer independent of Streamlit.
+- [ ] BLOCKED `T-530` — Add truthful FastAPI application/runtime service independent of the frontend.
   - Depends on: `T-520`.
-  - Acceptance: real queued/running/completed/failed/cancelled/interrupted state; heartbeat/progress/events; read-only live GridWorld observation proven not to alter scientific RNG/actions; unfinished runs visible; stop/cancel/restart only when safe; unsupported pause/resume/control capabilities explicit.
+  - Acceptance: explicit versioned REST/WebSocket contracts expose real queued/running/completed/failed/cancelled/interrupted state, heartbeat/progress/events, history/resources, and read-only live GridWorld observation proven not to alter scientific RNG/actions; unfinished runs visible; stop/cancel/restart only when safe; unsupported pause/resume/control capabilities explicit; no scientific execution logic duplicated in FastAPI routes.
 
-- [ ] BLOCKED `T-531` — Rebuild the Streamlit research application on the validated core/runtime service.
+- [ ] BLOCKED `T-531` — Build the React + TypeScript + Vite research application selected by DEC-043 over the validated FastAPI/runtime service.
   - Depends on: `T-530`, `T-521`.
-  - Acceptance: Dashboard; real New Experiment configuration/resolved-config review; Runs active/history/detail with live GridWorld/event timeline/metrics/logs; Compare with compatibility checks/distributions/paired CIs/counts/layout-condition breakdowns; Artifacts real CSV/JSON/HTML/provenance preview/export; self-explanatory UX/help/tooltips/units/status semantics/accessibility/empty-loading-error-disabled states and lightweight onboarding; root `run_app.bat` remains functional; no fabricated state/data/replay.
+  - Acceptance: Dashboard; real New Experiment configuration/resolved-config review; Runs active/history/detail with smooth live GridWorld/event timeline/metrics/logs; Compare with compatibility checks/distributions/paired CIs/counts/layout-condition breakdowns; Artifacts real CSV/JSON/HTML/provenance preview/export; model/agent infographics; self-explanatory UX/help/tooltips/units/status semantics/accessibility/empty-loading-error-disabled states and lightweight onboarding; responsive desktop/laptop presentation; root `run_app.bat` launches one FastAPI/Uvicorn server serving prebuilt frontend assets; no fabricated state/data/replay. Node/Vite is build-time only for the normal supported user runtime unless target-machine requirements are explicitly amended.
 
 - [ ] BLOCKED `T-532` — Add repository-root UI screenshots and bounded CI browser/render validation.
   - Depends on: `T-531`.
-  - Acceptance: root `ui-screenshots/` documents committed stable page screenshots; CI capture is deterministic and bounded; diagnostic artifacts may be uploaded; fixtures never masquerade as scientific results; historical no-trace runs show replay unavailable.
+  - Acceptance: root `ui-screenshots/` documents committed stable page screenshots; CI capture is deterministic/bounded; diagnostic artifacts may be uploaded; fixtures never masquerade as scientific results; historical no-trace runs show replay unavailable.
 
 - [ ] USER_VALIDATION_REQUIRED `T-511` — Validate the complete intended application workflow and UX.
   - Depends on: `T-512`, `T-531`, `T-532`.
@@ -146,19 +147,12 @@ DEC-042 replacement evidence path:
 
 - [ ] BLOCKED `T-610` — Execute frozen `protocol-v1.1` final matrix with new run IDs after protocol freeze and application acceptance.
   - Depends on: `T-522`, `T-511`.
-  - Acceptance: all predeclared v1.1 runs execute through the validated core/application path on the target machine; no cherry-picking; failed/interrupted/invalid outcomes retained with reasons; v1.0 evidence untouched.
-
 - [ ] BLOCKED `T-611` — Validate and freeze accepted v1.1 final evidence.
   - Depends on: `T-610`.
-  - Acceptance: exact run/file/provenance/checksum inclusion set is frozen with exclusions/reasons explicit.
-
 - [ ] BLOCKED `T-612` — Run predeclared v1.1 paired statistical analysis and sensitivity diagnostics.
   - Depends on: `T-611`.
-  - Acceptance: paired effects, 95% CIs, explicit n, per-layout/aggregate views, primary component estimands and secondary recovery sensitivity reproduce from frozen v1.1 evidence only.
-
 - [ ] BLOCKED `T-613` — Generate v1.1 figures/tables/exports and superseding thesis/defense evidence package.
   - Depends on: `T-612`.
-  - Acceptance: version-controlled rebuild produces final result artifacts and traceable claim/result/run mapping; historical v1.0 package remains archived rather than rewritten.
 
 ## Mandatory pre-WP7 user approval gate
 
@@ -169,9 +163,9 @@ Only after the requested scientific/application refinement, new evidence path wh
 ## WP7 — Thesis writing, review, and defense presentation
 
 - [ ] BLOCKED `T-700` — Recheck current Department/University thesis/Word/citation/submission/defense rules.
-  - Depends on: mandatory pre-WP7 user approval gate and the accepted final evidence state.
+  - Depends on: mandatory pre-WP7 user approval gate and accepted final evidence state.
 - [ ] DEFERRED `T-701` — Review completed theses later supplied by the user as contextual examples only.
-- [ ] DEFERRED `T-710` — Draft the complete Greek thesis from citation-ready bibliography and accepted frozen evidence.
+- [ ] DEFERRED `T-710` — Draft complete Greek thesis from citation-ready bibliography and accepted frozen evidence.
 - [ ] DEFERRED `T-711` — Produce review-ready Word thesis with validated figures/tables/cross-references/citations.
 - [ ] DEFERRED `T-712` — Incorporate supervisor/reviewer corrections and revalidate affected evidence.
 - [ ] DEFERRED `T-713` — Freeze final thesis deliverable and required submission copies.
