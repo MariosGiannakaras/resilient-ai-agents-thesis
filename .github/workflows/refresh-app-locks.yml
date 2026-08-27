@@ -1,4 +1,4 @@
-name: Refresh application locks
+name: Refresh application lock
 
 on:
   push:
@@ -6,23 +6,20 @@ on:
       - feat/pre-wp7-protocol-v1.1-ui-rebuild
     paths:
       - pyproject.toml
-      - frontend/package.json
-      - frontend/tsconfig*.json
-      - frontend/vite.config.ts
-      - frontend/index.html
-      - frontend/src/**
       - .github/workflows/refresh-app-locks.yml
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  resolve-and-build:
+  resolve-lock:
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout
+      - name: Checkout implementation branch
         uses: actions/checkout@v4
+        with:
+          ref: feat/pre-wp7-protocol-v1.1-ui-rebuild
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
@@ -32,29 +29,21 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
 
-      - name: Resolve Python lock
+      - name: Resolve locked Python application environment
         run: uv lock
 
-      - name: Set up Node 22
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.12.0'
+      - name: Commit lock change when required
+        shell: bash
+        run: |
+          if git diff --quiet -- uv.lock; then
+            echo "uv.lock already current"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add uv.lock
+          git commit -m "chore: refresh application lock"
+          git push origin HEAD:feat/pre-wp7-protocol-v1.1-ui-rebuild
 
-      - name: Resolve frontend lock
-        working-directory: frontend
-        run: npm install --ignore-scripts
-
-      - name: Build frontend
-        working-directory: frontend
-        run: npm run build
-
-      - name: Upload resolved application artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: application-locks-and-build
-          if-no-files-found: error
-          retention-days: 2
-          path: |
-            uv.lock
-            frontend/package-lock.json
-            frontend/dist/**
+      - name: Verify locked environment
+        run: uv sync --locked
