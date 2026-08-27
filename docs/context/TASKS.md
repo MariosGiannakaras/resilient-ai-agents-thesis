@@ -1,77 +1,74 @@
 # Thesis Task Registry
 
 **Status:** Active canonical execution ledger  
-**Purpose:** Preserve exact task/dependency/resume state across Codex sessions, quota interruptions, restarts, and chat changes.
+**Purpose:** Preserve exact task/dependency/resume state across Codex sessions, quota interruptions, restarts and chat changes.
 
-`CURRENT_STATUS.md` is the compact status summary; decisions/evidence are read progressively. This file is the canonical checklist.
+`CURRENT_STATUS.md` is the compact status summary. This file is the canonical task/dependency checklist.
 
 ## Mandatory session rule
 
-Every Codex session MUST read the three-file session-start core before selecting work:
+Every Codex session MUST read the three-file session-start core:
 
 1. `AGENTS.md`
 2. `docs/context/TASKS.md`
 3. `docs/context/CURRENT_STATUS.md`
 
-Use current session memory together with durable Git/repository evidence. Repository state wins when memory is missing, stale, truncated, or conflicting.
+Use session memory together with repository/Git/GitHub/evidence. Repository evidence wins when memory or prose is stale. Inspect `git status`, branch, recent commits, PR #92 and any `IN_PROGRESS` work before modifying anything.
 
-Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED` dependency/gate unmet; `DEFERRED` intentionally later. In-progress/failed work never counts as complete.
+Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED` gate/dependency unmet; `DEFERRED` intentionally later. In-progress/failed work never counts as complete.
 
 ## Resume state
 
-- **Package:** DEC-042 + DEC-044 + DEC-045 + DEC-046 + DEC-047 pre-WP7 scientific/application refinement. DEC-043 is historical/superseded.
+- **Package:** DEC-042 + DEC-044 + DEC-045 + DEC-046 + DEC-047. DEC-043 is historical/superseded.
 - **Project:** **2/8** major refinement milestones complete.
-- **Current task:** `T-521`
-- **State:** `READY`
-- **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; this is the single implementation branch/PR.
-- **Trackers:** #87 master; #88 scientific; #89 runtime; #90 UI; #91 screenshots/CI/packaging.
-- **Last validated checkpoint:** PR CI run **396** passed documentation consistency, committed JSON validation, Python compilation, locked environment, the complete 143-test suite including SARSA/Dyna-Q/five-strategy integration/reference tests, and bibliography integrity.
-- **Continuity reconciliation:** DEC-047 supersedes the three-agent candidate direction with five mechanism-distinct user-facing strategies while preserving historical IDs/evidence; T-523 implementation/feasibility is complete.
-- **Downstream planning:** `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` records future Word/PowerPoint/ChatGPT/Codex/optional-Canva/manual-screenshot ownership without unlocking WP7.
-- **Uncommitted work:** unknown from remote handoff; every new session must inspect `git status` before assuming clean state.
-- **Exact next action:** execute `T-521`: define and implement the authoritative five-strategy candidate `protocol-v1.1`, bounded fairness/tuning surfaces, fresh held-out layouts/seeds, stable configuration identities and paired statistical support. Do not inspect or generate final-v1.1 outcomes and do not start `T-700+`.
+- **Current task:** `T-522`
+- **State:** `READY` for non-final execution on the validated thesis machine.
+- **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no second implementation branch.
+- **Trackers:** #87 master; #88 scientific (**9/12**); #89 runtime; #90 UI; #91 screenshots/CI/packaging.
+- **Last validated checkpoint:** PR CI run **409** passed documentation, JSON, compile, locked environment, repository tests including candidate-v1.1 protocol/configuration/fresh-reserve/paired-statistics guards, and bibliography integrity.
+- **Completed refinement tasks:** `T-520`, `T-523`, `T-521`.
+- **Pre-WP7 approval:** NOT APPROVED; `T-700+` execution remains blocked.
+- **Exact next action:** execute `T-522` only with predeclared non-final evidence on the validated thesis machine. If that physical-machine boundary is unavailable to the active session, record it and continue dependency-valid `T-530`; never substitute GitHub-hosted CI or inspect final-v1.1 reserve outcomes.
 
 ## Quota/interruption resilience
 
-1. Inspect `git status`, branch, recent commits, PR #92/check state, and every `IN_PROGRESS` task at session start.
-2. Resume `IN_PROGRESS` work first unless genuinely blocked.
-3. Never discard branch/uncommitted work before inspection.
-4. Preserve recoverable checkpoint commits for substantial validated slices.
-5. Reconcile this Resume state whenever a newer instruction supersedes architecture, research design, UI behavior, tool ownership, or next action.
-6. Preserve stable task/requirement/decision identifiers; append or supersede explicitly rather than silently renumbering durable references.
-7. Use `Project: X/Y` and issue X/Y only from finite canonical denominators.
-8. Testing remains risk-based/proportional; pilot/final matrices are never CI tests.
-9. Do not create another implementation branch for this package.
+1. Resume valid unfinished local/remote work before starting something new.
+2. Never discard uncommitted/pushed/partial experiment evidence without inspection.
+3. Reconcile this ledger at coherent checkpoints, not after every command/run child.
+4. Preserve stable task/requirement/decision IDs; supersede explicitly rather than renumbering.
+5. Use `Project: X/Y` only from finite canonical denominators.
+6. Testing is risk-based/proportional; scientific experiment matrices are not CI test matrices.
+7. Never create another implementation branch for this package.
 
-## WP0 — Completed repository/research infrastructure
+## WP0 — Repository/research infrastructure
 
 - [x] `T-001` — Repository/project identity and controlled Git/PR workflow.
 - [x] `T-002` — Immutable `ThesisBibliography` integration/provenance.
 - [x] `T-003` — Python 3.12 + `uv` locked environment/importable core.
 - [x] `T-004` — Information/RNG/scenario/experiment/stage contracts.
 - [x] `T-005` — Run bundles/provenance/checksums/metrics/publication safeguards.
-- [x] `T-006` — Active-document reconciliation/canonical Codex prompt.
+- [x] `T-006` — Documentation reconciliation/canonical execution prompt.
 - [x] `T-007` — End-to-end lifecycle/user/Codex/defense handoffs.
-- [x] `T-008` — Lean three-file session-start core and resumable Goal execution.
-- [x] `T-009` — Project-scoped OpenAI developer-documentation MCP configuration.
+- [x] `T-008` — Lean three-file session-start core and resumable execution.
+- [x] `T-009` — Project-scoped OpenAI developer-documentation configuration.
 
-## WP1 — Completed target-machine baseline
+## WP1 — Target-machine baseline
 
 - [x] `T-100` — Actual-machine hardware/software/storage inventory.
 - [x] `T-101` — Compute-dependent dependency/runtime constraints.
 - [x] `T-102` — Durable capability-provenance reconciliation.
 
-## WP2 — Completed research framing and controlled testbed
+## WP2 — Research framing and controlled testbed
 
 - [x] `T-200` — Source-traceable RQ/hypothesis framing.
 - [x] `T-210` — GridWorld implementation comparison.
 - [x] `T-211` — GridWorld ADR.
 - [x] `T-212` — Project-owned Gymnasium GridWorld.
-- [x] `T-213` — GridWorld known-answer/determinism/disturbance/information tests.
+- [x] `T-213` — Known-answer/determinism/disturbance/information tests.
 
-GridWorld is the controlled experimental/visualization testbed, not the thesis subject. The thesis compares resilient agent strategies under uncertainty/change.
+GridWorld is the controlled experimental/visualization testbed, not the thesis subject.
 
-## WP3 — Completed historical metrics/agent selection
+## WP3 — Historical metrics/agent selection
 
 - [x] `T-300` — Resilience/degradation/recovery estimands.
 - [x] `T-301` — Known-answer metric validation.
@@ -79,7 +76,7 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
 - [x] `T-311` — Robust-MDP citation decision.
 - [x] `T-312` — Historical F0/C0/R0-capable implementation.
 
-## WP4 — Completed historical pilot/protocol system
+## WP4 — Historical pilot/protocol system
 
 - [x] `T-400` — Partitions and pilot protocol.
 - [x] `T-401` — Headless runner/orchestration.
@@ -90,57 +87,46 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
 
 ## WP5 — Application baseline and active refinement
 
-Historical baseline:
-
 - [x] `T-500` — Historical experiment-manager baseline.
 - [x] `T-510` — Historical Streamlit dashboard baseline.
 - [x] `T-512` — Historical self-explanatory UX/onboarding pass.
-- [x] `T-513` — Refinement governance, single branch/PR, Codex handoff and canonical state.
+- [x] `T-513` — Refinement governance, single branch/PR, Codex handoff.
 
-Current refinement:
-
-- [x] `T-520` — Implement/integrate information-limited deterministic Dyna-Q+ (`D0` historical technical identity).
+- [x] `T-520` — Information-limited deterministic Dyna-Q+ integration.
   - Depends on: `T-513`.
-  - Validated: uses only agent-visible observations/intended actions/rewards; deterministic Q/model/RNG serialization; common checkpoint; episode-preserving deployment; historical `PilotProtocol` unchanged; development-only `V11DevelopmentProtocol`; F0/C0/D0 runner deterministic; missing/irrelevant Dyna-specific parameters and non-development use fail closed.
+  - Evidence: separate development-only path, deterministic state/model/RNG, episode persistence, no evaluator leakage; historical protocol semantics unchanged.
 
-- [x] `T-523` — Implement/validate the broadened DEC-047 agent strategy set before candidate-v1.1 freeze.
+- [x] `T-523` — Broaden main strategy set to Fixed Q-Learning, Adaptive Q-Learning, SARSA, Dyna-Q and Dyna-Q+.
   - Depends on: `T-520`.
-  - Validated: deterministic information-limited **SARSA** with explicit/versioned config/state and hand-checked on-policy updates; deterministic **Dyna-Q** reusing the empirical learned-model/planning machinery while excluding Dyna-Q+ untried-action/recency semantics; focused Dyna-Q vs Dyna-Q+ contrast tests; episode-persistent deployment wrappers; development runner/config identities for Fixed Q-Learning, Adaptive Q-Learning, SARSA, Dyna-Q and Dyna-Q+; deterministic Random Agent non-ranked reference fixture; human-readable strategy metadata independent of opaque IDs; bounded matrix-size/runtime feasibility recorded; historical v1.0/R0 evidence untouched.
-  - Validation: PR CI run **396** passed the complete 143-test suite plus documentation/JSON/compile/lock/bibliography checks. Five-strategy candidate matrix is 888,832 environment episodes before Dyna planning overhead versus 315,392 historical v1.0 episodes; exact planning runtime remains a non-final T-522 feasibility measurement, not a final-evidence assumption.
-  - Fairness boundary preserved: same online agent-visible information; no changepoint/evaluator truth; final SARSA training/fairness choice and bounded planning settings remain explicit T-521/T-522 protocol decisions.
+  - Evidence: SARSA/Dyna-Q implementations, five-strategy runner, Random reference fixture, human-readable identities and feasibility; CI run 396.
 
-- [ ] READY `T-521` — Implement authoritative candidate `protocol-v1.1`, bounded tuning design, fresh held-out layouts/seeds, approved configuration identity/settings policy, and paired statistical support.
+- [x] `T-521` — Authoritative **candidate** `protocol-v1.1`, bounded tuning/settings, fresh reserves, configuration identity/provenance and paired statistics.
   - Depends on: `T-523`.
-  - Acceptance: v1.0/final evidence untouched; candidate v1.1 contains the five validated main strategies **Fixed Q-Learning, Adaptive Q-Learning, SARSA, Dyna-Q, Dyna-Q+**; validated Q-learning budgets preserved; exact small predeclared SARSA fairness-tuning and Dyna planning/Dyna-Q+ `kappa` search only where justified; four fresh held-out final layouts + fresh precommitted final seeds; seven single-factor conditions with `action-remap-2-swap` / `action-remap-4-cycle`; stable resolved-configuration identity/provenance; multiple approved development/tuning configurations use multiple predefined roots and no single-run/best-seed cherry-picking; primary cumulative deficit/immediate degradation/terminal performance; recovery secondary/sensitivity; paired effects + 95% CIs with explicit n/layout aggregation; candidate status cannot authorize final evidence.
-  - Conditional robust gate: a redesigned Robust Planner becomes a sixth main comparator only if a small predeclared non-final nominal-viability/fairness/runtime gate passes; otherwise historical R0 remains negative pilot evidence only.
+  - Evidence: separate fail-closed schema/loader/runner; five strategies; preserved Q baseline alpha `.5`, gamma `.96875`, epsilon `.125`; 2 SARSA + 2 Dyna-Q + 4 Dyna-Q+ bounded candidate configurations; four fresh held-out layouts; fresh/disjoint 32-root final bank; seven structural single-factor conditions; stable SHA-256 configuration/protocol identities; complete-root tuning/no best-seed; cumulative deficit/immediate degradation/terminal performance primary; recovery secondary/sensitivity; root-blocked equal-layout paired effects with deterministic 95% percentile-bootstrap CI; pilot/final candidate execution blocked. CI run 409.
+  - Robust gate: historical R0 remains negative/diagnostic; a redesigned Robust Planner is conditional/non-main unless a separate non-final viability/fairness/runtime gate passes.
 
-- [ ] BLOCKED `T-522` — Execute bounded non-final tuning/pilot and freeze/amend/reject v1.1.
+- [ ] READY `T-522` — Execute bounded non-final tuning/resource evaluation and freeze/amend/reject v1.1.
   - Depends on: `T-521`.
-  - Acceptance: candidate settings selected only from predeclared non-final evidence; all retained strategies pass correctness/runtime/informativeness criteria; configurations compared using approved repeated/paired design and predeclared selection/tie rules; failed/interrupted/non-recovery/poor configurations retained; optional Robust Planner either passes its explicit gate or remains excluded with documented evidence; no final-v1.1 outcomes inspected before freeze; final retained configuration for each scientific agent is explicit/versioned.
+  - Acceptance: use only complete predeclared non-final roots/layouts/conditions/configurations; retain failed/interrupted/poor/non-recovery outcomes; apply deterministic selection/tie rules; measure Dyna planning wall time/update/artifact cost on the validated thesis machine; resolve conditional Robust Planner explicitly; freeze retained configuration IDs before any final reserve access.
+  - External boundary: do not substitute GitHub-hosted CI for the validated thesis machine. If unavailable, continue `T-530`.
 
-- [ ] READY `T-530` — Add truthful UI-independent Python runtime service for live experiments.
+- [ ] READY `T-530` — Truthful UI-independent Python runtime service for live experiments.
   - Depends on: `T-520`.
-  - Acceptance: versioned DTO/service contracts for queued/running/completed/failed/cancelled/interrupted state, heartbeat/progress/events/history/resources, unfinished runs, read-only live GridWorld observer proven not to alter RNG/actions, safe stop/cancel/restart only, unsupported controls explicit. NiceGUI framework plumbing is not the scientific runtime contract.
-  - Execution order: remain secondary to current scientific T-521/T-522 sequence; do not split into a parallel branch.
+  - Acceptance: versioned queued/running/completed/failed/cancelled/interrupted DTOs; heartbeat/progress/events/history/resources; unfinished-run recovery; read-only live GridWorld observer proven not to alter RNG/actions; safe capability-based controls; unsupported controls explicit.
 
-- [ ] BLOCKED `T-531` — Complete native NiceGUI application with DEC-045 analytics, DEC-046 novice-first UX and DEC-047 human-readable agent strategies.
+- [ ] BLOCKED `T-531` — Complete native NiceGUI application.
   - Depends on: `T-521`, `T-530`.
-  - Existing early work: NiceGUI shell/read model/visualization builders/onboarding; historical v1.0 Plotly views; intentionally empty live ECharts surface.
-  - Functional acceptance: Dashboard; New Experiment supports protocol-approved agent/configuration variants, multiple seeds/repetitions and bounded settings/sweeps with resolved-config review; Runs active/history/detail with smooth live GridWorld, event timeline, real metrics/logs and compatible live agent/configuration overlays; Compare supports compatible agents/settings/config identities with distributions/paired CIs/counts/layout-condition views; Artifacts real CSV/JSON/HTML/provenance preview/export; Plotly/ECharts/Mermaid/AG Grid integration.
-  - Naming acceptance: primary selector is **Agent strategy**; ordinary users see Fixed Q-Learning, Adaptive Q-Learning, SARSA, Dyna-Q and Dyna-Q+ with plain one-sentence explanations/mechanism badges. Historical/internal IDs such as F0/C0/D0/config hashes appear only under Technical details / Reproducibility.
-  - Self-explanatory UX acceptance: non-programmer/non-RL user understands agents, conditions, settings, fixed-vs-tunable configuration, units, metrics, repetition meaning and statuses via plain-language labels, helper text, info icons/tooltips, progressive disclosure, metric/uncertainty explanations and actionable invalid/empty/loading/error/disabled states.
-  - Visual acceptance: modern compact hierarchy; consistent icons; accessible semantic text+icon+color states; restrained hover/focus/selection micro-interactions; purposeful chart/status/GridWorld animations; reduced-motion-safe where practical; skippable/replayable onboarding. Animation never implies fake progress.
-  - Runtime acceptance: root `run_app.bat` opens the NiceGUI native desktop window; same pages work in CI browser mode; no active Node/Vite/Streamlit stack; no fabricated state/data/replay.
+  - Acceptance: Dashboard/New Experiment/Runs/Compare/Artifacts; approved Agent strategy/configuration/repetitions; smooth truthful live GridWorld; ECharts live telemetry; Plotly final/comparison figures; Mermaid explanations; AG Grid tables; tooltips/helper text/progressive disclosure; accessible text+icon+color status; compact modern micro-interactions/animations; technical IDs only under Reproducibility; no fake data/progress/replay.
 
-- [ ] BLOCKED `T-532` — Root UI screenshots, bounded render validation and Windows packaging.
+- [ ] BLOCKED `T-532` — Root screenshots, bounded UI validation and Windows standalone packaging.
   - Depends on: `T-531`.
-  - Acceptance: root `ui-screenshots/` with stable pages plus useful help/tooltip/status/empty/error examples; deterministic bounded CI capture; no fixture presented as evidence; historical no-trace replay unavailable; Windows native launch/close/restart; validated NiceGUI/PyInstaller `onedir + windowed` folder requiring no Python/Node/browser interaction and using safe writable data paths.
+  - Acceptance: root `ui-screenshots/`, deterministic CI/browser captures, useful help/status/error/empty states, no fixture-as-evidence, native NiceGUI/PyInstaller `onedir + windowed` launch/close/restart with safe writable paths.
 
-- [ ] USER_VALIDATION_REQUIRED `T-511` — Validate the complete intended application workflow and self-explanatory UX.
+- [ ] USER_VALIDATION_REQUIRED `T-511` — Intended-user application workflow/self-explanatory UX acceptance.
   - Depends on: `T-512`, `T-531`, `T-532`.
-  - Acceptance: a non-technical intended user can understand the human-readable agent strategies, configure an approved experiment/configuration set, launch/monitor truthful live GridWorld/charts, compare compatible live/finalized agent/settings behavior, inspect/export/screenshot results, understand help/status/errors/disabled states/onboarding, and use the standalone app. Automated screenshots/package checks never close this gate.
+  - Acceptance: a non-technical user can understand strategies/settings/metrics, configure an approved experiment, monitor real GridWorld/charts, compare/export/screenshot evidence and understand help/errors/status. Automated checks never close this gate.
 
-## WP6 — Historical v1.0 evidence and future v1.1 evidence
+## WP6 — Historical and future final evidence
 
 - [x] `T-600` — Historical frozen v1.0 final matrix.
 - [x] `T-601` — Historical v1.0 evidence validation/freeze.
@@ -148,58 +134,48 @@ Current refinement:
 - [x] `T-603` — Historical v1.0 figures/tables/artifacts.
 - [x] `T-604` — Historical thesis/defense evidence package.
 
-- [ ] BLOCKED `T-610` — Execute frozen v1.1 final matrix with new run IDs through the accepted thesis-machine/application execution path.
+- [ ] BLOCKED `T-610` — Execute frozen v1.1 final matrix through accepted thesis-machine/application path.
   - Depends on: `T-522`, `T-511`.
-  - Acceptance: frozen retained scientific-agent settings/config IDs only; all required fresh layouts/conditions/paired roots executed or transparently accounted for; reference fixtures not mixed into fair rankings; no post-final configuration switching; ordinary approved execution requires no Codex/console intervention.
 - [ ] BLOCKED `T-611` — Validate/freeze v1.1 final evidence.
   - Depends on: `T-610`.
-- [ ] BLOCKED `T-612` — Predeclared v1.1 paired statistical analysis/sensitivity diagnostics.
+- [ ] BLOCKED `T-612` — Predeclared paired statistical analysis/sensitivity diagnostics.
   - Depends on: `T-611`.
-- [ ] BLOCKED `T-613` — v1.1 figures/tables/exports and superseding thesis/defense evidence package.
+- [ ] BLOCKED `T-613` — Final v1.1 figures/tables/exports and thesis/defense evidence package.
   - Depends on: `T-612`.
-  - Acceptance: claim-ready evidence map includes final human-readable agent/config identities, technical IDs, runs, paired statistics, figures/tables/captions and source/protocol references; no provisional/tuning values promoted to final evidence.
 
 ## Mandatory pre-WP7 user approval gate
 
-**NOT APPROVED.** Technical completion, green CI, screenshots, packaged app or completed `T-613` do not authorize writing. Only after refinement/evidence and `T-511` acceptance may the assistant ask whether WP7 may begin; only a direct affirmative unlocks it.
-
-Planning files such as `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` may be prepared before the gate so future execution is unambiguous; final thesis prose/defense production remains blocked.
+**NOT APPROVED.** Completion of science, CI, screenshots, packaging or `T-613` does not authorize thesis writing. Only explicit user approval after accepted evidence/application can unlock WP7.
 
 ## WP7 — Thesis writing/review/defense
 
-- [ ] BLOCKED `T-700` — Recheck current Department/University thesis/submission/defense rules and current tool assumptions.
-  - Depends on: mandatory pre-WP7 approval gate and accepted final evidence state.
-  - Acceptance: dated authoritative guidance snapshot; current Word/template/citation/submission/defense requirements; explicit differences from historical snapshot; `WP7_WP8_TOOL_WORKFLOW.md` revalidated against current Word/PowerPoint/ChatGPT/Canva capabilities where material.
+- [ ] BLOCKED `T-700` — Recheck current Department/University submission/formatting/defense rules and current tool assumptions.
+  - Depends on: `T-613`, `T-511` and explicit pre-WP7 user approval.
 - [ ] DEFERRED `T-701` — Review later supplied completed theses as contextual examples only.
-  - Acceptance: structural/presentation observations only; never scientific/official authority.
 - [ ] DEFERRED `T-710` — Draft complete Greek thesis from accepted evidence.
-  - Depends on: `T-700`; final evidence package.
-  - Acceptance: chapter evidence maps; every quantitative/result claim maps to frozen result/figure/table IDs; external claims map to citation-ready evidence; negative/null/unexpected results and limitations retained; full human-readable agent strategy names introduced before any stable abbreviations/technical IDs; settings/protocol terminology used consistently.
-- [ ] DEFERRED `T-711` — Produce review-ready Word thesis and manual asset-placement register.
+  - Depends on: `T-700`.
+- [ ] DEFERRED `T-711` — Produce review-ready Word thesis + manual `ASSET-*` placement register.
   - Depends on: `T-710`.
-  - Acceptance: `.docx` uses Word heading styles/automatic TOC/caption fields/cross-references/lists; validated figures/tables; every user-captured screenshot/GIF/video request has an `ASSET-*` record with exact page/state/run/config/crop, target chapter/section, caption, placement/size guidance, evidence identity and static fallback.
 - [ ] DEFERRED `T-712` — Incorporate supervisor/reviewer corrections and revalidate.
-  - Depends on: `T-711` and actual feedback when provided.
-  - Acceptance: feedback-to-change register; every affected citation/result/figure/table/method statement revalidated; scientific changes reopen the proper evidence/protocol task rather than being hidden in prose.
+  - Depends on: `T-711`.
 - [ ] DEFERRED `T-713` — Freeze final thesis deliverable.
-  - Depends on: `T-712` or documented absence/completion of required review cycle.
-  - Acceptance: Word fields/TOC/captions/cross-references/lists updated; final formatting/evidence/citation/asset QA passed; controlled `.docx` + required exports frozen.
+  - Depends on: `T-712`.
 - [ ] DEFERRED `T-720` — Defense narrative/slide outline/evidence map.
-  - Depends on: stable/final thesis.
-  - Acceptance: examiner-facing narrative; slide-to-thesis/result/source map; generated-vs-user-captured asset plan; live-demo/static fallback plan.
+  - Depends on: `T-713`.
 - [ ] DEFERRED `T-721` — Final PowerPoint + speaker material per `docs/thesis/PRESENTATION_WORKFLOW.md`.
   - Depends on: `T-720`.
-  - Acceptance: final `.pptx`, embedded notes, separate full spoken Greek script, evidence IDs preserved, exact `ASSET-*` instructions for manual app media; Canva optional only; PowerPoint remains final inspection surface.
 - [ ] DEFERRED `T-722` — Validate/rehearse defense package/demo fallback.
   - Depends on: `T-721`.
-  - Acceptance: current official duration/content/file rules; numerical/citation consistency; PowerPoint rendering/media/notes/Presenter View; rehearsal timing; live demo plus tested static/screenshot/GIF/video fallback.
 
 ## WP8 — Final audits/completion
 
 - [ ] DEFERRED `T-800` — Final bibliography/citation/official-guidance audit.
+  - Depends on: `T-713`, `T-722`.
 - [ ] DEFERRED `T-801` — Final reproducibility/privacy/licensing/docs/thesis/defense/application-asset audit.
+  - Depends on: `T-800`.
 - [ ] DEFERRED `T-802` — Final delivery readiness.
+  - Depends on: `T-801`.
 
 ## Task maintenance rule
 
-Every material checkpoint must reconcile this registry if work starts/completes/blocks/unblocks/is superseded or new required work is discovered. GitHub issues are tracking views, not a competing task list.
+Every material checkpoint reconciles this registry. GitHub issues are tracking views, not a competing task list. In-progress/failed work never counts as complete.
