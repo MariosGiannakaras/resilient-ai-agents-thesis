@@ -17,17 +17,17 @@ This file stays compact. `docs/context/TASKS.md` is the canonical ledger; use pr
 - Decisions: `DEC-042` scientific refinement; superseded `DEC-043` React/Vite exploration; authoritative `DEC-044` NiceGUI native application; `DEC-045` visual analytics; `DEC-046` novice-first compact UX.
 - Single branch: `feat/pre-wp7-protocol-v1.1-ui-rebuild`; single draft PR: #92. No parallel implementation branch or early merge.
 - Trackers: #87 master; #88 scientific; #89 runtime; #90 UI; #91 screenshots/CI/packaging.
-- Master progress remains **1/8**. Current task: `T-520 IN_PROGRESS`.
+- Master progress is **2/8**. `T-520` is complete; current task is `T-521 READY`.
+- PR CI run **346** passed documentation consistency, JSON validation, Python compile, locked environment, complete tests including `test_v11_runner.py`, and bibliography integrity on the D0/NiceGUI checkpoint.
 
 ## Continuity / interruption audit
 
 The branch was audited for work left half-finished by interruptions or superseding instructions. Findings are durable in #87/TASKS:
 
-- **D0 integration is unfinished, not lost.** Standalone D0, deterministic/serializable state, episode-preserving deployment and a v1.1 runner exist. A development-only `V11DevelopmentProtocol` adapter was added because historical `PilotProtocol` correctly rejects D0; historical validation must remain unchanged. Focused v1.1 runner tests/current-head CI are required before T-520 closes.
+- **D0 integration is complete.** Standalone D0, deterministic/serializable state, episode-preserving deployment, development-only `V11DevelopmentProtocol` and deterministic F0/C0/D0 v1.1 runner integration are validated. Historical `PilotProtocol` semantics remain unchanged.
 - **Framework migration is source-clean.** React/Vite is historical only; active application code is NiceGUI. Historical Streamlit pages and temporary React/Vite files are removed from the active implementation.
 - **NiceGUI is an early shell, not completed T-531.** Read model, five-page shell, historical v1.0 Plotly views, agent infographics and an intentionally empty ECharts live surface exist. Real runtime DTOs, live GridWorld/charts, full configurator, final help/error states, screenshots and packaging remain required.
-- Latest checked head failed at documentation consistency before Python compile/tests. The Codex prompt has been repaired; a new current-head CI result must prove the newer D0/NiceGUI checkpoint rather than relying on older run 266.
-- Master issue #87 was reconciled from stale Streamlit wording and now includes an interruption checklist.
+- **Documentation reconciliation is still active.** Older source-of-truth rows that say Streamlit or “standalone executable not required” are superseded by the later explicit user requirement plus DEC-044/046 and must be updated rather than left contradictory.
 
 No second active frontend implementation was found.
 
@@ -35,7 +35,7 @@ No second active frontend implementation was found.
 
 - Keep F0 frozen Q-learning and C0 continual Q-learning from the common checkpoint; add D0 Dyna-Q+ using only agent-visible information.
 - Preserve F0/C0 alpha `0.5`, gamma `0.96875`, epsilon `0.125`, 512 training episodes/layout, 16 pre-change, 32 post-change, horizon 48 and 32 paired final roots.
-- Candidate v1.1: seven single-factor conditions; structural remap IDs; four fresh held-out final layouts; fresh precommitted final seeds; bounded D0-only planning tuning.
+- T-521 candidate v1.1: seven single-factor conditions; structural remap IDs; four fresh held-out final layouts; fresh precommitted final seeds; bounded D0-only planning tuning; paired statistical support.
 - Primary reporting: cumulative deficit, immediate degradation, terminal gap/performance. Recovery stays secondary/sensitivity. Paired effects + 95% CIs required; no composite resilience score/post-hoc favorable threshold.
 - Preserve R0 pilot evidence; do not reinstate it unchanged or add deep RL merely to increase model count.
 
@@ -68,7 +68,7 @@ D0 planning parameters, candidate v1.1 freeze, new layouts/seeds/final evidence,
 
 ## Exact next action
 
-1. Confirm a new current-head CI reaches compile/locked environment/tests after the repaired prompt.
-2. Validate the new focused `V11DevelopmentProtocol`/`V11ExperimentRunner` tests and fix any real failures without changing historical protocol semantics.
-3. Close T-520 only when green; then proceed dependency-valid T-521/T-530.
+1. Reconcile remaining active source-of-truth Streamlit/standalone contradictions to DEC-044/046.
+2. Start `T-521`: implement authoritative candidate-v1.1 schema, bounded D0-only tuning plan, fresh layouts/seeds, structural remap IDs and paired statistical support.
+3. Keep final-evidence use blocked until T-522 non-final validation/freeze gate passes.
 4. Attach live GridWorld/charts only to truthful T-530 observer data. Do not start `T-700+`.
