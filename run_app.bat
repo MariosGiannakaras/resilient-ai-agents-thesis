@@ -1,17 +1,25 @@
 @echo off
-REM Execute the Streamlit UI dashboard
-REM Required by REQ-APP-014
+REM One-click launcher for the local thesis application (REQ-APP-014).
 
+setlocal
 set REPO_ROOT=%~dp0
 cd /d "%REPO_ROOT%"
 
-REM Check if uv is available
-where uv >nul 2>&1
-if %ERRORLEVEL% neq 0 (
-    echo uv is not installed or not in PATH. Please install uv.
+if not exist "frontend\dist\index.html" (
+    echo ERROR: frontend\dist\index.html is missing.
+    echo This checkout does not contain the prebuilt thesis application frontend.
+    echo Restore or build the validated frontend artifact before normal application use.
     exit /b 1
 )
 
-REM Run the Streamlit app
-set STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
-uv run streamlit run src/app/main.py --server.headless=false --browser.gatherUsageStats=false
+where uv >nul 2>&1
+if %ERRORLEVEL% neq 0 (
+    echo ERROR: uv is not installed or not in PATH.
+    exit /b 1
+)
+
+uv run uvicorn app.main:app --app-dir src --host 127.0.0.1 --port 8501
+if %ERRORLEVEL% neq 0 (
+    echo ERROR: the thesis application failed to start.
+    exit /b 1
+)
