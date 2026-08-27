@@ -1,6 +1,6 @@
 # Current Project Status
 
-**Date:** 2026-08-27
+**Date:** 2026-08-27  
 **Status:** Authoritative current-state summary
 
 This file is intentionally short. Detailed policy, history, requirements, and design rationale live in the source-of-truth documents routed by `AGENTS.md`; do not grow this file into a second project manual.
@@ -8,80 +8,69 @@ This file is intentionally short. Detailed policy, history, requirements, and de
 ## Current execution state
 
 - Canonical concrete ledger: `docs/context/TASKS.md`.
-- `T-100` and `T-101` were accepted and squash-merged in PR #55 (`45e04cd`).
-- `T-102` was objectively reviewed, CI-validated, and squash-merged in PR #57 (`48f7124`); the accepted snapshot now cites durable merged-main source provenance.
-- Current work package: **WP4 — Pilot protocol and headless experiment system**.
-- `T-200` passed canonical CI and objective diff review, then squash-merged through PR #58 (`67bb423`).
-- `T-210` passed canonical CI and objective review, then squash-merged through PR #60 (`ff3b970`).
-- DEC-032 completed `T-211`, passed canonical CI/review, and squash-merged through PR #61 (`9df6787`).
-- `T-212`/`T-213` passed canonical CI/review and squash-merged through PR #62 (`e7352d5`).
-- `T-300`/`T-301` passed canonical CI/review and squash-merged through PR #63 (`25f67bb`).
-- `T-310`/`T-311` passed canonical CI/review and squash-merged through PR #64 (`e7d97a5`).
-- `T-312` passed canonical CI/review and squash-merged through PR #65 (`6f596a3`).
-- `T-400` passed canonical CI/review and squash-merged through PR #66 (`1502bfd`).
-- `T-401` passed canonical CI/review and squash-merged through PR #67 (`8ddfcc2`).
-- `T-402` passed canonical CI/review and squash-merged through PR #68 (`34ca10b`).
-- `T-410` completed the bounded pilot lifecycle. PR #71 (`1b94ebb`) merged the v0.2 amendment; all 14 PV02 children are published and the validated analysis contains 336 units plus 18,144 sensitivity records with no v0.2 failure/exclusion. The retained v0.1 failure and superseded attempts remain explicit.
-- Pilot evidence confirms CPU/runtime/storage feasibility but makes two final-freeze constraints mandatory: R0's current configuration has approximately 96% nominal truncation and recovery classification varies across metric settings in 33/42 agent-condition-layout cells. No final claim or favorable threshold/model selection is allowed from these diagnostics.
-- `T-411` freshness review completed in canonical `ThesisBibliography`; no new evidence required protocol change.
-- `T-412` completed under its restored original acceptance contract; protocol/statistical-plan evidence is preserved.
-- `T-500` corrective audit completed: experiment_manager uses canonical FINALIZATION_MARKER from run_bundle.py, full integrity validation (checksums, marker-manifest agreement, run-id identity), tests use real RunBundle finalization semantics.
-- `T-510` corrective repair completed: Compare/Artifacts pages operate on real data, lifecycle gate protects final reserve, protocol eligibility is validated, and resource telemetry uses the actual schema.
-- `T-511` is **USER_VALIDATION_REQUIRED**; automated checks do not substitute for the intended user's real end-to-end acceptance.
-- `T-600` completed: 14 execution commits preserved durably in `archive/final-campaign-execution`.
-- `T-601` completed: freeze manifest validates exact file bytes and provenance reachability.
-- `T-602` completed: reproducible analysis generated exactly 896 valid units.
-- `T-603` completed: generated artifacts and primary metric figures.
-- `T-604` completed: evidence package constructed with claim-to-result mapping.
-- **Pre-WP7 user approval: NOT APPROVED.** The user explicitly wants further refinement of the application, agent choices/behavior, experiments/runs, and results before writing; existing WP5/WP6 outputs remain preserved baseline evidence, not final user acceptance.
-- **Current work package:** pre-WP7 user-directed refinement/acceptance. **Current task:** `T-700`, BLOCKED. Exact next action: do not start any `T-700+` work; execute user-directed pre-writing refinements first, then explicitly ask for WP7 approval. Only a direct affirmative response unlocks WP7/WP8.
+- Existing WP0–WP6 work remains preserved, including the validated research core, `protocol-v1.0`, all finalized `FINAL-*` runs, and the existing thesis-final evidence package.
+- `T-511` remains **USER_VALIDATION_REQUIRED**. Automated render/tests never substitute for the intended user's end-to-end application acceptance.
+- **Pre-WP7 user approval: NOT APPROVED.** WP7/WP8 and all `T-700+` work remain blocked.
+- The user explicitly reopened the pre-writing scientific/application state on 2026-08-27 and requested direct implementation of the approved refinement rather than thesis writing.
+
+### Active refinement package
+
+- **Decision:** `DEC-042` — pre-WP7 protocol v1.1 and application refinement.
+- **Single implementation branch:** `feat/pre-wp7-protocol-v1.1-ui-rebuild`.
+- **GitHub trackers:** master #87; scientific #88; runtime #89; UI #90; screenshots/CI/Codex handoff #91.
+- **Branch policy for this package:** continue only on the branch above; do not open a parallel implementation branch. Intermediate commits are recovery checkpoints. The branch is not merged merely because automated checks pass; user-facing application acceptance remains an explicit gate.
+- **Current milestone:** 1/8 governance/handoff checkpoint in progress. `DEC-042` is committed; canonical task-ledger reconciliation and the first implementation checkpoint follow on the same branch.
+
+### Accepted scientific direction for v1.1 candidate
+
+- Preserve `protocol-v1.0`, historical finalized runs, frozen evidence, and R0 pilot evidence immutably.
+- Retain F0 frozen Q-learning and C0 continual Q-learning from the common nominal checkpoint.
+- Add D0 Dyna-Q+ as a third scientifically distinct tabular agent using only agent-visible interaction data; no evaluator information leakage.
+- Do not add deep RL merely to increase model count and do not reinstate the accepted R0 construction unchanged.
+- Preserve the existing validated F0/C0 base configuration: learning rate `0.5`, discount `0.96875`, exploration epsilon `0.125`, 512 training episodes/layout, 16 pre-change episodes, 32 post-change episodes, 48-step horizon, and 32 paired final roots.
+- Candidate v1.1 retains seven single-factor conditions but structurally renames the remaps to `action-remap-2-swap` and `action-remap-4-cycle`.
+- Candidate v1.1 uses four **new held-out final layouts** and a **fresh precommitted final seed bank** because v1.0 final outcomes have already been inspected.
+- D0-specific planning parameters require a bounded development/tuning selection and non-final validation. **`protocol-v1.1` is not frozen and no v1.1 final campaign may run until that evidence exists.**
+- Primary reporting: cumulative deficit, immediate degradation, and terminal gap/performance. Recovery remains secondary/sensitivity with explicit non-recovery. Add paired agent effects and 95% confidence intervals; no post-hoc favorable threshold selection and no composite resilience score.
+
+### Accepted application direction
+
+- Keep `src/resilient_agents/` headless and UI-independent.
+- Add an application/runtime service layer for truthful active-run registry, heartbeat/progress/events, read-only live GridWorld state, history, and capability-based controls.
+- Rebuild the Streamlit surface around Dashboard → New Experiment → Runs/live GridWorld → Compare → Artifacts. The current page implementation is not a design baseline and may be replaced substantially.
+- UI controls, progress, logs, metrics, and lifecycle state must be backend-derived. Unsupported controls remain explicitly unsupported.
+- Visualization speed changes presentation cadence only and never scientific timing/RNG.
+- Historical finalized runs without a retained step trace show replay unavailable; never synthesize or reconstruct a trajectory.
+- Keep root `run_app.bat` working.
+- Create root `ui-screenshots/` and commit stable CI-rendered screenshots there for review once the relevant UI milestone is stable. Screenshot fixtures are UI-only and never scientific evidence.
 
 ## Accepted repository / Codex baseline
 
-- Python 3.12 + `uv` + committed lockfile.
-- Independent research package: `src/resilient_agents/`.
-- Ground-truth/agent-visible information boundary and independent deterministic RNG streams are established.
-- Filesystem-first run bundles, provenance/checksums, selective Git LFS, and guarded one-commit/one-push publication per finalized whole experiment are established.
-- Run publication fails closed on inconsistent finalization/checksums/index/provenance; analysis exclusion remains separate from the original execution outcome.
-- Untracked non-output repository inputs are treated as dirty source provenance; generated `results/**`/`artifacts/**` do not create a false source-dirty state.
-- Future Streamlit UI remains a thin layer over the validated headless core after pilots.
+- Python 3.12 + `uv` + committed lockfile; native Windows CPU execution is the required supported scientific baseline.
+- Project-owned Gymnasium GridWorld, explicit agent/evaluator information boundary, independent deterministic RNG streams, filesystem-first finalized run bundles, provenance/checksums, and guarded publication remain authoritative.
+- UI/application code consumes the validated scientific core; it never reimplements experiment semantics.
+- Invalid or ambiguous required scientific/provenance/lifecycle state fails closed. Never fabricate data, evidence, progress, logs, metrics, results, protocol state, or apparent success.
+- Testing is risk-based and proportional: targeted checks during implementation and PR CI as the canonical full-suite guard when available. No arbitrary coverage target and no pilot/final experiment matrix in CI.
 
-Codex uses progressive disclosure: the session-start core is exactly `AGENTS.md`, `TASKS.md`, and this file. The canonical tracked execution bootstrap is `docs/context/CODEX_EXECUTION_PROMPT.md`. Goal mode persists across the canonical lifecycle: routine task completion, PR creation, CI, objective diff review, squash merge, reconciliation, and next-task selection are autonomous execution steps rather than stop conditions when available permissions and repository policy allow them. The mandatory pre-WP7 user gate in `TASKS.md` is an explicit stop condition.
+Codex session startup remains exactly `AGENTS.md`, `docs/context/TASKS.md`, and this file, followed by only task-specific evidence. The tracked bootstrap is `docs/context/CODEX_EXECUTION_PROMPT.md`.
 
-Testing is risk-based and proportional: targeted local checks while implementing, PR CI as the canonical full-suite pre-merge guard when available, no duplicate full-suite runs for reassurance, and no arbitrary coverage/mutation/fuzz/property/combinatorial expansion without a concrete risk.
+## Exact continuation rule
 
-Codex reports objective `X/Y` progress only from real denominators in `TASKS.md` and preserves recoverable `IN_PROGRESS`/branch checkpoints across interruptions.
+On this work package, Codex must first verify that it is on `feat/pre-wp7-protocol-v1.1-ui-rebuild`, inspect #87–#91/current branch commits, and resume the first incomplete dependency-valid refinement subtask. It must keep repository status/task/decision files synchronized at checkpoints and must not create another implementation branch for this package.
 
-## Bibliography baseline
+The intended execution order is:
 
-`MariosGiannakaras/ThesisBibliography` remains the canonical bibliography source of truth and is currently private. The accepted immutable thesis import is `bibliography-integration-v3`:
+1. durable governance/task handoff;
+2. D0 + candidate protocol-v1.1 + statistical support;
+3. truthful application runtime/service layer;
+4. Streamlit workflow/live GridWorld rebuild;
+5. root UI screenshot capture + bounded CI validation;
+6. real user E2E review/acceptance.
 
-- resolved checkout: `71995373ae0da64149583cae8d7a2c17e5ab1a0a`
-- complete-corpus source: `e46693d4201cf47c118eb61c216243f3c5798e28`
-- citation-ready source: `822891fb585c98dbe4464602e97998704d1609c5`
-- 585 canonical sources; 113 citation-ready; 19 research materials
-- 281 indexed original PDFs as metadata only; 1,568 integrity-covered consumer files
+No `T-700+` action is permitted. After all pre-WP7 refinements are technically complete and the user has reviewed the resulting application/screenshots, explicitly ask whether they approve starting WP7. Only a direct affirmative answer unlocks writing/defense work.
 
-`research/bibliography/citation-ready/` is the strict automatic formal-citation layer. Upstream promotion/refresh occurs in `ThesisBibliography`, followed by a new immutable synchronization; primary bibliography originals/PDFs/LFS objects are not copied here.
+## Bibliography and target-machine boundaries
 
-## Target-machine baseline
+`MariosGiannakaras/ThesisBibliography` remains the canonical bibliography source of truth. Scientific source originals are not edited here. The accepted target-machine baseline remains native Windows CPython 3.12 via `uv`, Ryzen 5 2600X / ~31.9 GiB RAM, CPU-required execution; the Radeon RX 570 is not a validated scientific-compute backend.
 
-The actual target-machine baseline is accepted in `SYSTEM_CAPABILITY_REPORT.md` and the generated schema-v2 snapshot `system-capability.accepted.json` (DEC-031). The machine provides a Ryzen 5 2600X (6 cores/12 threads), about 31.9 GiB usable RAM, a Radeon RX 570 with 8 GiB VRAM, and about 169.4 GiB free on the repository filesystem at collection. The canonical runtime is native Windows CPython 3.12 managed by the locked `uv` environment. CPU execution remains mandatory; NVIDIA/CUDA is absent and no AMD scientific-compute backend is validated, so no accelerator-specific dependency is accepted yet.
-
-## Lifecycle gates
-
-The accepted sequence remains:
-
-> target-machine baseline → research framing/GridWorld → metrics/agent selection → pilots → protocol/statistical-plan freeze → experiment management/dashboard → validated application → final experiment campaign → frozen evidence/statistics → thesis evidence package → **explicit user pre-WP7 approval** → Greek thesis/review/freeze → defense presentation → final audit/delivery
-
-Before WP7, user-directed refinements may reopen or supersede earlier work. If scientific design changes, preserve existing finalized evidence and use an explicit amendment/new version/new Run-IDs rather than mutating old runs. No WP7/WP8 task may begin until the agent explicitly asks whether to enter WP7 and the user answers unambiguously yes.
-
-## Still intentionally unfrozen
-
-The T-200 construct-level RQ/hypothesis framing is complete but remains explicitly provisional. Scientific choices the user asks to revisit may be reopened only through an evidence-preserving amendment/version path when frozen evidence would otherwise be affected.
-
-Supervisor identity, future corrections, deadlines, example theses, final Word formatting, and exact defense/submission rules are later-stage inputs and do not block pre-WP7 refinement. Current official guidance is rechecked only after the mandatory WP7 user-approval gate is explicitly opened.
-
-## Repository visibility
-
-The thesis repository may be temporarily public at explicit user direction to use public GitHub Actions. Public CI availability is an operational choice, not approval for permanent public release; privacy, copyright/licensing, source-material, secret, provenance, and final-release checks remain required before any intended public distribution.
+Supervisor identity, future corrections, deadlines, example theses, final Word formatting, and exact defense/submission rules remain later-stage inputs and do not block this pre-WP7 refinement.
