@@ -10,11 +10,11 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any, Mapping
 
 import pandas as pd
 
-from resilient_agents.contracts import ProtocolStage
+from resilient_agents.contracts import ProtocolStage, RetentionPolicy
 from resilient_agents.experiment_manager import ExperimentRegistry
 from resilient_agents.runtime_service import RuntimeRunSnapshot, RuntimeService
 from resilient_agents.v11_candidate_runner import V11CandidateExperimentRequest
@@ -306,9 +306,7 @@ class ApplicationReadModel:
             terminal_window=4,
             recovery_tolerance=0.0,
             recovery_stability_episodes=2,
-            retention_policy=__import__(
-                "resilient_agents.contracts", fromlist=["RetentionPolicy"]
-            ).RetentionPolicy.EVENTS,
+            retention_policy=RetentionPolicy.EVENTS,
             auto_publish=False,
             execution_timeout_seconds=None,
             agent_configuration_ids=dict(selection.agent_configuration_ids),
