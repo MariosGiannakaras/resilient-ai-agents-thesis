@@ -13,7 +13,7 @@ Every Codex session MUST read:
 2. `docs/context/TASKS.md`
 3. `docs/context/CURRENT_STATUS.md`
 
-Repository/Git/GitHub/evidence wins over stale memory or prose. Inspect the active branch, PR #92 and any `IN_PROGRESS` work before modification.
+Use available **session memory** together with repository/Git/GitHub/evidence, with repository evidence winning when stale. Inspect `git status`, the active branch, recent commits, PR #92 and any `IN_PROGRESS` work before modification.
 
 Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED` gate/dependency unmet; `DEFERRED` intentionally later; `SUPERSEDED` retained history that must not execute. In-progress/failed work never counts as complete.
 
@@ -22,7 +22,7 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 - **Package:** DEC-048 protocol-v2 redesign refined by DEC-050 methodology closure. DEC-042/047 and candidate v1.1 remain auditable predecessor design. DEC-049 controls the later new-framework frontend rebuild.
 - **Project:** **4/8** master milestones complete (#87: 1, 2, 4, 5).
 - **Current task:** `T-524`.
-- **State:** `IN_PROGRESS`; methodology exploration/closure is complete, but the four new closure sources on ThesisBibliography PR #143 still require canonical intake/analysis/evidence/selection/package/corpus convergence and immutable consumer sync.
+- **State:** `IN_PROGRESS`; methodology exploration/closure is complete, but the four new closure sources merged through ThesisBibliography PR #143 still require canonical intake/analysis/evidence/selection/package/corpus convergence and immutable consumer sync.
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no parallel main-repo implementation branch.
 - **Trackers:** #87 master 4/8; #95 protocol-v2 2/10; #88 closed/superseded; #89 complete/closed; #93 PAUSED; #94 DEFERRED post-thesis.
 - **Historical science:** protocol-v1.0 / FINAL-* / R0 evidence immutable. Candidate v1.1 remains non-final history; old `T-522` must not execute.
@@ -97,18 +97,18 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Depends on: `T-521`.
   - Research closure completed: 30-point audit fact-check, 20-check deep-chain pass, eight-part closure audit, DEC-050.
   - Accepted scientific contract includes: Phase-A independent method training; actual interaction budgets; common semantic information/reward/gamma; isolated no-learning probes; administrative truncation with bootstrap; each method/root/layout own full scientific checkpoint; exact shared Phase-B branch point; Frozen nominal/Frozen disturbed/Adaptive nominal/Adaptive disturbed branches; Adaptive updates only after boundary; same behavior-policy state at fork; DiD adaptation-benefit estimands; root-level inference/failure policy; explicit observation-corruption frequency + support/magnitude; final-reserve leakage firewall; historical v1.x truncation limitation; DEC-049 frontend boundary.
-  - Remaining acceptance work: finish ThesisBibliography issue #135 plus closure intake PR #143 through canonical source IDs, scientific analysis/evidence, thesis selection, generated package/corpus convergence, all upstream validators green, and a new immutable thesis-repo bibliography sync; reconcile any generated source IDs/status into protocol docs; then mark T-524 complete.
+  - Remaining acceptance work: finish ThesisBibliography issue #135 plus closure intake merged from PR #143 through canonical source IDs, scientific analysis/evidence, thesis selection, generated package/corpus convergence, all upstream validators green, and a new immutable thesis-repo bibliography sync; reconcile generated source IDs/status into protocol docs; then mark T-524 complete.
 
 - [ ] BLOCKED `T-525` — Implement the bounded framework-neutral multimethod training/checkpoint/deployment foundation required for v2 pilots.
   - Depends on: `T-524`.
   - Acceptance: v2 method-discriminated config/result schemas; project-owned actual interaction accounting; common task-level gamma/reward/truncation contract; experiment-lifecycle/capability adapter registry; independent Phase-A training; isolated interaction-indexed no-learning probes; full method-specific scientific state save/restore; process-destroy/restore/continue conformance; exact branch-point clone equality; Frozen/Adaptive behavior-policy-state semantics; four post-boundary branches; root/failure provenance; no evaluator leakage.
   - Minimum pilot adapters: Q-Learning, SARSA, DQN, PPO, Dyna-Q+. Dyna-Q is ablation-only. A2C receives only bounded feasibility support if needed for its promotion decision.
-  - DQN adapter must persist networks/optimizer/replay/sampling RNG/warm-up/update ratio/target/exploration schedules. PPO adapter must persist full code-level configuration and checkpoint only at legal completed rollout/update boundaries. Dyna-Q+ must use full own model/recency/planning state rather than the historical Q-only checkpoint path.
+  - DQN adapter persists networks/optimizer/replay/sampling RNG/warm-up/update ratio/target/exploration schedules. PPO adapter persists full code-level configuration and checkpoints only at legal completed rollout/update boundaries. Dyna-Q+ uses full own model/recency/planning state rather than the historical Q-only checkpoint path.
   - Do not perform final tuning, final matrix execution or UI work here.
 
 - [ ] BLOCKED `T-526` — Run bounded environment-discrimination + method/severity/CPU feasibility pilots on the validated Windows machine.
   - Depends on: `T-525`.
-  - Acceptance: small **predeclared ordered** GridWorld complexity ladder; common task semantics; simplest level that avoids universal floor/ceiling and is CPU-feasible; project-owned actual interaction/runtime measurements; checkpoint/clone fidelity; artifact size; learning signal/variance; method-native update-boundary feasibility.
+  - Acceptance: small **predeclared ordered** GridWorld complexity ladder; common task semantics; simplest level avoiding universal floor/ceiling and CPU-feasible; project-owned interaction/runtime measurements; checkpoint/clone fidelity; artifact size; learning signal/variance; method-native update-boundary feasibility.
   - Calibrate action-failure frequencies and observation-corruption frequency + support/magnitude using semantics/non-degeneracy, never preferred method ranking. Exact action-remap identities remain categorical rather than falsely scalar severity.
   - Evaluate A2C promotion only for distinct thesis value vs PPO at acceptable matrix cost. Retain poor/failing outcomes. No final reserve.
   - External boundary: hosted CI does not substitute for the physical Windows runtime/feasibility evidence gate.
@@ -169,7 +169,7 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Depends on: `T-712`.
 - [ ] DEFERRED `T-720` — Defense narrative/slide outline/evidence map.
   - Depends on: `T-713`.
-- [ ] DEFERRED `T-721` — Final PowerPoint + speaker material.
+- [ ] DEFERRED `T-721` — Final PowerPoint + speaker material following `docs/thesis/PRESENTATION_WORKFLOW.md`.
   - Depends on: `T-720`.
 - [ ] DEFERRED `T-722` — Validate/rehearse defense package/demo fallback.
   - Depends on: `T-721`.
