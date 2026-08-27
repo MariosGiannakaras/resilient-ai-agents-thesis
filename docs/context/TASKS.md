@@ -26,7 +26,7 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; this is the single implementation branch/PR.
 - **Trackers:** #87 master; #88 scientific; #89 runtime; #90 UI; #91 screenshots/CI/packaging.
 - **Last validated code point:** `T-520` complete; PR CI run **346** passed documentation consistency, JSON validation, Python compile, locked environment, full tests including `test_v11_runner.py`, and bibliography integrity.
-- **Continuity reconciliation:** completed for the known interrupted/stale areas. `PROJECT_CONTEXT`, `EXECUTION_WORKFLOW`, `MODEL_CANDIDATES`, DEC-042, current requirements/decisions/constraints/open-questions/roadmap/definition-of-done and application/thesis workflow docs now use NiceGUI/F0-C0-D0/current delivery semantics rather than stale active Streamlit/R0/v1.0-only wording. Historical records remain explicitly historical/superseded.
+- **Continuity reconciliation:** completed for known interrupted/stale areas. Current authority uses NiceGUI/F0-C0-D0/current delivery semantics. Stable requirement IDs remain stable; new requirements append new IDs rather than repurposing old identifiers.
 - **Downstream planning:** `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` records the future Word/PowerPoint/ChatGPT/Codex/optional-Canva/manual-screenshot ownership model without unlocking WP7.
 - **Uncommitted work:** unknown from remote handoff; every new session must inspect `git status` before assuming clean state.
 - **Exact next action:** execute `T-521` as one bounded scientific scope: authoritative candidate-v1.1 schema, exact bounded D0-only tuning plan, fresh held-out layouts/seeds, structural remap IDs, approved configuration identity/settings rules, and paired statistical support. Do not start final-v1.1 evidence or `T-700+`.
@@ -38,9 +38,10 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 3. Never discard branch/uncommitted work before inspection.
 4. Preserve recoverable checkpoint commits for substantial validated slices.
 5. Reconcile this Resume state whenever a newer instruction supersedes architecture, research design, UI behavior, tool ownership, or next action.
-6. Use `Project: X/Y` and issue X/Y only from finite canonical denominators.
-7. Testing remains risk-based/proportional; pilot/final matrices are never CI tests.
-8. Do not create another implementation branch for this package.
+6. Preserve stable task/requirement/decision identifiers; append or supersede explicitly rather than silently renumbering durable references.
+7. Use `Project: X/Y` and issue X/Y only from finite canonical denominators.
+8. Testing remains risk-based/proportional; pilot/final matrices are never CI tests.
+9. Do not create another implementation branch for this package.
 
 ## WP0 — Completed repository/research infrastructure
 
