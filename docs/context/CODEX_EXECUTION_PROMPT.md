@@ -4,7 +4,7 @@
 
 Give Codex only:
 
-> `/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely. Complete the canonical task registry autonomously, one bounded dependency-valid task or coherent package at a time. Never bypass BLOCKED/DEFERRED work, fabricate evidence, cross an external approval gate, or create a parallel branch when the active package pins one.`
+> `/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely. Complete the canonical project task registry autonomously, one bounded dependency-valid task or coherent package at a time. Treat routine Git, PR creation, CI, objective diff review, corrections, task reconciliation, and next-task selection as work to perform, not reasons to stop. Never bypass BLOCKED/DEFERRED work, fabricate evidence, cross an external approval gate, or create a parallel branch when the active package pins one.`
 
 This is the tracked bootstrap. `AGENTS.md` owns always-on rules; do not rebuild policy from chat history.
 
@@ -18,17 +18,18 @@ The current package is the user-approved pre-WP7 protocol-v1.1 + application ref
 - `protocol-v1.1` remains candidate until D0-specific non-final tuning/pilot evidence and validation justify freeze. Never run a v1.1 final campaign for CI/UI convenience.
 - Keep `TASKS.md`, `CURRENT_STATUS.md`, decisions and #87–#91 synchronized at checkpoints.
 - Root `ui-screenshots/` contains stable UI review screenshots; screenshots/fixtures are never scientific evidence.
-- `T-511` remains USER_VALIDATION_REQUIRED and all `T-700+` WP7/WP8 work remains blocked until explicit user approval.
+- `T-511` remains USER_VALIDATION_REQUIRED and all `T-700+` work remains blocked until explicit user approval.
 
 ## Startup / resume
 
-Use the explicit three-file session-start core and nothing else before selecting work:
-
-1. `AGENTS.md`
-2. `docs/context/TASKS.md`
-3. `docs/context/CURRENT_STATUS.md`
-
-Then inspect `git status`, current branch, recent commits, PR #92/check state, and the current Resume state. For DEC-042 work verify the branch is exactly `feat/pre-wp7-protocol-v1.1-ui-rebuild`; switch/update that existing branch rather than creating another one. Resume valid IN_PROGRESS work first, otherwise the first dependency-valid READY refinement task. Read only task-specific evidence after that.
+1. Inspect `git status`, current branch, recent commits, PR #92/check state, and the current Resume state.
+2. Read only the session-start core:
+   - `AGENTS.md`
+   - `docs/context/TASKS.md`
+   - `docs/context/CURRENT_STATUS.md`
+3. For DEC-042 work verify the branch is exactly `feat/pre-wp7-protocol-v1.1-ui-rebuild`; switch/update that existing branch rather than creating another one.
+4. Resume valid IN_PROGRESS work first, otherwise the first dependency-valid READY refinement task. Read only task-specific evidence after that.
+5. Work one bounded scope at a time and preserve recoverable checkpoint commits after substantial validated slices.
 
 ## Current execution order
 
@@ -38,8 +39,6 @@ Then inspect `git status`, current branch, recent commits, PR #92/check state, a
 4. Streamlit Dashboard → New Experiment → Runs/live GridWorld → Compare → Artifacts rebuild.
 5. Root UI screenshots + bounded CI capture/validation.
 6. Human E2E acceptance; only afterward ask explicitly whether WP7 may begin.
-
-Work one bounded scope at a time and preserve recoverable checkpoint commits after substantial validated slices.
 
 ## Scientific package contract
 
@@ -63,13 +62,13 @@ Work one bounded scope at a time and preserve recoverable checkpoint commits aft
 
 ## Execution / validation contract
 
-For each scope, confirm dependencies and acceptance, implement the smallest complete solution, fail closed on invalid required state, run the smallest relevant deterministic checks, reconcile docs/tasks/issues, and review the actual diff.
+For each scope, confirm dependencies/acceptance, implement the smallest complete solution, fail closed on invalid required state, run the smallest relevant deterministic checks, reconcile docs/tasks/issues, and review the actual diff.
 
-Testing is proportional: known-answer, determinism, information-boundary, serialization, configuration, lifecycle-truthfulness, artifact-loading and representative render checks. No arbitrary coverage target, no broad fuzz/mutation/combinatorial expansion without a concrete risk, and no pilot/final matrices in CI. PR CI is the canonical full-suite guard when available; do not duplicate it merely for reassurance.
+Testing is proportional: known-answer, determinism, information-boundary, serialization, configuration, lifecycle-truthfulness, artifact-loading and representative render checks. No arbitrary coverage target, broad fuzz/mutation/combinatorial expansion without concrete risk, or pilot/final matrices in CI. PR CI is the canonical full-suite guard when available; do not duplicate it merely for reassurance.
 
 Do not submit an `APPROVE` review on your own PR. The repository normally permits an objective own-PR squash merge after green CI/review, but this package explicitly defers that own-PR squash merge until the integrated user-facing acceptance checkpoint.
 
-Progress uses real finite denominators only. Report `Project: X/Y` only from canonical `T-*` entries, with issue/milestone X/Y when useful. In-progress/failed work never counts as complete.
+Progress uses finite canonical denominators only. Report `Project: X/Y` only from canonical `T-*` entries, with issue/milestone X/Y when useful. In-progress/failed work never counts as complete.
 
 ## Stop conditions
 
@@ -79,4 +78,4 @@ Technical completion, screenshots or green CI are not WP7 approval.
 
 ## Final report
 
-Report objective progress; changed scientific/runtime/UI behavior; branch/PR/CI state; protocol-v1.1 candidate/frozen state; UI screenshots available for review; remaining human acceptance; exact next action; and explicit confirmation that WP7 is still blocked unless the user has directly approved it.
+Report objective progress; changed scientific/runtime/UI behavior; branch/PR/CI state; protocol-v1.1 candidate/frozen state; UI screenshots available for review; remaining human acceptance; exact next action; and confirmation that WP7 is blocked unless the user directly approved it.
