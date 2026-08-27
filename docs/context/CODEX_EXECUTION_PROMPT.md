@@ -21,13 +21,14 @@ Current package: pre-WP7 protocol-v1.1 + application refinement governed by DEC-
 
 ## Startup / resume
 
-The explicit three-file session-start core is:
-
-1. `AGENTS.md`
-2. `docs/context/TASKS.md`
-3. `docs/context/CURRENT_STATUS.md`
-
-Before selecting work, inspect `git status`, current branch, recent commits and PR #92/check state. Verify/use the existing pinned branch. Resume valid IN_PROGRESS work first; otherwise select the first dependency-valid READY task. Preserve recoverable commits after substantial validated slices.
+1. Inspect `git status`, current branch, recent commits and PR #92/check state.
+2. Read only the session-start core:
+   - `AGENTS.md`
+   - `docs/context/TASKS.md`
+   - `docs/context/CURRENT_STATUS.md`
+3. Verify/use the existing pinned branch; do not create another implementation branch.
+4. Resume valid IN_PROGRESS work first; otherwise select the first dependency-valid READY task.
+5. Preserve recoverable commits after substantial validated slices.
 
 Current order: finish D0 → candidate v1.1/statistics → truthful runtime service → native NiceGUI application/live GridWorld → screenshots/browser/Windows packaging → human E2E → ask whether WP7 may begin.
 
