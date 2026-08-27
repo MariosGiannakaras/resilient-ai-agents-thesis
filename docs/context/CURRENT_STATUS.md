@@ -16,12 +16,12 @@
 
 - Decisions: DEC-042 scientific refinement; DEC-043 historical/superseded React/Vite exploration; DEC-044 NiceGUI native application; DEC-045 visual analytics; DEC-046 novice-first compact UX; DEC-047 broadened agent comparison and human-readable naming.
 - Single branch/PR: `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft #92. No parallel implementation branch or early merge.
-- Master progress: **5/8** milestones complete (#87 milestones 1, 2, 4, 5 and 6).
-- Completed refinement tasks: `T-520`, `T-523`, `T-521`, `T-530`, `T-531`.
-- Current repository task: **`T-532 READY`**.
+- Master progress: **6/8** milestones complete (#87 milestones 1, 2, 4, 5, 6 and 7).
+- Completed refinement tasks: `T-520`, `T-523`, `T-521`, `T-530`, `T-531`, `T-532`.
+- Current repository task: **`T-511 USER_VALIDATION_REQUIRED` / `T-522 READY` (external)**.
 - External scientific gate: **`T-522 READY` only on the validated thesis machine**; hosted CI is not a substitute.
-- Trackers: #87 master 5/8; #88 scientific 9/12; #89 runtime 6/6 complete/closed; #90 UI 8/9; #91 screenshots/CI/packaging 0/6 active next.
-- PR #92's current-head CI is the canonical full-suite guard and must be inspected live; historical run 425 remains only the completed T-530 checkpoint.
+- Trackers: #87 master 6/8; #88 scientific 9/12; #89 runtime 6/6 complete/closed; #90 UI 9/9 complete/closed; #91 screenshots/CI/packaging 6/6 complete/closed.
+- PR #92's current-head CI is the canonical full-suite guard and must be inspected live.
 
 ## Thesis framing and scientific direction
 
@@ -95,4 +95,4 @@ T-522 retained settings, optional Robust Planner decision, measured thesis-machi
 
 ## Exact next action
 
-Continue **T-532** on the existing branch/PR: create accepted root screenshots, add bounded deterministic NiceGUI browser/CI capture, and validate actual Windows native-window plus `onedir + windowed` delivery behavior and safe writable paths. Keep T-522 reserved for the validated thesis machine. Do not inspect/generate final-v1.1 outcomes and do not start `T-700+`.
+T-532 standalone PyInstaller packaging, execution separation, and screenshots are complete. The implementation branch is currently blocked waiting on two external gates: **T-511** (intended-user application workflow/UX acceptance) and **T-522** (scientific machine execution of non-final protocol). Do not inspect/generate final-v1.1 outcomes and do not start `T-700+`.
