@@ -1,95 +1,121 @@
-import sys
+"""FastAPI application shell for the local thesis UI.
+
+This module intentionally exposes only truthful, read-only application data at
+this scaffold stage. Active-run supervision/WebSocket streaming belongs to
+T-530 and must not be simulated here.
+"""
+from __future__ import annotations
+
 from pathlib import Path
+from typing import Any
 
-import streamlit as st
-
-repo_root = Path(__file__).resolve().parents[2]
-if str(repo_root / "src") not in sys.path:
-    sys.path.insert(0, str(repo_root / "src"))
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from resilient_agents.experiment_manager import ExperimentRegistry, get_resource_snapshot
-from app.components.onboarding import show_onboarding, onboarding_replay_button
 
-st.set_page_config(
-    page_title="Resilient Agents Dashboard",
-    page_icon="🔬",
-    layout="wide",
+API_SCHEMA_VERSION = 1
+REPO_ROOT = Path(__file__).resolve().parents[2]
+FRONTEND_DIST = REPO_ROOT / "frontend" / "dist"
+
+app = FastAPI(
+    title="Resilient AI Agents Thesis Application",
+    version="0.1.0",
+    docs_url="/api/docs",
+    redoc_url=None,
+    openapi_url="/api/openapi.json",
 )
 
-st.title("Resilient AI Agents Dashboard")
+# Development-only Vite origins. The supported thesis-user path is same-origin
+# FastAPI serving the prebuilt SPA, so CORS is unnecessary in normal use.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
+    allow_credentials=False,
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
 
-onboarding_replay_button()
-show_onboarding()
 
-st.markdown("""
-Welcome to the experiment dashboard for the resilient AI agents thesis.
+def _registry() -> ExperimentRegistry:
+    return ExperimentRegistry(REPO_ROOT)
 
-Use the sidebar to navigate to:
-- **New Experiment**: Configure and launch valid experiment campaigns.
-- **Runs**: Monitor active runs, inspect history, and view details.
-- **Compare**: Compare completed runs against each other.
-- **Artifacts**: Generate thesis artifacts and figures.
-""")
 
-st.subheader("System Status")
-with st.spinner("Loading system snapshot..."):
-    status = get_resource_snapshot(repo_root)
+@app.get("/api/health")
+def health() -> dict[str, Any]:
+    """Return application-shell status without claiming runtime readiness."""
+    return {
+        "api_schema_version": API_SCHEMA_VERSION,
+        "status": "ok",
+        "frontend_built": (FRONTEND_DIST / "index.html").is_file(),
+        "active_runtime_service": "not-yet-implemented",
+    }
 
-if status.get("status") == "unavailable":
-    st.warning("System inventory is currently unavailable.", icon="⚠️")
-else:
-    col1, col2, col3 = st.columns(3)
-    cpu = status.get("cpu", {})
-    memory = status.get("memory", {})
-    storage = status.get("storage", {})
-    
-    col1.metric(
-        "CPU Cores", 
-        cpu.get("logical_processors", "N/A"),
-        help="Number of logical processors available for parallel environment execution."
+
+@app.get("/api/system")
+def system_snapshot() -> dict[str, Any]:
+    """Return the canonical real resource snapshot or explicit unavailable state."""
+    return get_resource_snapshot(REPO_ROOT)
+
+
+@app.get("/api/runs")
+def list_finalized_runs() -> dict[str, Any]:
+    """Return integrity-validated finalized-run history only.
+
+    Unfinished/active runs are intentionally not inferred from this registry;
+    T-530 will expose them through a dedicated runtime service.
+    """
+    try:
+        runs = _registry().list_runs()
+    except (OSError, ValueError) as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    return {"api_schema_version": API_SCHEMA_VERSION, "runs": runs}
+
+
+@app.get("/api/runs/{run_id}")
+def get_finalized_run(run_id: str) -> dict[str, Any]:
+    try:
+        run = _registry().get_run(run_id)
+    except (OSError, ValueError) as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    if run is None:
+        raise HTTPException(status_code=404, detail="run not found")
+    return {"api_schema_version": API_SCHEMA_VERSION, "run": run}
+
+
+if (FRONTEND_DIST / "assets").is_dir():
+    app.mount(
+        "/assets",
+        StaticFiles(directory=FRONTEND_DIST / "assets"),
+        name="frontend-assets",
     )
-    
-    total_bytes = memory.get("total_bytes", 0)
-    col2.metric(
-        "Total RAM", 
-        f"{total_bytes / (1024**3):.1f} GB" if total_bytes else "N/A",
-        help="Total physical memory on the system."
-    )
-    
-    repo_fs = storage.get("repo_filesystem", {})
-    free_bytes = repo_fs.get("free_bytes", 0)
-    col3.metric(
-        "Free Disk", 
-        f"{free_bytes / (1024**3):.1f} GB" if free_bytes else "N/A",
-        help="Remaining storage space on the partition hosting the thesis repository."
-    )
 
-st.subheader("Recent Runs")
-registry = ExperimentRegistry(repo_root)
-runs = registry.list_runs()
 
-if runs:
-    recent = sorted(runs, key=lambda r: r.get("started_at_utc", ""), reverse=True)[:5]
-    for r in recent:
-        status_val = r.get("status")
-        # Semantic statuses
-        if status_val == "completed":
-            icon = "✅"
-            color = "green"
-        elif status_val == "failed":
-            icon = "❌"
-            color = "red"
-        elif status_val == "cancelled":
-            icon = "🛑"
-            color = "orange"
-        else:
-            icon = "🔄"
-            color = "blue"
-            
-        st.markdown(
-            f"{icon} **`{r.get('run_id')}`** — <span style='color:{color}'>{status_val}</span> — "
-            f"Protocol: `{r.get('protocol_version')}`",
-            unsafe_allow_html=True
+@app.get("/{frontend_path:path}", include_in_schema=False)
+def serve_frontend(frontend_path: str) -> FileResponse | JSONResponse:
+    """Serve the prebuilt Vite SPA and preserve client-side routing.
+
+    API paths are declared above and therefore resolved before this catch-all.
+    Missing build output is an explicit service-unavailable state, never a
+    generated placeholder pretending that the UI is ready.
+    """
+    index_path = FRONTEND_DIST / "index.html"
+    if not index_path.is_file():
+        return JSONResponse(
+            status_code=503,
+            content={
+                "status": "frontend-unavailable",
+                "detail": "frontend/dist is missing; build the validated frontend",
+            },
         )
-else:
-    st.info("No completed runs found. Navigate to **New Experiment** to launch your first campaign.", icon="ℹ️")
+
+    requested = (FRONTEND_DIST / frontend_path).resolve()
+    try:
+        requested.relative_to(FRONTEND_DIST.resolve())
+    except ValueError:
+        requested = index_path
+    if frontend_path and requested.is_file():
+        return FileResponse(requested)
+    return FileResponse(index_path)
