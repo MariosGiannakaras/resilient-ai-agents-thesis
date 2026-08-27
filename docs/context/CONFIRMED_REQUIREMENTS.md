@@ -1,6 +1,6 @@
 # Confirmed Requirements
 
-This file contains only requirements established by the latest explicit user instruction, the official application, verified official guidance, or accepted current project decisions implementing explicit user direction.
+This file contains only requirements established by the latest explicit user instruction, the official application, verified official guidance, or accepted current project decisions implementing explicit user direction. Requirement IDs are stable once assigned; new requirements append new IDs rather than renumbering historical entries.
 
 **Status values:** `CONFIRMED`, `PARTIALLY_CONFIRMED`, `BLOCKED_BY_DECISION`, `DEFERRED`.
 
