@@ -16,7 +16,7 @@ The five main candidate strategies are deliberately mechanism-distinct:
 4. **Dyna-Q** — real updates are augmented with planning over an empirical learned model;
 5. **Dyna-Q+** — Dyna-Q planning is augmented with recency-driven re-exploration for possible change.
 
-The formal/theoretical basis is maintained in `ThesisBibliography`, including the primary Q-learning source (`SRC-AD8A2E9A85`), the primary Dyna source (`SRC-F6BD3A6B18`), the continual-RL review (`SRC-39696F490F`), the dynamically-varying-environment survey (`SRC-8025C139CE`), the Sutton–Barto full-text source (`SRC-701E163AC8`), and the partially verified historical SARSA-lineage record (`SRC-D20C157084`). The partially verified record is not used as sole citation support for claims that require checked full text.
+The formal/theoretical basis is maintained upstream in `ThesisBibliography`, including Watkins–Dayan Q-learning, Sutton Dyna, continual-RL and dynamically-varying-environment reviews, and the historical SARSA lineage. Those newly verified upstream records are not assigned thesis-repository `SRC-*` identifiers here until the established versioned bibliography synchronization imports them. The already accepted thesis-repository Sutton–Barto full-text source remains `SRC-701E163AC8`. Partially verified historical material is never used as sole citation support for claims that require checked full text.
 
 ## Controlled initial-knowledge policy
 
