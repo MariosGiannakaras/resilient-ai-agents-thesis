@@ -15,8 +15,11 @@ dependencies = [
     "plotly>=7.0.0",
 ]
 
+[project.scripts]
+resilient-agents-app = "app.main:main"
+
 [tool.hatch.build.targets.wheel]
-packages = ["src/resilient_agents"]
+packages = ["src/resilient_agents", "src/app"]
 
 [tool.uv]
 package = true
