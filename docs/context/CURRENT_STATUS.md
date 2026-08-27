@@ -16,76 +16,81 @@
 
 - Decisions: DEC-042 scientific refinement; DEC-043 historical/superseded React/Vite exploration; DEC-044 NiceGUI native application; DEC-045 visual analytics; DEC-046 novice-first compact UX; DEC-047 broadened agent comparison and human-readable naming.
 - Single branch/PR: `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft #92. No parallel implementation branch or early merge.
-- Trackers: #87 master; #88 scientific; #89 runtime; #90 UI; #91 screenshots/CI/packaging.
-- Progress: **2/8** major milestones. `T-520`, `T-523` and **`T-521` are complete**. Current scientific task is **`T-522 READY`**.
-- PR CI run **409** validated the T-521 checkpoint: documentation consistency, committed JSON validation, Python compilation, locked environment, complete tests including candidate protocol/configuration runner/fresh-reserve/paired-statistics checks, and bibliography integrity.
-- Upstream `ThesisBibliography` now contains strengthened agent-strategy theory: Watkins–Dayan Q-learning, Sutton Dyna, Khetarpal continual RL and Padakandla dynamically varying RL are source-analysed/citation-ready; Rummery–Niranjan is retained conservatively as historical-lineage metadata where reliable complete-text verification was unavailable.
+- Master progress: **4/8** milestones complete (#87 milestones 1, 2, 4 and 5).
+- Completed refinement tasks: `T-520`, `T-523`, `T-521`, `T-530`.
+- Current repository task: **`T-531 READY`**.
+- External scientific gate: **`T-522 READY` only on the validated thesis machine**; hosted CI is not a substitute.
+- Trackers: #87 master 4/8; #88 scientific 9/12; #89 runtime 6/6 complete/closed; #90 UI active next; #91 screenshots/CI/packaging later.
+- PR CI run **425** validated the latest runtime checkpoint: documentation consistency, committed JSON validation, Python compilation, locked environment, complete tests including candidate protocol/statistics/runtime observer/runtime service contracts, and bibliography integrity.
 
-## Thesis framing
+## Thesis framing and scientific direction
 
-The thesis concerns **resilient AI agent strategies operating under uncertainty and environmental change**. GridWorld is the controlled experimental testbed and visualization environment used to expose mechanisms, disturbances, trajectories and comparisons reproducibly. It is not the thesis subject or the basis for choosing agent families.
+The thesis concerns **resilient AI agent strategies operating under uncertainty and environmental change**. GridWorld is the controlled experimental testbed and visualization environment, not the thesis subject.
 
-## Scientific direction
+Main candidate strategies:
 
-DEC-047 defines five main candidate strategies:
-
-1. **Fixed Q-Learning** — learned nominal Q-values/policy, no post-change learning; historical technical identity F0.
-2. **Adaptive Q-Learning** — continual off-policy Q-learning; historical technical identity C0.
+1. **Fixed Q-Learning** — learned nominal Q-values/policy, no post-change learning.
+2. **Adaptive Q-Learning** — continual off-policy Q-learning.
 3. **SARSA** — on-policy continual model-free TD control.
-4. **Dyna-Q** — online model learning plus planning over experienced state-action transitions, without Dyna-Q+ recency/untried-action bonuses.
-5. **Dyna-Q+** — Dyna planning plus directed re-exploration of long-untried actions; historical technical identity D0.
+4. **Dyna-Q** — online model learning plus planning over experienced state-action transitions.
+5. **Dyna-Q+** — Dyna planning plus directed re-exploration of long-untried actions.
 
-**Reference only:** deterministic Random Agent is a lower scale/correctness fixture. A nominal/fully-informed planner may only be a clearly privileged analytical/debug reference. Neither belongs in fair rankings.
+Random Agent and any nominal/fully-informed planner are reference-only. Historical R0 remains negative/diagnostic pilot evidence; a redesigned Robust Planner is conditional on the predeclared non-final gate.
 
-**Robust branch:** historical R0 remains negative/diagnostic pilot evidence. A redesigned Robust Planner can become a conditional sixth comparator only if a predeclared non-final nominal-viability/fairness/runtime gate passes; unchanged R0 is not reinstated.
+## Completed candidate protocol / statistics
 
-## Completed T-521 candidate protocol
+`configs/protocols/protocol-v1.1.json` remains an explicit **candidate**, not a frozen/final protocol. T-521 provides the five strategies, preserved Q baseline (`alpha=.5`, `gamma=.96875`, `epsilon=.125`, 512 training episodes/layout), bounded SARSA/Dyna settings, four fresh held-out layouts, fresh/disjoint seed banks, seven structural single-factor conditions, stable configuration/protocol SHA-256 provenance, and fail-closed final access.
 
-The checked-in `configs/protocols/protocol-v1.1.json` is an explicit **candidate**, not a frozen/final protocol. Its separate fail-closed `V11CandidateProtocol` loader preserves historical `PilotProtocol` semantics and blocks pilot/final execution.
+Primary metrics are cumulative deficit, immediate degradation and terminal performance. Recovery remains secondary/sensitivity. `v11_statistics.py` implements predeclared root-blocked paired effects with equal layout weighting and deterministic 95% percentile-bootstrap CIs. No composite resilience score or post-hoc favorable threshold is allowed.
 
-T-521 provides:
+## T-522 external scientific gate
 
-- five validated strategies with user-facing names and stable technical identities;
-- preserved Q baseline: alpha `0.5`, gamma `0.96875`, epsilon `0.125`, 512 nominal training episodes/layout;
-- bounded non-final catalog: two SARSA alpha candidates, two Dyna-Q planning budgets, four Dyna-Q+ planning/kappa combinations;
-- four fresh held-out layouts and a fresh 32-root final bank, disjoint from development/tuning and historical reserves;
-- seven single-factor conditions with `action-remap-2-swap` and `action-remap-4-cycle`;
-- stable configuration/protocol SHA-256 provenance;
-- tuning restricted to the full predeclared tuning root bank and nominal + two persistent-remap conditions, with no best-seed/single-run selection;
-- primary cumulative deficit, immediate degradation and terminal performance; recovery secondary/sensitivity; no composite score;
-- predeclared paired contrasts with equal-weight layout aggregation inside roots and deterministic 95% percentile-bootstrap CIs over root effects (10,000 resamples, fixed seed);
-- explicit final-outcome access block until T-522 freeze plus later application/user gates.
+T-522 may use only the complete predeclared **non-final** development/tuning evidence on the validated thesis machine. It must retain failures/poor outcomes, measure Dyna planning runtime/cost, apply predeclared selection/tie rules, resolve the optional Robust Planner gate, and freeze/amend/reject retained configuration IDs before any v1.1 final reserve access.
 
-Candidate status **does not authorize final evidence**.
+This remote GitHub-connected session does not substitute hosted runners for that physical-machine evidence.
 
-## T-522 scope
+## Completed T-530 runtime service
 
-`T-522` may use only predeclared **non-final** development/tuning evidence to select/freeze/amend/reject candidate configurations. It must compare complete repeated/paired evidence, retain failures/poor/non-recovery outcomes, measure Dyna planning cost on the validated thesis machine, apply the predeclared deterministic selection/tie rules, and inspect no v1.1 final-layout/final-seed outcomes.
+T-530 is complete and tracker #89 is closed 6/6.
 
-If the physical thesis machine is unavailable in the current remote session, record that external execution boundary and continue dependency-valid `T-530`; do not move the scientific matrix into GitHub-hosted CI.
+- `RuntimeService` is UI-independent and exposes schema-v1 queued/running/completed/failed/cancelled/interrupted snapshots.
+- Persisted runtime metadata is separate from scientific run bundles.
+- Heartbeat derives from real telemetry activity; progress uses persisted root completion plus latest real phase/episode/step.
+- Candidate requests are validated against the protocol before queue creation.
+- Runtime execution uses only the owned candidate entrypoint; arbitrary shell commands are not exposed.
+- Cancel/restart are capability-based; pause/resume are explicitly unsupported.
+- Historical unfinished runs remain visible without being falsely restartable; finalized scientific status remains authoritative.
+- Live GridWorld telemetry is evaluator-side operational/provisional data, separate from scientific retention.
+- Observer ON versus OFF is regression-tested to produce identical scientific root results.
+- Canonical resource snapshots and live telemetry tailing are exposed for NiceGUI.
 
-## User-facing naming and application
+## T-531 application scope
 
-The primary UI concept is **Agent strategy**. Ordinary users see full names and concise mechanism explanations; F0/C0/D0, schema IDs and configuration hashes are secondary under **Technical details / Reproducibility**.
+NiceGUI 3.16 native/pywebview remains the single active frontend over the UI-independent Python runtime/scientific services.
 
-- NiceGUI 3.16 native/pywebview over UI-independent Python runtime/scientific services.
-- Plotly = stored/final scientific figures; ECharts = real live/provisional telemetry; Mermaid = explanations; AG Grid Community = analytical tables.
-- T-530 supplies truthful active-run DTOs/events/history/resources, controls and read-only live GridWorld observation.
-- T-531 completes Dashboard/New Experiment/Runs/Compare/Artifacts and novice-first explanations.
-- T-532 validates screenshots/browser/native Windows/PyInstaller `onedir + windowed`; root `run_app.bat` remains checkout launcher.
+T-531 must complete:
 
-After acceptance, approved experiments run directly from the desktop application on the validated thesis machine without Codex/console commands merely to launch a frozen configuration.
+- Dashboard with real recent/active run status, resources and navigation;
+- New Experiment with human-readable **Agent strategy** selection, approved configuration variants, repetitions/root seeds, bounded settings/sweeps, fixed-vs-tunable explanations and resolved-config review;
+- Runs with active/history/detail, real lifecycle/progress/events/logs and smooth read-only live GridWorld driven only by runtime telemetry;
+- Compare with compatible agent/configuration comparisons, distributions, paired CIs/counts and layout/condition views;
+- Artifacts with real CSV/JSON/HTML/provenance preview/export;
+- Plotly for stored/final scientific figures, ECharts for live/provisional telemetry, Mermaid for explanations and AG Grid Community for analytical tables;
+- novice-first compact UX: plain labels, accurate tooltips/help, units/consequences, progressive disclosure, semantic text+icon+color status and actionable invalid/empty/loading/error/disabled states;
+- no fake progress, fabricated metrics/logs or synthesized historical trajectory replay.
+
+Technical IDs (`F0/C0/D0`, schema/config hashes) belong under **Technical details / Reproducibility**, not ordinary strategy names.
 
 ## Bibliography and testing baseline
 
-`MariosGiannakaras/ThesisBibliography` remains canonical. The accepted immutable thesis-repository import remains **`bibliography-integration-v3`**. The newer upstream theory package must enter this repository only through the established later versioned bibliography synchronization workflow; never hand-copy formal citation evidence.
+`MariosGiannakaras/ThesisBibliography` remains canonical. The accepted immutable thesis-repository import remains **`bibliography-integration-v3`**. Newer upstream theory records enter only through a later versioned synchronization; do not hand-copy formal citation evidence.
 
-Testing remains risk-based/proportional; PR CI is the canonical full-suite guard. Experiment matrices are scientific work, not CI test matrices.
+Testing remains risk-based/proportional; PR CI is the canonical full-suite guard. Scientific experiment matrices are not CI tests.
 
 ## Still intentionally unfrozen
 
-T-522 retained settings, conditional Robust Planner decision, measured Dyna planning runtime, frozen v1.1 protocol, new final evidence, active-run runtime behavior, final novice-first UI/screenshots/native package, current official WP7 rules and final thesis/presentation deliverables remain unfrozen until their explicit gates pass.
+T-522 retained settings, optional Robust Planner decision, measured thesis-machine planning runtime, frozen v1.1 protocol, new final evidence, final NiceGUI UX/screenshots/native package, current official WP7 rules and final thesis/presentation deliverables remain unfrozen until their explicit gates pass.
 
 ## Exact next action
 
-Execute **T-522** only on predeclared non-final evidence. If validated thesis-machine execution is unavailable, do not substitute GitHub-hosted CI; record the blocker and proceed with dependency-valid **T-530** on the same branch/PR. Do not inspect/generate final-v1.1 outcomes and do not start `T-700+`.
+Continue **T-531** on the existing branch/PR: wire the validated `RuntimeService` and candidate protocol/configuration metadata into the NiceGUI Dashboard/New Experiment/Runs/Compare/Artifacts surfaces without fabricating state. Keep T-522 reserved for the validated thesis machine. Do not inspect/generate final-v1.1 outcomes and do not start `T-700+`.
