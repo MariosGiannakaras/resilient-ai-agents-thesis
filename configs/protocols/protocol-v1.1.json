@@ -1,0 +1,148 @@
+{
+  "schema_version": 2,
+  "protocol_version": "protocol-v1.1-candidate",
+  "status": "candidate",
+  "scientific_scope": {
+    "primary_question": "How do five mechanism-distinct agent strategies differ in resistance and adaptation after unannounced uncertainty or environmental change?",
+    "final_evidence_use": false,
+    "testbed_role": "GridWorld is the controlled experimental and visualization testbed, not the thesis subject."
+  },
+  "gridworld_schema_version": 1,
+  "information_policy": {
+    "expose_executed_action": false,
+    "expose_disturbance_flags": false,
+    "expose_change_indicator": false,
+    "expose_regime_id": false,
+    "expose_true_state": false
+  },
+  "partitions": {
+    "development": ["dev-l01", "dev-l02"],
+    "tuning": ["tune-l01", "tune-l02"],
+    "pilot": [],
+    "final": ["v11-final-l01", "v11-final-l02", "v11-final-l03", "v11-final-l04"]
+  },
+  "layouts": [
+    {"layout_id":"dev-l01","stage":"development","grid":{"width":7,"height":7,"start":[0,0],"goal":[6,6],"obstacles":[[1,1],[2,1],[3,1],[4,3],[4,4],[2,5]]}},
+    {"layout_id":"dev-l02","stage":"development","grid":{"width":7,"height":7,"start":[0,0],"goal":[6,6],"obstacles":[[1,2],[2,2],[3,4],[4,4],[5,2],[5,3]]}},
+    {"layout_id":"tune-l01","stage":"tuning","grid":{"width":7,"height":7,"start":[0,0],"goal":[6,6],"obstacles":[[1,3],[2,3],[3,1],[3,2],[4,5],[5,5]]}},
+    {"layout_id":"tune-l02","stage":"tuning","grid":{"width":7,"height":7,"start":[0,0],"goal":[6,6],"obstacles":[[1,5],[2,1],[2,5],[3,3],[4,3],[5,1]]}},
+    {"layout_id":"v11-final-l01","stage":"final","grid":{"width":7,"height":7,"start":[0,0],"goal":[6,6],"obstacles":[[1,1],[2,1],[2,4],[3,4],[5,2],[5,5]]}},
+    {"layout_id":"v11-final-l02","stage":"final","grid":{"width":7,"height":7,"start":[0,0],"goal":[6,6],"obstacles":[[1,4],[2,2],[3,2],[4,4],[4,5],[5,1]]}},
+    {"layout_id":"v11-final-l03","stage":"final","grid":{"width":7,"height":7,"start":[0,0],"goal":[6,6],"obstacles":[[1,2],[1,5],[3,1],[3,4],[4,4],[5,3]]}},
+    {"layout_id":"v11-final-l04","stage":"final","grid":{"width":7,"height":7,"start":[0,0],"goal":[6,6],"obstacles":[[2,1],[2,5],[3,3],[4,1],[4,3],[5,5]]}}
+  ],
+  "reward_spec": {"step": -1.0, "collision": -2.0, "goal": 0.0},
+  "episode_horizon": {"rule": "shortest-path-multiple", "shortest_path_multiplier": 4, "required_shortest_path_length": 12},
+  "conditions": [
+    {"condition_id":"nominal","scientific_role":"Matched reference and nominal cost","mechanism":"nominal","action_mapping":{"up":"up","right":"right","down":"down","left":"left"},"remapped_actions":0,"action_failure_probability":0.0,"observation_corruption_probability":0.0},
+    {"condition_id":"action-remap-2-swap","scientific_role":"Primary minimal persistent action remap","mechanism":"action-remap","action_mapping":{"up":"right","right":"up","down":"down","left":"left"},"remapped_actions":2,"action_failure_probability":0.0,"observation_corruption_probability":0.0},
+    {"condition_id":"action-remap-4-cycle","scientific_role":"Primary four-action persistent cycle remap","mechanism":"action-remap","action_mapping":{"up":"right","right":"down","down":"left","left":"up"},"remapped_actions":4,"action_failure_probability":0.0,"observation_corruption_probability":0.0},
+    {"condition_id":"action-failure-1of8","scientific_role":"Supporting low action-execution diagnostic","mechanism":"action-failure","action_mapping":{"up":"up","right":"right","down":"down","left":"left"},"remapped_actions":0,"action_failure_probability":0.125,"observation_corruption_probability":0.0},
+    {"condition_id":"action-failure-1of4","scientific_role":"Supporting higher action-execution diagnostic","mechanism":"action-failure","action_mapping":{"up":"up","right":"right","down":"down","left":"left"},"remapped_actions":0,"action_failure_probability":0.25,"observation_corruption_probability":0.0},
+    {"condition_id":"observation-corruption-1of8","scientific_role":"Supporting low observation diagnostic","mechanism":"observation-corruption","action_mapping":{"up":"up","right":"right","down":"down","left":"left"},"remapped_actions":0,"action_failure_probability":0.0,"observation_corruption_probability":0.125},
+    {"condition_id":"observation-corruption-1of4","scientific_role":"Supporting higher observation diagnostic","mechanism":"observation-corruption","action_mapping":{"up":"up","right":"right","down":"down","left":"left"},"remapped_actions":0,"action_failure_probability":0.0,"observation_corruption_probability":0.25}
+  ],
+  "agent_regimes": [
+    {"agent_id":"f0","method":"tabular_q_learning_v1","user_facing_name":"Fixed Q-Learning","mechanism_badge":"Does not adapt","post_change_learning":false},
+    {"agent_id":"c0","method":"tabular_q_learning_v1","user_facing_name":"Adaptive Q-Learning","mechanism_badge":"Model-free / off-policy","post_change_learning":true},
+    {"agent_id":"s0","method":"sarsa_v1","user_facing_name":"SARSA","mechanism_badge":"Model-free / on-policy","post_change_learning":true},
+    {"agent_id":"dq0","method":"dyna_q_v1","user_facing_name":"Dyna-Q","mechanism_badge":"Uses planning","post_change_learning":true},
+    {"agent_id":"d0","method":"dyna_q_plus_v1","user_facing_name":"Dyna-Q+","mechanism_badge":"Planning + re-explores for change","post_change_learning":true}
+  ],
+  "checkpoint_training": {
+    "configuration_id": "common-q-checkpoint-v1",
+    "method": "tabular_q_learning_v1",
+    "learning_rate": 0.5,
+    "discount_factor": 0.96875,
+    "exploration_epsilon": 0.125,
+    "training_episodes_per_layout": 512,
+    "bootstrap_on_truncation": false,
+    "initial_q_value": 0.0
+  },
+  "configuration_catalog": {
+    "f0-base-v1":{"agent_id":"f0","method":"tabular_q_learning_v1","settings":{"learning_rate":0.5,"discount_factor":0.96875,"exploration_epsilon":0.125,"bootstrap_on_truncation":false,"initial_q_value":0.0}},
+    "c0-base-v1":{"agent_id":"c0","method":"tabular_q_learning_v1","settings":{"learning_rate":0.5,"discount_factor":0.96875,"exploration_epsilon":0.125,"bootstrap_on_truncation":false,"initial_q_value":0.0}},
+    "s0-a025-v1":{"agent_id":"s0","method":"sarsa_v1","settings":{"learning_rate":0.25,"discount_factor":0.96875,"exploration_epsilon":0.125,"bootstrap_on_truncation":false,"initial_q_value":0.0}},
+    "s0-a050-v1":{"agent_id":"s0","method":"sarsa_v1","settings":{"learning_rate":0.5,"discount_factor":0.96875,"exploration_epsilon":0.125,"bootstrap_on_truncation":false,"initial_q_value":0.0}},
+    "dq0-p05-v1":{"agent_id":"dq0","method":"dyna_q_v1","settings":{"learning_rate":0.5,"discount_factor":0.96875,"exploration_epsilon":0.125,"bootstrap_on_truncation":false,"initial_q_value":0.0,"planning_steps":5}},
+    "dq0-p10-v1":{"agent_id":"dq0","method":"dyna_q_v1","settings":{"learning_rate":0.5,"discount_factor":0.96875,"exploration_epsilon":0.125,"bootstrap_on_truncation":false,"initial_q_value":0.0,"planning_steps":10}},
+    "d0-p05-k0005-v1":{"agent_id":"d0","method":"dyna_q_plus_v1","settings":{"learning_rate":0.5,"discount_factor":0.96875,"exploration_epsilon":0.125,"bootstrap_on_truncation":false,"initial_q_value":0.0,"planning_steps":5,"kappa":0.0005}},
+    "d0-p05-k0010-v1":{"agent_id":"d0","method":"dyna_q_plus_v1","settings":{"learning_rate":0.5,"discount_factor":0.96875,"exploration_epsilon":0.125,"bootstrap_on_truncation":false,"initial_q_value":0.0,"planning_steps":5,"kappa":0.001}},
+    "d0-p10-k0005-v1":{"agent_id":"d0","method":"dyna_q_plus_v1","settings":{"learning_rate":0.5,"discount_factor":0.96875,"exploration_epsilon":0.125,"bootstrap_on_truncation":false,"initial_q_value":0.0,"planning_steps":10,"kappa":0.0005}},
+    "d0-p10-k0010-v1":{"agent_id":"d0","method":"dyna_q_plus_v1","settings":{"learning_rate":0.5,"discount_factor":0.96875,"exploration_epsilon":0.125,"bootstrap_on_truncation":false,"initial_q_value":0.0,"planning_steps":10,"kappa":0.001}}
+  },
+  "development": {
+    "root_seeds": [2148734999340899673,8357679882384238839,10401015698290709914,8915558462887270296],
+    "allowed_configuration_ids": ["f0-base-v1","c0-base-v1","s0-a025-v1","s0-a050-v1","dq0-p05-v1","dq0-p10-v1","d0-p05-k0005-v1","d0-p05-k0010-v1","d0-p10-k0005-v1","d0-p10-k0010-v1"]
+  },
+  "tuning": {
+    "root_seeds": [12986408528353180536,13892508379589321023,4081047663894099825,10778247903627529292,7088799643490810295,11322974369056228458,7419505541495665946,7651147050538486086],
+    "training_episodes_per_layout": 512,
+    "evaluation_pre_change_episodes": 16,
+    "evaluation_post_change_episodes": 32,
+    "condition_ids": ["nominal","action-remap-2-swap","action-remap-4-cycle"],
+    "candidate_configuration_ids": {
+      "f0":["f0-base-v1"],
+      "c0":["c0-base-v1"],
+      "s0":["s0-a025-v1","s0-a050-v1"],
+      "dq0":["dq0-p05-v1","dq0-p10-v1"],
+      "d0":["d0-p05-k0005-v1","d0-p05-k0010-v1","d0-p10-k0005-v1","d0-p10-k0010-v1"]
+    },
+    "selection_rule": [
+      "all required roots/layouts/conditions must complete or be transparently retained as failed/incomplete",
+      "maximize equal-weight mean terminal performance across declared tuning layouts, roots and conditions",
+      "minimize equal-weight mean cumulative deficit",
+      "minimize equal-weight mean immediate degradation",
+      "prefer lower planning_steps, then lower kappa, then lower learning_rate when still tied",
+      "lexicographically smallest configuration_id"
+    ],
+    "single_run_or_best_seed_selection": false
+  },
+  "evaluation": {
+    "root_seeds": [16324972595301538791,13174831318048648882,16481377427942291417,4254177363732715738,11400159664672989727,10321160965998390098,8082739836431596107,15755303461797166356,3647827452466292431,511392737514727565,5221817943705854852,13991927730926575961,11231642931286138736,2753801744444366548,18399734178452200759,5708270038964516261,14582827362302305123,12837077974544237975,3483182632170225461,4321510416692545735,17941178078165295662,5567058892214916427,11986325641174523129,4414316069726465359,9621961287984975546,4168651443016638231,10512640115250224468,9092757347073519655,16242854352442895360,8123791488018538886,9241304694279493294,4838871041751816990],
+    "pre_change_episodes": 16,
+    "post_change_episodes": 32,
+    "change_boundary": "between-episode-blocks",
+    "paired_reference": "same-layout-condition-root-seed",
+    "condition_ids": ["nominal","action-remap-2-swap","action-remap-4-cycle","action-failure-1of8","action-failure-1of4","observation-corruption-1of8","observation-corruption-1of4"],
+    "retention_policy": "events-plus-episode-curves",
+    "final_layout_ids": ["v11-final-l01","v11-final-l02","v11-final-l03","v11-final-l04"]
+  },
+  "metric_policy": {
+    "primary": ["cumulative_deficit","immediate_degradation","terminal_performance"],
+    "secondary": ["recovery_time","worst_window_degradation"],
+    "composite_resilience_score": false,
+    "recovery_is_sensitivity": true
+  },
+  "statistical_analysis_plan": {
+    "predeclared_contrasts": [["c0","f0"],["s0","f0"],["dq0","f0"],["d0","f0"],["s0","c0"],["dq0","c0"],["d0","dq0"]],
+    "paired_unit": "same root seed within the same layout and condition",
+    "layout_aggregation": "compute the paired agent effect within each root and layout, then average the four held-out layout effects equally within each root",
+    "primary_n": "32 root-level paired effects per condition and contrast after equal-weight four-layout aggregation",
+    "confidence_interval": {"level":0.95,"method":"percentile-bootstrap-over-root-level-paired-effects","resamples":10000,"analysis_seed":110920260827},
+    "reporting": ["report n=32 paired roots and 4 held-out layouts explicitly","report layout-specific effects alongside the four-layout aggregate","report effect estimate and 95% CI without post-hoc method switching","retain negative/null/unexpected effects"],
+    "multiple_testing_policy": "No null-hypothesis significance-testing family is predeclared; confidence intervals describe the predeclared mechanistic contrasts.",
+    "final_outcome_access": "blocked-until-protocol-frozen-and-T-511-accepted"
+  },
+  "robust_planner_gate": {
+    "status": "conditional-not-main",
+    "historical_r0": "immutable-negative-diagnostic-evidence",
+    "promotion_rule": "A redesigned Robust Planner may become a sixth main comparator only after a separate predeclared non-final nominal-viability, information-fairness and runtime gate; otherwise it remains excluded."
+  },
+  "resource_policy": {
+    "runtime_baseline": "validated thesis machine",
+    "initial_concurrency": 1,
+    "gpu_required": false,
+    "t522_measurement_required": true,
+    "planning_runtime_action": "If bounded planning settings are disproportionate, amend before freeze without inspecting final outcomes."
+  },
+  "stopping_policy": {
+    "training": "fixed-configured-episode-count",
+    "evaluation": "fixed-pre-and-post-episode-blocks",
+    "early_success_stopping": false,
+    "invalid_or_nonfinite_state": "fail-immediately-and-retain",
+    "timeout": "retain-partial-output-and-mark-failed"
+  },
+  "required_artifacts": ["resolved protocol/configuration IDs and canonical hashes","root and derived RNG seeds","source/runtime provenance","common checkpoint checksum","event log and per-episode return curves","per-agent planning update counts where applicable","metric definitions and paired-analysis provenance"],
+  "failure_and_exclusion_policy": {"retain_failed_cancelled_interrupted":true,"reference_fixtures_ranked":false,"post_final_configuration_switching":false,"final_evidence_allowed":false}
+}
