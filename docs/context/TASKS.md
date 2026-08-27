@@ -20,15 +20,16 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 ## Resume state
 
 - **Package:** DEC-042 + DEC-044 + DEC-045 + DEC-046 + DEC-047. DEC-043 is historical/superseded.
-- **Project:** **2/8** major refinement milestones complete.
-- **Current task:** `T-522`
-- **State:** `READY` for non-final execution on the validated thesis machine.
+- **Project:** **4/8** major refinement milestones complete (#87 milestones 1, 2, 4 and 5).
+- **Current repository task:** `T-531`.
+- **State:** `READY`; dependencies `T-521` and `T-530` are complete.
+- **External scientific gate:** `T-522` remains READY only on the validated thesis machine. It is not replaced by hosted CI.
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no second implementation branch.
-- **Trackers:** #87 master; #88 scientific (**9/12**); #89 runtime; #90 UI; #91 screenshots/CI/packaging.
-- **Last validated checkpoint:** PR CI run **409** passed documentation, JSON, compile, locked environment, repository tests including candidate-v1.1 protocol/configuration/fresh-reserve/paired-statistics guards, and bibliography integrity.
-- **Completed refinement tasks:** `T-520`, `T-523`, `T-521`.
+- **Trackers:** #87 master (**4/8**); #88 scientific (**9/12**); #89 runtime (**6/6 complete/closed**); #90 UI; #91 screenshots/CI/packaging.
+- **Last validated checkpoint:** PR CI run **425** passed documentation, JSON, Python compile, locked environment, complete repository tests including v1.1 candidate/statistics/runtime observer/runtime service contracts, and bibliography integrity.
+- **Completed refinement tasks:** `T-520`, `T-523`, `T-521`, `T-530`.
 - **Pre-WP7 approval:** NOT APPROVED; `T-700+` execution remains blocked.
-- **Exact next action:** execute `T-522` only with predeclared non-final evidence on the validated thesis machine. If that physical-machine boundary is unavailable to the active session, record it and continue dependency-valid `T-530`; never substitute GitHub-hosted CI or inspect final-v1.1 reserve outcomes.
+- **Exact next action:** continue `T-531` on this branch. If a session has access to the validated thesis machine, `T-522` may run in parallel only as the predeclared non-final external evidence gate; never inspect/generate final-v1.1 reserve outcomes.
 
 ## Quota/interruption resilience
 
@@ -102,19 +103,19 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
 
 - [x] `T-521` — Authoritative **candidate** `protocol-v1.1`, bounded tuning/settings, fresh reserves, configuration identity/provenance and paired statistics.
   - Depends on: `T-523`.
-  - Evidence: separate fail-closed schema/loader/runner; five strategies; preserved Q baseline alpha `.5`, gamma `.96875`, epsilon `.125`; 2 SARSA + 2 Dyna-Q + 4 Dyna-Q+ bounded candidate configurations; four fresh held-out layouts; fresh/disjoint 32-root final bank; seven structural single-factor conditions; stable SHA-256 configuration/protocol identities; complete-root tuning/no best-seed; cumulative deficit/immediate degradation/terminal performance primary; recovery secondary/sensitivity; root-blocked equal-layout paired effects with deterministic 95% percentile-bootstrap CI; pilot/final candidate execution blocked. CI run 409.
+  - Evidence: separate fail-closed schema/loader/runner; five strategies; preserved Q baseline alpha `.5`, gamma `.96875`, epsilon `.125`; 2 SARSA + 2 Dyna-Q + 4 Dyna-Q+ bounded candidate configurations; four fresh held-out layouts; fresh/disjoint 32-root final bank; seven structural single-factor conditions; stable SHA-256 configuration/protocol identities; complete-root tuning/no best-seed; cumulative deficit/immediate degradation/terminal performance primary; recovery secondary/sensitivity; root-blocked equal-layout paired effects with deterministic 95% percentile-bootstrap CI; pilot/final candidate execution blocked. CI run 409/425.
   - Robust gate: historical R0 remains negative/diagnostic; a redesigned Robust Planner is conditional/non-main unless a separate non-final viability/fairness/runtime gate passes.
 
 - [ ] READY `T-522` — Execute bounded non-final tuning/resource evaluation and freeze/amend/reject v1.1.
   - Depends on: `T-521`.
   - Acceptance: use only complete predeclared non-final roots/layouts/conditions/configurations; retain failed/interrupted/poor/non-recovery outcomes; apply deterministic selection/tie rules; measure Dyna planning wall time/update/artifact cost on the validated thesis machine; resolve conditional Robust Planner explicitly; freeze retained configuration IDs before any final reserve access.
-  - External boundary: do not substitute GitHub-hosted CI for the validated thesis machine. If unavailable, continue `T-530`.
+  - External boundary: do not substitute GitHub-hosted CI for the validated thesis machine.
 
-- [ ] READY `T-530` — Truthful UI-independent Python runtime service for live experiments.
+- [x] `T-530` — Truthful UI-independent Python runtime service for live experiments.
   - Depends on: `T-520`.
-  - Acceptance: versioned queued/running/completed/failed/cancelled/interrupted DTOs; heartbeat/progress/events/history/resources; unfinished-run recovery; read-only live GridWorld observer proven not to alter RNG/actions; safe capability-based controls; unsupported controls explicit.
+  - Evidence: schema-v1 queued/running/completed/failed/cancelled/interrupted DTOs; persisted runtime registry; activity heartbeat; persisted root progress plus latest real phase/episode/step; telemetry tail; canonical resources; unfinished/finalized history reconciliation; capability-based cancel/restart; pause/resume explicitly unsupported; owned candidate subprocess entrypoint only; pre-queue protocol/request validation; read-only live GridWorld observer; observer ON/OFF produces identical scientific root results. Tracker #89 6/6; CI run 425.
 
-- [ ] BLOCKED `T-531` — Complete native NiceGUI application.
+- [ ] READY `T-531` — Complete native NiceGUI application.
   - Depends on: `T-521`, `T-530`.
   - Acceptance: Dashboard/New Experiment/Runs/Compare/Artifacts; approved Agent strategy/configuration/repetitions; smooth truthful live GridWorld; ECharts live telemetry; Plotly final/comparison figures; Mermaid explanations; AG Grid tables; tooltips/helper text/progressive disclosure; accessible text+icon+color status; compact modern micro-interactions/animations; technical IDs only under Reproducibility; no fake data/progress/replay.
 
