@@ -14,72 +14,72 @@
 
 ## Active refinement
 
-- Decisions: DEC-042 scientific refinement; DEC-043 historical/superseded React/Vite exploration; DEC-044 NiceGUI native application; DEC-045 visual analytics; DEC-046 novice-first compact UX; **DEC-047 broader agent comparison + human-readable agent naming**.
+- Decisions: DEC-042 scientific refinement; DEC-043 historical/superseded React/Vite exploration; DEC-044 NiceGUI native application; DEC-045 visual analytics; DEC-046 novice-first compact UX; DEC-047 broadened agent comparison and human-readable naming.
 - Single branch/PR: `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft #92. No parallel implementation branch or early merge.
 - Trackers: #87 master; #88 scientific; #89 runtime; #90 UI; #91 screenshots/CI/packaging.
-- Progress: **2/8** major milestones. `T-520` complete; current task is now **`T-523 READY`**. `T-521` is blocked on T-523.
-- PR CI run **376** validated the pre-DEC-047 continuity/documentation reconciliation: documentation consistency, JSON validation, Python compile, locked environment, complete tests and bibliography integrity passed. DEC-047/T-523 changes require a new current-head CI before their checkpoint is called validated.
+- Progress: **2/8** major milestones. `T-520` and `T-523` are complete. Current scientific task is **`T-521 READY`**; `T-522` remains blocked on T-521.
+- PR CI run **396** validated the broadened agent implementation checkpoint: documentation consistency, committed JSON validation, Python compile, locked environment, complete **143-test** suite including SARSA/Dyna-Q/five-strategy/reference tests, and bibliography integrity.
 
-## Thesis framing correction
+## Thesis framing
 
-The thesis is about **resilient AI agent strategies operating under uncertainty and environmental change**. GridWorld is the controlled experimental testbed and visualization environment used to make mechanisms, disturbances, trajectories and comparisons reproducible/understandable. It is not the thesis subject or the reason the agent set is selected.
+The thesis concerns **resilient AI agent strategies operating under uncertainty and environmental change**. GridWorld is the controlled experimental testbed and visualization environment used to expose mechanisms, disturbances, trajectories and comparisons reproducibly. It is not the thesis subject or the basis for choosing agent families.
 
 ## Scientific direction
 
-DEC-047 broadens the candidate v1.1 comparison from three technical roles to **five main user-facing agent strategies**:
+DEC-047 defines five main candidate strategies:
 
-1. **Fixed Q-Learning** — learned nominal policy, no post-change learning (historical technical identity F0).
-2. **Adaptive Q-Learning** — ordinary off-policy continual Q-learning (historical technical identity C0).
-3. **SARSA** — on-policy continual model-free learning.
-4. **Dyna-Q** — online learning plus an empirical learned model and planning, without recency bonus.
-5. **Dyna-Q+** — learned-model planning plus directed re-exploration of long-untried actions (historical technical identity D0).
+1. **Fixed Q-Learning** — learned nominal Q-values/policy, no post-change learning; historical technical identity F0.
+2. **Adaptive Q-Learning** — continual off-policy Q-learning; historical technical identity C0.
+3. **SARSA** — on-policy continual model-free TD control.
+4. **Dyna-Q** — online model learning plus planning over experienced state-action transitions, without Dyna-Q+ recency/untried-action bonuses.
+5. **Dyna-Q+** — Dyna planning plus directed re-exploration of long-untried actions; historical technical identity D0.
 
-Why these five: they isolate no adaptation, off-policy model-free adaptation, on-policy model-free adaptation, learned-model planning, and planning plus explicit change-seeking re-exploration. Plain Dyna-Q is required to separate the contribution of planning from Dyna-Q+'s recency bonus.
+The set isolates no adaptation, off-policy model-free adaptation, on-policy model-free adaptation, learned-model planning, and planning plus explicit change-seeking re-exploration. `T-523` implemented and validated SARSA and plain Dyna-Q with deterministic/serializable state, the same agent-visible information boundary, episode persistence, focused algorithmic tests and five-strategy runner/configuration identities.
 
-**Reference-only strategies:** Random Agent may be used as a lower scale/correctness fixture; a nominal/fully-informed planner may be used as a clearly privileged scale/debug reference. They are not equivalent scientific agents and are excluded from fair rankings.
+**Reference only:** deterministic Random Agent is a lower scale/correctness fixture. A nominal/fully-informed planner may only be a clearly privileged analytical/debug reference. Neither belongs in fair rankings.
 
-**Robust-planning branch:** historical R0 remains negative/diagnostic pilot evidence. A redesigned Robust Planner may become a conditional sixth comparator only if a small predeclared non-final nominal-viability/fairness/runtime gate passes. Do not reinstate R0 unchanged.
+**Robust branch:** historical R0 remains negative/diagnostic pilot evidence. A redesigned Robust Planner can become a conditional sixth comparator only if a predeclared non-final nominal-viability/fairness/runtime gate passes; unchanged R0 is not reinstated.
 
-Preserve Fixed/Adaptive Q-Learning alpha `0.5`, gamma `0.96875`, epsilon `0.125`, 512 training episodes/layout, 16 pre-change, 32 post-change, horizon 48 and current target 32 paired final roots unless an explicit later evidence-backed amendment changes the matrix.
+Preserve the validated Fixed/Adaptive Q-Learning base values unless an explicit evidence-backed amendment is made: alpha `0.5`, gamma `0.96875`, epsilon `0.125`, 512 nominal training episodes/layout, 16 pre-change, 32 post-change, horizon 48 and current target 32 paired final roots.
 
-T-523 must implement/validate SARSA and plain Dyna-Q with the same agent-visible information boundary, deterministic/serializable state and focused correctness tests, then integrate them into the versioned runner/configuration identity surface. T-521 then owns the authoritative five-agent candidate-v1.1 schema, bounded tuning, fresh layouts/seeds and paired statistics.
+Five-strategy matrix feasibility is bounded but not yet a runtime claim: 888,832 environment episodes for 4 layouts × 7 conditions × 32 roots versus 315,392 historical v1.0 episodes, about 2.82× before Dyna planning overhead. Real planning cost must be measured on non-final runs before freeze.
 
-Multiple approved development/tuning configurations remain stage-controlled: stable identity/hash/provenance, multiple predefined roots, no single-run/best-seed selection, final retained settings frozen before final outcomes.
+## T-521 scope
 
-Primary reporting remains cumulative deficit, immediate degradation and terminal gap/performance. Recovery remains secondary/sensitivity. Paired effects + 95% CIs + explicit n/layout-aware views required; no composite resilience score/post-hoc favorable threshold.
+T-521 now owns the authoritative candidate `protocol-v1.1` definition before any selection evidence is inspected:
 
-## User-facing naming
+- five validated main strategies and stable human-readable/technical configuration identities;
+- exact small predeclared SARSA fairness-tuning and Dyna/Dyna-Q+ planning surfaces only where scientifically justified;
+- four fresh held-out final layouts and a fresh precommitted final seed bank;
+- seven single-factor conditions with structural remap IDs `action-remap-2-swap` and `action-remap-4-cycle`;
+- paired effects, 95% confidence intervals, explicit n and layout-aware aggregation;
+- primary cumulative deficit, immediate degradation and terminal performance/gap; recovery secondary/sensitivity;
+- no best-seed, best-final switching, opaque composite score or post-hoc favorable threshold.
 
-Opaque technical IDs are not primary UI terminology. The selector is **Agent strategy** and ordinary users see the five full names above plus one-sentence explanations and mechanism badges such as `Does not adapt`, `Model-free`, `On-policy`, `Uses planning`, `Re-explores for change`.
+Candidate status never authorizes final evidence. T-522 later uses only predeclared non-final evidence to freeze/amend/reject strategies and settings.
 
-Historical/internal IDs such as F0/C0/D0, method schema IDs and configuration hashes appear only in **Technical details / Reproducibility**. The same human-readable names must propagate to Runs, Compare, chart legends, screenshots, thesis-facing exports and presentation assets.
+## User-facing naming and application
 
-## Application / execution direction
+The primary UI concept is **Agent strategy**. Ordinary users see full names and concise mechanism explanations; F0/C0/D0, schema IDs and configuration hashes are secondary under **Technical details / Reproducibility**. The same full names propagate to Runs, Compare, charts, screenshots and later thesis/presentation-facing exports.
 
 - NiceGUI 3.16 native/pywebview over UI-independent Python runtime/scientific services.
-- Plotly = stored/final figures; ECharts = real live/provisional telemetry; Mermaid = explanations; AG Grid Community = analytical tables.
-- T-530 supplies truthful active-run DTOs/events/history/resources, safe controls and read-only live GridWorld; visualization never changes scientific timing/actions/RNG.
-- T-531 completes Dashboard/New Experiment/Runs/Compare/Artifacts with approved configurations/settings, repetitions, live overlays and novice-first explanations using the new human-readable agent strategy names.
+- Plotly = stored/final scientific figures; ECharts = real live/provisional telemetry; Mermaid = explanations; AG Grid Community = analytical tables.
+- T-530 supplies truthful active-run DTOs/events/history/resources, capability-based controls and read-only live GridWorld observation.
+- T-531 completes Dashboard/New Experiment/Runs/Compare/Artifacts and novice-first explanations.
 - T-532 validates screenshots/browser/native Windows/PyInstaller `onedir + windowed`; root `run_app.bat` remains checkout launcher.
 
-After acceptance, ordinary approved experiments run directly from the desktop application on the validated thesis machine without Codex/console commands. Backend owns resolved config, seeds, execution, persistence/provenance, finalization and guarded Git publication.
+After acceptance, approved experiments run directly from the desktop application on the validated thesis machine without Codex/console commands merely to launch a frozen configuration.
 
-GitHub remains source-of-truth/PR/CI/evidence coordination. GitHub-hosted Actions are not automatically the validated final stochastic experiment machine. A thesis-machine self-hosted runner is optional; local Codex remains for code/protocol/debugging changes, not routine frozen runs.
+## Bibliography and testing baseline
 
-## WP7/WP8 future workflow
+`MariosGiannakaras/ThesisBibliography` remains canonical; accepted immutable thesis-repo import is `bibliography-integration-v3`. New research sources continue through the bibliography repository's canonical intake and are imported only through a later versioned synchronization.
 
-After final evidence, T-511 acceptance and explicit approval: Codex/repository automation owns traceable evidence/assets/technical checks; ChatGPT is preferred for Greek thesis/slide drafting and placement guidance; Word is final `.docx` QA; PowerPoint is final `.pptx` QA/rehearsal; Canva is optional polish. Every user-captured screenshot/GIF/video receives an exact `ASSET-*` record with state/run/config, crop, target section/slide, caption/placement/size, evidence ID and static fallback.
-
-## Accepted baseline
-
-Python 3.12 + `uv`, project GridWorld testbed, strict information boundary, deterministic RNG, filesystem run bundles, provenance/checksums and guarded publication remain authoritative. Testing stays risk-based/proportional; PR CI is the canonical full-suite guard.
-
-`MariosGiannakaras/ThesisBibliography` remains canonical; accepted immutable import: `bibliography-integration-v3`.
+Testing remains risk-based/proportional; PR CI is the canonical full-suite guard. Use progressive reading and targeted checks during implementation rather than coverage expansion.
 
 ## Still intentionally unfrozen
 
-SARSA/Dyna-Q implementation checkpoint, exact SARSA/Dyna planning tuning surfaces, candidate-v1.1 freeze, conditional Robust Planner decision, exact fresh layouts/seeds, new final evidence, active-run runtime behavior, final novice-first UI/screenshots/native package, current official WP7 formatting/defense rules and final thesis/presentation deliverables remain unfrozen until explicit gates pass.
+Exact T-521 tuning/fairness surfaces, candidate-v1.1 schema/fresh layouts/seeds/statistical implementation, T-522 retained strategy/settings outcome, conditional Robust Planner decision, actual Dyna planning runtime, new final evidence, active-run runtime behavior, final novice-first UI/screenshots/native package, current official WP7 formatting/defense rules and final thesis/presentation deliverables remain unfrozen until their explicit gates pass.
 
 ## Exact next action
 
-Execute **T-523**: implement/validate SARSA and Dyna-Q, integrate five main agent strategies/reference fixtures/user-facing identities, and measure bounded runtime feasibility. Then execute T-521. Keep final evidence and every `T-700+` task blocked.
+Execute **T-521** as one bounded scientific scope. Define and implement the authoritative five-strategy candidate `protocol-v1.1`, predeclared bounded settings/fairness rules, fresh held-out layouts/seeds, configuration identity/provenance and paired statistical support. Do not inspect/generate final-v1.1 outcomes and do not start any `T-700+` task.
