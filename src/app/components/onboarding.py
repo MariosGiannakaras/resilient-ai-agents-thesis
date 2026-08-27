@@ -11,7 +11,7 @@ STEPS = (
     ),
     (
         "New Experiment",
-        "Understand F0/C0/D0 and configure only protocol-approved agents, layouts, uncertainty conditions, seeds and parameters. The exact resolved request is reviewed before launch.",
+        "Choose among Fixed Q-Learning, Adaptive Q-Learning, SARSA, Dyna-Q and Dyna-Q+. Only protocol-approved layouts, conditions, repetitions and settings are available, and a plain-language resolved request is reviewed before launch.",
     ),
     (
         "Runs",
@@ -19,7 +19,7 @@ STEPS = (
     ),
     (
         "Compare",
-        "Compare compatible runs with distributions, paired effects, uncertainty and layout/condition breakdowns. Live values are never silently promoted into final evidence.",
+        "Compare compatible stored evidence with distributions, counts and layout/condition breakdowns. Paired effects or confidence intervals appear only when the stored evidence actually contains them.",
     ),
     (
         "Artifacts",

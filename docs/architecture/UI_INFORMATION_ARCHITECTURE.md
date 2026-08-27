@@ -17,7 +17,7 @@ System details, metric definitions and advanced settings use drawers/tabs/contex
 The application must be usable without reading a separate manual. Scientific complexity is explained rather than hidden behind unexplained IDs.
 
 - Use human-readable primary labels; technical IDs remain secondary reproducibility detail.
-- Explain F0/C0/D0 roles, uncertainty conditions, settings, repetitions/seeds, metrics, aggregation and SD/CI/error semantics.
+- Explain the five full Agent strategy names, uncertainty conditions, settings, repetitions, metrics, aggregation and SD/CI/error semantics; exact seeds and internal IDs stay under Reproducibility.
 - Use concise info-icon/tooltips for non-obvious concepts and contextual/expandable help for longer explanations.
 - Tooltips supplement rather than replace information required to make a safe configuration decision.
 - Use consistent terminology across configuration, live runs, history, comparison and exports.
@@ -70,7 +70,7 @@ Keep the page compact and screenshot-ready; resource status is a current snapsho
 Purpose: configure and launch scientifically valid work without code.
 
 - Select protocol/stage.
-- Select permitted agent regime(s): F0/C0/D0 as defined by the active protocol.
+- Select permitted Agent strategies: Fixed Q-Learning, Adaptive Q-Learning, SARSA, Dyna-Q and Dyna-Q+ as defined by the active protocol.
 - Select one or more protocol-approved configuration/settings variants where the stage permits them.
 - Explain fixed vs tunable parameters and model-specific settings; hide invalid/unapproved internal switches.
 - Select environment/layout and uncertainty condition/severity allowed by the protocol.

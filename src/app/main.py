@@ -15,8 +15,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator
 
-from nicegui import ui
+from nicegui import app, ui
 
+from app.components.onboarding import open_onboarding
 from app.live import build_runtime_telemetry_view, gridworld_html
 from app.state import (
     AGENT_PROFILE_BY_ID,
@@ -24,8 +25,8 @@ from app.state import (
     ApplicationReadModel,
     CandidateExperimentForm,
     bytes_to_gib,
-    setting_summary,
-    shortened_hash,
+    layout_label,
+    setting_rows,
 )
 from app.visualizations import (
     CONDITION_LABELS,
@@ -33,8 +34,9 @@ from app.visualizations import (
     PLOTLY_CONFIG,
     agent_infographic_mermaid,
     aggregated_metric_figure,
+    evidence_distribution_figure,
+    layout_breakdown_figure,
     live_series_options,
-    metric_heatmap_figure,
 )
 from resilient_agents.contracts import ProtocolStage
 from resilient_agents.runtime_service import RuntimeRunSnapshot, RuntimeStatus
@@ -42,6 +44,9 @@ from resilient_agents.runtime_service import RuntimeRunSnapshot, RuntimeStatus
 REPO_ROOT = Path(__file__).resolve().parents[2]
 READ_MODEL = ApplicationReadModel(REPO_ROOT)
 APP_TITLE = "Resilient AI Agents Lab"
+THESIS_ARTIFACT_ROOT = REPO_ROOT / "results" / "thesis-final" / "artifacts"
+if THESIS_ARTIFACT_ROOT.is_dir():
+    app.add_static_files("/stored-thesis-artifacts", str(THESIS_ARTIFACT_ROOT))
 
 NAVIGATION = (
     ("/", "Dashboard", "dashboard"),
@@ -58,6 +63,43 @@ STATUS_COLORS = {
     RuntimeStatus.FAILED: "red-7",
     RuntimeStatus.CANCELLED: "orange-8",
     RuntimeStatus.INTERRUPTED: "deep-orange-7",
+}
+
+STATUS_ICONS = {
+    RuntimeStatus.QUEUED: "schedule",
+    RuntimeStatus.RUNNING: "play_circle",
+    RuntimeStatus.COMPLETED: "check_circle",
+    RuntimeStatus.FAILED: "error",
+    RuntimeStatus.CANCELLED: "cancel",
+    RuntimeStatus.INTERRUPTED: "power_off",
+}
+
+STATUS_TEXT = {
+    RuntimeStatus.QUEUED: "◷ Queued",
+    RuntimeStatus.RUNNING: "▶ Running",
+    RuntimeStatus.COMPLETED: "✓ Completed",
+    RuntimeStatus.FAILED: "! Failed",
+    RuntimeStatus.CANCELLED: "× Cancelled",
+    RuntimeStatus.INTERRUPTED: "■ Interrupted",
+}
+
+CONDITION_HELP = {
+    "nominal": "No environmental change. This provides the matched reference behavior.",
+    "action-failure-1of8": "About one in eight intended actions is not executed as requested.",
+    "action-failure-1of4": "About one in four intended actions is not executed as requested.",
+    "observation-corruption-1of8": "About one in eight delivered observations is corrupted.",
+    "observation-corruption-1of4": "About one in four delivered observations is corrupted.",
+    "action-remap-2-swap": "Two action meanings are persistently swapped after the change.",
+    "action-remap-4-cycle": "All four action meanings are persistently cycled after the change.",
+    "remap-min-in-set": "Historical two-action persistent remap condition.",
+    "remap-max-out-of-set": "Historical four-action persistent remap condition.",
+}
+
+METRIC_HELP = {
+    "post_change_mean": "Average return after the environmental change. Higher is better.",
+    "cumulative_deficit": "Total shortfall from the matched reference after change. Lower is better; zero means no shortfall.",
+    "immediate_degradation": "Performance loss immediately after change. Lower is better.",
+    "nominal_mean": "Average return before change under nominal conditions. Higher is better.",
 }
 
 GLOBAL_CSS = r"""
@@ -111,7 +153,12 @@ body { background: var(--app-bg); color: var(--text); }
 .grid-empty-icon { font-size:52px; color:#cbd5e1; }
 .q-drawer { background: rgba(255,255,255,.98) !important; }
 .q-table__container, .ag-root-wrapper { border-radius: 14px !important; }
-@media (prefers-reduced-motion: reduce) { .gw-cell { transition:none; } }
+.q-btn, .q-card, .q-field { transition: box-shadow .16s ease, transform .16s ease, border-color .16s ease; }
+.q-btn:not(.disabled):hover { transform: translateY(-1px); }
+.q-btn:focus-visible, .q-field--focused { outline: 3px solid rgba(37,99,235,.18); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
 @media (max-width: 900px) { .app-page { padding: 20px 16px 36px; } .page-title { font-size: 25px; } }
 """
 
@@ -127,7 +174,16 @@ def _status_badge(text: str, *, color: str = "grey-7") -> None:
 
 
 def _runtime_badge(status: RuntimeStatus) -> None:
-    _status_badge(status.value.replace("_", " ").title(), color=STATUS_COLORS[status])
+    with ui.row().classes("items-center gap-1 no-wrap"):
+        ui.icon(STATUS_ICONS[status], size="16px").classes(f"text-{STATUS_COLORS[status]}")
+        _status_badge(status.value.replace("_", " ").title(), color=STATUS_COLORS[status])
+
+
+def _configuration_option_label(option: Any, available: tuple[Any, ...]) -> str:
+    varied = [row for row in setting_rows(option, available) if row["availability"].startswith("Tunable")]
+    if not varied:
+        return "Protocol-approved fixed configuration"
+    return " · ".join(f"{row['setting']}: {row['value']}" for row in varied)
 
 
 @contextmanager
@@ -149,6 +205,7 @@ def page_shell(title: str, subtitle: str, *, eyebrow: str) -> Iterator[None]:
                 ui.label(APP_TITLE).classes("font-semibold text-[15px]")
                 ui.label("Local thesis research application").classes("text-[11px] text-slate-500")
             ui.space()
+            ui.button("Getting started", icon="help_outline", on_click=open_onboarding).props("flat dense no-caps")
             _status_badge("WP7 BLOCKED · pre-writing refinement", color="orange-8")
 
     with ui.left_drawer(value=True, fixed=True).classes("app-drawer pt-3"):
@@ -231,21 +288,29 @@ def _render_agent_profile(agent: Any) -> None:
 
 
 def _runtime_table_rows(runs: list[RuntimeRunSnapshot]) -> list[dict[str, Any]]:
-    return [
-        {
+    rows: list[dict[str, Any]] = []
+    for item in runs:
+        try:
+            identity = READ_MODEL.run_identity(item.run_id) or {}
+        except RuntimeError:
+            identity = {}
+        rows.append({
             "run_id": item.run_id,
-            "status": item.status.value,
+            "status": STATUS_TEXT[item.status],
             "progress": (
                 "—"
                 if item.progress.total_roots == 0
                 else f"{item.progress.completed_roots}/{item.progress.total_roots} roots"
             ),
             "attempt": item.attempt,
+            "strategies": ", ".join(identity.get("strategy_names", ())) or "Unavailable",
+            "stage": str(identity.get("stage") or "Unavailable").replace("_", " ").title(),
+            "layout": layout_label(str(identity["layout_id"])) if identity.get("layout_id") else "Unavailable",
+            "condition": CONDITION_LABELS.get(str(identity.get("condition_id")), str(identity.get("condition_id") or "Unavailable")),
             "started_at_utc": item.created_at_utc,
             "updated_at_utc": item.updated_at_utc,
-        }
-        for item in runs
-    ]
+        })
+    return rows
 
 
 @ui.page("/", title=f"{APP_TITLE} · Dashboard")
@@ -261,6 +326,11 @@ def dashboard_page() -> None:
             for item in runtime_runs
             if item.status in {RuntimeStatus.QUEUED, RuntimeStatus.RUNNING}
         ]
+        failed_or_interrupted = [
+            item
+            for item in runtime_runs
+            if item.status in {RuntimeStatus.FAILED, RuntimeStatus.INTERRUPTED}
+        ]
         system = READ_MODEL.system_snapshot()
         cpu = system.get("cpu", {}) if isinstance(system, dict) else {}
         memory = system.get("memory", {}) if isinstance(system, dict) else {}
@@ -273,10 +343,26 @@ def dashboard_page() -> None:
             _metric_card("Total memory", bytes_to_gib(memory.get("total_bytes")), "Current machine snapshot", "dns")
             _metric_card("Free workspace disk", bytes_to_gib(storage.get("repository_filesystem_free_bytes")), "Repository filesystem", "hard_drive")
 
+        with ui.row().classes("w-full gap-3 flex-wrap"):
+            ui.button("Configure experiment", icon="add", on_click=lambda: ui.navigate.to("/experiment")).props("unelevated no-caps")
+            ui.button("Open active runs", icon="monitor_heart", on_click=lambda: ui.navigate.to("/runs")).props("outline no-caps")
+            ui.button("Compare stored evidence", icon="compare_arrows", on_click=lambda: ui.navigate.to("/compare")).props("outline no-caps")
+            ui.button("Export artifacts", icon="download", on_click=lambda: ui.navigate.to("/artifacts")).props("flat no-caps")
+
         if runtime_error:
             with ui.row().classes("status-strip status-danger w-full items-center gap-2"):
                 ui.icon("error_outline")
                 ui.label(f"Runtime/history read error: {runtime_error}")
+        elif failed_or_interrupted:
+            with ui.row().classes("status-strip status-warning w-full items-center gap-2"):
+                ui.icon("warning_amber")
+                ui.label(
+                    f"{len(failed_or_interrupted)} failed or interrupted run(s) remain visible. Open Runs to inspect the recorded status and recovery capability."
+                )
+        if not isinstance(cpu.get("model"), str) or not isinstance(memory.get("total_bytes"), (int, float)):
+            with ui.row().classes("status-strip status-warning w-full items-center gap-2"):
+                ui.icon("memory")
+                ui.label("Some current resource details are unavailable. Refresh the application or check the system inventory before starting expensive work.")
 
         with ui.grid(columns=2).classes("w-full gap-5"):
             with ui.card().classes("panel-card w-full"):
@@ -293,8 +379,10 @@ def dashboard_page() -> None:
                     ui.label(f"Protocol SHA-256: {protocol['sha256']}").classes("text-xs break-all")
                 _render_protocol_state()
             with ui.card().classes("panel-card w-full"):
-                ui.label("Current application capability").classes("section-title")
+                ui.label("Current machine and capability").classes("section-title")
                 with ui.column().classes("gap-2 text-sm"):
+                    ui.label(str(cpu.get("model") or "CPU details unavailable"))
+                    ui.label(f"{cpu.get('physical_cores', '—')} physical / {cpu.get('logical_processors', '—')} logical processors").classes("muted text-xs")
                     ui.label("✓ Five protocol-v1.1 Agent strategies and bounded configurations")
                     ui.label("✓ Truthful runtime lifecycle, resources and controls")
                     ui.label("✓ Read-only live GridWorld telemetry with non-interference test")
@@ -340,6 +428,9 @@ def experiment_page() -> None:
                 ui.label(
                     "Final-evidence execution is intentionally unavailable until T-522 freezes retained configurations and the later application/user gates pass."
                 ).classes("text-sm")
+        with ui.expansion("What is the difference between Development and Tuning?", icon="help_outline").classes("w-full"):
+            ui.label("Development checks behavior on the approved development layouts and conditions without selecting final evidence.").classes("text-sm")
+            ui.label("Tuning evaluates only the predeclared candidate choices on the complete tuning repetition bank; it is not a best-seed search.").classes("text-sm")
 
         form: dict[str, Any] = {
             "stage": ProtocolStage.DEVELOPMENT.value,
@@ -379,7 +470,7 @@ def experiment_page() -> None:
                     ui.input(
                         "Run ID",
                         value=form["run_id"],
-                        on_change=lambda event: form.update(run_id=str(event.value)),
+                        on_change=lambda event: (form.update(run_id=str(event.value)), configurator.refresh()),
                     ).props("outlined dense").classes("w-full").tooltip("Stable identifier for this run bundle. It must be unique and contain no path separators.")
 
                     def change_stage(event: Any) -> None:
@@ -400,26 +491,31 @@ def experiment_page() -> None:
                         on_change=change_stage,
                     ).props("outlined dense").classes("w-full").tooltip("Candidate protocol permits only development/tuning. Final is deliberately locked.")
                     ui.select(
-                        list(layouts),
+                        {layout_id: layout_label(layout_id) for layout_id in layouts},
                         value=form["layout_id"],
                         label="GridWorld layout",
-                        on_change=lambda event: form.update(layout_id=str(event.value)),
-                    ).props("outlined dense").classes("w-full")
+                        on_change=lambda event: (form.update(layout_id=str(event.value)), configurator.refresh()),
+                    ).props("outlined dense").classes("w-full").tooltip("Only layouts assigned to the selected protocol stage are available.")
                     ui.select(
                         {condition: CONDITION_LABELS.get(condition, condition) for condition in conditions},
                         value=form["condition_id"],
                         label="Uncertainty / change condition",
-                        on_change=lambda event: form.update(condition_id=str(event.value)),
-                    ).props("outlined dense").classes("w-full")
+                        on_change=lambda event: (form.update(condition_id=str(event.value)), configurator.refresh()),
+                    ).props("outlined dense").classes("w-full").tooltip("A controlled single-factor change approved by the candidate protocol.")
+                    ui.label(CONDITION_HELP.get(str(form["condition_id"]), "Protocol-defined controlled condition.")).classes("muted text-xs")
                     with ui.row().classes("status-strip w-full items-center gap-2"):
                         ui.icon("repeat")
-                        ui.label(f"Repetitions: {len(roots)} predeclared root seeds · complete bank required")
-                    with ui.expansion("Root seeds", icon="numbers").classes("w-full"):
+                        ui.label(f"Repetitions: {len(roots)} predefined independent roots · complete bank required")
+                    with ui.expansion("Technical details / Reproducibility", icon="fingerprint").classes("w-full"):
+                        ui.label("Exact predefined root seeds").classes("font-medium text-xs")
                         ui.label(", ".join(str(seed) for seed in roots)).classes("text-xs break-all muted")
 
                 with ui.card().classes("panel-card w-full"):
                     ui.label("Agent strategy").classes("section-title")
                     ui.label("Select one or more mechanism-distinct strategies. Internal IDs stay secondary.").classes("muted text-sm")
+                    with ui.row().classes("status-strip w-full items-start gap-2"):
+                        ui.icon("tune", size="18px")
+                        ui.label("Fixed settings cannot be changed. Tunable settings vary only through approved choices. Unavailable settings are intentionally not exposed.").classes("text-xs")
 
                     def change_agents(event: Any) -> None:
                         values = list(event.value or [])
@@ -451,14 +547,20 @@ def experiment_page() -> None:
                                 configurator.refresh()
 
                             ui.select(
-                                {option.configuration_id: setting_summary(option.settings) for option in options},
+                                {option.configuration_id: _configuration_option_label(option, options) for option in options},
                                 value=form["configs"][agent_id],
                                 label="Approved configuration",
                                 on_change=config_changed,
-                            ).props("outlined dense").classes("w-full")
+                            ).props("outlined dense").classes("w-full").tooltip("Every choice is bounded by protocol-v1.1 and evaluated across the complete repetition bank.")
                             selected_option = next(
                                 item for item in options if item.configuration_id == form["configs"][agent_id]
                             )
+                            for row in setting_rows(selected_option, options):
+                                with ui.row().classes("w-full items-start gap-2 text-xs"):
+                                    ui.icon("tune" if row["availability"].startswith("Tunable") else "lock", size="15px").classes("text-slate-500 mt-0.5")
+                                    with ui.column().classes("gap-0"):
+                                        ui.label(f"{row['setting']}: {row['value']} · {row['availability']}").classes("font-medium")
+                                        ui.label(f"{row['range']} · {row['consequence']}").classes("muted")
                             with ui.expansion("Technical details / Reproducibility", icon="fingerprint").classes("w-full"):
                                 ui.label(f"Configuration ID: {selected_option.configuration_id}").classes("text-xs")
                                 ui.label(f"SHA-256: {selected_option.sha256}").classes("text-xs break-all muted")
@@ -489,7 +591,29 @@ def experiment_page() -> None:
                         ui.icon("error_outline")
                         ui.label(error)
                 elif request is not None:
-                    ui.code(json.dumps(request.to_dict(), indent=2, sort_keys=True), language="json").classes("w-full max-h-96 overflow-auto")
+                    payload = request.to_dict()
+                    with ui.grid(columns=4).classes("w-full gap-3"):
+                        _metric_card("Stage", str(payload["stage"]).title(), "Non-final evidence class", "science")
+                        _metric_card("Layout", layout_label(str(payload["layout_id"])), "Protocol-approved", "grid_view")
+                        _metric_card("Repetitions", str(len(payload["root_seeds"])), "Complete predefined bank", "repeat")
+                        _metric_card("Strategies", str(len(payload["agent_ids"])), "Mechanism-distinct choices", "psychology")
+                    with ui.row().classes("status-strip w-full items-start gap-2"):
+                        ui.icon("warning_amber")
+                        ui.label(CONDITION_HELP.get(str(payload["condition_id"]), "Protocol-defined controlled condition."))
+                    with ui.column().classes("w-full gap-2"):
+                        for agent_id in payload["agent_ids"]:
+                            profile = AGENT_PROFILE_BY_ID[str(agent_id)]
+                            option = next(
+                                item
+                                for item in configuration_options[str(agent_id)]
+                                if item.configuration_id == payload["agent_configuration_ids"][str(agent_id)]
+                            )
+                            ui.label(f"{profile.name} · {_configuration_option_label(option, configuration_options[str(agent_id)])}").classes("text-sm font-medium")
+                    ui.label(
+                        f"Episode plan: {payload['training_episodes_per_layout']} nominal training episodes per layout, then {payload['pre_change_episodes']} before-change and {payload['post_change_episodes']} after-change episodes per repetition."
+                    ).classes("muted text-sm")
+                    with ui.expansion("Technical details / Reproducibility", icon="fingerprint").classes("w-full"):
+                        ui.code(json.dumps(payload, indent=2, sort_keys=True), language="json").classes("w-full max-h-96 overflow-auto")
 
                     def launch() -> None:
                         assert request is not None
@@ -548,6 +672,27 @@ def _render_live_run(run: RuntimeRunSnapshot) -> None:
                 except (RuntimeError, OSError) as exc:
                     ui.notify(str(exc), type="negative")
             ui.button("Restart", icon="restart_alt", on_click=restart).props("outline no-caps")
+        ui.button("Pause", icon="pause", on_click=lambda: None).props("outline no-caps disable").tooltip("Pause is unsupported by the scientific runtime; stopping mid-root could invalidate lifecycle semantics.")
+        ui.button("Resume", icon="play_arrow", on_click=lambda: None).props("outline no-caps disable").tooltip("Resume is unsupported. A retained cancelled or interrupted candidate request may be restarted from its safe boundary instead.")
+
+    try:
+        identity = READ_MODEL.run_identity(run.run_id)
+    except RuntimeError as exc:
+        identity = None
+        with ui.row().classes("status-strip status-danger w-full items-center gap-2"):
+            ui.icon("error_outline")
+            ui.label(str(exc))
+    if identity:
+        with ui.row().classes("status-strip w-full items-center gap-2 flex-wrap"):
+            ui.icon("psychology", size="18px")
+            ui.label(" · ".join(identity["strategy_names"]) or "Strategy identity unavailable").classes("font-medium text-sm")
+            ui.label(f"{str(identity.get('stage') or 'unknown').title()} · {layout_label(str(identity.get('layout_id') or ''))} · {CONDITION_LABELS.get(str(identity.get('condition_id')), identity.get('condition_id') or 'Condition unavailable')}").classes("muted text-xs")
+        with ui.expansion("Technical details / Reproducibility", icon="fingerprint").classes("w-full"):
+            ui.label(f"Protocol: {identity.get('protocol_version') or 'Unavailable'}").classes("text-xs")
+            configuration_ids = identity.get("agent_configuration_ids", {})
+            if configuration_ids:
+                for agent_id, configuration_id in configuration_ids.items():
+                    ui.label(f"{AGENT_PROFILE_BY_ID.get(agent_id).name if agent_id in AGENT_PROFILE_BY_ID else agent_id}: {configuration_id}").classes("text-xs")
 
     if run.progress.total_roots:
         ui.linear_progress(value=run.progress.fraction_complete).props("rounded stripe").classes("w-full")
@@ -555,6 +700,7 @@ def _render_live_run(run: RuntimeRunSnapshot) -> None:
         ui.label(f"Heartbeat: {run.heartbeat_at_utc or 'No telemetry heartbeat yet'}")
         ui.label(f"Attempt: {run.attempt}")
         ui.label(f"Latest sequence: {run.latest_telemetry_sequence if run.latest_telemetry_sequence is not None else '—'}")
+        ui.label(f"Phase / episode / step: {run.progress.latest_phase or '—'} / {run.progress.latest_episode_index if run.progress.latest_episode_index is not None else '—'} / {run.progress.latest_step if run.progress.latest_step is not None else '—'}")
     if run.message:
         with ui.row().classes("status-strip status-warning w-full items-center gap-2"):
             ui.icon("info")
@@ -610,6 +756,53 @@ def _render_live_run(run: RuntimeRunSnapshot) -> None:
                         ui.label(f"step {event.get('step', '—')} · r={event.get('reward', '—')}").classes("muted text-xs")
 
 
+def _render_history_detail(run: RuntimeRunSnapshot) -> None:
+    try:
+        identity = READ_MODEL.run_identity(run.run_id) or {}
+        retained_step_trace = (
+            bool(run.telemetry_path and Path(run.telemetry_path).is_file())
+            or READ_MODEL.historical_trace_available(run.run_id)
+        )
+    except RuntimeError as exc:
+        with ui.row().classes("status-strip status-danger w-full items-center gap-2"):
+            ui.icon("error_outline")
+            ui.label(str(exc))
+        return
+    finalized = READ_MODEL.finalized_run(run.run_id)
+    manifest = finalized.get("manifest", {}) if finalized else {}
+    with ui.card().classes("panel-card w-full"):
+        with ui.row().classes("w-full items-center gap-3"):
+            ui.label(run.run_id).classes("section-title")
+            _runtime_badge(run.status)
+            ui.space()
+            ui.button("Open artifacts", icon="inventory_2", on_click=lambda: ui.navigate.to("/artifacts")).props("flat no-caps")
+        if identity:
+            ui.label(" · ".join(identity.get("strategy_names", ())) or "Strategy identity unavailable").classes("font-medium")
+            ui.label(
+                f"{str(identity.get('stage') or 'unknown').title()} · "
+                f"{layout_label(str(identity.get('layout_id') or ''))} · "
+                f"{CONDITION_LABELS.get(str(identity.get('condition_id')), identity.get('condition_id') or 'Condition unavailable')}"
+            ).classes("muted text-sm")
+        if retained_step_trace:
+            with ui.row().classes("status-strip status-success w-full items-center gap-2"):
+                ui.icon("verified")
+                ui.label("A real retained GridWorld step trace is available. Any replay must use only those stored events.")
+        else:
+            with ui.row().classes("status-strip status-warning w-full items-start gap-2"):
+                ui.icon("videocam_off")
+                with ui.column().classes("gap-0"):
+                    ui.label("GridWorld replay unavailable").classes("font-semibold")
+                    ui.label("This historical run retained summaries/events but no per-step observer trajectory. The application will not synthesize one.").classes("text-sm")
+        if run.status in {RuntimeStatus.FAILED, RuntimeStatus.INTERRUPTED, RuntimeStatus.CANCELLED}:
+            ui.label(run.message or "The recorded lifecycle status is preserved. Restart is available only when the runtime advertises that capability.").classes("muted text-sm")
+        with ui.expansion("Technical details / Reproducibility", icon="fingerprint").classes("w-full"):
+            ui.label(f"Protocol: {identity.get('protocol_version') or manifest.get('protocol_version') or 'Unavailable'}").classes("text-xs")
+            ui.label(f"Retention: {identity.get('retention_policy') or manifest.get('retention_policy') or 'Unavailable'}").classes("text-xs")
+            ui.label(f"Source commit: {identity.get('source_git_commit') or 'Unavailable'}").classes("text-xs break-all")
+            ui.label(f"Started (UTC): {run.created_at_utc or 'Unavailable'}").classes("text-xs")
+            ui.label(f"Finished/updated (UTC): {run.updated_at_utc or 'Unavailable'}").classes("text-xs")
+
+
 @ui.page("/runs", title=f"{APP_TITLE} · Runs")
 def runs_page() -> None:
     with page_shell(
@@ -617,7 +810,7 @@ def runs_page() -> None:
         "RuntimeService is the single source of live lifecycle, progress, controls and GridWorld telemetry. Historical trajectories are never synthesized when trace data is absent.",
         eyebrow="Runs",
     ):
-        selected: dict[str, str | None] = {"run_id": None}
+        selected: dict[str, str | None] = {"run_id": None, "history_run_id": None}
 
         @ui.refreshable
         def run_workspace() -> None:
@@ -661,11 +854,25 @@ def runs_page() -> None:
                     if not runs:
                         ui.label("No runtime or historical runs are available.").classes("muted")
                     else:
+                        if selected["history_run_id"] is None or not any(item.run_id == selected["history_run_id"] for item in runs):
+                            selected["history_run_id"] = runs[0].run_id
+                        ui.select(
+                            {item.run_id: f"{item.run_id} · {STATUS_TEXT[item.status]}" for item in runs},
+                            value=selected["history_run_id"],
+                            label="Inspect run detail",
+                            on_change=lambda event: (selected.update(history_run_id=str(event.value)), run_workspace.refresh()),
+                        ).props("outlined dense").classes("w-full max-w-2xl")
+                        chosen_history = next(item for item in runs if item.run_id == selected["history_run_id"])
+                        _render_history_detail(chosen_history)
                         ui.aggrid(
                             {
                                 "columnDefs": [
                                     {"headerName": "Run", "field": "run_id", "minWidth": 230, "pinned": "left"},
                                     {"headerName": "Status", "field": "status", "width": 125, "filter": True},
+                                    {"headerName": "Agent strategies", "field": "strategies", "minWidth": 260, "filter": True},
+                                    {"headerName": "Stage", "field": "stage", "width": 125, "filter": True},
+                                    {"headerName": "Layout", "field": "layout", "minWidth": 150, "filter": True},
+                                    {"headerName": "Condition", "field": "condition", "minWidth": 210, "filter": True},
                                     {"headerName": "Progress", "field": "progress", "width": 145},
                                     {"headerName": "Attempt", "field": "attempt", "width": 95},
                                     {"headerName": "Created (UTC)", "field": "started_at_utc", "minWidth": 190},
@@ -690,40 +897,181 @@ def compare_page() -> None:
         "Stored historical v1.0 evidence is shown with its actual SD. Candidate v1.1 paired 95% CIs will appear only after the scientific freeze/final evidence path produces them.",
         eyebrow="Compare",
     ):
-        frame = READ_MODEL.v10_aggregated_summary()
-        if frame is None:
+        aggregate = READ_MODEL.v10_aggregated_summary()
+        primary = READ_MODEL.v10_primary_metrics()
+        freeze = READ_MODEL.thesis_final_freeze_summary()
+        if aggregate is None or primary is None:
             with ui.row().classes("status-strip status-warning w-full items-center gap-2"):
                 ui.icon("warning_amber")
-                ui.label("The historical aggregated summary artifact is unavailable or unreadable.")
+                ui.label("The historical stored comparison artifacts are unavailable or unreadable. No substitute data is generated.")
             return
 
         with ui.row().classes("status-strip w-full items-center gap-2"):
-            ui.icon("history")
-            ui.label("Currently showing immutable protocol-v1.0 historical finalized evidence. v1.1 candidate/tuning telemetry is not promoted here as final evidence.")
+            ui.icon("verified")
+            ui.label(
+                f"Compatible stored evidence · protocol-v1.0 · {freeze.get('included_runs') if freeze else '—'} included final runs. Candidate/live telemetry is not promoted here."
+            )
         metrics = [
             metric
             for metric in ("post_change_mean", "cumulative_deficit", "immediate_degradation", "nominal_mean")
-            if (metric, "mean") in frame.columns
+            if (metric, "mean") in aggregate.columns and metric in primary.columns
         ]
-        with ui.card().classes("panel-card w-full"):
-            with ui.row().classes("w-full items-end gap-4"):
-                metric_select = ui.select(
-                    {metric: METRIC_LABELS.get(metric, metric) for metric in metrics},
-                    value=metrics[0],
-                    label="Metric",
-                ).props("outlined dense").classes("min-w-72")
-                ui.label("Bars = mean; v1.0 error bars = SD, not confidence intervals.").classes("muted text-xs pb-2")
-            plot = ui.plotly(_plot_payload(aggregated_metric_figure(frame, metrics[0]))).classes("w-full h-[620px]")
+        available_agents = tuple(dict.fromkeys(str(value) for value in primary["agent_id"]))
+        available_conditions = tuple(dict.fromkeys(str(value) for value in primary["condition_id"]))
+        selection: dict[str, Any] = {
+            "metric": metrics[0],
+            "agents": list(available_agents),
+            "conditions": list(available_conditions),
+        }
 
-            def change_metric(event: Any) -> None:
-                plot.figure = _plot_payload(aggregated_metric_figure(frame, str(event.value)))
-                plot.update()
+        @ui.refreshable
+        def comparison_workspace() -> None:
+            selected_agents = [value for value in available_agents if value in selection["agents"]]
+            selected_conditions = [value for value in available_conditions if value in selection["conditions"]]
+            with ui.card().classes("panel-card w-full"):
+                ui.label("Compatible evidence selection").classes("section-title")
+                with ui.grid(columns=3).classes("w-full gap-4"):
+                    ui.select(
+                        {metric: METRIC_LABELS.get(metric, metric) for metric in metrics},
+                        value=selection["metric"],
+                        label="Metric",
+                        on_change=lambda event: (selection.update(metric=str(event.value)), comparison_workspace.refresh()),
+                    ).props("outlined dense").classes("w-full").tooltip("Choose one versioned metric stored in the historical evidence artifacts.")
+                    ui.select(
+                        {agent_id: AGENT_PROFILE_BY_ID[agent_id].name for agent_id in available_agents},
+                        value=selection["agents"],
+                        label="Agent strategies",
+                        multiple=True,
+                        on_change=lambda event: (selection.update(agents=list(event.value or [])), comparison_workspace.refresh()),
+                    ).props("outlined dense use-chips").classes("w-full")
+                    ui.select(
+                        {condition: CONDITION_LABELS.get(condition, condition) for condition in available_conditions},
+                        value=selection["conditions"],
+                        label="Conditions",
+                        multiple=True,
+                        on_change=lambda event: (selection.update(conditions=list(event.value or [])), comparison_workspace.refresh()),
+                    ).props("outlined dense use-chips").classes("w-full")
+                ui.label(METRIC_HELP.get(selection["metric"], "Stored versioned metric.")).classes("muted text-sm")
 
-            metric_select.on_value_change(change_metric)
+            if not selected_agents or not selected_conditions:
+                with ui.row().classes("status-strip status-warning w-full items-center gap-2"):
+                    ui.icon("info")
+                    ui.label("Select at least one Agent strategy and one condition to build a comparison from stored evidence.")
+                return
 
-        with ui.card().classes("panel-card w-full"):
-            ui.label("Condition × agent overview").classes("section-title")
-            ui.plotly(_plot_payload(metric_heatmap_figure(frame, "cumulative_deficit"))).classes("w-full h-[520px]")
+            selected_primary = primary[
+                primary["agent_id"].astype(str).isin(selected_agents)
+                & primary["condition_id"].astype(str).isin(selected_conditions)
+            ]
+            aggregate_mask = (
+                aggregate.index.get_level_values("agent_id").astype(str).isin(selected_agents)
+                & aggregate.index.get_level_values("condition_id").astype(str).isin(selected_conditions)
+            )
+            selected_aggregate = aggregate[aggregate_mask]
+            with ui.row().classes("status-strip status-success w-full items-center gap-2"):
+                ui.icon("check_circle")
+                ui.label(
+                    f"Scientifically compatible slice: one frozen protocol/stage and common root/layout design · n={len(selected_primary)} stored strategy-condition observations."
+                )
+
+            with ui.grid(columns=2).classes("w-full gap-5"):
+                with ui.card().classes("panel-card w-full"):
+                    ui.label("Stored distributions").classes("section-title")
+                    ui.label("Points are stored observations; boxes summarize their distribution. No confidence interval is inferred.").classes("muted text-xs")
+                    ui.plotly(
+                        _plot_payload(
+                            evidence_distribution_figure(
+                                primary,
+                                selection["metric"],
+                                agent_ids=selected_agents,
+                                condition_ids=selected_conditions,
+                            )
+                        )
+                    ).classes("w-full h-[620px]")
+                with ui.card().classes("panel-card w-full"):
+                    ui.label("Stored aggregate view").classes("section-title")
+                    ui.label("Bars = mean; historical v1.0 error bars = SD, never CI.").classes("muted text-xs")
+                    ui.plotly(
+                        _plot_payload(aggregated_metric_figure(selected_aggregate, selection["metric"]))
+                    ).classes("w-full h-[620px]")
+
+            with ui.grid(columns=2).classes("w-full gap-5"):
+                with ui.card().classes("panel-card w-full"):
+                    ui.label("Layout breakdown").classes("section-title")
+                    ui.plotly(
+                        _plot_payload(
+                            layout_breakdown_figure(
+                                primary,
+                                selection["metric"],
+                                agent_ids=selected_agents,
+                                condition_ids=selected_conditions,
+                            )
+                        )
+                    ).classes("w-full h-[500px]")
+                with ui.card().classes("panel-card w-full"):
+                    ui.label("Observation counts").classes("section-title")
+                    count_rows = (
+                        selected_primary.groupby(["agent_id", "condition_id", "layout_id"], as_index=False)
+                        .size()
+                        .to_dict(orient="records")
+                    )
+                    for row in count_rows:
+                        agent_id = str(row.pop("agent_id"))
+                        condition_id = str(row.pop("condition_id"))
+                        layout_id = str(row.pop("layout_id"))
+                        row["strategy"] = AGENT_PROFILE_BY_ID[agent_id].name
+                        row["condition"] = CONDITION_LABELS.get(condition_id, condition_id)
+                        row["layout"] = layout_label(layout_id)
+                    ui.aggrid(
+                        {
+                            "columnDefs": [
+                                {"headerName": "Agent strategy", "field": "strategy", "minWidth": 190, "filter": True},
+                                {"headerName": "Condition", "field": "condition", "minWidth": 220, "filter": True},
+                                {"headerName": "Layout", "field": "layout", "minWidth": 140, "filter": True},
+                                {"headerName": "Stored n", "field": "size", "width": 110},
+                            ],
+                            "rowData": count_rows,
+                            "defaultColDef": {"sortable": True, "filter": True, "resizable": True},
+                        },
+                        modules="community",
+                    ).classes("w-full h-[500px]")
+
+            with ui.card().classes("panel-card w-full"):
+                ui.label("What differs between the selected strategies").classes("section-title")
+                difference_rows = [
+                    {
+                        "strategy": AGENT_PROFILE_BY_ID[agent_id].name,
+                        "adaptation": AGENT_PROFILE_BY_ID[agent_id].adaptation,
+                        "planning": AGENT_PROFILE_BY_ID[agent_id].planning,
+                        "historical_setting": "Common frozen Q-learning settings" if agent_id in {"f0", "c0"} else "Not present in historical v1.0 evidence",
+                    }
+                    for agent_id in selected_agents
+                ]
+                ui.aggrid(
+                    {
+                        "columnDefs": [
+                            {"headerName": "Agent strategy", "field": "strategy", "minWidth": 190},
+                            {"headerName": "Adaptation behavior", "field": "adaptation", "flex": 1, "wrapText": True, "autoHeight": True},
+                            {"headerName": "Planning", "field": "planning", "minWidth": 220},
+                            {"headerName": "Stored setting identity", "field": "historical_setting", "minWidth": 240},
+                        ],
+                        "rowData": difference_rows,
+                        "defaultColDef": {"sortable": True, "filter": True, "resizable": True},
+                    },
+                    modules="community",
+                ).classes("w-full h-64")
+                with ui.expansion("Technical details / Reproducibility", icon="fingerprint").classes("w-full"):
+                    ui.label(f"Protocol: {freeze.get('protocol_version') if freeze else 'protocol-v1.0'}").classes("text-xs")
+                    ui.label(f"Frozen source archive: {freeze.get('provenance_archive_ref') if freeze else 'Unavailable'}").classes("text-xs")
+                    ui.label("Historical F0/C0 identities are preserved in the stored artifacts; ordinary labels use full strategy names.").classes("muted text-xs")
+
+            with ui.row().classes("status-strip status-warning w-full items-start gap-2"):
+                ui.icon("ssid_chart")
+                with ui.column().classes("gap-0"):
+                    ui.label("Paired effects and 95% confidence intervals unavailable for this stored artifact version").classes("font-semibold")
+                    ui.label("Historical v1.0 stores descriptive means, distributions and SD. The application will not relabel SD or derive an unplanned CI. v1.1 paired effects appear only if a later stored analysis artifact contains them.").classes("text-sm")
+
+        comparison_workspace()
 
 
 @ui.page("/artifacts", title=f"{APP_TITLE} · Artifacts")
@@ -734,46 +1082,106 @@ def artifacts_page() -> None:
         eyebrow="Artifacts",
     ):
         artifacts = READ_MODEL.thesis_final_artifacts()
+        freeze = READ_MODEL.thesis_final_freeze_summary()
         if not artifacts:
-            ui.label("No thesis-final artifacts were found.").classes("muted")
+            with ui.row().classes("status-strip status-warning w-full items-center gap-2"):
+                ui.icon("inventory_2")
+                ui.label("No frozen thesis-final artifacts were found. Complete and validate the evidence pipeline before expecting exports here.")
             return
+        if freeze:
+            with ui.row().classes("status-strip status-success w-full items-center gap-2"):
+                ui.icon("verified")
+                ui.label(
+                    f"Frozen {freeze['protocol_version']} evidence · {freeze['included_runs']}/{freeze['total_final_runs_found']} final runs included · frozen {freeze['freeze_time_utc']}"
+                )
         rows = [
             {
                 "name": item["name"],
                 "type": item["suffix"].lstrip(".").upper() or "FILE",
                 "size_kib": round(item["size_bytes"] / 1024, 1),
+                "classification": item["evidence_class"],
             }
             for item in artifacts
         ]
-        with ui.grid(columns=2).classes("w-full gap-5"):
+        selection: dict[str, str] = {"name": artifacts[0]["name"]}
+
+        @ui.refreshable
+        def artifact_workspace() -> None:
+            selected = next(item for item in artifacts if item["name"] == selection["name"])
+            with ui.grid(columns=2).classes("w-full gap-5"):
+                with ui.card().classes("panel-card w-full"):
+                    ui.label("Artifact index").classes("section-title")
+                    ui.select(
+                        {item["name"]: f"{item['name']} · {item['suffix'].lstrip('.').upper() or 'FILE'}" for item in artifacts},
+                        value=selection["name"],
+                        label="Preview artifact",
+                        on_change=lambda event: (selection.update(name=str(event.value)), artifact_workspace.refresh()),
+                    ).props("outlined dense").classes("w-full")
+                    ui.aggrid(
+                        {
+                            "columnDefs": [
+                                {"headerName": "Artifact", "field": "name", "minWidth": 220, "flex": 1, "filter": True},
+                                {"headerName": "Type", "field": "type", "width": 82, "filter": True},
+                                {"headerName": "Size (KiB)", "field": "size_kib", "width": 108},
+                            ],
+                            "rowData": rows,
+                            "defaultColDef": {"sortable": True, "filter": True, "resizable": True},
+                        },
+                        modules="community",
+                    ).classes("w-full h-96")
+                with ui.card().classes("panel-card w-full"):
+                    ui.label("Selected artifact").classes("section-title")
+                    ui.label(selected["name"]).classes("font-semibold")
+                    ui.label(selected["evidence_class"]).classes("muted text-sm")
+                    ui.button(
+                        "Download stored file",
+                        icon="download",
+                        on_click=lambda path=selected["path"]: ui.download.file(str(path)),
+                    ).props("unelevated no-caps")
+                    with ui.expansion("Technical details / Reproducibility", icon="fingerprint").classes("w-full"):
+                        ui.label(f"SHA-256: {selected['sha256']}").classes("text-xs break-all")
+                        ui.label(f"Stored path: {selected['path'].relative_to(REPO_ROOT)}").classes("text-xs")
+                        if freeze:
+                            ui.label(f"Source run count: {freeze['included_runs']}").classes("text-xs")
+                            ui.label(f"Provenance archive: {freeze['provenance_archive_ref']}").classes("text-xs")
+
             with ui.card().classes("panel-card w-full"):
-                ui.label("Artifact index").classes("section-title")
-                ui.aggrid(
-                    {
-                        "columnDefs": [
-                            {"headerName": "Artifact", "field": "name", "flex": 1},
-                            {"headerName": "Type", "field": "type", "width": 100},
-                            {"headerName": "Size (KiB)", "field": "size_kib", "width": 120},
-                        ],
-                        "rowData": rows,
-                        "defaultColDef": {"sortable": True, "filter": True, "resizable": True},
-                    },
-                    modules="community",
-                ).classes("w-full h-96")
-            with ui.card().classes("panel-card w-full"):
-                ui.label("Downloads").classes("section-title")
-                ui.label("Downloading does not modify scientific evidence.").classes("muted text-sm")
-                with ui.column().classes("w-full gap-2"):
-                    for item in artifacts:
-                        with ui.row().classes("w-full items-center no-wrap border border-slate-200 rounded-xl p-2"):
-                            ui.icon("description").classes("text-primary")
-                            ui.label(item["name"]).classes("text-sm")
-                            ui.space()
-                            ui.button(
-                                "Download",
-                                icon="download",
-                                on_click=lambda path=item["path"]: ui.download.file(str(path)),
-                            ).props("flat dense no-caps")
+                ui.label("Stored preview").classes("section-title")
+                ui.label("The preview reads the selected file directly. It is not regenerated or silently substituted.").classes("muted text-sm")
+                try:
+                    preview = READ_MODEL.artifact_preview(selection["name"])
+                except (KeyError, RuntimeError) as exc:
+                    with ui.row().classes("status-strip status-danger w-full items-center gap-2"):
+                        ui.icon("error_outline")
+                        ui.label(str(exc))
+                    return
+                if preview["kind"] == "csv":
+                    ui.aggrid(
+                        {
+                            "columnDefs": [
+                                {"headerName": column, "field": column, "minWidth": 135}
+                                for column in preview["columns"]
+                            ],
+                            "rowData": preview["rows"],
+                            "defaultColDef": {"sortable": True, "filter": True, "resizable": True},
+                        },
+                        modules="community",
+                    ).classes("w-full h-[520px]")
+                    if preview["truncated"]:
+                        ui.label("Preview limited to the first 40 stored rows; download the CSV for the complete artifact.").classes("muted text-xs")
+                elif preview["kind"] == "json":
+                    ui.code(json.dumps(preview["value"], indent=2, sort_keys=True), language="json").classes("w-full max-h-[620px] overflow-auto")
+                elif preview["kind"] == "html":
+                    ui.html(
+                        f'<iframe title="Stored Plotly artifact preview" src="{preview["relative_url"]}" style="width:100%;height:620px;border:1px solid #e2e8f0;border-radius:14px;background:white"></iframe>',
+                        sanitize=False,
+                    ).classes("w-full")
+                else:
+                    with ui.row().classes("status-strip w-full items-center gap-2"):
+                        ui.icon("visibility_off")
+                        ui.label("Inline preview is unavailable for this file type. Download returns the exact stored file.")
+
+        artifact_workspace()
 
 
 def main() -> None:

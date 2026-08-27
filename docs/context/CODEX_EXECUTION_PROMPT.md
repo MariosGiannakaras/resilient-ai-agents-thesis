@@ -14,7 +14,7 @@ Pre-WP7 refinement is governed by DEC-042/044/045/046/047 and issues #87–#91.
 
 - Use only `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; do not merge early or create a parallel implementation branch.
 - Preserve v1.0/final historical evidence and R0 pilot evidence immutably.
-- `T-520`, `T-523` and **`T-521` are complete**. Current scientific task: **`T-522 READY`**. `T-530` is also dependency-valid and becomes the active repository task if T-522 requires the unavailable physical thesis machine.
+- `T-520`, `T-523`, `T-521`, `T-530` and `T-531` are complete. Current scientific task: **`T-522 READY`** only on the validated thesis machine. Otherwise the active repository task is **`T-532 READY`**.
 - Never generate or inspect v1.1 final outcomes for CI/UI/protocol-selection convenience.
 - `T-511` remains USER_VALIDATION_REQUIRED; all `T-700+` execution is blocked until explicit user approval.
 
@@ -26,7 +26,7 @@ Pre-WP7 refinement is governed by DEC-042/044/045/046/047 and issues #87–#91.
    - `docs/context/TASKS.md`
    - `docs/context/CURRENT_STATUS.md`
 3. Inspect/resume IN_PROGRESS work before READY work.
-4. Follow the ledger: attempt T-522 only where validated thesis-machine evidence is available; otherwise continue T-530 without inventing a new gate or branch.
+4. Follow the ledger: attempt T-522 only where validated thesis-machine evidence is available; otherwise continue T-532 without inventing a new gate or branch.
 5. Preserve recoverable validated checkpoints and reconcile durable status/issues.
 
 ## Current scientific contract
@@ -53,7 +53,8 @@ T-522 may use only the predeclared non-final matrix. Retain failures/poor/non-re
 - NiceGUI 3.16 native/pywebview over UI-independent Python runtime/scientific services; no active Streamlit/React/Vite/Node stack.
 - Primary UI concept is **Agent strategy** with full names, concise explanations and mechanism badges. Technical IDs/hashes appear only under **Technical details / Reproducibility**.
 - T-530 provides truthful active-run DTOs/events/history/resources, read-only live GridWorld and capability-based controls.
-- T-531 handles approved strategy/configuration/repetitions, compatible live/final comparisons and novice-first self-explanatory UX.
+- T-531 completed approved strategy/configuration/repetition selection, truthful live/history views, stored-evidence Compare/Artifacts and novice-first self-explanatory UX. Issue #90 is 8/9; its remaining native/onedir item is owned by T-532.
+- T-532 owns accepted root screenshots, bounded browser/CI capture, actual Windows native-window behavior and `onedir + windowed` packaging validation.
 - Plotly = stored/final figures; ECharts = LIVE/PROVISIONAL telemetry; Mermaid = explanations; AG Grid Community = analytical tables.
 - Use accurate tooltips/help, units/consequences, progressive disclosure, resolved-config review, semantic icon+text+color states, actionable errors/empty states and restrained micro-interactions.
 - Animation is presentation-only and never changes timing/actions/seeds/RNG or fabricates progress/replay.

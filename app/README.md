@@ -39,7 +39,7 @@ The historical Streamlit dashboard and the short-lived React/Vite prototype rema
 
 - **Plotly:** thesis/presentation-ready stored analysis figures, distributions, uncertainty, paired effects and comparison plots.
 - **ECharts:** high-frequency live/provisional run telemetry and multi-agent overlays.
-- **Mermaid:** F0/C0/D0 and experiment-flow infographics.
+- **Mermaid:** full five-strategy and experiment-flow infographics.
 - **AG Grid Community:** run history, comparison selection and detailed result/artifact tables.
 
 Live/provisional telemetry, finalized individual runs, and versioned analysis/evidence are separate visual data classes. A live chart is never silently promoted into thesis evidence.
@@ -49,7 +49,7 @@ Live/provisional telemetry, finalized individual runs, and versioned analysis/ev
 The primary navigation remains intentionally small:
 
 1. **Dashboard** — active/recent runs, warnings, protocol state, current resources, quick actions.
-2. **New Experiment** — agent explanations, validated configuration, layouts/conditions/seeds, resolved-config review, launch.
+2. **New Experiment** — Agent strategy explanations, validated configuration, layouts/conditions/predefined repetitions, resolved-config review, launch.
 3. **Runs** — active/history/detail workspace, live GridWorld, event timeline, logs/metrics, truthful lifecycle state and compatible live comparisons.
 4. **Compare** — compatible run/model comparisons, distributions, paired effects/CIs, counts and condition/layout breakdowns.
 5. **Artifacts** — real figures/tables/CSV/JSON/HTML outputs, provenance and exports.

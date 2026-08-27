@@ -156,14 +156,14 @@ Codex on the thesis machine remains useful for code/protocol fixes, debugging, m
 
 Canonical task state is only in `docs/context/TASKS.md`.
 
-Current refinement progress: **2/8** major milestones. Current task: `T-521 READY`.
+Current refinement progress: **5/8** major milestones. Current repository task: `T-532 READY`; `T-522` remains the separate validated-thesis-machine scientific gate.
 
 High-level order:
 
-1. T-521 candidate-v1.1 schema/tuning/statistics.
+1. T-521 candidate-v1.1 schema/tuning/statistics (complete).
 2. T-522 bounded non-final D0 tuning/pilot and freeze/amend/reject decision.
-3. T-530 truthful active-run runtime service.
-4. T-531 complete NiceGUI research application.
+3. T-530 truthful active-run runtime service (complete).
+4. T-531 complete NiceGUI research application (complete).
 5. T-532 screenshots/render/native Windows packaging validation.
 6. T-511 intended-user human E2E acceptance.
 7. T-610–T-613 frozen v1.1 final execution, evidence freeze, paired analysis and final evidence package.

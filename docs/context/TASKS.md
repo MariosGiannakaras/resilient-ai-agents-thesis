@@ -20,16 +20,16 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 ## Resume state
 
 - **Package:** DEC-042 + DEC-044 + DEC-045 + DEC-046 + DEC-047. DEC-043 is historical/superseded.
-- **Project:** **4/8** major refinement milestones complete (#87 milestones 1, 2, 4 and 5).
-- **Current repository task:** `T-531`.
-- **State:** `READY`; dependencies `T-521` and `T-530` are complete.
+- **Project:** **5/8** major refinement milestones complete (#87 milestones 1, 2, 4, 5 and 6).
+- **Current task:** `T-532`.
+- **State:** `READY`; dependency `T-531` is complete.
 - **External scientific gate:** `T-522` remains READY only on the validated thesis machine. It is not replaced by hosted CI.
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no second implementation branch.
-- **Trackers:** #87 master (**4/8**); #88 scientific (**9/12**); #89 runtime (**6/6 complete/closed**); #90 UI; #91 screenshots/CI/packaging.
-- **Last validated checkpoint:** PR CI run **425** passed documentation, JSON, Python compile, locked environment, complete repository tests including v1.1 candidate/statistics/runtime observer/runtime service contracts, and bibliography integrity.
-- **Completed refinement tasks:** `T-520`, `T-523`, `T-521`, `T-530`.
+- **Trackers:** #87 master (**5/8**); #88 scientific (**9/12**); #89 runtime (**6/6 complete/closed**); #90 UI (**8/9**); #91 screenshots/CI/packaging (**0/6**, active next).
+- **Validation authority:** inspect PR #92's current-head CI live; historical run 425 remains the T-530 checkpoint but is not a substitute for the current head.
+- **Completed refinement tasks:** `T-520`, `T-523`, `T-521`, `T-530`, `T-531`.
 - **Pre-WP7 approval:** NOT APPROVED; `T-700+` execution remains blocked.
-- **Exact next action:** continue `T-531` on this branch. If a session has access to the validated thesis machine, `T-522` may run in parallel only as the predeclared non-final external evidence gate; never inspect/generate final-v1.1 reserve outcomes.
+- **Exact next action:** continue `T-532` on this branch: root screenshots, bounded browser/CI capture and actual Windows native/onedir validation. If a session has access to the validated thesis machine, `T-522` may run in parallel only as the predeclared non-final external evidence gate; never inspect/generate final-v1.1 reserve outcomes.
 
 ## Quota/interruption resilience
 
@@ -115,11 +115,12 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Depends on: `T-520`.
   - Evidence: schema-v1 queued/running/completed/failed/cancelled/interrupted DTOs; persisted runtime registry; activity heartbeat; persisted root progress plus latest real phase/episode/step; telemetry tail; canonical resources; unfinished/finalized history reconciliation; capability-based cancel/restart; pause/resume explicitly unsupported; owned candidate subprocess entrypoint only; pre-queue protocol/request validation; read-only live GridWorld observer; observer ON/OFF produces identical scientific root results. Tracker #89 6/6; CI run 425.
 
-- [ ] READY `T-531` — Complete native NiceGUI application.
+- [x] `T-531` — Complete native NiceGUI application.
   - Depends on: `T-521`, `T-530`.
   - Acceptance: Dashboard/New Experiment/Runs/Compare/Artifacts; approved Agent strategy/configuration/repetitions; smooth truthful live GridWorld; ECharts live telemetry; Plotly final/comparison figures; Mermaid explanations; AG Grid tables; tooltips/helper text/progressive disclosure; accessible text+icon+color status; compact modern micro-interactions/animations; technical IDs only under Reproducibility; no fake data/progress/replay.
+  - Evidence: all five NiceGUI routes consume the validated read/runtime/core contracts; five human-readable strategy flows and bounded settings; truthful lifecycle/history/no-trace states; stored-only v1.0 distributions/counts/layout breakdowns with SD never relabelled CI; exact stored artifact preview/download/provenance; 15 focused application tests; import/compile and five-route browser-mode render checks; tall visual inspection corrected Plotly/artifact clipping. Tracker #90 8/9; its remaining native/onedir item belongs to T-532.
 
-- [ ] BLOCKED `T-532` — Root screenshots, bounded UI validation and Windows standalone packaging.
+- [ ] READY `T-532` — Root screenshots, bounded UI validation and Windows standalone packaging.
   - Depends on: `T-531`.
   - Acceptance: root `ui-screenshots/`, deterministic CI/browser captures, useful help/status/error/empty states, no fixture-as-evidence, native NiceGUI/PyInstaller `onedir + windowed` launch/close/restart with safe writable paths.
 

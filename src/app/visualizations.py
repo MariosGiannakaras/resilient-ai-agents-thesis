@@ -80,13 +80,13 @@ def _base_layout(title: str, subtitle: str | None = None) -> dict[str, Any]:
         "font": {"family": "Inter, Segoe UI, Arial, sans-serif", "size": 13},
         "paper_bgcolor": "rgba(0,0,0,0)",
         "plot_bgcolor": "rgba(0,0,0,0)",
-        "margin": {"l": 70, "r": 28, "t": 82, "b": 72},
+        "margin": {"l": 70, "r": 28, "t": 132, "b": 78},
         "legend": {
             "orientation": "h",
             "yanchor": "bottom",
-            "y": 1.01,
-            "xanchor": "right",
-            "x": 1.0,
+            "y": 1.0,
+            "xanchor": "left",
+            "x": 0.0,
         },
         "hoverlabel": {"namelength": -1},
     }
@@ -210,6 +210,108 @@ def metric_heatmap_figure(
         ),
         xaxis={"tickangle": -24, "automargin": True},
         yaxis={"automargin": True},
+    )
+    return figure
+
+
+def evidence_distribution_figure(
+    frame: pd.DataFrame,
+    metric: str,
+    *,
+    agent_ids: Sequence[str],
+    condition_ids: Sequence[str],
+) -> go.Figure:
+    """Build stored-observation distributions without inventing inferential CIs."""
+    if metric not in frame.columns:
+        raise KeyError(f"Metric {metric!r} is not available in primary evidence")
+    selected = frame[
+        frame["agent_id"].astype(str).isin(agent_ids)
+        & frame["condition_id"].astype(str).isin(condition_ids)
+    ]
+    figure = go.Figure()
+    symbols = {"f0": "circle", "c0": "diamond", "s0": "square", "dq0": "triangle-up", "d0": "x"}
+    for agent_id in agent_ids:
+        subset = selected[selected["agent_id"].astype(str) == agent_id]
+        if subset.empty:
+            continue
+        figure.add_trace(
+            go.Box(
+                name=AGENT_LABELS.get(agent_id, agent_id),
+                x=[CONDITION_LABELS.get(str(value), str(value)) for value in subset["condition_id"]],
+                y=subset[metric].astype(float),
+                boxpoints="all",
+                jitter=0.2,
+                pointpos=0,
+                marker={
+                    "color": AGENT_COLORS.get(agent_id),
+                    "symbol": symbols.get(agent_id, "circle"),
+                    "size": 5,
+                    "opacity": 0.55,
+                },
+                line={"color": AGENT_COLORS.get(agent_id)},
+                hovertemplate=(
+                    "%{x}<br>%{fullData.name}<br>stored observation=%{y:.3f}"
+                    "<extra></extra>"
+                ),
+            )
+        )
+    label = METRIC_LABELS.get(metric, metric.replace("_", " ").title())
+    figure.update_layout(
+        **_base_layout(
+            f"{label} distributions",
+            f"protocol-v1.0 stored primary metrics · n={len(selected)} observations · no CI available",
+        ),
+        boxmode="group",
+        xaxis={"title": "Uncertainty condition", "tickangle": -20, "automargin": True},
+        yaxis={"title": label, "automargin": True},
+    )
+    return figure
+
+
+def layout_breakdown_figure(
+    frame: pd.DataFrame,
+    metric: str,
+    *,
+    agent_ids: Sequence[str],
+    condition_ids: Sequence[str],
+) -> go.Figure:
+    """Show stored layout means for the selected compatible evidence slice."""
+    if metric not in frame.columns:
+        raise KeyError(f"Metric {metric!r} is not available in primary evidence")
+    selected = frame[
+        frame["agent_id"].astype(str).isin(agent_ids)
+        & frame["condition_id"].astype(str).isin(condition_ids)
+    ]
+    grouped = (
+        selected.groupby(["layout_id", "agent_id"], as_index=False)[metric]
+        .mean()
+        .sort_values(["layout_id", "agent_id"])
+    )
+    figure = go.Figure()
+    for agent_id in agent_ids:
+        subset = grouped[grouped["agent_id"].astype(str) == agent_id]
+        if subset.empty:
+            continue
+        figure.add_trace(
+            go.Bar(
+                name=AGENT_LABELS.get(agent_id, agent_id),
+                x=[str(value).replace("final-l", "Layout ").lstrip("0") for value in subset["layout_id"]],
+                y=subset[metric].astype(float),
+                marker={"color": AGENT_COLORS.get(agent_id)},
+                text=[AGENT_LABELS.get(agent_id, agent_id) for _ in range(len(subset))],
+                textposition="none",
+                hovertemplate="%{x}<br>%{fullData.name}<br>layout mean=%{y:.3f}<extra></extra>",
+            )
+        )
+    label = METRIC_LABELS.get(metric, metric.replace("_", " ").title())
+    figure.update_layout(
+        **_base_layout(
+            f"{label} by layout",
+            "protocol-v1.0 stored observations · descriptive means only",
+        ),
+        barmode="group",
+        xaxis={"title": "Layout"},
+        yaxis={"title": label, "automargin": True},
     )
     return figure
 

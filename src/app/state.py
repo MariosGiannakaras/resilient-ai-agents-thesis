@@ -7,8 +7,10 @@ under the canonical ``ExperimentRegistry``.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -124,6 +126,45 @@ class CandidateExperimentForm:
     agent_configuration_ids: Mapping[str, str]
 
 
+SETTING_PRESENTATION: Mapping[str, Mapping[str, str]] = {
+    "learning_rate": {
+        "label": "Learning responsiveness",
+        "range": "0 to 1 (unit-free)",
+        "consequence": "Higher values give more weight to recent experience.",
+    },
+    "discount_factor": {
+        "label": "Future-reward weight",
+        "range": "0 to 1 (unit-free)",
+        "consequence": "Higher values place more weight on rewards further ahead.",
+    },
+    "exploration_epsilon": {
+        "label": "Exploration probability",
+        "range": "0 to 1 (probability)",
+        "consequence": "The chance of deliberately trying a non-greedy action.",
+    },
+    "planning_steps": {
+        "label": "Planning updates",
+        "range": "Non-negative count per real transition",
+        "consequence": "More updates may improve adaptation but increase compute time.",
+    },
+    "kappa": {
+        "label": "Re-exploration strength",
+        "range": "Non-negative bonus scale",
+        "consequence": "Higher values more strongly revisit actions not tried recently.",
+    },
+    "bootstrap_on_truncation": {
+        "label": "Truncation handling",
+        "range": "Fixed protocol rule",
+        "consequence": "Disabled so a time-limit truncation is not treated as continuing value.",
+    },
+    "initial_q_value": {
+        "label": "Initial action value",
+        "range": "Reward units",
+        "consequence": "The common starting estimate before nominal training.",
+    },
+}
+
+
 class ApplicationReadModel:
     """Truthful query/control facade for the current local thesis workspace."""
 
@@ -142,6 +183,7 @@ class ApplicationReadModel:
             reverse=True,
         )
 
+    @lru_cache(maxsize=256)
     def finalized_run(self, run_id: str) -> dict[str, Any] | None:
         return self.registry.get_run(run_id)
 
@@ -329,23 +371,181 @@ class ApplicationReadModel:
     def restart_runtime_run(self, run_id: str) -> RuntimeRunSnapshot:
         return self.runtime.restart(run_id)
 
+    @lru_cache(maxsize=256)
+    def runtime_request(self, run_id: str) -> dict[str, Any] | None:
+        """Return a persisted runtime request for identity display only."""
+        path = self.repo_root / "results" / "runtime" / run_id / "request.json"
+        if not path.is_file():
+            return None
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+            raise RuntimeError(f"runtime request is unreadable for {run_id}") from exc
+        if not isinstance(payload, dict) or payload.get("run_id") != run_id:
+            raise RuntimeError(f"runtime request identity mismatch for {run_id}")
+        return payload
+
+    def run_identity(self, run_id: str) -> dict[str, Any] | None:
+        runtime_request = self.runtime_request(run_id)
+        finalized = self.finalized_run(run_id)
+        manifest = finalized.get("manifest", {}) if finalized else {}
+        config = finalized.get("config", {}) if finalized else {}
+        request = runtime_request
+        if request is None and isinstance(config, dict):
+            candidate = config.get("request")
+            request = candidate if isinstance(candidate, dict) else None
+        if request is None and not finalized:
+            return None
+        agent_ids = request.get("agent_ids", []) if request else []
+        return {
+            "protocol_version": (
+                manifest.get("protocol_version")
+                or ("protocol-v1.1" if runtime_request is not None else None)
+            ),
+            "stage": request.get("stage") if request else manifest.get("stage"),
+            "layout_id": request.get("layout_id") if request else None,
+            "condition_id": request.get("condition_id") if request else None,
+            "agent_ids": tuple(str(value) for value in agent_ids),
+            "strategy_names": tuple(
+                AGENT_PROFILE_BY_ID[value].name if value in AGENT_PROFILE_BY_ID else value
+                for value in (str(item) for item in agent_ids)
+            ),
+            "agent_configuration_ids": (
+                dict(request.get("agent_configuration_ids", {}))
+                if request and isinstance(request.get("agent_configuration_ids"), dict)
+                else {}
+            ),
+            "retention_policy": request.get("retention_policy") if request else None,
+            "source_git_commit": (
+                manifest.get("source", {}).get("git_commit")
+                if isinstance(manifest.get("source"), dict)
+                else None
+            ),
+        }
+
+    @lru_cache(maxsize=256)
+    def historical_trace_available(self, run_id: str) -> bool:
+        """Report only an explicitly retained GridWorld step trace.
+
+        Episode summaries are not trajectories and therefore never enable replay.
+        """
+        path = self.repo_root / "results" / "runs" / run_id / "events.jsonl"
+        if not path.is_file():
+            return False
+        try:
+            with path.open(encoding="utf-8") as handle:
+                for line in handle:
+                    try:
+                        event = json.loads(line)
+                    except json.JSONDecodeError as exc:
+                        raise RuntimeError(f"historical event trace is unreadable for {run_id}") from exc
+                    if isinstance(event, dict) and event.get("event") == "gridworld_step":
+                        return True
+        except (OSError, UnicodeError) as exc:
+            raise RuntimeError(f"historical event trace is unreadable for {run_id}") from exc
+        return False
+
     def thesis_final_artifacts(self) -> list[dict[str, Any]]:
         root = self.repo_root / "results" / "thesis-final" / "artifacts"
-        if not root.is_dir():
+        manifest = self.repo_root / "results" / "thesis-final" / "freeze-manifest.json"
+        if not root.is_dir() and not manifest.is_file():
             return []
         rows: list[dict[str, Any]] = []
-        for path in sorted(root.iterdir()):
+        paths = list(sorted(root.iterdir())) if root.is_dir() else []
+        if manifest.is_file():
+            paths.append(manifest)
+        evidence_package = self.repo_root / "results" / "thesis_evidence_package.zip"
+        if evidence_package.is_file():
+            paths.append(evidence_package)
+        for path in paths:
             if not path.is_file():
                 continue
+            digest = hashlib.sha256(path.read_bytes()).hexdigest()
             rows.append(
                 {
                     "name": path.name,
                     "suffix": path.suffix.lower(),
                     "size_bytes": path.stat().st_size,
                     "path": path,
+                    "sha256": digest,
+                    "evidence_class": "Frozen historical protocol-v1.0 evidence",
+                    "preview_kind": (
+                        path.suffix.lower().lstrip(".")
+                        if path.suffix.lower() in {".csv", ".json", ".html"}
+                        else None
+                    ),
                 }
             )
         return rows
+
+    def thesis_final_freeze_summary(self) -> dict[str, Any] | None:
+        path = self.repo_root / "results" / "thesis-final" / "freeze-manifest.json"
+        if not path.is_file():
+            return None
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, json.JSONDecodeError):
+            return None
+        if not isinstance(payload, dict):
+            return None
+        return {
+            "protocol_version": payload.get("protocol_version"),
+            "freeze_time_utc": payload.get("freeze_time_utc"),
+            "included_runs": payload.get("included_runs"),
+            "total_final_runs_found": payload.get("total_final_runs_found"),
+            "provenance_archive_ref": payload.get("provenance_archive_ref"),
+        }
+
+    def artifact_preview(self, name: str, *, row_limit: int = 40) -> dict[str, Any]:
+        artifacts = {item["name"]: item for item in self.thesis_final_artifacts()}
+        if name not in artifacts:
+            raise KeyError(name)
+        artifact = artifacts[name]
+        path = artifact["path"]
+        suffix = artifact["suffix"]
+        if suffix == ".csv":
+            try:
+                frame = pd.read_csv(path, nrows=row_limit)
+            except (OSError, UnicodeError, ValueError, pd.errors.ParserError) as exc:
+                raise RuntimeError(f"CSV artifact is unreadable: {name}") from exc
+            return {
+                "kind": "csv",
+                "columns": [str(column) for column in frame.columns],
+                "rows": frame.where(pd.notna(frame), None).to_dict(orient="records"),
+                "truncated": path.name == "primary_metrics.csv" and len(frame) >= row_limit,
+            }
+        if suffix == ".json":
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+                raise RuntimeError(f"JSON artifact is unreadable: {name}") from exc
+            return {"kind": "json", "value": payload}
+        if suffix == ".html":
+            return {
+                "kind": "html",
+                "relative_url": f"/stored-thesis-artifacts/{path.name}",
+            }
+        return {"kind": "unavailable"}
+
+    def v10_primary_metrics(self) -> pd.DataFrame | None:
+        path = self.repo_root / "results" / "thesis-final" / "artifacts" / "primary_metrics.csv"
+        if not path.is_file():
+            return None
+        try:
+            frame = pd.read_csv(path)
+        except (OSError, UnicodeError, ValueError, pd.errors.ParserError):
+            return None
+        required = {
+            "agent_id",
+            "condition_id",
+            "layout_id",
+            "run_id",
+            "nominal_mean",
+            "post_change_mean",
+            "cumulative_deficit",
+            "immediate_degradation",
+        }
+        return frame if required.issubset(frame.columns) else None
 
     def v10_aggregated_summary(self) -> pd.DataFrame | None:
         path = (
@@ -378,12 +578,63 @@ def shortened_hash(value: str, length: int = 12) -> str:
 
 
 def setting_summary(settings: Mapping[str, Any]) -> str:
-    order = (
-        ("learning_rate", "α"),
-        ("discount_factor", "γ"),
-        ("exploration_epsilon", "ε"),
-        ("planning_steps", "planning"),
-        ("kappa", "κ"),
-    )
-    parts = [f"{label}={settings[key]}" for key, label in order if key in settings]
+    order = ("learning_rate", "discount_factor", "exploration_epsilon", "planning_steps", "kappa")
+    parts = [
+        f"{SETTING_PRESENTATION[key]['label']}: {settings[key]}"
+        for key in order
+        if key in settings
+    ]
     return " · ".join(parts)
+
+
+def layout_label(layout_id: str) -> str:
+    prefixes = {
+        "dev-l": "Development layout ",
+        "tune-l": "Tuning layout ",
+        "final-l": "Historical final layout ",
+        "v11-final-l": "Reserved final layout ",
+    }
+    for prefix, label in prefixes.items():
+        if layout_id.startswith(prefix):
+            suffix = layout_id.removeprefix(prefix).lstrip("0") or "0"
+            return label + suffix
+    return "Protocol-approved layout"
+
+
+def setting_rows(
+    selected: CandidateConfigurationOption,
+    available: tuple[CandidateConfigurationOption, ...],
+) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    preferred_order = (
+        "learning_rate",
+        "exploration_epsilon",
+        "discount_factor",
+        "planning_steps",
+        "kappa",
+        "bootstrap_on_truncation",
+        "initial_q_value",
+    )
+    ordered_keys = [key for key in preferred_order if key in selected.settings]
+    ordered_keys.extend(key for key in selected.settings if key not in ordered_keys)
+    for key in ordered_keys:
+        value = selected.settings[key]
+        presentation = SETTING_PRESENTATION.get(
+            key,
+            {
+                "label": key.replace("_", " ").title(),
+                "range": "Protocol-defined",
+                "consequence": "Defined by the approved protocol configuration.",
+            },
+        )
+        values = {option.settings.get(key) for option in available}
+        rows.append(
+            {
+                "setting": str(presentation["label"]),
+                "value": str(value),
+                "availability": "Tunable across approved choices" if len(values) > 1 else "Fixed by protocol",
+                "range": str(presentation["range"]),
+                "consequence": str(presentation["consequence"]),
+            }
+        )
+    return rows

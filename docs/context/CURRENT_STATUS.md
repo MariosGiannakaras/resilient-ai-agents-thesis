@@ -16,12 +16,12 @@
 
 - Decisions: DEC-042 scientific refinement; DEC-043 historical/superseded React/Vite exploration; DEC-044 NiceGUI native application; DEC-045 visual analytics; DEC-046 novice-first compact UX; DEC-047 broadened agent comparison and human-readable naming.
 - Single branch/PR: `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft #92. No parallel implementation branch or early merge.
-- Master progress: **4/8** milestones complete (#87 milestones 1, 2, 4 and 5).
-- Completed refinement tasks: `T-520`, `T-523`, `T-521`, `T-530`.
-- Current repository task: **`T-531 READY`**.
+- Master progress: **5/8** milestones complete (#87 milestones 1, 2, 4, 5 and 6).
+- Completed refinement tasks: `T-520`, `T-523`, `T-521`, `T-530`, `T-531`.
+- Current repository task: **`T-532 READY`**.
 - External scientific gate: **`T-522 READY` only on the validated thesis machine**; hosted CI is not a substitute.
-- Trackers: #87 master 4/8; #88 scientific 9/12; #89 runtime 6/6 complete/closed; #90 UI active next; #91 screenshots/CI/packaging later.
-- PR CI run **425** validated the latest runtime checkpoint: documentation consistency, committed JSON validation, Python compilation, locked environment, complete tests including candidate protocol/statistics/runtime observer/runtime service contracts, and bibliography integrity.
+- Trackers: #87 master 5/8; #88 scientific 9/12; #89 runtime 6/6 complete/closed; #90 UI 8/9; #91 screenshots/CI/packaging 0/6 active next.
+- PR #92's current-head CI is the canonical full-suite guard and must be inspected live; historical run 425 remains only the completed T-530 checkpoint.
 
 ## Thesis framing and scientific direction
 
@@ -64,11 +64,11 @@ T-530 is complete and tracker #89 is closed 6/6.
 - Observer ON versus OFF is regression-tested to produce identical scientific root results.
 - Canonical resource snapshots and live telemetry tailing are exposed for NiceGUI.
 
-## T-531 application scope
+## Completed T-531 application
 
 NiceGUI 3.16 native/pywebview remains the single active frontend over the UI-independent Python runtime/scientific services.
 
-T-531 must complete:
+T-531 now provides:
 
 - Dashboard with real recent/active run status, resources and navigation;
 - New Experiment with human-readable **Agent strategy** selection, approved configuration variants, repetitions/root seeds, bounded settings/sweeps, fixed-vs-tunable explanations and resolved-config review;
@@ -78,6 +78,8 @@ T-531 must complete:
 - Plotly for stored/final scientific figures, ECharts for live/provisional telemetry, Mermaid for explanations and AG Grid Community for analytical tables;
 - novice-first compact UX: plain labels, accurate tooltips/help, units/consequences, progressive disclosure, semantic text+icon+color status and actionable invalid/empty/loading/error/disabled states;
 - no fake progress, fabricated metrics/logs or synthesized historical trajectory replay.
+
+Focused application tests validate bounded protocol/configuration choices, plain-language identities/settings, truthful no-trace history, exact stored artifact reads and live telemetry parsing. Browser-mode rendering of all five routes and a tall Compare visual pass confirmed the compact layout; Plotly title/legend and Artifact-index clipping found during that pass were corrected. Issue #90 is 8/9 because its remaining native-window/onedir packaging item is the T-532 boundary.
 
 Technical IDs (`F0/C0/D0`, schema/config hashes) belong under **Technical details / Reproducibility**, not ordinary strategy names.
 
@@ -89,8 +91,8 @@ Testing remains risk-based/proportional; PR CI is the canonical full-suite guard
 
 ## Still intentionally unfrozen
 
-T-522 retained settings, optional Robust Planner decision, measured thesis-machine planning runtime, frozen v1.1 protocol, new final evidence, final NiceGUI UX/screenshots/native package, current official WP7 rules and final thesis/presentation deliverables remain unfrozen until their explicit gates pass.
+T-522 retained settings, optional Robust Planner decision, measured thesis-machine planning runtime, frozen v1.1 protocol, new final evidence, accepted screenshots/native package, intended-user validation, current official WP7 rules and final thesis/presentation deliverables remain unfrozen until their explicit gates pass.
 
 ## Exact next action
 
-Continue **T-531** on the existing branch/PR: wire the validated `RuntimeService` and candidate protocol/configuration metadata into the NiceGUI Dashboard/New Experiment/Runs/Compare/Artifacts surfaces without fabricating state. Keep T-522 reserved for the validated thesis machine. Do not inspect/generate final-v1.1 outcomes and do not start `T-700+`.
+Continue **T-532** on the existing branch/PR: create accepted root screenshots, add bounded deterministic NiceGUI browser/CI capture, and validate actual Windows native-window plus `onedir + windowed` delivery behavior and safe writable paths. Keep T-522 reserved for the validated thesis machine. Do not inspect/generate final-v1.1 outcomes and do not start `T-700+`.
