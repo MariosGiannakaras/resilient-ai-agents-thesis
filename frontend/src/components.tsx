@@ -132,7 +132,7 @@ export function RunTable({ runs }: { runs: RunRecord[] }) {
             <th>Status</th>
             <th>Protocol</th>
             <th>Stage</th>
-            <th>Finished</th>
+            <th>Recorded</th>
           </tr>
         </thead>
         <tbody>
@@ -142,7 +142,7 @@ export function RunTable({ runs }: { runs: RunRecord[] }) {
               <td><StatusLabel status={run.status} /></td>
               <td>{run.protocol_version}</td>
               <td>{humanize(run.stage)}</td>
-              <td>{formatTimestamp(run.finished_at_utc)}</td>
+              <td>{formatTimestamp(run.recorded_at_utc)}</td>
             </tr>
           ))}
         </tbody>
