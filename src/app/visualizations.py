@@ -14,21 +14,27 @@ import plotly.graph_objects as go
 
 
 AGENT_LABELS = {
-    "f0": "F0 · Frozen Q-learning",
-    "c0": "C0 · Continual Q-learning",
-    "d0": "D0 · Dyna-Q+",
+    "f0": "Fixed Q-Learning",
+    "c0": "Adaptive Q-Learning",
+    "s0": "SARSA",
+    "dq0": "Dyna-Q",
+    "d0": "Dyna-Q+",
 }
 
 AGENT_COLORS = {
     "f0": "#64748b",
     "c0": "#2563eb",
-    "d0": "#7c3aed",
+    "s0": "#0f766e",
+    "dq0": "#9333ea",
+    "d0": "#c2410c",
 }
 
 AGENT_DASHES = {
     "f0": "solid",
     "c0": "dash",
-    "d0": "dot",
+    "s0": "dashdot",
+    "dq0": "dot",
+    "d0": "longdash",
 }
 
 METRIC_LABELS = {
@@ -36,6 +42,7 @@ METRIC_LABELS = {
     "post_change_mean": "Post-change return",
     "cumulative_deficit": "Cumulative deficit",
     "immediate_degradation": "Immediate degradation",
+    "terminal_performance": "Terminal performance",
     "terminal_gap": "Terminal gap",
 }
 
@@ -207,6 +214,17 @@ def metric_heatmap_figure(
     return figure
 
 
+def _live_series_label(series_id: str) -> tuple[str, str | None]:
+    parts = series_id.split(":")
+    agent_id = parts[0].casefold()
+    name = AGENT_LABELS.get(agent_id, parts[0])
+    if len(parts) >= 3:
+        branch = parts[1]
+        phase = parts[2]
+        return agent_id, f"{name} · {branch} · {phase}"
+    return agent_id, name
+
+
 def live_series_options(
     series: Mapping[str, Sequence[tuple[int | float, int | float]]],
     *,
@@ -221,11 +239,12 @@ def live_series_options(
     """
     chart_series: list[dict[str, Any]] = []
     for index, (series_id, points) in enumerate(series.items()):
-        color = AGENT_COLORS.get(series_id.casefold())
+        agent_id, label = _live_series_label(series_id)
+        color = AGENT_COLORS.get(agent_id)
         chart_series.append(
             {
                 "id": series_id,
-                "name": AGENT_LABELS.get(series_id.casefold(), series_id),
+                "name": label,
                 "type": "line",
                 "showSymbol": False,
                 "smooth": 0.18,
@@ -263,7 +282,7 @@ def live_series_options(
         "animation": True,
         "title": {
             "text": title,
-            "subtext": "LIVE / PROVISIONAL · backend-derived telemetry",
+            "subtext": "LIVE / PROVISIONAL · runtime telemetry, not final evidence",
             "left": 12,
         },
         "tooltip": {"trigger": "axis"},
@@ -280,23 +299,33 @@ def live_series_options(
             {"type": "inside", "xAxisIndex": 0},
             {"type": "slider", "xAxisIndex": 0, "height": 18, "bottom": 18},
         ],
-        "xAxis": {"type": "value", "name": x_axis_label, "nameLocation": "middle", "nameGap": 38},
-        "yAxis": {"type": "value", "name": y_axis_label, "nameLocation": "middle", "nameGap": 48},
+        "xAxis": {
+            "type": "value",
+            "name": x_axis_label,
+            "nameLocation": "middle",
+            "nameGap": 38,
+        },
+        "yAxis": {
+            "type": "value",
+            "name": y_axis_label,
+            "nameLocation": "middle",
+            "nameGap": 48,
+        },
         "series": chart_series,
     }
 
 
 def agent_infographic_mermaid(agent_id: str) -> str:
-    """Return a static explanatory diagram for one documented agent regime."""
+    """Return a static explanatory diagram for one documented agent strategy."""
     normalized = agent_id.casefold()
     if normalized == "f0":
         return """
 flowchart LR
-    O[Agent-visible observation] --> P[Frozen Q-table policy]
+    O[Agent-visible observation] --> P[Fixed Q-values]
     P --> A[Intended action]
     A --> E[GridWorld]
     E --> R[Reward + next observation]
-    R -. no post-checkpoint Q update .-> P
+    R -. no online Q update .-> P
 """.strip()
     if normalized == "c0":
         return """
@@ -305,8 +334,32 @@ flowchart LR
     P --> A[Intended action]
     A --> E[GridWorld]
     E --> X[Reward + next observation]
-    X --> U[Online TD update]
+    X --> U[Off-policy Q update]
     U --> P
+""".strip()
+    if normalized == "s0":
+        return """
+flowchart LR
+    O[Agent-visible observation] --> P[SARSA policy]
+    P --> A[Action actually followed]
+    A --> E[GridWorld]
+    E --> X[Reward + next observation]
+    X --> N[Next selected action]
+    N --> U[On-policy SARSA update]
+    U --> P
+""".strip()
+    if normalized == "dq0":
+        return """
+flowchart LR
+    O[Agent-visible observation] --> P[Dyna-Q policy]
+    P --> A[Intended action]
+    A --> E[GridWorld]
+    E --> X[Reward + next observation]
+    X --> Q[Direct Q update]
+    X --> M[Learn empirical model]
+    M --> PL[Planning over experienced pairs]
+    Q --> P
+    PL --> P
 """.strip()
     if normalized == "d0":
         return """
@@ -316,9 +369,10 @@ flowchart LR
     A --> E[GridWorld]
     E --> X[Reward + next observation]
     X --> Q[Direct Q update]
-    X --> M[Empirical transition/reward model]
-    M --> PL[Planning updates + recency bonus]
+    X --> M[Learn empirical model]
+    M --> PL[Planning + recency bonus]
+    PL --> R[Re-check long-untried actions]
     Q --> P
-    PL --> P
+    R --> P
 """.strip()
     raise KeyError(f"Unknown agent profile: {agent_id}")
