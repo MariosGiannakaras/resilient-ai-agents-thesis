@@ -217,7 +217,13 @@ class StudyMatrixDefinition:
 
 
 class StudyPlanner:
-    """Materialize one immutable study recipe into stable scientific job IDs."""
+    """Materialize one immutable study recipe into stable scientific job IDs.
+
+    Phase B is intentionally materialized as one matched-set job per
+    method/root/layout/condition.  The validated protocol-v2 executor creates
+    FN/FD/AN/AD from one exact branch point atomically; splitting those branches
+    into independent scheduler jobs would weaken the matched-design invariant.
+    """
 
     def __init__(self, recipe: StudyRecipe) -> None:
         if not isinstance(recipe, StudyRecipe):
@@ -288,32 +294,30 @@ class StudyPlanner:
                     phase_a_job_id = phase_a_ids[(method_id, root_id, layout_id)]
                     for condition_id in allowed_conditions:
                         condition = self._condition_by_id[condition_id]
-                        for branch in self.matrix.branches:
-                            jobs.append(
-                                StudyJobSpec(
-                                    job_id=self.phase_b_job_id(
-                                        method_id,
-                                        root_id,
-                                        layout_id,
-                                        condition_id,
-                                        branch,
-                                    ),
-                                    stage=StudyStage.PHASE_B,
-                                    evidence_class=self.recipe.evidence_class,
-                                    dependencies=(phase_a_job_id,),
-                                    payload={
-                                        "job_type": "phase-b-branch",
-                                        "recipe_sha256": self.recipe.sha256(),
-                                        "execution": dict(self.matrix.phase_b_execution),
-                                        "phase_a_job_id": phase_a_job_id,
-                                        "method_id": method_id,
-                                        "root_id": root_id,
-                                        "layout_id": layout_id,
-                                        "condition": dict(condition),
-                                        "branch": branch,
-                                    },
-                                )
+                        jobs.append(
+                            StudyJobSpec(
+                                job_id=self.phase_b_job_id(
+                                    method_id,
+                                    root_id,
+                                    layout_id,
+                                    condition_id,
+                                ),
+                                stage=StudyStage.PHASE_B,
+                                evidence_class=self.recipe.evidence_class,
+                                dependencies=(phase_a_job_id,),
+                                payload={
+                                    "job_type": "phase-b-matched-set",
+                                    "recipe_sha256": self.recipe.sha256(),
+                                    "execution": dict(self.matrix.phase_b_execution),
+                                    "phase_a_job_id": phase_a_job_id,
+                                    "method": dict(method),
+                                    "root": dict(root),
+                                    "layout": dict(layout),
+                                    "condition": dict(condition),
+                                    "branches": list(self.matrix.branches),
+                                },
                             )
+                        )
 
         jobs.append(
             StudyJobSpec(
@@ -405,13 +409,11 @@ class StudyPlanner:
         root_id: str,
         layout_id: str,
         condition_id: str,
-        branch: str,
     ) -> str:
         components = (
             _component(method_id, field="method_id"),
             _component(root_id, field="root_id"),
             _component(layout_id, field="layout_id"),
             _component(condition_id, field="condition_id"),
-            _component(branch.lower(), field="branch"),
         )
         return "pb__" + "__".join(components)
