@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Mapping
 
 from .model import JobState, StudyJobSpec, StudyPlan, StudyStage
 
@@ -26,6 +27,35 @@ class StudyLifecycle:
             raise ValueError("plan must be StudyPlan")
         self._states = {job.job_id: JobState.PENDING for job in self.plan.jobs}
         self._attempts = {job.job_id: 0 for job in self.plan.jobs}
+
+    @classmethod
+    def restore(
+        cls,
+        plan: StudyPlan,
+        *,
+        states: Mapping[str, str],
+        attempts: Mapping[str, int],
+    ) -> "StudyLifecycle":
+        lifecycle = cls(plan)
+        expected = set(plan.by_id())
+        if set(states) != expected or set(attempts) != expected:
+            raise ValueError("persisted lifecycle keys do not match study plan")
+        restored_states: dict[str, JobState] = {}
+        restored_attempts: dict[str, int] = {}
+        for job_id in expected:
+            try:
+                restored_states[job_id] = JobState(str(states[job_id]))
+            except ValueError as exc:
+                raise ValueError(f"unsupported persisted job state for {job_id}") from exc
+            attempt = attempts[job_id]
+            if not isinstance(attempt, int) or isinstance(attempt, bool) or attempt < 0:
+                raise ValueError(f"invalid persisted attempt count for {job_id}")
+            if restored_states[job_id] is JobState.RUNNING and attempt < 1:
+                raise ValueError(f"running job {job_id} must have at least one attempt")
+            restored_attempts[job_id] = attempt
+        lifecycle._states = restored_states
+        lifecycle._attempts = restored_attempts
+        return lifecycle
 
     def state_for(self, job_id: str) -> JobState:
         try:
@@ -152,6 +182,12 @@ class StudyLifecycle:
             "running": sum(state is JobState.RUNNING for state in self._states.values()),
             "pending": sum(state is JobState.PENDING for state in self._states.values()),
             "cancelled": sum(state is JobState.CANCELLED for state in self._states.values()),
+        }
+
+    def snapshot(self) -> dict[str, dict[str, str | int]]:
+        return {
+            "states": {job_id: state.value for job_id, state in self._states.items()},
+            "attempts": dict(self._attempts),
         }
 
     def snapshot_states(self) -> dict[str, JobState]:
