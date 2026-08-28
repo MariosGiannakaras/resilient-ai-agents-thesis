@@ -23,7 +23,6 @@ class StudyDefaultRegistryTests(unittest.TestCase):
                     "study-export",
                 },
             )
-            self.assertIsNone(service.evidence_package("missing-study") if False else None)
 
 
 if __name__ == "__main__":
