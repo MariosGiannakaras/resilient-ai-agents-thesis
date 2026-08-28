@@ -28,6 +28,9 @@ package = true
 gridworld-prototype = [
     "minigrid==3.1.0",
 ]
+protocol-v2-pilot = [
+    "stable-baselines3==2.9.0",
+]
 application-packaging = [
     "pyinstaller>=6,<7",
 ]
