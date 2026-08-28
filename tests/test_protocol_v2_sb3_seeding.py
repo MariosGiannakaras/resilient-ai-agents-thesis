@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import unittest
+from collections.abc import Mapping
 
 try:
     import gymnasium as gym
@@ -61,6 +62,18 @@ if _SB3_AVAILABLE:
 
 @unittest.skipUnless(_SB3_AVAILABLE, "protocol-v2-pilot dependency group not installed")
 class ProtocolV2SB3SeedingTests(unittest.TestCase):
+    def assert_nested_parameter_equal(self, first, second):
+        if isinstance(first, Mapping):
+            self.assertIsInstance(second, Mapping)
+            self.assertEqual(set(first), set(second))
+            for key in first:
+                self.assert_nested_parameter_equal(first[key], second[key])
+            return
+        if torch.is_tensor(first):
+            self.assertTrue(torch.equal(first, second))
+            return
+        self.assertEqual(first, second)
+
     def test_behavior_reseed_preserves_initialized_parameters_and_changes_rng_state(self):
         model = _model(101)
         adapter = dqn_state_adapter(
@@ -73,15 +86,7 @@ class ProtocolV2SB3SeedingTests(unittest.TestCase):
 
         reseed_sb3_behavior_rng(adapter, exploration_seed=202)
 
-        after_parameters = model.get_parameters()
-        for group in before_parameters:
-            for name in before_parameters[group]:
-                self.assertTrue(
-                    torch.equal(
-                        before_parameters[group][name],
-                        after_parameters[group][name],
-                    )
-                )
+        self.assert_nested_parameter_equal(before_parameters, model.get_parameters())
         self.assertNotEqual(adapter.export_state()["rng_state"], before_rng)
 
     def test_same_initialization_seed_same_parameters_but_distinct_behavior_streams(self):
@@ -100,13 +105,10 @@ class ProtocolV2SB3SeedingTests(unittest.TestCase):
         reseed_sb3_behavior_rng(first, exploration_seed=401)
         reseed_sb3_behavior_rng(second, exploration_seed=402)
 
-        first_parameters = first_model.get_parameters()
-        second_parameters = second_model.get_parameters()
-        for group in first_parameters:
-            for name in first_parameters[group]:
-                self.assertTrue(
-                    torch.equal(first_parameters[group][name], second_parameters[group][name])
-                )
+        self.assert_nested_parameter_equal(
+            first_model.get_parameters(),
+            second_model.get_parameters(),
+        )
         self.assertNotEqual(
             first.export_state()["rng_state"],
             second.export_state()["rng_state"],
