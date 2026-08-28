@@ -6,6 +6,10 @@ import unittest
 from pathlib import Path
 
 from resilient_agents.evidence_v2 import StudyEvidenceValidator
+from resilient_agents.evidence_v2.executors import (
+    StudyAnalysisExecutor,
+    StudyValidationExecutor,
+)
 from resilient_agents.study import (
     ArtifactRole,
     EvidenceClass,
@@ -142,13 +146,22 @@ class StudyProtocolV2PhaseBExecutorTests(unittest.TestCase):
                 },
                 "postprocessing": {
                     "validation": {"validator": "protocol-v2-study"},
-                    "analysis": {"analysis_recipe": "root-level-did"},
+                    "analysis": {
+                        "analysis_recipe": "protocol-v2-root-level-v1",
+                        "phase_a_metric": "terminated_rate",
+                        "phase_a_direction": "higher-is-better",
+                        "phase_b_metric": "return_sum",
+                        "phase_b_direction": "higher-is-better",
+                        "layout_aggregation": "equal-weight",
+                        "require_complete_layout_blocks": True,
+                        "interval": {"kind": "none"},
+                    },
                     "exports": {"package": "thesis-evidence"},
                 },
             },
         )
 
-    def test_real_q_phase_a_checkpoint_drives_atomic_four_branch_phase_b(self) -> None:
+    def test_real_q_study_runs_phase_a_matched_phase_b_validation_and_analysis(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             recipe = self._recipe()
@@ -165,6 +178,8 @@ class StudyProtocolV2PhaseBExecutorTests(unittest.TestCase):
                     [
                         ProtocolV2PhaseAStudyExecutor(),
                         ProtocolV2PhaseBStudyExecutor(),
+                        StudyValidationExecutor(),
+                        StudyAnalysisExecutor(),
                     ]
                 ),
             )
@@ -213,6 +228,27 @@ class StudyProtocolV2PhaseBExecutorTests(unittest.TestCase):
             self.assertTrue(report.valid, report.to_dict())
             self.assertEqual(report.planned_scientific_jobs, 2)
             self.assertEqual(report.completed_scientific_jobs, 2)
+
+            validation = scheduler.run_job("validate-study")
+            self.assertIs(validation.outcome.kind, JobOutcomeKind.COMPLETED)
+            analyzed = scheduler.run_job("analyze-study")
+            self.assertIs(analyzed.outcome.kind, JobOutcomeKind.COMPLETED)
+            packages = [
+                item
+                for item in store.artifacts()
+                if item.artifact_id == "analysis-package"
+            ]
+            self.assertEqual(len(packages), 1)
+            package = json.loads((root / packages[0].relative_path).read_text())
+            self.assertEqual(package["analysis_recipe"], "protocol-v2-root-level-v1")
+            self.assertEqual(len(package["phase_a"]["unit_records"]), 1)
+            self.assertEqual(len(package["phase_a"]["root_records"]), 1)
+            self.assertEqual(len(package["phase_b"]["unit_records"]), 1)
+            self.assertEqual(len(package["phase_b"]["root_records"]), 1)
+            effect = package["phase_b"]["unit_records"][0]
+            self.assertIn("frozen_loss", effect)
+            self.assertIn("adaptive_loss", effect)
+            self.assertIn("adaptation_benefit", effect)
 
 
 if __name__ == "__main__":
