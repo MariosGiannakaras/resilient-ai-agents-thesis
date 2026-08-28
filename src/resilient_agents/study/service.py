@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from .model import StudyArtifact
+from .model import ArtifactRole, StudyArtifact
 from .planner import StudyPlanPreview, StudyPlanner
 from .recipe import StudyRecipe
 from .scheduler import ScheduledJobResult, StudyExecutorRegistry, StudyScheduler
@@ -65,7 +65,9 @@ class StudyService:
 
     The facade owns no UI session state. Durable filesystem study evidence is
     always reloaded before control/read operations, so application restart does
-    not alter scientific identity or progress.
+    not alter scientific identity or progress. When no custom registry is
+    supplied, the service uses the concrete protocol-v2 Study executors; tests
+    and specialized callers may still inject an explicit registry.
     """
 
     def __init__(
@@ -79,7 +81,14 @@ class StudyService:
         self.writable_root = (
             Path(writable_root).resolve() if writable_root else self.repo_root
         )
-        self.executors = executors or StudyExecutorRegistry()
+        if executors is None:
+            # Lazy import avoids making optional SB3/runtime implementation
+            # modules part of package-import initialization. Their heavy
+            # dependencies remain lazy until a DQN/PPO job actually executes.
+            from .default_executors import default_study_executor_registry
+
+            executors = default_study_executor_registry()
+        self.executors = executors
 
     def preview(self, recipe: StudyRecipe) -> StudyPlanSummary:
         planner = StudyPlanner(recipe)
@@ -116,6 +125,18 @@ class StudyService:
 
     def artifacts(self, study_id: str) -> tuple[StudyArtifact, ...]:
         return self._load(study_id).artifacts()
+
+    def evidence_package(self, study_id: str) -> StudyArtifact | None:
+        packages = tuple(
+            artifact
+            for artifact in self._load(study_id).artifacts()
+            if artifact.role is ArtifactRole.EVIDENCE_PACKAGE
+        )
+        if not packages:
+            return None
+        if len(packages) != 1:
+            raise RuntimeError("study has ambiguous evidence-package artifacts")
+        return packages[0]
 
     def run_ready(
         self,
