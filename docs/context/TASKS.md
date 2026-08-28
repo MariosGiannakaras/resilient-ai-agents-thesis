@@ -19,17 +19,17 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 
 ## Resume state
 
-- **Package:** DEC-048 protocol-v2 redesign refined by DEC-050 methodology closure. DEC-042/047 and candidate v1.1 remain auditable predecessor design. DEC-049 controls the later new-framework frontend rebuild.
+- **Package:** DEC-048/050 protocol-v2 methodology plus DEC-051 study-first backend reconstruction. DEC-042/047 and candidate v1.1 remain auditable predecessor design. DEC-049 controls the later new-framework frontend rebuild.
 - **Project:** **4/8** master milestones complete (#87: 1, 2, 4, 5).
-- **Current task:** `T-526`.
-- **State:** `READY`; T-525 framework-neutral multimethod backend implementation is complete and validated. The next scientific evidence is the predeclared non-final physical Windows feasibility gate; hosted CI cannot substitute for it.
+- **Current implementation task:** `T-529` IN_PROGRESS — reconstruct the final study-first backend orchestration/evidence/analysis/export foundation around the validated T-525 scientific core.
+- **External scientific gate:** `T-526` remains READY and requires the predeclared physical Windows feasibility run; hosted CI cannot substitute for it. T-529 may continue while that external evidence is pending because it must not invent or consume T-526/T-527 outcomes.
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no parallel main-repo implementation branch.
 - **Trackers:** #87 master 4/8; #95 protocol-v2 4/10; #88 closed/superseded; #89 complete/closed; #93 PAUSED; #94 DEFERRED post-thesis.
-- **Historical science:** protocol-v1.0 / FINAL-* / R0 evidence immutable. Candidate v1.1 remains non-final history; old `T-522` must not execute.
+- **Historical science:** protocol-v1.0 / FINAL-* / R0 evidence immutable. Candidate v1.1 remains non-final history; old `T-522` must not execute. Historical scientific runners remain reproducible even when superseded application/runtime surfaces are removed from the active tree.
 - **Bibliography:** immutable protocol-v2 consumer snapshot remains upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`, merged through thesis PR #96 and validated on PR #92.
-- **Frontend direction:** final frontend is rebuilt from scratch with a **different framework from NiceGUI** at `T-528` only after T-527 freezes the remaining v2 scientific/runtime contract.
+- **Frontend direction:** final frontend is rebuilt from scratch with a **different framework from NiceGUI** at `T-528` only after both T-527 scientific freeze and T-529 backend completion.
 - **Pre-WP7 approval:** NOT APPROVED; `T-700+` remains blocked.
-- **Exact next action:** on the validated physical Windows thesis machine, execute `scripts/run_protocol_v2_feasibility_windows.ps1` exactly once from a clean reviewed branch state. Retain the generated `results/pilots/protocol-v2-feasibility-v0.1/` artifacts for review before Phase-B severity calibration. Do not access any final reserve, tune methods, start old T-522, or resume UI implementation early.
+- **Exact user-machine action:** on the validated physical Windows thesis machine, execute `scripts/run_protocol_v2_feasibility_windows.ps1` exactly once from a clean reviewed branch state. Retain the generated `results/pilots/protocol-v2-feasibility-v0.1/` artifacts for review before Phase-B severity calibration. Do not access any final reserve, tune methods, start old T-522, or resume UI implementation early.
 
 ## Quota/interruption resilience
 
@@ -107,7 +107,6 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Core pilot implementations: Q-Learning, SARSA and Dyna-Q+ project exact-state adapters; DQN/PPO Stable-Baselines3 2.9.0 exact-state adapters using CPU-only PyTorch 2.9.0. DQN persists replay/target/optimizer/counters/schedules/RNG; PPO checkpoints only at legal completed rollout/update boundaries. Neural initialization and post-initialization behavior/update RNG streams are explicitly separated; environment/disturbance streams remain independent.
   - Phase-B conformance: Frozen learning state cannot mutate; SARSA requires quiescent fork; Frozen Dyna-Q+ bypasses the historical model-mutating learning `act()` path; DQN/PPO attach to the exact already-restored project GridWorld prefix. T-525 intentionally fails closed rather than inventing multi-episode post-boundary reset semantics; T-526/T-527 own that final lifecycle choice.
   - Validation at closure: complete dedicated protocol-v2 conformance gate (55 tests, CPU-only dependency check) and repository-wide tests/documentation/JSON/bibliography validation passed on the same reviewed PR #92 implementation head before status reconciliation.
-  - Do not perform final tuning, final matrix execution or UI work here.
 
 - [ ] READY `T-526` — Run bounded environment-discrimination + method/severity/CPU feasibility pilots on the validated Windows machine.
   - Depends on: `T-525` — satisfied.
@@ -115,7 +114,6 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Physical entrypoint: `scripts/run_protocol_v2_feasibility_windows.ps1`.
   - Runbook: `docs/research/T526_WINDOWS_FEASIBILITY_RUNBOOK.md`.
   - First physical pass: ordered 7×7 → 10×10 → 14×14 GridWorld ladder, two layouts/level, three roots, five core methods, common 2048-interaction Phase-A budget, no-learning probes at 0/512/1024/2048, CPU/wall/checkpoint/failure evidence; stop at the first level that is neither a universal final floor nor a universal early ceiling.
-  - Acceptance: small **predeclared ordered** GridWorld complexity ladder; common task semantics; simplest level avoiding universal floor/ceiling and CPU-feasible; project-owned interaction/runtime measurements; checkpoint/clone fidelity; artifact size; learning signal/variance; method-native update-boundary feasibility.
   - After level selection, use only the already-predeclared Phase-B calibration candidates: action-remap mappings; action-failure probabilities; observation-corruption probabilities with explicit global valid-cell support. Calibrate semantics/non-degeneracy, never preferred method ranking. Exact action-remap identities remain categorical rather than falsely scalar severity.
   - Evaluate A2C promotion only for distinct thesis value vs PPO at acceptable matrix cost. Retain poor/failing outcomes. No final reserve.
   - External boundary: hosted CI does not substitute for the physical Windows runtime/feasibility evidence gate.
@@ -126,18 +124,32 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Statistical freeze: root/run independent; block/equal layout handling; paired/DiD primary effects; Student-t root-level mean CI as default candidate subject to final pilot diagnostics/precision sizing; root-bootstrap/robust sensitivity; explicit failure denominators; limited primary contrast family and frozen multiplicity rule if p-values are used.
   - Freeze final layout/root reserve and exact Phase-B branch/update behavior before access.
 
-- [x] `T-530` — Truthful UI-independent Python runtime service/read-only observer foundation.
-- [x] `T-531` — Functional NiceGUI prototype over validated backend. **Prototype/history only.**
-- [x] `T-532` — Prototype screenshot/packaging feasibility work. **Not final UI/delivery packaging.**
+- [ ] IN_PROGRESS `T-529` — Reconstruct the study-first protocol-v2 backend from recipe through evidence/analysis/export, without frontend implementation.
+  - Depends on: `T-525` — satisfied. Runs in parallel with the external T-526 gate but may not consume or invent unresolved T-526/T-527 values.
+  - Controlling decision/spec: `docs/decisions/DEC-051_STUDY_FIRST_BACKEND_RECONSTRUCTION.md` and `docs/architecture/STUDY_BACKEND_REDESIGN.md`.
+  - [x] Remove superseded NiceGUI application/runtime/packaging surfaces from the active tree while preserving historical scientific reproducibility in Git/history.
+  - [x] Implement immutable `StudyRecipe`, evidence classes, ordered stages, job DAG, stage barriers, scientific/infrastructure failure distinction, durable `StudyStore`, lineage and finalized-integrity checks.
+  - [x] Implement deterministic recipe-to-plan materialization with stable Phase-A/Phase-B job IDs, method-specific condition eligibility and exact Phase-A producer dependencies.
+  - [x] Implement generic execution ports, scheduler and framework-neutral restart-safe `StudyService` facade.
+  - [ ] Implement real protocol-v2 Phase-A/Phase-B study executors over the validated Q/SARSA/DQN/PPO/Dyna-Q+ drivers, emitting standardized scientific artifacts/analysis records; Phase-B remains fail-closed for any lifecycle not yet frozen by T-527.
+  - [x] Implement structural v2 evidence validation and a validation-stage executor that reconciles expected jobs/artifacts/checkpoint lineage and retained scientific failures.
+  - [ ] Complete standardized v2 analysis records/statistical engine with root/layout blocking, matched FN/FD/AN/AD estimands, explicit failure denominators and frozen statistical-recipe inputs.
+  - [ ] Implement deterministic study export/handoff package for machine-readable data, thesis figures/tables/evidence IDs and presentation asset lineage; no thesis prose or PPTX here.
+  - [ ] Reconcile active docs/decision index and quarantine remaining v1.x application assumptions; historical scientific evidence/runners stay reproducible and cannot contaminate v2 confirmatory analysis.
+  - Acceptance: one immutable Study recipe can be planned, executed/resumed without UI logic, validated, analyzed and exported with complete lineage; no final scientific parameter comes from frontend/defaults; dedicated tests and repository CI pass.
+
+- [x] `T-530` — Historical truthful UI-independent Python runtime service/read-only observer foundation. **Superseded for final application by DEC-051/T-529; implementation removed from active tree after study-first replacement began.**
+- [x] `T-531` — Functional NiceGUI prototype over validated backend. **Prototype/history only; active implementation removed by DEC-049/051.**
+- [x] `T-532` — Prototype screenshot/packaging feasibility work. **Prototype/history only; active implementation removed by DEC-049/051.**
 
 - [ ] BLOCKED `T-528` — Select a different frontend framework and rebuild the final v2-aware application UI/UX from scratch (#93).
-  - Depends on: `T-527`.
-  - Acceptance: select a **different framework from NiceGUI** only after the framework-neutral v2 backend is stable; document selection for local desktop use, dual Frozen/Adaptive GridWorld rendering, scientific charts/tables, accessibility, maintainability, Python-service integration and later standalone delivery; rebuild rather than restyle the NiceGUI prototype; consume backend DTOs/events without duplicating scientific execution.
+  - Depends on: `T-527`, `T-529`.
+  - Acceptance: select a **different framework from NiceGUI** only after the framework-neutral v2 scientific/study backend is stable; document selection for local desktop use, synchronized Frozen/Adaptive GridWorld rendering, scientific charts/tables, accessibility, maintainability, Python-service integration and later standalone delivery; consume `StudyService` DTOs/events without duplicating scientific execution.
   - Exact chart/table/diagram libraries and packaging technology are selected here/later, not inherited from the historical NiceGUI stack.
 
 - [ ] BLOCKED `T-511` — Intended-user application workflow/self-explanatory UX acceptance.
   - Depends on: `T-512`, `T-528`.
-  - Acceptance: user explicitly accepts final v2 configure/run/monitor/history/compare/export/error/help workflow. Automated checks never close this gate.
+  - Acceptance: user explicitly accepts final v2 thesis-study/custom configure/run/monitor/history/compare/export/error/help workflow. Automated checks never close this gate.
 
 ## WP6 — Final scientific evidence
 
@@ -147,8 +159,8 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
 - [x] `T-603` — Historical v1.0 figures/tables/artifacts.
 - [x] `T-604` — Historical v1.0 evidence package.
 
-- [ ] BLOCKED `T-610` — Execute frozen protocol-v2 final matrix.
-  - Depends on: `T-527`, `T-511`.
+- [ ] BLOCKED `T-610` — Execute frozen protocol-v2 final matrix through the accepted study-first execution path.
+  - Depends on: `T-527`, `T-529`, `T-511`.
 - [ ] BLOCKED `T-611` — Validate/freeze v2 final evidence.
   - Depends on: `T-610`.
 - [ ] BLOCKED `T-612` — Predeclared v2 nominal-learning/resilience statistical analysis and sensitivity diagnostics.
