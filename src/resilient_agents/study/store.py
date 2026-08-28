@@ -21,6 +21,7 @@ from .recipe import StudyRecipe
 
 STUDY_BUNDLE_SCHEMA_VERSION = 1
 STUDY_FINALIZATION_MARKER = "FINALIZED"
+_FINAL_STATUSES = {"completed", "completed-with-scientific-failures"}
 
 
 def _utc_now() -> str:
@@ -67,6 +68,24 @@ def _read_json_object(path: Path) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise RuntimeError(f"study JSON must be an object: {path}")
     return payload
+
+
+def _read_marker(path: Path) -> dict[str, str]:
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except (OSError, UnicodeError) as exc:
+        raise RuntimeError("study finalization marker is unreadable") from exc
+    result: dict[str, str] = {}
+    for line in lines:
+        if "=" not in line:
+            raise RuntimeError("study finalization marker is malformed")
+        key, _, value = line.partition("=")
+        key = key.strip()
+        value = value.strip()
+        if not key or key in result:
+            raise RuntimeError("study finalization marker is malformed")
+        result[key] = value
+    return result
 
 
 def _plan_to_dict(plan: StudyPlan) -> dict[str, Any]:
@@ -224,7 +243,6 @@ class StudyStore:
         lifecycle = StudyLifecycle(plan)
         now = _utc_now()
         plan_payload = _plan_to_dict(plan)
-        recipe_payload = recipe.to_dict()
         manifest = {
             "schema_version": STUDY_BUNDLE_SCHEMA_VERSION,
             "study_id": plan.study_id,
@@ -243,7 +261,7 @@ class StudyStore:
             "progress": lifecycle.progress(),
             "finalized_at_utc": None,
         }
-        _write_json_atomic(study_dir / "recipe.json", recipe_payload)
+        _write_json_atomic(study_dir / "recipe.json", recipe.to_dict())
         _write_json_atomic(study_dir / "plan.json", plan_payload)
         _write_json_atomic(study_dir / "lifecycle.json", lifecycle.snapshot())
         _write_json_atomic(study_dir / "manifest.json", manifest)
@@ -272,7 +290,25 @@ class StudyStore:
         study_dir = writable_root / "results" / "studies" / study_id
         if not study_dir.is_dir():
             raise FileNotFoundError(f"study bundle not found: {study_dir}")
-        manifest = _read_json_object(study_dir / "manifest.json")
+        manifest_path = study_dir / "manifest.json"
+        marker_path = study_dir / STUDY_FINALIZATION_MARKER
+        if marker_path.is_file():
+            marker = _read_marker(marker_path)
+            if set(marker) != {
+                "schema_version",
+                "status",
+                "recipe_sha256",
+                "manifest_sha256",
+            }:
+                raise RuntimeError("study finalization marker keys mismatch")
+            if marker["schema_version"] != str(STUDY_BUNDLE_SCHEMA_VERSION):
+                raise RuntimeError("study finalization marker schema mismatch")
+            if sha256_file(manifest_path) != marker["manifest_sha256"]:
+                raise RuntimeError("finalized study manifest integrity mismatch")
+        else:
+            marker = None
+
+        manifest = _read_json_object(manifest_path)
         if manifest.get("schema_version") != STUDY_BUNDLE_SCHEMA_VERSION:
             raise RuntimeError("unsupported study bundle schema")
         if manifest.get("study_id") != study_id:
@@ -303,7 +339,8 @@ class StudyStore:
             lifecycle=lifecycle,
             manifest=manifest,
         )
-        store._validate_manifest_against_lifecycle()
+        store._validate_manifest_against_lifecycle(marker)
+        store._validate_finalized_files()
         store._validate_artifacts()
         return store
 
@@ -382,7 +419,11 @@ class StudyStore:
         if not path.is_file():
             return ()
         artifacts: list[StudyArtifact] = []
-        for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        try:
+            lines = path.read_text(encoding="utf-8").splitlines()
+        except (OSError, UnicodeError) as exc:
+            raise RuntimeError("study artifact index is unreadable") from exc
+        for number, line in enumerate(lines, start=1):
             try:
                 payload = json.loads(line)
             except json.JSONDecodeError as exc:
@@ -459,12 +500,15 @@ class StudyStore:
             f"schema_version={STUDY_BUNDLE_SCHEMA_VERSION}\n"
             f"status={status}\n"
             f"recipe_sha256={self.recipe.sha256()}\n"
+            f"manifest_sha256={sha256_file(self.study_dir / 'manifest.json')}\n"
         )
         temporary = self.study_dir / (STUDY_FINALIZATION_MARKER + ".tmp")
         temporary.write_text(marker, encoding="utf-8", newline="\n")
         temporary.replace(self.study_dir / STUDY_FINALIZATION_MARKER)
 
-    def _validate_manifest_against_lifecycle(self) -> None:
+    def _validate_manifest_against_lifecycle(
+        self, marker: Mapping[str, str] | None
+    ) -> None:
         if self.manifest.get("progress") != self.lifecycle.progress():
             raise RuntimeError("study manifest progress does not match lifecycle")
         expected_stage = (
@@ -474,14 +518,56 @@ class StudyStore:
         )
         if self.manifest.get("current_stage") != expected_stage:
             raise RuntimeError("study manifest current_stage does not match lifecycle")
-        marker_exists = (self.study_dir / STUDY_FINALIZATION_MARKER).is_file()
-        if marker_exists and self.manifest.get("status") not in {
-            "completed",
-            "completed-with-scientific-failures",
-        }:
+        if marker is None:
+            if self.manifest.get("status") != "active":
+                raise RuntimeError("unfinalized study must remain active")
+            if "files" in self.manifest:
+                raise RuntimeError("active study cannot declare finalized file hashes")
+            return
+        status = str(self.manifest.get("status"))
+        if status not in _FINAL_STATUSES:
             raise RuntimeError("study finalization marker/status mismatch")
-        if not marker_exists and self.manifest.get("status") != "active":
-            raise RuntimeError("unfinalized study must remain active")
+        if not self.lifecycle.complete:
+            raise RuntimeError("finalized study lifecycle is not resolved")
+        if marker.get("status") != status:
+            raise RuntimeError("study finalization marker status mismatch")
+        if marker.get("recipe_sha256") != self.recipe.sha256():
+            raise RuntimeError("study finalization marker recipe mismatch")
+        if not self.manifest.get("finalized_at_utc"):
+            raise RuntimeError("finalized study manifest lacks finalized_at_utc")
+
+    def _validate_finalized_files(self) -> None:
+        marker_path = self.study_dir / STUDY_FINALIZATION_MARKER
+        if not marker_path.is_file():
+            return
+        files = self.manifest.get("files")
+        if not isinstance(files, Mapping):
+            raise RuntimeError("finalized study manifest lacks file integrity map")
+        expected_files = {
+            "recipe.json",
+            "plan.json",
+            "lifecycle.json",
+            "events.jsonl",
+        }
+        if (self.study_dir / "artifacts.jsonl").is_file():
+            expected_files.add("artifacts.jsonl")
+        if set(files) != expected_files:
+            raise RuntimeError("finalized study file integrity scope mismatch")
+        for name in expected_files:
+            metadata = files[name]
+            if not isinstance(metadata, Mapping) or set(metadata) != {
+                "sha256",
+                "size_bytes",
+            }:
+                raise RuntimeError(f"finalized study file metadata is invalid: {name}")
+            path = self.study_dir / name
+            if not path.is_file():
+                raise RuntimeError(f"finalized study file is missing: {name}")
+            if (
+                metadata.get("sha256") != sha256_file(path)
+                or metadata.get("size_bytes") != path.stat().st_size
+            ):
+                raise RuntimeError(f"finalized study file integrity mismatch: {name}")
 
     def _validate_artifacts(self) -> None:
         known_jobs = set(self.plan.by_id())
