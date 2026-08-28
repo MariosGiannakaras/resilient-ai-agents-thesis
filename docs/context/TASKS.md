@@ -21,14 +21,15 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 
 - **Package:** DEC-048 protocol-v2 redesign refined by DEC-050 methodology closure. DEC-042/047 and candidate v1.1 remain auditable predecessor design. DEC-049 controls the later new-framework frontend rebuild.
 - **Project:** **4/8** master milestones complete (#87: 1, 2, 4, 5).
-- **Current task:** `T-525`.
-- **State:** `IN_PROGRESS`; T-524 source/bibliography/methodology closure is complete. The immutable protocol-v2 bibliography consumer snapshot is upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`, merged through thesis PR #96 and validated on the current PR #92 merge state.
+- **Current task:** `T-526`.
+- **State:** `READY`; T-525 framework-neutral multimethod backend implementation is complete and validated. The next scientific evidence is the predeclared non-final physical Windows feasibility gate; hosted CI cannot substitute for it.
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no parallel main-repo implementation branch.
-- **Trackers:** #87 master 4/8; #95 protocol-v2 3/10; #88 closed/superseded; #89 complete/closed; #93 PAUSED; #94 DEFERRED post-thesis.
+- **Trackers:** #87 master 4/8; #95 protocol-v2 4/10; #88 closed/superseded; #89 complete/closed; #93 PAUSED; #94 DEFERRED post-thesis.
 - **Historical science:** protocol-v1.0 / FINAL-* / R0 evidence immutable. Candidate v1.1 remains non-final history; old `T-522` must not execute.
-- **Frontend direction:** final frontend is rebuilt from scratch with a **different framework from NiceGUI** at `T-528` after v2 backend/scientific stability.
+- **Bibliography:** immutable protocol-v2 consumer snapshot remains upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`, merged through thesis PR #96 and validated on PR #92.
+- **Frontend direction:** final frontend is rebuilt from scratch with a **different framework from NiceGUI** at `T-528` only after T-527 freezes the remaining v2 scientific/runtime contract.
 - **Pre-WP7 approval:** NOT APPROVED; `T-700+` remains blocked.
-- **Exact next action:** implement T-525 framework-neutral protocol-v2 lifecycle/checkpoint/branching and minimum method adapters. Do not access any final reserve, tune methods, start old T-522, or resume UI implementation early.
+- **Exact next action:** on the validated physical Windows thesis machine, execute `scripts/run_protocol_v2_feasibility_windows.ps1` exactly once from a clean reviewed branch state. Retain the generated `results/pilots/protocol-v2-feasibility-v0.1/` artifacts for review before Phase-B severity calibration. Do not access any final reserve, tune methods, start old T-522, or resume UI implementation early.
 
 ## Quota/interruption resilience
 
@@ -99,18 +100,23 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Frozen scientific contract includes: Phase-A independent method training; actual interaction budgets; common semantic information/reward/gamma; isolated no-learning probes; administrative truncation with bootstrap; each method/root/layout own full scientific checkpoint; exact shared Phase-B branch point; Frozen nominal/Frozen disturbed/Adaptive nominal/Adaptive disturbed branches; Adaptive updates only after boundary; same behavior-policy state at fork; DiD adaptation-benefit estimands; root-level inference/failure policy; explicit observation-corruption frequency + support/magnitude; final-reserve leakage firewall; historical v1.x truncation limitation; DEC-049 frontend boundary.
   - Bibliography closure: ThesisBibliography issue #135 completed; canonical methodology analyses/evidence/selection converged; 121 citation-ready sources; later-writing crosswalk retained in the corpus; upstream immutable SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`; thesis consumer sync PR #96 merged and current PR #92 repository checks passed after sync.
 
-- [ ] IN_PROGRESS `T-525` — Implement the bounded framework-neutral multimethod training/checkpoint/deployment foundation required for v2 pilots.
+- [x] `T-525` — Implement the bounded framework-neutral multimethod training/checkpoint/deployment foundation required for v2 pilots.
   - Depends on: `T-524`.
-  - Acceptance: v2 method-discriminated config/result schemas; project-owned actual interaction accounting; common task-level gamma/reward/truncation contract; experiment-lifecycle/capability adapter registry; independent Phase-A training; isolated interaction-indexed no-learning probes; full method-specific scientific state save/restore; process-destroy/restore/continue conformance; exact branch-point clone equality; Frozen/Adaptive behavior-policy-state semantics; four post-boundary branches; root/failure provenance; no evaluator leakage.
-  - Minimum pilot adapters: Q-Learning, SARSA, DQN, PPO, Dyna-Q+. Dyna-Q is ablation-only. A2C receives only bounded feasibility support if needed for its promotion decision.
-  - DQN adapter persists networks/optimizer/replay/sampling RNG/warm-up/update ratio/target/exploration schedules. PPO adapter persists full code-level configuration and checkpoints only at legal completed rollout/update boundaries. Dyna-Q+ uses full own model/recency/planning state rather than the historical Q-only checkpoint path.
-  - First implementation slice: add a protocol-v2 lifecycle/adapter layer beside the legacy v1.x runner; preserve historical Q-only checkpoint artifacts while providing exact Q scientific continuation; add conformance tests for serialization/destruction/restoration/continuation, branch cloning, interaction accounting, probe non-mutation, truncation semantics and information boundaries.
+  - Completed contract: `docs/research/PROTOCOL_V2_BACKEND_CONTRACT.md`.
+  - Implemented: v2 method-discriminated config/result schemas; project-owned actual interaction accounting; common task-level gamma/reward/truncation contract; experiment-lifecycle/capability registry; independent Phase-A training; isolated interaction-indexed no-learning probes; full method-specific scientific state save/restore; process-destroy/restore/continue conformance; exact branch-point clone equality; Frozen/Adaptive behavior-policy-state semantics; exact GridWorld state/RNG branching; four post-boundary branches; root/failure provenance; evaluator-information fail-closed boundaries.
+  - Core pilot implementations: Q-Learning, SARSA and Dyna-Q+ project exact-state adapters; DQN/PPO Stable-Baselines3 2.9.0 exact-state adapters using CPU-only PyTorch 2.9.0. DQN persists replay/target/optimizer/counters/schedules/RNG; PPO checkpoints only at legal completed rollout/update boundaries. Neural initialization and post-initialization behavior/update RNG streams are explicitly separated; environment/disturbance streams remain independent.
+  - Phase-B conformance: Frozen learning state cannot mutate; SARSA requires quiescent fork; Frozen Dyna-Q+ bypasses the historical model-mutating learning `act()` path; DQN/PPO attach to the exact already-restored project GridWorld prefix. T-525 intentionally fails closed rather than inventing multi-episode post-boundary reset semantics; T-526/T-527 own that final lifecycle choice.
+  - Validation at closure: complete dedicated protocol-v2 conformance gate (55 tests, CPU-only dependency check) and repository-wide tests/documentation/JSON/bibliography validation passed on the same reviewed PR #92 implementation head before status reconciliation.
   - Do not perform final tuning, final matrix execution or UI work here.
 
-- [ ] BLOCKED `T-526` — Run bounded environment-discrimination + method/severity/CPU feasibility pilots on the validated Windows machine.
-  - Depends on: `T-525`.
+- [ ] READY `T-526` — Run bounded environment-discrimination + method/severity/CPU feasibility pilots on the validated Windows machine.
+  - Depends on: `T-525` — satisfied.
+  - Predeclared plan: `configs/protocols/protocol-v2-feasibility-v0.1.json`.
+  - Physical entrypoint: `scripts/run_protocol_v2_feasibility_windows.ps1`.
+  - Runbook: `docs/research/T526_WINDOWS_FEASIBILITY_RUNBOOK.md`.
+  - First physical pass: ordered 7×7 → 10×10 → 14×14 GridWorld ladder, two layouts/level, three roots, five core methods, common 2048-interaction Phase-A budget, no-learning probes at 0/512/1024/2048, CPU/wall/checkpoint/failure evidence; stop at the first level that is neither a universal final floor nor a universal early ceiling.
   - Acceptance: small **predeclared ordered** GridWorld complexity ladder; common task semantics; simplest level avoiding universal floor/ceiling and CPU-feasible; project-owned interaction/runtime measurements; checkpoint/clone fidelity; artifact size; learning signal/variance; method-native update-boundary feasibility.
-  - Calibrate action-failure frequencies and observation-corruption frequency + support/magnitude using semantics/non-degeneracy, never preferred method ranking. Exact action-remap identities remain categorical rather than falsely scalar severity.
+  - After level selection, use only the already-predeclared Phase-B calibration candidates: action-remap mappings; action-failure probabilities; observation-corruption probabilities with explicit global valid-cell support. Calibrate semantics/non-degeneracy, never preferred method ranking. Exact action-remap identities remain categorical rather than falsely scalar severity.
   - Evaluate A2C promotion only for distinct thesis value vs PPO at acceptable matrix cost. Retain poor/failing outcomes. No final reserve.
   - External boundary: hosted CI does not substitute for the physical Windows runtime/feasibility evidence gate.
 
