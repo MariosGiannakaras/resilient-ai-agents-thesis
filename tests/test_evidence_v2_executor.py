@@ -46,7 +46,7 @@ class EvidenceV2ExecutorTests(unittest.TestCase):
                     stage=StudyStage.PHASE_B,
                     evidence_class=EvidenceClass.DEVELOPMENT,
                     dependencies=("pa",),
-                    payload={"job_type": "phase-b-branch"},
+                    payload={"job_type": "phase-b-matched-set"},
                 ),
                 StudyJobSpec(
                     job_id="validate",
@@ -69,6 +69,32 @@ class EvidenceV2ExecutorTests(unittest.TestCase):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(content)
         return relative, hashlib.sha256(content).hexdigest()
+
+    def _analysis_artifact(
+        self,
+        *,
+        store: StudyStore,
+        root: Path,
+        job_id: str,
+        artifact_id: str,
+        source_artifact_ids: tuple[str, ...],
+    ) -> None:
+        path, digest = self._file(
+            root,
+            f"results/runs/{job_id}/analysis.json",
+            b'{"record_type":"test"}\n',
+        )
+        store.record_artifact(
+            StudyArtifact(
+                artifact_id=artifact_id,
+                role=ArtifactRole.ANALYSIS_DATA,
+                evidence_class=EvidenceClass.DEVELOPMENT,
+                relative_path=path,
+                sha256=digest,
+                source_job_ids=(job_id,),
+                source_artifact_ids=source_artifact_ids,
+            )
+        )
 
     def test_validation_executor_records_report_and_completes_valid_study(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -95,7 +121,15 @@ class EvidenceV2ExecutorTests(unittest.TestCase):
                     relative_path=cp_path,
                     sha256=cp_sha,
                     source_job_ids=("pa",),
+                    source_artifact_ids=("pa-run",),
                 )
+            )
+            self._analysis_artifact(
+                store=store,
+                root=root,
+                job_id="pa",
+                artifact_id="pa-analysis",
+                source_artifact_ids=("pa-run", "pa-cp"),
             )
             store.complete_job("pa")
             store.start_job("pb")
@@ -110,6 +144,13 @@ class EvidenceV2ExecutorTests(unittest.TestCase):
                     source_job_ids=("pb",),
                     source_artifact_ids=("pa-cp",),
                 )
+            )
+            self._analysis_artifact(
+                store=store,
+                root=root,
+                job_id="pb",
+                artifact_id="pb-analysis",
+                source_artifact_ids=("pa-cp", "pb-run"),
             )
             store.complete_job("pb")
 
