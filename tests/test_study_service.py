@@ -89,7 +89,7 @@ class StudyServiceTests(unittest.TestCase):
             _SuccessExecutor(job_type)
             for job_type in (
                 "phase-a-training",
-                "phase-b-branch",
+                "phase-b-matched-set",
                 "study-validation",
                 "study-analysis",
                 "study-export",
@@ -103,8 +103,8 @@ class StudyServiceTests(unittest.TestCase):
             preview = service.preview(self._recipe())
             self.assertEqual(preview.study_id, "service-study")
             self.assertEqual(preview.preview.phase_a_jobs, 1)
-            self.assertEqual(preview.preview.phase_b_jobs, 4)
-            self.assertEqual(preview.preview.total_jobs, 8)
+            self.assertEqual(preview.preview.phase_b_jobs, 1)
+            self.assertEqual(preview.preview.total_jobs, 5)
             self.assertFalse((root / "results" / "studies").exists())
 
     def test_create_status_restart_and_list_are_durable(self) -> None:
@@ -131,9 +131,9 @@ class StudyServiceTests(unittest.TestCase):
             )
             service.create(self._recipe())
             results = service.run_ready("service-study")
-            self.assertEqual(len(results), 8)
+            self.assertEqual(len(results), 5)
             pre_finalize = service.status("service-study")
-            self.assertEqual(pre_finalize.progress["completed"], 8)
+            self.assertEqual(pre_finalize.progress["completed"], 5)
             self.assertFalse(pre_finalize.finalized)
 
             finalized = service.finalize("service-study")
