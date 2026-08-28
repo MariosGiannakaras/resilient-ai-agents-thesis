@@ -38,8 +38,19 @@ class StudyServiceTests(unittest.TestCase):
             scientific_status="service-test",
             frozen=False,
             study={
-                "matrix_schema_version": 1,
+                "matrix_schema_version": 2,
                 "phase_a": {
+                    "execution": {
+                        "training_interaction_budget": 32,
+                        "probe_interaction_indices": [0, 32],
+                        "episodes_per_probe": 1,
+                        "task": {
+                            "gamma": 0.95,
+                            "reward_contract": {"step": -0.1, "goal": 1.0},
+                            "administrative_truncation": True,
+                            "bootstrap_on_truncation": True,
+                        },
+                    },
                     "methods": [
                         {
                             "method_id": "q_learning",
@@ -53,6 +64,10 @@ class StudyServiceTests(unittest.TestCase):
                     "layouts": [{"layout_id": "layout-a"}],
                 },
                 "phase_b": {
+                    "execution": {
+                        "interaction_budget_per_branch": 8,
+                        "prefix_interactions": 2,
+                    },
                     "conditions": [
                         {
                             "condition_id": "remap",
