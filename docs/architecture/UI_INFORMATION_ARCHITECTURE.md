@@ -1,172 +1,234 @@
 # UI Information Architecture
 
-This is the bounded page map for the native NiceGUI research application. It keeps navigation small while exposing enough scientific context for a non-programmer/non-RL user to configure, observe and understand the research workflow.
+**Status:** framework-neutral contract for the future T-528 rebuild. No final frontend framework, component library, chart library or packaging technology is selected here.
 
-## Primary navigation
+The final application is a client of the study-first `StudyService` backend. It exposes research intent and results while the backend owns scientific mechanics such as roots, exact checkpoints, FN/FD/AN/AD branch construction, validation and evidence lineage.
 
-1. Dashboard
-2. New Experiment
-3. Runs
-4. Compare
-5. Artifacts
+## Primary workflow
 
-System details, metric definitions and advanced settings use drawers/tabs/contextual panels rather than extra top-level products unless later evidence requires otherwise.
+Default user journey:
+
+> **Choose study → Choose method(s) → Review → Run → Monitor → Results → Export**
+
+The simplest valid path should feel closer to:
+
+> **Choose study → Choose methods → Run → Results**
+
+because frozen scientific settings, root construction, Phase-A/Phase-B orchestration and validation are backend recipe responsibilities rather than manual UI plumbing.
+
+Two high-level study intents are expected unless T-528 evidence supports a clearer wording:
+
+1. **Compare Learning** — nominal Phase-A learning/performance comparison.
+2. **Test Resilience** — matched Frozen versus Adaptive resilience/adaptation study.
+
+Advanced/custom exploratory workflows may expose more controls, but they remain permanently distinguishable from thesis-valid frozen studies.
+
+## Candidate primary navigation
+
+T-528 may refine labels/layout, but the information model should cover:
+
+1. Home / Studies
+2. New Study
+3. Active / History
+4. Results / Compare
+5. Evidence / Export
+6. Help / Getting Started as contextual utility rather than a scientific product area
+
+Do not restore historical Dashboard/New Experiment/Runs/Compare/Artifacts labels merely for continuity if a cleaner study-first structure is better.
 
 ## Self-explanatory UX contract
 
 The application must be usable without reading a separate manual. Scientific complexity is explained rather than hidden behind unexplained IDs.
 
 - Use human-readable primary labels; technical IDs remain secondary reproducibility detail.
-- Explain the five full Agent strategy names, uncertainty conditions, settings, repetitions, metrics, aggregation and SD/CI/error semantics; exact seeds and internal IDs stay under Reproducibility.
+- Explain retained methods, uncertainty conditions, study modes, metrics, aggregation and interval/error semantics; exact roots/internal IDs stay under Reproducibility.
 - Use concise info-icon/tooltips for non-obvious concepts and contextual/expandable help for longer explanations.
-- Tooltips supplement rather than replace information required to make a safe configuration decision.
-- Use consistent terminology across configuration, live runs, history, comparison and exports.
-- Every important status combines understandable text + stable icon/symbol + semantic visual treatment; color alone never carries essential meaning.
+- Tooltips supplement rather than replace information required to make a scientifically safe choice.
+- Use consistent terminology across planning, execution, history, results and exports.
+- Every important status combines understandable text + stable icon/symbol + semantic visual treatment; **color alone** never carries essential meaning.
 - Warnings/errors state what happened, what is affected and the useful next action.
 - Empty/loading/disabled/unavailable states explain why and what can be done next.
-- Use confirmations only for destructive/high-impact actions.
+- Use confirmations only for destructive or scientifically high-impact actions.
 - Progressive disclosure hides irrelevant implementation detail, not scientific meaning or required decisions.
+- Never fabricate telemetry, trajectory motion, progress, metrics, comparisons or completed artifacts.
 
-## Configuration-identity and multiple-settings contract
+## Scientific configuration contract
 
-The application supports multiple **protocol-approved resolved configurations/settings** where the active stage declares them.
+### Thesis-valid/frozen mode
 
-- Every resolved configuration has a stable identity/hash and stored provenance.
-- Show which settings are fixed, tunable, advanced or unavailable and why.
-- Development/tuning may expose multiple approved variants; final-evidence mode exposes only frozen allowed configurations.
-- Every compared setting/configuration is backed by the required predefined repetitions/seeds; no single-run “best setting” ranking.
-- New Experiment previews the number of whole experiments/roots implied by the selected configuration plan.
-- Runs and Compare carry the configuration identity alongside agent, layout, condition and stage.
-- Compatibility logic prevents or clearly warns about scientifically invalid cross-protocol/stage/configuration comparisons.
-- Technical parameter differences can be expanded without cluttering the primary comparison view.
+The UI loads an immutable recipe and may not silently alter:
+
+- task/reward/gamma semantics;
+- retained method configurations;
+- roots/seeds;
+- final layouts;
+- uncertainty severities/mappings;
+- learning/deployment budgets;
+- probe cadence;
+- Phase-B branch combinations;
+- exact checkpoint origins;
+- statistical recipe/contrast family.
+
+The backend resolves those values from the frozen Study recipe. The UI shows them readably and explains why they are locked.
+
+### Development/tuning/exploratory mode
+
+Only stage-authorized settings are editable. Every variant receives stable configuration identity/provenance and cannot later masquerade as confirmatory evidence.
+
+- Show fixed, editable, advanced and unavailable settings with reasons.
+- Validate method-specific settings and scientific compatibility before run creation.
+- Avoid a generic free-form settings panel that lets the user construct invalid protocol combinations.
+- Seeds/roots are not “try another seed” controls for replacing poor outcomes.
+
+## Pre-run review
+
+Before launch, present a **pre-run review** derived from the resolved Study plan:
+
+- study/evidence class and protocol version;
+- selected methods and roles;
+- layouts/conditions at a human-readable level;
+- planned independent roots and scientific unit counts;
+- Phase-A/Phase-B stages that will run;
+- estimated/known resource implications when evidence supports them;
+- locked versus user-selected settings;
+- blocking validation issues;
+- explicit note when a run is exploratory/non-thesis evidence.
+
+The user should not need to enumerate FN/FD/AN/AD manually. In resilience mode, the primary conceptual comparison may be shown as **Frozen vs Adaptive** while technical branch details remain available under methodology/reproducibility.
 
 ## Lightweight onboarding
 
-After the final screen structure is stable, provide a short first-run flow (approximately 5–7 steps): orientation, configure, validate/launch, monitor, inspect results, compare, export/help.
+After the final T-528 screen structure is stable, provide a short first-run flow of roughly 5–7 steps: orientation, choose study, review, run/monitor, inspect results, compare, export/help.
 
-- Previous / Next / Skip / Finish.
+- **Previous / Next / Skip / Finish**.
 - Skippable and non-blocking.
 - Replayable from Help / Getting Started.
-- Lightweight local NiceGUI/application state only; no account/profile/persistence subsystem.
-- Do not add a separate heavyweight JS/DOM tour framework without demonstrated need.
+- Local lightweight state only; no account/profile subsystem without a demonstrated need.
+- Do not add a heavyweight tour framework unless it materially improves the selected frontend implementation.
 - Every page remains understandable when onboarding is skipped.
 
-## 1. Dashboard
+## Studies / Home
 
-Purpose: immediate project/application state and next actions.
+Purpose: show durable study state and objective next actions.
 
-- Active and recent runs.
-- Recent failures/warnings.
-- Current protocol/stage and evidence state.
-- Lightweight current CPU/RAM/disk/supported-GPU snapshot.
-- Quick actions: create experiment, open active run, compare results, export artifact.
-- Summary of accepted/frozen evidence where relevant.
-- Clear recommended next action when objectively defined.
+- Current/ready/running/recent studies from `StudyService`.
+- Evidence class and frozen/exploratory status.
+- Current stage and truthful completed/failed/skipped/pending counts.
+- External/blocking gates where relevant.
+- Recent actionable failures/warnings.
+- Quick actions: create/choose study, open active study, inspect results/evidence.
+- Recommended next action only when objectively derivable from backend state.
 
-Keep the page compact and screenshot-ready; resource status is a current snapshot, not a monitoring product.
+Resource status should remain a lightweight current snapshot, not a monitoring platform.
 
-## 2. New Experiment
+## New Study
 
-Purpose: configure and launch scientifically valid work without code.
+Purpose: express research intent without requiring scientific orchestration knowledge.
 
-- Select protocol/stage.
-- Select permitted Agent strategies: Fixed Q-Learning, Adaptive Q-Learning, SARSA, Dyna-Q and Dyna-Q+ as defined by the active protocol.
-- Select one or more protocol-approved configuration/settings variants where the stage permits them.
-- Explain fixed vs tunable parameters and model-specific settings; hide invalid/unapproved internal switches.
-- Select environment/layout and uncertainty condition/severity allowed by the protocol.
-- Select or resolve the approved seed/repetition plan.
-- Show defaults, units, range/meaning/consequences and validation.
-- Progressive disclosure for advanced parameters.
-- Preview resolved configuration identity, run/root count, evidence class/retention and relevant estimated resources.
-- Present a pre-run review: agents, configuration IDs/settings, environment/condition, seeds/repetitions, protocol/stage, expected run count and blocking issues.
-- Launch single or approved batch/tuning plan only after validation passes.
-- Save/clone/version configuration only where the scientific workflow allows it.
+- Choose a permitted study mode/recipe.
+- Choose method(s) only where the recipe/stage permits selection.
+- Show recommended/frozen presets and why they are valid.
+- Provide optional **Customize** progressive disclosure only for authorized exploratory/tuning parameters.
+- Preview materialized job/root/layout/condition counts from the backend planner.
+- Show pre-run review and validation before launch.
+- Do not expose manual checkpoint IDs, branch cloning, root generation or internal executor choices as normal controls.
 
-Invalid/incompatible combinations are blocked with an actionable explanation.
+Invalid/incompatible combinations are blocked with an actionable explanation from backend validation.
 
-## 3. Runs
+## Active study / Monitor
 
-Unified section with Active, Run Detail and History.
+Purpose: observe real execution without influencing scientific behavior.
 
-### Active
+- Truthful Study stage/job status from durable backend state.
+- Method/root/layout/condition currently executing where useful.
+- Real progress counters based on scientific interaction/job state, never elapsed-time animation pretending to be progress.
+- Read-only GridWorld/trajectory view only where the backend provides scientifically isolated observation data.
+- Real warnings/errors/events/resources.
+- Supported cancellation/retry controls only where lifecycle semantics permit them; unsupported pause/resume remains explicit.
+- Frozen vs Adaptive views may be synchronized conceptually, but the UI must not inject information into agents or alter timing/RNG.
 
-- Truthful queued/running/status/progress from T-530 runtime DTOs.
-- Essential lifecycle actions only when supported.
-- Warnings/errors/heartbeat/current resource snapshot.
-- Agent + configuration identity visible.
-- Compatible multi-agent/configuration live overlays only when the scientific comparison is meaningful.
+If step-level replay is unavailable for retained historical evidence, say so rather than fabricating it.
 
-### Run detail
+## History
 
-- Smooth live GridWorld driven by read-only observer state.
-- Current episode/step/action/reward and relevant evaluator-labelled disturbance state without leaking it back to agents.
-- Real event timeline, logs and `LIVE / PROVISIONAL` metrics.
-- ECharts live curves/overlays for compatible agents/settings.
-- Resolved configuration identity and readable primary settings; full technical config/provenance expandable.
-- Final outputs/artifacts after completion.
-- Actionable recovery guidance after failure/interruption.
-- Historical finalized runs without retained step trace explicitly show replay unavailable.
+- Search/filter by study, method, root/configuration identity, layout, condition, state, evidence class and date where available.
+- Completed/scientific-failed/infrastructure-failed/skipped/cancelled/interrupted units remain attributable.
+- History is study-first, with drill-down to jobs/runs rather than a flat run list as the primary mental model.
+- Rerun/retry controls must respect scientific identity; no “rerun bad seed” shortcut.
 
-Visualization speed/interpolation is presentation-only and never affects execution actions/timing/seeds/RNG.
+## Results / Compare
 
-### History
+Purpose: interpret scientifically compatible evidence.
 
-- Search/filter by agent, configuration/settings identity, layout, condition, status, stage/evidence class, date and experiment.
-- Completed/failed/cancelled/interrupted/excluded runs remain visible.
-- Clone/rerun/export where scientifically valid.
-- Empty state directs the user to create an experiment.
+### Phase A — learning
 
-## 4. Compare
+Show, when the analysis recipe supports them:
 
-Purpose: understand compatible scientific results and configuration effects.
+- standardized final no-learning evaluation;
+- equal-grid learning time-average/AUC-style summaries;
+- root/layout distributions and explicit included/planned denominators;
+- runtime/resource cost separately from policy quality.
 
-- Select runs/experiments/agent groups/configuration identities.
-- Show compatibility status and reasons for incompatibility.
-- Performance, immediate degradation, cumulative deficit, terminal performance/gap and secondary recovery/sensitivity views as permitted by the evidence version.
-- Distribution plots, paired effects/95% CIs and explicit n where the final analysis supports them.
-- Layout/condition/seed breakdowns where approved.
-- Clear table of what differs between selected configurations/settings.
-- Plotly for stored/final scientific figures; historical v1.0 SD remains labelled SD rather than CI.
-- No best-run-only view, no unlabeled composite score and no post-hoc best-setting cherry-picking.
-- Export comparison data/artifact manifest.
+### Phase B — resilience/adaptation
 
-If no valid comparison exists, explain what is incompatible and how to choose compatible evidence.
+Show component results rather than a composite score:
 
-## 5. Artifacts
+- Frozen disturbed-vs-nominal loss;
+- Adaptive disturbed-vs-nominal loss;
+- matched adaptation benefit / DiD;
+- branch-level FN/FD/AN/AD detail on demand;
+- condition-family separation;
+- failure/skipped denominators.
 
-Purpose: inspect/export thesis-ready evidence and application assets.
+### Comparison rules
 
-- Real figures/tables/CSV/JSON/HTML outputs and manifests.
-- Preview/download stored Plotly/static scientific figures.
-- Friendly summary of source runs/configuration identities/generation script/metric version.
-- Full checksums/provenance expandable.
-- Frozen/approved/provisional classification visible.
-- Complete evidence-bundle export.
-- Empty states explain what results are required first.
+- Compare only scientifically compatible protocol/evidence definitions.
+- Show effect sizes/intervals only when emitted by the frozen analysis package.
+- Historical SD is labelled SD; do not relabel it as CI.
+- No best-run-only view, no unlabeled composite score, no post-hoc best-setting cherry-picking.
+- Explain incomplete layout/root blocks and retained failures rather than silently dropping them.
+
+Exact chart types and visualization libraries are selected at T-528/T-613 after the statistical/output contract is frozen.
+
+## Evidence / Export
+
+Purpose: inspect and hand off reproducible evidence.
+
+- Study evidence-handoff manifest and result index.
+- Deterministic analysis/root-level CSV/JSON outputs.
+- Stable result/evidence IDs.
+- Thesis-ready tables/figures only after their downstream frozen recipe generates them.
+- Friendly source-study/recipe/protocol/evidence-class summary.
+- Full checksums/provenance/lineage expandable.
+- Clear separation of scientific evidence from illustrative application screenshots/GIF/video.
+- Empty states explain which upstream stage is required.
+
+The UI never treats whatever happens to be visible on screen as the authoritative export source.
 
 ## Contextual panels
 
-Use contextual panels for:
+Use contextual/help surfaces for:
 
-- agent/configuration explanations;
-- metric definitions/formulas/CI semantics;
-- system/runtime/Git details;
-- checksums/provenance manifests;
-- raw/processed data metadata;
-- advanced config explanations;
+- method/role explanations;
+- Frozen/Adaptive and FN/FD/AN/AD methodology;
+- metric/estimand/interval definitions;
+- system/runtime details;
+- checksums/provenance/recipe hashes;
+- raw/derived data metadata;
+- advanced configuration explanations;
 - storage warnings;
 - application settings;
 - Help / Getting Started / onboarding replay.
 
 ## Navigation and visual principles
 
-- Stable small navigation.
-- Modern compact desktop/laptop density rather than oversized decorative sections.
-- Consistent typography, spacing, iconography, cards, filters, tables and charts.
-- Agent identity remains visually consistent across GridWorld/charts/tables without relying on color alone.
-- Restrained hover/focus/selection micro-interactions and purposeful state/chart/GridWorld animations improve comprehension.
-- Animation never fabricates progress/trajectory/metrics and remains understandable with reduced motion where practical.
+- Stable small navigation and clear hierarchy.
+- Modern compact desktop/laptop density rather than oversized decoration.
+- Consistent typography, spacing, icons, tables and charts within the T-528 design system.
+- Method identity stays consistent across GridWorld/charts/tables without relying on color alone.
+- Restrained hover/focus/selection feedback and purposeful state/chart/GridWorld animation may improve comprehension.
+- Animation never fabricates progress/trajectory/metrics and must remain understandable with reduced motion.
 - Separate execution controls, live/provisional interpretation and frozen-result interpretation.
-- Every visible scientific value comes from real data and a versioned definition.
-- Provenance remains accessible without dominating primary workflows.
+- Every visible scientific value comes from real backend data and a versioned definition.
+- Provenance remains accessible without dominating the primary workflow.
 - UX polish reduces cognitive load; it does not add decorative machinery without a concrete usability benefit.
