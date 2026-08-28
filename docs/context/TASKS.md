@@ -21,7 +21,8 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 
 - **Package:** DEC-048/050 protocol-v2 methodology plus DEC-051 study-first backend reconstruction. DEC-042/047 and candidate v1.1 remain auditable predecessor design. DEC-049 controls the later new-framework frontend rebuild.
 - **Project:** **4/8** master milestones complete (#87: 1, 2, 4, 5).
-- **Current implementation task:** `T-529` IN_PROGRESS — reconstruct the final study-first backend orchestration/evidence/analysis/export foundation around the validated T-525 scientific core.
+- **Current task:** `T-529`.
+- **State:** `IN_PROGRESS`; reconstruct the final study-first backend orchestration/evidence/analysis/export foundation around the validated T-525 scientific core.
 - **External scientific gate:** `T-526` remains READY and requires the predeclared physical Windows feasibility run; hosted CI cannot substitute for it. T-529 may continue while that external evidence is pending because it must not invent or consume T-526/T-527 outcomes.
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no parallel main-repo implementation branch.
 - **Trackers:** #87 master 4/8; #95 protocol-v2 4/10; #88 closed/superseded; #89 complete/closed; #93 PAUSED; #94 DEFERRED post-thesis.
@@ -29,7 +30,7 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 - **Bibliography:** immutable protocol-v2 consumer snapshot remains upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`, merged through thesis PR #96 and validated on PR #92.
 - **Frontend direction:** final frontend is rebuilt from scratch with a **different framework from NiceGUI** at `T-528` only after both T-527 scientific freeze and T-529 backend completion.
 - **Pre-WP7 approval:** NOT APPROVED; `T-700+` remains blocked.
-- **Exact user-machine action:** on the validated physical Windows thesis machine, execute `scripts/run_protocol_v2_feasibility_windows.ps1` exactly once from a clean reviewed branch state. Retain the generated `results/pilots/protocol-v2-feasibility-v0.1/` artifacts for review before Phase-B severity calibration. Do not access any final reserve, tune methods, start old T-522, or resume UI implementation early.
+- **Exact next action:** continue T-529 implementation in-repo; independently, on the validated physical Windows thesis machine execute `scripts/run_protocol_v2_feasibility_windows.ps1` exactly once from a clean reviewed branch state and retain the generated `results/pilots/protocol-v2-feasibility-v0.1/` artifacts. Do not access final reserve, tune methods from final outcomes, start old T-522, or resume UI implementation early.
 
 ## Quota/interruption resilience
 
