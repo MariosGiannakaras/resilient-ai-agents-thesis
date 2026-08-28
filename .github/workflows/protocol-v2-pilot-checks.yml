@@ -92,4 +92,5 @@ jobs:
             tests.test_study_protocol_v2_phase_b_executor \
             tests.test_evidence_v2_validation \
             tests.test_evidence_v2_executor \
-            tests.test_evidence_v2_statistics -q
+            tests.test_evidence_v2_statistics \
+            tests.test_evidence_v2_denominators -q
