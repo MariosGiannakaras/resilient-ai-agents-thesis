@@ -19,8 +19,23 @@ class StudyPlannerTests(unittest.TestCase):
             scientific_status="planner-test",
             frozen=False,
             study={
-                "matrix_schema_version": 1,
+                "matrix_schema_version": 2,
                 "phase_a": {
+                    "execution": {
+                        "training_interaction_budget": 128,
+                        "probe_interaction_indices": [0, 64, 128],
+                        "episodes_per_probe": 2,
+                        "task": {
+                            "gamma": 0.95,
+                            "reward_contract": {
+                                "step": -0.1,
+                                "collision": -0.25,
+                                "goal": 1.0,
+                            },
+                            "administrative_truncation": True,
+                            "bootstrap_on_truncation": True,
+                        },
+                    },
                     "methods": [
                         {
                             "method_id": "q_learning",
@@ -51,6 +66,10 @@ class StudyPlannerTests(unittest.TestCase):
                     ],
                 },
                 "phase_b": {
+                    "execution": {
+                        "interaction_budget_per_branch": 32,
+                        "prefix_interactions": 8,
+                    },
                     "conditions": [
                         {
                             "condition_id": "remap-swap",
@@ -78,11 +97,7 @@ class StudyPlannerTests(unittest.TestCase):
         plan = planner.materialize()
         preview = planner.preview()
 
-        # Two learning methods x two roots x two layouts plus one cheap reference
-        # over the same roots/layouts.
         self.assertEqual(preview.phase_a_jobs, 12)
-        # Q-Learning: 2 conditions x 4 branches x 2 roots x 2 layouts = 32.
-        # Dyna-Q ablation: 1 condition x 4 branches x 2 roots x 2 layouts = 16.
         self.assertEqual(preview.phase_b_jobs, 48)
         self.assertEqual(preview.total_jobs, 63)
         self.assertEqual(preview.method_count, 2)
@@ -98,6 +113,17 @@ class StudyPlannerTests(unittest.TestCase):
             "pb__dyna_q__root-01__layout-a__action-failure__fd",
             plan.by_id(),
         )
+
+    def test_execution_contract_is_copied_into_scientific_job_payloads(self) -> None:
+        plan = StudyPlanner(self._recipe()).materialize()
+        phase_a = plan.by_id()["pa__q_learning__root-01__layout-a"]
+        phase_b = plan.by_id()[
+            "pb__q_learning__root-01__layout-a__remap-swap__fn"
+        ]
+        self.assertEqual(phase_a.payload["execution"]["training_interaction_budget"], 128)
+        self.assertEqual(phase_a.payload["execution"]["task"]["gamma"], 0.95)
+        self.assertEqual(phase_b.payload["execution"]["interaction_budget_per_branch"], 32)
+        self.assertEqual(phase_b.payload["execution"]["prefix_interactions"], 8)
 
     def test_phase_b_job_depends_on_exact_matching_phase_a_checkpoint_producer(self) -> None:
         plan = StudyPlanner(self._recipe()).materialize()
@@ -153,6 +179,13 @@ class StudyPlannerTests(unittest.TestCase):
         payload["study"]["phase_a"]["roots"][0]["root_id"] = "root__01"
         recipe = StudyRecipe.from_dict(payload)
         with self.assertRaisesRegex(ValueError, "reserved '__' delimiter"):
+            StudyPlanner(recipe)
+
+    def test_requires_explicit_phase_execution_objects(self) -> None:
+        payload = self._recipe().to_dict()
+        del payload["study"]["phase_a"]["execution"]
+        recipe = StudyRecipe.from_dict(payload)
+        with self.assertRaisesRegex(ValueError, "study.phase_a keys mismatch"):
             StudyPlanner(recipe)
 
 
