@@ -52,14 +52,15 @@ class ExplicitSeededGridWorldEnv(gym.Env):
 
     def reset(self, *, seed: int | None = None, options: dict[str, Any] | None = None):
         del options
+        if seed is not None and (not isinstance(seed, int) or isinstance(seed, bool) or seed < 0):
+            raise ValueError("Gymnasium seed must be a non-negative integer when supplied")
         if self._next_episode >= len(self._episode_seeds):
             raise RuntimeError("explicit GridWorld episode seed sequence exhausted")
         episode_seeds = self._episode_seeds[self._next_episode]
-        if seed is not None and seed != episode_seeds.environment:
-            # SB3/Gymnasium may pass an algorithm seed only on the first reset.
-            # It must agree with the project environment seed rather than
-            # silently creating a second environment-randomness contract.
-            raise ValueError("Gymnasium reset seed must match the predeclared environment seed")
+        # SB3's algorithm seed and the project's environment seed are separate
+        # scientific streams. The Gymnasium seed supplied by SB3 is therefore
+        # intentionally not forwarded into the project environment; the exact
+        # predeclared EnvironmentSeeds object remains authoritative.
         observation = self._environment.reset(seeds=episode_seeds)
         self._next_episode += 1
         return observation, {}
