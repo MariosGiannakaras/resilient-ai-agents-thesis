@@ -98,8 +98,10 @@ class StudyPlannerTests(unittest.TestCase):
         preview = planner.preview()
 
         self.assertEqual(preview.phase_a_jobs, 12)
-        self.assertEqual(preview.phase_b_jobs, 48)
-        self.assertEqual(preview.total_jobs, 63)
+        # Q-Learning: 2 conditions x 2 roots x 2 layouts = 8 matched sets.
+        # Dyna-Q ablation: 1 condition x 2 roots x 2 layouts = 4 matched sets.
+        self.assertEqual(preview.phase_b_jobs, 12)
+        self.assertEqual(preview.total_jobs, 27)
         self.assertEqual(preview.method_count, 2)
         self.assertEqual(preview.reference_count, 1)
         self.assertEqual(preview.root_count, 2)
@@ -110,7 +112,7 @@ class StudyPlannerTests(unittest.TestCase):
         self.assertEqual(len(plan.jobs_for_stage(StudyStage.ANALYSIS)), 1)
         self.assertEqual(len(plan.jobs_for_stage(StudyStage.EXPORT)), 1)
         self.assertNotIn(
-            "pb__dyna_q__root-01__layout-a__action-failure__fd",
+            "pb__dyna_q__root-01__layout-a__action-failure",
             plan.by_id(),
         )
 
@@ -118,17 +120,18 @@ class StudyPlannerTests(unittest.TestCase):
         plan = StudyPlanner(self._recipe()).materialize()
         phase_a = plan.by_id()["pa__q_learning__root-01__layout-a"]
         phase_b = plan.by_id()[
-            "pb__q_learning__root-01__layout-a__remap-swap__fn"
+            "pb__q_learning__root-01__layout-a__remap-swap"
         ]
         self.assertEqual(phase_a.payload["execution"]["training_interaction_budget"], 128)
         self.assertEqual(phase_a.payload["execution"]["task"]["gamma"], 0.95)
         self.assertEqual(phase_b.payload["execution"]["interaction_budget_per_branch"], 32)
         self.assertEqual(phase_b.payload["execution"]["prefix_interactions"], 8)
+        self.assertEqual(phase_b.payload["branches"], ["FN", "FD", "AN", "AD"])
 
-    def test_phase_b_job_depends_on_exact_matching_phase_a_checkpoint_producer(self) -> None:
+    def test_phase_b_matched_set_depends_on_exact_matching_phase_a_checkpoint_producer(self) -> None:
         plan = StudyPlanner(self._recipe()).materialize()
         job = plan.by_id()[
-            "pb__q_learning__root-02__layout-b__remap-swap__ad"
+            "pb__q_learning__root-02__layout-b__remap-swap"
         ]
         self.assertEqual(
             job.dependencies,
@@ -138,7 +141,7 @@ class StudyPlannerTests(unittest.TestCase):
             job.payload["phase_a_job_id"],
             "pa__q_learning__root-02__layout-b",
         )
-        self.assertEqual(job.payload["branch"], "AD")
+        self.assertEqual(job.payload["job_type"], "phase-b-matched-set")
 
     def test_validation_is_stage_barrier_based_so_scientific_failures_can_be_counted(self) -> None:
         plan = StudyPlanner(self._recipe()).materialize()
