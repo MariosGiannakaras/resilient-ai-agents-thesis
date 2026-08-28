@@ -3,13 +3,13 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from typing import Any, Mapping, Sequence
+from typing import Any, Mapping
 
 from ..protocol_v2 import ProtocolV2Branch
 from .model import EvidenceClass, StudyJobSpec, StudyPlan, StudyStage
 from .recipe import StudyRecipe
 
-STUDY_MATRIX_SCHEMA_VERSION = 1
+STUDY_MATRIX_SCHEMA_VERSION = 2
 _COMPONENT_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 _EXPECTED_BRANCHES = tuple(branch.value for branch in ProtocolV2Branch)
 
@@ -56,6 +56,12 @@ def _exact_keys(value: Mapping[str, Any], expected: set[str], *, field: str) -> 
         raise ValueError(f"{field} keys mismatch; missing={missing}, unknown={unknown}")
 
 
+def _object(value: Any, *, field: str) -> dict[str, Any]:
+    if not isinstance(value, Mapping) or not value:
+        raise ValueError(f"{field} must be a non-empty object")
+    return dict(value)
+
+
 @dataclass(frozen=True)
 class StudyPlanPreview:
     phase_a_jobs: int
@@ -88,10 +94,12 @@ class StudyPlanPreview:
 
 @dataclass(frozen=True)
 class StudyMatrixDefinition:
+    phase_a_execution: Mapping[str, Any]
     methods: tuple[Mapping[str, Any], ...]
     references: tuple[Mapping[str, Any], ...]
     roots: tuple[Mapping[str, Any], ...]
     layouts: tuple[Mapping[str, Any], ...]
+    phase_b_execution: Mapping[str, Any]
     conditions: tuple[Mapping[str, Any], ...]
     branches: tuple[str, ...]
     validation: Mapping[str, Any]
@@ -120,12 +128,12 @@ class StudyMatrixDefinition:
             raise ValueError("study.postprocessing must be an object")
         _exact_keys(
             phase_a,
-            {"methods", "references", "roots", "layouts"},
+            {"execution", "methods", "references", "roots", "layouts"},
             field="study.phase_a",
         )
         _exact_keys(
             phase_b,
-            {"conditions", "branches"},
+            {"execution", "conditions", "branches"},
             field="study.phase_b",
         )
         _exact_keys(
@@ -134,6 +142,12 @@ class StudyMatrixDefinition:
             field="study.postprocessing",
         )
 
+        phase_a_execution = _object(
+            phase_a["execution"], field="study.phase_a.execution"
+        )
+        phase_b_execution = _object(
+            phase_b["execution"], field="study.phase_b.execution"
+        )
         methods = _records(
             phase_a["methods"], field="study.phase_a.methods", id_key="method_id"
         )
@@ -188,10 +202,12 @@ class StudyMatrixDefinition:
                 raise ValueError(f"study.postprocessing.{name} must be an object")
 
         return cls(
+            phase_a_execution=phase_a_execution,
             methods=tuple(normalized_methods),
             references=references,
             roots=roots,
             layouts=layouts,
+            phase_b_execution=phase_b_execution,
             conditions=conditions,
             branches=branches,
             validation=dict(postprocessing["validation"]),
@@ -232,6 +248,7 @@ class StudyPlanner:
                             payload={
                                 "job_type": "phase-a-training",
                                 "recipe_sha256": self.recipe.sha256(),
+                                "execution": dict(self.matrix.phase_a_execution),
                                 "method": dict(method),
                                 "root": dict(root),
                                 "layout": dict(layout),
@@ -253,6 +270,7 @@ class StudyPlanner:
                             payload={
                                 "job_type": "phase-a-reference",
                                 "recipe_sha256": self.recipe.sha256(),
+                                "execution": dict(self.matrix.phase_a_execution),
                                 "reference": dict(reference),
                                 "root": dict(root),
                                 "layout": dict(layout),
@@ -286,6 +304,7 @@ class StudyPlanner:
                                     payload={
                                         "job_type": "phase-b-branch",
                                         "recipe_sha256": self.recipe.sha256(),
+                                        "execution": dict(self.matrix.phase_b_execution),
                                         "phase_a_job_id": phase_a_job_id,
                                         "method_id": method_id,
                                         "root_id": root_id,
