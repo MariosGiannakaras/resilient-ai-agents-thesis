@@ -1,6 +1,7 @@
 """Protocol-v2 evidence validation, analysis and deterministic export layer."""
 
-from .executors import StudyValidationExecutor
+from .analysis import ANALYSIS_PACKAGE_SCHEMA_VERSION, StudyAnalysisEngine
+from .executors import StudyAnalysisExecutor, StudyValidationExecutor
 from .statistics import (
     MatchedAdaptationEffect,
     MeanInterval,
@@ -18,10 +19,13 @@ from .validation import (
 )
 
 __all__ = [
+    "ANALYSIS_PACKAGE_SCHEMA_VERSION",
     "EvidenceValidationFinding",
     "MatchedAdaptationEffect",
     "MeanInterval",
     "MetricDirection",
+    "StudyAnalysisEngine",
+    "StudyAnalysisExecutor",
     "StudyEvidenceValidationReport",
     "StudyEvidenceValidator",
     "StudyValidationExecutor",
