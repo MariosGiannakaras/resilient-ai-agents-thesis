@@ -75,7 +75,7 @@ First pass remains the predeclared ordered 7×7 -> 10×10 -> 14×14 ladder, two 
 
 Root/run is the independent randomization unit; layouts are blocked/repeated observations. Scientific failures remain outcomes; infrastructure retries retain the same scientific identity. Final statistical values and contrast family are frozen only in T-527. Filesystem evidence remains authoritative; any future index/database must be rebuildable.
 
-Canonical bibliography remains `MariosGiannakaras/ThesisBibliography`, immutable upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`: 597 canonical sources, 121 citation-ready sources and 19 research materials.
+Canonical bibliography remains `MariosGiannakaras/ThesisBibliography`, immutable upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`: 597 canonical sources, 121 citation-ready sources and 19 research materials. The synchronized consumer history label `bibliography-integration-v3` remains immutable.
 
 ## Still intentionally unfrozen
 
