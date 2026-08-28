@@ -63,4 +63,9 @@ jobs:
             tests.test_protocol_v2 \
             tests.test_protocol_v2_runtime \
             tests.test_protocol_v2_gridworld \
-            tests.test_protocol_v2_sb3 -q
+            tests.test_protocol_v2_implementations \
+            tests.test_protocol_v2_executor \
+            tests.test_protocol_v2_sb3 \
+            tests.test_protocol_v2_sb3_driver \
+            tests.test_protocol_v2_tabular_driver \
+            tests.test_protocol_v2_tabular_phase_b -q
