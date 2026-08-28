@@ -177,12 +177,13 @@ class ProjectTabularPhaseBBranchDriver:
             or target_interaction < self._interactions
         ):
             raise ValueError("target_interaction must be an integer >= current interactions")
-        observation = self.environment.environment.gym_env.last_transition
-        current_observation = (
-            self.environment.environment.gym_env.debug_state()["position"]
-            if observation is None
-            else observation.delivered_observation
-        )
+
+        prefix_transition = self.environment.environment.gym_env.last_transition
+        if prefix_transition is None:
+            raise RuntimeError(
+                "Phase-B branch requires a delivered pre-change prefix observation; evaluator truth is not a fallback"
+            )
+        current_observation = prefix_transition.delivered_observation
 
         while self._interactions < target_interaction:
             if self._terminated or self._truncated:
