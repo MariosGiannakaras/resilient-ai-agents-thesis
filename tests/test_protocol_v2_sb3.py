@@ -54,8 +54,6 @@ if _SB3_AVAILABLE:
 
     def _environment_factory():
         # Scientific branch tests checkpoint only after complete four-step episodes.
-        # Pre-reset the fresh environment so the saved post-auto-reset observation
-        # corresponds to the external environment state used for continuation.
         env = _TinyDeterministicEnv()
         env.reset(seed=7001)
         return env
@@ -145,8 +143,6 @@ class ProtocolV2SB3AdapterTests(unittest.TestCase):
         clone = adapter.clone()
         self.assertEqual(adapter.state_sha256(), clone.state_sha256())
 
-        # Branch-local RNG virtualization makes two independent continuations
-        # from the exact same scientific state converge bit-for-bit on CPU.
         adapter.learn_to_total_interactions(12)
         clone.learn_to_total_interactions(12)
         self.assertEqual(adapter.state_sha256(), clone.state_sha256())
@@ -178,8 +174,8 @@ class ProtocolV2SB3AdapterTests(unittest.TestCase):
         saved = adapter.export_state()
         self.assertEqual(saved["method_id"], "ppo")
         self.assertIsNone(saved["replay_buffer_b64"])
-        self.assertTrue(saved["counters"]["rollout_full"])
-        self.assertEqual(saved["counters"]["rollout_pos"], 8)
+        self.assertEqual(saved["counters"]["rollout_boundary"], "completed-update")
+        self.assertEqual(saved["counters"]["rollout_buffer_size"], 8)
 
         clone = adapter.clone()
         self.assertEqual(adapter.state_sha256(), clone.state_sha256())
