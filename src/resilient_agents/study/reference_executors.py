@@ -9,8 +9,7 @@ from __future__ import annotations
 
 import random
 import statistics
-from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
 from ..gridworld import GridWorldEnvironment
 from ..randomness import derive_scoped_seed
@@ -95,7 +94,7 @@ class ProtocolV2PhaseAReferenceExecutor:
                     episode_return = 0.0
                     episode_length = 0
                     while True:
-                        truth = env.step(action_rng.randrange(env.action_space.n))
+                        truth = env.step(action_rng.randrange(env.gym_env.action_space.n))
                         episode_return += float(truth.reward)
                         episode_length += 1
                         total_environment_interactions += 1
