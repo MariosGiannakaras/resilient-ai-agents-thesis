@@ -1,0 +1,59 @@
+name: Protocol-v2 pilot checks
+
+on:
+  pull_request:
+    paths:
+      - "pyproject.toml"
+      - "uv.lock"
+      - "src/resilient_agents/protocol_v2.py"
+      - "src/resilient_agents/protocol_v2_runtime.py"
+      - "src/resilient_agents/protocol_v2_sb3.py"
+      - "tests/test_protocol_v2.py"
+      - "tests/test_protocol_v2_runtime.py"
+      - "tests/test_protocol_v2_sb3.py"
+      - ".github/workflows/protocol-v2-pilot-checks.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "pyproject.toml"
+      - "uv.lock"
+      - "src/resilient_agents/protocol_v2*.py"
+      - "tests/test_protocol_v2*.py"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: protocol-v2-pilot-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  focused-conformance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install locked protocol-v2 pilot environment
+        run: |
+          uv lock --check
+          uv sync --locked --group protocol-v2-pilot --no-progress
+
+      - name: Run focused protocol-v2 conformance tests
+        env:
+          CUDA_VISIBLE_DEVICES: ""
+        run: |
+          uv run --group protocol-v2-pilot python -m unittest \
+            tests.test_protocol_v2 \
+            tests.test_protocol_v2_runtime \
+            tests.test_protocol_v2_sb3 -q
