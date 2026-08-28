@@ -12,8 +12,6 @@ isolated evaluation, checkpoint provenance and the matched four-branch design.
 """
 from __future__ import annotations
 
-import hashlib
-import json
 from dataclasses import dataclass
 from typing import Any, Callable, Mapping, Protocol, runtime_checkable
 
@@ -21,7 +19,6 @@ from .protocol_v2 import (
     InteractionLedger,
     ProtocolV2Branch,
     ProtocolV2Phase,
-    ScientificCheckpoint,
     ScientificStateAdapter,
     fork_four_branches,
     make_scientific_checkpoint,
@@ -68,17 +65,6 @@ class ProbeEvaluator(Protocol):
     ) -> ProbeResult: ...
 
 
-def _checkpoint_state_sha256(checkpoint: ScientificCheckpoint) -> str:
-    encoded = json.dumps(
-        checkpoint.state,
-        ensure_ascii=False,
-        allow_nan=False,
-        separators=(",", ":"),
-        sort_keys=True,
-    ).encode("utf-8")
-    return hashlib.sha256(encoded).hexdigest()
-
-
 @dataclass(frozen=True)
 class PhaseAExecution:
     """Completed Phase-A output plus final live adapter for downstream forking."""
@@ -91,9 +77,7 @@ class PhaseAExecution:
             raise ValueError("PhaseAExecution requires a completed PhaseAResult")
         if self.final_adapter.method_id != self.result.request.method.method_id:
             raise ValueError("final adapter method does not match Phase-A request")
-        if self.final_adapter.state_sha256() != _checkpoint_state_sha256(
-            self.result.final_checkpoint
-        ):
+        if self.final_adapter.export_state() != self.result.final_checkpoint.state:
             raise ValueError("final adapter does not match Phase-A checkpoint state")
 
 
