@@ -12,8 +12,10 @@ isolated evaluation, checkpoint provenance and the matched four-branch design.
 """
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import dataclass
-from typing import Any, Callable, Mapping, Protocol, Sequence, runtime_checkable
+from typing import Any, Callable, Mapping, Protocol, runtime_checkable
 
 from .protocol_v2 import (
     InteractionLedger,
@@ -66,6 +68,17 @@ class ProbeEvaluator(Protocol):
     ) -> ProbeResult: ...
 
 
+def _checkpoint_state_sha256(checkpoint: ScientificCheckpoint) -> str:
+    encoded = json.dumps(
+        checkpoint.state,
+        ensure_ascii=False,
+        allow_nan=False,
+        separators=(",", ":"),
+        sort_keys=True,
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
 @dataclass(frozen=True)
 class PhaseAExecution:
     """Completed Phase-A output plus final live adapter for downstream forking."""
@@ -78,30 +91,10 @@ class PhaseAExecution:
             raise ValueError("PhaseAExecution requires a completed PhaseAResult")
         if self.final_adapter.method_id != self.result.request.method.method_id:
             raise ValueError("final adapter method does not match Phase-A request")
-        if self.final_adapter.state_sha256() != self.result.final_checkpoint.sha256_state:
+        if self.final_adapter.state_sha256() != _checkpoint_state_sha256(
+            self.result.final_checkpoint
+        ):
             raise ValueError("final adapter does not match Phase-A checkpoint state")
-
-
-# ScientificCheckpoint intentionally exposes the envelope digest, while the
-# executor also needs a digest of the opaque state itself for live equality.
-def _state_sha256(checkpoint: ScientificCheckpoint) -> str:
-    import hashlib
-    import json
-
-    encoded = json.dumps(
-        checkpoint.state,
-        ensure_ascii=False,
-        allow_nan=False,
-        separators=(",", ":"),
-        sort_keys=True,
-    ).encode("utf-8")
-    return hashlib.sha256(encoded).hexdigest()
-
-
-# Backward-compatible property added at runtime rather than changing the frozen
-# checkpoint dataclass used by earlier T-525 slices.
-if not hasattr(ScientificCheckpoint, "sha256_state"):
-    ScientificCheckpoint.sha256_state = property(_state_sha256)  # type: ignore[attr-defined]
 
 
 def execute_phase_a(
@@ -171,8 +164,6 @@ def execute_phase_a(
     elif driver.training_interactions > request.training_interaction_budget:
         raise RuntimeError("method driver exceeded Phase-A interaction budget")
 
-    # A final probe is required only when explicitly present in the frozen plan;
-    # no implicit outcome-dependent evaluation point is inserted here.
     checkpoint = make_scientific_checkpoint(
         adapter=driver.state_adapter,
         root_id=request.root.root_id,
@@ -277,8 +268,6 @@ def execute_phase_b(
         environment_branch = shared_environment.fork_into(
             disturbed_spec if plan.disturbed else nominal_spec
         )
-        # Exact pre-fork trajectory state must be common even though the target
-        # branch scenario identity may differ post-boundary.
         state = environment_branch.export_state()
         source = shared_environment.export_state()
         for key in (
