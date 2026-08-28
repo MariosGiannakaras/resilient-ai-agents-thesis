@@ -34,6 +34,7 @@ from .scheduler import (
     StudyExecutorRegistry,
     StudyScheduler,
 )
+from .service import StudyPlanSummary, StudyService, StudyStatus
 from .store import (
     STUDY_BUNDLE_SCHEMA_VERSION,
     STUDY_FINALIZATION_MARKER,
@@ -61,9 +62,12 @@ __all__ = [
     "StudyMatrixDefinition",
     "StudyPlan",
     "StudyPlanPreview",
+    "StudyPlanSummary",
     "StudyPlanner",
     "StudyRecipe",
     "StudyScheduler",
+    "StudyService",
     "StudyStage",
+    "StudyStatus",
     "StudyStore",
 ]
