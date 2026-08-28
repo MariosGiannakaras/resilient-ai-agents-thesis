@@ -3,77 +3,90 @@
 **Date:** 2026-08-28  
 **Status:** Authoritative compact current-state summary
 
-`docs/context/TASKS.md` is the canonical ledger. Use **progressive** task-specific reading of DEC-048/049/050 and `docs/research/` only as needed.
+`docs/context/TASKS.md` is the canonical ledger. Use **progressive** task-specific reading of DEC-048/049/050/051 and `docs/research/` / `docs/architecture/` only as needed.
 
 ## Current execution state
 
 - Historical accepted baseline includes completed `T-100` target-machine validation and `T-200` research framing through protocol-v1.0 WP6 evidence. Frozen protocol-v1.0, `FINAL-*` and R0 evidence remain immutable. Candidate v1.1 is auditable non-final history; old `T-522` must not execute.
-- **Project: 4/8** master milestones complete (#87: 1, 2, 4, 5). **`T-524` and `T-525` are COMPLETE; current task: `T-526` READY for physical Windows evidence.** Protocol-v2 tracker #95 is 4/10.
-- T-525 closure is documented in `docs/research/PROTOCOL_V2_BACKEND_CONTRACT.md`.
-- #93 final UI rebuild remains PAUSED. T-528 will rebuild from scratch with a **different framework from NiceGUI** only after T-527 freezes the remaining scientific/runtime contract.
-- **Pre-WP7 approval: NOT APPROVED.** No `T-700+` work.
+- `T-524` and `T-525` are COMPLETE. The validated protocol-v2 scientific core supports Q-Learning, SARSA, DQN, PPO and Dyna-Q+ with exact scientific continuation, actual-interaction accounting, isolated probes and matched FN/FD/AN/AD Phase-B semantics.
+- **Current implementation task: `T-529` IN_PROGRESS.** DEC-051 reconstructs the backend around one study-first lifecycle: immutable recipe -> deterministic plan -> scientific jobs/checkpoints -> validation -> analysis -> thesis/presentation exports.
+- **External scientific gate: `T-526` READY.** The predeclared non-final Windows feasibility pilot still has to run on the validated physical thesis machine. T-529 may continue without fabricating or consuming T-526/T-527 outcomes.
+- `T-527` remains BLOCKED on T-526. Final methods/layouts/budgets/hyperparameters/severities/roots/statistics remain unfrozen.
+- #93 / `T-528` remains PAUSED/BLOCKED. The final UI is rebuilt from scratch with a different framework from NiceGUI only after both T-527 and T-529 are complete.
+- **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
 
-## Protocol-v2 scientific contract
+## Study-first backend reconstruction
+
+The final application/backend aggregate is now `Study`, not a flat `Run`. Individual runs/checkpoints remain lower-level immutable evidence units.
+
+Implemented under `src/resilient_agents/study/`:
+
+- immutable content-addressed `StudyRecipe` with evidence classes and a frozen-confirmatory firewall;
+- ordered study stages and deterministic job DAG;
+- explicit scientific failure vs infrastructure failure vs downstream skip semantics;
+- durable `StudyStore` with recipe/plan/lifecycle/events/artifact lineage and finalized tamper checks;
+- deterministic planner with stable Phase-A/Phase-B IDs, exact Phase-A producer dependencies and method-specific Phase-B condition eligibility;
+- generic executor ports/scheduler;
+- restart-safe framework-neutral `StudyService` that reloads filesystem evidence rather than relying on UI session memory.
+
+Implemented under `src/resilient_agents/evidence_v2/`:
+
+- structural evidence validation from planned job to run/checkpoint/artifact lineage;
+- validation-stage executor;
+- standardized Phase-A/Phase-B analysis records;
+- root/layout statistical primitives including interaction-axis learning summaries, paired effects, matched four-branch adaptation benefit and Student-t intervals driven by frozen recipe inputs.
+
+Still active in T-529:
+
+- real protocol-v2 Phase-A/Phase-B study executor bridge over validated method-native drivers;
+- complete v2 analysis engine and explicit failure denominators;
+- deterministic thesis/defense data/table/figure/evidence export package;
+- final active-document/legacy-boundary reconciliation.
+
+## Cleanup boundary
+
+The superseded NiceGUI `src/app` implementation, v1.1 application `RuntimeService`/observer, NiceGUI-only tests, old runtime launcher and NiceGUI packaging/screenshot/validation scripts have been removed from the active tree. Their history remains in Git; historical scientific runners and finalized evidence are not deleted or rewritten.
+
+`pyproject.toml` no longer exposes the old application entrypoint and packages only `src/resilient_agents`. NiceGUI/PyInstaller dependency-lock entries remain temporarily until the lock can be safely regenerated; they no longer define the active architecture.
+
+## Protocol-v2 scientific invariants
 
 ### Phase A
 
-- Train every retained method independently under common task/reward/action semantics, common semantic agent-visible information and common task-level `gamma`.
-- Fairness resource = **actual environment interactions**, not episodes, optimizer updates, wall time or requested library timesteps.
-- Run standardized interaction-indexed no-learning probes only on cloned learner state; probe interactions remain outside the training budget/state.
-- Core feasibility candidates: Q-Learning, SARSA, DQN, PPO, Dyna-Q+. Dyna-Q is ablation-only; A2C remains promotion/diagnostic only.
+- Train every retained method independently under common task/reward/action semantics, common semantic information and task-level `gamma`.
+- Fairness resource = actual environment interactions, not episodes, optimizer updates or wall time.
+- Standardized interaction-indexed no-learning probes operate only on cloned learner state.
 
 ### Phase B
 
-Each `method × root × layout` begins from its own exact Phase-A scientific checkpoint. At the exact branch point, clone identical learner/behavior/RNG state into Frozen nominal, Frozen disturbed, Adaptive nominal and Adaptive disturbed branches. Adaptive updates begin only after the boundary and do not reset replay, optimizer, epsilon, warm-up, recency or schedules.
+Each `method × root × layout` originates from its own exact Phase-A checkpoint. The exact branch point is cloned into Frozen nominal, Frozen disturbed, Adaptive nominal and Adaptive disturbed branches. Adaptive updates begin only after the boundary and do not reset replay, optimizer, epsilon, warm-up, recency or schedules.
 
-Primary losses are immediate degradation, cumulative deficit and terminal gap against the same-regime nominal reference. Primary adaptation benefit is the matched four-branch difference-in-differences. Recovery remains secondary; no composite resilience score.
-
-T-525 validates one exact post-boundary segment and fails closed if another environment reset is required. T-526/T-527 must explicitly freeze the final multi-episode post-boundary reset/regime semantics.
-
-## Backend invariants and T-525 closure
-
-- `max_steps` is administrative truncation in v2; goal arrival is termination; value learners bootstrap through truncation.
-- Scientific checkpoints preserve exact continuation state: Q/SARSA schedules/RNG/counters; Dyna-Q+ learned model/recency/planning; DQN networks/optimizer/full replay/update/exploration state; PPO policy/value/optimizer/schedules/RNG at legal rollout/update boundaries.
-- Exact GridWorld state includes trajectory position, seeds, disturbance RNGs, Gym RNG and last transition. Evaluator truth never substitutes for delivered observation.
-- Neural initialization and later stochastic behavior/update RNG are separately rooted. SB3 algorithm RNG and project environment/disturbance RNG streams remain independent.
-- Frozen branches cannot mutate learning state. SARSA requires a quiescent fork; Frozen Dyna-Q+ avoids its model-mutating learning `act()` path; DQN/PPO attach to exact restored project-GridWorld branches.
-- The v2 lifecycle is separate from legacy `HeadlessExperimentRequest`; historical execution/evidence semantics were not rewritten.
-
-Concrete pilot implementations exist for Q-Learning, SARSA, Dyna-Q+, DQN and PPO. Stable-Baselines3 2.9.0 / CPU-only PyTorch 2.9.0 is the neural pilot stack.
-
-Closure evidence on the reviewed PR #92 implementation head: the dedicated CPU-only protocol-v2 gate passed **55 conformance tests**; repository-wide tests, documentation/JSON checks and installed-bibliography validation also passed.
+Primary adaptation benefit remains the matched four-branch difference-in-differences. T-525 validates one exact post-boundary segment; T-526/T-527 still own the final multi-episode reset/regime lifecycle decision.
 
 ## T-526 physical gate
 
-The committed non-final plan is `configs/protocols/protocol-v2-feasibility-v0.1.json`; runbook is `docs/research/T526_WINDOWS_FEASIBILITY_RUNBOOK.md`; user-machine entrypoint is `scripts/run_protocol_v2_feasibility_windows.ps1`.
+Committed plan: `configs/protocols/protocol-v2-feasibility-v0.1.json`.  
+Runbook: `docs/research/T526_WINDOWS_FEASIBILITY_RUNBOOK.md`.  
+Entrypoint: `scripts/run_protocol_v2_feasibility_windows.ps1`.
 
-First physical pass:
-
-- ordered GridWorld ladder: 7×7 → 10×10 → 14×14;
-- two layouts/level, three roots, five core methods;
-- provisional common Phase-A budget: 2048 actual interactions;
-- probes: 0/512/1024/2048;
-- record training/probe interactions, wall/process CPU time, checkpoint size and failures;
-- select the first complete level that is neither a universal early ceiling nor a universal final floor; never select by preferred method ranking.
-
-After the selected level is reviewed, T-526 continues with already-predeclared Phase-B calibration candidates: two categorical action-remap mappings, bounded action-failure probabilities and bounded observation-corruption probabilities with explicit global valid-cell support. A2C promotion remains conditional on distinct thesis value and acceptable matrix cost.
-
-Hosted CI does **not** substitute for this physical-machine gate.
+First pass remains the predeclared ordered 7×7 -> 10×10 -> 14×14 ladder, two layouts/level, three roots, five core methods, 2048 actual Phase-A training interactions and probes at 0/512/1024/2048. Hosted CI does not substitute for this machine evidence.
 
 ## Statistics / provenance
 
-Root/run is the independent randomization unit; layouts, checkpoints and episodes are blocks/repeated observations. Student-t root-level 95% intervals remain the current primary candidate, with bootstrap/robust sensitivity and final precision/runtime sizing deferred to T-527. Scientific failures remain outcomes; infrastructure retries keep the same root identity.
+Root/run is the independent randomization unit; layouts are blocked/repeated observations. Scientific failures remain outcomes; infrastructure retries retain the same scientific identity. Final statistical values and contrast family are frozen only in T-527. Filesystem evidence remains authoritative; any future index/database must be rebuildable.
 
-Canonical bibliography remains `MariosGiannakaras/ThesisBibliography`, immutable upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`: 597 canonical sources, 121 citation-ready sources, 19 research materials. Thesis sync PR #96 is merged; `bibliography-integration-v3` remains immutable history.
+Canonical bibliography remains `MariosGiannakaras/ThesisBibliography`, immutable upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`: 597 canonical sources, 121 citation-ready sources and 19 research materials.
 
 ## Still intentionally unfrozen
 
-Final retained methods/A2C decision, selected GridWorld level/layouts, final budgets/gamma/reward/horizon, method hyperparameters, probe cadence, Phase-B reset lifecycle, uncertainty settings, roots/statistics, final frontend framework and final evidence remain T-526/T-527 gated.
+Final retained methods/A2C decision, selected GridWorld level/layouts, final budgets/gamma/reward/horizon, method hyperparameters, probe cadence, Phase-B reset lifecycle, uncertainty settings, roots/statistics, confirmatory Study recipe values, final frontend framework and final evidence remain T-526/T-527 gated.
 
-## Exact next action
+## Exact next actions
 
-From a clean reviewed `feat/pre-wp7-protocol-v1.1-ui-rebuild` checkout on the validated native Windows thesis machine, execute exactly once:
+Backend work: continue `T-529` with the real protocol-v2 Study executor bridge, then complete v2 analysis/export and repository reconciliation. Do not start UI.
+
+User-machine scientific gate: from a clean reviewed branch checkout on the validated native Windows thesis machine, execute exactly once:
 
 `powershell -ExecutionPolicy Bypass -File .\scripts\run_protocol_v2_feasibility_windows.ps1`
 
-Retain `results/pilots/protocol-v2-feasibility-v0.1/` unchanged for review. Do not rerun/overwrite it, access final reserve, tune methods or resume UI. After T-526 evidence is complete, T-527 freezes the remaining protocol; then T-528 starts the new-framework UI rebuild.
+Retain `results/pilots/protocol-v2-feasibility-v0.1/` unchanged for review. Do not rerun/overwrite it, access final reserve or tune methods from final outcomes.
