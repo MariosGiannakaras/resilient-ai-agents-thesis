@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+import csv
 import json
 import tempfile
 import unittest
 from pathlib import Path
 
-from resilient_agents.evidence_v2 import StudyEvidenceValidator
+from resilient_agents.evidence_v2 import StudyEvidenceValidator, StudyExportExecutor
 from resilient_agents.evidence_v2.executors import (
     StudyAnalysisExecutor,
     StudyValidationExecutor,
@@ -156,12 +157,15 @@ class StudyProtocolV2PhaseBExecutorTests(unittest.TestCase):
                         "require_complete_layout_blocks": True,
                         "interval": {"kind": "none"},
                     },
-                    "exports": {"package": "thesis-evidence"},
+                    "exports": {
+                        "package": "protocol-v2-evidence-handoff-v1",
+                        "emit_csv": True,
+                    },
                 },
             },
         )
 
-    def test_real_q_study_runs_phase_a_matched_phase_b_validation_and_analysis(self) -> None:
+    def test_real_q_study_runs_through_deterministic_evidence_handoff(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             recipe = self._recipe()
@@ -180,6 +184,7 @@ class StudyProtocolV2PhaseBExecutorTests(unittest.TestCase):
                         ProtocolV2PhaseBStudyExecutor(),
                         StudyValidationExecutor(),
                         StudyAnalysisExecutor(),
+                        StudyExportExecutor(),
                     ]
                 ),
             )
@@ -249,6 +254,42 @@ class StudyProtocolV2PhaseBExecutorTests(unittest.TestCase):
             self.assertIn("frozen_loss", effect)
             self.assertIn("adaptive_loss", effect)
             self.assertIn("adaptation_benefit", effect)
+
+            exported = scheduler.run_job("export-study")
+            self.assertIs(exported.outcome.kind, JobOutcomeKind.COMPLETED)
+            self.assertEqual(exported.outcome.measurements["exported_files"], 6)
+            handoff = next(
+                item
+                for item in store.artifacts()
+                if item.artifact_id == "evidence-handoff-package"
+            )
+            manifest = json.loads((root / handoff.relative_path).read_text())
+            self.assertEqual(manifest["package"], "protocol-v2-evidence-handoff-v1")
+            self.assertEqual(
+                manifest["figure_rendering_status"],
+                "deferred-until-frozen-figure-recipe",
+            )
+            self.assertEqual(manifest["source_analysis_artifact_id"], "analysis-package")
+
+            result_index = json.loads(
+                (
+                    root
+                    / "results/studies/phase-b-integration-study/derived/export/result-index.json"
+                ).read_text()
+            )
+            self.assertEqual(
+                [item["result_id"] for item in result_index["results"]],
+                ["RESULT-PA-q_learning", "RESULT-PB-q_learning-remap-swap"],
+            )
+            with (
+                root
+                / "results/studies/phase-b-integration-study/derived/export/phase-b-method-condition-summary.csv"
+            ).open(newline="", encoding="utf-8") as handle:
+                rows = list(csv.DictReader(handle))
+            self.assertEqual(len(rows), 1)
+            self.assertEqual(rows[0]["method_id"], "q_learning")
+            self.assertEqual(rows[0]["condition_id"], "remap-swap")
+            self.assertIn("adaptation_benefit_mean", rows[0])
 
 
 if __name__ == "__main__":
