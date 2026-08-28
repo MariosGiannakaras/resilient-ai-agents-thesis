@@ -16,8 +16,15 @@ from .model import (
     StudyStage,
 )
 from .recipe import STUDY_RECIPE_SCHEMA_VERSION, StudyRecipe
+from .store import (
+    STUDY_BUNDLE_SCHEMA_VERSION,
+    STUDY_FINALIZATION_MARKER,
+    StudyStore,
+)
 
 __all__ = [
+    "STUDY_BUNDLE_SCHEMA_VERSION",
+    "STUDY_FINALIZATION_MARKER",
     "STUDY_RECIPE_SCHEMA_VERSION",
     "ArtifactRole",
     "EvidenceClass",
@@ -28,4 +35,5 @@ __all__ = [
     "StudyPlan",
     "StudyRecipe",
     "StudyStage",
+    "StudyStore",
 ]
