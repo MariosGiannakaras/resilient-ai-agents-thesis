@@ -53,13 +53,24 @@ class JobState(str, Enum):
     COMPLETED = "completed"
     SCIENTIFIC_FAILED = "scientific-failed"
     INFRASTRUCTURE_FAILED = "infrastructure-failed"
+    SKIPPED = "skipped"
     CANCELLED = "cancelled"
 
     @property
     def satisfies_dependencies(self) -> bool:
-        """A scientific failure is evidence and therefore resolves the job unit."""
+        """Only a successful producer can satisfy a direct artifact dependency."""
 
-        return self in {JobState.COMPLETED, JobState.SCIENTIFIC_FAILED}
+        return self is JobState.COMPLETED
+
+    @property
+    def resolves_stage(self) -> bool:
+        """Scientific failure/derived skip are retained outcomes, not missing work."""
+
+        return self in {
+            JobState.COMPLETED,
+            JobState.SCIENTIFIC_FAILED,
+            JobState.SKIPPED,
+        }
 
     @property
     def retryable(self) -> bool:
