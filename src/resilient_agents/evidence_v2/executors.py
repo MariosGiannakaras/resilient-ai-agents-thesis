@@ -6,18 +6,11 @@ import json
 from pathlib import Path
 from typing import Any, Mapping
 
-from ..study import (
-    ArtifactRole,
-    EvidenceClass,
-    JobOutcomeKind,
-    StudyArtifact,
-    StudyJobContext,
-    StudyJobOutcome,
-    StudyJobSpec,
-    StudyStage,
-    StudyStore,
-)
+from ..study.model import ArtifactRole, EvidenceClass, StudyArtifact, StudyJobSpec, StudyStage
+from ..study.ports import JobOutcomeKind, StudyJobContext, StudyJobOutcome
+from ..study.store import StudyStore
 from .analysis import StudyAnalysisEngine
+from .denominators import build_scientific_denominators
 from .validation import StudyEvidenceValidator
 
 
@@ -152,6 +145,7 @@ class StudyAnalysisExecutor:
             store,
             specification=specification,
         )
+        package["scientific_denominators"] = build_scientific_denominators(store)
         path = context.study_dir / "derived" / "analysis" / "analysis-package.json"
         digest = _write_json_atomic(path, package)
         relative = path.resolve().relative_to(context.writable_root.resolve()).as_posix()
@@ -182,6 +176,12 @@ class StudyAnalysisExecutor:
                 "recipe_sha256": context.recipe_sha256,
             },
         )
+        denominators = package["scientific_denominators"]
+        scientific_failures = sum(
+            int(row["scientific_failed"])
+            for section in denominators.values()
+            for row in section
+        )
         return StudyJobOutcome(
             kind=JobOutcomeKind.COMPLETED,
             artifacts=(artifact,),
@@ -190,5 +190,6 @@ class StudyAnalysisExecutor:
                 "phase_a_root_records": len(package["phase_a"]["root_records"]),
                 "phase_b_unit_records": len(package["phase_b"]["unit_records"]),
                 "phase_b_root_records": len(package["phase_b"]["root_records"]),
+                "scientific_failures": scientific_failures,
             },
         )
