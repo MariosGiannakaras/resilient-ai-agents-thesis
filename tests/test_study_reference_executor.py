@@ -30,6 +30,7 @@ class StudyReferenceExecutorTests(unittest.TestCase):
             )
         )
         scenario.pop("gridworld_schema_version")
+        scenario["scenario_id"] = "layout-a"
         return StudyJobSpec(
             job_id="ref__random__root-01__layout-a",
             stage=StudyStage.PHASE_A,
