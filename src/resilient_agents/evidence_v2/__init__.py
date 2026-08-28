@@ -1,5 +1,6 @@
 """Protocol-v2 evidence validation, analysis and deterministic export layer."""
 
+from .executors import StudyValidationExecutor
 from .validation import (
     EvidenceValidationFinding,
     StudyEvidenceValidationReport,
@@ -10,4 +11,5 @@ __all__ = [
     "EvidenceValidationFinding",
     "StudyEvidenceValidationReport",
     "StudyEvidenceValidator",
+    "StudyValidationExecutor",
 ]
