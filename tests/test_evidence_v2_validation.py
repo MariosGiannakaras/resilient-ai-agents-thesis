@@ -44,14 +44,14 @@ class EvidenceV2ValidationTests(unittest.TestCase):
                     },
                 ),
                 StudyJobSpec(
-                    job_id="pb-fd",
+                    job_id="pb",
                     stage=StudyStage.PHASE_B,
                     evidence_class=recipe.evidence_class,
                     dependencies=("pa",),
                     payload={
-                        "job_type": "phase-b-branch",
+                        "job_type": "phase-b-matched-set",
                         "recipe_sha256": digest,
-                        "branch": "FD",
+                        "branches": ["FN", "FD", "AN", "AD"],
                     },
                 ),
                 StudyJobSpec(
@@ -90,6 +90,9 @@ class EvidenceV2ValidationTests(unittest.TestCase):
         checkpoint_path, checkpoint_sha = self._write(
             root, "results/runs/pa/checkpoint.bin", b"checkpoint"
         )
+        analysis_path, analysis_sha = self._write(
+            root, "results/runs/pa/analysis.json", b'{"record_type":"phase-a"}\n'
+        )
         store.record_artifact(
             StudyArtifact(
                 artifact_id="pa-run",
@@ -108,6 +111,18 @@ class EvidenceV2ValidationTests(unittest.TestCase):
                 relative_path=checkpoint_path,
                 sha256=checkpoint_sha,
                 source_job_ids=("pa",),
+                source_artifact_ids=("pa-run",),
+            )
+        )
+        store.record_artifact(
+            StudyArtifact(
+                artifact_id="pa-analysis",
+                role=ArtifactRole.ANALYSIS_DATA,
+                evidence_class=EvidenceClass.DEVELOPMENT,
+                relative_path=analysis_path,
+                sha256=analysis_sha,
+                source_job_ids=("pa",),
+                source_artifact_ids=("pa-run", "pa-checkpoint"),
             )
         )
         store.complete_job("pa")
@@ -120,22 +135,36 @@ class EvidenceV2ValidationTests(unittest.TestCase):
         *,
         checkpoint_id: str,
     ) -> None:
-        store.start_job("pb-fd")
+        store.start_job("pb")
         run_path, run_sha = self._write(
-            root, "results/runs/pb-fd/summary.json", b'{"status":"completed"}\n'
+            root, "results/runs/pb/summary.json", b'{"status":"completed"}\n'
+        )
+        analysis_path, analysis_sha = self._write(
+            root, "results/runs/pb/analysis.json", b'{"record_type":"phase-b-matched-set"}\n'
         )
         store.record_artifact(
             StudyArtifact(
-                artifact_id="pb-fd-run",
+                artifact_id="pb-run",
                 role=ArtifactRole.RUN_BUNDLE,
                 evidence_class=EvidenceClass.DEVELOPMENT,
                 relative_path=run_path,
                 sha256=run_sha,
-                source_job_ids=("pb-fd",),
+                source_job_ids=("pb",),
                 source_artifact_ids=(checkpoint_id,),
             )
         )
-        store.complete_job("pb-fd")
+        store.record_artifact(
+            StudyArtifact(
+                artifact_id="pb-analysis",
+                role=ArtifactRole.ANALYSIS_DATA,
+                evidence_class=EvidenceClass.DEVELOPMENT,
+                relative_path=analysis_path,
+                sha256=analysis_sha,
+                source_job_ids=("pb",),
+                source_artifact_ids=(checkpoint_id, "pb-run"),
+            )
+        )
+        store.complete_job("pb")
 
     def test_valid_completed_evidence_traces_phase_b_to_exact_phase_a_checkpoint(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -159,6 +188,9 @@ class EvidenceV2ValidationTests(unittest.TestCase):
             store = self._store(root)
             store.start_job("pa")
             run_path, run_sha = self._write(root, "results/runs/pa/summary.json", b"{}")
+            analysis_path, analysis_sha = self._write(
+                root, "results/runs/pa/analysis.json", b"{}"
+            )
             store.record_artifact(
                 StudyArtifact(
                     artifact_id="pa-run",
@@ -169,12 +201,21 @@ class EvidenceV2ValidationTests(unittest.TestCase):
                     source_job_ids=("pa",),
                 )
             )
+            store.record_artifact(
+                StudyArtifact(
+                    artifact_id="pa-analysis",
+                    role=ArtifactRole.ANALYSIS_DATA,
+                    evidence_class=EvidenceClass.DEVELOPMENT,
+                    relative_path=analysis_path,
+                    sha256=analysis_sha,
+                    source_job_ids=("pa",),
+                    source_artifact_ids=("pa-run",),
+                )
+            )
             store.complete_job("pa")
-            # Resolve Phase B scientifically to let structural validation inspect
-            # the complete evidence state rather than failing only on PENDING.
-            store.start_job("pb-fd")
+            store.start_job("pb")
             failure_path, failure_sha = self._write(
-                root, "results/runs/pb-fd/failure.json", b'{"kind":"scientific"}'
+                root, "results/runs/pb/failure.json", b'{"kind":"scientific"}'
             )
             store.record_artifact(
                 StudyArtifact(
@@ -183,10 +224,10 @@ class EvidenceV2ValidationTests(unittest.TestCase):
                     evidence_class=EvidenceClass.DEVELOPMENT,
                     relative_path=failure_path,
                     sha256=failure_sha,
-                    source_job_ids=("pb-fd",),
+                    source_job_ids=("pb",),
                 )
             )
-            store.fail_job_scientifically("pb-fd", reason="scientific failure")
+            store.fail_job_scientifically("pb", reason="scientific failure")
 
             report = StudyEvidenceValidator().validate(store)
             self.assertFalse(report.valid)
@@ -199,7 +240,7 @@ class EvidenceV2ValidationTests(unittest.TestCase):
                 {item.code for item in report.findings},
             )
 
-    def test_scientific_phase_a_failure_is_valid_when_recorded_and_branch_is_skipped(self) -> None:
+    def test_scientific_phase_a_failure_is_valid_when_recorded_and_matched_set_is_skipped(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             store = self._store(root)
@@ -225,24 +266,38 @@ class EvidenceV2ValidationTests(unittest.TestCase):
             self.assertEqual(report.skipped_scientific_jobs, 1)
             self.assertEqual(report.failure_record_count, 1)
 
-    def test_phase_b_run_without_exact_checkpoint_lineage_is_invalid(self) -> None:
+    def test_phase_b_evidence_without_exact_checkpoint_lineage_is_invalid(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             store = self._store(root)
             self._record_phase_a_success(store, root)
-            store.start_job("pb-fd")
-            run_path, run_sha = self._write(root, "results/runs/pb-fd/summary.json", b"{}")
+            store.start_job("pb")
+            run_path, run_sha = self._write(root, "results/runs/pb/summary.json", b"{}")
+            analysis_path, analysis_sha = self._write(
+                root, "results/runs/pb/analysis.json", b"{}"
+            )
             store.record_artifact(
                 StudyArtifact(
-                    artifact_id="pb-fd-run",
+                    artifact_id="pb-run",
                     role=ArtifactRole.RUN_BUNDLE,
                     evidence_class=EvidenceClass.DEVELOPMENT,
                     relative_path=run_path,
                     sha256=run_sha,
-                    source_job_ids=("pb-fd",),
+                    source_job_ids=("pb",),
                 )
             )
-            store.complete_job("pb-fd")
+            store.record_artifact(
+                StudyArtifact(
+                    artifact_id="pb-analysis",
+                    role=ArtifactRole.ANALYSIS_DATA,
+                    evidence_class=EvidenceClass.DEVELOPMENT,
+                    relative_path=analysis_path,
+                    sha256=analysis_sha,
+                    source_job_ids=("pb",),
+                    source_artifact_ids=("pb-run",),
+                )
+            )
+            store.complete_job("pb")
 
             report = StudyEvidenceValidator().validate(store)
             self.assertFalse(report.valid)
