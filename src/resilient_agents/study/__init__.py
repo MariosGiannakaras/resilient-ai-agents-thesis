@@ -15,6 +15,12 @@ from .model import (
     StudyPlan,
     StudyStage,
 )
+from .planner import (
+    STUDY_MATRIX_SCHEMA_VERSION,
+    StudyMatrixDefinition,
+    StudyPlanPreview,
+    StudyPlanner,
+)
 from .recipe import STUDY_RECIPE_SCHEMA_VERSION, StudyRecipe
 from .store import (
     STUDY_BUNDLE_SCHEMA_VERSION,
@@ -25,6 +31,7 @@ from .store import (
 __all__ = [
     "STUDY_BUNDLE_SCHEMA_VERSION",
     "STUDY_FINALIZATION_MARKER",
+    "STUDY_MATRIX_SCHEMA_VERSION",
     "STUDY_RECIPE_SCHEMA_VERSION",
     "ArtifactRole",
     "EvidenceClass",
@@ -32,7 +39,10 @@ __all__ = [
     "StudyArtifact",
     "StudyJobSpec",
     "StudyLifecycle",
+    "StudyMatrixDefinition",
     "StudyPlan",
+    "StudyPlanPreview",
+    "StudyPlanner",
     "StudyRecipe",
     "StudyStage",
     "StudyStore",
