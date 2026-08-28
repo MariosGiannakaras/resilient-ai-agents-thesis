@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+from typing import Any, Mapping
 
 from ..study import (
     ArtifactRole,
@@ -13,8 +14,10 @@ from ..study import (
     StudyJobContext,
     StudyJobOutcome,
     StudyJobSpec,
+    StudyStage,
     StudyStore,
 )
+from .analysis import StudyAnalysisEngine
 from .validation import StudyEvidenceValidator
 
 
@@ -36,6 +39,12 @@ def _write_json_atomic(path: Path, payload: object) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def _mapping(value: Any, *, field: str) -> dict[str, Any]:
+    if not isinstance(value, Mapping):
+        raise ValueError(f"{field} must be an object")
+    return dict(value)
+
+
 class StudyValidationExecutor:
     job_type = "study-validation"
 
@@ -45,6 +54,8 @@ class StudyValidationExecutor:
         *,
         context: StudyJobContext,
     ) -> StudyJobOutcome:
+        if job.stage is not StudyStage.VALIDATION:
+            raise ValueError("study-validation executor requires a VALIDATION job")
         store = StudyStore.load(
             repo_root=context.repo_root,
             writable_root=context.writable_root,
@@ -54,6 +65,19 @@ class StudyValidationExecutor:
         path = context.study_dir / "derived" / "validation" / "report.json"
         digest = _write_json_atomic(path, report.to_dict())
         relative = path.resolve().relative_to(context.writable_root.resolve()).as_posix()
+        source_ids = tuple(
+            sorted(
+                artifact.artifact_id
+                for artifact in store.artifacts()
+                if artifact.role
+                in {
+                    ArtifactRole.RUN_BUNDLE,
+                    ArtifactRole.SCIENTIFIC_CHECKPOINT,
+                    ArtifactRole.FAILURE_RECORD,
+                    ArtifactRole.ANALYSIS_DATA,
+                }
+            )
+        )
         artifact = StudyArtifact(
             artifact_id="validation-report",
             role=ArtifactRole.VALIDATION_REPORT,
@@ -61,6 +85,7 @@ class StudyValidationExecutor:
             relative_path=relative,
             sha256=digest,
             source_job_ids=(job.job_id,),
+            source_artifact_ids=source_ids,
             metadata={
                 "recipe_sha256": context.recipe_sha256,
                 "planned_scientific_jobs": report.planned_scientific_jobs,
@@ -83,5 +108,87 @@ class StudyValidationExecutor:
             kind=JobOutcomeKind.INFRASTRUCTURE_FAILURE,
             message="protocol-v2 study evidence failed structural/integrity validation",
             artifacts=(artifact,),
-            measurements={"error_count": sum(item.severity == "error" for item in report.findings)},
+            measurements={
+                "error_count": sum(
+                    item.severity == "error" for item in report.findings
+                )
+            },
+        )
+
+
+class StudyAnalysisExecutor:
+    """Build the deterministic root-level protocol-v2 analysis package."""
+
+    job_type = "study-analysis"
+
+    def execute(
+        self,
+        job: StudyJobSpec,
+        *,
+        context: StudyJobContext,
+    ) -> StudyJobOutcome:
+        if job.stage is not StudyStage.ANALYSIS:
+            raise ValueError("study-analysis executor requires an ANALYSIS job")
+        specification = _mapping(
+            job.payload.get("specification"),
+            field="study-analysis specification",
+        )
+        store = StudyStore.load(
+            repo_root=context.repo_root,
+            writable_root=context.writable_root,
+            study_id=context.study_id,
+        )
+        validation_reports = [
+            artifact
+            for artifact in store.artifacts()
+            if artifact.role is ArtifactRole.VALIDATION_REPORT
+        ]
+        if len(validation_reports) != 1:
+            raise RuntimeError(
+                "study analysis requires exactly one completed validation-report artifact"
+            )
+
+        package = StudyAnalysisEngine().analyze(
+            store,
+            specification=specification,
+        )
+        path = context.study_dir / "derived" / "analysis" / "analysis-package.json"
+        digest = _write_json_atomic(path, package)
+        relative = path.resolve().relative_to(context.writable_root.resolve()).as_posix()
+        source_ids = tuple(
+            sorted(
+                {
+                    validation_reports[0].artifact_id,
+                    *(
+                        artifact.artifact_id
+                        for artifact in store.artifacts()
+                        if artifact.role is ArtifactRole.ANALYSIS_DATA
+                        and artifact.evidence_class is not EvidenceClass.DERIVED
+                    ),
+                }
+            )
+        )
+        artifact = StudyArtifact(
+            artifact_id="analysis-package",
+            role=ArtifactRole.ANALYSIS_DATA,
+            evidence_class=EvidenceClass.DERIVED,
+            relative_path=relative,
+            sha256=digest,
+            source_job_ids=(job.job_id,),
+            source_artifact_ids=source_ids,
+            metadata={
+                "record_type": "protocol-v2-analysis-package",
+                "analysis_recipe": package["analysis_recipe"],
+                "recipe_sha256": context.recipe_sha256,
+            },
+        )
+        return StudyJobOutcome(
+            kind=JobOutcomeKind.COMPLETED,
+            artifacts=(artifact,),
+            measurements={
+                "phase_a_unit_records": len(package["phase_a"]["unit_records"]),
+                "phase_a_root_records": len(package["phase_a"]["root_records"]),
+                "phase_b_unit_records": len(package["phase_b"]["unit_records"]),
+                "phase_b_root_records": len(package["phase_b"]["root_records"]),
+            },
         )
