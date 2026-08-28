@@ -21,7 +21,19 @@ from .planner import (
     StudyPlanPreview,
     StudyPlanner,
 )
+from .ports import (
+    JobOutcomeKind,
+    StudyJobContext,
+    StudyJobExecutor,
+    StudyJobOutcome,
+)
 from .recipe import STUDY_RECIPE_SCHEMA_VERSION, StudyRecipe
+from .scheduler import (
+    ScheduledJobResult,
+    StudyExecutorCrashed,
+    StudyExecutorRegistry,
+    StudyScheduler,
+)
 from .store import (
     STUDY_BUNDLE_SCHEMA_VERSION,
     STUDY_FINALIZATION_MARKER,
@@ -35,8 +47,15 @@ __all__ = [
     "STUDY_RECIPE_SCHEMA_VERSION",
     "ArtifactRole",
     "EvidenceClass",
+    "JobOutcomeKind",
     "JobState",
+    "ScheduledJobResult",
     "StudyArtifact",
+    "StudyExecutorCrashed",
+    "StudyExecutorRegistry",
+    "StudyJobContext",
+    "StudyJobExecutor",
+    "StudyJobOutcome",
     "StudyJobSpec",
     "StudyLifecycle",
     "StudyMatrixDefinition",
@@ -44,6 +63,7 @@ __all__ = [
     "StudyPlanPreview",
     "StudyPlanner",
     "StudyRecipe",
+    "StudyScheduler",
     "StudyStage",
     "StudyStore",
 ]
