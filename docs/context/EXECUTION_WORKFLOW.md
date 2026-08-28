@@ -2,11 +2,11 @@
 
 ## Operating model
 
-The user provides goals, genuinely non-objective academic/product choices, observed application behavior, later supervisor/Department feedback and private material when actually required. The user is not the routine Git/CI/task-bookkeeping operator.
+The user provides goals, genuinely non-objective academic/product choices, observed target-machine/application behavior, later supervisor/Department feedback and private material when actually required. The user is not the routine Git/CI/task-bookkeeping operator.
 
-Codex executes bounded repository work from actual state, performs objective diff review, uses GitHub CI as the canonical full-suite implementation guard, fixes failures/findings and reconciles tasks/docs. This current pre-WP7 package stays on the single branch/PR declared in `TASKS.md` and must not be merged early merely because an intermediate checkpoint is green.
+Codex executes bounded repository work from actual state, performs objective diff review, uses GitHub CI as the canonical full-suite implementation guard, fixes failures/findings and reconciles tasks/docs. The active pre-WP7 package stays on the single branch/PR declared in `TASKS.md` and is not merged merely because an intermediate checkpoint is green.
 
-ChatGPT is used for independent research/review and, after the explicit WP7 approval gate, becomes the preferred Greek writing/narrative/user-instruction layer. It is not a mandatory stop after every technical checkpoint.
+ChatGPT is used for independent research/review and, only after the explicit WP7 approval gate, becomes the preferred Greek writing/narrative/user-instruction layer.
 
 Normal implementation flow:
 
@@ -22,128 +22,149 @@ Every Codex session starts with exactly:
 
 Before selecting work, inspect Git status/current branch/recent commits and PR/check state. Resume valid `IN_PROGRESS` work first. Repository evidence wins over stale/truncated session memory. Never discard useful branch/uncommitted work without inspection.
 
-The tracked entrypoint is `docs/context/CODEX_EXECUTION_PROMPT.md`. Goal mode keeps the long-horizon objective active while `TASKS.md` controls what is actually dependency-valid. Routine task/PR/CI boundaries are not reasons to ask the user to say “continue”.
-
-Checkpoint commits are allowed for recovery. Coherent work should still reach `main` as a small number of meaningful permanent commits when the governing acceptance/approval gates permit it.
-
 ## Testing / CI discipline
 
 Validation is risk-based and proportional.
 
-- During implementation, run the smallest deterministic checks that protect the changed acceptance condition or material scientific/reliability boundary.
-- Add tests for known-answer behavior, information isolation, determinism/serialization, configuration validation, lifecycle truthfulness and concrete regressions.
-- No arbitrary coverage target, broad fuzz/mutation project, exhaustive parameter matrix or pilot/final campaign as CI testing.
-- GitHub PR CI is the canonical complete repository check. Do not repeatedly duplicate successful full-suite runs locally.
-- On failure, inspect the narrowest failing step first. On success, record the result and continue.
-- Required scientific/provenance/configuration state fails closed; optional unavailability is explicit and never treated as affirmative evidence.
+- Use the smallest deterministic checks that protect the changed scientific/reliability boundary during implementation.
+- Add tests for known-answer behavior, information isolation, determinism/serialization, configuration validation, lifecycle truthfulness, provenance and concrete regressions.
+- Do not turn experiment matrices into CI tests or pursue arbitrary coverage/fuzzing projects.
+- GitHub PR CI is the canonical complete repository check.
+- Required scientific/provenance/configuration state fails closed.
 
 ## Bibliography flow
 
-All new source discovery/original PDFs/OCR/conversion/scientific source analysis belong to `MariosGiannakaras/ThesisBibliography`. This repository consumes only committed immutable generated corpus versions. Formal citation trust is limited to `research/bibliography/citation-ready/`.
+All new source discovery/original PDFs/OCR/conversion/scientific source analysis belongs to `MariosGiannakaras/ThesisBibliography`. This repository consumes only committed immutable generated corpus versions. Formal citation trust is limited to `research/bibliography/citation-ready/`.
 
-## Scientific implementation and model/settings flow
+## Scientific workflow authority
 
-Current candidate-v1.1 scientific direction is maintained in `docs/research/MODEL_CANDIDATES.md`:
+Protocol-v2, controlled by DEC-048/050, separates:
 
-- F0 frozen Q-learning;
-- C0 continual Q-learning;
-- D0 Dyna-Q+;
-- R0 preserved as historical pilot evidence only for the current direction.
+1. **Phase A — nominal learning:** every retained method trains independently under common semantic task/information and actual-environment-interaction accounting, with isolated no-learning probes.
+2. **Phase B — resilience/adaptation:** each method/root/layout starts from its own exact Phase-A scientific checkpoint and branches into FN/FD/AN/AD with Adaptive learning beginning only after the change boundary.
 
-Development/tuning may contain multiple **approved resolved configurations** per regime. Each configuration has stored identity/provenance and multiple predefined root seeds; single-run/best-seed selection is forbidden. F0/C0 base values remain the accepted candidate configuration unless explicitly reopened. D0-only planning settings are selected from the predeclared bounded T-521/T-522 non-final search. Final settings are frozen before final outcomes are inspected.
+Q-Learning, SARSA, DQN, PPO and Dyna-Q+ are the current feasibility core; final retention remains T-526/T-527 gated. Dyna-Q is a targeted ablation and A2C remains conditional. Historical v1.0/v1.1 evidence is not pooled into v2 confirmatory estimates.
 
-## Application implementation handoff
+## Study-first backend workflow
 
-Historical Streamlit and temporary React/Vite surfaces are superseded. The authoritative application is NiceGUI native mode per DEC-044, with analytics per DEC-045 and novice-first UX per DEC-046.
+DEC-051/T-529 makes `Study`, not an individual run, the final backend aggregate.
 
-The scientific core remains UI-independent. T-530 owns the Python runtime/service boundary for real active-run status/events/heartbeat/history/resources, safe control capabilities and read-only live GridWorld observation. NiceGUI consumes those contracts and must never fabricate scientific execution state.
+The authoritative chain is:
 
-T-531 completes Dashboard, New Experiment, Runs, Compare and Artifacts. The UI exposes protocol-approved settings and configuration variants, explains their meaning, supports multiple seeds/repetitions and compatible comparisons, and distinguishes development/tuning/live-provisional/final evidence clearly.
+> immutable recipe -> deterministic study plan -> scientific jobs/checkpoints -> validation -> analysis -> export
 
-T-532 validates root screenshots, browser rendering, native Windows behavior and the cleaned NiceGUI/PyInstaller `onedir + windowed` delivery folder. T-511 remains a human end-to-end acceptance gate; automated rendering never substitutes for it.
+A lower-level `RunBundle` remains the provenance/checksum evidence unit for one scientific execution. `StudyStore` is the parent lifecycle that records recipe/plan identity, job states, artifact lineage and finalization.
 
-## Where approved research runs execute
+### Evidence classes
 
-Once the application/runtime is complete, **ordinary approved experiments should not require Codex or console commands**. The intended path is the validated desktop application on the accepted thesis machine:
+Every study/job/artifact is explicitly classified as development, tuning, confirmatory, derived, exploratory or historical.
 
-> choose approved model/configuration/condition/seeds -> review resolved configuration -> launch -> monitor real live state/GridWorld/metrics -> finalize evidence/provenance -> guarded Git publication -> compare/analyze/export
+A confirmatory Study recipe must already be frozen. Development/custom output cannot be promoted by UI action or filename changes.
 
-The application/backend therefore becomes the normal research execution surface after acceptance.
+### Failure semantics
 
-### GitHub-hosted Actions
+- **Scientific failure:** retained outcome; do not replace with another favorable root.
+- **Infrastructure failure:** not a scientific outcome; may retry only with the same scientific identity/provenance rules.
+- **Skipped downstream unit:** explicit when a required scientific checkpoint does not exist because its producer failed scientifically.
 
-GitHub remains the repository, PR, CI and evidence coordination surface. GitHub-hosted runners are suitable for:
+### Stage barriers
 
-- repository/documentation/config validators;
-- deterministic unit/integration/smoke tests;
-- bounded browser/render checks;
-- reproducible analysis/artifact regeneration when the inputs are already frozen and the analysis contract allows it;
-- packaging/build automation that does not substitute for native target-machine validation.
+Later stages do not execute while an earlier stage remains unresolved. Direct artifact dependencies are stricter: a Phase-B branch requires the exact successful Phase-A checkpoint producer.
 
-GitHub-hosted runners are **not automatically equivalent to the accepted thesis machine**. Final-v1.1 stochastic evidence remains on the validated thesis-machine execution path unless an explicit protocol amendment revalidates a different environment.
+## Current T-529 implementation path
 
-### Optional self-hosted GitHub runner
+The active backend reconstruction proceeds in this order:
 
-A self-hosted GitHub Actions runner could technically be installed on the thesis Windows machine, allowing a workflow to be triggered from GitHub while computation still occurs locally. This is optional, not the default architecture: it adds runner/service/security/update complexity without removing the need for the physical machine. The finished desktop application is the simpler user-facing run surface.
+1. clean superseded NiceGUI/v1.1 application/runtime surfaces from the active tree while preserving historical scientific reproducibility in Git;
+2. maintain immutable Study recipe/lifecycle/store contracts;
+3. materialize deterministic Phase-A/Phase-B job DAGs from explicit execution settings;
+4. bridge recipe-materialized jobs to the validated protocol-v2 method-native executors;
+5. emit finalized lower-level run bundles, exact checkpoints and standardized analysis records;
+6. validate planned-vs-produced evidence and Phase-A -> Phase-B lineage;
+7. execute frozen root-level v2 statistics;
+8. deterministically export machine-readable data, thesis figures/tables/evidence IDs and presentation asset lineage;
+9. expose only the framework-neutral `StudyService` to the later frontend.
 
-### When local Codex is still needed
+No final scientific parameter may be supplied by frontend defaults.
 
-Codex on the thesis machine is useful when code/protocol changes are required: debugging a real native issue, implementing a scientifically justified amendment, repairing packaging, or modifying analysis/runtime behavior. It should not be required merely to execute an already-approved configuration once the app is complete.
+## External T-526 / T-527 gates
 
-## Final-v1.1 evidence flow
+T-529 may continue while T-526 waits for the physical Windows thesis machine, but it cannot invent the unresolved scientific values.
 
-The normal final sequence remains gated:
+T-526 remains the predeclared non-final feasibility/environment/severity/runtime gate. Hosted CI cannot substitute for it.
 
-1. T-521 candidate-v1.1 definition/statistics.
-2. T-522 bounded non-final D0 tuning/pilot and freeze/amend/reject.
-3. T-530/T-531/T-532 application/runtime/delivery completion.
-4. T-511 intended-user acceptance.
-5. T-610 frozen v1.1 final matrix on the approved execution path.
-6. T-611 evidence completeness/integrity freeze.
-7. T-612 predeclared paired analysis/sensitivity diagnostics.
-8. T-613 final figures/tables/exports + thesis/defense evidence package.
+T-527 then freezes retained methods, layouts, budgets, hyperparameters, severities, roots, statistics and the remaining Phase-B lifecycle. Only after this can the confirmatory Study recipe be materialized with final values.
 
-A run ID is one whole experiment and may contain many root seeds/episodes. Failed/cancelled/interrupted/invalid/non-recovery outcomes remain attributable. Successful finalization may create at most one guarded Git commit/push for the whole experiment.
+## Application handoff
+
+Historical Streamlit/React/NiceGUI implementations are not the final application architecture. The active NiceGUI source/runtime/package surface has been removed from the active tree under DEC-049/051; Git history preserves it as prototype evidence.
+
+The future application is a client of `StudyService`. It may request/observe:
+
+- recipe validation and deterministic plan preview;
+- study create/start/resume/status;
+- aggregate and per-job progress;
+- truthful live/provisional events when implemented;
+- finalized results/history/artifacts;
+- validation/analysis/export outputs.
+
+It must not construct roots, branch IDs, checkpoint paths, SB3 objects or scientific execution commands itself.
+
+T-528 remains blocked until T-527 and T-529 are complete. It must select a framework different from NiceGUI and rebuild the frontend from scratch.
+
+## Intended user workflow after T-528
+
+The default thesis-valid path should be conceptually simple:
+
+> Run Thesis Study -> Monitor -> Validate -> Results -> Export
+
+A separate exploratory/custom path may expose model/settings choices, but it remains permanently distinguishable from confirmatory thesis evidence.
+
+The general exploratory UX remains:
+
+> Mode -> Model(s) -> Settings -> Review -> Run -> Live Monitor -> Results/Compare -> History/Artifacts/Export
+
+Backend orchestration creates FN/FD/AN/AD and scientific bookkeeping automatically.
+
+## Where approved research executes
+
+Final stochastic scientific evidence remains on the validated thesis-machine execution path unless an explicit protocol amendment validates another environment. GitHub-hosted Actions remain suitable for repository checks, deterministic tests and allowed reproducible analysis/artifact regeneration, but are not automatically equivalent to the thesis machine.
+
+Once the final application is accepted, ordinary execution of an already-frozen Study should not require Codex or manual console construction. Codex remains relevant for code/protocol changes, debugging, justified amendments and repository/evidence maintenance.
+
+## Final protocol-v2 evidence flow
+
+The current final sequence is:
+
+1. T-526 physical feasibility/severity/runtime evidence.
+2. T-527 fair tuning, precision/runtime sizing and machine-readable protocol freeze.
+3. T-529 complete/validate study-first backend.
+4. T-528 new-framework frontend rebuild.
+5. T-511 intended-user acceptance.
+6. T-610 execute the frozen protocol-v2 final Study.
+7. T-611 validate/freeze final evidence.
+8. T-612 execute the predeclared root-level analysis/sensitivity diagnostics.
+9. T-613 generate final figures/tables/data and thesis/defense evidence package.
+
+No final-reserve inspection occurs before the frozen protocol authorizes it.
 
 ## Mandatory pre-WP7 gate
 
-Application/evidence completion does not authorize writing. After T-613 and T-511 are satisfactory, the assistant may ask whether WP7 may start. Only an explicit user approval unlocks T-700+.
+Application/evidence completion does not authorize writing. Only explicit user approval after T-613/T-511 unlocks T-700+.
 
-Planning/documentation of the future workflow is allowed before that gate; thesis prose/result interpretation intended as final writing is not.
+## WP7/WP8 handoff
 
-## WP7/WP8 tool and responsibility handoff
+After approval:
 
-Detailed future ownership lives in `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` once present; `TASKS.md` remains the only task-status ledger.
+- **Repository/Codex:** evidence maps, reproducible figures/tables, technical/citation/result consistency and traceable asset manifests.
+- **ChatGPT:** Greek thesis drafting/restructuring/review, explanatory wording, slide narrative, speaker notes/script and exact user-facing manual placement instructions.
+- **Microsoft Word:** authoritative final `.docx` composition/inspection.
+- **PowerPoint:** authoritative final `.pptx` inspection/rehearsal.
+- **Canva:** optional bounded visual polish only; never a scientific data source.
+- **User:** supervisor/private input, subjective academic review gates, selected real app media capture and final Word/PowerPoint/rehearsal inspection.
 
-High-level split:
-
-- **Repository/Codex:** evidence maps, reproducible figures/tables, technical/citation/result consistency, traceable asset manifests and legitimate code/data fixes.
-- **ChatGPT:** Greek thesis drafting/restructuring/review, explanatory wording, chapter coherence, slide narrative, speaker notes/full script and exact user-facing manual placement instructions.
-- **Microsoft Word:** final `.docx` composition/inspection, styles/automatic TOC, captions, cross-references, lists, equations, pagination and visual QA.
-- **PowerPoint:** final `.pptx` inspection/rehearsal, speaker notes/Presenter View, media/animation validation and presentation QA.
-- **Canva:** optional visual-polish only; never the source of scientific claims/data and every PPTX round-trip is revalidated in PowerPoint.
-- **User:** external/supervisor input, subjective academic review gates, selected real app screenshots/GIF/video capture, manual insertion where required using exact placement instructions, and final Word/PowerPoint/rehearsal inspection.
-
-The user should not have to infer where a manually captured image belongs. For every requested screenshot/GIF/video, the repository workflow must provide: asset ID, exact app state/run/config to capture, crop/content requirements, target thesis chapter/section and/or slide, intended claim/purpose, caption, size/alignment guidance, source/evidence identifiers, and a static fallback where animation cannot be embedded reliably.
-
-## Thesis writing/review handoff
-
-Before T-710, T-700 rechecks current official Department/University Word/citation/submission/defense requirements and records anything that supersedes the current snapshot. T-701 may review user-supplied example theses as contextual presentation/structure references only.
-
-T-710 drafts the Greek thesis from citation-ready bibliography plus the frozen T-613 evidence package. Quantitative/result claims must map to result/figure/table IDs and external factual claims to verified sources. Negative/null/unexpected results and limitations remain explicit.
-
-T-711 creates the review-ready Word artifact and a placement/QA register. T-712 incorporates real supervisor/reviewer corrections and revalidates every affected claim/citation/figure/table/method description. T-713 freezes the final thesis only after Word-level cross-reference/caption/TOC/formatting and evidence checks pass.
-
-## Defense handoff
-
-T-720 creates the defense narrative, slide outline and evidence map from the final thesis/evidence. T-721 creates the PowerPoint, embedded speaker notes and separate full spoken Greek script. T-722 validates PowerPoint rendering, factual/numerical consistency, official timing/content requirements, rehearsal and demo/screenshot/video fallback.
-
-See `docs/thesis/PRESENTATION_WORKFLOW.md` for the detailed presentation contract.
-
-## Final audits
-
-T-800 rechecks bibliography/citations/current official guidance. T-801 audits reproducibility, protocol/results, privacy/licensing, repository/docs/thesis/defense consistency. T-802 confirms final delivery readiness.
+Quantitative thesis/presentation assets derive from frozen repository evidence, never manually retyped from the UI.
 
 ## Documentation rule
 
-Every material architecture/science/tool/ownership/task change reconciles affected active documents in the same branch checkpoint. Historical records may remain only when clearly labelled historical/superseded. Generated bibliography content is never hand-edited for consistency.
+Every material architecture/science/tool/ownership/task change reconciles affected active documents in the same branch checkpoint. Historical records remain only when clearly labelled historical/superseded. Generated bibliography content is never hand-edited for consistency.
