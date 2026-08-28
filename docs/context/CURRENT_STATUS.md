@@ -3,11 +3,11 @@
 **Date:** 2026-08-28  
 **Status:** Authoritative compact current-state summary
 
-`docs/context/TASKS.md` is the canonical ledger. Read DEC-048/049/050 and `docs/research/` only as needed for task-specific detail.
+`docs/context/TASKS.md` is the canonical ledger. Use **progressive** task-specific reading of DEC-048/049/050 and `docs/research/` only as needed.
 
 ## Current execution state
 
-- Historical protocol-v1.0, `FINAL-*` and R0 evidence remain immutable. Candidate v1.1 is auditable non-final history; old `T-522` must not execute.
+- Historical accepted baseline includes completed `T-100` target-machine validation and `T-200` research framing through protocol-v1.0 WP6 evidence. Frozen protocol-v1.0, `FINAL-*` and R0 evidence remain immutable. Candidate v1.1 is auditable non-final history; old `T-522` must not execute.
 - **Project: 4/8** master milestones complete (#87: 1, 2, 4, 5). **`T-524` and `T-525` are COMPLETE; current task: `T-526` READY for physical Windows evidence.** Protocol-v2 tracker #95 is 4/10.
 - T-525 closure is documented in `docs/research/PROTOCOL_V2_BACKEND_CONTRACT.md`.
 - #93 final UI rebuild remains PAUSED. T-528 will rebuild from scratch with a **different framework from NiceGUI** only after T-527 freezes the remaining scientific/runtime contract.
@@ -66,7 +66,7 @@ Root/run is the independent randomization unit; layouts, checkpoints and episode
 
 Canonical bibliography remains `MariosGiannakaras/ThesisBibliography`, immutable upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`: 597 canonical sources, 121 citation-ready sources, 19 research materials. Thesis sync PR #96 is merged; `bibliography-integration-v3` remains immutable history.
 
-## Still unfrozen
+## Still intentionally unfrozen
 
 Final retained methods/A2C decision, selected GridWorld level/layouts, final budgets/gamma/reward/horizon, method hyperparameters, probe cadence, Phase-B reset lifecycle, uncertainty settings, roots/statistics, final frontend framework and final evidence remain T-526/T-527 gated.
 
