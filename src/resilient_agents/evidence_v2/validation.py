@@ -72,15 +72,15 @@ class StudyEvidenceValidationReport:
 class StudyEvidenceValidator:
     """Validate planned-vs-produced scientific evidence before analysis.
 
-    Scientific failures are valid outcomes when they are explicitly recorded.
-    Missing or ambiguous evidence, broken Phase-A -> Phase-B checkpoint lineage,
-    and unclassified/infrastructure-incomplete units are validation errors.
+    Scientific failures are valid outcomes when explicitly recorded. Missing or
+    ambiguous evidence, broken Phase-A -> matched-Phase-B checkpoint lineage and
+    unclassified/infrastructure-incomplete units are validation errors.
     """
 
     _SCIENTIFIC_JOB_TYPES = {
         "phase-a-training",
         "phase-a-reference",
-        "phase-b-branch",
+        "phase-b-matched-set",
     }
 
     def validate(self, store: StudyStore) -> StudyEvidenceValidationReport:
@@ -114,7 +114,6 @@ class StudyEvidenceValidator:
             if state is JobState.COMPLETED:
                 completed += 1
                 self._validate_completed_job(
-                    store=store,
                     job=job,
                     job_type=job_type,
                     produced=produced,
@@ -135,12 +134,12 @@ class StudyEvidenceValidator:
                     )
             elif state is JobState.SKIPPED:
                 skipped += 1
-                if job_type != "phase-b-branch":
+                if job_type != "phase-b-matched-set":
                     findings.append(
                         EvidenceValidationFinding(
                             code="UNEXPECTED_SCIENTIFIC_SKIP",
                             severity="error",
-                            message="Only a dependent Phase-B unit may be scientifically skipped.",
+                            message="Only a dependent Phase-B matched set may be scientifically skipped.",
                             job_id=job.job_id,
                         )
                     )
@@ -156,7 +155,7 @@ class StudyEvidenceValidator:
                             EvidenceValidationFinding(
                                 code="SKIP_WITHOUT_FAILED_DEPENDENCY",
                                 severity="error",
-                                message="Skipped Phase-B unit is not explained by an upstream scientific failure.",
+                                message="Skipped Phase-B matched set is not explained by an upstream scientific failure.",
                                 job_id=job.job_id,
                             )
                         )
@@ -193,7 +192,6 @@ class StudyEvidenceValidator:
     def _validate_completed_job(
         self,
         *,
-        store: StudyStore,
         job: Any,
         job_type: str,
         produced: list[StudyArtifact],
@@ -201,14 +199,14 @@ class StudyEvidenceValidator:
         artifacts_by_id: Mapping[str, StudyArtifact],
         findings: list[EvidenceValidationFinding],
     ) -> None:
-        required_roles: set[ArtifactRole]
         if job_type == "phase-a-training":
             required_roles = {
                 ArtifactRole.RUN_BUNDLE,
                 ArtifactRole.SCIENTIFIC_CHECKPOINT,
+                ArtifactRole.ANALYSIS_DATA,
             }
-        elif job_type in {"phase-a-reference", "phase-b-branch"}:
-            required_roles = {ArtifactRole.RUN_BUNDLE}
+        elif job_type in {"phase-a-reference", "phase-b-matched-set"}:
+            required_roles = {ArtifactRole.RUN_BUNDLE, ArtifactRole.ANALYSIS_DATA}
         else:  # pragma: no cover - filtered by caller.
             return
         for role in required_roles:
@@ -240,14 +238,14 @@ class StudyEvidenceValidator:
                 )
             return
 
-        if job_type != "phase-b-branch":
+        if job_type != "phase-b-matched-set":
             return
         if len(job.dependencies) != 1:
             findings.append(
                 EvidenceValidationFinding(
                     code="PHASE_B_ORIGIN_DEPENDENCY_INVALID",
                     severity="error",
-                    message="Phase-B branch must depend on exactly one matching Phase-A producer.",
+                    message="Phase-B matched set must depend on exactly one matching Phase-A producer.",
                     job_id=job.job_id,
                 )
             )
@@ -265,22 +263,26 @@ class StudyEvidenceValidator:
                     code="PHASE_B_ORIGIN_CHECKPOINT_MISSING",
                     severity="error",
                     message=(
-                        "Phase-B branch cannot resolve one exact scientific checkpoint from its Phase-A dependency."
+                        "Phase-B matched set cannot resolve one exact scientific checkpoint from its Phase-A dependency."
                     ),
                     job_id=job.job_id,
                 )
             )
             return
         checkpoint_id = expected_checkpoints[0].artifact_id
-        run_artifacts = [item for item in produced if item.role is ArtifactRole.RUN_BUNDLE]
-        for artifact in run_artifacts:
+        lineage_artifacts = [
+            item
+            for item in produced
+            if item.role in {ArtifactRole.RUN_BUNDLE, ArtifactRole.ANALYSIS_DATA}
+        ]
+        for artifact in lineage_artifacts:
             if checkpoint_id not in artifact.source_artifact_ids:
                 findings.append(
                     EvidenceValidationFinding(
                         code="PHASE_B_CHECKPOINT_LINEAGE_MISSING",
                         severity="error",
                         message=(
-                            "Phase-B run artifact does not trace to the exact Phase-A checkpoint."
+                            "Phase-B evidence artifact does not trace to the exact Phase-A checkpoint."
                         ),
                         job_id=job.job_id,
                         artifact_id=artifact.artifact_id,
