@@ -214,7 +214,7 @@ class StudyArtifact:
             raise ValueError("relative_path must be non-empty")
         path = PurePosixPath(self.relative_path)
         if path.is_absolute() or ".." in path.parts:
-            raise ValueError("relative_path must remain inside the study bundle")
+            raise ValueError("relative_path must remain inside the writable evidence root")
         if (
             not isinstance(self.sha256, str)
             or len(self.sha256) != 64
