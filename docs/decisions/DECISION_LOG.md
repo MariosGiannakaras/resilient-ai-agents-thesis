@@ -179,7 +179,7 @@ File: `DEC-051_STUDY_FIRST_BACKEND_RECONSTRUCTION.md`.
 File: `DEC-052_T526_CHECKPOINT_MATERIALIZATION_AND_PHASE_B.md`.
 
 ## DEC-053 — SB3 scientific-continuation identity for T-526 recovery
-**CURRENT NARROW T-526 RECOVERY AUTHORITY; PHYSICAL VALIDATION PENDING.** SB3 DQN/PPO require the exact historical learner SHA, complete continuation-state/invariant audit and exact restore/derived round trip while retaining nonidentical original/reconstructed raw archive SHAs separately. Q-Learning, SARSA and Dyna-Q+ retain exact raw-envelope identity. One versioned v0.2 physical attempt is authorized only after clean reviewed-head CI; Phase B remains unchanged and requires 30/30 accepted states.
+**CURRENT NARROW T-526 RECOVERY AUTHORITY; PHYSICAL ATTEMPT COMPLETE/FAIL-CLOSED.** SB3 DQN/PPO require the exact historical learner SHA, complete continuation-state/invariant audit and exact restore/derived round trip while retaining nonidentical original/reconstructed raw archive SHAs separately. The physical recovery passed 30/30; Phase B then stopped at 8/240 because the exact SARSA checkpoint has a deferred on-policy update and cannot enter the frozen no-learning prefix. No rerun/resume/lifecycle relaxation is authorized.
 
 File: `DEC-053_SB3_SCIENTIFIC_CONTINUATION_IDENTITY.md`.
 

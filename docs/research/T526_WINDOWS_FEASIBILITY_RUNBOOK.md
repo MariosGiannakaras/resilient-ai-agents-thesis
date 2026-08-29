@@ -1,10 +1,12 @@
 # T-526 Physical Windows Feasibility Runbook
 
-**Status:** one-time Phase-A complete and immutable; DEC-052 physical recovery failed its exact barrier; DEC-053 v0.2 scientific-continuation recovery is implemented and awaits reviewed physical execution
+**Status:** one-time Phase-A complete and immutable; DEC-052 failed its exact raw-envelope barrier; DEC-053 recovery passed 30/30 and its Phase-B attempt failed closed at 8/240 on unresolved exact SARSA lifecycle state
 **Plan:** `configs/protocols/protocol-v2-feasibility-v0.1.json`  
 **Entrypoint:** `scripts/run_protocol_v2_feasibility_windows.ps1`
 **Recovery amendment:** `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json`
 **Recovery/Phase-B entrypoint:** `scripts/run_protocol_v2_t526_recovery_phase_b_windows.ps1`
+**DEC-053 amendment:** `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.2.json`
+**DEC-053 entrypoint:** `scripts/run_protocol_v2_t526_recovery_phase_b_v02_windows.ps1`
 
 ## Purpose
 
@@ -175,3 +177,15 @@ It may execute exactly once, only after the implementation/configuration/docs ar
 - after 30/30 only, `results/pilots/protocol-v2-feasibility-phase-b-v0.2/`.
 
 Any scientific identity failure is retained and stops the attempt. Phase B remains the unchanged eight-condition, 240-set, 960-branch, 9,600-post-boundary-interaction calibration and cannot begin before 30/30. No additional retry/relaxation, T-527 decision, A2C addition or final-reserve access is authorized.
+
+## Retained DEC-053 physical attempt (2026-08-29)
+
+The clean physical Windows checkout executed the v0.2 entrypoint once from reviewed PR #92 head `167d012a6eb1b0a2a5638836dea73d799128375f` after Repository and Protocol-v2 pilot checks were green.
+
+- Recovery: 30/30 accepted scientific continuation states, zero historical learner-fingerprint mismatches, zero recovery failures and exact serialized byte sizes. Q-Learning, SARSA and Dyna-Q+ retained exact raw-envelope identity. All six DQN and six PPO units retained distinct original/reconstructed raw transport hashes while passing exact learner, restore, round-trip and derived-invariant barriers.
+- Recovery runtime/artifacts: 132.519 wall-seconds; 33 hash-covered files and 4,760,652 bytes under `results/pilots/protocol-v2-feasibility-v0.1-recovery-v0.2/`. Independent validation reports `valid-complete`.
+- Phase B: all eight Q-Learning conditions for `t526-r01/gw-l1-a` completed, totaling 8/240 matched sets, 32/960 branches, eight common-prefix interactions and 320/9,600 post-boundary interactions.
+- Failure: the next planned set, SARSA `t526-r01/gw-l1-a` / `action-remap-swap-right-down`, failed before its prefix. The exact checkpoint retains a deferred on-policy update for state `[1,5]`, action `down`, reward `-0.1`, next state `[1,6]`. The frozen common prefix requires a quiescent no-learning state. Discarding the update would alter the exact continuation state; resolving it would select the next on-policy action and apply learning without an authorized boundary rule.
+- Phase-B runtime/artifacts: 1.355 wall-seconds; 3 hash-covered files and 24,957 bytes under `results/pilots/protocol-v2-feasibility-phase-b-v0.2/`. Independent validation reports `valid-failed`, with zero scientific failures and one infrastructure/lifecycle failure at the next contiguous planned set.
+
+Do not rerun, resume, replace or hand-edit either v0.2 evidence directory. T-526A, T-526 and T-527 remain blocked pending a new explicit scientific/lifecycle decision for the SARSA deferred-update boundary. DEC-053 does not authorize silently discarding or resolving that update.

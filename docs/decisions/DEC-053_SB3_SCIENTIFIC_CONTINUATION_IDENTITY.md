@@ -1,7 +1,7 @@
 # DEC-053 — SB3 Scientific-Continuation Identity for T-526 Recovery
 
 **Date:** 2026-08-29
-**Status:** Accepted and implemented; physical validation pending
+**Status:** Accepted and physically executed; recovery passed 30/30, Phase B failed closed on unresolved SARSA lifecycle state
 **Scope:** narrow correction to SB3 identity semantics for a single versioned T-526A recovery attempt
 
 ## Context
@@ -68,3 +68,11 @@ This is a serialization-semantics correction established without observing a new
 ## Stop conditions
 
 Before execution, the DEC-053 implementation/configuration/tests/docs must be committed and pushed, both required PR checks must be green on that exact commit, PR #92 must point to it, and the native Windows worktree must be clean. The v0.2 entrypoint may execute exactly once only after those gates.
+
+## Physical result
+
+Reviewed head `167d012a6eb1b0a2a5638836dea73d799128375f` passed both required checks and was clean/current on the native Windows thesis PC. The actual v0.2 run passed its complete preflight and reconstructed all 30 states from unit one. All 30 historical learner fingerprints matched, every adapter restore/round trip and derived continuation invariant passed, and all native project methods retained exact raw checkpoint-envelope identity. All six DQN and six PPO raw envelopes differed as expected transport identities; their checkpoint byte sizes remained exact. The recovery bundle independently validates as complete with 30/30 accepted states, 12 raw SB3 mismatches and zero learner-fingerprint/scientific/infrastructure failures.
+
+Phase B then executed the eight Q-Learning matched sets for `t526-r01/gw-l1-a` (32 branches, eight prefix and 320 post-boundary interactions). The next planned set, SARSA `t526-r01/gw-l1-a` under `action-remap-swap-right-down`, failed before its prefix because the exact Phase-A SARSA checkpoint contains a deferred on-policy update. The predeclared common prefix is no-learning and intentionally rejects non-quiescent project learners. Discarding the deferred update would alter exact state; resolving it would perform the pending SARSA update and requires a frozen boundary rule not authorized by DEC-053.
+
+The failure is retained as infrastructure/lifecycle evidence. Phase B stopped at 8/240; T-526A/T-526/T-527 remain blocked. DEC-053 authorizes no rerun, resume or ad-hoc lifecycle relaxation.

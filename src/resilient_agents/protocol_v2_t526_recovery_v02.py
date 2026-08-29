@@ -528,6 +528,112 @@ def validate_recovery_evidence(
     return result
 
 
+def validate_phase_b_attempt_evidence(
+    *, repo_root: Path, amendment: Mapping[str, Any]
+) -> Mapping[str, Any]:
+    """Validate either complete or retained fail-closed DEC-053 Phase-B evidence."""
+
+    verify_original_bundle(repo_root=repo_root, amendment=amendment)
+    verify_prior_failed_recovery(repo_root=repo_root, amendment=amendment)
+    validate_recovery_evidence(repo_root=repo_root, amendment=amendment)
+    directory = repo_root / str(amendment["phase_b"]["output_directory"])
+    manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
+    if manifest["status"] == "complete":
+        return validate_phase_b_evidence(repo_root=repo_root, amendment=amendment)
+    if manifest["status"] != "failed":
+        raise RuntimeError("unsupported DEC-053 Phase-B attempt status")
+    rows = _read_jsonl(directory / "matched-sets.jsonl")
+    failures = _read_jsonl(directory / "failures.jsonl")
+    recovery_dir = repo_root / str(amendment["recovery"]["output_directory"])
+    recovery_rows = {
+        (row["method_id"], row["root_id"], row["layout_id"]): row
+        for row in _read_jsonl(recovery_dir / "reconstruction.jsonl")
+    }
+    plan = load_plan(repo_root / str(amendment["original_phase_a"]["plan_path"]))
+    selected = next(
+        level
+        for level in plan["ordered_gridworld_ladder"]
+        if level["level_id"] == "gw-l1"
+    )
+    planned = [
+        (
+            method_id,
+            str(root_data["root_id"]),
+            str(layout["layout_id"]),
+            str(condition["condition_id"]),
+        )
+        for layout in selected["layouts"]
+        for root_data in plan["roots"]
+        for method_id in CORE_METHOD_IDS
+        for condition in amendment["phase_b"]["conditions"]
+    ]
+    observed = []
+    post_boundary_interactions = 0
+    for row in rows:
+        key = (
+            row["method_id"],
+            row["root_id"],
+            row["layout_id"],
+            row["condition_id"],
+        )
+        observed.append(key)
+        recovered = recovery_rows[key[:3]]
+        if row["source_original_raw_checkpoint_sha256"] != recovered[
+            "original_raw_checkpoint_sha256"
+        ]:
+            raise RuntimeError(f"Phase-B original checkpoint lineage mismatch: {key}")
+        if row["source_reconstructed_raw_checkpoint_sha256"] != recovered[
+            "reconstructed_raw_checkpoint_sha256"
+        ]:
+            raise RuntimeError(f"Phase-B reconstructed checkpoint lineage mismatch: {key}")
+        if int(row["prefix_interactions"]) != 1 or row["episode_resets"] is not False:
+            raise RuntimeError(f"Phase-B lifecycle mismatch: {key}")
+        branches = row["branches"]
+        if tuple(item["branch"] for item in branches) != EXPECTED_BRANCHES:
+            raise RuntimeError(f"Phase-B branch assignment mismatch: {key}")
+        if any(int(item["interactions"]) != 10 for item in branches):
+            raise RuntimeError(f"Phase-B interaction mismatch: {key}")
+        post_boundary_interactions += sum(int(item["interactions"]) for item in branches)
+    if observed != planned[: len(observed)]:
+        raise RuntimeError("failed Phase-B evidence is not a contiguous planned prefix")
+    if (
+        int(manifest["completed_matched_sets"]) != len(rows)
+        or int(manifest["completed_branch_executions"]) != len(rows) * 4
+        or int(manifest["completed_post_boundary_interactions"])
+        != post_boundary_interactions
+    ):
+        raise RuntimeError("failed Phase-B manifest counts do not reconcile")
+    if len(rows) >= 240 or len(failures) != 1:
+        raise RuntimeError("failed Phase-B evidence lacks one retained fail-closed event")
+    failure = failures[0]
+    failure_key = (
+        failure["method_id"],
+        failure["root_id"],
+        failure["layout_id"],
+        failure["condition_id"],
+    )
+    if (
+        failure_key != planned[len(rows)]
+        or failure["failure_kind"] != "infrastructure"
+        or failure["stage"] != "phase-b-matched-set"
+    ):
+        raise RuntimeError("failed Phase-B event does not identify the next planned set")
+    integrity = _validate_integrity(directory)
+    return {
+        "status": "valid-failed",
+        "attempt_status": "failed",
+        "matched_sets": len(rows),
+        "branch_executions": len(rows) * 4,
+        "prefix_interactions": len(rows),
+        "post_boundary_interactions": post_boundary_interactions,
+        "scientific_failures": 0,
+        "infrastructure_failures": len(failures),
+        "failure": failure,
+        "artifact_files": integrity["total_files"],
+        "artifact_bytes": integrity["total_bytes"],
+    }
+
+
 def run_phase_b(
     *, repo_root: Path, amendment: Mapping[str, Any]
 ) -> Mapping[str, Any]:
@@ -859,14 +965,32 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--validate-only", action="store_true")
+    parser.add_argument("--validate-attempt-only", action="store_true")
     parser.add_argument("--validate-recovery-attempt-only", action="store_true")
     args = parser.parse_args(argv)
     repo_root = Path(args.repo_root).resolve()
     amendment_path = (repo_root / args.amendment).resolve()
     amendment = load_amendment(amendment_path)
-    if args.validate_only and args.validate_recovery_attempt_only:
+    validation_modes = sum(
+        bool(item)
+        for item in (
+            args.validate_only,
+            args.validate_attempt_only,
+            args.validate_recovery_attempt_only,
+        )
+    )
+    if validation_modes > 1:
         parser.error("validation modes are mutually exclusive")
-    if args.validate_recovery_attempt_only:
+    if args.validate_attempt_only:
+        result = {
+            "recovery": validate_recovery_attempt_evidence(
+                repo_root=repo_root, amendment=amendment
+            ),
+            "phase_b": validate_phase_b_attempt_evidence(
+                repo_root=repo_root, amendment=amendment
+            ),
+        }
+    elif args.validate_recovery_attempt_only:
         result = {
             "recovery": validate_recovery_attempt_evidence(
                 repo_root=repo_root, amendment=amendment

@@ -1,0 +1,1 @@
+{"condition_id":"action-remap-swap-right-down","exception_type":"ValueError","failure_kind":"infrastructure","layout_id":"gw-l1-a","message":"shared no-learning prefix requires a quiescent project learner; pending/deferred Phase-A state must be resolved by the frozen protocol","method_id":"sarsa","root_id":"t526-r01","stage":"phase-b-matched-set"}

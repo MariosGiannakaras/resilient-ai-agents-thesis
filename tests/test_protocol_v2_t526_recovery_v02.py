@@ -11,6 +11,7 @@ from resilient_agents.protocol_v2_t526_recovery_v02 import (
     SB3_METHOD_IDS,
     _identity_evidence,
     load_amendment,
+    validate_phase_b_attempt_evidence,
     validate_recovery_attempt_evidence,
     verify_prior_failed_recovery,
 )
@@ -73,6 +74,12 @@ class T526RecoveryV02ContractTests(unittest.TestCase):
             repo_root=REPO_ROOT, amendment=amendment
         )
         self.assertIn(result["status"], {"valid-complete", "valid-failed-barrier"})
+        phase_b = REPO_ROOT / amendment["phase_b"]["output_directory"]
+        if phase_b.exists():
+            phase_b_result = validate_phase_b_attempt_evidence(
+                repo_root=REPO_ROOT, amendment=amendment
+            )
+            self.assertIn(phase_b_result["status"], {"valid", "valid-failed"})
 
     @unittest.skipUnless(
         _SB3_AVAILABLE, "protocol-v2-pilot dependency group not installed"
