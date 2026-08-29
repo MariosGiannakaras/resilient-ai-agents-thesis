@@ -3,17 +3,18 @@
 **Date:** 2026-08-29  
 **Status:** Authoritative compact current-state summary
 
-`docs/context/TASKS.md` is the canonical ledger. Use **progressive** task-specific reading of DEC-048/049/050/051/052 and `docs/research/` / `docs/architecture/` only as needed.
+`docs/context/TASKS.md` is the canonical ledger. Use **progressive** task-specific reading of DEC-048/049/050/051/052/053 and `docs/research/` / `docs/architecture/` only as needed.
 
 ## Current execution state
 
 - Historical accepted baseline includes completed `T-100` target-machine validation and `T-200` research framing through protocol-v1.0 WP6 evidence. Protocol-v1.0, FINAL-* and R0 evidence remain immutable. Candidate v1.1 is non-final history; old `T-522` must not execute.
 - `T-524`, `T-525` and `T-529` are COMPLETE.
 - `T-529` completed DEC-051's framework-neutral Study lifecycle: immutable recipe -> deterministic plan -> real Phase A -> exact checkpoint -> optional common no-learning prefix -> atomic FN/FD/AN/AD -> validation -> root/layout analysis with explicit denominators -> deterministic machine-readable evidence export. No final frontend, thesis prose, final thesis figures or PPTX were generated.
-- **Current scientific gate: `T-526 BLOCKED`; recovery sub-gate `T-526A BLOCKED` after its one authorized physical DEC-052 attempt failed the exact checkpoint barrier.** Hosted CI cannot substitute for the retained physical-machine evidence.
+- **Current scientific gate: `T-526 BLOCKED`; recovery sub-gate `T-526A IN_PROGRESS` under DEC-053, with physical validation not yet executed.** Hosted CI cannot substitute for the retained physical-machine evidence.
 - The physical checkout was safely recovered to reviewed source commit `5198dbe077119b7caa4e9a101b55b115a979c22e`. The untracked `temp_body.md` was inspected, confirmed to be an obsolete PR-body draft with no unique durable information and removed. Native Windows Git preflight was clean, and `scripts/run_protocol_v2_feasibility_windows.ps1` executed exactly once.
 - The retained Phase-A bundle selected `gw-l1` (7×7) by the predeclared discrimination rule. All 30 declared method/root/layout units completed; no scientific or infrastructure failure, runtime hard-abort or checkpoint warning occurred. The bundle validated against the declared file set, plan hash, source commit, unit matrix, interaction/probe budgets, guardrails and accepted capability snapshot.
 - DEC-052 implementation was committed/pushed and both required checks were green at clean reviewed head `5e784d31729ad09c40f2633f3d1682896e624317`. The physical recovery then executed once. Q-Learning and SARSA `t526-r01/gw-l1-a` reproduced exact checkpoint and learner identities. DQN reproduced the authoritative learner-state SHA and serialized byte size, but its checkpoint-envelope SHA was `7b385564...` instead of `f2da03f3...`. The 30/30 barrier failed at 2 exact matches, the infrastructure/recovery failure was retained, and Phase B correctly did not start.
+- The SB3 2.9.0 audit proves the raw mismatch is transport/runtime metadata, at minimum the necessarily different `data.start_time`; controlled field-level tests also expose process-address-bearing human-readable class metadata. The historical DQN/PPO learner fingerprint covers all continuation state. DQN `_n_calls`, although not directly hashed, is uniquely fixed at retained `num_timesteps` by the frozen fresh-start/`n_envs=1` step invariant and is now asserted explicitly. DEC-053 preserves DEC-052 and authorizes one separate v0.2 attempt after reviewed-head gates.
 - `T-527` is BLOCKED on T-526. Final methods/layouts/budgets/hyperparameters/severities/roots/statistics remain unfrozen.
 - `T-528` / #93 is PAUSED/BLOCKED on T-527; its T-529 backend dependency is satisfied. The final frontend must use a framework different from NiceGUI.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
@@ -51,7 +52,9 @@ Plan: `configs/protocols/protocol-v2-feasibility-v0.1.json`
 Runbook: `docs/research/T526_WINDOWS_FEASIBILITY_RUNBOOK.md`  
 Entrypoint: `scripts/run_protocol_v2_feasibility_windows.ps1`
 
-Recovery decision/config/entrypoint: `docs/decisions/DEC-052_T526_CHECKPOINT_MATERIALIZATION_AND_PHASE_B.md`, `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json`, `scripts/run_protocol_v2_t526_recovery_phase_b_windows.ps1`.
+Historical failed recovery authority/config/entrypoint: `docs/decisions/DEC-052_T526_CHECKPOINT_MATERIALIZATION_AND_PHASE_B.md`, `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json`, `scripts/run_protocol_v2_t526_recovery_phase_b_windows.ps1`.
+
+Current v0.2 authority/config/entrypoint: `docs/decisions/DEC-053_SB3_SCIENTIFIC_CONTINUATION_IDENTITY.md`, `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.2.json`, `scripts/run_protocol_v2_t526_recovery_phase_b_v02_windows.ps1`. The new output directories do not yet exist.
 
 Failed recovery evidence: `results/pilots/protocol-v2-feasibility-v0.1-recovery/` — 3 attempted payloads, 2 exact matches, 1 retained checkpoint-identity failure, 499,535 hash-covered bytes. The failed-attempt validator passes. No Phase-B output directory exists; matched sets/interactions are 0/240 and 0.
 
@@ -73,4 +76,4 @@ Final retained methods/A2C decision, selected GridWorld level/layouts, final bud
 
 ## Exact next action
 
-Obtain independent scientific/recovery review of the retained DEC-052 checkpoint-envelope mismatch. Do not rerun recovery, relax the exact identity rule, alter seeds/configuration/serialization or start Phase B/T-527/T-528 without new explicit authority. Do not access final reserve.
+Commit/push the DEC-053 authority and implementation, require both PR #92 checks green on that exact commit, verify a clean native Windows worktree, then run the v0.2 entrypoint exactly once. Do not start Phase B unless the runner proves 30/30 accepted states; do not start T-527/T-528 or access final reserve.

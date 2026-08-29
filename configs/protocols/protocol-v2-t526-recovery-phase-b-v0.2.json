@@ -1,0 +1,178 @@
+{
+  "schema_version": 2,
+  "amendment_id": "DEC-053",
+  "pilot_id": "protocol-v2-t526-recovery-phase-b-v0.2",
+  "scientific_status": "non-final-feasibility-recovery-and-calibration-only",
+  "purpose": "Materialize the missing gw-l1 Phase-A checkpoint payloads under the corrected SB3 scientific-continuation identity policy, require 30/30 accepted states, and only then execute the unchanged predeclared Phase-B calibration matrix",
+  "final_reserve_access": false,
+  "required_host": {
+    "os": "Windows 10",
+    "architecture": "AMD64",
+    "python": "3.12",
+    "execution_baseline": "cpu-only"
+  },
+  "original_phase_a": {
+    "source_commit": "5198dbe077119b7caa4e9a101b55b115a979c22e",
+    "plan_path": "configs/protocols/protocol-v2-feasibility-v0.1.json",
+    "canonical_plan_sha256": "ec246a7acb3802f2665d85dfc5a957379dec31fcaa96dba2c4bd14d47567e6e7",
+    "evidence_directory": "results/pilots/protocol-v2-feasibility-v0.1",
+    "evidence_file_sha256": {
+      "failures.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "level-summary.json": "898f177a44009da2d26b2db402eb3c3e7bb803be0a7b33ff8e3bbade3e0c28f6",
+      "manifest.json": "23efe73c7c849c75ae3933becced918e0b8ead0f9a721aeab46d2885d63c81f0",
+      "phase-a-runs.jsonl": "b9d3badc80f526ecb0ad031df610a47f6ff5c1687fa9dcf86a5f0d3a8b76117a",
+      "system-capability.json": "bf808df09eb91104dd9249cecac24fb9e8e8a53db9b88bd2fbcacfee60b58001"
+    },
+    "selected_level_id": "gw-l1",
+    "expected_units": 30,
+    "training_interactions_per_unit": 2048,
+    "probe_interaction_indices": [0, 512, 1024, 2048],
+    "methods": ["q_learning", "sarsa", "dqn", "ppo", "dyna_q_plus"],
+    "roots": ["t526-r01", "t526-r02", "t526-r03"],
+    "layouts": ["gw-l1-a", "gw-l1-b"]
+  },
+  "prior_failed_recovery": {
+    "decision_id": "DEC-052",
+    "evidence_directory": "results/pilots/protocol-v2-feasibility-v0.1-recovery",
+    "evidence_file_sha256": {
+      "manifest.json": "48a9eb029185abfe56920ed4f9c5b0790de0d35aabd18913cea25feb17c60350",
+      "reconstruction.jsonl": "60f57ff173718f633488dd9ce4c3fb7c0b471cdc3a9ae9075e518b9091cebd7d",
+      "failures.jsonl": "81a5e90730a5eee53ed9177987d241c57c9d735ea7e5e876e3cb8e56fa76d4a3",
+      "integrity.json": "29056edb36128bee90d3571a75d47b46af7d64b13ef7b4bdbbc056efbfeb975f",
+      "checkpoints/q_learning/t526-r01/gw-l1-a.json": "83df8d7a4d04921539f184cc7b8eedc4545b2701a7d07a9457255a3390aca9c0",
+      "checkpoints/sarsa/t526-r01/gw-l1-a.json": "8ae2fc4a4058de85168172d996549362fdfbdb6e34c4ad2b55bae51fbea44694",
+      "checkpoints/dqn/t526-r01/gw-l1-a.json": "0c29a3d8aa416a6bf3159cfb54618ad403c5e139108d78f2adcab5e92a4e3d65"
+    }
+  },
+  "source_compatibility": {
+    "require_no_diff_from_original_source_commit": [
+      "configs/protocols/protocol-v2-feasibility-v0.1.json",
+      "pyproject.toml",
+      "uv.lock",
+      "src/resilient_agents/agents.py",
+      "src/resilient_agents/contracts.py",
+      "src/resilient_agents/dyna_q_plus.py",
+      "src/resilient_agents/environment.py",
+      "src/resilient_agents/gridworld.py",
+      "src/resilient_agents/protocol_v2.py",
+      "src/resilient_agents/protocol_v2_executor.py",
+      "src/resilient_agents/protocol_v2_feasibility.py",
+      "src/resilient_agents/protocol_v2_gridworld.py",
+      "src/resilient_agents/protocol_v2_runtime.py",
+      "src/resilient_agents/protocol_v2_sb3.py",
+      "src/resilient_agents/protocol_v2_sb3_driver.py",
+      "src/resilient_agents/protocol_v2_sb3_gridworld.py",
+      "src/resilient_agents/protocol_v2_sb3_seeding.py",
+      "src/resilient_agents/protocol_v2_tabular_driver.py",
+      "src/resilient_agents/randomness.py",
+      "src/resilient_agents/sarsa.py"
+    ]
+  },
+  "identity_policy": {
+    "policy_id": "dec-053-scientific-continuation-identity-v1",
+    "native_methods": ["q_learning", "sarsa", "dyna_q_plus"],
+    "sb3_methods": ["dqn", "ppo"],
+    "native_require_raw_checkpoint_envelope_sha256": true,
+    "sb3_require_raw_checkpoint_envelope_sha256": false,
+    "sb3_require_historical_learner_state_sha256": true,
+    "sb3_require_post_restore_historical_learner_state_sha256": true,
+    "sb3_require_derived_scientific_continuation_round_trip": true,
+    "retain_original_and_reconstructed_raw_sha256": true
+  },
+  "recovery": {
+    "role": "dec-053-scientific-continuation-state-materialization-only-not-new-phase-a-observation",
+    "output_directory": "results/pilots/protocol-v2-feasibility-v0.1-recovery-v0.2",
+    "required_exact_matches": 30,
+    "checkpoint_path_template": "checkpoints/{method_id}/{root_id}/{layout_id}.json",
+    "common_scientific_row_fields": [
+      "status",
+      "level_id",
+      "layout_id",
+      "root_id",
+      "method_id",
+      "implementation_id",
+      "training_interactions",
+      "probe_interactions",
+      "learner_state_sha256",
+      "probes"
+    ],
+    "native_additional_exact_row_fields": [
+      "checkpoint_bytes",
+      "checkpoint_sha256"
+    ]
+  },
+  "phase_b": {
+    "output_directory": "results/pilots/protocol-v2-feasibility-phase-b-v0.2",
+    "selected_level_id": "gw-l1",
+    "common_nominal_no_learning_prefix_interactions": 1,
+    "post_boundary_interactions_per_branch": 10,
+    "branches": ["FN", "FD", "AN", "AD"],
+    "episode_resets": false,
+    "shortest_path_safety": {
+      "required_shortest_path_length": 12,
+      "prefix_plus_branch_interactions": 11,
+      "require_strictly_less_than_shortest_path": true
+    },
+    "conditions": [
+      {
+        "condition_id": "action-remap-swap-right-down",
+        "family": "action-remap",
+        "specification": {
+          "mapping_id": "swap-right-down",
+          "mapping": {"up": "up", "right": "down", "down": "right", "left": "left"}
+        }
+      },
+      {
+        "condition_id": "action-remap-cycle-clockwise",
+        "family": "action-remap",
+        "specification": {
+          "mapping_id": "cycle-clockwise",
+          "mapping": {"up": "right", "right": "down", "down": "left", "left": "up"}
+        }
+      },
+      {
+        "condition_id": "action-failure-p005",
+        "family": "action-failure",
+        "specification": {"probability": 0.05}
+      },
+      {
+        "condition_id": "action-failure-p015",
+        "family": "action-failure",
+        "specification": {"probability": 0.15}
+      },
+      {
+        "condition_id": "action-failure-p030",
+        "family": "action-failure",
+        "specification": {"probability": 0.30}
+      },
+      {
+        "condition_id": "observation-corruption-p002",
+        "family": "observation-corruption",
+        "specification": {
+          "probability": 0.02,
+          "support": "uniform-valid-non-obstacle-excluding-true-state"
+        }
+      },
+      {
+        "condition_id": "observation-corruption-p005",
+        "family": "observation-corruption",
+        "specification": {
+          "probability": 0.05,
+          "support": "uniform-valid-non-obstacle-excluding-true-state"
+        }
+      },
+      {
+        "condition_id": "observation-corruption-p010",
+        "family": "observation-corruption",
+        "specification": {
+          "probability": 0.10,
+          "support": "uniform-valid-non-obstacle-excluding-true-state"
+        }
+      }
+    ],
+    "expected_matched_sets": 240,
+    "expected_branch_executions": 960,
+    "expected_post_boundary_interactions": 9600,
+    "ppo_pilot_semantics": "Adaptive PPO starts collecting the method-native rollout at the first post-boundary interaction; the 10-interaction segment is shorter than the frozen 128-interaction update quantum, so no optimizer update is performed and the final transient rollout state is retained by exact digest rather than promoted as a restorable checkpoint"
+  }
+}

@@ -1,6 +1,6 @@
 # T-526 Physical Windows Feasibility Runbook
 
-**Status:** one-time Phase-A complete and immutable; DEC-052 physical recovery failed its exact barrier and Phase B did not execute
+**Status:** one-time Phase-A complete and immutable; DEC-052 physical recovery failed its exact barrier; DEC-053 v0.2 scientific-continuation recovery is implemented and awaits reviewed physical execution
 **Plan:** `configs/protocols/protocol-v2-feasibility-v0.1.json`  
 **Entrypoint:** `scripts/run_protocol_v2_feasibility_windows.ps1`
 **Recovery amendment:** `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json`
@@ -146,4 +146,32 @@ The clean physical Windows checkout executed the new entrypoint once from review
 - Runtime: 16.648 seconds for the retained recovery attempt.
 - Recovery artifacts: 499,535 hash-covered bytes under `results/pilots/protocol-v2-feasibility-v0.1-recovery/`; independent failed-attempt integrity/lineage validation passes.
 
-Do not rerun the attempt, alter serialization/seeds/configuration or reinterpret the matching learner digest as satisfying DEC-052. A new explicit scientific/recovery decision is required. The original Phase-A bundle remains authoritative and unchanged.
+Do not rerun the DEC-052 attempt, alter its evidence or reinterpret the matching learner digest as satisfying DEC-052. At the conclusion of that attempt a new explicit scientific/recovery decision was required. DEC-053 now supplies a separate, versioned authority without rewriting this historical result. The original Phase-A bundle remains authoritative and unchanged.
+
+## DEC-053 SB3 identity correction and v0.2 authority
+
+The technical audit in `T526_SB3_SCIENTIFIC_CONTINUATION_IDENTITY_AUDIT.md` inspected the retained reconstructed DQN archive and SB3 2.9.0 save/load/learn implementation. `_canonicalize_zip()` normalizes the outer ZIP only. The inner SB3 `data` member retains `start_time`, which comes from `time.time_ns()` and affects elapsed-time/FPS logging only. Original Phase A and DEC-052 executed at different times, so that field necessarily differs. SB3 also emits human-readable class fields containing process memory addresses; the loader ignores those display values and restores the separate cloudpickle payload.
+
+Focused tests prove all of the following without a scientific rerun:
+
+- changing only `start_time` changes the raw archive and no other archive field;
+- both archives retain and restore the exact same historical learner SHA and DEC-053 derived continuation SHA;
+- perturbing online parameters, DQN target parameters, optimizer state, replay contents/cursor/full state, counters or RNG changes/fails the scientific identity;
+- changing a schedule definition not directly represented in the historical hash fails the derived invariant barrier;
+- DQN `_n_calls` is uniquely determined as `num_timesteps` under the frozen fresh-start, single-environment, one-step callback path and is rejected if unequal;
+- PPO policy/value/optimizer/counters/RNG are historically hashed, schedules are explicitly audited, and checkpoints remain restricted to legal completed rollout/update boundaries whose consumed buffer is reset before future collection.
+
+DEC-053 therefore treats raw SB3 archive hashes as retained transport/audit identities, never byte-identical states. Acceptance still requires the exact physically recorded historical learner SHA, exact accounting/probes/configuration/source/provenance, successful restore and post-restore SHA, all explicit continuation invariants and an exact derived round trip. Q-Learning, SARSA and Dyna-Q+ retain the stronger raw-envelope equality requirement.
+
+The versioned reviewed-head command is:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\run_protocol_v2_t526_recovery_phase_b_v02_windows.ps1
+```
+
+It may execute exactly once, only after the implementation/configuration/docs are committed and pushed, both PR #92 checks are green on that exact commit, PR #92 points to it and native Windows Git is clean. It reconstructs all 30 units from unit one and creates only:
+
+- `results/pilots/protocol-v2-feasibility-v0.1-recovery-v0.2/`;
+- after 30/30 only, `results/pilots/protocol-v2-feasibility-phase-b-v0.2/`.
+
+Any scientific identity failure is retained and stops the attempt. Phase B remains the unchanged eight-condition, 240-set, 960-branch, 9,600-post-boundary-interaction calibration and cannot begin before 30/30. No additional retry/relaxation, T-527 decision, A2C addition or final-reserve access is authorized.

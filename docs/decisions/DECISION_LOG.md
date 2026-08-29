@@ -174,9 +174,14 @@ File: `DEC-050_PROTOCOL_V2_CLOSURE_REFINEMENTS.md`.
 File: `DEC-051_STUDY_FIRST_BACKEND_RECONSTRUCTION.md`.
 
 ## DEC-052 — T-526 checkpoint materialization recovery and bounded Phase-B calibration
-**CURRENT NARROW T-526 RECOVERY AUTHORITY.** The original one-time Phase-A bundle remains immutable and authoritative. Only the selected `gw-l1` states may be deterministically materialized under unchanged Phase-A code/configuration; every one of 30 checkpoint and learner identities must exactly match before the predeclared 240-set Phase-B calibration may execute. The pilot-only lifecycle is one no-learning prefix interaction plus ten post-boundary interactions per FN/FD/AN/AD branch without reset. T-527 retains all final freeze authority.
+**HISTORICAL VALID FAILED-ATTEMPT AUTHORITY; SB3 identity rule superseded narrowly by DEC-053.** The original one-time Phase-A bundle remains immutable and authoritative. Its one reviewed physical attempt correctly stopped at 2/30 under DEC-052's declared raw-envelope rule and retained the failure; Phase B did not execute.
 
 File: `DEC-052_T526_CHECKPOINT_MATERIALIZATION_AND_PHASE_B.md`.
+
+## DEC-053 — SB3 scientific-continuation identity for T-526 recovery
+**CURRENT NARROW T-526 RECOVERY AUTHORITY; PHYSICAL VALIDATION PENDING.** SB3 DQN/PPO require the exact historical learner SHA, complete continuation-state/invariant audit and exact restore/derived round trip while retaining nonidentical original/reconstructed raw archive SHAs separately. Q-Learning, SARSA and Dyna-Q+ retain exact raw-envelope identity. One versioned v0.2 physical attempt is authorized only after clean reviewed-head CI; Phase B remains unchanged and requires 30/30 accepted states.
+
+File: `DEC-053_SB3_SCIENTIFIC_CONTINUATION_IDENTITY.md`.
 
 ## Downstream tool/workflow policy
 
