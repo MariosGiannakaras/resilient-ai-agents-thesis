@@ -1,7 +1,7 @@
 # DEC-052 — T-526 Checkpoint Materialization Recovery and Bounded Phase-B Calibration
 
 **Date:** 2026-08-29
-**Status:** Accepted by explicit user scientific-review authority; implementation and physical validation pending
+**Status:** Accepted and implemented; one authorized physical recovery attempt failed the exact barrier, so Phase B remains blocked
 **Scope:** narrow non-final T-526 recovery and Phase-B feasibility evidence only
 
 ## Context
@@ -67,3 +67,9 @@ No A2C or additional Dyna-Q arm is added. No final reserve is accessed.
 ## Supersession boundary
 
 This decision supersedes only the narrow T-526 one-time wording that unintentionally prevented deterministic materialization of already-identified checkpoint payloads. It does not weaken prohibitions on replacing scientific failures, changing roots/seeds/methods/candidates, outcome-driven tuning, mutating original/final evidence, or starting T-527 before T-526 completes.
+
+## Physical result
+
+The reviewed implementation head `5e784d31729ad09c40f2633f3d1682896e624317` passed both required PR checks and executed once on the physical Windows thesis machine. The immutable original hashes and Phase-A source-compatibility gate passed. Q-Learning and SARSA for the first root/layout exactly reproduced both identities. DQN reproduced its authoritative learner-state identity and canonical checkpoint byte size, but its checkpoint-envelope identity differed (`7b385564...` reconstructed versus `f2da03f3...` authoritative).
+
+DEC-052 requires both identities with no tolerance. The runner therefore retained the mismatch as recovery/infrastructure evidence, stopped at 2/30 exact matches and did not start Phase B. This matching learner fingerprint does not satisfy or relax the checkpoint-envelope requirement. No retry or new amendment is authorized by this decision.

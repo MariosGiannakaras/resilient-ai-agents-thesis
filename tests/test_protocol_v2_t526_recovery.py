@@ -18,6 +18,7 @@ from resilient_agents.protocol_v2_t526_recovery import (
     compare_reconstruction_row,
     load_amendment,
     require_complete_recovery_barrier,
+    validate_recovery_attempt_evidence,
     verify_original_bundle,
     verify_source_compatibility,
 )
@@ -132,6 +133,16 @@ class T526RecoveryContractTests(unittest.TestCase):
             _write_json(second, value)
             self.assertEqual(first.read_bytes(), second.read_bytes())
             self.assertEqual(_file_sha256(first), _file_sha256(second))
+
+    def test_retained_physical_recovery_attempt_validates_when_present(self):
+        amendment = load_amendment(AMENDMENT_PATH)
+        attempt = REPO_ROOT / amendment["recovery"]["output_directory"]
+        if not attempt.exists():
+            self.skipTest("physical recovery evidence is not present in this checkout")
+        result = validate_recovery_attempt_evidence(
+            repo_root=REPO_ROOT, amendment=amendment
+        )
+        self.assertIn(result["status"], {"valid-complete", "valid-failed-barrier"})
 
     def test_candidate_or_level_mutation_is_rejected(self):
         value = json.loads(AMENDMENT_PATH.read_text(encoding="utf-8"))

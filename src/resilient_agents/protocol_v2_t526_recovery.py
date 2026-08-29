@@ -882,19 +882,19 @@ def _validate_integrity(directory: Path) -> Mapping[str, Any]:
     return integrity
 
 
-def validate_recovery_evidence(
+def validate_recovery_attempt_evidence(
     *, repo_root: Path, amendment: Mapping[str, Any]
 ) -> Mapping[str, Any]:
     verify_original_bundle(repo_root=repo_root, amendment=amendment)
     directory = repo_root / str(amendment["recovery"]["output_directory"])
     manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
-    if manifest["status"] != "complete-barrier-passed" or int(manifest["exact_matches"]) != 30:
-        raise RuntimeError("recovery evidence does not prove the 30/30 barrier")
     rows = _read_jsonl(directory / "reconstruction.jsonl")
-    if len(rows) != 30 or not all(row["exact_match"] is True for row in rows):
-        raise RuntimeError("recovery reconstruction denominator/exact-match status failed")
-    if (directory / "failures.jsonl").read_text(encoding="utf-8"):
-        raise RuntimeError("recovery failure log is non-empty")
+    failures = _read_jsonl(directory / "failures.jsonl")
+    exact_matches = sum(row["exact_match"] is True for row in rows)
+    if exact_matches != int(manifest["exact_matches"]):
+        raise RuntimeError("recovery manifest exact-match count does not reconcile")
+    if len(rows) > 30:
+        raise RuntimeError("recovery attempt exceeds the predeclared 30-unit denominator")
     original_rows = _authoritative_rows(repo_root=repo_root, amendment=amendment)
     seen = set()
     for row in rows:
@@ -905,19 +905,63 @@ def validate_recovery_evidence(
         path = directory / row["checkpoint_path"]
         if _file_sha256(path) != row["checkpoint_file_sha256"]:
             raise RuntimeError(f"recovery checkpoint file hash mismatch: {key}")
+        if row["expected_checkpoint_sha256"] != original_rows[key]["checkpoint_sha256"]:
+            raise RuntimeError(f"recovery expected checkpoint identity changed: {key}")
+        if row["expected_learner_state_sha256"] != original_rows[key]["learner_state_sha256"]:
+            raise RuntimeError(f"recovery expected learner identity changed: {key}")
+        if bool(row["exact_match"]) == bool(row["mismatches"]):
+            raise RuntimeError(f"recovery exact-match flag/mismatch details disagree: {key}")
         checkpoint = _checkpoint_from_mapping(json.loads(path.read_text(encoding="utf-8")))
-        if checkpoint.sha256 != original_rows[key]["checkpoint_sha256"]:
-            raise RuntimeError(f"recovery checkpoint scientific identity mismatch: {key}")
-        if row["reconstructed_learner_state_sha256"] != original_rows[key]["learner_state_sha256"]:
-            raise RuntimeError(f"recovery learner identity mismatch: {key}")
+        if row["reconstructed_checkpoint_sha256"] != checkpoint.sha256:
+            raise RuntimeError(f"recovery row checkpoint identity does not match its payload: {key}")
+        if (
+            checkpoint.sha256 != original_rows[key]["checkpoint_sha256"]
+            and row["exact_match"] is True
+        ):
+            raise RuntimeError(f"exact recovery row has checkpoint mismatch: {key}")
+        learner_matches = (
+            row["reconstructed_learner_state_sha256"]
+            == original_rows[key]["learner_state_sha256"]
+        )
+        if row["exact_match"] is True and not learner_matches:
+            raise RuntimeError(f"exact recovery row has learner mismatch: {key}")
     integrity = _validate_integrity(directory)
+    status = str(manifest["status"])
+    if status == "complete-barrier-passed":
+        if len(rows) != 30 or exact_matches != 30 or failures:
+            raise RuntimeError("successful recovery evidence does not prove the 30/30 barrier")
+    elif status == "failed-barrier-blocks-phase-b":
+        nonmatches = len(rows) - exact_matches
+        if (
+            len(rows) >= 30
+            or nonmatches <= 0
+            or len(failures) != nonmatches
+            or any(failure.get("failure_kind") != "infrastructure" for failure in failures)
+        ):
+            raise RuntimeError("failed recovery evidence lacks a retained barrier failure")
+    else:
+        raise RuntimeError(f"unsupported recovery attempt status: {status!r}")
     return {
-        "status": "valid",
-        "exact_matches": len(rows),
-        "checkpoint_files": 30,
+        "status": "valid-complete" if status == "complete-barrier-passed" else "valid-failed-barrier",
+        "attempt_status": status,
+        "rows_attempted": len(rows),
+        "exact_matches": exact_matches,
+        "failures": len(failures),
+        "checkpoint_files": len(rows),
         "artifact_files": integrity["total_files"],
         "artifact_bytes": integrity["total_bytes"],
     }
+
+
+def validate_recovery_evidence(
+    *, repo_root: Path, amendment: Mapping[str, Any]
+) -> Mapping[str, Any]:
+    result = validate_recovery_attempt_evidence(
+        repo_root=repo_root, amendment=amendment
+    )
+    if result["attempt_status"] != "complete-barrier-passed":
+        raise RuntimeError("recovery evidence does not prove the 30/30 barrier")
+    return result
 
 
 def validate_phase_b_evidence(
@@ -1018,10 +1062,19 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--validate-only", action="store_true")
+    parser.add_argument("--validate-recovery-attempt-only", action="store_true")
     args = parser.parse_args(argv)
     repo_root = Path(args.repo_root).resolve()
     amendment = load_amendment((repo_root / args.amendment).resolve())
-    if args.validate_only:
+    if args.validate_only and args.validate_recovery_attempt_only:
+        parser.error("validation modes are mutually exclusive")
+    if args.validate_recovery_attempt_only:
+        result = {
+            "recovery": validate_recovery_attempt_evidence(
+                repo_root=repo_root, amendment=amendment
+            )
+        }
+    elif args.validate_only:
         result = {
             "recovery": validate_recovery_evidence(
                 repo_root=repo_root, amendment=amendment

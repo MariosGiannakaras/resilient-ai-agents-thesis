@@ -1,6 +1,6 @@
 # T-526 Physical Windows Feasibility Runbook
 
-**Status:** one-time Phase-A complete and immutable; DEC-052 recovery/Phase-B implementation pending reviewed-head physical execution
+**Status:** one-time Phase-A complete and immutable; DEC-052 physical recovery failed its exact barrier and Phase B did not execute
 **Plan:** `configs/protocols/protocol-v2-feasibility-v0.1.json`  
 **Entrypoint:** `scripts/run_protocol_v2_feasibility_windows.ps1`
 **Recovery amendment:** `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json`
@@ -131,3 +131,19 @@ The script enforces the physical Windows/branch/clean/current-remote/current-dra
 - `results/pilots/protocol-v2-feasibility-phase-b-v0.1/`.
 
 It never writes the original Phase-A directory. Do not rerun, delete, replace or hand-edit generated recovery/Phase-B evidence. Execute all eight candidates; do not select a final severity or preferred remap inside T-526.
+
+## Retained DEC-052 physical recovery attempt (2026-08-29)
+
+The clean physical Windows checkout executed the new entrypoint once from reviewed PR #92 head `5e784d31729ad09c40f2633f3d1682896e624317` after Repository and Protocol-v2 pilot checks were green.
+
+- Original five-file bundle integrity: passed before and after the attempt.
+- Phase-A source compatibility with `5198dbe...`: passed for all declared paths.
+- Q-Learning / `t526-r01` / `gw-l1-a`: exact checkpoint and learner match.
+- SARSA / `t526-r01` / `gw-l1-a`: exact checkpoint and learner match.
+- DQN / `t526-r01` / `gw-l1-a`: learner-state SHA exactly matched `bee1cce1...`; canonical checkpoint byte size exactly matched `460571`; reconstructed checkpoint-envelope SHA `7b385564...` did not equal authoritative `f2da03f3...`.
+- Barrier result: failed at 2/30 exact matches with one retained infrastructure/recovery failure.
+- Phase B: not started; 0/240 matched sets and zero branch interactions.
+- Runtime: 16.648 seconds for the retained recovery attempt.
+- Recovery artifacts: 499,535 hash-covered bytes under `results/pilots/protocol-v2-feasibility-v0.1-recovery/`; independent failed-attempt integrity/lineage validation passes.
+
+Do not rerun the attempt, alter serialization/seeds/configuration or reinterpret the matching learner digest as satisfying DEC-052. A new explicit scientific/recovery decision is required. The original Phase-A bundle remains authoritative and unchanged.
