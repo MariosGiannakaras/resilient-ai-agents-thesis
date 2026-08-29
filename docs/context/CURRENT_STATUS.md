@@ -10,8 +10,10 @@
 - Historical accepted baseline includes completed `T-100` target-machine validation and `T-200` research framing through protocol-v1.0 WP6 evidence. Protocol-v1.0, FINAL-* and R0 evidence remain immutable. Candidate v1.1 is non-final history; old `T-522` must not execute.
 - `T-524`, `T-525` and `T-529` are COMPLETE.
 - `T-529` completed DEC-051's framework-neutral Study lifecycle: immutable recipe -> deterministic plan -> real Phase A -> exact checkpoint -> optional common no-learning prefix -> atomic FN/FD/AN/AD -> validation -> root/layout analysis with explicit denominators -> deterministic machine-readable evidence export. No final frontend, thesis prose, final thesis figures or PPTX were generated.
-- **Current dependency-valid gate: `T-526` READY.** It still requires the predeclared non-final pilot on the validated physical Windows thesis machine. Hosted CI cannot substitute for it.
-- The latest physical T-526 attempt stopped before the runner started because repository preflight failed. The checkout reported local HEAD `6aacd40332fe8578ab5e1c9a34bae30d4e321688`, stale relative to remote, plus untracked prior PR draft `temp_body.md`. No T-526 result directory, selected level, runtime data, checkpoints, scientific outcomes or validation evidence were produced. The reported WSL change to `results/thesis_evidence_package.zip` was verified as Git LFS hydration with matching committed content and native Windows Git clean.
+- **Current scientific gate: `T-526 BLOCKED` after valid one-time Phase-A execution; recovery sub-gate `T-526A` requires explicit protocol/review authority.** Hosted CI cannot substitute for the retained physical-machine evidence.
+- The physical checkout was safely recovered to reviewed source commit `5198dbe077119b7caa4e9a101b55b115a979c22e`. The untracked `temp_body.md` was inspected, confirmed to be an obsolete PR-body draft with no unique durable information and removed. Native Windows Git preflight was clean, and `scripts/run_protocol_v2_feasibility_windows.ps1` executed exactly once.
+- The retained Phase-A bundle selected `gw-l1` (7×7) by the predeclared discrimination rule. All 30 declared method/root/layout units completed; no scientific or infrastructure failure, runtime hard-abort or checkpoint warning occurred. The bundle validated against the declared file set, plan hash, source commit, unit matrix, interaction/probe budgets, guardrails and accepted capability snapshot.
+- Phase-B did not execute. The committed runner retained checkpoint hashes/sizes but not exact checkpoint payloads, and no committed Phase-B calibration entrypoint/lifecycle exists. Regenerating Phase A would violate the one-time evidence boundary; inventing a post-outcome lifecycle would violate the protocol. `T-526A` must resolve this through an explicit non-outcome-driven amendment/review while the Phase-A bundle remains unchanged.
 - `T-527` is BLOCKED on T-526. Final methods/layouts/budgets/hyperparameters/severities/roots/statistics remain unfrozen.
 - `T-528` / #93 is PAUSED/BLOCKED on T-527; its T-529 backend dependency is satisfied. The final frontend must use a framework different from NiceGUI.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
@@ -49,9 +51,11 @@ Plan: `configs/protocols/protocol-v2-feasibility-v0.1.json`
 Runbook: `docs/research/T526_WINDOWS_FEASIBILITY_RUNBOOK.md`  
 Entrypoint: `scripts/run_protocol_v2_feasibility_windows.ps1`
 
-The predeclared first pass remains ordered 7×7 -> 10×10 -> 14×14, two layouts/level, three roots, five core methods, 2048 actual Phase-A training interactions and probes at 0/512/1024/2048.
+The predeclared one-time first pass evaluated `gw-l1` first and selected it, so the ordered ladder correctly stopped before `gw-l2`/`gw-l3`. The completed matrix contains two layouts, three roots, five core methods, 2048 actual Phase-A training interactions per unit and probes at 0/512/1024/2048.
 
-Before retrying, inspect `temp_body.md` and preserve any unique content; remove it from the repository working tree only if confirmed obsolete. Then fast-forward the active physical branch to the reviewed current remote head and require a clean native-Windows Git preflight. This is repository/infrastructure repair, not a scientific protocol amendment or scientific failure.
+Recorded physical totals are 61,440 training interactions, 28,524 probe interactions, 129.344 summed unit wall-seconds, 459.469 summed unit process-CPU-seconds and 4,680,026 aggregate serialized checkpoint bytes. The retained five-file artifact bundle is 40,488 bytes. Per-method median unit wall times were Q-Learning 0.169 s, SARSA 0.168 s, Dyna-Q+ 0.363 s, DQN 11.792 s and PPO 8.465 s; maximum serialized checkpoint sizes were 17,225, 17,124, 49,338, 463,739 and 236,224 bytes respectively.
+
+Evidence path: `results/pilots/protocol-v2-feasibility-v0.1/`. Do not rerun, delete, rename, replace or hand-edit it.
 
 ## Statistics / provenance
 
@@ -65,12 +69,4 @@ Final retained methods/A2C decision, selected GridWorld level/layouts, final bud
 
 ## Exact next action
 
-All dependency-valid in-repository T-529 work is complete. On the validated physical thesis machine:
-
-1. inspect/preserve or explicitly discard only the confirmed-obsolete untracked `temp_body.md`;
-2. fast-forward `feat/pre-wp7-protocol-v1.1-ui-rebuild` to the reviewed current remote head and verify clean native-Windows Git status;
-3. execute exactly once:
-
-`powershell -ExecutionPolicy Bypass -File .\scripts\run_protocol_v2_feasibility_windows.ps1`
-
-Retain `results/pilots/protocol-v2-feasibility-v0.1/` unchanged for review. Do not rerun/overwrite scientific failures, access final reserve or tune methods from final outcomes.
+Independently review the retained one-time Phase-A bundle, then resolve `T-526A` through an explicitly authorized non-outcome-driven protocol/recovery amendment. The recovery must not rerun Phase A, reconstruct or replace its exact states from outcomes, change the predeclared candidate severities, access final reserve or start T-527/T-528. T-526 remains blocked until a faithful Phase-B path exists and executes.

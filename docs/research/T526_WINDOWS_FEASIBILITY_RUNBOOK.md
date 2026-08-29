@@ -1,6 +1,6 @@
 # T-526 Physical Windows Feasibility Runbook
 
-**Status:** predeclared non-final physical-machine gate  
+**Status:** one-time Phase-A complete; Phase-B blocked on explicit checkpoint-handoff recovery review
 **Plan:** `configs/protocols/protocol-v2-feasibility-v0.1.json`  
 **Entrypoint:** `scripts/run_protocol_v2_feasibility_windows.ps1`
 
@@ -76,3 +76,24 @@ This rule asks only whether the testbed discriminates at a useful difficulty. It
 Do not rerun, delete, rename or hand-edit the generated pilot output. Inspect `git status`, retain the entire output directory, and provide/commit those artifacts for review. The next T-526 step will use the selected level and the already-predeclared Phase-B calibration candidates.
 
 The final frontend remains blocked until T-526 and T-527 are complete. T-527 must freeze the retained methods, budgets, hyperparameters, Phase-B episode/reset lifecycle, severities, roots/statistics and machine-readable protocol before T-528 chooses a different framework from NiceGUI and rebuilds the UI.
+
+## Retained physical Phase-A checkpoint (2026-08-29)
+
+The clean physical Windows checkout executed the committed entrypoint exactly once from reviewed source commit `5198dbe077119b7caa4e9a101b55b115a979c22e`.
+
+- Selected level: `gw-l1` (7×7), the first level in the declared ladder. It was neither a universal final floor nor a universal early ceiling.
+- Completed units: 30/30 (five core methods × three roots × two layouts).
+- Failures: zero scientific failures and zero infrastructure/runtime-guardrail failures.
+- Interactions: 61,440 training and 28,524 isolated probe interactions.
+- Runtime: 129.344 summed unit wall-seconds and 459.469 summed unit process-CPU-seconds.
+- Checkpoint measurement: 4,680,026 aggregate serialized bytes; every unit remained below the warning threshold.
+- Retained file bundle: 40,488 bytes under `results/pilots/protocol-v2-feasibility-v0.1/`.
+- Validation: exact required file set, declared plan SHA-256, source commit, complete unique unit matrix, interaction/probe budgets, runtime/checkpoint guardrails and copied accepted capability snapshot all passed; `failures.jsonl` is empty.
+
+Do not rerun, delete, rename, replace or hand-edit this evidence.
+
+## Phase-B recovery blocker
+
+The committed Phase-A runner materialized each exact final checkpoint in memory only long enough to record its SHA-256 identity and serialized size. It did not retain checkpoint payload files. The repository also has no committed Phase-B severity-calibration entrypoint or fully specified execution handoff that can consume the one-time trained states.
+
+Consequently, Phase-B cannot proceed faithfully from this retained bundle. Regenerating Phase A would violate the explicit one-time execution boundary, while inventing a new post-outcome handoff/lifecycle would be a protocol amendment. `T-526A` therefore requires explicit scientific review/authority for a non-outcome-driven recovery path that preserves this bundle unchanged, retains only the already-predeclared candidate set and does not access final reserve.

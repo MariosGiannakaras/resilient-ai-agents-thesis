@@ -21,8 +21,8 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 
 - **Package:** DEC-048/050 protocol-v2 methodology plus completed DEC-051 study-first backend reconstruction. DEC-042/047 and candidate v1.1 remain auditable predecessor design. DEC-049 controls the later new-framework frontend rebuild.
 - **Project:** **4/8** master milestones complete (#87: 1, 2, 4, 5).
-- **Current task:** `T-526`.
-- **State:** `READY`; the predeclared physical Windows feasibility pilot remains the next dependency-valid scientific gate. The first attempted physical session did **not** execute scientific work because repository preflight failed before the runner started: the local checkout was stale relative to the remote branch and contained an untracked prior PR draft (`temp_body.md`). No T-526 result directory, selected level, runtime data, checkpoints, method/root outcomes or validation evidence were produced.
+- **Current task:** `T-526` / recovery sub-gate `T-526A`.
+- **State:** `T-526 BLOCKED after valid one-time Phase-A execution`; `T-526A` requires an explicit non-outcome-driven protocol/recovery review before Phase-B. The physical checkout was safely fast-forwarded to reviewed source commit `5198dbe077119b7caa4e9a101b55b115a979c22e`, obsolete `temp_body.md` was removed after inspection, and the committed Windows entrypoint executed exactly once. All 30 declared `gw-l1` method/root/layout units completed, `gw-l1` was selected by the predeclared rule and no scientific/infrastructure failure was recorded. The generated bundle retained checkpoint hashes/sizes but not checkpoint payloads, and no committed Phase-B calibration entrypoint/lifecycle exists; therefore Phase-B cannot faithfully consume the exact one-time Phase-A trained states without a reviewed amendment or prohibited regeneration.
 - **Completed parallel backend work:** `T-529` is COMPLETE. The framework-neutral Study lifecycle now covers immutable recipe -> deterministic plan -> real Phase A -> exact checkpoint -> optional common no-learning prefix -> atomic FN/FD/AN/AD -> validation -> root/layout analysis with explicit denominators -> deterministic machine-readable evidence export, with restart-safe provenance and no frontend dependency.
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no parallel main-repo implementation branch and no early merge.
 - **Trackers:** #87 master 4/8; #95 protocol-v2 4/10; #88 closed/superseded; #89 complete/closed; #93 PAUSED; #94 DEFERRED post-thesis.
@@ -30,7 +30,7 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 - **Bibliography:** immutable protocol-v2 consumer snapshot remains upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`, merged through thesis PR #96 and validated on PR #92.
 - **Frontend direction:** final frontend is rebuilt from scratch with a **different framework from NiceGUI** at `T-528` only after T-527 scientific freeze. T-529's backend dependency is already satisfied.
 - **Pre-WP7 approval:** NOT APPROVED; `T-700+` remains blocked.
-- **Exact next action:** on the validated physical Windows thesis machine, first inspect and explicitly preserve/disposition the untracked `temp_body.md` without discarding unique work, then fast-forward the clean `feat/pre-wp7-protocol-v1.1-ui-rebuild` checkout to the reviewed remote branch head. Only after preflight is satisfied, execute `scripts/run_protocol_v2_feasibility_windows.ps1` exactly once and retain `results/pilots/protocol-v2-feasibility-v0.1/` unchanged for review. Do not access final reserve, tune methods from final outcomes, start old T-522, or resume UI implementation early.
+- **Exact next action:** independently review the immutable retained Phase-A bundle and resolve `T-526A` through an explicit non-outcome-driven recovery/amendment path that does not rerun, replace or hand-edit the one-time evidence. Do not execute Phase-B from regenerated checkpoints, access final reserve, tune methods from outcomes, start old T-522/T-527 or resume UI implementation early.
 
 ## Quota/interruption resilience
 
@@ -109,7 +109,7 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Phase-B conformance: Frozen learning state cannot mutate; SARSA requires quiescent fork; Frozen Dyna-Q+ bypasses the historical model-mutating learning `act()` path; DQN/PPO attach to the exact already-restored project GridWorld prefix. T-525 intentionally fails closed rather than inventing multi-episode post-boundary reset semantics; T-526/T-527 own that final lifecycle choice.
   - Validation at closure: complete dedicated protocol-v2 conformance gate (55 tests, CPU-only dependency check) and repository-wide tests/documentation/JSON/bibliography validation passed on the same reviewed PR #92 implementation head before status reconciliation.
 
-- [ ] READY `T-526` — Run bounded environment-discrimination + method/severity/CPU feasibility pilots on the validated Windows machine.
+- [ ] BLOCKED `T-526` — Run bounded environment-discrimination + method/severity/CPU feasibility pilots on the validated Windows machine.
   - Depends on: `T-525` — satisfied.
   - Predeclared plan: `configs/protocols/protocol-v2-feasibility-v0.1.json`.
   - Physical entrypoint: `scripts/run_protocol_v2_feasibility_windows.ps1`.
@@ -118,7 +118,13 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - After level selection, use only the already-predeclared Phase-B calibration candidates: action-remap mappings; action-failure probabilities; observation-corruption probabilities with explicit global valid-cell support. Calibrate semantics/non-degeneracy, never preferred method ranking. Exact action-remap identities remain categorical rather than falsely scalar severity.
   - Evaluate A2C promotion only for distinct thesis value vs PPO at acceptable matrix cost. Retain poor/failing outcomes. No final reserve.
   - External boundary: hosted CI does not substitute for the physical Windows runtime/feasibility evidence gate.
-  - Latest physical attempt: **preflight only; no scientific execution occurred.** The physical checkout reported local HEAD `6aacd40332fe8578ab5e1c9a34bae30d4e321688`, stale relative to the then-current remote head, plus untracked `temp_body.md`. `results/pilots/protocol-v2-feasibility-v0.1/` was absent. The apparent WSL modification of `results/thesis_evidence_package.zip` was verified as Git LFS hydration with matching committed content and native Windows Git clean.
+  - Physical Phase-A result (2026-08-29): repository recovery and clean native-Windows preflight completed at reviewed source commit `5198dbe077119b7caa4e9a101b55b115a979c22e`; the entrypoint executed exactly once. `gw-l1` (7×7) was the first acceptable level. All 30 planned units (five methods × three roots × two layouts) completed with 61,440 total training interactions, 28,524 probe interactions, 129.344 summed unit wall-seconds, 459.469 summed unit CPU-seconds and 4,680,026 aggregate serialized checkpoint bytes. No scientific failure, infrastructure failure, hard runtime abort or checkpoint warning occurred. Evidence: `results/pilots/protocol-v2-feasibility-v0.1/`.
+  - Blocker: the committed Phase-A runner records checkpoint hashes/sizes but does not retain the exact checkpoint payloads, and the repository contains no committed Phase-B calibration entrypoint or complete execution lifecycle. Phase-B is therefore blocked because regenerating Phase-A states would violate the one-time evidence boundary and inventing a recovery/lifecycle after outcomes would violate the protocol. Retain the Phase-A bundle unchanged.
+
+- [ ] BLOCKED `T-526A` — Review and authorize a non-outcome-driven T-526 Phase-B recovery/amendment path.
+  - Depends on: retained one-time T-526 Phase-A evidence at `results/pilots/protocol-v2-feasibility-v0.1/`.
+  - Acceptance: explicitly resolve the missing exact-checkpoint payload/Phase-B entrypoint lifecycle without deleting, replacing, regenerating or hand-editing Phase-A evidence; preserve the already-predeclared candidate set and selected-level rule; document why the recovery does not use observed method rankings or access final reserve.
+  - Gate: scientific protocol/review authority is required because the predeclared one-time runner cannot supply exact Phase-A checkpoint payloads to Phase-B.
 
 - [ ] BLOCKED `T-527` — Fair tuning, precision/runtime sizing, statistical freeze and machine-readable protocol-v2 firewall.
   - Depends on: `T-526`.
