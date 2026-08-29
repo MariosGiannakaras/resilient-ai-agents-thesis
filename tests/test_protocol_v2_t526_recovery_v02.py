@@ -15,6 +15,13 @@ from resilient_agents.protocol_v2_t526_recovery_v02 import (
     verify_prior_failed_recovery,
 )
 
+try:
+    import stable_baselines3  # noqa: F401
+
+    _SB3_AVAILABLE = True
+except ImportError:
+    _SB3_AVAILABLE = False
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 AMENDMENT_PATH = (
@@ -67,6 +74,9 @@ class T526RecoveryV02ContractTests(unittest.TestCase):
         )
         self.assertIn(result["status"], {"valid-complete", "valid-failed-barrier"})
 
+    @unittest.skipUnless(
+        _SB3_AVAILABLE, "protocol-v2-pilot dependency group not installed"
+    )
     def test_retained_dec052_dqn_passes_the_new_restore_and_derived_barrier(self):
         amendment = load_amendment(AMENDMENT_PATH)
         plan = load_plan(
