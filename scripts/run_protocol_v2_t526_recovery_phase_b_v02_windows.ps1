@@ -8,34 +8,42 @@ $Amendment = 'configs/protocols/protocol-v2-t526-recovery-phase-b-v0.2.json'
 $RecoveryOutput = 'results/pilots/protocol-v2-feasibility-v0.1-recovery-v0.2'
 $PhaseBOutput = 'results/pilots/protocol-v2-feasibility-phase-b-v0.2'
 $RequiredChecks = @('sanity', 'focused-conformance')
+$Git = 'C:\Program Files\Git\cmd\git.exe'
+$Gh = 'C:\Program Files\GitHub CLI\gh.exe'
+$Uv = Join-Path $env:USERPROFILE '.local\bin\uv.exe'
 
 if ($env:OS -ne 'Windows_NT') {
     throw 'DEC-053 T-526A must run in native Windows PowerShell on the validated thesis machine.'
+}
+foreach ($Tool in @($Git, $Gh, $Uv)) {
+    if (-not (Test-Path $Tool -PathType Leaf)) {
+        throw "Required native tool not found: '$Tool'."
+    }
 }
 
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 Set-Location $RepoRoot
 
-$Branch = (git branch --show-current).Trim()
+$Branch = (& $Git branch --show-current).Trim()
 if ($LASTEXITCODE -ne 0 -or $Branch -ne $ExpectedBranch) {
     throw "Expected branch '$ExpectedBranch'; current branch is '$Branch'."
 }
 
-$Dirty = git status --porcelain --untracked-files=all
+$Dirty = & $Git status --porcelain --untracked-files=all
 if ($LASTEXITCODE -ne 0) { throw 'Unable to inspect native-Windows Git state.' }
 if ($Dirty) {
     throw "Working tree must be clean before DEC-053 physical execution. Current changes:`n$Dirty"
 }
 
-git fetch origin $ExpectedBranch
+& $Git fetch origin $ExpectedBranch
 if ($LASTEXITCODE -ne 0) { throw 'Unable to fetch the active reviewed branch.' }
-$LocalHead = (git rev-parse HEAD).Trim()
-$RemoteHead = (git rev-parse "origin/$ExpectedBranch").Trim()
+$LocalHead = (& $Git rev-parse HEAD).Trim()
+$RemoteHead = (& $Git rev-parse "origin/$ExpectedBranch").Trim()
 if ($LASTEXITCODE -ne 0 -or $LocalHead -ne $RemoteHead) {
     throw "Local HEAD '$LocalHead' does not equal current remote branch HEAD '$RemoteHead'."
 }
 
-$PrJson = gh pr view $PullRequest --repo $Repository --json headRefName,headRefOid,isDraft,state,statusCheckRollup
+$PrJson = & $Gh pr view $PullRequest --repo $Repository --json headRefName,headRefOid,isDraft,state,statusCheckRollup
 if ($LASTEXITCODE -ne 0) { throw 'Unable to inspect draft PR #92.' }
 $Pr = $PrJson | ConvertFrom-Json
 if ($Pr.state -ne 'OPEN' -or -not $Pr.isDraft) {
@@ -59,15 +67,15 @@ foreach ($Output in @($RecoveryOutput, $PhaseBOutput)) {
 }
 
 Write-Host 'DEC-053 T-526A preflight: locked CPU pilot environment'
-uv sync --locked --group protocol-v2-pilot --no-progress
+& $Uv sync --locked --group protocol-v2-pilot --no-progress
 if ($LASTEXITCODE -ne 0) { throw 'uv sync failed.' }
 
 Write-Host 'DEC-053 T-526A preflight: Python/SB3/PyTorch CPU contract'
-uv run --locked --group protocol-v2-pilot python -c "import sys, torch, stable_baselines3 as sb3; assert sys.version_info[:2] == (3,12); assert sb3.__version__ == '2.9.0'; assert torch.__version__.startswith('2.9.0'); assert torch.version.cuda is None; assert not torch.cuda.is_available(); print(sys.version); print('SB3', sb3.__version__); print('Torch', torch.__version__, 'CUDA', torch.version.cuda)"
+& $Uv run --locked --group protocol-v2-pilot python -c "import sys, torch, stable_baselines3 as sb3; assert sys.version_info[:2] == (3,12); assert sb3.__version__ == '2.9.0'; assert torch.__version__.startswith('2.9.0'); assert torch.version.cuda is None; assert not torch.cuda.is_available(); print(sys.version); print('SB3', sb3.__version__); print('Torch', torch.__version__, 'CUDA', torch.version.cuda)"
 if ($LASTEXITCODE -ne 0) { throw 'CPU scientific dependency preflight failed.' }
 
 Write-Host 'DEC-053 T-526A preflight: identity proof and affected conformance tests'
-uv run --locked --group protocol-v2-pilot python -m unittest `
+& $Uv run --locked --group protocol-v2-pilot python -m unittest `
     tests.test_protocol_v2_sb3_identity `
     tests.test_protocol_v2_t526_recovery_v02 `
     tests.test_protocol_v2_t526_recovery `
@@ -79,11 +87,11 @@ uv run --locked --group protocol-v2-pilot python -m unittest `
 if ($LASTEXITCODE -ne 0) { throw 'DEC-053 focused conformance tests failed.' }
 
 Write-Host 'DEC-053 T-526A physical checkpoint materialization and Phase-B calibration'
-uv run --locked --group protocol-v2-pilot python -m resilient_agents.protocol_v2_t526_recovery_v02 --repo-root . --amendment $Amendment
+& $Uv run --locked --group protocol-v2-pilot python -m resilient_agents.protocol_v2_t526_recovery_v02 --repo-root . --amendment $Amendment
 if ($LASTEXITCODE -ne 0) { throw 'DEC-053 recovery/Phase-B runner failed; retain all diagnostic output.' }
 
 Write-Host 'DEC-053 T-526A independent generated-evidence validation'
-uv run --locked --group protocol-v2-pilot python -m resilient_agents.protocol_v2_t526_recovery_v02 --repo-root . --amendment $Amendment --validate-only
+& $Uv run --locked --group protocol-v2-pilot python -m resilient_agents.protocol_v2_t526_recovery_v02 --repo-root . --amendment $Amendment --validate-only
 if ($LASTEXITCODE -ne 0) { throw 'DEC-053 generated-evidence validation failed.' }
 
 Write-Host ''
