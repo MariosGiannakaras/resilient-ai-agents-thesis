@@ -1,8 +1,10 @@
 # T-526 Physical Windows Feasibility Runbook
 
-**Status:** one-time Phase-A complete; Phase-B blocked on explicit checkpoint-handoff recovery review
+**Status:** one-time Phase-A complete and immutable; DEC-052 recovery/Phase-B implementation pending reviewed-head physical execution
 **Plan:** `configs/protocols/protocol-v2-feasibility-v0.1.json`  
 **Entrypoint:** `scripts/run_protocol_v2_feasibility_windows.ps1`
+**Recovery amendment:** `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json`
+**Recovery/Phase-B entrypoint:** `scripts/run_protocol_v2_t526_recovery_phase_b_windows.ps1`
 
 ## Purpose
 
@@ -97,3 +99,35 @@ Do not rerun, delete, rename, replace or hand-edit this evidence.
 The committed Phase-A runner materialized each exact final checkpoint in memory only long enough to record its SHA-256 identity and serialized size. It did not retain checkpoint payload files. The repository also has no committed Phase-B severity-calibration entrypoint or fully specified execution handoff that can consume the one-time trained states.
 
 Consequently, Phase-B cannot proceed faithfully from this retained bundle. Regenerating Phase A would violate the explicit one-time execution boundary, while inventing a new post-outcome handoff/lifecycle would be a protocol amendment. `T-526A` therefore requires explicit scientific review/authority for a non-outcome-driven recovery path that preserves this bundle unchanged, retains only the already-predeclared candidate set and does not access final reserve.
+
+## DEC-052 recovery authorization and lifecycle
+
+DEC-052 supplies that explicit narrow authority. It does not reopen Phase A. The new runner verifies the five original file hashes and requires the declared Phase-A-affecting paths to have no Git diff from source commit `5198dbe077119b7caa4e9a101b55b115a979c22e`. It materializes only the 30 already-selected `gw-l1` checkpoint payloads and compares every scientifically deterministic row field, checkpoint SHA-256 and learner-state SHA-256 exactly. A single mismatch is retained as recovery/infrastructure failure and blocks Phase B.
+
+The amendment freezes the T-526 calibration-only Phase-B lifecycle before execution:
+
+- selected level `gw-l1`, five core methods, three roots and both layouts;
+- the two original categorical action remaps, three action-failure probabilities and three observation-corruption probabilities;
+- exactly one common nominal no-learning prefix interaction;
+- FN/FD/AN/AD forks from the exact same branch point;
+- exactly ten actual post-boundary interactions per branch;
+- no episode reset.
+
+Both selected layouts have shortest-path length 12, so `1 + 10 = 11 < 12`. None of the declared disturbances can shorten the physical transition graph. This removes reset/terminal ambiguity without freezing the later final lifecycle owned by T-527.
+
+Adaptive PPO begins native rollout collection at the first post-boundary interaction. Its native update quantum remains 128, so the ten-interaction pilot segment performs no premature optimizer update; its exact transient rollout state is hash-retained and is not promoted as a restorable checkpoint.
+
+## Recovery command and reviewed-head gate
+
+Do not run recovery from uncommitted implementation. First commit/push the amendment implementation, wait for green `Repository checks` and `Protocol-v2 pilot checks`, confirm PR #92 points to that commit, and confirm native-Windows Git is clean. Then run from the repository root:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\run_protocol_v2_t526_recovery_phase_b_windows.ps1
+```
+
+The script enforces the physical Windows/branch/clean/current-remote/current-draft-PR/green-check preflight. It creates only:
+
+- `results/pilots/protocol-v2-feasibility-v0.1-recovery/`;
+- `results/pilots/protocol-v2-feasibility-phase-b-v0.1/`.
+
+It never writes the original Phase-A directory. Do not rerun, delete, replace or hand-edit generated recovery/Phase-B evidence. Execute all eight candidates; do not select a final severity or preferred remap inside T-526.

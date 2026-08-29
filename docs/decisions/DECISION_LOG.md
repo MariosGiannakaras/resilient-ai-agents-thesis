@@ -173,6 +173,11 @@ File: `DEC-050_PROTOCOL_V2_CLOSURE_REFINEMENTS.md`.
 
 File: `DEC-051_STUDY_FIRST_BACKEND_RECONSTRUCTION.md`.
 
+## DEC-052 — T-526 checkpoint materialization recovery and bounded Phase-B calibration
+**CURRENT NARROW T-526 RECOVERY AUTHORITY.** The original one-time Phase-A bundle remains immutable and authoritative. Only the selected `gw-l1` states may be deterministically materialized under unchanged Phase-A code/configuration; every one of 30 checkpoint and learner identities must exactly match before the predeclared 240-set Phase-B calibration may execute. The pilot-only lifecycle is one no-learning prefix interaction plus ten post-boundary interactions per FN/FD/AN/AD branch without reset. T-527 retains all final freeze authority.
+
+File: `DEC-052_T526_CHECKPOINT_MATERIALIZATION_AND_PHASE_B.md`.
+
 ## Downstream tool/workflow policy
 
 `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` records later Codex/repository, ChatGPT, Microsoft Word, PowerPoint, optional Canva and user-captured `ASSET-*` responsibilities. Planning it does not unlock T-700+.

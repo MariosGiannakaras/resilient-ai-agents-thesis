@@ -3,17 +3,17 @@
 **Date:** 2026-08-29  
 **Status:** Authoritative compact current-state summary
 
-`docs/context/TASKS.md` is the canonical ledger. Use **progressive** task-specific reading of DEC-048/049/050/051 and `docs/research/` / `docs/architecture/` only as needed.
+`docs/context/TASKS.md` is the canonical ledger. Use **progressive** task-specific reading of DEC-048/049/050/051/052 and `docs/research/` / `docs/architecture/` only as needed.
 
 ## Current execution state
 
 - Historical accepted baseline includes completed `T-100` target-machine validation and `T-200` research framing through protocol-v1.0 WP6 evidence. Protocol-v1.0, FINAL-* and R0 evidence remain immutable. Candidate v1.1 is non-final history; old `T-522` must not execute.
 - `T-524`, `T-525` and `T-529` are COMPLETE.
 - `T-529` completed DEC-051's framework-neutral Study lifecycle: immutable recipe -> deterministic plan -> real Phase A -> exact checkpoint -> optional common no-learning prefix -> atomic FN/FD/AN/AD -> validation -> root/layout analysis with explicit denominators -> deterministic machine-readable evidence export. No final frontend, thesis prose, final thesis figures or PPTX were generated.
-- **Current scientific gate: `T-526 BLOCKED` after valid one-time Phase-A execution; recovery sub-gate `T-526A` requires explicit protocol/review authority.** Hosted CI cannot substitute for the retained physical-machine evidence.
+- **Current scientific gate: `T-526 BLOCKED` after valid one-time Phase-A execution; recovery sub-gate `T-526A IN_PROGRESS` under explicit DEC-052 authority.** Hosted CI cannot substitute for the retained physical-machine evidence.
 - The physical checkout was safely recovered to reviewed source commit `5198dbe077119b7caa4e9a101b55b115a979c22e`. The untracked `temp_body.md` was inspected, confirmed to be an obsolete PR-body draft with no unique durable information and removed. Native Windows Git preflight was clean, and `scripts/run_protocol_v2_feasibility_windows.ps1` executed exactly once.
 - The retained Phase-A bundle selected `gw-l1` (7×7) by the predeclared discrimination rule. All 30 declared method/root/layout units completed; no scientific or infrastructure failure, runtime hard-abort or checkpoint warning occurred. The bundle validated against the declared file set, plan hash, source commit, unit matrix, interaction/probe budgets, guardrails and accepted capability snapshot.
-- Phase-B did not execute. The committed runner retained checkpoint hashes/sizes but not exact checkpoint payloads, and no committed Phase-B calibration entrypoint/lifecycle exists. Regenerating Phase A would violate the one-time evidence boundary; inventing a post-outcome lifecycle would violate the protocol. `T-526A` must resolve this through an explicit non-outcome-driven amendment/review while the Phase-A bundle remains unchanged.
+- Phase-B has not executed. DEC-052 now authorizes only deterministic materialization of the missing `gw-l1` payloads under unchanged Phase-A sources, exact comparison with all 30 authoritative rows and a mandatory 30/30 barrier. The amendment config freezes all eight original candidates and a pilot-only one-interaction no-learning prefix plus ten post-boundary interactions per FN/FD/AN/AD branch without reset. Implementation must first be committed/pushed and receive both green PR #92 checks; physical recovery remains prohibited until that reviewed clean-head gate passes.
 - `T-527` is BLOCKED on T-526. Final methods/layouts/budgets/hyperparameters/severities/roots/statistics remain unfrozen.
 - `T-528` / #93 is PAUSED/BLOCKED on T-527; its T-529 backend dependency is satisfied. The final frontend must use a framework different from NiceGUI.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
@@ -51,6 +51,8 @@ Plan: `configs/protocols/protocol-v2-feasibility-v0.1.json`
 Runbook: `docs/research/T526_WINDOWS_FEASIBILITY_RUNBOOK.md`  
 Entrypoint: `scripts/run_protocol_v2_feasibility_windows.ps1`
 
+Recovery decision/config/entrypoint: `docs/decisions/DEC-052_T526_CHECKPOINT_MATERIALIZATION_AND_PHASE_B.md`, `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json`, `scripts/run_protocol_v2_t526_recovery_phase_b_windows.ps1`.
+
 The predeclared one-time first pass evaluated `gw-l1` first and selected it, so the ordered ladder correctly stopped before `gw-l2`/`gw-l3`. The completed matrix contains two layouts, three roots, five core methods, 2048 actual Phase-A training interactions per unit and probes at 0/512/1024/2048.
 
 Recorded physical totals are 61,440 training interactions, 28,524 probe interactions, 129.344 summed unit wall-seconds, 459.469 summed unit process-CPU-seconds and 4,680,026 aggregate serialized checkpoint bytes. The retained five-file artifact bundle is 40,488 bytes. Per-method median unit wall times were Q-Learning 0.169 s, SARSA 0.168 s, Dyna-Q+ 0.363 s, DQN 11.792 s and PPO 8.465 s; maximum serialized checkpoint sizes were 17,225, 17,124, 49,338, 463,739 and 236,224 bytes respectively.
@@ -69,4 +71,4 @@ Final retained methods/A2C decision, selected GridWorld level/layouts, final bud
 
 ## Exact next action
 
-Independently review the retained one-time Phase-A bundle, then resolve `T-526A` through an explicitly authorized non-outcome-driven protocol/recovery amendment. The recovery must not rerun Phase A, reconstruct or replace its exact states from outcomes, change the predeclared candidate severities, access final reserve or start T-527/T-528. T-526 remains blocked until a faithful Phase-B path exists and executes.
+Complete and push the DEC-052 implementation checkpoint, require green Repository and Protocol-v2 pilot checks on the exact PR #92 head, confirm a clean native-Windows checkout, then run the committed recovery/Phase-B entrypoint once. Stop Phase B on any checkpoint/learner mismatch. Do not start T-527/T-528 or access final reserve.

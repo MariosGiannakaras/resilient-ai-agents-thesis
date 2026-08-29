@@ -6,6 +6,9 @@ on:
       - "pyproject.toml"
       - "uv.lock"
       - "configs/protocols/protocol-v2-feasibility-v0.1.json"
+      - "configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json"
+      - "docs/decisions/DEC-052_T526_CHECKPOINT_MATERIALIZATION_AND_PHASE_B.md"
+      - "scripts/run_protocol_v2_t526_recovery_phase_b_windows.ps1"
       - "src/resilient_agents/protocol_v2*.py"
       - "src/resilient_agents/study/*.py"
       - "src/resilient_agents/evidence_v2/*.py"
@@ -20,6 +23,7 @@ on:
       - "pyproject.toml"
       - "uv.lock"
       - "configs/protocols/protocol-v2-feasibility-v0.1.json"
+      - "configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json"
       - "src/resilient_agents/protocol_v2*.py"
       - "src/resilient_agents/study/*.py"
       - "src/resilient_agents/evidence_v2/*.py"
@@ -83,6 +87,7 @@ jobs:
             tests.test_protocol_v2_tabular_driver \
             tests.test_protocol_v2_tabular_phase_b \
             tests.test_protocol_v2_feasibility \
+            tests.test_protocol_v2_t526_recovery \
             tests.test_study_backend \
             tests.test_study_planner \
             tests.test_study_scheduler \
