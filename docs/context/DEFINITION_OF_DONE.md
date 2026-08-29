@@ -44,11 +44,11 @@ Project-level completion conditions only. Concrete task IDs/status/dependencies/
 - [x] Analysis retains explicit planned/completed/scientific-failure/skipped/infrastructure denominators and receives interval/layout policy from an explicit recipe.
 - [x] Deterministic evidence handoff emits machine-readable root/summary tables, stable `RESULT-*` IDs, result index and integrity manifest from the analysis package.
 - [x] Framework-neutral restart-safe `StudyService` exposes planning/status/history/artifacts/execution/retry/finalization and uses the concrete protocol-v2 executor registry by default.
-- [ ] T-529 final correctness/docs/CI closure completed with no active v1.x/NiceGUI product path competing with the Study API.
+- [x] T-529 final correctness/docs/CI closure completed with no active v1.x/NiceGUI product path competing with the Study API.
 
 ## Final application completion
 
-The final UI is deliberately not implemented before T-527/T-529 stabilize its backend contract.
+The final UI is deliberately not implemented before T-527 freezes the remaining scientific/runtime contract. T-529's backend contract is complete.
 
 - [ ] T-528 selects a frontend framework **different from NiceGUI** and records the selection rationale for local Windows use, scientific visualization, accessibility, maintainability and Python-service integration.
 - [ ] Final application is rebuilt from scratch as a client of `StudyService`; scientific orchestration is not duplicated in frontend state.

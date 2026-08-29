@@ -117,7 +117,7 @@ Final root count, interval/sensitivity/multiplicity recipe, contrast family and 
 
 ## Scientific and study-first implementation foundation
 
-Validated/current reusable infrastructure now includes:
+Validated/current reusable infrastructure includes:
 
 - Python 3.12 + locked `uv` environment;
 - project-owned Gymnasium GridWorld and strict evaluator-vs-agent information boundary;
@@ -131,15 +131,16 @@ Validated/current reusable infrastructure now includes:
 - filesystem run bundles/provenance/checksums;
 - immutable `StudyRecipe`, deterministic Study job plan, durable `StudyStore`, stage barriers and restart-safe scheduler;
 - framework-neutral `StudyService` with concrete default protocol-v2 executors;
-- v2 evidence validation, root-level analysis package and deterministic data/table/result-ID evidence handoff.
+- real recipe-driven Phase-A -> exact-checkpoint -> common-prefix -> atomic Phase-B execution;
+- v2 evidence validation, root/layout analysis, explicit outcome denominators and deterministic machine-readable evidence handoff with stable result IDs and lineage.
 
-The currently validated Phase-B lifecycle is one exact post-boundary environment segment. Prefix or branch execution fails closed if a reset would be required. T-526/T-527, not application code, decide any multi-episode lifecycle amendment.
+T-529 has completed this framework-neutral backend foundation. The currently validated Phase-B lifecycle remains bounded by the scientific core's fail-closed lifecycle rules; T-526/T-527, not application code, decide any final multi-episode lifecycle amendment.
 
 ## Application status
 
 DEC-051 makes the study-first backend the final application-facing architecture. The active NiceGUI runtime/application/packaging surface has been removed; Git history retains it as prototype evidence. The final frontend is **not selected or implemented yet**.
 
-T-528 will choose a framework different from NiceGUI and build the UI from scratch only after T-527 freezes the remaining scientific/runtime contract and T-529 completes the framework-neutral backend. Historical screenshot/PyInstaller work is prototype context only. Final Windows standalone packaging remains post-thesis T-803.
+T-528 will choose a framework different from NiceGUI and build the UI from scratch only after T-527 freezes the remaining scientific/runtime contract. T-529's backend dependency is complete. Historical screenshot/PyInstaller work is prototype context only. Final Windows standalone packaging remains post-thesis T-803.
 
 ## Current lifecycle
 
@@ -147,10 +148,10 @@ Canonical concrete state is in `TASKS.md`.
 
 1. `T-524` — protocol-v2 scientific contract — **COMPLETE**.
 2. `T-525` — framework-neutral multimethod scientific execution foundation — **COMPLETE**.
-3. `T-529` — study-first recipe/orchestration/evidence/analysis/export backend reconstruction — **IN_PROGRESS** and allowed to proceed without inventing unresolved T-526/T-527 values.
-4. `T-526` — bounded physical Windows environment/method/severity feasibility gate — **READY**, external.
+3. `T-529` — study-first recipe/orchestration/evidence/analysis/export backend reconstruction — **COMPLETE**.
+4. `T-526` — bounded physical Windows environment/method/severity feasibility gate — **READY**, external; the latest attempt stopped before scientific execution because repository preflight was not clean/current.
 5. `T-527` — fair tuning, precision/runtime sizing, statistics and machine-readable protocol-v2 freeze — **BLOCKED on T-526**.
-6. `T-528` — new-framework final UI rebuild — **BLOCKED on T-527 + T-529**.
+6. `T-528` — new-framework final UI rebuild — **BLOCKED on T-527**; its T-529 dependency is satisfied.
 7. `T-511` — explicit intended-user acceptance.
 8. `T-610..T-613` — frozen v2 final execution, validation, analysis and evidence package.
 9. Explicit user approval before any WP7 writing.
@@ -158,20 +159,3 @@ Canonical concrete state is in `TASKS.md`.
 11. `T-803` post-thesis standalone Windows package.
 
 No green CI, pilot, screenshot, packaged app or completed analysis alone authorizes WP7.
-
-## Current authority
-
-Use:
-
-- `AGENTS.md` — always-on project/Codex policy;
-- `docs/context/TASKS.md` — concrete task/resume state;
-- `docs/context/CURRENT_STATUS.md` — compact status;
-- `docs/context/CODEX_EXECUTION_PROMPT.md` — Codex bootstrap;
-- `docs/decisions/DEC-048_PROTOCOL_V2_INDEPENDENT_LEARNING_AND_MATCHED_RESILIENCE.md` — protocol-v2 scientific design;
-- `docs/decisions/DEC-050_PROTOCOL_V2_CLOSURE_REFINEMENTS.md` — methodology closure/refinements;
-- `docs/decisions/DEC-051_STUDY_FIRST_BACKEND_RECONSTRUCTION.md` — current backend/application architecture;
-- `docs/architecture/STUDY_BACKEND_REDESIGN.md` — reconstruction implementation contract;
-- `docs/thesis/THESIS_REQUIREMENTS.md` — thesis evidence/format requirements;
-- `docs/thesis/PRESENTATION_WORKFLOW.md` — future defense workflow.
-
-Earlier decisions/documents remain auditable historical context where explicitly superseded.

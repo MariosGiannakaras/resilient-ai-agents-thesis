@@ -19,18 +19,18 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 
 ## Resume state
 
-- **Package:** DEC-048/050 protocol-v2 methodology plus DEC-051 study-first backend reconstruction. DEC-042/047 and candidate v1.1 remain auditable predecessor design. DEC-049 controls the later new-framework frontend rebuild.
+- **Package:** DEC-048/050 protocol-v2 methodology plus completed DEC-051 study-first backend reconstruction. DEC-042/047 and candidate v1.1 remain auditable predecessor design. DEC-049 controls the later new-framework frontend rebuild.
 - **Project:** **4/8** master milestones complete (#87: 1, 2, 4, 5).
-- **Current task:** `T-529`.
-- **State:** `IN_PROGRESS`; reconstruct the final study-first backend orchestration/evidence/analysis/export foundation around the validated T-525 scientific core.
-- **External scientific gate:** `T-526` remains READY and requires the predeclared physical Windows feasibility run; hosted CI cannot substitute for it. T-529 may continue while that external evidence is pending because it must not invent or consume T-526/T-527 outcomes.
-- **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no parallel main-repo implementation branch.
+- **Current task:** `T-526`.
+- **State:** `READY`; the predeclared physical Windows feasibility pilot remains the next dependency-valid scientific gate. The first attempted physical session did **not** execute scientific work because repository preflight failed before the runner started: the local checkout was stale relative to the remote branch and contained an untracked prior PR draft (`temp_body.md`). No T-526 result directory, selected level, runtime data, checkpoints, method/root outcomes or validation evidence were produced.
+- **Completed parallel backend work:** `T-529` is COMPLETE. The framework-neutral Study lifecycle now covers immutable recipe -> deterministic plan -> real Phase A -> exact checkpoint -> optional common no-learning prefix -> atomic FN/FD/AN/AD -> validation -> root/layout analysis with explicit denominators -> deterministic machine-readable evidence export, with restart-safe provenance and no frontend dependency.
+- **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no parallel main-repo implementation branch and no early merge.
 - **Trackers:** #87 master 4/8; #95 protocol-v2 4/10; #88 closed/superseded; #89 complete/closed; #93 PAUSED; #94 DEFERRED post-thesis.
 - **Historical science:** protocol-v1.0 / FINAL-* / R0 evidence immutable. Candidate v1.1 remains non-final history; old `T-522` must not execute. Historical scientific runners remain reproducible even when superseded application/runtime surfaces are removed from the active tree.
 - **Bibliography:** immutable protocol-v2 consumer snapshot remains upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`, merged through thesis PR #96 and validated on PR #92.
-- **Frontend direction:** final frontend is rebuilt from scratch with a **different framework from NiceGUI** at `T-528` only after both T-527 scientific freeze and T-529 backend completion.
+- **Frontend direction:** final frontend is rebuilt from scratch with a **different framework from NiceGUI** at `T-528` only after T-527 scientific freeze. T-529's backend dependency is already satisfied.
 - **Pre-WP7 approval:** NOT APPROVED; `T-700+` remains blocked.
-- **Exact next action:** continue T-529 implementation in-repo; independently, on the validated physical Windows thesis machine execute `scripts/run_protocol_v2_feasibility_windows.ps1` exactly once from a clean reviewed branch state and retain the generated `results/pilots/protocol-v2-feasibility-v0.1/` artifacts. Do not access final reserve, tune methods from final outcomes, start old T-522, or resume UI implementation early.
+- **Exact next action:** on the validated physical Windows thesis machine, first inspect and explicitly preserve/disposition the untracked `temp_body.md` without discarding unique work, then fast-forward the clean `feat/pre-wp7-protocol-v1.1-ui-rebuild` checkout to the reviewed remote branch head. Only after preflight is satisfied, execute `scripts/run_protocol_v2_feasibility_windows.ps1` exactly once and retain `results/pilots/protocol-v2-feasibility-v0.1/` unchanged for review. Do not access final reserve, tune methods from final outcomes, start old T-522, or resume UI implementation early.
 
 ## Quota/interruption resilience
 
@@ -118,6 +118,7 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - After level selection, use only the already-predeclared Phase-B calibration candidates: action-remap mappings; action-failure probabilities; observation-corruption probabilities with explicit global valid-cell support. Calibrate semantics/non-degeneracy, never preferred method ranking. Exact action-remap identities remain categorical rather than falsely scalar severity.
   - Evaluate A2C promotion only for distinct thesis value vs PPO at acceptable matrix cost. Retain poor/failing outcomes. No final reserve.
   - External boundary: hosted CI does not substitute for the physical Windows runtime/feasibility evidence gate.
+  - Latest physical attempt: **preflight only; no scientific execution occurred.** The physical checkout reported local HEAD `6aacd40332fe8578ab5e1c9a34bae30d4e321688`, stale relative to the then-current remote head, plus untracked `temp_body.md`. `results/pilots/protocol-v2-feasibility-v0.1/` was absent. The apparent WSL modification of `results/thesis_evidence_package.zip` was verified as Git LFS hydration with matching committed content and native Windows Git clean.
 
 - [ ] BLOCKED `T-527` — Fair tuning, precision/runtime sizing, statistical freeze and machine-readable protocol-v2 firewall.
   - Depends on: `T-526`.
@@ -125,27 +126,27 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Statistical freeze: root/run independent; block/equal layout handling; paired/DiD primary effects; Student-t root-level mean CI as default candidate subject to final pilot diagnostics/precision sizing; root-bootstrap/robust sensitivity; explicit failure denominators; limited primary contrast family and frozen multiplicity rule if p-values are used.
   - Freeze final layout/root reserve and exact Phase-B branch/update behavior before access.
 
-- [ ] IN_PROGRESS `T-529` — Reconstruct the study-first protocol-v2 backend from recipe through evidence/analysis/export, without frontend implementation.
-  - Depends on: `T-525` — satisfied. Runs in parallel with the external T-526 gate but may not consume or invent unresolved T-526/T-527 values.
+- [x] `T-529` — Reconstruct the study-first protocol-v2 backend from recipe through evidence/analysis/export, without frontend implementation.
+  - Depends on: `T-525` — satisfied. Completed without consuming or inventing unresolved T-526/T-527 values.
   - Controlling decision/spec: `docs/decisions/DEC-051_STUDY_FIRST_BACKEND_RECONSTRUCTION.md` and `docs/architecture/STUDY_BACKEND_REDESIGN.md`.
   - [x] Remove superseded NiceGUI application/runtime/packaging surfaces from the active tree while preserving historical scientific reproducibility in Git/history.
   - [x] Implement immutable `StudyRecipe`, evidence classes, ordered stages, job DAG, stage barriers, scientific/infrastructure failure distinction, durable `StudyStore`, lineage and finalized-integrity checks.
   - [x] Implement deterministic recipe-to-plan materialization with stable Phase-A/Phase-B job IDs, method-specific condition eligibility and exact Phase-A producer dependencies.
   - [x] Implement generic execution ports, scheduler and framework-neutral restart-safe `StudyService` facade.
-  - [ ] Implement real protocol-v2 Phase-A/Phase-B study executors over the validated Q/SARSA/DQN/PPO/Dyna-Q+ drivers, emitting standardized scientific artifacts/analysis records; Phase-B remains fail-closed for any lifecycle not yet frozen by T-527.
+  - [x] Implement real protocol-v2 Phase-A/Phase-B study executors over the validated Q/SARSA/DQN/PPO/Dyna-Q+ drivers, emitting standardized scientific artifacts/analysis records; Phase-B remains fail-closed for any lifecycle not yet frozen by T-527.
   - [x] Implement structural v2 evidence validation and a validation-stage executor that reconciles expected jobs/artifacts/checkpoint lineage and retained scientific failures.
-  - [ ] Complete standardized v2 analysis records/statistical engine with root/layout blocking, matched FN/FD/AN/AD estimands, explicit failure denominators and frozen statistical-recipe inputs.
-  - [ ] Implement deterministic study export/handoff package for machine-readable data, thesis figures/tables/evidence IDs and presentation asset lineage; no thesis prose or PPTX here.
-  - [ ] Reconcile active docs/decision index and quarantine remaining v1.x application assumptions; historical scientific evidence/runners stay reproducible and cannot contaminate v2 confirmatory analysis.
-  - Acceptance: one immutable Study recipe can be planned, executed/resumed without UI logic, validated, analyzed and exported with complete lineage; no final scientific parameter comes from frontend/defaults; dedicated tests and repository CI pass.
+  - [x] Complete standardized v2 analysis records/statistical engine with root/layout blocking, matched FN/FD/AN/AD estimands, explicit failure denominators and explicit recipe-driven statistical inputs.
+  - [x] Implement deterministic study export/handoff package for machine-readable CSV/JSON tables, stable evidence/result IDs and provenance/lineage for later thesis/defense tooling; T-529 generates no thesis prose, thesis figures or PPTX.
+  - [x] Reconcile active docs/decision index and quarantine remaining v1.x application assumptions; historical scientific evidence/runners stay reproducible and cannot contaminate v2 confirmatory analysis.
+  - Acceptance satisfied: one immutable Study recipe is covered end to end through planning, restart-safe execution, real Phase A, exact checkpoint consumption, common no-learning prefix, atomic FN/FD/AN/AD, retained scientific failure semantics, validation, root/layout analysis, explicit denominators and deterministic lineage-preserving export without UI logic. Dedicated protocol-v2 and repository-wide CI were green on the reviewed implementation head; this checkpoint closes the remaining documentation reconciliation.
 
 - [x] `T-530` — Historical truthful UI-independent Python runtime service/read-only observer foundation. **Superseded for final application by DEC-051/T-529; implementation removed from active tree after study-first replacement began.**
 - [x] `T-531` — Functional NiceGUI prototype over validated backend. **Prototype/history only; active implementation removed by DEC-049/051.**
 - [x] `T-532` — Prototype screenshot/packaging feasibility work. **Prototype/history only; active implementation removed by DEC-049/051.**
 
 - [ ] BLOCKED `T-528` — Select a different frontend framework and rebuild the final v2-aware application UI/UX from scratch (#93).
-  - Depends on: `T-527`, `T-529`.
-  - Acceptance: select a **different framework from NiceGUI** only after the framework-neutral v2 scientific/study backend is stable; document selection for local desktop use, synchronized Frozen/Adaptive GridWorld rendering, scientific charts/tables, accessibility, maintainability, Python-service integration and later standalone delivery; consume `StudyService` DTOs/events without duplicating scientific execution.
+  - Depends on: `T-527`; `T-529` is satisfied.
+  - Acceptance: select a **different framework from NiceGUI** only after the framework-neutral v2 scientific/study backend is stable and T-527 freezes the remaining scientific/runtime contract; document selection for local desktop use, synchronized Frozen/Adaptive GridWorld rendering, scientific charts/tables, accessibility, maintainability, Python-service integration and later standalone delivery; consume `StudyService` DTOs/events without duplicating scientific execution.
   - Exact chart/table/diagram libraries and packaging technology are selected here/later, not inherited from the historical NiceGUI stack.
 
 - [ ] BLOCKED `T-511` — Intended-user application workflow/self-explanatory UX acceptance.

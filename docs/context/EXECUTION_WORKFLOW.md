@@ -49,7 +49,7 @@ Q-Learning, SARSA, DQN, PPO and Dyna-Q+ are the current feasibility core; final 
 
 DEC-051/T-529 makes `Study`, not an individual run, the final backend aggregate.
 
-The authoritative chain is:
+The authoritative implemented chain is:
 
 > immutable recipe -> deterministic study plan -> scientific jobs/checkpoints -> validation -> analysis -> export
 
@@ -69,31 +69,35 @@ A confirmatory Study recipe must already be frozen. Development/custom output ca
 
 ### Stage barriers
 
-Later stages do not execute while an earlier stage remains unresolved. Direct artifact dependencies are stricter: a Phase-B branch requires the exact successful Phase-A checkpoint producer.
+Later stages do not execute while an earlier stage remains unresolved. Direct artifact dependencies are stricter: a Phase-B matched set requires the exact successful Phase-A checkpoint producer.
 
-## Current T-529 implementation path
+## T-529 completion boundary
 
-The active backend reconstruction proceeds in this order:
+T-529 is complete. The framework-neutral backend now provides:
 
-1. clean superseded NiceGUI/v1.1 application/runtime surfaces from the active tree while preserving historical scientific reproducibility in Git;
-2. maintain immutable Study recipe/lifecycle/store contracts;
-3. materialize deterministic Phase-A/Phase-B job DAGs from explicit execution settings;
-4. bridge recipe-materialized jobs to the validated protocol-v2 method-native executors;
-5. emit finalized lower-level run bundles, exact checkpoints and standardized analysis records;
-6. validate planned-vs-produced evidence and Phase-A -> Phase-B lineage;
-7. execute frozen root-level v2 statistics;
-8. deterministically export machine-readable data, thesis figures/tables/evidence IDs and presentation asset lineage;
-9. expose only the framework-neutral `StudyService` to the later frontend.
+1. immutable Study recipe/lifecycle/store contracts;
+2. deterministic Phase-A/Phase-B job DAGs from explicit execution settings;
+3. real recipe-materialized execution over the validated protocol-v2 method-native drivers;
+4. exact scientific checkpoint lineage and a shared no-learning prefix primitive;
+5. one atomic matched FN/FD/AN/AD Phase-B execution unit;
+6. structural evidence validation and planned-vs-produced reconciliation;
+7. root/layout-aware analysis with matched adaptation-benefit estimands and explicit outcome denominators;
+8. deterministic machine-readable CSV/JSON/result-ID/provenance export for later scientific/thesis tooling;
+9. framework-neutral `StudyService` as the application-facing service boundary.
 
-No final scientific parameter may be supplied by frontend defaults.
+T-529 does **not** generate thesis prose, final thesis figures or PPTX. Those remain later evidence/writing deliverables after T-527/T-610..T-613 and the explicit WP7 gate.
+
+No final scientific parameter is supplied by frontend defaults.
 
 ## External T-526 / T-527 gates
 
-T-529 may continue while T-526 waits for the physical Windows thesis machine, but it cannot invent the unresolved scientific values.
+T-529 is complete without consuming or inventing T-526/T-527 outcomes.
 
-T-526 remains the predeclared non-final feasibility/environment/severity/runtime gate. Hosted CI cannot substitute for it.
+T-526 remains the predeclared non-final feasibility/environment/severity/runtime gate on the physical Windows thesis machine. Hosted CI cannot substitute for it. A repository-preflight failure before the runner starts is infrastructure state, not a scientific outcome.
 
-T-527 then freezes retained methods, layouts, budgets, hyperparameters, severities, roots, statistics and the remaining Phase-B lifecycle. Only after this can the confirmatory Study recipe be materialized with final values.
+The latest physical attempt stopped before execution because the local checkout was stale and contained untracked `temp_body.md`. Before retrying, inspect/preserve that draft as appropriate, fast-forward the clean checkout to the reviewed remote branch head and rerun the predeclared entrypoint only after preflight passes. No T-526 scientific evidence exists from the aborted attempt.
+
+T-527 then freezes retained methods, layouts, budgets, hyperparameters, severities, roots, statistics and the remaining Phase-B lifecycle. Only after this can a confirmatory Study recipe be materialized with final values.
 
 ## Application handoff
 
@@ -110,7 +114,7 @@ The future application is a client of `StudyService`. It may request/observe:
 
 It must not construct roots, branch IDs, checkpoint paths, SB3 objects or scientific execution commands itself.
 
-T-528 remains blocked until T-527 and T-529 are complete. It must select a framework different from NiceGUI and rebuild the frontend from scratch.
+T-528 remains blocked on T-527. Its T-529 backend dependency is satisfied. It must select a framework different from NiceGUI and rebuild the frontend from scratch.
 
 ## Intended user workflow after T-528
 
@@ -132,19 +136,18 @@ Final stochastic scientific evidence remains on the validated thesis-machine exe
 
 Once the final application is accepted, ordinary execution of an already-frozen Study should not require Codex or manual console construction. Codex remains relevant for code/protocol changes, debugging, justified amendments and repository/evidence maintenance.
 
-## Final protocol-v2 evidence flow
+## Remaining protocol-v2 evidence flow
 
-The current final sequence is:
+T-529's backend prerequisite is complete. The remaining sequence is:
 
 1. T-526 physical feasibility/severity/runtime evidence.
 2. T-527 fair tuning, precision/runtime sizing and machine-readable protocol freeze.
-3. T-529 complete/validate study-first backend.
-4. T-528 new-framework frontend rebuild.
-5. T-511 intended-user acceptance.
-6. T-610 execute the frozen protocol-v2 final Study.
-7. T-611 validate/freeze final evidence.
-8. T-612 execute the predeclared root-level analysis/sensitivity diagnostics.
-9. T-613 generate final figures/tables/data and thesis/defense evidence package.
+3. T-528 new-framework frontend rebuild against the completed StudyService contract.
+4. T-511 intended-user acceptance.
+5. T-610 execute the frozen protocol-v2 final Study.
+6. T-611 validate/freeze final evidence.
+7. T-612 execute the predeclared root-level analysis/sensitivity diagnostics.
+8. T-613 generate final figures/tables/data and thesis/defense evidence package.
 
 No final-reserve inspection occurs before the frozen protocol authorizes it.
 
