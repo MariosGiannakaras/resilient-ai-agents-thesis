@@ -14,9 +14,10 @@ from __future__ import annotations
 
 import json
 import time
+from collections.abc import Mapping
 from dataclasses import replace
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
 from ..contracts import ChangeEvent, ScenarioSpec
 from ..evidence_v2.records import PhaseBAnalysisRecord
@@ -334,14 +335,31 @@ class ProtocolV2PhaseBStudyExecutor:
             execution.get("interaction_budget_per_branch"),
             field="job.execution.interaction_budget_per_branch",
         )
+        reset_policy = execution.get("episode_reset_policy_id")
+        subsequent_episode_seed_count = execution.get("subsequent_episode_seed_count")
         unknown_execution = set(execution) - {
             "prefix_interactions",
             "interaction_budget_per_branch",
+            "episode_reset_policy_id",
+            "subsequent_episode_seed_count",
         }
         if unknown_execution:
             raise ValueError(
                 f"unsupported Phase-B execution fields: {sorted(unknown_execution)}"
             )
+        if reset_policy is None and subsequent_episode_seed_count is not None:
+            raise ValueError("subsequent episode seeds require an explicit reset policy")
+        if reset_policy is not None:
+            if reset_policy != "dec-055-persistent-multi-episode-deployment-v1":
+                raise ValueError("unsupported Phase-B episode reset policy")
+            subsequent_episode_seed_count = _positive_int(
+                subsequent_episode_seed_count,
+                field="job.execution.subsequent_episode_seed_count",
+            )
+            if subsequent_episode_seed_count < branch_budget:
+                raise ValueError(
+                    "multi-episode seed count must cover the fail-closed worst case"
+                )
 
         method = _mapping(job.payload.get("method"), field="job.method")
         root_payload = _mapping(job.payload.get("root"), field="job.root")
@@ -398,6 +416,18 @@ class ProtocolV2PhaseBStudyExecutor:
             condition=condition,
             onset_step=prefix.environment.environment.gym_env._step,
         )
+        subsequent_episode_seeds = (
+            ()
+            if reset_policy is None
+            else _episode_seeds(
+                root,
+                scope=(
+                    "protocol-v2-study-phase-b-episodes:"
+                    f"{layout['layout_id']}:{condition['condition_id']}"
+                ),
+                count=int(subsequent_episode_seed_count),
+            )
+        )
 
         resolved_config = {
             "entrypoint": "resilient_agents.study.protocol_v2_phase_b_executor.matched-set.v1",
@@ -445,6 +475,7 @@ class ProtocolV2PhaseBStudyExecutor:
                         adaptive=adaptive,
                         learner=branch_learner,
                         environment=environment,
+                        subsequent_episode_seeds=subsequent_episode_seeds,
                     )
                 )
             elif method_id in {"dqn", "ppo"}:
@@ -455,6 +486,7 @@ class ProtocolV2PhaseBStudyExecutor:
                         learner=branch_learner,
                         environment=environment,
                         deterministic_inference=False,
+                        subsequent_episode_seeds=subsequent_episode_seeds,
                     )
                 )
             else:  # pragma: no cover - guarded by restore path.
@@ -486,6 +518,7 @@ class ProtocolV2PhaseBStudyExecutor:
             "phase_a_checkpoint_artifact_id": checkpoint_artifact_id,
             "phase_a_checkpoint_sha256": checkpoint.sha256,
             "prefix_interactions": prefix_interactions,
+            "episode_reset_policy_id": reset_policy,
             "branch_point_learner_sha256": matched.branch_point_learner_sha256,
             "branch_point_environment_sha256": matched.branch_point_environment_sha256,
             "branches": [

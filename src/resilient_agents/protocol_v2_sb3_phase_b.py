@@ -11,8 +11,10 @@ multi-episode Phase-B lifecycle is frozen by T-526/T-527.
 """
 from __future__ import annotations
 
-from typing import Any, Mapping
+from collections.abc import Mapping, Sequence
+from typing import Any
 
+from .environment import EnvironmentSeeds
 from .protocol_v2 import ProtocolV2Branch
 from .protocol_v2_gridworld import GridWorldScientificStateAdapter
 from .protocol_v2_sb3 import SB3ScientificStateAdapter
@@ -51,6 +53,7 @@ class SB3PhaseBBranchDriver:
         learner: SB3ScientificStateAdapter,
         environment: GridWorldScientificStateAdapter,
         deterministic_inference: bool,
+        subsequent_episode_seeds: Sequence[EnvironmentSeeds] = (),
     ) -> None:
         if learner.method_id not in {"dqn", "ppo"}:
             raise ValueError("SB3 Phase-B driver supports DQN or PPO")
@@ -81,7 +84,10 @@ class SB3PhaseBBranchDriver:
         self._terminated = False
         self._truncated = False
         self._base_model_interactions = int(learner.model.num_timesteps)
-        self._continuation = BranchContinuationGridWorldEnv(environment)
+        self._continuation = BranchContinuationGridWorldEnv(
+            environment,
+            subsequent_episode_seeds=subsequent_episode_seeds,
+        )
         self._frozen_state = None if adaptive else _frozen_learning_state(learner)
         if adaptive:
             # The scientific-state fingerprint deliberately excludes the
@@ -105,9 +111,11 @@ class SB3PhaseBBranchDriver:
 
         while self._interactions < target_interaction:
             if self._terminated or self._truncated:
-                raise RuntimeError(
-                    "Phase-B segment ended before target; multi-episode reset semantics are not frozen yet"
-                )
+                observation, info = self._continuation.reset()
+                if info:
+                    raise RuntimeError("Phase-B episode reset leaked information")
+                self._terminated = False
+                self._truncated = False
             action = _scalar_action(
                 self.learner.predict(
                     observation,
@@ -144,6 +152,8 @@ class SB3PhaseBBranchDriver:
             "truncated": float(self._truncated),
             "adaptive": float(self.adaptive),
             "deterministic_inference": float(self.deterministic_inference),
+            "episodes_started": float(self._continuation.episodes_started),
+            "episodes_completed": float(self._continuation.episodes_completed),
         }
 
     def run_to_interaction(self, target_interaction: int) -> Mapping[str, float]:

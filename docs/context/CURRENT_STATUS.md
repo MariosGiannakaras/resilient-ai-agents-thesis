@@ -10,13 +10,13 @@
 - Historical accepted baseline includes completed `T-100` target-machine validation and `T-200` research framing through protocol-v1.0 WP6 evidence. Protocol-v1.0, FINAL-* and R0 evidence remain immutable. Candidate v1.1 is non-final history; old `T-522` must not execute.
 - `T-524`, `T-525` and `T-529` are COMPLETE.
 - `T-529` completed DEC-051's framework-neutral Study lifecycle: immutable recipe -> deterministic plan -> real Phase A -> exact checkpoint -> optional common no-learning prefix -> atomic FN/FD/AN/AD -> validation -> root/layout analysis with explicit denominators -> deterministic machine-readable evidence export. No final frontend, thesis prose, final thesis figures or PPTX were generated.
-- **Current scientific gate: `T-526A` and `T-526` COMPLETE; `T-527` READY but not started.** DEC-054 settlement and fresh Phase-B v0.3 completed on the physical Windows thesis machine from reviewed authority `14002a47763991234a1d0623f27330a895f348f0`.
+- **Current scientific gate: `T-527` IN_PROGRESS under pre-outcome DEC-055 authority; `T-526A` and `T-526` remain COMPLETE.** DEC-055 implementation and deterministic T-526 input diagnostics await a reviewed green commit before any physical tuning outcome.
 - The retained Phase-A bundle selected `gw-l1` (7×7) by the predeclared discrimination rule. All 30 declared method/root/layout units completed; no scientific or infrastructure failure, runtime hard-abort or checkpoint warning occurred. The bundle validated against the declared file set, plan hash, source commit, unit matrix, interaction/probe budgets, guardrails and accepted capability snapshot.
 - DEC-052 failed closed at 2/30 on a raw DQN envelope mismatch. The SB3 2.9.0 audit proved runtime/transport metadata (`data.start_time` and display-only class metadata) differed while the complete historical continuation state matched.
 - DEC-053 recovery validated 30/30 states with 12 retained SB3 transport mismatches and no learner mismatch/failure. Its Phase B stopped fail-closed at 8/240 before SARSA's first prefix because the exact checkpoint retained a deferred update.
 - The DEC-054 audit proves the fixed Phase-A interaction target stops after the final counted `observe()` with no extra `act()`. Five SARSA sources retain one valid deferred on-policy backup for interaction 2,048; 25 states are already quiescent. The existing bootstrapped-truncation path provides the exact behavior-policy/bootstrap-only action precedent. Settlement derives a separate deployment-start state with zero environment interactions and cannot use the fresh Phase-B observation.
 - DEC-054 physical validation accepted 30/30 quiescent deployment-start states: five SARSA states were deterministically settled with exact restored behavior-policy RNG and 25 states were no-ops. Settlement consumed zero environment interactions. Fresh Phase-B v0.3 completed 240/240 matched sets, 960 branches, 240 one-interaction common prefixes and 9,600 post-boundary interactions with zero scientific/infrastructure failures; independent validators pass.
-- `T-527` is READY but was not started. Final methods/layouts/budgets/hyperparameters/severities/roots/statistics remain unfrozen.
+- DEC-055 now freezes the fair tuning/sizing opportunity and persistent multi-episode Phase-B lifecycle before outcomes. Final methods/layouts/budgets/hyperparameters/severities/roots/statistics remain unfrozen until physical evidence and DEC-056.
 - `T-528` / #93 is PAUSED/BLOCKED on T-527; its T-529 backend dependency is satisfied. The final frontend must use a framework different from NiceGUI.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
 
@@ -75,6 +75,8 @@ Evidence path: `results/pilots/protocol-v2-feasibility-v0.1/`. Do not rerun, del
 
 Final statistical values and the contrast family freeze only in T-527. Filesystem evidence remains authoritative and any future index/database must be rebuildable.
 
+DEC-055 authority/config/runbook/entrypoint: `docs/decisions/DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md`, `configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json`, `docs/research/T527_WINDOWS_TUNING_SIZING_RUNBOOK.md`, `scripts/run_protocol_v2_t527_tuning_sizing_windows.ps1`. The deterministic input package is `results/pilots/protocol-v2-t527-input-diagnostics-v0.1/`. No physical T-527 tuning or sizing outcome exists yet.
+
 Canonical bibliography remains `MariosGiannakaras/ThesisBibliography`, immutable upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`: 597 canonical sources, 121 citation-ready sources and 19 research materials. `bibliography-integration-v3` remains immutable historical terminology.
 
 ## Still intentionally unfrozen
@@ -83,4 +85,4 @@ Final retained methods/A2C decision, final layout set, budgets/gamma/reward/hori
 
 ## Exact next action
 
-Commit/push the retained DEC-054 settlement and Phase-B v0.3 evidence with final canonical/PR/#95 reconciliation; require both checks green on the exact final evidence commit. Do not rerun any physical stage or start READY T-527/T-528 in this session.
+Commit/push the complete DEC-055 pre-run authority, update PR #92 to state that physical validation is pending, keep #95 at 7/10, and require both checks green on the exact clean native-Windows head. Only then execute the committed T-527 Windows entrypoint once. Do not rerun T-526, access final reserve, or start T-528.

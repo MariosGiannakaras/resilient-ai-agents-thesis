@@ -246,6 +246,27 @@ class ProtocolV2SB3GridWorldPhaseBTests(unittest.TestCase):
         self.assertEqual(results[ProtocolV2Branch.ADAPTIVE_DISTURBED].metrics["adaptive"], 1.0)
         source.close()
 
+    def test_ppo_adaptive_multi_episode_uses_declared_resets_without_clock_reset(self):
+        source, branch_point, nominal, _ = self._branch_point()
+        learner = self._ppo_adapter().clone()
+        branch = branch_point.fork_into(nominal)
+        driver = SB3PhaseBBranchDriver(
+            branch=ProtocolV2Branch.ADAPTIVE_NOMINAL,
+            adaptive=True,
+            learner=learner,
+            environment=branch,
+            deterministic_inference=True,
+            subsequent_episode_seeds=self._episode_seeds(8),
+        )
+        base = int(learner.model.num_timesteps)
+        metrics = driver.run_to_interaction(24)
+        self.assertEqual(driver.interactions, 24)
+        self.assertEqual(int(learner.model.num_timesteps), base + 24)
+        self.assertGreaterEqual(metrics["episodes_started"], 2.0)
+        self.assertGreaterEqual(metrics["episodes_completed"], 1.0)
+        source.close()
+        branch.environment.close()
+
 
 if __name__ == "__main__":
     unittest.main()

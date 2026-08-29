@@ -188,6 +188,12 @@ File: `DEC-053_SB3_SCIENTIFIC_CONTINUATION_IDENTITY.md`.
 
 File: `DEC-054_PHASE_A_INTERACTION_BUDGET_SETTLEMENT.md`.
 
+## DEC-055 — Protocol-v2 fair tuning and sizing authority
+
+**ACCEPTED PRE-OUTCOME AUTHORITY; PHYSICAL VALIDATION PENDING.** All five core methods receive exactly six method-appropriate configurations over the same three tuning roots, two development layouts, 8,192 actual interactions and frozen probe grid. Selection, common Phase-A budget, 256/512 multi-episode action-remap sizing, 12/16/20/24 root precision rule and persistent reset/regime semantics are fixed before outcomes. Final reserve, final layouts/roots and confirmatory execution remain forbidden.
+
+File: `DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md`.
+
 ## Downstream tool/workflow policy
 
 `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` records later Codex/repository, ChatGPT, Microsoft Word, PowerPoint, optional Canva and user-captured `ASSET-*` responsibilities. Planning it does not unlock T-700+.
@@ -196,7 +202,6 @@ File: `DEC-054_PHASE_A_INTERACTION_BUDGET_SETTLEMENT.md`.
 
 Only evidence-gated or genuinely later choices remain pending:
 
-- T-526 physical Windows environment/method/severity feasibility evidence and any scientifically required lifecycle amendment;
 - T-527 final retained methods, fair tuning results, task/layout/severity values, root count, budgets/probe grid, statistical interval/sensitivity/multiplicity recipe and exact multi-episode Phase-B semantics;
 - whether A2C merits promotion beyond the PPO actor-critic core based on distinct value versus matrix/runtime cost;
 - T-528 final replacement frontend framework, visualization/component libraries and application packaging integration strategy;

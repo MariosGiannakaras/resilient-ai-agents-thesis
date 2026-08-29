@@ -1,6 +1,6 @@
 # Protocol v2 Backend Contract
 
-**Status:** T-525 implementation-complete contract; DEC-054 boundary settlement physically validated; final numeric protocol remains T-527 gated
+**Status:** T-525 implementation-complete contract; DEC-054 validated; DEC-055 multi-episode lifecycle frozen pre-outcome; final numeric protocol remains T-527 gated
 **Research authority:** DEC-048 / DEC-050 / `PROTOCOL_V2_RESEARCH_DESIGN.md`  
 **Implementation branch:** `feat/pre-wp7-protocol-v1.1-ui-rebuild`
 
@@ -122,11 +122,11 @@ Special handling is explicit where method semantics require it:
 - Frozen DQN/PPO perform inference without mutating model/optimizer/replay/update counters.
 - Adaptive DQN/PPO attach method-native SB3 training to the exact already-restored project GridWorld branch.
 
-## 8. Phase-B lifecycle boundary intentionally left for T-526/T-527
+## 8. Phase-B lifecycle boundary and T-527 freeze
 
-T-525 validates one exact post-boundary environment segment. If termination/truncation occurs before the requested branch target and another episode reset would be required, the implementation fails closed.
+T-525 originally validated one exact post-boundary environment segment and failed closed if another episode reset was required. DEC-055 now supplies the pre-outcome T-527 lifecycle rule and implementation: learner state and the global actual-interaction clock persist; each reset consumes the next deterministic root/matched-set episode seed; nominal and disturbed branches use common episode schedules where valid; administrative truncation bootstraps; and disturbed regimes remain active across every later disturbed-branch episode. For persistent action remapping, later episodes start directly in the post-change mapping rather than replaying or delaying the original first-episode onset.
 
-This is intentional. The final protocol must explicitly decide how a persistent action remap and other uncertainty mechanisms behave across later episode resets. That decision depends on the selected GridWorld level, horizon, feasible interaction budget and final estimand schedule and therefore belongs to T-526/T-527 rather than being hidden in backend code.
+Callers that do not supply an explicit later-episode seed schedule still fail closed. This preserves the earlier backend contract for exploratory recipes while allowing the frozen protocol-v2.0 recipe to make the lifecycle explicit and machine-runnable.
 
 ### T-526 exact Phase-A budget settlement
 

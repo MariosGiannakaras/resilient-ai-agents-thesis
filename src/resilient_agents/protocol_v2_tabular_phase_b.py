@@ -13,10 +13,12 @@ choice rather than being invented inside the backend implementation.
 from __future__ import annotations
 
 import json
+from collections.abc import Mapping, Sequence
 from dataclasses import replace
-from typing import Any, Mapping
+from typing import Any
 
 from .contracts import AgentTransition, project_for_agent
+from .environment import EnvironmentSeeds
 from .gridworld import ACTION_NAMES, GridAction
 from .protocol_v2 import (
     NativeStateAdapter,
@@ -25,7 +27,10 @@ from .protocol_v2 import (
     TabularQScientificStateAdapter,
     require_information_limited_transition,
 )
-from .protocol_v2_gridworld import GridWorldScientificStateAdapter
+from .protocol_v2_gridworld import (
+    GridWorldScientificStateAdapter,
+    reset_gridworld_branch_episode,
+)
 
 
 def _agent(adapter: ScientificStateAdapter) -> Any:
@@ -143,6 +148,7 @@ class ProjectTabularPhaseBBranchDriver:
         adaptive: bool,
         learner: ScientificStateAdapter,
         environment: GridWorldScientificStateAdapter,
+        subsequent_episode_seeds: Sequence[EnvironmentSeeds] = (),
     ) -> None:
         if learner.method_id not in {"q_learning", "sarsa", "dyna_q_plus"}:
             raise ValueError("project Phase-B driver supports Q, SARSA or Dyna-Q+")
@@ -157,6 +163,13 @@ class ProjectTabularPhaseBBranchDriver:
         self.learner = learner
         self.environment = environment
         self._agent = _agent(learner)
+        self._subsequent_episode_seeds = tuple(subsequent_episode_seeds)
+        if any(
+            not isinstance(item, EnvironmentSeeds)
+            for item in self._subsequent_episode_seeds
+        ):
+            raise ValueError("subsequent_episode_seeds must be EnvironmentSeeds")
+        self._next_episode_seed = 0
         self._interactions = 0
         state = learner.export_state()
         last_step = state.get("last_step")
@@ -165,6 +178,8 @@ class ProjectTabularPhaseBBranchDriver:
         self._return_sum = 0.0
         self._terminated = False
         self._truncated = False
+        self._episodes_started = 1
+        self._episodes_completed = 0
 
     @property
     def interactions(self) -> int:
@@ -187,9 +202,23 @@ class ProjectTabularPhaseBBranchDriver:
 
         while self._interactions < target_interaction:
             if self._terminated or self._truncated:
-                raise RuntimeError(
-                    "Phase-B segment ended before target; multi-episode reset semantics are not frozen yet"
+                if self._next_episode_seed >= len(self._subsequent_episode_seeds):
+                    raise RuntimeError("declared Phase-B episode seed sequence exhausted")
+                self._agent.end_episode(
+                    {
+                        "episode_index": self._episodes_started - 1,
+                        "outcome": "terminated" if self._terminated else "truncated",
+                        "global_post_boundary_interactions": self._interactions,
+                    }
                 )
+                current_observation = reset_gridworld_branch_episode(
+                    self.environment,
+                    seeds=self._subsequent_episode_seeds[self._next_episode_seed],
+                )
+                self._next_episode_seed += 1
+                self._episodes_started += 1
+                self._terminated = False
+                self._truncated = False
             action_name = (
                 self._agent.act(current_observation)
                 if self.adaptive
@@ -217,6 +246,8 @@ class ProjectTabularPhaseBBranchDriver:
             self._return_sum += float(truth.reward)
             self._terminated = bool(truth.terminated)
             self._truncated = bool(truth.truncated)
+            if self._terminated or self._truncated:
+                self._episodes_completed += 1
             current_observation = truth.delivered_observation
 
         return {
@@ -224,4 +255,6 @@ class ProjectTabularPhaseBBranchDriver:
             "terminated": float(self._terminated),
             "truncated": float(self._truncated),
             "adaptive": float(self.adaptive),
+            "episodes_started": float(self._episodes_started),
+            "episodes_completed": float(self._episodes_completed),
         }

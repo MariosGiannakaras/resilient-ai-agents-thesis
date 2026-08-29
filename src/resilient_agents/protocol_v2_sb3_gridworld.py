@@ -11,14 +11,18 @@ The facades do not add information or scientific defaults.
 """
 from __future__ import annotations
 
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 import gymnasium as gym
 
 from .contracts import ScenarioSpec
 from .environment import EnvironmentSeeds
 from .gridworld import GridWorldEnvironment
-from .protocol_v2_gridworld import GridWorldScientificStateAdapter
+from .protocol_v2_gridworld import (
+    GridWorldScientificStateAdapter,
+    reset_gridworld_branch_episode,
+)
 
 
 class ExplicitSeededGridWorldEnv(gym.Env):
@@ -80,7 +84,7 @@ class ExplicitSeededGridWorldEnv(gym.Env):
 
 
 class BranchContinuationGridWorldEnv(gym.Env):
-    """Expose one exact already-started protocol-v2 branch to SB3.
+    """Expose an exact protocol-v2 branch and declared later episodes to SB3.
 
     The first reset is an attachment handshake only. It returns the last
     delivered observation already present in the exact branch state and does
@@ -89,7 +93,12 @@ class BranchContinuationGridWorldEnv(gym.Env):
 
     metadata = {"render_modes": []}
 
-    def __init__(self, branch: GridWorldScientificStateAdapter) -> None:
+    def __init__(
+        self,
+        branch: GridWorldScientificStateAdapter,
+        *,
+        subsequent_episode_seeds: Sequence[EnvironmentSeeds] = (),
+    ) -> None:
         super().__init__()
         if not isinstance(branch, GridWorldScientificStateAdapter):
             raise ValueError("branch must be GridWorldScientificStateAdapter")
@@ -102,10 +111,19 @@ class BranchContinuationGridWorldEnv(gym.Env):
         self.action_space = branch.environment.gym_env.action_space
         self.observation_space = branch.environment.gym_env.observation_space
         self._attached = False
+        self._subsequent_episode_seeds = tuple(subsequent_episode_seeds)
+        if any(
+            not isinstance(item, EnvironmentSeeds)
+            for item in self._subsequent_episode_seeds
+        ):
+            raise ValueError("subsequent_episode_seeds must be EnvironmentSeeds")
+        self._next_episode_seed = 0
         self._interactions = 0
         self._return_sum = 0.0
         self._terminated = False
         self._truncated = False
+        self._episodes_started = 1
+        self._episodes_completed = 0
 
     @property
     def interactions(self) -> int:
@@ -123,17 +141,35 @@ class BranchContinuationGridWorldEnv(gym.Env):
     def truncated(self) -> bool:
         return self._truncated
 
+    @property
+    def episodes_started(self) -> int:
+        return self._episodes_started
+
+    @property
+    def episodes_completed(self) -> int:
+        return self._episodes_completed
+
     def reset(self, *, seed: int | None = None, options: dict[str, Any] | None = None):
         del seed, options
-        if self._attached:
-            raise RuntimeError(
-                "Phase-B branch requested an environment reset before multi-episode semantics were frozen"
-            )
-        transition = self.branch.environment.gym_env.last_transition
-        if transition is None:
-            raise RuntimeError("branch lost its delivered prefix observation")
-        self._attached = True
-        return transition.delivered_observation, {}
+        if not self._attached:
+            transition = self.branch.environment.gym_env.last_transition
+            if transition is None:
+                raise RuntimeError("branch lost its delivered prefix observation")
+            self._attached = True
+            return transition.delivered_observation, {}
+        if not (self._terminated or self._truncated):
+            raise RuntimeError("Phase-B environment reset requested before episode completion")
+        if self._next_episode_seed >= len(self._subsequent_episode_seeds):
+            raise RuntimeError("declared Phase-B episode seed sequence exhausted")
+        observation = reset_gridworld_branch_episode(
+            self.branch,
+            seeds=self._subsequent_episode_seeds[self._next_episode_seed],
+        )
+        self._next_episode_seed += 1
+        self._terminated = False
+        self._truncated = False
+        self._episodes_started += 1
+        return observation, {}
 
     def step(self, action):
         if not self._attached:
@@ -145,6 +181,8 @@ class BranchContinuationGridWorldEnv(gym.Env):
         self._return_sum += float(transition.reward)
         self._terminated = bool(transition.terminated)
         self._truncated = bool(transition.truncated)
+        if self._terminated or self._truncated:
+            self._episodes_completed += 1
         return (
             transition.delivered_observation,
             float(transition.reward),
