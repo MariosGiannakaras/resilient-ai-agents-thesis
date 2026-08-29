@@ -27,10 +27,8 @@ from .protocol_v2 import (
     TabularQScientificStateAdapter,
     require_information_limited_transition,
 )
-from .protocol_v2_gridworld import (
-    GridWorldScientificStateAdapter,
-    reset_gridworld_branch_episode,
-)
+from .protocol_v2_gridworld import GridWorldScientificStateAdapter
+from .protocol_v2_multi_episode import reset_gridworld_branch_episode
 
 
 def _agent(adapter: ScientificStateAdapter) -> Any:

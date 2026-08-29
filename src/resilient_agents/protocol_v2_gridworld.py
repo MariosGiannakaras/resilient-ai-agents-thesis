@@ -20,9 +20,8 @@ from __future__ import annotations
 import hashlib
 import json
 import random
-from collections.abc import Mapping
-from dataclasses import asdict, replace
-from typing import Any
+from dataclasses import asdict
+from typing import Any, Mapping
 
 from .contracts import GroundTruthTransition, ScenarioSpec
 from .environment import EnvironmentSeeds
@@ -88,50 +87,6 @@ def gridworld_task_sha256(spec: ScenarioSpec) -> str:
 
 def gridworld_scenario_sha256(spec: ScenarioSpec) -> str:
     return hashlib.sha256(gridworld_scenario_json(spec).encode("utf-8")).hexdigest()
-
-
-def persistent_post_boundary_episode_spec(spec: ScenarioSpec) -> ScenarioSpec:
-    """Return the same branch regime with any persistent change active at reset.
-
-    The first Phase-B episode receives its change at the exact common-prefix
-    boundary. Later episodes have no prefix to replay, so a persistent change
-    must be active from their first actual interaction rather than being
-    reintroduced at the historical first-episode onset index.
-    """
-
-    events = tuple(spec.change_events)
-    if not events:
-        return spec
-    if len(events) != 1 or not events[0].persistent:
-        raise ValueError("multi-episode Phase B requires one persistent change event")
-    event = replace(events[0], onset_step=0)
-    return replace(
-        spec,
-        scenario_id=f"{spec.scenario_id}--persistent-episode",
-        change_events=(event,),
-    )
-
-
-def reset_gridworld_branch_episode(
-    branch: GridWorldScientificStateAdapter,
-    *,
-    seeds: EnvironmentSeeds,
-) -> Any:
-    """Reset one branch episode without resetting its deployment regime."""
-
-    if not isinstance(branch, GridWorldScientificStateAdapter):
-        raise ValueError("branch must be GridWorldScientificStateAdapter")
-    if not isinstance(seeds, EnvironmentSeeds):
-        raise ValueError("episode reset seeds must be explicit EnvironmentSeeds")
-    current = branch.environment
-    next_spec = persistent_post_boundary_episode_spec(current.gym_env.spec)
-    if next_spec is not current.gym_env.spec:
-        replacement = GridWorldEnvironment(next_spec)
-        observation = replacement.reset(seeds=seeds)
-        current.close()
-        branch.environment = replacement
-        return observation
-    return current.reset(seeds=seeds)
 
 
 def _transition_to_json(value: GroundTruthTransition | None) -> Mapping[str, Any] | None:
@@ -284,13 +239,13 @@ class GridWorldScientificStateAdapter:
             )
         gym_env.last_transition = _transition_from_json(state["last_transition"])
 
-    def clone(self) -> GridWorldScientificStateAdapter:
+    def clone(self) -> "GridWorldScientificStateAdapter":
         target = GridWorldEnvironment(self.spec)
         clone = GridWorldScientificStateAdapter(target)
         clone.restore_state(self.export_state())
         return clone
 
-    def fork_into(self, target_spec: ScenarioSpec) -> GridWorldScientificStateAdapter:
+    def fork_into(self, target_spec: ScenarioSpec) -> "GridWorldScientificStateAdapter":
         """Restore a shared prefix into a matched post-boundary branch scenario."""
 
         target = GridWorldEnvironment(target_spec)

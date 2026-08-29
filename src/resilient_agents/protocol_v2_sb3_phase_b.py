@@ -17,8 +17,8 @@ from typing import Any
 from .environment import EnvironmentSeeds
 from .protocol_v2 import ProtocolV2Branch
 from .protocol_v2_gridworld import GridWorldScientificStateAdapter
+from .protocol_v2_multi_episode import PersistentMultiEpisodeBranchGridWorldEnv
 from .protocol_v2_sb3 import SB3ScientificStateAdapter
-from .protocol_v2_sb3_gridworld import BranchContinuationGridWorldEnv
 
 
 def _scalar_action(action: Any) -> Any:
@@ -84,9 +84,8 @@ class SB3PhaseBBranchDriver:
         self._terminated = False
         self._truncated = False
         self._base_model_interactions = int(learner.model.num_timesteps)
-        self._continuation = BranchContinuationGridWorldEnv(
-            environment,
-            subsequent_episode_seeds=subsequent_episode_seeds,
+        self._continuation = PersistentMultiEpisodeBranchGridWorldEnv(
+            environment, subsequent_episode_seeds=subsequent_episode_seeds
         )
         self._frozen_state = None if adaptive else _frozen_learning_state(learner)
         if adaptive:

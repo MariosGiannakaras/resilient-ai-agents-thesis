@@ -11,10 +11,8 @@ from resilient_agents.protocol_v2 import (
     ProtocolV2Branch,
     TabularQScientificStateAdapter,
 )
-from resilient_agents.protocol_v2_gridworld import (
-    GridWorldScientificStateAdapter,
-    reset_gridworld_branch_episode,
-)
+from resilient_agents.protocol_v2_gridworld import GridWorldScientificStateAdapter
+from resilient_agents.protocol_v2_multi_episode import reset_gridworld_branch_episode
 from resilient_agents.protocol_v2_t527 import CORE_METHOD_IDS, load_plan
 from resilient_agents.protocol_v2_tabular_phase_b import (
     ProjectTabularPhaseBBranchDriver,
