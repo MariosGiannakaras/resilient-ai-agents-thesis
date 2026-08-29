@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "decision_id": "DEC-054",
+  "pilot_id": "protocol-v2-t526-boundary-settlement-phase-b-v0.3",
+  "scientific_status": "non-final-feasibility-boundary-settlement-and-calibration-only",
+  "purpose": "Derive quiescent deployment-start states by completing only algorithmic bookkeeping attributable to the already-consumed final Phase-A interaction, then execute one fresh unchanged T-526 Phase-B matrix",
+  "final_reserve_access": false,
+  "required_host": {
+    "os": "Windows 10",
+    "architecture": "AMD64",
+    "python": "3.12",
+    "execution_baseline": "cpu-only"
+  },
+  "prior_dec053": {
+    "amendment_path": "configs/protocols/protocol-v2-t526-recovery-phase-b-v0.2.json",
+    "amendment_file_sha256": "74b06515ff59dfd5b126c8b44ab2623e5d49527e42d4f26aed4465d895c4cffd",
+    "recovery_directory": "results/pilots/protocol-v2-feasibility-v0.1-recovery-v0.2",
+    "recovery_file_sha256": {
+      "manifest.json": "f357a486d617b2848c51445fab6056952b0997e86b947e1f08cc9673dea62e7e",
+      "reconstruction.jsonl": "b66553af0ca40ee0a243efd642b9e79dd10c0b07f438b684555ce39522df538a",
+      "failures.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "integrity.json": "f69b5a5c1d7fde04b1ff7d972084f6bd1bbe6f7a1051ee3e691f297189216315"
+    },
+    "failed_phase_b_directory": "results/pilots/protocol-v2-feasibility-phase-b-v0.2",
+    "failed_phase_b_file_sha256": {
+      "manifest.json": "c261e36b7e9e02047068d485cc3fd08fe3efe1dedd8b8bcc554a0aa159c693ad",
+      "matched-sets.jsonl": "3b5b4ab6e09b6d6a56ea4a8053724455b0dbbb09200505f6ec00c5fead3a6fb5",
+      "failures.jsonl": "05ada8830cacd92c1c60453da285f32d0ab7d0108b8cab6a681c909dac8a7ee6",
+      "integrity.json": "a202418959133a4ca4a3a4c0f3b2b1a905dc31f91b170ec8dd3931f0e1fb5ae3"
+    }
+  },
+  "settlement": {
+    "policy_id": "dec-054-phase-a-budget-boundary-settlement-v1",
+    "output_directory": "results/pilots/protocol-v2-feasibility-boundary-settlement-v0.1",
+    "checkpoint_path_template": "deployment-start-checkpoints/{method_id}/{root_id}/{layout_id}.json",
+    "source_training_interactions": 2048,
+    "required_accepted_states": 30,
+    "required_environment_interactions_per_state": 0,
+    "method_policy": {
+      "q_learning": "verified-quiescent-no-op",
+      "sarsa": "behavior-policy-bootstrap-final-consumed-transition-or-quiescent-no-op",
+      "dqn": "verified-quiescent-no-op",
+      "ppo": "verified-completed-rollout-update-boundary-no-op",
+      "dyna_q_plus": "verified-quiescent-no-op"
+    },
+    "idempotence": "already-quiescent-state-is-an-explicit-no-op; physical lineage always begins from the exact accepted DEC-053 source SHA"
+  },
+  "phase_b": {
+    "output_directory": "results/pilots/protocol-v2-feasibility-phase-b-v0.3",
+    "selected_level_id": "gw-l1",
+    "common_nominal_no_learning_prefix_interactions": 1,
+    "post_boundary_interactions_per_branch": 10,
+    "branches": ["FN", "FD", "AN", "AD"],
+    "episode_resets": false,
+    "shortest_path_safety": {
+      "required_shortest_path_length": 12,
+      "prefix_plus_branch_interactions": 11,
+      "require_strictly_less_than_shortest_path": true
+    },
+    "conditions": [
+      {
+        "condition_id": "action-remap-swap-right-down",
+        "family": "action-remap",
+        "specification": {
+          "mapping_id": "swap-right-down",
+          "mapping": {"up": "up", "right": "down", "down": "right", "left": "left"}
+        }
+      },
+      {
+        "condition_id": "action-remap-cycle-clockwise",
+        "family": "action-remap",
+        "specification": {
+          "mapping_id": "cycle-clockwise",
+          "mapping": {"up": "right", "right": "down", "down": "left", "left": "up"}
+        }
+      },
+      {
+        "condition_id": "action-failure-p005",
+        "family": "action-failure",
+        "specification": {"probability": 0.05}
+      },
+      {
+        "condition_id": "action-failure-p015",
+        "family": "action-failure",
+        "specification": {"probability": 0.15}
+      },
+      {
+        "condition_id": "action-failure-p030",
+        "family": "action-failure",
+        "specification": {"probability": 0.30}
+      },
+      {
+        "condition_id": "observation-corruption-p002",
+        "family": "observation-corruption",
+        "specification": {
+          "probability": 0.02,
+          "support": "uniform-valid-non-obstacle-excluding-true-state"
+        }
+      },
+      {
+        "condition_id": "observation-corruption-p005",
+        "family": "observation-corruption",
+        "specification": {
+          "probability": 0.05,
+          "support": "uniform-valid-non-obstacle-excluding-true-state"
+        }
+      },
+      {
+        "condition_id": "observation-corruption-p010",
+        "family": "observation-corruption",
+        "specification": {
+          "probability": 0.10,
+          "support": "uniform-valid-non-obstacle-excluding-true-state"
+        }
+      }
+    ],
+    "expected_matched_sets": 240,
+    "expected_branch_executions": 960,
+    "expected_prefix_interactions": 240,
+    "expected_post_boundary_interactions": 9600,
+    "ppo_pilot_semantics": "Adaptive PPO starts collecting the method-native rollout at the first post-boundary interaction; the 10-interaction segment is shorter than the frozen 128-interaction update quantum, so no optimizer update is performed and the final transient rollout state is retained by exact digest rather than promoted as a restorable checkpoint"
+  }
+}

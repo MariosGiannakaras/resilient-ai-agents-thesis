@@ -1,12 +1,14 @@
 # T-526 Physical Windows Feasibility Runbook
 
-**Status:** one-time Phase-A complete and immutable; DEC-052 failed its exact raw-envelope barrier; DEC-053 recovery passed 30/30 and its Phase-B attempt failed closed at 8/240 on unresolved exact SARSA lifecycle state
+**Status:** one-time Phase-A and DEC-053 recovery immutable; DEC-054 zero-interaction boundary settlement and fresh Phase-B v0.3 are implemented and await reviewed physical validation
 **Plan:** `configs/protocols/protocol-v2-feasibility-v0.1.json`  
 **Entrypoint:** `scripts/run_protocol_v2_feasibility_windows.ps1`
 **Recovery amendment:** `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json`
 **Recovery/Phase-B entrypoint:** `scripts/run_protocol_v2_t526_recovery_phase_b_windows.ps1`
 **DEC-053 amendment:** `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.2.json`
 **DEC-053 entrypoint:** `scripts/run_protocol_v2_t526_recovery_phase_b_v02_windows.ps1`
+**DEC-054 config:** `configs/protocols/protocol-v2-t526-boundary-settlement-phase-b-v0.3.json`
+**DEC-054 entrypoint:** `scripts/run_protocol_v2_t526_boundary_settlement_phase_b_v03_windows.ps1`
 
 ## Purpose
 
@@ -189,3 +191,22 @@ The clean physical Windows checkout executed the v0.2 entrypoint once from revie
 - Phase-B runtime/artifacts: 1.355 wall-seconds; 3 hash-covered files and 24,957 bytes under `results/pilots/protocol-v2-feasibility-phase-b-v0.2/`. Independent validation reports `valid-failed`, with zero scientific failures and one infrastructure/lifecycle failure at the next contiguous planned set.
 
 Do not rerun, resume, replace or hand-edit either v0.2 evidence directory. T-526A, T-526 and T-527 remain blocked pending a new explicit scientific/lifecycle decision for the SARSA deferred-update boundary. DEC-053 does not authorize silently discarding or resolving that update.
+
+## DEC-054 boundary settlement and fresh Phase-B v0.3 authority
+
+The lifecycle audit in `T526_PHASE_A_BOUNDARY_SETTLEMENT_AUDIT.md` proves that the exact fixed-budget cutoff is an administrative algorithm boundary. Five of six retained SARSA checkpoints contain one deferred nonterminal backup for the already-counted interaction 2,048; all other retained states and one SARSA state are quiescent. Existing SARSA bootstrapped-truncation semantics already select a behavior-policy action solely for the continuation estimate and discard it without execution.
+
+DEC-054 therefore derives a distinct deployment-start state with zero environment interactions. It verifies exact DEC-053 source identity/counters, uses the restored Phase-A epsilon/action order/RNG and deferred `next_state`, applies the one-step SARSA backup once, clears deferred state, retains the advanced exploration RNG and leaves no deployment pending action. Q-Learning, DQN, PPO, Dyna-Q+ and quiescent SARSA are explicit verified no-ops.
+
+After commit/push, green checks on the exact PR #92 head and a clean native Windows worktree, run exactly once:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\run_protocol_v2_t526_boundary_settlement_phase_b_v03_windows.ps1
+```
+
+The entrypoint validates the original Phase-A, DEC-052, DEC-053 recovery v0.2 and failed Phase-B v0.2 trees. It does not execute Phase A or recovery. It creates only:
+
+- `results/pilots/protocol-v2-feasibility-boundary-settlement-v0.1/`;
+- after a 30/30 settlement barrier, `results/pilots/protocol-v2-feasibility-phase-b-v0.3/`.
+
+Phase-B v0.3 starts from matched set one and keeps the existing 240-set/960-branch/240-prefix/9,600-post-boundary design exactly. Do not copy v0.2 rows, rerun/resume either attempt, access final reserve or start T-527 before complete validated evidence.

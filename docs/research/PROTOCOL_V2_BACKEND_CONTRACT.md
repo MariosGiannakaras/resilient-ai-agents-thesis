@@ -1,6 +1,6 @@
 # Protocol v2 Backend Contract
 
-**Status:** T-525 implementation-complete contract; machine feasibility and final numeric protocol remain T-526/T-527 gated  
+**Status:** T-525 implementation-complete contract; DEC-054 boundary settlement implemented pending physical validation; final numeric protocol remains T-526/T-527 gated
 **Research authority:** DEC-048 / DEC-050 / `PROTOCOL_V2_RESEARCH_DESIGN.md`  
 **Implementation branch:** `feat/pre-wp7-protocol-v1.1-ui-rebuild`
 
@@ -127,6 +127,12 @@ Special handling is explicit where method semantics require it:
 T-525 validates one exact post-boundary environment segment. If termination/truncation occurs before the requested branch target and another episode reset would be required, the implementation fails closed.
 
 This is intentional. The final protocol must explicitly decide how a persistent action remap and other uncertainty mechanisms behave across later episode resets. That decision depends on the selected GridWorld level, horizon, feasible interaction budget and final estimand schedule and therefore belongs to T-526/T-527 rather than being hidden in backend code.
+
+### T-526 exact Phase-A budget settlement
+
+DEC-054 narrowly resolves the separate pre-prefix case where a method-native learner has completed the fixed actual-interaction budget but retains algorithmic bookkeeping attributable to the final consumed transition. The immutable historical checkpoint remains the source identity. A deterministic derived deployment-start state may complete that bookkeeping with zero environment interactions before constructing the fresh Phase-B environment.
+
+For the retained implementation matrix, Q-Learning, DQN, PPO and Dyna-Q+ are already quiescent. SARSA may carry one deferred nonterminal backup; settlement selects the required bootstrap-only action from the deferred Phase-A `next_state` under the exact restored behavior policy/RNG, applies the update once and discards the action. It never uses or executes a Phase-B observation/action. All 30 derived states must be quiescent and validated before the common no-learning prefix.
 
 ## 9. Information and randomness invariants
 

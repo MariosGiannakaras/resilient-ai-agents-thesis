@@ -1,6 +1,6 @@
 # Current Project Status
 
-**Date:** 2026-08-29  
+**Date:** 2026-08-30
 **Status:** Authoritative compact current-state summary
 
 `docs/context/TASKS.md` is the canonical ledger. Use **progressive** task-specific reading of DEC-048/049/050/051/052/053 and `docs/research/` / `docs/architecture/` only as needed.
@@ -10,12 +10,13 @@
 - Historical accepted baseline includes completed `T-100` target-machine validation and `T-200` research framing through protocol-v1.0 WP6 evidence. Protocol-v1.0, FINAL-* and R0 evidence remain immutable. Candidate v1.1 is non-final history; old `T-522` must not execute.
 - `T-524`, `T-525` and `T-529` are COMPLETE.
 - `T-529` completed DEC-051's framework-neutral Study lifecycle: immutable recipe -> deterministic plan -> real Phase A -> exact checkpoint -> optional common no-learning prefix -> atomic FN/FD/AN/AD -> validation -> root/layout analysis with explicit denominators -> deterministic machine-readable evidence export. No final frontend, thesis prose, final thesis figures or PPTX were generated.
-- **Current scientific gate: `T-526 BLOCKED`; recovery sub-gate `T-526A BLOCKED` after DEC-053 recovery passed 30/30 but Phase B failed closed at 8/240 on exact SARSA deferred state.** Hosted CI cannot substitute for the retained physical-machine evidence.
+- **Current scientific gate: `T-526 BLOCKED`; recovery/lifecycle sub-gate `T-526A IN_PROGRESS` under DEC-054, with physical settlement/Phase-B v0.3 validation pending.** Hosted CI cannot substitute for the retained physical-machine evidence.
 - The physical checkout was safely recovered to reviewed source commit `5198dbe077119b7caa4e9a101b55b115a979c22e`. The untracked `temp_body.md` was inspected, confirmed to be an obsolete PR-body draft with no unique durable information and removed. Native Windows Git preflight was clean, and `scripts/run_protocol_v2_feasibility_windows.ps1` executed exactly once.
 - The retained Phase-A bundle selected `gw-l1` (7×7) by the predeclared discrimination rule. All 30 declared method/root/layout units completed; no scientific or infrastructure failure, runtime hard-abort or checkpoint warning occurred. The bundle validated against the declared file set, plan hash, source commit, unit matrix, interaction/probe budgets, guardrails and accepted capability snapshot.
 - DEC-052 implementation was committed/pushed and both required checks were green at clean reviewed head `5e784d31729ad09c40f2633f3d1682896e624317`. The physical recovery then executed once. Q-Learning and SARSA `t526-r01/gw-l1-a` reproduced exact checkpoint and learner identities. DQN reproduced the authoritative learner-state SHA and serialized byte size, but its checkpoint-envelope SHA was `7b385564...` instead of `f2da03f3...`. The 30/30 barrier failed at 2 exact matches, the infrastructure/recovery failure was retained, and Phase B correctly did not start.
 - The SB3 2.9.0 audit proves the raw mismatch is transport/runtime metadata, at minimum the necessarily different `data.start_time`; controlled field-level tests also expose process-address-bearing human-readable class metadata. The historical DQN/PPO learner fingerprint covers all continuation state. DQN `_n_calls`, although not directly hashed, is uniquely fixed at retained `num_timesteps` by the frozen fresh-start/`n_envs=1` step invariant and is asserted explicitly.
 - DEC-053 executed from clean reviewed head `167d012a6eb1b0a2a5638836dea73d799128375f`. Recovery independently validates 30/30 accepted states, 12 raw DQN/PPO transport mismatches, exact checkpoint sizes, zero historical learner mismatches and no recovery failure. Phase B completed all eight Q-Learning conditions for the first unit (32 branches, eight prefix and 320 post-boundary interactions), then failed before the first SARSA prefix because the exact checkpoint contains a deferred update. The retained failure is infrastructure/lifecycle, not a scientific method outcome.
+- The DEC-054 audit proves the fixed Phase-A interaction target stops after the final counted `observe()` with no extra `act()`. Five SARSA sources retain one valid deferred on-policy backup for interaction 2,048; 25 states are already quiescent. The existing bootstrapped-truncation path provides the exact behavior-policy/bootstrap-only action precedent. Settlement derives a separate deployment-start state with zero environment interactions and cannot use the fresh Phase-B observation.
 - `T-527` is BLOCKED on T-526. Final methods/layouts/budgets/hyperparameters/severities/roots/statistics remain unfrozen.
 - `T-528` / #93 is PAUSED/BLOCKED on T-527; its T-529 backend dependency is satisfied. The final frontend must use a framework different from NiceGUI.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
@@ -57,6 +58,8 @@ Historical failed recovery authority/config/entrypoint: `docs/decisions/DEC-052_
 
 Current v0.2 authority/config/entrypoint: `docs/decisions/DEC-053_SB3_SCIENTIFIC_CONTINUATION_IDENTITY.md`, `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.2.json`, `scripts/run_protocol_v2_t526_recovery_phase_b_v02_windows.ps1`.
 
+Pending DEC-054 authority/config/entrypoint: `docs/decisions/DEC-054_PHASE_A_INTERACTION_BUDGET_SETTLEMENT.md`, `configs/protocols/protocol-v2-t526-boundary-settlement-phase-b-v0.3.json`, `scripts/run_protocol_v2_t526_boundary_settlement_phase_b_v03_windows.ps1`. No settlement-v0.1 or Phase-B-v0.3 output exists yet.
+
 DEC-053 evidence: `results/pilots/protocol-v2-feasibility-v0.1-recovery-v0.2/` — valid-complete 30/30, 33 hash-covered files, 4,760,652 bytes, 132.519 seconds. `results/pilots/protocol-v2-feasibility-phase-b-v0.2/` — valid failed attempt, 8/240 matched sets, 32/960 branches, 8 prefix + 320/9,600 post-boundary interactions, one infrastructure failure, 3 hash-covered files, 24,957 bytes, 1.355 seconds.
 
 Failed recovery evidence: `results/pilots/protocol-v2-feasibility-v0.1-recovery/` — 3 attempted payloads, 2 exact matches, 1 retained checkpoint-identity failure, 499,535 hash-covered bytes. The failed-attempt validator passes. No Phase-B output directory exists; matched sets/interactions are 0/240 and 0.
@@ -79,4 +82,4 @@ Final retained methods/A2C decision, selected GridWorld level/layouts, final bud
 
 ## Exact next action
 
-Obtain a new explicit scientific/lifecycle decision for the exact SARSA deferred-update boundary. Do not rerun/resume v0.2, discard/resolve the update ad hoc, overwrite retained evidence, start T-527/T-528 or access final reserve.
+Commit/push the DEC-054 audit, implementation, focused tests and reconciliation; update PR #92 while keeping #95 at 6/10; require both checks green on that exact head and clean native Windows Git; then execute the new settlement + fresh Phase-B v0.3 entrypoint exactly once. Do not run Phase A/recovery, resume v0.2, start T-527/T-528 or access final reserve.
