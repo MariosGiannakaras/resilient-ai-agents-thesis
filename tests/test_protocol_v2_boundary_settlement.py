@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import json
+import tempfile
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -352,21 +353,24 @@ class ProtocolV2BoundarySettlementTests(unittest.TestCase):
             )
 
     def test_phase_b_cannot_create_output_before_complete_settlement_barrier(self):
-        config = load_config(CONFIG_PATH)
-        phase_b = REPO_ROOT / config["phase_b"]["output_directory"]
-        self.assertFalse(phase_b.exists())
-        with (
-            mock.patch(
-                "resilient_agents.protocol_v2_t526_boundary_phase_b_v03.verify_immutable_inputs"
-            ),
-            mock.patch(
-                "resilient_agents.protocol_v2_t526_boundary_phase_b_v03.validate_settlement_evidence",
-                return_value={"accepted_states": 29},
-            ),
-        ):
-            with self.assertRaisesRegex(RuntimeError, "incomplete settlement barrier"):
-                run_phase_b_v03(repo_root=REPO_ROOT, config=config)
-        self.assertFalse(phase_b.exists())
+        config = copy.deepcopy(dict(load_config(CONFIG_PATH)))
+        with tempfile.TemporaryDirectory() as temporary:
+            phase_b = Path(temporary) / "phase-b-must-not-start"
+            config["phase_b"]["output_directory"] = str(phase_b)
+            with (
+                mock.patch(
+                    "resilient_agents.protocol_v2_t526_boundary_phase_b_v03.verify_immutable_inputs"
+                ),
+                mock.patch(
+                    "resilient_agents.protocol_v2_t526_boundary_phase_b_v03.validate_settlement_evidence",
+                    return_value={"accepted_states": 29},
+                ),
+            ):
+                with self.assertRaisesRegex(
+                    RuntimeError, "incomplete settlement barrier"
+                ):
+                    run_phase_b_v03(repo_root=REPO_ROOT, config=config)
+            self.assertFalse(phase_b.exists())
 
 
 ACTION_METHODS = ("q_learning", "sarsa", "dqn", "ppo", "dyna_q_plus")

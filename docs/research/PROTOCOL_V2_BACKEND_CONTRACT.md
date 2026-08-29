@@ -1,6 +1,6 @@
 # Protocol v2 Backend Contract
 
-**Status:** T-525 implementation-complete contract; DEC-054 boundary settlement implemented pending physical validation; final numeric protocol remains T-526/T-527 gated
+**Status:** T-525 implementation-complete contract; DEC-054 boundary settlement physically validated; final numeric protocol remains T-527 gated
 **Research authority:** DEC-048 / DEC-050 / `PROTOCOL_V2_RESEARCH_DESIGN.md`  
 **Implementation branch:** `feat/pre-wp7-protocol-v1.1-ui-rebuild`
 

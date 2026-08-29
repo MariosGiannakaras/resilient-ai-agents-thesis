@@ -1,6 +1,6 @@
 # T-526 Physical Windows Feasibility Runbook
 
-**Status:** one-time Phase-A and DEC-053 recovery immutable; DEC-054 zero-interaction boundary settlement and fresh Phase-B v0.3 are implemented and await reviewed physical validation
+**Status:** T-526 complete; one-time Phase A, DEC-052/053 history, DEC-054 settlement and fresh Phase-B v0.3 retained immutably
 **Plan:** `configs/protocols/protocol-v2-feasibility-v0.1.json`  
 **Entrypoint:** `scripts/run_protocol_v2_feasibility_windows.ps1`
 **Recovery amendment:** `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json`
@@ -190,7 +190,7 @@ The clean physical Windows checkout executed the v0.2 entrypoint once from revie
 - Failure: the next planned set, SARSA `t526-r01/gw-l1-a` / `action-remap-swap-right-down`, failed before its prefix. The exact checkpoint retains a deferred on-policy update for state `[1,5]`, action `down`, reward `-0.1`, next state `[1,6]`. The frozen common prefix requires a quiescent no-learning state. Discarding the update would alter the exact continuation state; resolving it would select the next on-policy action and apply learning without an authorized boundary rule.
 - Phase-B runtime/artifacts: 1.355 wall-seconds; 3 hash-covered files and 24,957 bytes under `results/pilots/protocol-v2-feasibility-phase-b-v0.2/`. Independent validation reports `valid-failed`, with zero scientific failures and one infrastructure/lifecycle failure at the next contiguous planned set.
 
-Do not rerun, resume, replace or hand-edit either v0.2 evidence directory. T-526A, T-526 and T-527 remain blocked pending a new explicit scientific/lifecycle decision for the SARSA deferred-update boundary. DEC-053 does not authorize silently discarding or resolving that update.
+Do not rerun, resume, replace or hand-edit either v0.2 evidence directory. At that historical checkpoint, T-526A/T-526/T-527 remained blocked pending a new explicit scientific/lifecycle decision for the SARSA deferred-update boundary. DEC-053 did not authorize silently discarding or resolving that update; DEC-054 below later supplied the separate rule.
 
 ## DEC-054 boundary settlement and fresh Phase-B v0.3 authority
 
@@ -210,3 +210,16 @@ The entrypoint validates the original Phase-A, DEC-052, DEC-053 recovery v0.2 an
 - after a 30/30 settlement barrier, `results/pilots/protocol-v2-feasibility-phase-b-v0.3/`.
 
 Phase-B v0.3 starts from matched set one and keeps the existing 240-set/960-branch/240-prefix/9,600-post-boundary design exactly. Do not copy v0.2 rows, rerun/resume either attempt, access final reserve or start T-527 before complete validated evidence.
+
+## Retained DEC-054 physical result (2026-08-30)
+
+The clean native Windows checkout executed the DEC-054 entrypoint from reviewed PR #92 authority `14002a47763991234a1d0623f27330a895f348f0` after Repository and Protocol-v2 pilot checks were green.
+
+- Input integrity: original Phase A, failed DEC-052 recovery, valid DEC-053 recovery v0.2 and failed DEC-053 Phase-B v0.2 all passed their immutable lineage/integrity validators before and after execution.
+- Settlement: 30/30 accepted states, 25 no-ops, five exact SARSA behavior-policy settlements, zero environment interactions and zero failures. All deployment-start states were quiescent, deterministic on replay and exact on round-trip restore.
+- Settlement runtime/artifacts: 21.289 wall-seconds; 33 hash-covered files and 4,755,471 bytes under `results/pilots/protocol-v2-feasibility-boundary-settlement-v0.1/`.
+- Phase B: a fresh matrix started at matched set one and completed 240/240 sets, 960 branches, 240 common-prefix interactions and 9,600 post-boundary interactions. No v0.2 row was copied.
+- Phase-B runtime/artifacts: 223.710 wall-seconds; four hash-covered files and 803,558 bytes under `results/pilots/protocol-v2-feasibility-phase-b-v0.3/`.
+- Failures/final reserve: zero scientific failures, zero infrastructure failures and no final-reserve access.
+
+Independent generated-evidence validation reports both directories `valid-complete`. Do not rerun, resume, replace or hand-edit either directory. T-526A and T-526 are complete; T-527 is ready but was not started by this execution.

@@ -184,7 +184,7 @@ File: `DEC-052_T526_CHECKPOINT_MATERIALIZATION_AND_PHASE_B.md`.
 File: `DEC-053_SB3_SCIENTIFIC_CONTINUATION_IDENTITY.md`.
 
 ## DEC-054 — Phase-A interaction-budget settlement for exact deployment start
-**CURRENT NARROW T-526 LIFECYCLE AUTHORITY; PHYSICAL VALIDATION PENDING.** The immutable DEC-053 recovery remains the historical trained-state source. A method-aware, zero-environment-interaction settlement derives quiescent deployment-start states: Q-Learning/DQN/PPO/Dyna-Q+ and quiescent SARSA are no-ops; one valid deferred SARSA backup is completed with the exact restored behavior policy/RNG and its bootstrap-only action is discarded. A 30/30 settled-state barrier is required before one fresh unchanged Phase-B v0.3 attempt.
+**ACCEPTED; PHYSICAL VALIDATION COMPLETE.** The immutable DEC-053 recovery remains the historical trained-state source. A method-aware, zero-environment-interaction settlement derived 30/30 quiescent deployment-start states: Q-Learning/DQN/PPO/Dyna-Q+ and one quiescent SARSA were no-ops; five valid deferred SARSA backups were completed with the exact restored behavior policy/RNG and their bootstrap-only actions were discarded. Fresh unchanged Phase-B v0.3 then completed 240/240 matched sets and validated. T-526/T-526A are complete; T-527 is ready.
 
 File: `DEC-054_PHASE_A_INTERACTION_BUDGET_SETTLEMENT.md`.
 

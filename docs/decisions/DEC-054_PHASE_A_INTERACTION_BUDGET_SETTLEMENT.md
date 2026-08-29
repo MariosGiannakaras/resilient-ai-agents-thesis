@@ -1,7 +1,7 @@
 # DEC-054 — Phase-A Interaction-Budget Settlement for Exact Deployment Start
 
 **Date:** 2026-08-30
-**Status:** Accepted and implemented; reviewed physical validation pending
+**Status:** Accepted, implemented and physically validated
 **Scope:** T-526 boundary settlement and one fresh versioned Phase-B v0.3 attempt only
 
 ## Context
@@ -77,6 +77,18 @@ Before execution, these files, focused tests and canonical reconciliation must b
 The entrypoint validates original Phase A, DEC-052, DEC-053 recovery v0.2 and DEC-053 failed Phase-B v0.2 before writing. It does not execute Phase A or either recovery.
 
 Any settlement or Phase-B failure is retained and authorizes no rerun, resume, seed replacement or post-outcome lifecycle change. No final reserve, A2C promotion, T-527 execution, UI work or final experiment is authorized by this decision.
+
+## Physical validation result
+
+The pre-run authority commit was `14002a47763991234a1d0623f27330a895f348f0`. PR #92 pointed to that exact head, both required checks were green and native Windows Git was clean before execution.
+
+- Immutable original Phase A, DEC-052, DEC-053 recovery v0.2 and failed Phase-B v0.2 integrity/lineage validation passed.
+- Settlement accepted 30/30 states: 25 no-ops and five non-no-op SARSA settlements. Each non-no-op retained exact pre/post learner identities, behavior-policy bootstrap action/RNG provenance, unchanged 2,048/2,047 counters and zero environment interactions. Deterministic replay, quiescence and round-trip restore passed.
+- Fresh Phase-B v0.3 completed 240/240 matched sets, 960 branches, 240 prefix interactions and 9,600 post-boundary interactions with zero scientific and infrastructure failures.
+- Settlement evidence contains 33 hash-covered files and 4,755,471 bytes; Phase-B evidence contains four hash-covered files and 803,558 bytes. Scientific wall times were 21.289 and 223.710 seconds respectively.
+- No original/recovery/v0.2 evidence was modified, no final reserve was accessed and T-527 was not started.
+
+The validated evidence is immutable at `results/pilots/protocol-v2-feasibility-boundary-settlement-v0.1/` and `results/pilots/protocol-v2-feasibility-phase-b-v0.3/`. T-526A and T-526 are complete; T-527 becomes ready.
 
 ## Non-outcome-driven basis
 
