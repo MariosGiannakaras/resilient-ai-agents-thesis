@@ -18,7 +18,10 @@ from .environment import EnvironmentSeeds
 from .protocol_v2 import ProtocolV2Branch
 from .protocol_v2_gridworld import GridWorldScientificStateAdapter
 from .protocol_v2_multi_episode import PersistentMultiEpisodeBranchGridWorldEnv
-from .protocol_v2_sb3_observation import as_sb3_gridworld_observation
+from .protocol_v2_sb3_observation import (
+    as_sb3_gridworld_observation,
+    predict_sb3_gridworld_action,
+)
 from .protocol_v2_sb3 import SB3ScientificStateAdapter
 
 
@@ -121,8 +124,10 @@ class SB3PhaseBBranchDriver:
                 self._terminated = False
                 self._truncated = False
             action = _scalar_action(
-                self.learner.predict(
+                predict_sb3_gridworld_action(
+                    self.learner,
                     observation,
+                    self._continuation.observation_space,
                     deterministic=self.deterministic_inference,
                 )
             )

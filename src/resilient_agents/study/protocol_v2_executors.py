@@ -32,6 +32,7 @@ from ..protocol_v2_runtime import (
     ProtocolV2RootIdentity,
 )
 from ..protocol_v2_sb3 import dqn_state_adapter, ppo_state_adapter
+from ..protocol_v2_sb3_observation import predict_sb3_gridworld_action
 from ..protocol_v2_sb3_driver import SB3PhaseADriver, SB3_IMPLEMENTATION_ID
 from ..protocol_v2_sb3_gridworld import ExplicitSeededGridWorldEnv
 from ..protocol_v2_sb3_seeding import reseed_sb3_behavior_rng
@@ -213,7 +214,12 @@ class _SB3ProjectProbeEvaluator:
                 total = 0.0
                 length = 0
                 while True:
-                    action = adapter.predict(observation, deterministic=True)
+                    action = predict_sb3_gridworld_action(
+                        adapter,
+                        observation,
+                        env.gym_env.observation_space,
+                        deterministic=True,
+                    )
                     if hasattr(action, "item"):
                         action = action.item()
                     truth = env.step(int(action))

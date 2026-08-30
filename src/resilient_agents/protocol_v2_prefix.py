@@ -20,6 +20,7 @@ from .gridworld import ACTION_NAMES, GridAction, GridWorldEnvironment
 from .protocol_v2 import ScientificStateAdapter
 from .protocol_v2_gridworld import GridWorldScientificStateAdapter
 from .protocol_v2_sb3 import SB3ScientificStateAdapter
+from .protocol_v2_sb3_observation import predict_sb3_gridworld_action
 from .protocol_v2_sb3_phase_b import _frozen_learning_state as _sb3_frozen_learning_state
 from .protocol_v2_tabular_phase_b import (
     _frozen_act as _project_frozen_act,
@@ -119,7 +120,14 @@ def prepare_shared_no_learning_prefix(
                 if _project_learning_state(learner) != frozen_learning_state:
                     raise RuntimeError("shared prefix mutated project scientific learning state")
             else:
-                action = _scalar_action(learner.predict(observation, deterministic=False))
+                action = _scalar_action(
+                    predict_sb3_gridworld_action(
+                        learner,
+                        observation,
+                        environment.gym_env.observation_space,
+                        deterministic=False,
+                    )
+                )
                 truth = environment.step(int(action))
                 if _sb3_frozen_learning_state(learner) != frozen_learning_state:
                     raise RuntimeError("shared prefix mutated SB3 scientific learning state")

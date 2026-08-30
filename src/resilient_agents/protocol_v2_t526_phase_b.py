@@ -16,6 +16,7 @@ from .protocol_v2 import ProtocolV2Branch, ScientificStateAdapter
 from .protocol_v2_gridworld import GridWorldScientificStateAdapter
 from .protocol_v2_sb3 import SB3ScientificStateAdapter, _digest_value
 from .protocol_v2_sb3_gridworld import BranchContinuationGridWorldEnv
+from .protocol_v2_sb3_observation import predict_sb3_gridworld_action
 from .protocol_v2_sb3_phase_b import (
     SB3PhaseBBranchDriver,
     _frozen_learning_state,
@@ -245,8 +246,10 @@ class T526PPOPhaseBBranchDriver:
             if self._terminated or self._truncated:
                 raise RuntimeError("T-526 no-reset Phase-B segment ended early")
             action = _scalar_action(
-                self.learner.predict(
+                predict_sb3_gridworld_action(
+                    self.learner,
                     observation,
+                    self._continuation.observation_space,
                     deterministic=self.deterministic_inference,
                 )
             )

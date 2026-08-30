@@ -200,6 +200,12 @@ File: `DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md`.
 
 File: `DEC-056_T527_SIZING_OBSERVATION_BOUNDARY_RETRY.md`.
 
+## DEC-057 — T-527 complete SB3 direct-inference boundary correction and sizing completion authority
+
+**ACCEPTED PRE-OUTCOME AUTHORITY; PHYSICAL VALIDATION PENDING.** Every active direct project-GridWorld SB3 prediction surface uses one strict representation boundary. Exact, complete Q-Learning and SARSA sizing-v0.2 strata may be composed only after structural/integrity validation that does not inspect performance; DQN, PPO and Dyna-Q+ must execute fresh from their first unit in one sizing-v0.3 attempt. DEC-057 authorizes no tuning rerun, final-reserve access or final freeze. DEC-058 is permitted only after a valid-complete five-method combined matrix.
+
+File: `DEC-057_T527_COMPLETE_SB3_INGRESS_AND_SIZING_COMPLETION.md`.
+
 ## Downstream tool/workflow policy
 
 `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` records later Codex/repository, ChatGPT, Microsoft Word, PowerPoint, optional Canva and user-captured `ASSET-*` responsibilities. Planning it does not unlock T-700+.
@@ -208,7 +214,7 @@ File: `DEC-056_T527_SIZING_OBSERVATION_BOUNDARY_RETRY.md`.
 
 Only evidence-gated or genuinely later choices remain pending:
 
-- T-527 final retained methods, fair tuning results, task/layout/severity values, root count, budgets/probe grid, statistical interval/sensitivity/multiplicity recipe and exact multi-episode Phase-B semantics;
+- T-527 final retained methods, fair tuning results, task/layout/severity values, root count, budgets/probe grid, statistical interval/sensitivity/multiplicity recipe and exact multi-episode Phase-B semantics (DEC-058 only after DEC-057 physical completion);
 - whether A2C merits promotion beyond the PPO actor-critic core based on distinct value versus matrix/runtime cost;
 - T-528 final replacement frontend framework, visualization/component libraries and application packaging integration strategy;
 - T-613 final figure/table selection and evidence-to-thesis/defense asset map;

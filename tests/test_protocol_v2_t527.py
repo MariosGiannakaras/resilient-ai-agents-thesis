@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import importlib.util
 import json
 import unittest
@@ -26,6 +27,13 @@ from resilient_agents.protocol_v2_t527_sizing_v02 import (
     load_retry_plan,
     validate_historical_authority,
 )
+from resilient_agents.protocol_v2_t527_sizing_v03 import (
+    FRESH_METHODS,
+    REUSED_METHODS,
+    _validate_combined_identity_coverage,
+    load_completion_plan,
+    validate_historical_authority as validate_dec057_authority,
+)
 from resilient_agents.protocol_v2_tabular_phase_b import (
     ProjectTabularPhaseBBranchDriver,
 )
@@ -34,10 +42,41 @@ from tests.test_gridworld import fixture_seeds, fixture_spec
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PLAN_PATH = REPO_ROOT / "configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json"
 RETRY_PLAN_PATH = REPO_ROOT / "configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json"
+COMPLETION_PLAN_PATH = (
+    REPO_ROOT / "configs/protocols/protocol-v2-t527-sizing-completion-v0.3.json"
+)
 _SB3_AVAILABLE = importlib.util.find_spec("stable_baselines3") is not None
 
 
 class ProtocolV2T527ContractTests(unittest.TestCase):
+    def test_no_active_project_gridworld_direct_sb3_ingress_bypasses_wrapper(self):
+        allowed = {
+            ("protocol_v2_feasibility.py", "adapter"),
+            ("protocol_v2_sb3.py", "self.model"),
+            ("protocol_v2_sb3_driver.py", "adapter"),
+            ("protocol_v2_t526_phase_b.py", "self.inner"),
+        }
+        found = set()
+        source_root = REPO_ROOT / "src/resilient_agents"
+        for path in source_root.rglob("*.py"):
+            tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+            for node in ast.walk(tree):
+                if not (
+                    isinstance(node, ast.Call)
+                    and isinstance(node.func, ast.Attribute)
+                    and node.func.attr == "predict"
+                ):
+                    continue
+                owner = ast.unparse(node.func.value)
+                key = (path.name, owner)
+                found.add(key)
+                self.assertIn(
+                    key,
+                    allowed,
+                    f"unclassified direct SB3 predict ingress bypasses canonical wrapper: {path}:{node.lineno}",
+                )
+        self.assertEqual(found, allowed)
+
     def test_plan_freezes_equal_opportunity_and_no_final_reserve(self):
         plan = load_plan(PLAN_PATH)
         self.assertFalse(plan["final_reserve_access"])
@@ -51,6 +90,90 @@ class ProtocolV2T527ContractTests(unittest.TestCase):
         self.assertEqual(plan["sizing"]["root_count_candidates"], [12, 16, 20, 24])
         self.assertEqual(plan["sizing"]["phase_b_horizon_candidates"], [256, 512])
         self.assertNotIn("a2c", json.dumps(plan).lower())
+
+    def test_dec057_plan_freezes_structural_composition_and_fresh_three_method_scope(self):
+        plan = load_completion_plan(COMPLETION_PLAN_PATH)
+        self.assertFalse(plan["final_reserve_access"])
+        self.assertEqual(tuple(plan["execution_scope"]["fresh_methods"]), FRESH_METHODS)
+        self.assertEqual(
+            tuple(plan["execution_scope"]["reused_complete_methods"]),
+            REUSED_METHODS,
+        )
+        self.assertEqual(plan["execution_scope"]["expected_fresh_phase_a_units"], 144)
+        self.assertEqual(plan["execution_scope"]["expected_fresh_matched_sets"], 288)
+        self.assertFalse(plan["execution_scope"]["reuse_incomplete_dqn_v02"])
+        self.assertFalse(plan["execution_scope"]["reuse_any_sizing_v01"])
+        self.assertFalse(
+            plan["reuse_authority"]["performance_values_permitted_for_reuse_decision"]
+        )
+
+    @unittest.skipUnless(_SB3_AVAILABLE, "protocol-v2-pilot dependency group not installed")
+    def test_dec057_structurally_accepts_only_complete_q_and_sarsa_v02_strata(self):
+        plan = load_completion_plan(COMPLETION_PLAN_PATH)
+        validation = validate_dec057_authority(repo_root=REPO_ROOT, plan=plan)
+        self.assertEqual(validation["status"], "valid-structural-composition-authority")
+        self.assertFalse(validation["final_reserve_access"])
+        self.assertFalse(validation["performance_values_used_for_reuse_decision"])
+        self.assertEqual(set(validation["reusable_methods"]), set(REUSED_METHODS))
+        for method in REUSED_METHODS:
+            result = validation["reusable_methods"][method]
+            self.assertEqual(result["status"], "structurally-accepted")
+            self.assertEqual(result["phase_a_units"], 48)
+            self.assertEqual(result["matched_sets"], 96)
+            self.assertFalse(result["performance_values_used_for_decision"])
+        self.assertEqual(validation["excluded_sources"]["sizing_v02_dqn_rows"], "all")
+
+    def test_dec057_combined_guard_rejects_incomplete_v02_dqn_reference(self):
+        source_plan = load_retry_plan(RETRY_PLAN_PATH)
+        retained = "results/pilots/protocol-v2-t527-sizing-v0.2"
+        fresh = "results/pilots/protocol-v2-t527-sizing-v0.3"
+        layouts = [item["layout_id"] for item in source_plan["development_layouts"]]
+        conditions = [item["condition_id"] for item in source_plan["sizing"]["conditions"]]
+        phase_a = []
+        phase_b = []
+        phase_a_index = []
+        phase_b_index = []
+        methods = tuple(REUSED_METHODS) + tuple(FRESH_METHODS)
+        for method in methods:
+            package = retained if method in REUSED_METHODS else fresh
+            for index in range(1, 25):
+                root = f"t527-size-r{index:02d}"
+                for layout in layouts:
+                    phase_a.append({"method_id": method, "root_id": root, "layout_id": layout})
+                    phase_a_index.append({
+                        "method_id": method,
+                        "source_package": package,
+                    })
+                    for condition in conditions:
+                        phase_b.append({
+                            "method_id": method,
+                            "root_id": root,
+                            "layout_id": layout,
+                            "condition_id": condition,
+                        })
+                        phase_b_index.append({
+                            "method_id": method,
+                            "source_package": package,
+                        })
+        _validate_combined_identity_coverage(
+            source_plan=source_plan,
+            phase_a=phase_a,
+            phase_b=phase_b,
+            phase_a_index=phase_a_index,
+            phase_b_index=phase_b_index,
+            retained_package=retained,
+        )
+        dqn_entry = next(item for item in phase_a_index if item["method_id"] == "dqn")
+        dqn_entry["source_package"] = retained
+        with self.assertRaisesRegex(RuntimeError, "incomplete v0.2 method"):
+            _validate_combined_identity_coverage(
+                source_plan=source_plan,
+                phase_a=phase_a,
+                phase_b=phase_b,
+                phase_a_index=phase_a_index,
+                phase_b_index=phase_b_index,
+                retained_package=retained,
+            )
 
     @unittest.skipUnless(_SB3_AVAILABLE, "protocol-v2-pilot dependency group not installed")
     def test_dec056_validates_retained_tuning_and_failed_sizing_without_final_access(self):

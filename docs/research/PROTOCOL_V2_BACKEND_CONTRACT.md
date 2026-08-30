@@ -1,6 +1,6 @@
 # Protocol v2 Backend Contract
 
-**Status:** T-525 implementation-complete contract; DEC-054 validated; DEC-055 one-time sizing attempt failed at the SB3 reset-observation boundary; final protocol remains T-527 gated
+**Status:** T-525 implementation-complete contract; DEC-054 validated; DEC-055/056 sizing failures retained; DEC-057 ingress correction awaits physical completion; final protocol remains T-527 gated
 **Research authority:** DEC-048 / DEC-050 / `PROTOCOL_V2_RESEARCH_DESIGN.md`  
 **Implementation branch:** `feat/pre-wp7-protocol-v1.1-ui-rebuild`
 
@@ -126,7 +126,9 @@ Special handling is explicit where method semantics require it:
 
 T-525 originally validated one exact post-boundary environment segment and failed closed if another episode reset was required. DEC-055 supplies the pre-outcome T-527 lifecycle rule and implementation: learner state and the global actual-interaction clock persist; each reset consumes the next deterministic root/matched-set episode seed; nominal and disturbed branches use common episode schedules where valid; administrative truncation bootstraps; and disturbed regimes remain active across every later disturbed-branch episode. For persistent action remapping, later episodes start directly in the post-change mapping rather than replaying or delaying the original first-episode onset.
 
-The one-time DEC-055 physical attempt validated this lifecycle for complete Q-Learning and SARSA sizing subsets, then failed closed on the first DQN sizing unit: the project episode-reset helper returned a tuple observation and the Frozen SB3 driver passed it directly to the SB3 2.9.0 MultiDiscrete prediction path, which requires an array-shaped observation. This infrastructure/type boundary remains unresolved under the current authority. It does not invalidate the retained learner checkpoint, but it prevents a complete cross-method sizing matrix and therefore prevents the final T-527 freeze.
+The one-time DEC-055 physical attempt validated this lifecycle for complete Q-Learning and SARSA sizing subsets, then failed closed on the first DQN sizing unit because the Frozen reset path passed a tuple directly to SB3. DEC-056 corrected continuation/reset conversion, but its one attempt later proved the separate shared no-learning prefix still had the same direct stochastic ingress defect. Both valid-failed packages remain immutable.
+
+DEC-057 centralizes every active direct project-GridWorld SB3 prediction behind the strict declared-space conversion while leaving Gym/VecEnv training ingress unchanged. Its pre-outcome structural barrier permits only the exact complete Q-Learning/SARSA v0.2 strata to be referenced and requires DQN/PPO/Dyna-Q+ to execute fresh. A complete combined five-method sizing matrix and the final T-527 freeze remain pending physical validation.
 
 Callers that do not supply an explicit later-episode seed schedule still fail closed. This preserves the earlier backend contract for exploratory recipes while allowing the frozen protocol-v2.0 recipe to make the lifecycle explicit and machine-runnable.
 

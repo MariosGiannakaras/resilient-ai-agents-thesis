@@ -13,6 +13,7 @@ try:
     from resilient_agents.protocol_v2 import ProtocolV2Branch
     from resilient_agents.protocol_v2_executor import execute_phase_b
     from resilient_agents.protocol_v2_gridworld import GridWorldScientificStateAdapter
+    from resilient_agents.protocol_v2_prefix import prepare_shared_no_learning_prefix
     from resilient_agents.protocol_v2_sb3 import dqn_state_adapter, ppo_state_adapter
     from resilient_agents.protocol_v2_sb3_gridworld import (
         BranchContinuationGridWorldEnv,
@@ -23,6 +24,7 @@ try:
         SB3PhaseBBranchDriver,
         _frozen_learning_state,
     )
+    from resilient_agents.study.protocol_v2_executors import _SB3ProjectProbeEvaluator
     from tests.test_gridworld import fixture_spec
 
     _SB3_AVAILABLE = True
@@ -238,6 +240,91 @@ class ProtocolV2SB3GridWorldPhaseBTests(unittest.TestCase):
             self.assertIn(int(action), range(model.action_space.n))
         finally:
             model.exploration_rate = prior_rate
+
+    def test_shared_prefix_forces_dqn_exploration_through_canonical_ndarray_ingress(self):
+        learner = self._dqn_adapter().clone()
+        learner.model.exploration_rate = 1.0
+        seen = []
+        original_predict = learner.predict
+
+        def recorded_predict(observation, *, deterministic):
+            seen.append((observation.copy(), deterministic))
+            return original_predict(observation, deterministic=deterministic)
+
+        learner.predict = recorded_predict
+        frozen_before = _frozen_learning_state(learner)
+        fingerprint_before = learner.state_sha256()
+        prefix = prepare_shared_no_learning_prefix(
+            learner=learner,
+            nominal_spec=self._nominal_and_disturbed()[0],
+            environment_seeds=self._episode_seeds(1)[0],
+            interactions=1,
+        )
+        try:
+            self.assertEqual(prefix.interactions, 1)
+            self.assertEqual(prefix.environment.environment.gym_env._step, 1)
+            self.assertEqual(len(seen), 1)
+            observation, deterministic = seen[0]
+            self.assertIsInstance(observation, np.ndarray)
+            self.assertEqual(observation.dtype, learner.model.observation_space.dtype)
+            self.assertEqual(observation.shape, learner.model.observation_space.shape)
+            self.assertEqual(tuple(int(item) for item in observation), (0, 0))
+            self.assertFalse(deterministic)
+            self.assertEqual(_frozen_learning_state(learner), frozen_before)
+            self.assertNotEqual(learner.state_sha256(), fingerprint_before)
+        finally:
+            prefix.environment.environment.close()
+
+    def test_shared_prefix_uses_same_canonical_ingress_for_ppo(self):
+        learner = self._ppo_adapter().clone()
+        seen = []
+        original_predict = learner.predict
+
+        def recorded_predict(observation, *, deterministic):
+            seen.append((observation.copy(), deterministic))
+            return original_predict(observation, deterministic=deterministic)
+
+        learner.predict = recorded_predict
+        frozen_before = _frozen_learning_state(learner)
+        prefix = prepare_shared_no_learning_prefix(
+            learner=learner,
+            nominal_spec=self._nominal_and_disturbed()[0],
+            environment_seeds=self._episode_seeds(1)[0],
+            interactions=1,
+        )
+        try:
+            self.assertEqual(len(seen), 1)
+            observation, deterministic = seen[0]
+            self.assertIsInstance(observation, np.ndarray)
+            self.assertEqual(observation.dtype, learner.model.observation_space.dtype)
+            self.assertEqual(tuple(int(item) for item in observation), (0, 0))
+            self.assertFalse(deterministic)
+            self.assertEqual(_frozen_learning_state(learner), frozen_before)
+        finally:
+            prefix.environment.environment.close()
+
+    def test_project_probe_uses_canonical_ndarray_ingress(self):
+        learner = self._dqn_adapter().clone()
+        seen = []
+        original_predict = learner.predict
+
+        def recorded_predict(observation, *, deterministic):
+            seen.append((observation.copy(), deterministic))
+            return original_predict(observation, deterministic=deterministic)
+
+        learner.predict = recorded_predict
+        evaluator = _SB3ProjectProbeEvaluator(
+            scenario=self._nominal_and_disturbed()[0],
+            seeds=self._episode_seeds(1),
+        )
+        result = evaluator(learner, training_interaction_index=4, episodes=1)
+        self.assertGreater(result.probe_environment_interactions, 0)
+        self.assertTrue(seen)
+        self.assertTrue(all(isinstance(item[0], np.ndarray) for item in seen))
+        self.assertTrue(all(item[1] is True for item in seen))
+        self.assertTrue(
+            all(item[0].dtype == learner.model.observation_space.dtype for item in seen)
+        )
 
     def test_frozen_stochastic_dqn_crosses_resets_and_runs_256_without_type_failure(self):
         source, branch_point, nominal, _ = self._branch_point()

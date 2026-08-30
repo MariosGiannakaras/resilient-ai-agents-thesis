@@ -7,16 +7,18 @@
 
 ## Current execution state
 
-- Historical baseline includes completed `T-100` target-machine validation and `T-200` research framing through protocol-v1.0 WP6 evidence. Protocol-v1.0, FINAL-* and R0 evidence remain immutable. Candidate v1.1 is non-final history; old `T-522` must not execute.
+- `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable; old `T-522` must not execute.
 - `T-524`, `T-525` and `T-529` are COMPLETE.
 - `T-529` completed DEC-051's framework-neutral Study lifecycle from immutable recipe through real execution, validation, root/layout analysis and deterministic evidence export. It generated no final frontend or thesis/defense material.
-- **Current scientific gate: `T-527` BLOCKED on the retained DEC-056 sizing-v0.2 infrastructure failure; `T-526A` and `T-526` remain COMPLETE.** DEC-055 tuning is immutable valid-complete; sizing-v0.1 and v0.2 are immutable valid-failed. No resume/rerun is authorized.
-- The retained Phase-A bundle selected `gw-l1` (7×7) by the predeclared rule. All 30 method/root/layout units completed without scientific/infrastructure failure, runtime hard-abort or checkpoint warning. The bundle validated its files, plan/source hashes, unit matrix, budgets, guardrails and capability snapshot.
+- **Current scientific gate: `T-527` IN_PROGRESS under the accepted pre-outcome DEC-057 correction/completion authority; `T-526A` and `T-526` remain COMPLETE.** DEC-055 tuning is immutable valid-complete; sizing-v0.1 and v0.2 are immutable valid-failed and cannot be resumed/rerun.
+- The retained Phase-A bundle selected `gw-l1` (7×7) by rule and validated all 30 method/root/layout units without failure.
 - DEC-052 failed closed at 2/30 on a raw DQN envelope mismatch. The SB3 2.9.0 audit proved runtime/transport metadata (`data.start_time` and display-only class metadata) differed while the complete historical continuation state matched.
 - DEC-053 recovery validated 30/30 states with 12 retained SB3 transport mismatches and no learner mismatch/failure. Its Phase B stopped fail-closed at 8/240 before SARSA's first prefix because the exact checkpoint retained a deferred update.
-- The DEC-054 audit proves the fixed Phase-A interaction target stops after the final counted `observe()` with no extra `act()`. Five SARSA sources retain one valid deferred on-policy backup for interaction 2,048; 25 states are already quiescent. The existing bootstrapped-truncation path provides the exact behavior-policy/bootstrap-only action precedent. Settlement derives a separate deployment-start state with zero environment interactions and cannot use the fresh Phase-B observation.
+- DEC-054 proves five SARSA sources required deterministic behavior-policy settlement of their final already-counted transition; 25 sources were quiescent. Settlement used zero environment interactions and no Phase-B observation.
 - DEC-054 physical validation accepted 30/30 quiescent deployment-start states: five SARSA states were deterministically settled with exact restored behavior-policy RNG and 25 states were no-ops. Settlement consumed zero environment interactions. Fresh Phase-B v0.3 completed 240/240 matched sets, 960 branches, 240 one-interaction common prefixes and 9,600 post-boundary interactions with zero scientific/infrastructure failures; independent validators pass.
-- DEC-056's reviewed attempt started fresh and retained 137/240 Phase-A units plus 272/480 matched sets. The continuation adapter covered branch/reset execution, but the separate shared no-learning prefix still passed a tuple directly to stochastic DQN. Root 21 took SB3's pre-policy vectorization branch and failed with the same `.shape` exception. One infrastructure failure, zero scientific failures; final values remain unfrozen and DEC-057 was not created.
+- DEC-056's reviewed attempt started fresh and retained 137/240 Phase-A units plus 272/480 matched sets. The continuation adapter covered branch/reset execution, but the separate shared no-learning prefix still passed a tuple directly to stochastic DQN. Root 21 took SB3's pre-policy vectorization branch and failed with the same `.shape` exception. One infrastructure failure and zero scientific failures were retained.
+- DEC-057's pre-outcome audit found and centralized every active direct project-GridWorld SB3 inference ingress, including the shared prefix, Frozen branch driver, deterministic project probes and retained T-526 PPO helper. Forced exploration tests cover stochastic DQN and PPO. The generic Box evaluator and adapter-internal delegation remain explicitly outside this ingress rule.
+- Exact complete Q-Learning and SARSA v0.2 strata pass structural reuse barriers independent of performance. The one pending native attempt runs only fresh DQN/PPO/Dyna-Q+ (144 Phase-A units / 288 matched sets) and may compose a reference-only five-method 240/480 matrix only after full validation. Final values and DEC-058 remain unfrozen; #95 remains 7/10.
 - `T-528` / #93 is PAUSED/BLOCKED on T-527; its T-529 backend dependency is satisfied. The final frontend must use a framework different from NiceGUI.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
 
@@ -24,18 +26,10 @@
 
 Current reusable backend/evidence foundation includes:
 
-- immutable content-addressed `StudyRecipe`, evidence classes and frozen-confirmatory firewall;
-- deterministic stable-ID job DAG with stage barriers and exact Phase-A producer dependencies;
-- durable restart-safe `StudyStore`/`StudyService` with artifact lineage/finalization integrity;
-- explicit scientific failure, infrastructure failure and downstream skip semantics;
-- real Q-Learning/SARSA/DQN/PPO/Dyna-Q+ Phase-A Study execution and explicit Random supporting reference execution;
-- method-native exact scientific checkpoints and fail-closed checkpoint integrity checks;
-- one shared no-learning Phase-B prefix and atomic matched FN/FD/AN/AD execution from the exact same branch point;
-- structural evidence validation;
-- Phase-A interaction-axis learning summaries and root/layout blocked Phase-B matched adaptation effects;
-- explicit planned/completed/scientific-failure/skipped/infrastructure-failure/cancelled/pending/running denominators;
-- deterministic analysis/export lineage with machine-readable CSV/JSON, stable `RESULT-*` IDs and integrity/provenance manifests;
-- default concrete protocol-v2 executor registry behind the framework-neutral StudyService.
+- immutable recipes/evidence, stable-ID DAG barriers and restart-safe `StudyStore`/`StudyService`;
+- real Q-Learning/SARSA/DQN/PPO/Dyna-Q+ execution with exact checkpoints and explicit failure semantics;
+- shared-prefix atomic FN/FD/AN/AD branching, structural validation and root/layout analysis;
+- explicit status denominators and deterministic lineage-preserving CSV/JSON export.
 
 ## Protocol-v2 invariants
 
@@ -77,6 +71,8 @@ DEC-055 authority/config/runbook/entrypoint: `docs/decisions/DEC-055_PROTOCOL_V2
 
 DEC-056 authority/config/entrypoint: `docs/decisions/DEC-056_T527_SIZING_OBSERVATION_BOUNDARY_RETRY.md`, `configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json`, `scripts/run_protocol_v2_t527_sizing_v02_windows.ps1`. Evidence `results/pilots/protocol-v2-t527-sizing-v0.2/` is valid-failed at 137/240 and 272/480, with 142 integrity-covered files / 57,135,229 bytes and zero recomputed mismatches.
 
+DEC-057 authority/config/audit/entrypoint: `docs/decisions/DEC-057_T527_COMPLETE_SB3_INGRESS_AND_SIZING_COMPLETION.md`, `configs/protocols/protocol-v2-t527-sizing-completion-v0.3.json`, `docs/research/T527_SB3_DIRECT_INFERENCE_BOUNDARY_AUDIT.md`, `scripts/run_protocol_v2_t527_sizing_v03_windows.ps1`. Physical validation is pending; output paths must remain absent until the reviewed-head gate passes.
+
 Canonical bibliography remains `MariosGiannakaras/ThesisBibliography`, immutable upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`: 597 canonical sources, 121 citation-ready sources and 19 research materials. `bibliography-integration-v3` remains immutable historical terminology.
 
 ## Still intentionally unfrozen
@@ -85,4 +81,4 @@ Final retained methods/A2C decision, final layout set, budgets/gamma/reward/hori
 
 ## Exact next action
 
-Retain and independently review sizing-v0.2. The exact missing surface is direct stochastic SB3 inference in `prepare_shared_no_learning_prefix()`. Do not fix/rerun under DEC-056, access final reserve or start T-528. Keep #95 at 7/10.
+Commit/push the complete DEC-057 ingress correction, structural composition barrier, tests and native runner; require both PR #92 checks green and a clean/current native-Windows worktree; then execute the one sizing-v0.3 completion attempt exactly once. Do not access final reserve, create DEC-058 or start T-528 unless the combined 240/480 matrix validates. Keep #95 at 7/10 meanwhile.

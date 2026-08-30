@@ -1,6 +1,6 @@
 # T-527 Physical Windows Tuning and Sizing Runbook
 
-**Status:** DEC-055 and DEC-056 physical sizing attempts retained valid-failed; no resume/rerun authorized
+**Status:** DEC-055 and DEC-056 physical sizing attempts retained valid-failed; DEC-057 sizing completion pending reviewed physical validation
 **Decision:** `docs/decisions/DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md`  
 **Plan:** `configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json`  
 **Entrypoint:** `scripts/run_protocol_v2_t527_tuning_sizing_windows.ps1`
@@ -82,3 +82,24 @@ Authority commit `51612fe3ca216280d19afb69cd48f594e6ca2290` passed both checks a
 The adapter correctly covered persistent continuation attachment/step/reset and progressive 256→512 Frozen execution. The shared no-learning prefix was a separate direct stochastic inference surface: it reset the project environment to a tuple and called DQN prediction before converting the MultiDiscrete container. Root 21's exploration draw entered SB3 2.9.0's pre-policy vectorization branch, which accessed `.shape` and raised `AttributeError`. Earlier completed roots do not validate that missing surface because their stochastic draws bypassed it.
 
 Do not resume, rerun, copy, delete, replace or hand-edit sizing-v0.2. It cannot support horizon/root-count selection or DEC-057. T-527/T-528 remain blocked and #95 remains 7/10.
+
+## DEC-057 complete ingress correction and sizing completion v0.3
+
+DEC-057 is a new pre-outcome authority, not a DEC-056 retry or a final freeze. The exhaustive audit in `T527_SB3_DIRECT_INFERENCE_BOUNDARY_AUDIT.md` routes every active direct project-GridWorld SB3 prediction through one strict tuple-to-declared-MultiDiscrete-array boundary. It preserves scientific coordinates and restored stochastic RNG semantics.
+
+Exact Q-Learning and SARSA sizing-v0.2 strata may be reused by reference only because a pre-outcome structural validator proves their complete 48/48 Phase-A and 96/96 matched-set identities, source/integrity/checkpoint hashes, accounting, configuration and unchanged non-SB3 code lineage. It never uses returns, successes, runtime or precision to decide reuse. No v0.1 row or incomplete v0.2 DQN row is eligible.
+
+- Authority: `docs/decisions/DEC-057_T527_COMPLETE_SB3_INGRESS_AND_SIZING_COMPLETION.md`
+- Configuration: `configs/protocols/protocol-v2-t527-sizing-completion-v0.3.json`
+- Audit: `docs/research/T527_SB3_DIRECT_INFERENCE_BOUNDARY_AUDIT.md`
+- Entrypoint: `scripts/run_protocol_v2_t527_sizing_v03_windows.ps1`
+- Fresh evidence: `results/pilots/protocol-v2-t527-sizing-v0.3/`
+- Combined reference package: `results/pilots/protocol-v2-t527-sizing-combined-v0.3/`
+
+After the complete implementation is committed/pushed, both required checks are green on the exact open/draft PR #92 head and native Windows Git is clean/current, execute exactly once:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\run_protocol_v2_t527_sizing_v03_windows.ps1
+```
+
+The entrypoint runs no tuning and no final-reserve agent. It executes fresh DQN/PPO/Dyna-Q+ from the first DQN unit: 144 Phase-A units, 288 matched sets, 1,152 branches and 2,304 branch-horizon evaluations. Only a valid-complete fresh package may produce a reference-only combined matrix of 240 Phase-A units, 480 matched sets, 1,920 branches and 3,840 branch-horizon evaluations. Any failure is retained with no resume or second DEC-057 execution. DEC-058 and the final protocol firewall remain prohibited until that combined matrix validates.
