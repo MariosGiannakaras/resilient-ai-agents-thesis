@@ -1,4 +1,4 @@
-"""Recipe-first Thesis Study overview for the PySide6 application."""
+"""Read-only Thesis Study review for the PySide6 application."""
 from __future__ import annotations
 
 from PySide6.QtCore import Qt, Signal
@@ -22,8 +22,8 @@ class MethodItem(QFrame):
         super().__init__(parent)
         self.setObjectName("SubtleSurface")
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(11, 9, 11, 9)
-        layout.setSpacing(3)
+        layout.setContentsMargins(13, 11, 13, 11)
+        layout.setSpacing(5)
 
         top = QHBoxLayout()
         top.setSpacing(6)
@@ -61,15 +61,19 @@ class ScopeItem(QWidget):
 
 
 class ThesisStudyPage(QWidget):
+    back_requested = Signal()
     technical_details_toggled = Signal(bool)
 
     def __init__(
         self,
         protocol: FrozenProtocolSummary,
         parent: QWidget | None = None,
+        *,
+        show_back: bool = False,
     ) -> None:
         super().__init__(parent)
         self.protocol = protocol
+        self.show_back = show_back
         root = QVBoxLayout(self)
         root.setContentsMargins(0, 0, 0, 0)
 
@@ -79,11 +83,14 @@ class ThesisStudyPage(QWidget):
         content = QWidget()
         content.setObjectName("Page")
         self.content_layout = QVBoxLayout(content)
-        self.content_layout.setContentsMargins(38, 24, 42, 28)
-        self.content_layout.setSpacing(15)
+        self.content_layout.setContentsMargins(50, 34 if show_back else 44, 50, 38)
+        self.content_layout.setSpacing(18)
 
+        if self.show_back:
+            self._build_back()
         self._build_header()
         self._build_lock_banner()
+        self._build_help()
         self._build_workflow()
         self._build_metrics()
         self._build_methods()
@@ -95,32 +102,54 @@ class ThesisStudyPage(QWidget):
         root.addWidget(scroll)
         self.scroll = scroll
 
+    def _build_back(self) -> None:
+        back = QPushButton("←  Study types")
+        back.setObjectName("TextButton")
+        back.setCursor(Qt.CursorShape.PointingHandCursor)
+        back.setToolTip("Return to Thesis Study / Exploratory Study selection.")
+        back.clicked.connect(self.back_requested.emit)
+        self.content_layout.addWidget(back, 0, Qt.AlignmentFlag.AlignLeft)
+
     def _build_header(self) -> None:
-        row = QHBoxLayout()
-        row.setSpacing(12)
+        hero = QFrame()
+        hero.setObjectName("HeroSurface")
+        layout = QHBoxLayout(hero)
+        layout.setContentsMargins(24, 20, 24, 21)
+        layout.setSpacing(16)
+
         text = QVBoxLayout()
-        text.setSpacing(3)
-        title = QLabel("Thesis Study")
+        text.setSpacing(6)
+        eyebrow = QLabel("THESIS STUDY")
+        eyebrow.setObjectName("PageEyebrow")
+        title = QLabel("Frozen protocol review")
         title.setObjectName("PageTitle")
         lead = QLabel(
-            "Review the frozen protocol-v2.0 plan. Scientific settings are fixed by DEC-058."
+            "Review the accepted protocol-v2.0 study before final evidence execution is authorized. "
+            "Scientific settings are fixed by DEC-058 and remain read-only here."
         )
         lead.setObjectName("PageLead")
         lead.setWordWrap(True)
+        text.addWidget(eyebrow)
         text.addWidget(title)
         text.addWidget(lead)
-        row.addLayout(text, 1)
-        row.addWidget(StatusPill("FROZEN PROTOCOL", kind="frozen"), 0, Qt.AlignmentFlag.AlignTop)
-        self.content_layout.addLayout(row)
+        layout.addLayout(text, 1)
+        layout.addWidget(
+            StatusPill("FROZEN PROTOCOL", kind="frozen"),
+            0,
+            Qt.AlignmentFlag.AlignTop,
+        )
+        self.content_layout.addWidget(hero)
 
     def _build_lock_banner(self) -> None:
         banner = QFrame()
         banner.setObjectName("LockedBanner")
         layout = QHBoxLayout(banner)
-        layout.setContentsMargins(14, 10, 14, 10)
+        layout.setContentsMargins(15, 11, 15, 11)
         layout.setSpacing(12)
         status = StatusPill("LOCKED", kind="locked")
-        status.setToolTip("Final scientific execution requires a later explicit T-610+ authorization gate.")
+        status.setToolTip(
+            "Final scientific execution requires a later explicit T-610+ authorization gate."
+        )
         text = QVBoxLayout()
         text.setSpacing(1)
         title = QLabel("Final evidence execution is not authorized yet")
@@ -136,12 +165,30 @@ class ThesisStudyPage(QWidget):
         layout.addLayout(text, 1)
         self.content_layout.addWidget(banner)
 
+    def _build_help(self) -> None:
+        self.help_button = QPushButton("?   Why are these settings read-only?")
+        self.help_button.setObjectName("HelpDisclosure")
+        self.help_button.setCheckable(True)
+        self.help_button.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.help_button.setToolTip("Explain the frozen-protocol and final-reserve boundary.")
+        self.help_detail = QLabel(
+            "This screen is a presentation of the accepted DEC-058 authority. Roots, layouts, conditions, "
+            "method configurations and statistical rules are scientific protocol inputs, not UI preferences. "
+            "Changing them would define a different study rather than edit this frozen one."
+        )
+        self.help_detail.setObjectName("HelpDetail")
+        self.help_detail.setWordWrap(True)
+        self.help_detail.hide()
+        self.help_button.toggled.connect(self.help_detail.setVisible)
+        self.content_layout.addWidget(self.help_button)
+        self.content_layout.addWidget(self.help_detail)
+
     def _build_workflow(self) -> None:
         surface = QFrame()
         surface.setObjectName("Surface")
         outer = QVBoxLayout(surface)
-        outer.setContentsMargins(16, 11, 16, 11)
-        outer.setSpacing(7)
+        outer.setContentsMargins(18, 14, 18, 14)
+        outer.setSpacing(9)
 
         header = QHBoxLayout()
         title = QLabel("Study lifecycle")
@@ -183,7 +230,7 @@ class ThesisStudyPage(QWidget):
         surface = QFrame()
         surface.setObjectName("Surface")
         row = QHBoxLayout(surface)
-        row.setContentsMargins(18, 11, 18, 11)
+        row.setContentsMargins(18, 13, 18, 13)
         row.setSpacing(16)
         metrics = (
             (str(len(self.protocol.methods)), "Methods"),
@@ -208,11 +255,11 @@ class ThesisStudyPage(QWidget):
         grid_container = QWidget()
         grid = QGridLayout(grid_container)
         grid.setContentsMargins(0, 0, 0, 0)
-        grid.setHorizontalSpacing(8)
-        grid.setVerticalSpacing(0)
+        grid.setHorizontalSpacing(10)
+        grid.setVerticalSpacing(10)
         for index, method in enumerate(self.protocol.methods):
-            grid.addWidget(MethodItem(method), 0, index)
-            grid.setColumnStretch(index, 1)
+            grid.addWidget(MethodItem(method), index // 3, index % 3)
+            grid.setColumnStretch(index % 3, 1)
         self.content_layout.addWidget(grid_container)
 
     def _build_scope(self) -> None:
@@ -220,7 +267,7 @@ class ThesisStudyPage(QWidget):
         surface = QFrame()
         surface.setObjectName("Surface")
         row = QHBoxLayout(surface)
-        row.setContentsMargins(16, 11, 16, 11)
+        row.setContentsMargins(18, 13, 18, 13)
         row.setSpacing(16)
         items = (
             (
@@ -253,7 +300,10 @@ class ThesisStudyPage(QWidget):
             ("Study ID", self.protocol.study_id),
             ("Probe indices", ", ".join(str(item) for item in self.protocol.probe_indices)),
             ("Probe episodes", str(self.protocol.probe_episodes)),
-            ("Shared prefix", f"{self.protocol.phase_b_prefix_interactions} total interactions across matched sets"),
+            (
+                "Shared prefix",
+                f"{self.protocol.phase_b_prefix_interactions} total interactions across matched sets",
+            ),
             ("Execution gate", self.protocol.execution_authorization),
             ("Final reserve", "access=false"),
         )

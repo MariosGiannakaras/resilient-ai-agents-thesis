@@ -64,37 +64,47 @@ def main() -> int:
     app.processEvents()
 
     records: list[dict[str, object]] = []
+    study = window.study_page
 
-    # Historical accepted references are 1480x920. Capture this exact viewport
-    # first so visual review is not confounded by a size mismatch.
+    # Historical accepted references are 1480x920. Capture the key Study journey
+    # states at this exact viewport so visual review is not confounded by size.
     window.resize(QSize(1480, 920))
     window.set_page(0)
+    study.show_home()
+    app.processEvents()
+    records.append(capture(window, output, "reference-size-choose-study.png"))
+
+    study.show_thesis()
     app.processEvents()
     records.append(capture(window, output, "reference-size-thesis-study.png"))
 
-    study_page = window.pages[0]
-    technical = getattr(study_page, "technical", None)
-    if technical is None:
-        raise RuntimeError("Thesis Study page does not expose technical details surface")
-    technical.show()
+    study.thesis.technical.show()
     app.processEvents()
     records.append(capture(window, output, "reference-size-thesis-study-technical.png"))
-    technical.hide()
+    study.thesis.technical.hide()
+
+    study.show_exploratory()
+    app.processEvents()
+    records.append(capture(window, output, "reference-size-exploratory-models.png"))
 
     window.resize(QSize(1440, 900))
     window.set_page(0)
+    study.show_home()
     app.processEvents()
-    records.append(capture(window, output, "01-thesis-study.png"))
+    records.append(capture(window, output, "01-choose-study.png"))
 
-    technical.show()
+    study.show_thesis()
     app.processEvents()
-    records.append(capture(window, output, "02-thesis-study-technical.png"))
-    technical.hide()
+    records.append(capture(window, output, "02-thesis-study.png"))
+
+    study.show_exploratory()
+    app.processEvents()
+    records.append(capture(window, output, "03-exploratory-models.png"))
 
     for index, filename in (
-        (1, "03-runs-empty.png"),
-        (2, "04-results-empty.png"),
-        (3, "05-artifacts-empty.png"),
+        (1, "04-runs-empty.png"),
+        (2, "05-results-empty.png"),
+        (3, "06-artifacts-empty.png"),
     ):
         window.set_page(index)
         app.processEvents()
@@ -102,12 +112,17 @@ def main() -> int:
 
     window.resize(QSize(1366, 768))
     window.set_page(0)
+    study.show_home()
     app.processEvents()
-    records.append(capture(window, output, "06-thesis-study-1366x768.png"))
+    records.append(capture(window, output, "07-choose-study-1366x768.png"))
+
+    study.show_exploratory()
+    app.processEvents()
+    records.append(capture(window, output, "08-exploratory-models-1366x768.png"))
 
     protocol_path = REPO_ROOT / "configs" / "protocols" / "protocol-v2.0-final.json"
     manifest = {
-        "schema_version": 2,
+        "schema_version": 3,
         "purpose": "T-528 deterministic presentation review; not scientific evidence",
         "visual_reference_viewport": [1480, 920],
         "final_reserve_execution": "not-authorized-and-not-executed",

@@ -21,8 +21,8 @@ from .artifacts_page import ArtifactsPage
 from .placeholder_page import PlaceholderPage
 from .protocol import load_frozen_protocol
 from .runs_page import RunsPage
-from .study_page import ThesisStudyPage
 from .study_read_model import DesktopStudyReadModel
+from .study_workspace import StudyWorkspacePage
 from .widgets import NavButton
 
 
@@ -36,7 +36,10 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(1100, 700)
 
         protocol = load_frozen_protocol(self.repo_root)
-        self.study_read_model = DesktopStudyReadModel(repo_root=self.repo_root, writable_root=self.writable_root)
+        self.study_read_model = DesktopStudyReadModel(
+            repo_root=self.repo_root,
+            writable_root=self.writable_root,
+        )
 
         root = QWidget()
         root.setObjectName("AppRoot")
@@ -52,9 +55,9 @@ class MainWindow(QMainWindow):
 
         sidebar = QWidget()
         sidebar.setObjectName("Sidebar")
-        sidebar.setFixedWidth(282)
+        sidebar.setFixedWidth(300)
         sidebar_layout = QVBoxLayout(sidebar)
-        sidebar_layout.setContentsMargins(22, 22, 18, 18)
+        sidebar_layout.setContentsMargins(24, 22, 20, 18)
         sidebar_layout.setSpacing(7)
 
         workspace = QLabel("WORKSPACE")
@@ -62,14 +65,22 @@ class MainWindow(QMainWindow):
         sidebar_layout.addWidget(workspace)
         sidebar_layout.addSpacing(10)
 
-        self.thesis_page = ThesisStudyPage(protocol)
+        self.study_page = StudyWorkspacePage(protocol)
+        # Compatibility handle for presentation QA and callers that need the
+        # read-only frozen thesis review surface directly.
+        self.thesis_page = self.study_page.thesis
         self.runs_page = RunsPage(self.study_read_model)
         self.results_page = PlaceholderPage(
             "Results",
             "Compare Learning and Test Resilience become available from stored analysis evidence. The application will not invent example scientific outcomes.",
         )
         self.artifacts_page = ArtifactsPage(self.study_read_model)
-        self.pages = (self.thesis_page, self.runs_page, self.results_page, self.artifacts_page)
+        self.pages = (
+            self.study_page,
+            self.runs_page,
+            self.results_page,
+            self.artifacts_page,
+        )
 
         self.stack = QStackedWidget()
         for page in self.pages:
@@ -78,7 +89,7 @@ class MainWindow(QMainWindow):
 
         self.nav_buttons: list[NavButton] = []
         nav_items = (
-            ("▦   Study", "Review the frozen thesis plan or prepare an exploratory study."),
+            ("▦   Study", "Choose a thesis review or prepare a development-only exploratory study."),
             ("▶   Runs", "Inspect durable Study records and real execution state."),
             ("↔   Results", "Compare stored learning and resilience analysis when evidence exists."),
             ("▣   Artifacts", "Inspect artifacts registered by durable Study records."),
@@ -136,7 +147,7 @@ class MainWindow(QMainWindow):
 
         mark = QLabel("✦")
         mark.setStyleSheet("color:#245DE8;font-size:24px;font-weight:700;")
-        mark.setToolTip("Resilient Agents research application")
+        mark.setToolTip("Resilient AI Agents research application")
         layout.addWidget(mark)
 
         brand_group = QVBoxLayout()
@@ -152,7 +163,9 @@ class MainWindow(QMainWindow):
 
         help_button = QPushButton("?  Getting started")
         help_button.setObjectName("HeaderHelp")
-        help_button.setToolTip("Open a short guide to the application surfaces and scientific boundary.")
+        help_button.setToolTip(
+            "Open a short guide to the application surfaces and scientific boundary."
+        )
         help_button.clicked.connect(self._show_getting_started)
         layout.addWidget(help_button)
 
@@ -168,8 +181,8 @@ class MainWindow(QMainWindow):
         QMessageBox.information(
             self,
             "Getting started",
-            "Study prepares or reviews a study. Runs shows durable execution state. "
-            "Results exposes stored analysis only, and Artifacts shows registered outputs.\n\n"
+            "Study lets you review the frozen thesis design or begin development-only exploratory configuration. "
+            "Runs shows durable execution state. Results exposes stored analysis only, and Artifacts shows registered outputs.\n\n"
             "Final-reserve scientific execution remains locked until a later explicit authorization gate.",
         )
 

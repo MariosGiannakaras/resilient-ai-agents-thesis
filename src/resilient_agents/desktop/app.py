@@ -5,9 +5,9 @@ import os
 import sys
 from pathlib import Path
 
-from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication
 
+from . import APP_NAME
 from .main_window import MainWindow
 from .theme import application_stylesheet
 
@@ -38,7 +38,7 @@ def create_application(argv: list[str] | None = None) -> QApplication:
     app = QApplication.instance()
     if app is None:
         app = QApplication(argv if argv is not None else sys.argv)
-    app.setApplicationName("Resilient Agents")
+    app.setApplicationName(APP_NAME)
     app.setOrganizationName("THESIS")
     app.setStyle("Fusion")
     app.setStyleSheet(application_stylesheet())

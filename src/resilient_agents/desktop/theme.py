@@ -20,6 +20,9 @@ COLORS = {
     "locked": "#9A5B00",
     "locked_bg": "#FFF8EE",
     "locked_border": "#F3C47A",
+    "development": "#1F5A7A",
+    "development_bg": "#EEF8FC",
+    "development_border": "#A9D7E8",
     "success": "#067647",
     "success_bg": "#ECFDF3",
     "danger": "#B42318",
@@ -56,13 +59,35 @@ def application_stylesheet() -> str:
     QLabel#SectionTitle {{ font-size: 16px; font-weight: 700; }}
     QLabel#SectionHint {{ color: {COLORS['muted']}; font-size: 12px; }}
 
+    QFrame#HeroSurface {{ background: {COLORS['surface']}; border: 1px solid {COLORS['border']}; border-radius: 16px; }}
     QFrame#Surface {{ background: {COLORS['surface']}; border: 1px solid {COLORS['border']}; border-radius: 11px; }}
     QFrame#SubtleSurface {{ background: {COLORS['surface_subtle']}; border: 1px solid {COLORS['border']}; border-radius: 8px; }}
+    QFrame#ChoiceCard {{ background: {COLORS['surface']}; border: 1px solid {COLORS['border']}; border-radius: 14px; min-height: 248px; }}
+    QFrame#ChoiceCard:hover {{ border-color: #B8C9E7; }}
+    QFrame#ChoiceFacts {{ background: {COLORS['surface_subtle']}; border: 1px solid #E7ECF3; border-radius: 8px; }}
+    QLabel#ChoiceTitle {{ color: {COLORS['text']}; font-size: 18px; font-weight: 700; }}
+    QLabel#ChoiceBody {{ color: {COLORS['muted']}; font-size: 12px; }}
+    QLabel#ChoiceFact {{ color: #344054; font-size: 12px; }}
+
     QFrame#LockedBanner {{ background: {COLORS['locked_bg']}; border: 1px solid {COLORS['locked_border']}; border-radius: 9px; }}
     QLabel#LockedTitle {{ color: #704300; font-weight: 700; }}
     QLabel#LockedText {{ color: #7A5A24; }}
     QLabel#StatusLocked {{ color: {COLORS['locked']}; background: {COLORS['locked_bg']}; border: 1px solid {COLORS['locked_border']}; border-radius: 9px; padding: 3px 8px; font-size: 11px; font-weight: 700; }}
     QLabel#StatusFrozen {{ color: #174EA6; background: {COLORS['accent_soft']}; border: 1px solid #B9CDF7; border-radius: 9px; padding: 3px 8px; font-size: 11px; font-weight: 700; }}
+    QLabel#StatusDevelopment {{ color: {COLORS['development']}; background: {COLORS['development_bg']}; border: 1px solid {COLORS['development_border']}; border-radius: 9px; padding: 3px 8px; font-size: 11px; font-weight: 700; }}
+    QFrame#DevelopmentBanner {{ background: {COLORS['development_bg']}; border: 1px solid {COLORS['development_border']}; border-radius: 9px; }}
+    QLabel#DevelopmentText {{ color: #315B70; }}
+
+    QPushButton#HelpDisclosure {{ color: #24405F; background: transparent; border: 0; padding: 4px 2px; text-align: left; font-weight: 650; }}
+    QPushButton#HelpDisclosure:hover {{ color: {COLORS['accent']}; }}
+    QPushButton#HelpDisclosure:checked {{ color: {COLORS['accent']}; }}
+    QLabel#HelpDetail {{ color: #3F526B; background: #F7F9FC; border: 1px solid {COLORS['border']}; border-radius: 8px; padding: 10px 12px; }}
+
+    QFrame#ModelChoiceCard {{ background: {COLORS['surface']}; border: 1px solid {COLORS['border']}; border-radius: 11px; min-height: 124px; }}
+    QFrame#ModelChoiceCard:hover {{ border-color: #B8C9E7; }}
+    QCheckBox#ModelChoiceCheck {{ color: {COLORS['text']}; font-size: 14px; font-weight: 700; spacing: 8px; }}
+    QCheckBox#ModelChoiceCheck::indicator {{ width: 16px; height: 16px; }}
+    QLabel#ModelChoiceConfig {{ color: {COLORS['accent']}; font-size: 11px; font-weight: 600; }}
 
     QLabel#MetricValue {{ font-size: 20px; font-weight: 700; }}
     QLabel#MetricLabel {{ color: {COLORS['muted']}; font-size: 11px; }}
@@ -75,6 +100,7 @@ def application_stylesheet() -> str:
 
     QPushButton#PrimaryButton {{ background: {COLORS['accent']}; color: #FFFFFF; border: 0; border-radius: 7px; padding: 9px 14px; font-weight: 650; }}
     QPushButton#PrimaryButton:hover {{ background: {COLORS['accent_hover']}; }}
+    QPushButton#PrimaryButton:disabled {{ background: #D7DFED; color: #FFFFFF; }}
     QPushButton#SecondaryButton {{ background: {COLORS['surface']}; color: #263B56; border: 1px solid #C8D2E1; border-radius: 7px; padding: 9px 14px; font-weight: 600; }}
     QPushButton#SecondaryButton:hover {{ color: {COLORS['accent']}; border-color: #AFC3EE; background: #F8FAFF; }}
     QPushButton#LockedButton {{ background: #F5F7FA; color: #98A2B3; border: 1px solid #E1E6ED; border-radius: 7px; padding: 9px 14px; font-weight: 600; }}
