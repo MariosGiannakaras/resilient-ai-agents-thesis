@@ -23,7 +23,7 @@ This decision authorizes the formal scientific freeze of Protocol-v2.0 and the c
 3. **Probe Schedule**: Probes execute precisely at interactions 0, 512, 1024, 2048, 4096, and 8192, with 12 episodes per probe.
 4. **PPO Parameter**: 
 _steps remains exactly 128.
-5. **Phase-B Horizon**: The 256-interaction horizon is mechanically selected, as every method/root/layout pair in the combined matrix successfully completed ≥2 adaptive native update opportunities and ≥2 branch episodes at horizon 256.
+5. **Phase-B Horizon**: The 256-interaction horizon is mechanically selected, as every method/root/layout pair in the combined matrix successfully completed >=2 adaptive native update opportunities and >=2 branch episodes at horizon 256.
 6. **No-Learning Prefix**: Exactly one shared nominal interaction applies before branch replication.
 7. **Lifecycle**: The persistent multi-episode lifecycle applies deterministically across boundaries.
 8. **Final Conditions**: The final evaluated conditions are exactly four:
@@ -39,11 +39,15 @@ _steps remains exactly 128.
     - 5 methods
     - 12 independent roots
     - 2 held-out layouts
-    - Phase-A units: 5 × 12 × 2 = 120
+    - Phase-A units: 5 x 12 x 2 = 120
     - Phase-B conditions: 4
-    - Phase-B matched sets (FN/FD/AN/AD branches): 5 × 12 × 2 × 4 = 480
-    - Branch evaluations: 480 × 4 = 1920
-14. **Final Firewall**: Final reserve access is permanently sealed. No agent parameter, statistical rule, or environment layout may be changed after this freeze. T-528 is now READY.
+    - Phase-B matched sets (FN/FD/AN/AD branches): 5 x 12 x 2 x 4 = 480
+    - Branches: 480 x 4 = 1920
+14. **Final Firewall**: 
+    - Final reserve identities are frozen/materialized.
+    - Final reserve scientific execution remains sealed.
+    - inal_reserve_access=false
+    - Later T-610+ explicit authorization is required. No agent parameter, statistical rule, or environment layout may be changed after this freeze. T-528 is now READY.
 
 ## Consequences
 

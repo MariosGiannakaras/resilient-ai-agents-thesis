@@ -4,7 +4,7 @@
   "study_id": "protocol-v2.0-final",
   "scientific_status": "final-frozen-scientific-authority",
   "purpose": "Final frozen scientific authority for the protocol-v2 campaign",
-  "final_reserve_access": true,
+  "final_reserve_access": false,
   "required_host": {
     "platform": "Windows",
     "python": "3.12",
@@ -344,7 +344,8 @@
       4096,
       8192
     ],
-    "episodes_per_probe": 12
+    "episodes_per_probe": 12,
+    "deployment_start_settlement": "DEC-054"
   },
   "phase_b": {
     "conditions": [
@@ -403,6 +404,26 @@
     "methods": 5,
     "expected_phase_a_units": 120,
     "expected_matched_sets": 480,
-    "expected_branch_evaluations": 1920
-  }
+    "branch_roles": [
+      "FN",
+      "FD",
+      "AN",
+      "AD"
+    ],
+    "layouts_equal_weighted_within_root": true,
+    "primary_estimand": "matched-did-adaptation",
+    "descriptive_utility": "raw-ad-fd",
+    "p_values": false,
+    "multiplicity_correction": false,
+    "composite_resilience_score": false,
+    "failure_retention": true,
+    "root_replacement": false,
+    "expected_phase_a_training_interactions": 983040,
+    "expected_phase_b_matched_sets": 480,
+    "expected_phase_b_branches": 1920,
+    "expected_phase_b_prefix_interactions": 480,
+    "expected_phase_b_post_boundary_interactions": 491520
+  },
+  "direct_sb3_representation_boundary": "DEC-057",
+  "execution_authorization": "requires-explicit-t610-gate"
 }

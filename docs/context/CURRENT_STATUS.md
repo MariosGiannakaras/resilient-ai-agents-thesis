@@ -65,7 +65,7 @@ Evidence path: `results/pilots/protocol-v2-feasibility-v0.1/`. Do not rerun, del
 
 ## Statistics / provenance
 
-Final statistical values and the contrast family freeze only in T-527. Filesystem evidence remains authoritative and any future index/database must be rebuildable.
+Final statistical values and the contrast family are frozen by T-527 in DEC-058. Filesystem evidence remains authoritative and any future index/database must be rebuildable.
 
 DEC-055 authority/config/runbook/entrypoint: `docs/decisions/DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md`, `configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json`, `docs/research/T527_WINDOWS_TUNING_SIZING_RUNBOOK.md`, `scripts/run_protocol_v2_t527_tuning_sizing_windows.ps1`. The deterministic input package is `results/pilots/protocol-v2-t527-input-diagnostics-v0.1/`. The tuning package `results/pilots/protocol-v2-t527-tuning-v0.1/` is valid-complete at 180/180 (4 hash-covered files, 287,709 bytes). The sizing package `results/pilots/protocol-v2-t527-sizing-v0.1/` is valid-failed at 97/240 Phase-A units and 192/480 matched sets (101 hash-covered files, 3,911,282 bytes), with one infrastructure failure and zero hash mismatches.
 
