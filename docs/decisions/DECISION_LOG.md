@@ -190,7 +190,7 @@ File: `DEC-054_PHASE_A_INTERACTION_BUDGET_SETTLEMENT.md`.
 
 ## DEC-055 — Protocol-v2 fair tuning and sizing authority
 
-**ACCEPTED PRE-OUTCOME AUTHORITY; PHYSICAL VALIDATION PENDING.** All five core methods receive exactly six method-appropriate configurations over the same three tuning roots, two development layouts, 8,192 actual interactions and frozen probe grid. Selection, common Phase-A budget, 256/512 multi-episode action-remap sizing, 12/16/20/24 root precision rule and persistent reset/regime semantics are fixed before outcomes. Final reserve, final layouts/roots and confirmatory execution remain forbidden.
+**ACCEPTED PRE-OUTCOME AUTHORITY; PHYSICAL ATTEMPT VALID-FAILED.** The reviewed one-time run completed fair tuning 180/180 and selected `q-c06`, `sarsa-c06`, `dqn-c05`, `ppo-c06`, `dyna-c03` plus the 8,192-interaction common budget. Precision/runtime sizing stopped fail-closed at 97/240 Phase-A units and 192/480 matched sets when Frozen DQN reached a later episode reset and SB3 received a tuple rather than an array-shaped MultiDiscrete observation. The failure is infrastructure/type-boundary, not a scientific learner outcome. Evidence is retained, the attempt cannot be resumed/rerun under DEC-055, DEC-056 is not justified and final reserve/final layouts/roots remain untouched.
 
 File: `DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md`.
 

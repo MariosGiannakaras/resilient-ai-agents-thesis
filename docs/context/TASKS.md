@@ -21,8 +21,8 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 
 - **Package:** DEC-048/050 protocol-v2 methodology, completed DEC-051 study-first backend reconstruction, historical failed DEC-052 recovery, DEC-053's valid 30/30 scientific-continuation recovery and DEC-054's exact Phase-A budget-boundary settlement. DEC-042/047 and candidate v1.1 remain auditable predecessor design. DEC-049 controls the later new-framework frontend rebuild.
 - **Project:** **4/8** master milestones complete (#87: 1, 2, 4, 5).
-- **Current task:** `T-527` IN_PROGRESS under pre-outcome DEC-055 authority; `T-526` / `T-526A` remain COMPLETE.
-- **State:** DEC-055 freezes equal six-configuration tuning opportunity for all five core methods, common 8,192-interaction tuning/probe resources, mechanical selection, the 4,096/8,192 budget rule, 12/16/20/24 root precision candidates, 256/512 Phase-B horizons and persistent multi-episode lifecycle before tuning outcomes. Deterministic T-526 input diagnostics are retained; physical validation has not executed yet.
+- **Current task:** `T-527` BLOCKED on the retained one-time DEC-055 physical sizing failure; `T-526` / `T-526A` remain COMPLETE.
+- **State:** The reviewed DEC-055 authority executed exactly once. Fair tuning completed 180/180 and mechanically selected `q-c06`, `sarsa-c06`, `dqn-c05`, `ppo-c06`, `dyna-c03` plus the 8,192-interaction common Phase-A budget. Sizing failed closed after 97/240 Phase-A units and 192/480 matched sets when a Frozen DQN episode reset supplied the project tuple observation directly to SB3, whose MultiDiscrete inference path requires an array-shaped observation. The immutable failed attempt has no scientific failure and one infrastructure failure; DEC-056 was not created.
 - **Completed parallel backend work:** `T-529` is COMPLETE. The framework-neutral Study lifecycle now covers immutable recipe -> deterministic plan -> real Phase A -> exact checkpoint -> optional common no-learning prefix -> atomic FN/FD/AN/AD -> validation -> root/layout analysis with explicit denominators -> deterministic machine-readable evidence export, with restart-safe provenance and no frontend dependency.
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no parallel main-repo implementation branch and no early merge.
 - **Trackers:** #87 master 4/8; #95 protocol-v2 7/10 after exact trained-state/Frozen-Adaptive physical validation; #88 closed/superseded; #89 complete/closed; #93 PAUSED; #94 DEFERRED post-thesis.
@@ -30,7 +30,7 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 - **Bibliography:** immutable protocol-v2 consumer snapshot remains upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`, merged through thesis PR #96 and validated on PR #92.
 - **Frontend direction:** final frontend is rebuilt from scratch with a **different framework from NiceGUI** at `T-528` only after T-527 scientific freeze. T-529's backend dependency is already satisfied.
 - **Pre-WP7 approval:** NOT APPROVED; `T-700+` remains blocked.
-- **Exact next action:** commit/push the DEC-055 plan, lifecycle implementation, focused tests, input diagnostics and runbook; require both PR #92 checks green on that exact clean head, then execute the committed Windows T-527 tuning/sizing entrypoint once. Keep #95 at 7/10 until physical evidence and DEC-056 final freeze satisfy remaining items.
+- **Exact next action:** retain and review the DEC-055 failed attempt. Do not resume or rerun its tuning/sizing directories. Any future attempt requires a new explicit pre-outcome authority that fixes and validates the SB3 reset-observation type boundary before execution. Keep #95 at 7/10, T-528 blocked and the final reserve untouched.
 
 ## Quota/interruption resilience
 
@@ -139,13 +139,16 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Phase-B evidence: `results/pilots/protocol-v2-feasibility-phase-b-v0.3/` is valid-complete at 240/240, with 960 branches, 240 common-prefix interactions, 9,600 post-boundary interactions, four hash-covered files, 803,558 bytes, 223.710 wall-seconds and zero scientific/infrastructure failures.
   - The v0.3 attempt started from matched set one and copied no v0.2 row. All original Phase-A, DEC-052, DEC-053 recovery-v0.2 and failed Phase-B-v0.2 integrity/lineage checks passed before and after execution. No rerun/resume is authorized.
 
-- [ ] IN_PROGRESS `T-527` — Fair tuning, precision/runtime sizing, statistical freeze and machine-readable protocol-v2 firewall.
+- [ ] BLOCKED `T-527` — Fair tuning, precision/runtime sizing, statistical freeze and machine-readable protocol-v2 firewall.
   - Depends on: `T-526`.
   - Acceptance: bounded method-specific tuning with equivalent predeclared opportunity; common protocol-level gamma/reward/horizon values; fixed actual interaction budgets/probe grid compatible with retained update quanta; final retained methods/environment/severities/root count chosen only from non-final evidence; no best-seed/best-final-checkpoint selection.
   - Statistical freeze: root/run independent; block/equal layout handling; paired/DiD primary effects; Student-t root-level mean CI as default candidate subject to final pilot diagnostics/precision sizing; root-bootstrap/robust sensitivity; explicit failure denominators; limited primary contrast family and frozen multiplicity rule if p-values are used.
   - Freeze final layout/root reserve and exact Phase-B branch/update behavior before access.
   - DEC-055 pre-outcome authority/config/runner: `docs/decisions/DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md`, `configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json`, `scripts/run_protocol_v2_t527_tuning_sizing_windows.ps1`.
-  - Pre-run state: deterministic immutable-input diagnostics exist at `results/pilots/protocol-v2-t527-input-diagnostics-v0.1/`; physical tuning/sizing awaits committed/pushed green reviewed authority.
+  - Reviewed execution authority: `357c38cc5effafbb7fd45e464b37cd3e22eef84b` matched local/remote/PR #92, had both required checks green and a clean native-Windows worktree before the one authorized run.
+  - Tuning evidence: `results/pilots/protocol-v2-t527-tuning-v0.1/` is valid-complete at 180/180 with zero failures and zero integrity mismatches. The declared selection rule chose `q-c06`, `sarsa-c06`, `dqn-c05`, `ppo-c06`, `dyna-c03`; the common-budget rule chose 8,192 interactions. These remain non-final development outputs.
+  - Sizing evidence: `results/pilots/protocol-v2-t527-sizing-v0.1/` is valid-failed at 97/240 Phase-A units and 192/480 matched sets (1,536 branch-horizon evaluations), with zero scientific failures and one infrastructure failure at `dqn / t527-size-r01 / gw-l1-a`. All 24 roots for Q-Learning and SARSA completed; DQN failed in the first sizing unit after its Phase-A checkpoint was retained.
+  - Exact blocker: after a later Frozen DQN deployment episode reset, `reset_gridworld_branch_episode()` returned the project `(x, y)` tuple and `SB3PhaseBBranchDriver` passed it directly to `model.predict`; SB3 2.9.0 MultiDiscrete observation validation accessed `.shape` and raised `AttributeError`. No DEC-056/final layout/final root/final statistical or protocol-v2.0 freeze is justified from this incomplete sizing matrix. The attempt cannot be resumed or rerun under DEC-055.
 
 - [x] `T-529` — Reconstruct the study-first protocol-v2 backend from recipe through evidence/analysis/export, without frontend implementation.
   - Depends on: `T-525` — satisfied. Completed without consuming or inventing unresolved T-526/T-527 values.
