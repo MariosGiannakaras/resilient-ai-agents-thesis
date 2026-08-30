@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from PySide6.QtCore import Qt
 from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import (
     QHBoxLayout,
@@ -26,8 +27,6 @@ from .widgets import NavButton
 
 
 class MainWindow(QMainWindow):
-    PAGE_LABELS = ("Thesis Study", "Runs", "Results", "Artifacts")
-
     def __init__(self, *, repo_root: Path, writable_root: Path | None = None) -> None:
         super().__init__()
         self.repo_root = Path(repo_root).resolve()
@@ -44,7 +43,6 @@ class MainWindow(QMainWindow):
         app_layout = QVBoxLayout(root)
         app_layout.setContentsMargins(0, 0, 0, 0)
         app_layout.setSpacing(0)
-
         app_layout.addWidget(self._build_top_header())
 
         body = QWidget()
@@ -76,7 +74,6 @@ class MainWindow(QMainWindow):
         self.stack = QStackedWidget()
         for page in self.pages:
             self.stack.addWidget(page)
-
         self.runs_page.study_selected.connect(self._show_artifacts_for_study)
 
         self.nav_buttons: list[NavButton] = []
@@ -151,11 +148,6 @@ class MainWindow(QMainWindow):
         brand_group.addWidget(brand)
         brand_group.addWidget(subtitle)
         layout.addLayout(brand_group)
-
-        layout.addSpacing(28)
-        self.header_page = QLabel("Thesis Study")
-        self.header_page.setObjectName("HeaderPage")
-        layout.addWidget(self.header_page)
         layout.addStretch(1)
 
         help_button = QPushButton("?  Getting started")
@@ -166,6 +158,8 @@ class MainWindow(QMainWindow):
 
         lock = QLabel("FINAL RESERVE LOCKED")
         lock.setObjectName("HeaderLock")
+        lock.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        lock.setFixedHeight(24)
         lock.setToolTip("Final-reserve execution is not authorized during T-528.")
         layout.addWidget(lock)
         return header
@@ -181,7 +175,6 @@ class MainWindow(QMainWindow):
 
     def set_page(self, index: int) -> None:
         self.stack.setCurrentIndex(index)
-        self.header_page.setText(self.PAGE_LABELS[index])
         for button_index, button in enumerate(self.nav_buttons):
             button.setChecked(button_index == index)
         if index == 1:
