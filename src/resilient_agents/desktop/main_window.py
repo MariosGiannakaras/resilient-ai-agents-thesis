@@ -3,15 +3,12 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from PySide6.QtCore import Qt
 from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import (
-    QFrame,
     QHBoxLayout,
     QLabel,
     QMainWindow,
     QPushButton,
-    QSizePolicy,
     QStackedWidget,
     QVBoxLayout,
     QWidget,
@@ -82,10 +79,10 @@ class MainWindow(QMainWindow):
             self.nav_buttons.append(button)
 
         sidebar_layout.addStretch(1)
-        help_button = QPushButton("Help & terminology")
+        help_button = QPushButton("Help && terminology")
         help_button.setObjectName("NavButton")
         help_button.setToolTip(
-            "Contextual scientific help will be available throughout the application."
+            "Contextual scientific help will be connected in a later T-528 feature slice."
         )
         help_button.setEnabled(False)
         sidebar_layout.addWidget(help_button)
