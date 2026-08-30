@@ -22,7 +22,7 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 - **Package:** DEC-048/050 protocol-v2 methodology, completed DEC-051 study-first backend reconstruction, historical failed DEC-052 recovery, DEC-053's valid 30/30 scientific-continuation recovery and DEC-054's exact Phase-A budget-boundary settlement. DEC-042/047 and candidate v1.1 remain auditable predecessor design. DEC-049 controls the later new-framework frontend rebuild.
 - **Project:** **4/8** master milestones complete (#87: 1, 2, 4, 5).
 - **Current task:** `T-527` IN_PROGRESS under accepted pre-outcome DEC-057; `T-526` / `T-526A` remain COMPLETE.
-- **State:** DEC-055 tuning remains immutable valid-complete. DEC-055/056 sizing packages remain immutable valid-failed. DEC-057 centralizes direct project-GridWorld SB3 ingress and, after reviewed-head gates, authorizes one fresh DQN/PPO/Dyna-Q+ sizing-v0.3 completion plus structurally validated reference-only composition with exact complete Q-Learning/SARSA v0.2 strata. Physical validation is pending; final reserve and DEC-058 remain gated.
+- **State:** DEC-055 tuning remains immutable valid-complete. DEC-055/056 sizing packages remain immutable valid-failed. DEC-058 defines the final protocol-v2 frozen parameters, generated layouts, and roots. Physical validation of v0.3 completed with 0 failures.
 - **Completed parallel backend work:** `T-529` is COMPLETE. The framework-neutral Study lifecycle now covers immutable recipe -> deterministic plan -> real Phase A -> exact checkpoint -> optional common no-learning prefix -> atomic FN/FD/AN/AD -> validation -> root/layout analysis with explicit denominators -> deterministic machine-readable evidence export, with restart-safe provenance and no frontend dependency.
 - **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no parallel main-repo implementation branch and no early merge.
 - **Trackers:** #87 master 4/8; #95 protocol-v2 7/10 after exact trained-state/Frozen-Adaptive physical validation; #88 closed/superseded; #89 complete/closed; #93 PAUSED; #94 DEFERRED post-thesis.
@@ -30,7 +30,7 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 - **Bibliography:** immutable protocol-v2 consumer snapshot remains upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`, merged through thesis PR #96 and validated on PR #92.
 - **Frontend direction:** final frontend is rebuilt from scratch with a **different framework from NiceGUI** at `T-528` only after T-527 scientific freeze. T-529's backend dependency is already satisfied.
 - **Pre-WP7 approval:** NOT APPROVED; `T-700+` remains blocked.
-- **Exact next action:** validate, commit and push DEC-057; require green checks and clean/current native Windows; then execute sizing-v0.3 exactly once. Keep #95 at 7/10, T-528 blocked and final reserve untouched until a complete combined matrix justifies DEC-058.
+- **Exact next action:** validate, commit and push DEC-057; require green checks and clean/current native Windows; then execute sizing-v0.3 exactly once. Keep #95 at 7/10, T-528 READY.
 
 ## Quota/interruption resilience
 

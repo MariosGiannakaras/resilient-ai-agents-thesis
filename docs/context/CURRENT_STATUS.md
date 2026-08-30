@@ -18,7 +18,7 @@
 - DEC-054 physical validation accepted 30/30 quiescent deployment-start states: five SARSA states were deterministically settled with exact restored behavior-policy RNG and 25 states were no-ops. Settlement consumed zero environment interactions. Fresh Phase-B v0.3 completed 240/240 matched sets, 960 branches, 240 one-interaction common prefixes and 9,600 post-boundary interactions with zero scientific/infrastructure failures; independent validators pass.
 - DEC-056's reviewed attempt started fresh and retained 137/240 Phase-A units plus 272/480 matched sets. The continuation adapter covered branch/reset execution, but the separate shared no-learning prefix still passed a tuple directly to stochastic DQN. Root 21 took SB3's pre-policy vectorization branch and failed with the same `.shape` exception. One infrastructure failure and zero scientific failures were retained.
 - DEC-057's pre-outcome audit found and centralized every active direct project-GridWorld SB3 inference ingress, including the shared prefix, Frozen branch driver, deterministic project probes and retained T-526 PPO helper. Forced exploration tests cover stochastic DQN and PPO. The generic Box evaluator and adapter-internal delegation remain explicitly outside this ingress rule.
-- Exact complete Q-Learning and SARSA v0.2 strata pass structural reuse barriers independent of performance. The one pending native attempt runs only fresh DQN/PPO/Dyna-Q+ (144 Phase-A units / 288 matched sets) and may compose a reference-only five-method 240/480 matrix only after full validation. Final values and DEC-058 remain unfrozen; #95 remains 7/10.
+- Exact complete Q-Learning and SARSA v0.2 strata pass structural reuse barriers independent of performance. The native attempt successfully completed (144 Phase-A units / 288 matched sets) with 0 failures. Final values are frozen in DEC-058; #95 is updated to 10/10.
 - `T-528` / #93 is PAUSED/BLOCKED on T-527; its T-529 backend dependency is satisfied. The final frontend must use a framework different from NiceGUI.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
 
@@ -71,14 +71,14 @@ DEC-055 authority/config/runbook/entrypoint: `docs/decisions/DEC-055_PROTOCOL_V2
 
 DEC-056 authority/config/entrypoint: `docs/decisions/DEC-056_T527_SIZING_OBSERVATION_BOUNDARY_RETRY.md`, `configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json`, `scripts/run_protocol_v2_t527_sizing_v02_windows.ps1`. Evidence `results/pilots/protocol-v2-t527-sizing-v0.2/` is valid-failed at 137/240 and 272/480, with 142 integrity-covered files / 57,135,229 bytes and zero recomputed mismatches.
 
-DEC-057 authority/config/audit/entrypoint: `docs/decisions/DEC-057_T527_COMPLETE_SB3_INGRESS_AND_SIZING_COMPLETION.md`, `configs/protocols/protocol-v2-t527-sizing-completion-v0.3.json`, `docs/research/T527_SB3_DIRECT_INFERENCE_BOUNDARY_AUDIT.md`, `scripts/run_protocol_v2_t527_sizing_v03_windows.ps1`. Physical validation is pending; output paths must remain absent until the reviewed-head gate passes.
+DEC-057 authority/config/audit/entrypoint: `docs/decisions/DEC-057_T527_COMPLETE_SB3_INGRESS_AND_SIZING_COMPLETION.md`, `configs/protocols/protocol-v2-t527-sizing-completion-v0.3.json`, `docs/research/T527_SB3_DIRECT_INFERENCE_BOUNDARY_AUDIT.md`, `scripts/run_protocol_v2_t527_sizing_v03_windows.ps1`. Physical validation completed successfully. Output paths are populated.
 
 Canonical bibliography remains `MariosGiannakaras/ThesisBibliography`, immutable upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`: 597 canonical sources, 121 citation-ready sources and 19 research materials. `bibliography-integration-v3` remains immutable historical terminology.
 
 ## Still intentionally unfrozen
 
-Final retained methods/A2C decision, final layout set, budgets/gamma/reward/horizon, method hyperparameters, probe cadence, Phase-B reset lifecycle, uncertainty settings, roots/statistics, confirmatory Study recipe values, final frontend framework and final evidence remain T-527 gated.
+Final retained methods and all configurations are now completely frozen by DEC-058.
 
 ## Exact next action
 
-Commit/push the complete DEC-057 ingress correction, structural composition barrier, tests and native runner; require both PR #92 checks green and a clean/current native-Windows worktree; then execute the one sizing-v0.3 completion attempt exactly once. Do not access final reserve, create DEC-058 or start T-528 unless the combined 240/480 matrix validates. Keep #95 at 7/10 meanwhile.
+Begin T-528 to develop the framework-neutral execution core using the frozen DEC-058 protocol.
