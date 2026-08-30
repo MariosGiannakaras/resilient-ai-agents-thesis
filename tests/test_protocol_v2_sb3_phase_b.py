@@ -3,6 +3,8 @@ from __future__ import annotations
 import unittest
 from dataclasses import replace
 
+import numpy as np
+
 try:
     from stable_baselines3 import DQN, PPO
 
@@ -16,6 +18,7 @@ try:
         BranchContinuationGridWorldEnv,
         ExplicitSeededGridWorldEnv,
     )
+    from resilient_agents.protocol_v2_sb3_observation import as_sb3_gridworld_observation
     from resilient_agents.protocol_v2_sb3_phase_b import (
         SB3PhaseBBranchDriver,
         _frozen_learning_state,
@@ -200,6 +203,90 @@ class ProtocolV2SB3GridWorldPhaseBTests(unittest.TestCase):
         source.close()
         branch.environment.close()
 
+    def test_sb3_observation_adapter_is_representation_only_and_fails_closed(self):
+        nominal, _ = self._nominal_and_disturbed()
+        project = GridWorldEnvironment(nominal)
+        raw = project.reset(seeds=self._episode_seeds(1)[0])
+        self.assertIsInstance(raw, tuple)
+        converted = as_sb3_gridworld_observation(raw, project.gym_env.observation_space)
+        self.assertIsInstance(converted, np.ndarray)
+        self.assertEqual(converted.dtype, project.gym_env.observation_space.dtype)
+        self.assertEqual(converted.shape, project.gym_env.observation_space.shape)
+        self.assertEqual(tuple(int(value) for value in converted), raw)
+        with self.assertRaisesRegex(ValueError, "shape"):
+            as_sb3_gridworld_observation((0,), project.gym_env.observation_space)
+        with self.assertRaisesRegex(ValueError, "outside"):
+            as_sb3_gridworld_observation((10, 0), project.gym_env.observation_space)
+        with self.assertRaisesRegex(ValueError, "exact integers"):
+            as_sb3_gridworld_observation((0.0, 0.0), project.gym_env.observation_space)
+        project.close()
+
+    def test_raw_tuple_reproduces_stochastic_dqn_failure_but_adapter_preserves_inference(self):
+        adapter = self._dqn_adapter()
+        model = adapter.model
+        raw = (0, 0)
+        converted = as_sb3_gridworld_observation(raw, model.observation_space)
+        raw_deterministic, _ = model.predict(raw, deterministic=True)
+        converted_deterministic, _ = model.predict(converted, deterministic=True)
+        np.testing.assert_array_equal(raw_deterministic, converted_deterministic)
+        prior_rate = model.exploration_rate
+        model.exploration_rate = 1.0
+        try:
+            with self.assertRaisesRegex(AttributeError, "shape"):
+                model.predict(raw, deterministic=False)
+            action, _ = model.predict(converted, deterministic=False)
+            self.assertIn(int(action), range(model.action_space.n))
+        finally:
+            model.exploration_rate = prior_rate
+
+    def test_frozen_stochastic_dqn_crosses_resets_and_runs_256_without_type_failure(self):
+        source, branch_point, nominal, _ = self._branch_point()
+        learner = self._dqn_adapter().clone()
+        before = _frozen_learning_state(learner)
+        branch = branch_point.fork_into(nominal)
+        driver = SB3PhaseBBranchDriver(
+            branch=ProtocolV2Branch.FROZEN_NOMINAL,
+            adaptive=False,
+            learner=learner,
+            environment=branch,
+            deterministic_inference=False,
+            subsequent_episode_seeds=self._episode_seeds(64),
+        )
+        metrics = driver.run_to_interaction(256)
+        self.assertEqual(driver.interactions, 256)
+        self.assertGreaterEqual(metrics["episodes_completed"], 2.0)
+        self.assertEqual(metrics["native_update_opportunities_completed"], 0.0)
+        metrics = driver.run_to_interaction(512)
+        self.assertEqual(driver.interactions, 512)
+        self.assertGreaterEqual(metrics["episodes_completed"], 4.0)
+        self.assertEqual(_frozen_learning_state(learner), before)
+        source.close()
+        branch.environment.close()
+
+    def test_adaptive_dqn_crosses_resets_without_resetting_replay_or_update_state(self):
+        source, branch_point, nominal, _ = self._branch_point()
+        learner = self._dqn_adapter().clone()
+        branch = branch_point.fork_into(nominal)
+        base_timesteps = int(learner.model.num_timesteps)
+        base_updates = int(learner.model._n_updates)
+        base_replay_size = int(learner.model.replay_buffer.size())
+        driver = SB3PhaseBBranchDriver(
+            branch=ProtocolV2Branch.ADAPTIVE_NOMINAL,
+            adaptive=True,
+            learner=learner,
+            environment=branch,
+            deterministic_inference=False,
+            subsequent_episode_seeds=self._episode_seeds(16),
+        )
+        metrics = driver.run_to_interaction(32)
+        self.assertGreaterEqual(metrics["episodes_completed"], 1.0)
+        self.assertEqual(int(learner.model.num_timesteps), base_timesteps + 32)
+        self.assertEqual(int(learner.model._n_updates), base_updates + 32)
+        self.assertGreater(int(learner.model.replay_buffer.size()), base_replay_size)
+        self.assertEqual(metrics["native_update_opportunities_completed"], 32.0)
+        source.close()
+        branch.environment.close()
+
     def test_frozen_dqn_preserves_model_optimizer_replay_and_counters(self):
         source, branch_point, nominal, _ = self._branch_point()
         learner = self._dqn_adapter().clone()
@@ -264,6 +351,42 @@ class ProtocolV2SB3GridWorldPhaseBTests(unittest.TestCase):
         self.assertEqual(int(learner.model.num_timesteps), base + 24)
         self.assertGreaterEqual(metrics["episodes_started"], 2.0)
         self.assertGreaterEqual(metrics["episodes_completed"], 1.0)
+        source.close()
+        branch.environment.close()
+
+    def test_ppo_256_counts_two_completed_128_interaction_rollout_opportunities(self):
+        nominal, _ = self._nominal_and_disturbed()
+        seeds = self._episode_seeds(64)
+        env = ExplicitSeededGridWorldEnv(scenario=nominal, episode_seeds=seeds)
+        model = PPO(
+            "MlpPolicy", env, learning_rate=1e-3, n_steps=128, batch_size=64,
+            n_epochs=1, gamma=0.95, policy_kwargs={"net_arch": {"pi": [8], "vf": [8]}},
+            seed=301, device="cpu", verbose=0,
+        )
+        adapter = ppo_state_adapter(
+            model,
+            configuration={
+                "discount_factor": 0.95, "learning_rate": 1e-3, "n_steps": 128,
+                "batch_size": 64, "n_epochs": 1,
+                "net_arch": {"pi": [8], "vf": [8]}, "seed": 301,
+            },
+            environment_factory=lambda: ExplicitSeededGridWorldEnv(
+                scenario=nominal, episode_seeds=seeds
+            ),
+        )
+        adapter.learn_to_total_interactions(128)
+        source, branch_point, nominal, _ = self._branch_point()
+        learner = adapter.clone()
+        branch = branch_point.fork_into(nominal)
+        driver = SB3PhaseBBranchDriver(
+            branch=ProtocolV2Branch.ADAPTIVE_NOMINAL, adaptive=True,
+            learner=learner, environment=branch, deterministic_inference=False,
+            subsequent_episode_seeds=self._episode_seeds(64),
+        )
+        metrics = driver.run_to_interaction(256)
+        self.assertEqual(metrics["native_update_opportunities_completed"], 2.0)
+        self.assertEqual(metrics["native_optimizer_updates_completed"], 2.0)
+        self.assertGreaterEqual(metrics["episodes_completed"], 2.0)
         source.close()
         branch.environment.close()
 

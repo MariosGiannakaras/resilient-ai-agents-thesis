@@ -14,6 +14,7 @@ from .environment import EnvironmentSeeds
 from .gridworld import GridWorldEnvironment
 from .protocol_v2_gridworld import GridWorldScientificStateAdapter
 from .protocol_v2_sb3_gridworld import BranchContinuationGridWorldEnv
+from .protocol_v2_sb3_observation import as_sb3_gridworld_observation
 
 
 def persistent_post_boundary_episode_spec(spec: ScenarioSpec) -> ScenarioSpec:
@@ -83,7 +84,8 @@ class PersistentMultiEpisodeBranchGridWorldEnv(BranchContinuationGridWorldEnv):
 
     def reset(self, *, seed: int | None = None, options: dict[str, Any] | None = None):
         if not self._attached:
-            return super().reset(seed=seed, options=options)
+            observation, info = super().reset(seed=seed, options=options)
+            return as_sb3_gridworld_observation(observation, self.observation_space), info
         if not (self._terminated or self._truncated):
             raise RuntimeError("Phase-B environment reset requested before episode completion")
         if self._next_episode_seed >= len(self._subsequent_episode_seeds):
@@ -96,10 +98,17 @@ class PersistentMultiEpisodeBranchGridWorldEnv(BranchContinuationGridWorldEnv):
         self._terminated = False
         self._truncated = False
         self._episodes_started += 1
-        return observation, {}
+        return as_sb3_gridworld_observation(observation, self.observation_space), {}
 
     def step(self, action):
         result = super().step(action)
         if self._terminated or self._truncated:
             self._episodes_completed += 1
-        return result
+        observation, reward, terminated, truncated, info = result
+        return (
+            as_sb3_gridworld_observation(observation, self.observation_space),
+            reward,
+            terminated,
+            truncated,
+            info,
+        )

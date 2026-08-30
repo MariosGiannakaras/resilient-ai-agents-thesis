@@ -170,6 +170,8 @@ class ProjectTabularPhaseBBranchDriver:
         self._next_episode_seed = 0
         self._interactions = 0
         state = learner.export_state()
+        self._base_observed_transition_count = int(state["observed_transition_count"])
+        self._base_planning_update_count = int(state.get("planning_update_count", 0))
         last_step = state.get("last_step")
         self._next_agent_step = 0 if last_step is None else int(last_step) + 1
         self._frozen_learning_state = None if adaptive else _learning_state(learner)
@@ -248,6 +250,29 @@ class ProjectTabularPhaseBBranchDriver:
                 self._episodes_completed += 1
             current_observation = truth.delivered_observation
 
+        state = self.learner.export_state()
+        observed_delta = (
+            int(state["observed_transition_count"])
+            - self._base_observed_transition_count
+        )
+        if not self.adaptive:
+            native_opportunities = 0
+        elif self.learner.method_id == "sarsa":
+            # A final nonterminal SARSA transition is observed but its on-policy
+            # backup is not complete until the next behavior action is selected.
+            native_opportunities = observed_delta - int(
+                state["deferred_update"] is not None
+            )
+        else:
+            native_opportunities = observed_delta
+        planning_updates = (
+            int(state.get("planning_update_count", 0))
+            - self._base_planning_update_count
+            if self.adaptive and self.learner.method_id == "dyna_q_plus"
+            else 0
+        )
+        if native_opportunities < 0 or planning_updates < 0:
+            raise RuntimeError("project native update accounting regressed")
         return {
             "return_sum": float(self._return_sum),
             "terminated": float(self._terminated),
@@ -255,4 +280,6 @@ class ProjectTabularPhaseBBranchDriver:
             "adaptive": float(self.adaptive),
             "episodes_started": float(self._episodes_started),
             "episodes_completed": float(self._episodes_completed),
+            "native_update_opportunities_completed": float(native_opportunities),
+            "native_planning_updates_completed": float(planning_updates),
         }

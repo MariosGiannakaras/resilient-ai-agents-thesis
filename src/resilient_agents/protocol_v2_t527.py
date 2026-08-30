@@ -328,9 +328,10 @@ def _phase_a_request(
     layout_id: str,
     budget: int,
     probes: Sequence[int],
+    protocol_version: str = "protocol-v2.0-t527-development-v0.1",
 ) -> PhaseARequest:
     return PhaseARequest(
-        protocol_version="protocol-v2.0-t527-development-v0.1",
+        protocol_version=protocol_version,
         experiment_id=f"t527-{layout_id}-{root.root_id}-{method_id}-{parameters['config_id']}",
         layout_id=layout_id,
         root=root,
@@ -362,6 +363,8 @@ def _run_phase_a_unit(
     layout: Mapping[str, Any],
     budget: int,
     probes: Sequence[int],
+    decision_id: str = "DEC-055",
+    protocol_version: str = "protocol-v2.0-t527-development-v0.1",
 ) -> tuple[Mapping[str, Any], Any, Any]:
     root = _root(root_data)
     scenario_plan = {
@@ -394,11 +397,12 @@ def _run_phase_a_unit(
             layout_id=str(layout["layout_id"]),
             budget=budget,
             probes=probes,
+            protocol_version=protocol_version,
         ),
         driver=driver,
         probe_evaluator=evaluator,
         checkpoint_provenance={
-            "decision_id": "DEC-055",
+            "decision_id": decision_id,
             "scientific_status": "non-final-development-only",
             "config_id": parameters["config_id"],
         },
@@ -637,17 +641,27 @@ def _half_width(values: Sequence[float], critical: float) -> float:
     return critical * statistics.stdev(values) / math.sqrt(len(values))
 
 
+def _horizon_256_rule_passes(phase_b_rows: Sequence[Mapping[str, Any]]) -> bool:
+    for row in phase_b_rows:
+        for branch in row["horizons"]["256"]:
+            if branch["branch"] in {"AN", "AD"}:
+                metrics = branch["metrics"]
+                if (
+                    float(metrics["episodes_completed"]) < 2
+                    or float(metrics["native_update_opportunities_completed"]) < 2
+                ):
+                    return False
+    return True
+
+
 def _sizing_selection(
     *,
     plan: Mapping[str, Any],
     phase_a_rows: Sequence[Mapping[str, Any]],
     phase_b_rows: Sequence[Mapping[str, Any]],
+    decision_id: str = "DEC-055",
 ) -> Mapping[str, Any]:
-    horizon_256_valid = True
-    for row in phase_b_rows:
-        for branch in row["horizons"]["256"]:
-            if branch["branch"] in {"AN", "AD"} and float(branch["metrics"]["episodes_completed"]) < 2:
-                horizon_256_valid = False
+    horizon_256_valid = _horizon_256_rule_passes(phase_b_rows)
     selected_horizon = 256 if horizon_256_valid else 512
     criticals = plan["sizing"]["precision_rule"]["student_t_critical_values"]
     target = float(plan["sizing"]["precision_rule"]["target_half_width"])
@@ -686,7 +700,7 @@ def _sizing_selection(
             selected_roots = count
     return {
         "schema_version": 1,
-        "decision_id": "DEC-055",
+        "decision_id": decision_id,
         "selected_phase_b_horizon": selected_horizon,
         "horizon_256_rule_passed": horizon_256_valid,
         "selected_root_count": selected_roots,

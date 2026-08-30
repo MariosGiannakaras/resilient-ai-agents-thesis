@@ -18,6 +18,7 @@ from .environment import EnvironmentSeeds
 from .protocol_v2 import ProtocolV2Branch
 from .protocol_v2_gridworld import GridWorldScientificStateAdapter
 from .protocol_v2_multi_episode import PersistentMultiEpisodeBranchGridWorldEnv
+from .protocol_v2_sb3_observation import as_sb3_gridworld_observation
 from .protocol_v2_sb3 import SB3ScientificStateAdapter
 
 
@@ -84,6 +85,7 @@ class SB3PhaseBBranchDriver:
         self._terminated = False
         self._truncated = False
         self._base_model_interactions = int(learner.model.num_timesteps)
+        self._base_model_updates = int(learner.model._n_updates)
         self._continuation = PersistentMultiEpisodeBranchGridWorldEnv(
             environment, subsequent_episode_seeds=subsequent_episode_seeds
         )
@@ -106,7 +108,10 @@ class SB3PhaseBBranchDriver:
             transition = self.environment.environment.gym_env.last_transition
             if transition is None:
                 raise RuntimeError("Phase-B branch lost its delivered observation")
-            observation = transition.delivered_observation
+            observation = as_sb3_gridworld_observation(
+                transition.delivered_observation,
+                self._continuation.observation_space,
+            )
 
         while self._interactions < target_interaction:
             if self._terminated or self._truncated:
@@ -145,6 +150,22 @@ class SB3PhaseBBranchDriver:
         return self._metrics()
 
     def _metrics(self) -> Mapping[str, float]:
+        model = self.learner.model
+        timestep_delta = int(model.num_timesteps) - self._base_model_interactions
+        update_delta = int(model._n_updates) - self._base_model_updates
+        native_opportunities = 0
+        if self.adaptive and self.learner.method_id == "dqn":
+            native_opportunities = update_delta
+        elif self.adaptive:
+            quantum = int(model.n_steps) * int(model.n_envs)
+            if timestep_delta % quantum:
+                raise RuntimeError("PPO adaptive branch ended outside a completed rollout boundary")
+            native_opportunities = timestep_delta // quantum
+            expected_epochs = native_opportunities * int(model.n_epochs)
+            if update_delta != expected_epochs:
+                raise RuntimeError("PPO rollout/update opportunity accounting mismatch")
+        if timestep_delta < 0 or update_delta < 0 or native_opportunities < 0:
+            raise RuntimeError("SB3 native update accounting regressed")
         return {
             "return_sum": float(self._return_sum),
             "terminated": float(self._terminated),
@@ -153,6 +174,8 @@ class SB3PhaseBBranchDriver:
             "deterministic_inference": float(self.deterministic_inference),
             "episodes_started": float(self._continuation.episodes_started),
             "episodes_completed": float(self._continuation.episodes_completed),
+            "native_update_opportunities_completed": float(native_opportunities),
+            "native_optimizer_updates_completed": float(update_delta if self.adaptive else 0),
         }
 
     def run_to_interaction(self, target_interaction: int) -> Mapping[str, float]:

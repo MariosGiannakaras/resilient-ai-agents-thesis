@@ -194,6 +194,12 @@ File: `DEC-054_PHASE_A_INTERACTION_BUDGET_SETTLEMENT.md`.
 
 File: `DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md`.
 
+## DEC-056 — T-527 sizing observation-boundary correction and retry authority
+
+**ACCEPTED PRE-OUTCOME AUTHORITY; AWAITS PHYSICAL VALIDATION.** The retained DEC-055 DQN failure is a project/SB3 representation-boundary defect: SB3 2.9.0 stochastic DQN exploration vectorizes before policy tensor conversion and requires an ndarray-shaped MultiDiscrete observation. The project observation remains `(x, y)`; one strict facade adapter now emits the same coordinates as the declared-dtype ndarray to SB3 only. This decision also enforces DEC-055's already-frozen method-native Adaptive update-opportunity horizon rule and authorizes exactly one fresh sizing-only v0.2 attempt. Tuning-v0.1 and failed sizing-v0.1 remain immutable; #95 stays 7/10 and T-527 stays blocked until physical validation. A successful final freeze moves to DEC-057.
+
+File: `DEC-056_T527_SIZING_OBSERVATION_BOUNDARY_RETRY.md`.
+
 ## Downstream tool/workflow policy
 
 `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` records later Codex/repository, ChatGPT, Microsoft Word, PowerPoint, optional Canva and user-captured `ASSET-*` responsibilities. Planning it does not unlock T-700+.

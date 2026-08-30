@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import unittest
 from pathlib import Path
@@ -13,7 +14,18 @@ from resilient_agents.protocol_v2 import (
 )
 from resilient_agents.protocol_v2_gridworld import GridWorldScientificStateAdapter
 from resilient_agents.protocol_v2_multi_episode import reset_gridworld_branch_episode
-from resilient_agents.protocol_v2_t527 import CORE_METHOD_IDS, load_plan
+from resilient_agents.protocol_v2_t527 import (
+    CORE_METHOD_IDS,
+    _horizon_256_rule_passes,
+    load_plan,
+)
+from resilient_agents.protocol_v2_t527_sizing_v02 import (
+    EXPECTED_CONFIG_IDS,
+    generate_final_layouts,
+    generate_final_roots,
+    load_retry_plan,
+    validate_historical_authority,
+)
 from resilient_agents.protocol_v2_tabular_phase_b import (
     ProjectTabularPhaseBBranchDriver,
 )
@@ -21,6 +33,8 @@ from tests.test_gridworld import fixture_seeds, fixture_spec
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PLAN_PATH = REPO_ROOT / "configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json"
+RETRY_PLAN_PATH = REPO_ROOT / "configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json"
+_SB3_AVAILABLE = importlib.util.find_spec("stable_baselines3") is not None
 
 
 class ProtocolV2T527ContractTests(unittest.TestCase):
@@ -37,6 +51,50 @@ class ProtocolV2T527ContractTests(unittest.TestCase):
         self.assertEqual(plan["sizing"]["root_count_candidates"], [12, 16, 20, 24])
         self.assertEqual(plan["sizing"]["phase_b_horizon_candidates"], [256, 512])
         self.assertNotIn("a2c", json.dumps(plan).lower())
+
+    @unittest.skipUnless(_SB3_AVAILABLE, "protocol-v2-pilot dependency group not installed")
+    def test_dec056_validates_retained_tuning_and_failed_sizing_without_final_access(self):
+        plan = load_retry_plan(RETRY_PLAN_PATH)
+        validation = validate_historical_authority(repo_root=REPO_ROOT, plan=plan)
+        self.assertFalse(validation["final_reserve_access"])
+        self.assertEqual(validation["tuning_v01"]["status"], "valid-complete")
+        self.assertEqual(validation["tuning_v01"]["units"], 180)
+        self.assertEqual(validation["sizing_v01"]["status"], "valid-failed")
+        self.assertEqual(validation["sizing_v01"]["phase_a_units"], 97)
+        self.assertEqual(
+            {method: value["config_id"] for method, value in plan["selected_configs"].items()},
+            EXPECTED_CONFIG_IDS,
+        )
+
+    def test_horizon_rule_requires_native_opportunities_even_when_episodes_pass(self):
+        row = {
+            "horizons": {
+                "256": [
+                    {
+                        "branch": branch,
+                        "metrics": {
+                            "episodes_completed": 3.0,
+                            "native_update_opportunities_completed": 1.0 if branch == "AN" else 3.0,
+                        },
+                    }
+                    for branch in ("FN", "FD", "AN", "AD")
+                ]
+            }
+        }
+        self.assertFalse(_horizon_256_rule_passes([row]))
+        row["horizons"]["256"][2]["metrics"]["native_update_opportunities_completed"] = 2.0
+        self.assertTrue(_horizon_256_rule_passes([row]))
+
+    def test_final_layout_and_root_generation_is_deterministic_and_execution_free(self):
+        plan = load_retry_plan(RETRY_PLAN_PATH)
+        first = generate_final_layouts(plan)
+        self.assertEqual(first, generate_final_layouts(plan))
+        self.assertEqual(len(first), 2)
+        self.assertTrue(all(item["shortest_path_length"] == 12 for item in first))
+        roots = generate_final_roots(plan, 12)
+        self.assertEqual(len(roots), 12)
+        self.assertEqual(roots[0]["root_id"], "t527-final-r01")
+        self.assertTrue(all(root["initialization_seed"] > 70000 for root in roots))
 
     def test_persistent_action_remap_is_active_from_later_episode_start(self):
         disturbed = fixture_spec(

@@ -1,6 +1,6 @@
 # T-527 Physical Windows Tuning and Sizing Runbook
 
-**Status:** one-time DEC-055 execution retained valid-failed; no resume/rerun authorized
+**Status:** DEC-055 execution retained valid-failed; DEC-056 sizing-only v0.2 awaits reviewed physical execution
 **Decision:** `docs/decisions/DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md`  
 **Plan:** `configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json`  
 **Entrypoint:** `scripts/run_protocol_v2_t527_tuning_sizing_windows.ps1`
@@ -57,3 +57,20 @@ Authority commit `357c38cc5effafbb7fd45e464b37cd3e22eef84b` passed the reviewed-
 - final reserve: not accessed.
 
 Do not resume or rerun these directories. No sizing selection or DEC-056 final freeze is valid from the partial evidence.
+
+## DEC-056 sizing-only v0.2
+
+DEC-056 is the new correction/retry authority, not the final freeze. It preserves tuning-v0.1 and sizing-v0.1 immutably, validates both before execution, and starts a new complete sizing matrix from unit one. The project scientific observation remains `(x, y)`; the SB3 facade alone emits the same coordinates as a strict declared-dtype MultiDiscrete ndarray. Adaptive method-native update opportunities are recorded at 256 and 512 and are now enforced together with the original completed-episode criterion.
+
+- Authority: `docs/decisions/DEC-056_T527_SIZING_OBSERVATION_BOUNDARY_RETRY.md`
+- Configuration: `configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json`
+- Entrypoint: `scripts/run_protocol_v2_t527_sizing_v02_windows.ps1`
+New evidence: `results/pilots/protocol-v2-t527-sizing-v0.2/`
+
+After the committed authority matches local/remote/draft PR #92, both required checks are green and the native worktree is clean, execute exactly once:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\run_protocol_v2_t527_sizing_v02_windows.ps1
+```
+
+The entrypoint does not execute tuning. Expected valid-complete denominators are 240 Phase-A units, 480 matched sets, 1,920 branches and 3,840 branch-horizon evaluations. Any failure is retained with no resume or second DEC-056 retry. Final reserve remains inaccessible. Only a valid-complete result may support DEC-057 and the machine-readable protocol-v2.0 freeze.
