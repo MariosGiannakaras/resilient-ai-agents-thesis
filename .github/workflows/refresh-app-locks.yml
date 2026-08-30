@@ -1,19 +1,19 @@
-name: Refresh application lock
+name: T-528 application UI dependency check
 
 on:
   push:
     branches:
       - feat/pre-wp7-protocol-v1.1-ui-rebuild
     paths:
-      - pyproject.toml
+      - requirements/application-ui.txt
       - .github/workflows/refresh-app-locks.yml
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  resolve-lock:
+  validate-ui-overlay:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout implementation branch
@@ -29,21 +29,15 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
 
-      - name: Resolve locked Python application environment
-        run: uv lock
-
-      - name: Commit lock change when required
-        shell: bash
+      - name: Verify historical project lock without mutation
         run: |
-          if git diff --quiet -- uv.lock; then
-            echo "uv.lock already current"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add uv.lock
-          git commit -m "chore: refresh application lock"
-          git push origin HEAD:feat/pre-wp7-protocol-v1.1-ui-rebuild
+          uv lock --check
+          uv sync --locked --group gridworld-prototype --no-progress
 
-      - name: Verify locked environment
-        run: uv sync --locked
+      - name: Validate application-only UI overlay
+        run: |
+          uv pip install --python .venv/bin/python --requirement requirements/application-ui.txt
+          uv run --no-sync python -c "import PySide6; print(PySide6.__version__)"
+
+      - name: Assert root authority inputs stayed clean
+        run: git diff --exit-code -- pyproject.toml uv.lock

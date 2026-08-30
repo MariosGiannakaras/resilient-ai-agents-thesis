@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Render deterministic PySide6 T-528 review screenshots in offscreen mode.
 
-These screenshots are presentation QA artifacts, never scientific evidence.  The
+These screenshots are presentation QA artifacts, never scientific evidence. The
 script reads frozen protocol metadata but does not create, execute, resume or
 finalize any Study.
 """
@@ -60,19 +60,32 @@ def main() -> int:
 
     app = create_application([])
     window = MainWindow(repo_root=REPO_ROOT)
-    window.resize(QSize(1440, 900))
     window.show()
     app.processEvents()
 
     records: list[dict[str, object]] = []
+
+    # Historical accepted references are 1480x920. Capture this exact viewport
+    # first so visual review is not confounded by a size mismatch.
+    window.resize(QSize(1480, 920))
     window.set_page(0)
     app.processEvents()
-    records.append(capture(window, output, "01-thesis-study.png"))
+    records.append(capture(window, output, "reference-size-thesis-study.png"))
 
     study_page = window.pages[0]
     technical = getattr(study_page, "technical", None)
     if technical is None:
         raise RuntimeError("Thesis Study page does not expose technical details surface")
+    technical.show()
+    app.processEvents()
+    records.append(capture(window, output, "reference-size-thesis-study-technical.png"))
+    technical.hide()
+
+    window.resize(QSize(1440, 900))
+    window.set_page(0)
+    app.processEvents()
+    records.append(capture(window, output, "01-thesis-study.png"))
+
     technical.show()
     app.processEvents()
     records.append(capture(window, output, "02-thesis-study-technical.png"))
@@ -94,8 +107,9 @@ def main() -> int:
 
     protocol_path = REPO_ROOT / "configs" / "protocols" / "protocol-v2.0-final.json"
     manifest = {
-        "schema_version": 1,
+        "schema_version": 2,
         "purpose": "T-528 deterministic presentation review; not scientific evidence",
+        "visual_reference_viewport": [1480, 920],
         "final_reserve_execution": "not-authorized-and-not-executed",
         "protocol_file_sha256": sha256(protocol_path),
         "screenshots": records,
