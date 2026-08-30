@@ -1,6 +1,6 @@
 # DEC-056 — T-527 sizing observation-boundary correction and retry authority
 
-**Status:** accepted pre-outcome authority; awaits one physical sizing-v0.2 validation  
+**Status:** accepted pre-outcome authority; one physical sizing-v0.2 attempt valid-failed
 **Date:** 2026-08-30  
 **Task:** T-527  
 **Configuration:** `configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json`  
@@ -45,3 +45,13 @@ Before sizing-v0.2 outcomes, this authority also fixes the remaining mechanical 
 The committed entrypoint requires native Windows CPython 3.12 CPU execution, a clean local/remote/PR head, both required green checks, immutable T-526 validation, tuning-v0.1 valid-complete integrity and exact selection, and sizing-v0.1 valid-failed integrity and exact failure. It creates only `results/pilots/protocol-v2-t527-sizing-v0.2/`.
 
 Any failure is retained and stops the authority. There is no resume, second retry, seed replacement, tuning rerun, rule change or final-reserve access. Only 240/240 Phase-A units, 480/480 matched sets, 1,920 branches, 3,840 branch-horizon evaluations, complete update-opportunity accounting and full integrity validation can authorize DEC-057.
+
+## Retained physical result
+
+Reviewed authority commit `51612fe3ca216280d19afb69cd48f594e6ca2290` matched local/remote/draft PR #92, had both required checks green and a clean native-Windows worktree. Native preflight revalidated every immutable input and 38 focused tests passed. The one sizing-only attempt started from unit one and did not execute tuning or access final reserve.
+
+The attempt retained 137/240 Phase-A units and 272/480 matched sets before failing at `dqn / t527-size-r21 / gw-l1-a`. Q-Learning and SARSA completed all 48 Phase-A units and 96 matched sets each; DQN completed 41 Phase-A units and 80 matched sets. The generated integrity manifest covers 142 files / 57,135,229 bytes and independently recomputes with zero mismatches.
+
+The correction successfully covered branch attachment, branch steps, later episode resets and progressive Frozen calls, but the shared one-interaction no-learning prefix remained a separate direct stochastic SB3 inference surface. `prepare_shared_no_learning_prefix()` reset the framework-neutral environment to a tuple and passed that tuple directly to `SB3ScientificStateAdapter.predict(deterministic=False)`. At root 21 the stochastic DQN exploration branch took the pre-policy MultiDiscrete vectorization path and again accessed `.shape`, producing the retained `AttributeError`. Earlier roots passed only because their stochastic draws did not take that internal branch at the prefix; they do not prove the missing surface valid.
+
+This is one infrastructure/representation-boundary failure and zero scientific failures. Sizing-v0.2 cannot be resumed or rerun under DEC-056, and its partial performance cannot support a horizon, root-count, final-layout/root or protocol-v2.0 freeze. DEC-057 is not created. T-527 and T-528 remain blocked and issue #95 remains 7/10.

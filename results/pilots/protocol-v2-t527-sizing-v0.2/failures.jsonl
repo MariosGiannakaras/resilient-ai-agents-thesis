@@ -1,0 +1,1 @@
+{"exception_type":"AttributeError","layout_id":"gw-l1-a","message":"'tuple' object has no attribute 'shape'","method_id":"dqn","root_id":"t527-size-r21","stage":"sizing-retry"}

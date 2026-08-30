@@ -1,6 +1,6 @@
 # T-527 Physical Windows Tuning and Sizing Runbook
 
-**Status:** DEC-055 execution retained valid-failed; DEC-056 sizing-only v0.2 awaits reviewed physical execution
+**Status:** DEC-055 and DEC-056 physical sizing attempts retained valid-failed; no resume/rerun authorized
 **Decision:** `docs/decisions/DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md`  
 **Plan:** `configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json`  
 **Entrypoint:** `scripts/run_protocol_v2_t527_tuning_sizing_windows.ps1`
@@ -74,3 +74,11 @@ powershell -ExecutionPolicy Bypass -File .\scripts\run_protocol_v2_t527_sizing_v
 ```
 
 The entrypoint does not execute tuning. Expected valid-complete denominators are 240 Phase-A units, 480 matched sets, 1,920 branches and 3,840 branch-horizon evaluations. Any failure is retained with no resume or second DEC-056 retry. Final reserve remains inaccessible. Only a valid-complete result may support DEC-057 and the machine-readable protocol-v2.0 freeze.
+
+## Retained DEC-056 result
+
+Authority commit `51612fe3ca216280d19afb69cd48f594e6ca2290` passed both checks and clean native preflight. The one fresh run retained 137/240 Phase-A units, 272/480 matched sets, 1,088 branch executions and 2,176 branch-horizon evaluations before `dqn / t527-size-r21 / gw-l1-a` failed. It accounts for 272 common-prefix interactions and 557,056 post-boundary branch interactions. The integrity manifest covers 142 files / 57,135,229 bytes with zero recomputed mismatches. There were zero scientific failures, one infrastructure failure and no final-reserve access.
+
+The adapter correctly covered persistent continuation attachment/step/reset and progressive 256→512 Frozen execution. The shared no-learning prefix was a separate direct stochastic inference surface: it reset the project environment to a tuple and called DQN prediction before converting the MultiDiscrete container. Root 21's exploration draw entered SB3 2.9.0's pre-policy vectorization branch, which accessed `.shape` and raised `AttributeError`. Earlier completed roots do not validate that missing surface because their stochastic draws bypassed it.
+
+Do not resume, rerun, copy, delete, replace or hand-edit sizing-v0.2. It cannot support horizon/root-count selection or DEC-057. T-527/T-528 remain blocked and #95 remains 7/10.
