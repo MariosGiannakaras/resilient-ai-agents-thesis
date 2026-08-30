@@ -1,0 +1,53 @@
+name: T-528 PySide6 UI screenshots
+
+on:
+  pull_request:
+    paths:
+      - "src/resilient_agents/desktop/**"
+      - "scripts/render_ui_screenshots.py"
+      - "tests/test_desktop_protocol.py"
+      - "configs/protocols/protocol-v2.0-final.json"
+      - ".github/workflows/ui-screenshots.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: t528-ui-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      QT_QPA_PLATFORM: offscreen
+      PYTHONPATH: src
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install bounded UI renderer dependency
+        run: python -m pip install --disable-pip-version-check --quiet "PySide6==6.11.2"
+
+      - name: Validate frozen-protocol presentation boundary
+        run: python -m unittest tests.test_desktop_protocol -v
+
+      - name: Render deterministic review screenshots
+        run: python scripts/render_ui_screenshots.py --output ci-ui-screenshots
+
+      - name: Upload review screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: t528-ui-screenshots-${{ github.sha }}
+          path: ci-ui-screenshots/
+          if-no-files-found: error
+          retention-days: 14
