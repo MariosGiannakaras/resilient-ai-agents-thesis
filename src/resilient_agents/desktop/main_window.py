@@ -4,7 +4,16 @@ from __future__ import annotations
 from pathlib import Path
 
 from PySide6.QtGui import QKeySequence, QShortcut
-from PySide6.QtWidgets import QHBoxLayout, QLabel, QMainWindow, QPushButton, QStackedWidget, QVBoxLayout, QWidget
+from PySide6.QtWidgets import (
+    QHBoxLayout,
+    QLabel,
+    QMainWindow,
+    QMessageBox,
+    QPushButton,
+    QStackedWidget,
+    QVBoxLayout,
+    QWidget,
+)
 
 from . import APP_NAME, APP_SUBTITLE
 from .artifacts_page import ArtifactsPage
@@ -17,6 +26,8 @@ from .widgets import NavButton
 
 
 class MainWindow(QMainWindow):
+    PAGE_LABELS = ("Thesis Study", "Runs", "Results", "Artifacts")
+
     def __init__(self, *, repo_root: Path, writable_root: Path | None = None) -> None:
         super().__init__()
         self.repo_root = Path(repo_root).resolve()
@@ -30,25 +41,28 @@ class MainWindow(QMainWindow):
 
         root = QWidget()
         root.setObjectName("AppRoot")
-        shell = QHBoxLayout(root)
-        shell.setContentsMargins(0, 0, 0, 0)
-        shell.setSpacing(0)
+        app_layout = QVBoxLayout(root)
+        app_layout.setContentsMargins(0, 0, 0, 0)
+        app_layout.setSpacing(0)
+
+        app_layout.addWidget(self._build_top_header())
+
+        body = QWidget()
+        body_layout = QHBoxLayout(body)
+        body_layout.setContentsMargins(0, 0, 0, 0)
+        body_layout.setSpacing(0)
 
         sidebar = QWidget()
         sidebar.setObjectName("Sidebar")
-        sidebar.setFixedWidth(218)
+        sidebar.setFixedWidth(282)
         sidebar_layout = QVBoxLayout(sidebar)
-        sidebar_layout.setContentsMargins(17, 22, 17, 18)
+        sidebar_layout.setContentsMargins(22, 22, 18, 18)
         sidebar_layout.setSpacing(7)
 
-        brand = QLabel(APP_NAME)
-        brand.setObjectName("Brand")
-        subtitle = QLabel(APP_SUBTITLE)
-        subtitle.setObjectName("BrandSubtitle")
-        subtitle.setWordWrap(True)
-        sidebar_layout.addWidget(brand)
-        sidebar_layout.addWidget(subtitle)
-        sidebar_layout.addSpacing(22)
+        workspace = QLabel("WORKSPACE")
+        workspace.setObjectName("SidebarSection")
+        sidebar_layout.addWidget(workspace)
+        sidebar_layout.addSpacing(10)
 
         self.thesis_page = ThesisStudyPage(protocol)
         self.runs_page = RunsPage(self.study_read_model)
@@ -66,24 +80,47 @@ class MainWindow(QMainWindow):
         self.runs_page.study_selected.connect(self._show_artifacts_for_study)
 
         self.nav_buttons: list[NavButton] = []
-        for index, label in enumerate(("Study", "Runs", "Results", "Artifacts")):
+        nav_items = (
+            ("▦   Study", "Review the frozen thesis plan or prepare an exploratory study."),
+            ("▶   Runs", "Inspect durable Study records and real execution state."),
+            ("↔   Results", "Compare stored learning and resilience analysis when evidence exists."),
+            ("▣   Artifacts", "Inspect artifacts registered by durable Study records."),
+        )
+        for index, (label, tooltip) in enumerate(nav_items):
             button = NavButton(label)
+            button.setToolTip(tooltip)
             button.clicked.connect(lambda checked=False, i=index: self.set_page(i))
             sidebar_layout.addWidget(button)
             self.nav_buttons.append(button)
 
+        sidebar_layout.addSpacing(20)
+        sidebar_rule = QWidget()
+        sidebar_rule.setFixedHeight(1)
+        sidebar_rule.setStyleSheet("background:#DDE3EC;")
+        sidebar_layout.addWidget(sidebar_rule)
+        sidebar_layout.addSpacing(20)
+
+        scientific_state = QLabel("SCIENTIFIC STATE")
+        scientific_state.setObjectName("SidebarSection")
+        sidebar_layout.addWidget(scientific_state)
+        sidebar_layout.addSpacing(8)
+        for text, tooltip in (
+            ("✓  Protocol v2.0 frozen", "DEC-058 frozen scientific protocol."),
+            ("▣  Final reserve locked", "Final scientific execution remains sealed until explicit later authorization."),
+        ):
+            state = QLabel(text)
+            state.setObjectName("SidebarState")
+            state.setToolTip(tooltip)
+            sidebar_layout.addWidget(state)
+
         sidebar_layout.addStretch(1)
-        help_button = QPushButton("Help && terminology")
-        help_button.setObjectName("NavButton")
-        help_button.setToolTip("Contextual scientific help will be connected in a later T-528 feature slice.")
-        help_button.setEnabled(False)
-        sidebar_layout.addWidget(help_button)
-        utility = QLabel("Protocol v2.0 · DEC-058\nFinal reserve locked")
+        utility = QLabel("DEC-058 authority\nPresentation layer: T-528")
         utility.setObjectName("SidebarUtility")
         sidebar_layout.addWidget(utility)
 
-        shell.addWidget(sidebar)
-        shell.addWidget(self.stack, 1)
+        body_layout.addWidget(sidebar)
+        body_layout.addWidget(self.stack, 1)
+        app_layout.addWidget(body, 1)
         self.setCentralWidget(root)
 
         self.set_page(0)
@@ -92,8 +129,59 @@ class MainWindow(QMainWindow):
         QShortcut(QKeySequence("Alt+3"), self, activated=lambda: self.set_page(2))
         QShortcut(QKeySequence("Alt+4"), self, activated=lambda: self.set_page(3))
 
+    def _build_top_header(self) -> QWidget:
+        header = QWidget()
+        header.setObjectName("TopHeader")
+        header.setFixedHeight(64)
+        layout = QHBoxLayout(header)
+        layout.setContentsMargins(30, 0, 30, 0)
+        layout.setSpacing(12)
+
+        mark = QLabel("✦")
+        mark.setStyleSheet("color:#245DE8;font-size:24px;font-weight:700;")
+        mark.setToolTip("Resilient Agents research application")
+        layout.addWidget(mark)
+
+        brand_group = QVBoxLayout()
+        brand_group.setSpacing(0)
+        brand = QLabel(APP_NAME)
+        brand.setObjectName("HeaderBrand")
+        subtitle = QLabel("Local thesis research application")
+        subtitle.setObjectName("HeaderSubtitle")
+        brand_group.addWidget(brand)
+        brand_group.addWidget(subtitle)
+        layout.addLayout(brand_group)
+
+        layout.addSpacing(28)
+        self.header_page = QLabel("Thesis Study")
+        self.header_page.setObjectName("HeaderPage")
+        layout.addWidget(self.header_page)
+        layout.addStretch(1)
+
+        help_button = QPushButton("?  Getting started")
+        help_button.setObjectName("HeaderHelp")
+        help_button.setToolTip("Open a short guide to the application surfaces and scientific boundary.")
+        help_button.clicked.connect(self._show_getting_started)
+        layout.addWidget(help_button)
+
+        lock = QLabel("FINAL RESERVE LOCKED")
+        lock.setObjectName("HeaderLock")
+        lock.setToolTip("Final-reserve execution is not authorized during T-528.")
+        layout.addWidget(lock)
+        return header
+
+    def _show_getting_started(self) -> None:
+        QMessageBox.information(
+            self,
+            "Getting started",
+            "Study prepares or reviews a study. Runs shows durable execution state. "
+            "Results exposes stored analysis only, and Artifacts shows registered outputs.\n\n"
+            "Final-reserve scientific execution remains locked until a later explicit authorization gate.",
+        )
+
     def set_page(self, index: int) -> None:
         self.stack.setCurrentIndex(index)
+        self.header_page.setText(self.PAGE_LABELS[index])
         for button_index, button in enumerate(self.nav_buttons):
             button.setChecked(button_index == index)
         if index == 1:
