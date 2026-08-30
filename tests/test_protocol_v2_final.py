@@ -18,6 +18,29 @@ class TestProtocolV2Final(unittest.TestCase):
         self.assertIs(self.config.get("final_reserve_access"), False)
         self.assertEqual(self.config.get("execution_authorization"), "requires-explicit-t610-gate")
 
+    def test_dec058_document_has_no_control_character_corruption(self):
+        decision_path = Path(
+            "docs/decisions/DEC-058_PROTOCOL_V2_FINAL_SCIENTIFIC_FREEZE.md"
+        )
+        text = decision_path.read_text(encoding="utf-8")
+        forbidden = [
+            (index, ord(character))
+            for index, character in enumerate(text)
+            if character != "\n" and (ord(character) < 32 or ord(character) == 127)
+        ]
+        self.assertEqual(forbidden, [])
+        for identifier in (
+            "n_steps",
+            "action-remap-swap-right-down",
+            "action-remap-cycle-clockwise",
+            "action-failure-0.15",
+            "observation-corruption-0.05",
+            "t527-final-r01",
+            "t527-final-r12",
+            "final_reserve_access=false",
+        ):
+            self.assertIn(identifier, text)
+
     def test_retained_methods(self):
         methods = self.config.get("retained_methods", [])
         self.assertEqual(len(methods), 5)

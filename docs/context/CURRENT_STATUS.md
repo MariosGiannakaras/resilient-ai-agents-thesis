@@ -10,7 +10,7 @@
 - `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable; old `T-522` must not execute.
 - `T-524`, `T-525` and `T-529` are COMPLETE.
 - `T-529` completed DEC-051's framework-neutral Study lifecycle from immutable recipe through real execution, validation, root/layout analysis and deterministic evidence export. It generated no final frontend or thesis/defense material.
-- **Current scientific gate: `T-527` IN_PROGRESS under the accepted pre-outcome DEC-057 correction/completion authority; `T-526A` and `T-526` remain COMPLETE.** DEC-055 tuning is immutable valid-complete; sizing-v0.1 and v0.2 are immutable valid-failed and cannot be resumed/rerun.
+- **`T-527` is COMPLETE under accepted DEC-058; `T-526A`, `T-526` and `T-529` remain COMPLETE.** DEC-055 tuning is immutable valid-complete; sizing-v0.1 and v0.2 are immutable valid-failed and cannot be resumed/rerun.
 - The retained Phase-A bundle selected `gw-l1` (7×7) by rule and validated all 30 method/root/layout units without failure.
 - DEC-052 failed closed at 2/30 on a raw DQN envelope mismatch. The SB3 2.9.0 audit proved runtime/transport metadata (`data.start_time` and display-only class metadata) differed while the complete historical continuation state matched.
 - DEC-053 recovery validated 30/30 states with 12 retained SB3 transport mismatches and no learner mismatch/failure. Its Phase B stopped fail-closed at 8/240 before SARSA's first prefix because the exact checkpoint retained a deferred update.
@@ -18,8 +18,9 @@
 - DEC-054 physical validation accepted 30/30 quiescent deployment-start states: five SARSA states were deterministically settled with exact restored behavior-policy RNG and 25 states were no-ops. Settlement consumed zero environment interactions. Fresh Phase-B v0.3 completed 240/240 matched sets, 960 branches, 240 one-interaction common prefixes and 9,600 post-boundary interactions with zero scientific/infrastructure failures; independent validators pass.
 - DEC-056's reviewed attempt started fresh and retained 137/240 Phase-A units plus 272/480 matched sets. The continuation adapter covered branch/reset execution, but the separate shared no-learning prefix still passed a tuple directly to stochastic DQN. Root 21 took SB3's pre-policy vectorization branch and failed with the same `.shape` exception. One infrastructure failure and zero scientific failures were retained.
 - DEC-057's pre-outcome audit found and centralized every active direct project-GridWorld SB3 inference ingress, including the shared prefix, Frozen branch driver, deterministic project probes and retained T-526 PPO helper. Forced exploration tests cover stochastic DQN and PPO. The generic Box evaluator and adapter-internal delegation remain explicitly outside this ingress rule.
-- Exact complete Q-Learning and SARSA v0.2 strata pass structural reuse barriers independent of performance. The native attempt successfully completed (144 Phase-A units / 288 matched sets) with 0 failures. Final values are frozen in DEC-058; #95 is updated to 10/10.
-- `T-528` / #93 is PAUSED/BLOCKED on T-527; its T-529 backend dependency is satisfied. The final frontend must use a framework different from NiceGUI.
+- Exact complete Q-Learning and SARSA v0.2 strata passed structural reuse barriers independent of performance. DEC-057 sizing-v0.3 is valid-complete at 144/144 fresh Phase-A units and 288/288 fresh matched sets with zero failures; the combined five-method package is valid-complete at 240/240 Phase-A units, 480/480 matched sets, 1,920 branches and 3,840 branch-horizon evaluations.
+- DEC-058 accepts the final protocol-v2.0 scientific freeze. `configs/protocols/protocol-v2.0-final.json` retains `final_reserve_access=false`; issue #95 is 10/10 and CLOSED. No final-reserve scientific outcome was generated, and T-610+ remains unauthorized/unexecuted.
+- `T-528` / #93 is READY and not started; its T-527 and T-529 dependencies are satisfied. The final frontend must use a framework different from NiceGUI.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
 
 ## Completed Study-first backend
@@ -71,14 +72,16 @@ DEC-055 authority/config/runbook/entrypoint: `docs/decisions/DEC-055_PROTOCOL_V2
 
 DEC-056 authority/config/entrypoint: `docs/decisions/DEC-056_T527_SIZING_OBSERVATION_BOUNDARY_RETRY.md`, `configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json`, `scripts/run_protocol_v2_t527_sizing_v02_windows.ps1`. Evidence `results/pilots/protocol-v2-t527-sizing-v0.2/` is valid-failed at 137/240 and 272/480, with 142 integrity-covered files / 57,135,229 bytes and zero recomputed mismatches.
 
-DEC-057 authority/config/audit/entrypoint: `docs/decisions/DEC-057_T527_COMPLETE_SB3_INGRESS_AND_SIZING_COMPLETION.md`, `configs/protocols/protocol-v2-t527-sizing-completion-v0.3.json`, `docs/research/T527_SB3_DIRECT_INFERENCE_BOUNDARY_AUDIT.md`, `scripts/run_protocol_v2_t527_sizing_v03_windows.ps1`. Physical validation completed successfully. Output paths are populated.
+DEC-057 authority/config/audit/entrypoint: `docs/decisions/DEC-057_T527_COMPLETE_SB3_INGRESS_AND_SIZING_COMPLETION.md`, `configs/protocols/protocol-v2-t527-sizing-completion-v0.3.json`, `docs/research/T527_SB3_DIRECT_INFERENCE_BOUNDARY_AUDIT.md`, `scripts/run_protocol_v2_t527_sizing_v03_windows.ps1`. Evidence `results/pilots/protocol-v2-t527-sizing-v0.3/` and `results/pilots/protocol-v2-t527-sizing-combined-v0.3/` is valid-complete.
+
+DEC-058 authority/firewall: `docs/decisions/DEC-058_PROTOCOL_V2_FINAL_SCIENTIFIC_FREEZE.md` and `configs/protocols/protocol-v2.0-final.json`. The protocol is frozen with `final_reserve_access=false`; explicit later T-610+ authorization is required for final-reserve scientific execution.
 
 Canonical bibliography remains `MariosGiannakaras/ThesisBibliography`, immutable upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`: 597 canonical sources, 121 citation-ready sources and 19 research materials. `bibliography-integration-v3` remains immutable historical terminology.
 
 ## Still intentionally unfrozen
 
-Final retained methods and all configurations are now completely frozen by DEC-058.
+Final retained methods, configurations, layouts, roots, budgets, conditions and statistics are frozen by DEC-058. Final-reserve execution is not authorized by the freeze itself.
 
 ## Exact next action
 
-Begin T-528 to develop the framework-neutral execution core using the frozen DEC-058 protocol.
+Begin T-528 application/frontend work in a later task. Do not start T-528 during this documentation-only closure hotfix, and do not execute T-610+ or access the final reserve.

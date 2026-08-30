@@ -21,16 +21,16 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 
 - **Package:** DEC-048/050 protocol-v2 methodology, completed DEC-051 study-first backend reconstruction, historical failed DEC-052 recovery, DEC-053's valid 30/30 scientific-continuation recovery and DEC-054's exact Phase-A budget-boundary settlement. DEC-042/047 and candidate v1.1 remain auditable predecessor design. DEC-049 controls the later new-framework frontend rebuild.
 - **Project:** **4/8** master milestones complete (#87: 1, 2, 4, 5).
-- **Current task:** `T-527` IN_PROGRESS under accepted pre-outcome DEC-057; `T-526` / `T-526A` remain COMPLETE.
-- **State:** DEC-055 tuning remains immutable valid-complete. DEC-055/056 sizing packages remain immutable valid-failed. DEC-058 defines the final protocol-v2 frozen parameters, generated layouts, and roots. Physical validation of v0.3 completed with 0 failures.
+- **Current task:** `T-527` is COMPLETE under accepted DEC-058; `T-526` / `T-526A` and `T-529` remain COMPLETE. `T-528` is READY and has not started.
+- **State:** DEC-055 tuning remains immutable valid-complete; DEC-055/056 sizing packages remain immutable valid-failed. DEC-057 sizing-v0.3 and the combined five-method sizing package are valid-complete. DEC-058 accepts the protocol-v2.0 final scientific freeze with `final_reserve_access=false`. Final-reserve scientific execution remains unauthorized and requires an explicit later T-610+ authority.
 - **Completed parallel backend work:** `T-529` is COMPLETE. The framework-neutral Study lifecycle now covers immutable recipe -> deterministic plan -> real Phase A -> exact checkpoint -> optional common no-learning prefix -> atomic FN/FD/AN/AD -> validation -> root/layout analysis with explicit denominators -> deterministic machine-readable evidence export, with restart-safe provenance and no frontend dependency.
-- **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no parallel main-repo implementation branch and no early merge.
-- **Trackers:** #87 master 4/8; #95 protocol-v2 7/10 after exact trained-state/Frozen-Adaptive physical validation; #88 closed/superseded; #89 complete/closed; #93 PAUSED; #94 DEFERRED post-thesis.
+- **Branch / PR:** `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft, open, unmerged PR #92; no parallel main-repo implementation branch and no early merge.
+- **Trackers:** #87 master 4/8; #95 protocol-v2 10/10 CLOSED; #88 closed/superseded; #89 complete/closed; #93 READY; #94 DEFERRED post-thesis.
 - **Historical science:** protocol-v1.0 / FINAL-* / R0 evidence immutable. Candidate v1.1 remains non-final history; old `T-522` must not execute. Historical scientific runners remain reproducible even when superseded application/runtime surfaces are removed from the active tree.
 - **Bibliography:** immutable protocol-v2 consumer snapshot remains upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`, merged through thesis PR #96 and validated on PR #92.
 - **Frontend direction:** final frontend is rebuilt from scratch with a **different framework from NiceGUI** at `T-528` only after T-527 scientific freeze. T-529's backend dependency is already satisfied.
 - **Pre-WP7 approval:** NOT APPROVED; `T-700+` remains blocked.
-- **Exact next action:** validate, commit and push DEC-057; require green checks and clean/current native Windows; then execute sizing-v0.3 exactly once. Keep #95 at 7/10, T-528 READY.
+- **Exact next action:** begin `T-528` application/frontend work in a later task. Do not start T-528 during this documentation-only T-527 closure hotfix; do not execute T-610+ or access the final reserve.
 
 ## Quota/interruption resilience
 
@@ -139,7 +139,7 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Phase-B evidence: `results/pilots/protocol-v2-feasibility-phase-b-v0.3/` is valid-complete at 240/240, with 960 branches, 240 common-prefix interactions, 9,600 post-boundary interactions, four hash-covered files, 803,558 bytes, 223.710 wall-seconds and zero scientific/infrastructure failures.
   - The v0.3 attempt started from matched set one and copied no v0.2 row. All original Phase-A, DEC-052, DEC-053 recovery-v0.2 and failed Phase-B-v0.2 integrity/lineage checks passed before and after execution. No rerun/resume is authorized.
 
-- [ ] IN_PROGRESS `T-527` — Fair tuning, precision/runtime sizing, statistical freeze and machine-readable protocol-v2 firewall.
+- [x] `T-527` — Fair tuning, precision/runtime sizing, statistical freeze and machine-readable protocol-v2 firewall.
   - Depends on: `T-526`.
   - Acceptance: bounded method-specific tuning with equivalent predeclared opportunity; common protocol-level gamma/reward/horizon values; fixed actual interaction budgets/probe grid compatible with retained update quanta; final retained methods/environment/severities/root count chosen only from non-final evidence; no best-seed/best-final-checkpoint selection.
   - Statistical freeze: root/run independent; block/equal layout handling; paired/DiD primary effects; Student-t root-level mean CI as default candidate subject to final pilot diagnostics/precision sizing; root-bootstrap/robust sensitivity; explicit failure denominators; limited primary contrast family and frozen multiplicity rule if p-values are used.
@@ -153,7 +153,8 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - DEC-056 physical result: authority commit `51612fe3ca216280d19afb69cd48f594e6ca2290` passed clean-head/green-CI/native preflight. The one fresh attempt retained 137/240 Phase-A units, 272/480 matched sets, 1,088 branches and 2,176 branch-horizon evaluations in `results/pilots/protocol-v2-t527-sizing-v0.2/` (142 integrity-covered files / 57,135,229 bytes, zero mismatches). Q-Learning/SARSA completed; DQN failed at root 21 before its first matched-set prefix interaction. The direct shared-prefix inference surface was not covered by the new continuation adapter and stochastic SB3 vectorization again received a tuple. One infrastructure failure, zero scientific failures, no final-reserve access. No resume/rerun under DEC-056 is authorized.
   - DEC-057 pre-outcome correction/completion authority: `docs/decisions/DEC-057_T527_COMPLETE_SB3_INGRESS_AND_SIZING_COMPLETION.md`, `configs/protocols/protocol-v2-t527-sizing-completion-v0.3.json`, `docs/research/T527_SB3_DIRECT_INFERENCE_BOUNDARY_AUDIT.md`, `scripts/run_protocol_v2_t527_sizing_v03_windows.ps1`. The exhaustive ingress audit centralizes all direct project-GridWorld SB3 predictions behind one strict observation boundary and adds a source guard plus forced stochastic DQN/PPO regressions.
   - DEC-057 structural composition is accepted before new outcomes: exact complete Q-Learning and SARSA v0.2 strata are reference-reused only after immutable-integrity, cell-identity, checkpoint-hash, configuration, accounting and unchanged-code barriers. No performance/runtime value selected reuse; every v0.1 row and incomplete v0.2 DQN row is prohibited.
-  - DEC-058 defines the final protocol-v2 frozen parameters, generated layouts, and roots. Physical validation of v0.3 completed with 0 failures.
+  - DEC-057 physical sizing-v0.3 is valid-complete at 144/144 fresh Phase-A units and 288/288 fresh matched sets with zero failures. The combined five-method sizing evidence is valid-complete at 240/240 Phase-A units, 480/480 matched sets, 1,920 branches and 3,840 branch-horizon evaluations.
+  - DEC-058 accepts the final protocol-v2.0 scientific freeze and machine-readable `configs/protocols/protocol-v2.0-final.json` with `final_reserve_access=false`. Issue #95 is 10/10 and CLOSED. Final-reserve scientific execution is unauthorized until a separate explicit T-610+ authority.
 
 - [x] `T-529` — Reconstruct the study-first protocol-v2 backend from recipe through evidence/analysis/export, without frontend implementation.
   - Depends on: `T-525` — satisfied. Completed without consuming or inventing unresolved T-526/T-527 values.
@@ -173,7 +174,7 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
 - [x] `T-531` — Functional NiceGUI prototype over validated backend. **Prototype/history only; active implementation removed by DEC-049/051.**
 - [x] `T-532` — Prototype screenshot/packaging feasibility work. **Prototype/history only; active implementation removed by DEC-049/051.**
 
-- [ ] BLOCKED `T-528` — Select a different frontend framework and rebuild the final v2-aware application UI/UX from scratch (#93).
+- [ ] READY `T-528` — Select a different frontend framework and rebuild the final v2-aware application UI/UX from scratch (#93). Not started.
   - Depends on: `T-527`; `T-529` is satisfied.
   - Acceptance: select a **different framework from NiceGUI** only after the framework-neutral v2 scientific/study backend is stable and T-527 freezes the remaining scientific/runtime contract; document selection for local desktop use, synchronized Frozen/Adaptive GridWorld rendering, scientific charts/tables, accessibility, maintainability, Python-service integration and later standalone delivery; consume `StudyService` DTOs/events without duplicating scientific execution.
   - Exact chart/table/diagram libraries and packaging technology are selected here/later, not inherited from the historical NiceGUI stack.
