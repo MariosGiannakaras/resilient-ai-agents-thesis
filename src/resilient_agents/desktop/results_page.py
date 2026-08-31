@@ -212,9 +212,9 @@ class ResultsPage(QWidget):
         self.resilience_condition = QComboBox()
         self.resilience_condition.setMinimumWidth(300)
         self.resilience_condition.setToolTip(
-            "Select which stored uncertainty condition to visualize. This does not recompute the analysis."
+            "Filter the stored chart and table to one uncertainty condition. This does not recompute the analysis."
         )
-        self.resilience_condition.currentIndexChanged.connect(self._refresh_resilience_chart)
+        self.resilience_condition.currentIndexChanged.connect(self._refresh_resilience_view)
         filter_row.addWidget(self.resilience_condition)
         filter_row.addStretch(1)
         layout.addLayout(filter_row)
@@ -328,7 +328,7 @@ class ResultsPage(QWidget):
             f"Path: {package.relative_path}"
         )
         self._populate_learning(package)
-        self._populate_resilience(package)
+        self._prepare_resilience(package)
 
     def _method_name(self, method_id: str) -> str:
         return self.method_names.get(method_id, _display_identifier(method_id))
@@ -391,16 +391,45 @@ class ResultsPage(QWidget):
             legend=(("Final probe", "primary"), ("Time-average", "secondary")),
         )
 
-    def _populate_resilience(self, package: StoredAnalysisPackage) -> None:
-        self.resilience_table.setRowCount(len(package.resilience))
+    def _prepare_resilience(self, package: StoredAnalysisPackage) -> None:
         conditions: list[str] = []
-        for row, summary in enumerate(package.resilience):
+        for summary in package.resilience:
+            if summary.condition_id not in conditions:
+                conditions.append(summary.condition_id)
+
+        previous = self.resilience_condition.currentData()
+        self.resilience_condition.blockSignals(True)
+        self.resilience_condition.clear()
+        for condition_id in conditions:
+            self.resilience_condition.addItem(
+                _CONDITION_NAMES.get(condition_id, _display_identifier(condition_id)),
+                condition_id,
+            )
+        if previous in conditions:
+            self.resilience_condition.setCurrentIndex(conditions.index(previous))
+        self.resilience_condition.blockSignals(False)
+        self._refresh_resilience_view()
+
+    def _refresh_resilience_view(self, _index: int = -1) -> None:
+        package = self.current_package
+        condition_id = self.resilience_condition.currentData()
+        if package is None or not isinstance(condition_id, str):
+            self.resilience_table.setRowCount(0)
+            self.resilience_chart.set_data(title="Stored adaptation benefit", bars=())
+            return
+
+        summaries = tuple(
+            summary
+            for summary in package.resilience
+            if summary.condition_id == condition_id
+        )
+        self.resilience_table.setRowCount(len(summaries))
+        bars: list[StoredBar] = []
+        for row, summary in enumerate(summaries):
             condition = _CONDITION_NAMES.get(
                 summary.condition_id,
                 _display_identifier(summary.condition_id),
             )
-            if summary.condition_id not in conditions:
-                conditions.append(summary.condition_id)
             roots = f"{summary.included_root_count} / {summary.planned_root_count}"
             values = (
                 self._method_name(summary.method_id),
@@ -422,41 +451,26 @@ class ResultsPage(QWidget):
                         f"Stored metric: {summary.metric}; direction: {summary.direction}. "
                         "FN/FD/AN/AD effects were computed by the backend analysis engine."
                     )
-                self.resilience_table.setItem(row, column, self._item(value, tooltip=tooltip))
-
-        previous = self.resilience_condition.currentData()
-        self.resilience_condition.blockSignals(True)
-        self.resilience_condition.clear()
-        for condition_id in conditions:
-            self.resilience_condition.addItem(
-                _CONDITION_NAMES.get(condition_id, _display_identifier(condition_id)),
-                condition_id,
-            )
-        if previous in conditions:
-            self.resilience_condition.setCurrentIndex(conditions.index(previous))
-        self.resilience_condition.blockSignals(False)
-        self._refresh_resilience_chart()
-
-    def _refresh_resilience_chart(self, _index: int = -1) -> None:
-        package = self.current_package
-        condition_id = self.resilience_condition.currentData()
-        if package is None or not isinstance(condition_id, str):
-            self.resilience_chart.set_data(title="Stored adaptation benefit", bars=())
-            return
-        bars: list[StoredBar] = []
-        for summary in package.resilience:
-            if summary.condition_id != condition_id or summary.adaptation_benefit.mean is None:
-                continue
-            bars.append(
-                StoredBar(
-                    key=summary.method_id,
-                    label=self._method_name(summary.method_id),
-                    value=summary.adaptation_benefit.mean,
-                    lower=summary.adaptation_benefit.interval_lower,
-                    upper=summary.adaptation_benefit.interval_upper,
+                self.resilience_table.setItem(
+                    row,
+                    column,
+                    self._item(value, tooltip=tooltip),
                 )
-            )
-        condition_name = _CONDITION_NAMES.get(condition_id, _display_identifier(condition_id))
+            if summary.adaptation_benefit.mean is not None:
+                bars.append(
+                    StoredBar(
+                        key=summary.method_id,
+                        label=self._method_name(summary.method_id),
+                        value=summary.adaptation_benefit.mean,
+                        lower=summary.adaptation_benefit.interval_lower,
+                        upper=summary.adaptation_benefit.interval_upper,
+                    )
+                )
+
+        condition_name = _CONDITION_NAMES.get(
+            condition_id,
+            _display_identifier(condition_id),
+        )
         self.resilience_chart.set_data(
             title=f"Matched adaptation benefit · {condition_name}",
             bars=tuple(bars),
