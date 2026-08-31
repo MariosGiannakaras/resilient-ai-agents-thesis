@@ -3,8 +3,8 @@
 
 These screenshots are presentation QA artifacts, never scientific evidence. The
 script may create one deterministic DEVELOPMENT Study fixture in a temporary
-writable workspace so Runs controls can be reviewed, but it never executes,
-resumes or finalizes a Study.
+writable workspace so Runs controls and provenance presentation can be reviewed,
+but it never executes, resumes or finalizes a Study.
 """
 from __future__ import annotations
 
@@ -31,6 +31,12 @@ from resilient_agents.desktop.exploratory_study import (  # noqa: E402
     DesktopExploratoryStudyModel,
 )
 from resilient_agents.desktop.main_window import MainWindow  # noqa: E402
+from resilient_agents.study import (  # noqa: E402
+    ArtifactRole,
+    EvidenceClass,
+    StudyArtifact,
+    StudyStore,
+)
 
 
 def sha256(path: Path) -> str:
@@ -62,6 +68,53 @@ def prepare_review(study) -> None:
     study.customize.root_count.setCurrentIndex(1)
     study.customize.layout_count.setCurrentIndex(1)
     study._show_review()
+
+
+def add_presentation_provenance_fixture(
+    *, writable_root: Path, study_id: str
+) -> None:
+    """Record non-scientific QA lineage without executing any Study job."""
+
+    store = StudyStore.load(
+        repo_root=REPO_ROOT,
+        writable_root=writable_root,
+        study_id=study_id,
+    )
+    fixture_dir = store.study_dir / "presentation-qa"
+    fixture_dir.mkdir(parents=True, exist_ok=True)
+
+    provenance_path = fixture_dir / "ui-review-provenance.txt"
+    provenance_path.write_text(
+        "Presentation-only provenance fixture for T-528 UI review.\n"
+        "No scientific job produced this file and no scientific metric is represented.\n",
+        encoding="utf-8",
+    )
+    provenance = StudyArtifact(
+        artifact_id="ui-review-provenance",
+        role=ArtifactRole.PROVENANCE,
+        evidence_class=EvidenceClass.DEVELOPMENT,
+        relative_path=provenance_path.resolve().relative_to(writable_root).as_posix(),
+        sha256=sha256(provenance_path),
+        metadata={"purpose": "presentation-qa-only", "scientific_evidence": False},
+    )
+    store.record_artifact(provenance)
+
+    asset_path = fixture_dir / "ui-review-asset.txt"
+    asset_path.write_text(
+        "Presentation-only derived asset used to exercise artifact lineage UI.\n",
+        encoding="utf-8",
+    )
+    store.record_artifact(
+        StudyArtifact(
+            artifact_id="ui-review-presentation-asset",
+            role=ArtifactRole.PRESENTATION_ASSET,
+            evidence_class=EvidenceClass.DEVELOPMENT,
+            relative_path=asset_path.resolve().relative_to(writable_root).as_posix(),
+            sha256=sha256(asset_path),
+            source_artifact_ids=(provenance.artifact_id,),
+            metadata={"purpose": "presentation-qa-only", "scientific_evidence": False},
+        )
+    )
 
 
 def main() -> int:
@@ -136,33 +189,51 @@ def main() -> int:
         app.processEvents()
         records.append(capture(window, output, "06-runs-empty.png"))
 
+        window.set_page(2)
+        app.processEvents()
+        records.append(capture(window, output, "07-results-empty.png"))
+
+        window.set_page(3)
+        app.processEvents()
+        records.append(capture(window, output, "08-artifacts-empty.png"))
+
         # Create exactly one deterministic DEVELOPMENT Study fixture. Creation only
         # materializes durable recipe/plan state; no worker or scientific job runs.
         fixture = DesktopExploratoryStudyModel(
             repo_root=REPO_ROOT,
             writable_root=writable_root,
         )
+        fixture_study_id = "t528-dev-ui-review-gridworld"
         fixture.create(
             selected_method_ids=("q_learning",),
             root_count=1,
             layout_count=1,
             study_label="UI review",
-            study_id="t528-dev-ui-review-gridworld",
+            study_id=fixture_study_id,
         )
         if (writable_root / "results" / "runs").exists():
             raise RuntimeError("UI screenshot fixture unexpectedly executed a scientific run")
+
+        add_presentation_provenance_fixture(
+            writable_root=writable_root,
+            study_id=fixture_study_id,
+        )
+        if (writable_root / "results" / "runs").exists():
+            raise RuntimeError("provenance fixture unexpectedly executed a scientific run")
+
+        window.set_page(1)
         window.runs_page.refresh()
         window.runs_page.table.selectRow(0)
         app.processEvents()
         records.append(capture(window, output, "06b-runs-development-ready.png"))
 
-        for index, filename in (
-            (2, "07-results-empty.png"),
-            (3, "08-artifacts-empty.png"),
-        ):
-            window.set_page(index)
-            app.processEvents()
-            records.append(capture(window, output, filename))
+        window.set_page(3)
+        window.artifacts_page.refresh()
+        window.artifacts_page.set_study(fixture_study_id)
+        if window.artifacts_page.table.rowCount() > 1:
+            window.artifacts_page.table.selectRow(1)
+        app.processEvents()
+        records.append(capture(window, output, "08b-artifacts-provenance.png"))
 
         window.resize(QSize(1366, 768))
         window.set_page(0)
@@ -191,14 +262,22 @@ def main() -> int:
         app.processEvents()
         records.append(capture(window, output, "14-results-empty-1366x768.png"))
 
+        window.set_page(3)
+        window.artifacts_page.set_study(fixture_study_id)
+        if window.artifacts_page.table.rowCount() > 1:
+            window.artifacts_page.table.selectRow(1)
+        app.processEvents()
+        records.append(capture(window, output, "15-artifacts-provenance-1366x768.png"))
+
         protocol_path = REPO_ROOT / "configs" / "protocols" / "protocol-v2.0-final.json"
         manifest = {
-            "schema_version": 6,
+            "schema_version": 7,
             "purpose": "T-528 deterministic presentation review; not scientific evidence",
             "visual_reference_viewport": [1480, 920],
             "final_reserve_execution": "not-authorized-and-not-executed",
             "development_fixture_created_only": True,
             "development_fixture_scientific_runs": 0,
+            "presentation_provenance_fixture": "development-only-no-scientific-metrics",
             "stored_results_fixture": "none-no-scientific-metrics-fabricated",
             "protocol_file_sha256": sha256(protocol_path),
             "screenshots": records,

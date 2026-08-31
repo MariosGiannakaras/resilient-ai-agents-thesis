@@ -52,8 +52,16 @@ class ArtifactListItem:
     evidence_class: str
     relative_path: str
     sha256: str
-    source_job_count: int
-    source_artifact_count: int
+    source_job_ids: tuple[str, ...]
+    source_artifact_ids: tuple[str, ...]
+
+    @property
+    def source_job_count(self) -> int:
+        return len(self.source_job_ids)
+
+    @property
+    def source_artifact_count(self) -> int:
+        return len(self.source_artifact_ids)
 
 
 class DesktopStudyReadModel:
@@ -105,8 +113,8 @@ class DesktopStudyReadModel:
                 evidence_class=artifact.evidence_class.value,
                 relative_path=artifact.relative_path,
                 sha256=artifact.sha256,
-                source_job_count=len(artifact.source_job_ids),
-                source_artifact_count=len(artifact.source_artifact_ids),
+                source_job_ids=tuple(artifact.source_job_ids),
+                source_artifact_ids=tuple(artifact.source_artifact_ids),
             )
             for artifact in self._service.artifacts(study_id)
         )
