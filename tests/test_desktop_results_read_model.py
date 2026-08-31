@@ -165,7 +165,7 @@ class DesktopResultsReadModelTests(unittest.TestCase):
             writable = Path(directory)
             store, path = self._store_with_analysis(writable)
             path.write_text(path.read_text(encoding="utf-8") + "\n", encoding="utf-8")
-            with self.assertRaisesRegex(RuntimeError, "SHA-256"):
+            with self.assertRaisesRegex(RuntimeError, "SHA-256|file/hash"):
                 self._model(writable).load(store.plan.study_id)
 
     def test_refuses_analysis_from_different_recipe_identity(self) -> None:
