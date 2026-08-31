@@ -1,10 +1,10 @@
 """Runtime-only GridWorld presentation instrumentation for the desktop worker.
 
 This module deliberately does not modify protocol-v2 driver sources. The T-528
-DEVELOPMENT worker may temporarily wrap the public ``GridWorldEnvironment``
-reset/step methods inside its own subprocess. Scientific methods are called
-first; presentation copying happens afterwards and every presentation failure is
-swallowed. The original methods are restored on context exit.
+DEVELOPMENT worker may temporarily wrap public runtime objects inside its own
+subprocess. Scientific methods are called first; presentation copying happens
+afterwards and every presentation failure is swallowed. Original runtime objects
+are restored on context exit.
 """
 from __future__ import annotations
 
@@ -14,7 +14,11 @@ from dataclasses import dataclass
 from typing import Iterator
 
 from ..gridworld import GridWorldEnvironment
-from ..presentation_observer import PresentationEventSink, bound_presentation_sink, emit_gridworld_transition
+from ..presentation_observer import (
+    PresentationEventSink,
+    bound_presentation_sink,
+    emit_gridworld_transition,
+)
 
 
 @dataclass(frozen=True)
@@ -66,19 +70,72 @@ def instrument_gridworld_for_live_presentation(
 ) -> Iterator[None]:
     """Temporarily observe GridWorld transitions in this worker process only.
 
-    The wrappers call the original scientific methods first. Observer bookkeeping
-    is protected by ``try/except`` and never changes the method return value. A
-    Phase-B job may own several branch environments; presentation-only stream
-    labels distinguish runtime environment instances without claiming FN/FD/AN/AD
-    semantics that are not exposed at this boundary.
+    The GridWorld wrapper calls the original scientific method first and never
+    changes its return value. For Phase B, the existing Study executor's branch
+    driver factories are wrapped *at runtime only* so the presentation layer can
+    attach the authoritative ``ProtocolV2Branch`` label (FN/FD/AN/AD) to each
+    forked environment. Neither the executor source nor the branch-driver source
+    is modified. The shared pre-change prefix is labelled ``PREFIX``.
     """
 
     original_reset = GridWorldEnvironment.reset
     original_step = GridWorldEnvironment.step
     episode_index: defaultdict[int, int] = defaultdict(lambda: -1)
     interaction_index: defaultdict[int, int] = defaultdict(int)
-    stream_serial: dict[int, int] = {}
-    next_stream = 0
+    branch_by_environment: dict[int, str] = {}
+
+    phase_b_module = None
+    original_project_branch_driver = None
+    original_sb3_branch_driver = None
+
+    if identity.phase == "phase-b":
+        # Importing the already-supported Study executor here keeps the branch
+        # identity seam application-local. The worker is the only caller that
+        # enables this presentation instrumentation.
+        from ..study import protocol_v2_phase_b_executor as phase_b_module
+
+        original_project_branch_driver = phase_b_module.ProjectTabularPhaseBBranchDriver
+        original_sb3_branch_driver = phase_b_module.SB3PhaseBBranchDriver
+
+        def observed_project_branch_driver(
+            *, branch, adaptive, learner, environment, subsequent_episode_seeds=()
+        ):
+            try:
+                branch_by_environment[id(environment.environment)] = str(branch.value)
+            except Exception:
+                pass
+            return original_project_branch_driver(
+                branch=branch,
+                adaptive=adaptive,
+                learner=learner,
+                environment=environment,
+                subsequent_episode_seeds=subsequent_episode_seeds,
+            )
+
+        def observed_sb3_branch_driver(
+            *,
+            branch,
+            adaptive,
+            learner,
+            environment,
+            deterministic_inference,
+            subsequent_episode_seeds=(),
+        ):
+            try:
+                branch_by_environment[id(environment.environment)] = str(branch.value)
+            except Exception:
+                pass
+            return original_sb3_branch_driver(
+                branch=branch,
+                adaptive=adaptive,
+                learner=learner,
+                environment=environment,
+                deterministic_inference=deterministic_inference,
+                subsequent_episode_seeds=subsequent_episode_seeds,
+            )
+
+        phase_b_module.ProjectTabularPhaseBBranchDriver = observed_project_branch_driver
+        phase_b_module.SB3PhaseBBranchDriver = observed_sb3_branch_driver
 
     def observed_reset(self: GridWorldEnvironment, *, seeds):
         observation = original_reset(self, seeds=seeds)
@@ -93,15 +150,11 @@ def instrument_gridworld_for_live_presentation(
     def observed_step(self: GridWorldEnvironment, intended_action: int):
         transition = original_step(self, intended_action)
         try:
-            nonlocal next_stream
             key = id(self)
-            if key not in stream_serial:
-                stream_serial[key] = next_stream
-                next_stream += 1
             interaction_index[key] += 1
             branch = None
             if identity.phase == "phase-b":
-                branch = f"presentation-stream-{stream_serial[key] + 1}"
+                branch = branch_by_environment.get(key, "PREFIX")
             emit_gridworld_transition(
                 phase=identity.phase,
                 method_id=identity.method_id,
@@ -124,3 +177,6 @@ def instrument_gridworld_for_live_presentation(
     finally:
         GridWorldEnvironment.reset = original_reset
         GridWorldEnvironment.step = original_step
+        if phase_b_module is not None:
+            phase_b_module.ProjectTabularPhaseBBranchDriver = original_project_branch_driver
+            phase_b_module.SB3PhaseBBranchDriver = original_sb3_branch_driver
