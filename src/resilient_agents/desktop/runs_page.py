@@ -145,6 +145,7 @@ class RunsPage(QWidget):
 
         self.table = QTableWidget(0, 7)
         self.table.setObjectName("StudyTable")
+        self.table.setAccessibleName("Durable study history")
         self.table.setHorizontalHeaderLabels(
             ("Study", "Evidence", "Stage", "Progress", "Status", "Failures", "Finalized")
         )

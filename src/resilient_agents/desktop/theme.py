@@ -41,6 +41,7 @@ def application_stylesheet() -> str:
     QLabel#HeaderPage {{ color: {COLORS['muted']}; font-size: 12px; font-weight: 600; }}
     QPushButton#HeaderHelp {{ color: {COLORS['accent']}; background: transparent; border: 0; padding: 7px 9px; font-weight: 650; }}
     QPushButton#HeaderHelp:hover {{ color: {COLORS['accent_hover']}; background: {COLORS['accent_soft']}; border-radius: 6px; }}
+    QPushButton#HeaderHelp:focus {{ color: {COLORS['accent_hover']}; background: {COLORS['accent_soft']}; border: 2px solid {COLORS['accent']}; border-radius: 6px; }}
     QLabel#HeaderLock {{ color: #8A4B00; background: #FFF1DB; border: 1px solid #F4C27A; border-radius: 9px; padding: 3px 8px; font-size: 11px; font-weight: 700; }}
 
     QWidget#Sidebar {{ background: {COLORS['sidebar']}; border-right: 1px solid {COLORS['border']}; }}
@@ -48,6 +49,7 @@ def application_stylesheet() -> str:
     QPushButton#NavButton {{ border: 0; border-radius: 7px; padding: 10px 12px; text-align: left; color: #24405F; background: transparent; font-weight: 600; }}
     QPushButton#NavButton:hover {{ background: #F4F7FC; color: {COLORS['accent']}; }}
     QPushButton#NavButton:checked {{ background: {COLORS['accent_soft']}; color: {COLORS['accent']}; font-weight: 700; }}
+    QPushButton#NavButton:focus {{ border: 2px solid {COLORS['accent']}; }}
     QLabel#SidebarUtility {{ color: {COLORS['muted']}; font-size: 11px; }}
     QLabel#SidebarState {{ color: #344054; font-size: 12px; padding: 2px 0; }}
 
@@ -82,6 +84,7 @@ def application_stylesheet() -> str:
     QPushButton#HelpDisclosure {{ color: #24405F; background: transparent; border: 0; padding: 4px 2px; text-align: left; font-weight: 650; }}
     QPushButton#HelpDisclosure:hover {{ color: {COLORS['accent']}; }}
     QPushButton#HelpDisclosure:checked {{ color: {COLORS['accent']}; }}
+    QPushButton#HelpDisclosure:focus {{ color: {COLORS['accent_hover']}; border: 2px solid {COLORS['accent']}; border-radius: 5px; }}
     QLabel#HelpDetail {{ color: #3F526B; background: #F7F9FC; border: 1px solid {COLORS['border']}; border-radius: 8px; padding: 10px 12px; }}
 
     QLabel#StepComplete {{ color: #2F6A50; background: #EFF8F3; border: 1px solid #B8DCC7; border-radius: 8px; padding: 6px 11px; font-size: 11px; font-weight: 700; }}
@@ -93,6 +96,7 @@ def application_stylesheet() -> str:
     QFrame#ModelChoiceCard:hover {{ border-color: #B8C9E7; }}
     QCheckBox#ModelChoiceCheck {{ color: {COLORS['text']}; font-size: 14px; font-weight: 700; spacing: 8px; }}
     QCheckBox#ModelChoiceCheck::indicator {{ width: 16px; height: 16px; }}
+    QCheckBox#ModelChoiceCheck:focus {{ background: {COLORS['accent_soft']}; border: 2px solid {COLORS['accent']}; border-radius: 5px; }}
     QLabel#ModelChoiceConfig {{ color: {COLORS['accent']}; font-size: 11px; font-weight: 600; }}
 
     QLabel#ReviewLabel {{ color: {COLORS['muted']}; font-size: 11px; font-weight: 650; }}
@@ -109,22 +113,27 @@ def application_stylesheet() -> str:
 
     QPushButton#PrimaryButton {{ background: {COLORS['accent']}; color: #FFFFFF; border: 0; border-radius: 7px; padding: 9px 14px; font-weight: 650; }}
     QPushButton#PrimaryButton:hover {{ background: {COLORS['accent_hover']}; }}
+    QPushButton#PrimaryButton:focus {{ border: 2px solid {COLORS['text']}; }}
     QPushButton#PrimaryButton:disabled {{ background: #D7DFED; color: #FFFFFF; }}
     QPushButton#SecondaryButton {{ background: {COLORS['surface']}; color: #263B56; border: 1px solid #C8D2E1; border-radius: 7px; padding: 9px 14px; font-weight: 600; }}
     QPushButton#SecondaryButton:hover {{ color: {COLORS['accent']}; border-color: #AFC3EE; background: #F8FAFF; }}
+    QPushButton#SecondaryButton:focus {{ color: {COLORS['accent_hover']}; border: 2px solid {COLORS['accent']}; background: #F8FAFF; }}
     QPushButton#LockedButton {{ background: #F5F7FA; color: #98A2B3; border: 1px solid #E1E6ED; border-radius: 7px; padding: 9px 14px; font-weight: 600; }}
     QPushButton#TextButton {{ color: {COLORS['accent']}; background: transparent; border: 0; padding: 5px 0; font-weight: 600; text-align: left; }}
     QPushButton#TextButton:hover {{ color: {COLORS['accent_hover']}; }}
+    QPushButton#TextButton:focus {{ color: {COLORS['accent_hover']}; border: 2px solid {COLORS['accent']}; border-radius: 5px; }}
 
     QLineEdit#StudyLabelInput, QComboBox#ScopeCombo {{ background: {COLORS['surface']}; border: 1px solid #C8D2E1; border-radius: 7px; padding: 8px 10px; min-height: 18px; }}
-    QLineEdit#StudyLabelInput:focus, QComboBox#ScopeCombo:focus {{ border-color: #84A7F7; }}
+    QLineEdit#StudyLabelInput:focus, QComboBox#ScopeCombo:focus {{ border: 2px solid {COLORS['accent']}; }}
 
     QFrame#Divider {{ background: {COLORS['border']}; min-width: 1px; max-width: 1px; }}
     QTableWidget#StudyTable, QTableWidget#ArtifactTable {{ background: {COLORS['surface']}; border: 1px solid {COLORS['border']}; border-radius: 9px; selection-background-color: {COLORS['accent_soft']}; selection-color: {COLORS['text']}; outline: 0; }}
+    QTableWidget#StudyTable:focus, QTableWidget#ArtifactTable:focus, QTableWidget#ResultsTable:focus {{ border: 2px solid {COLORS['accent']}; }}
     QTableWidget#StudyTable::item, QTableWidget#ArtifactTable::item {{ border-bottom: 1px solid #F0F2F5; padding: 7px 6px; }}
     QHeaderView::section {{ background: #F8FAFC; color: {COLORS['muted']}; border: 0; border-bottom: 1px solid {COLORS['border']}; padding: 8px 6px; font-size: 11px; font-weight: 650; }}
     QProgressBar {{ border: 1px solid #D0D5DD; border-radius: 6px; background: #F2F4F7; text-align: center; min-height: 18px; color: {COLORS['text']}; }}
     QProgressBar::chunk {{ background: #84ADFF; border-radius: 5px; }}
     QComboBox {{ background: {COLORS['surface']}; border: 1px solid #D0D5DD; border-radius: 7px; padding: 7px 10px; }}
+    QComboBox:focus {{ border: 2px solid {COLORS['accent']}; }}
     QToolTip {{ background: #253247; color: #FFFFFF; border: 0; padding: 7px 9px; }}
     """

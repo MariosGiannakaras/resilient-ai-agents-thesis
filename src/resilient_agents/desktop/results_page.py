@@ -104,6 +104,8 @@ class ResultsPage(QWidget):
         self.study_combo.setToolTip(
             "Only Studies with a registered derived analysis-package artifact appear here."
         )
+        self.study_combo.setAccessibleName("Analysis study")
+        selector_label.setBuddy(self.study_combo)
         self.study_combo.currentIndexChanged.connect(self._selection_changed)
         selector_layout.addWidget(self.study_combo)
         selector_layout.addStretch(1)
@@ -187,6 +189,7 @@ class ResultsPage(QWidget):
         layout.addWidget(self.learning_chart)
         self.learning_table = QTableWidget(0, 6)
         self.learning_table.setObjectName("ResultsTable")
+        self.learning_table.setAccessibleName("Stored nominal learning summaries")
         self.learning_table.setHorizontalHeaderLabels(
             ("Method", "Final value", "Stored interval", "Learning average", "Stored interval", "Roots")
         )
@@ -214,6 +217,8 @@ class ResultsPage(QWidget):
         self.resilience_condition.setToolTip(
             "Filter the stored chart and table to one uncertainty condition. This does not recompute the analysis."
         )
+        self.resilience_condition.setAccessibleName("Resilience condition")
+        filter_label.setBuddy(self.resilience_condition)
         self.resilience_condition.currentIndexChanged.connect(self._refresh_resilience_view)
         filter_row.addWidget(self.resilience_condition)
         filter_row.addStretch(1)
@@ -227,6 +232,7 @@ class ResultsPage(QWidget):
 
         self.resilience_table = QTableWidget(0, 7)
         self.resilience_table.setObjectName("ResultsTable")
+        self.resilience_table.setAccessibleName("Stored matched resilience summaries")
         self.resilience_table.setHorizontalHeaderLabels(
             (
                 "Method",

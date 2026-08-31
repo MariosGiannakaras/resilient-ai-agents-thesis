@@ -26,7 +26,8 @@ SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from PySide6.QtCore import QSize  # noqa: E402
+from PySide6.QtCore import QSize, Qt  # noqa: E402
+from PySide6.QtGui import QPixmap  # noqa: E402
 
 from resilient_agents.desktop.app import create_application  # noqa: E402
 from resilient_agents.desktop.exploratory_study import (  # noqa: E402
@@ -60,7 +61,12 @@ def sha256(path: Path) -> str:
 def capture(window: MainWindow, output: Path, filename: str) -> dict[str, object]:
     app = create_application([])
     app.processEvents()
-    image = window.grab()
+    # QWidget.grab() can reuse a partially invalidated offscreen backing store
+    # after nested Study-page transitions. Render the full widget tree so
+    # unchanged header/sidebar regions cannot disappear from later captures.
+    image = QPixmap(window.size())
+    image.fill(Qt.GlobalColor.white)
+    window.render(image)
     target = output / filename
     if not image.save(str(target), "PNG"):
         raise RuntimeError(f"failed to save screenshot: {target}")
@@ -443,6 +449,10 @@ def main() -> int:
         study.show_home()
         app.processEvents()
         records.append(capture(window, output, "09-choose-study-1366x768.png"))
+
+        study.show_thesis()
+        app.processEvents()
+        records.append(capture(window, output, "09b-thesis-study-1366x768.png"))
 
         study.show_exploratory()
         app.processEvents()

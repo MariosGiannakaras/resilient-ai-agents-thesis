@@ -23,7 +23,8 @@ SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from PySide6.QtCore import QSize  # noqa: E402
+from PySide6.QtCore import QSize, Qt  # noqa: E402
+from PySide6.QtGui import QPixmap  # noqa: E402
 
 from resilient_agents.desktop.app import create_application  # noqa: E402
 from resilient_agents.desktop.exploratory_study import DesktopExploratoryStudyModel  # noqa: E402
@@ -43,7 +44,9 @@ def sha256(path: Path) -> str:
 def capture(window: MainWindow, output: Path, filename: str) -> dict[str, object]:
     app = create_application([])
     app.processEvents()
-    image = window.grab()
+    image = QPixmap(window.size())
+    image.fill(Qt.GlobalColor.white)
+    window.render(image)
     target = output / filename
     if not image.save(str(target), "PNG"):
         raise RuntimeError(f"failed to save screenshot: {target}")

@@ -59,6 +59,7 @@ class ArtifactsPage(QWidget):
         self.study_picker = QComboBox()
         self.study_picker.setMinimumWidth(320)
         self.study_picker.setAccessibleName("Study artifact source")
+        label.setBuddy(self.study_picker)
         self.study_picker.currentIndexChanged.connect(self._load_selected)
         controls.addWidget(label)
         controls.addWidget(self.study_picker)
@@ -80,6 +81,7 @@ class ArtifactsPage(QWidget):
 
         self.table = QTableWidget(0, 5)
         self.table.setObjectName("ArtifactTable")
+        self.table.setAccessibleName("Registered study artifacts")
         self.table.setHorizontalHeaderLabels(("Artifact", "Role", "Evidence", "Path", "SHA-256"))
         self.table.verticalHeader().setVisible(False)
         self.table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
