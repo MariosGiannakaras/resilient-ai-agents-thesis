@@ -128,7 +128,7 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
 ## WP6 — Final scientific evidence
 
 - [x] `T-600` — Historical frozen v1.0 final matrix.
-- [x] `T-601` — Validate/freeze v1.0 final evidence.
+- [x] `T-601` — Historical v1.0 evidence validation/freeze.
 - [x] `T-602` — Historical v1.0 statistical analysis.
 - [x] `T-603` — Historical v1.0 figures/tables/artifacts.
 - [x] `T-604` — Historical v1.0 evidence package.
