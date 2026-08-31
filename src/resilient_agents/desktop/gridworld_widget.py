@@ -15,7 +15,7 @@ class GridWorldLiveWidget(QWidget):
         super().__init__(parent)
         self._frame: LiveGridFrame | None = None
         self.setMinimumSize(210, 210)
-        self.setMaximumSize(320, 320)
+        self.setMaximumSize(560, 320)
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.setAccessibleName("Live GridWorld presentation")
         self.setToolTip(
@@ -24,17 +24,28 @@ class GridWorldLiveWidget(QWidget):
         )
 
     def sizeHint(self) -> QSize:
+        if self._frame is not None and self._frame.comparison is not None:
+            return QSize(520, 250)
         return QSize(250, 250)
 
     def set_frame(self, frame: LiveGridFrame | None) -> None:
         self._frame = frame
         if frame is None:
             self.setAccessibleDescription("No live GridWorld frame is available.")
+        elif frame.comparison is not None:
+            pair = frame.comparison
+            self.setAccessibleDescription(
+                f"Matched Frozen and Adaptive GridWorld presentation at interaction "
+                f"{pair.adaptive.interaction_index}. Frozen true state "
+                f"{pair.frozen.true_state}; Adaptive true state {pair.adaptive.true_state}; "
+                f"goal {pair.adaptive.goal}."
+            )
         else:
             self.setAccessibleDescription(
                 f"{frame.width} by {frame.height} GridWorld. Agent true state "
                 f"{frame.true_state}; goal {frame.goal}; interaction {frame.interaction_index}."
             )
+        self.updateGeometry()
         self.update()
 
     def paintEvent(self, _event) -> None:  # noqa: N802 - Qt naming contract
@@ -51,14 +62,52 @@ class GridWorldLiveWidget(QWidget):
             )
             return
 
-        padding = 12.0
-        available_w = max(1.0, self.width() - 2 * padding)
-        available_h = max(1.0, self.height() - 2 * padding)
-        cell = min(available_w / frame.width, available_h / frame.height)
+        comparison = frame.comparison
+        if comparison is None:
+            self._paint_grid(
+                painter,
+                frame,
+                QRectF(0.0, 0.0, float(self.width()), float(self.height())),
+            )
+            return
+
+        gap = 12.0
+        full = QRectF(0.0, 0.0, float(self.width()), float(self.height()))
+        panel_width = max(1.0, (full.width() - gap) / 2.0)
+        left = QRectF(full.left(), full.top(), panel_width, full.height())
+        right = QRectF(left.right() + gap, full.top(), panel_width, full.height())
+        self._paint_grid(painter, comparison.frozen, left, title="Frozen disturbed")
+        self._paint_grid(painter, comparison.adaptive, right, title="Adaptive disturbed")
+
+    @staticmethod
+    def _paint_grid(
+        painter: QPainter,
+        frame: LiveGridFrame,
+        area: QRectF,
+        *,
+        title: str | None = None,
+    ) -> None:
+        title_height = 24.0 if title else 0.0
+        if title:
+            painter.setPen(QColor("#344054"))
+            painter.drawText(
+                QRectF(area.left(), area.top(), area.width(), title_height),
+                Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter,
+                title,
+            )
+
+        padding = 10.0
+        usable = QRectF(
+            area.left() + padding,
+            area.top() + title_height + padding,
+            max(1.0, area.width() - 2 * padding),
+            max(1.0, area.height() - title_height - 2 * padding),
+        )
+        cell = min(usable.width() / frame.width, usable.height() / frame.height)
         grid_w = cell * frame.width
         grid_h = cell * frame.height
-        origin_x = (self.width() - grid_w) / 2.0
-        origin_y = (self.height() - grid_h) / 2.0
+        origin_x = usable.left() + (usable.width() - grid_w) / 2.0
+        origin_y = usable.top() + (usable.height() - grid_h) / 2.0
 
         border = QPen(QColor("#D0D5DD"), 1.0)
         obstacle_brush = QBrush(QColor("#344054"))
@@ -80,7 +129,6 @@ class GridWorldLiveWidget(QWidget):
                 painter.setPen(border)
                 painter.drawRect(rect)
 
-        # Goal marker.
         gx, gy = frame.goal
         goal_rect = QRectF(
             origin_x + gx * cell + cell * 0.27,
@@ -92,8 +140,6 @@ class GridWorldLiveWidget(QWidget):
         painter.setBrush(Qt.BrushStyle.NoBrush)
         painter.drawEllipse(goal_rect)
 
-        # Delivered observation is evaluator-visible here only as presentation;
-        # a dashed outline makes corruption legible without becoming agent input.
         if frame.delivered_observation != frame.true_state:
             ox, oy = frame.delivered_observation
             obs_rect = QRectF(
@@ -106,7 +152,6 @@ class GridWorldLiveWidget(QWidget):
             painter.setBrush(Qt.BrushStyle.NoBrush)
             painter.drawRoundedRect(obs_rect, cell * 0.12, cell * 0.12)
 
-        # True agent state.
         ax, ay = frame.true_state
         center = QPointF(
             origin_x + (ax + 0.5) * cell,
