@@ -10,11 +10,13 @@ import json
 import queue
 import threading
 import time
-from dataclasses import dataclass
+from collections import OrderedDict
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, Mapping
 
 LIVE_SCHEMA_VERSION = 1
+_FROZEN_HISTORY_LIMIT = 512
 
 
 def live_state_path(writable_root: Path, study_id: str) -> Path:
@@ -33,6 +35,12 @@ class DroppingLiveEventSink:
     ``emit`` uses ``put_nowait`` only. A full queue increments a drop counter and
     returns immediately. The background thread collapses events by stream_id and
     periodically writes one atomic latest-state snapshot.
+
+    For Phase-B presentation only, the writer also keeps a bounded in-memory tail
+    of Frozen-Disturbed (FD) frames. When an Adaptive-Disturbed (AD) frame arrives
+    at the same method/root/layout/interaction identity, the latest matched pair
+    is emitted to the transient snapshot. The history is presentation-only, never
+    persisted as Study evidence, and never participates in scientific control flow.
     """
 
     def __init__(
@@ -85,8 +93,25 @@ class DroppingLiveEventSink:
         self._stop.set()
         self._thread.join(timeout=2.0)
 
+    @staticmethod
+    def _pair_key(event: Mapping[str, Any]) -> tuple[str, str, str, str, int] | None:
+        try:
+            return (
+                str(event["phase"]),
+                str(event["method_id"]),
+                str(event["root_id"]),
+                str(event["layout_id"]),
+                int(event["interaction_index"]),
+            )
+        except (KeyError, TypeError, ValueError):
+            return None
+
     def _writer_loop(self) -> None:
         latest: dict[str, dict[str, Any]] = {}
+        frozen_history: OrderedDict[
+            tuple[str, str, str, str, int], dict[str, Any]
+        ] = OrderedDict()
+        latest_pair: dict[str, dict[str, Any]] | None = None
         dirty = False
         last_flush = time.monotonic()
         while not self._stop.is_set() or not self._queue.empty():
@@ -103,22 +128,50 @@ class DroppingLiveEventSink:
                 latest[stream_id] = event
                 dirty = True
 
+                branch = event.get("branch")
+                pair_key = self._pair_key(event)
+                if branch == "FD" and pair_key is not None:
+                    # A new FD branch begins before the corresponding AD branch.
+                    # Clearing the exposed pair at interaction 1 prevents an old
+                    # condition/job from looking synchronized with the new one.
+                    if pair_key[-1] == 1:
+                        latest_pair = None
+                    frozen_history[pair_key] = event
+                    frozen_history.move_to_end(pair_key)
+                    while len(frozen_history) > _FROZEN_HISTORY_LIMIT:
+                        frozen_history.popitem(last=False)
+                elif branch == "AD" and pair_key is not None:
+                    frozen = frozen_history.get(pair_key)
+                    if frozen is not None:
+                        latest_pair = {
+                            "frozen": dict(frozen),
+                            "adaptive": dict(event),
+                        }
+
             now = time.monotonic()
             if dirty and (now - last_flush >= self._flush_interval or self._stop.is_set()):
-                self._write_snapshot(latest)
+                self._write_snapshot(latest, latest_pair=latest_pair)
                 dirty = False
                 last_flush = now
 
         if dirty:
-            self._write_snapshot(latest)
+            self._write_snapshot(latest, latest_pair=latest_pair)
 
-    def _write_snapshot(self, latest: Mapping[str, Mapping[str, Any]]) -> None:
+    def _write_snapshot(
+        self,
+        latest: Mapping[str, Mapping[str, Any]],
+        *,
+        latest_pair: Mapping[str, Mapping[str, Any]] | None,
+    ) -> None:
         snapshot = {
             "schema_version": LIVE_SCHEMA_VERSION,
             "purpose": "transient-presentation-only-not-scientific-evidence",
             "study_id": self.study_id,
             "dropped_events": self._dropped,
             "latest_by_stream": dict(latest),
+            "latest_matched_resilience": None
+            if latest_pair is None
+            else dict(latest_pair),
         }
         temporary = self.path.with_suffix(".json.tmp")
         try:
@@ -163,6 +216,35 @@ class LiveGridFrame:
     disturbance_flags: Mapping[str, bool]
     change_event_ids: tuple[str, ...]
     presentation_sequence: int
+    comparison: "LiveGridComparison | None" = None
+
+
+@dataclass(frozen=True)
+class LiveGridComparison:
+    """Exact-interaction FD/AD presentation pair from one transient worker stream."""
+
+    frozen: LiveGridFrame
+    adaptive: LiveGridFrame
+
+    def __post_init__(self) -> None:
+        if self.frozen.branch != "FD" or self.adaptive.branch != "AD":
+            raise ValueError("live comparison requires FD and AD frames")
+        frozen_identity = (
+            self.frozen.phase,
+            self.frozen.method_id,
+            self.frozen.root_id,
+            self.frozen.layout_id,
+            self.frozen.interaction_index,
+        )
+        adaptive_identity = (
+            self.adaptive.phase,
+            self.adaptive.method_id,
+            self.adaptive.root_id,
+            self.adaptive.layout_id,
+            self.adaptive.interaction_index,
+        )
+        if frozen_identity != adaptive_identity:
+            raise ValueError("live comparison frames must share matched interaction identity")
 
 
 class DesktopLiveReadModel:
@@ -180,6 +262,51 @@ class DesktopLiveReadModel:
         ):
             raise RuntimeError(f"{field} must be a two-integer coordinate")
         return int(value[0]), int(value[1])
+
+    def _frame_from_event(self, stream_id: str, value: Any) -> LiveGridFrame | None:
+        try:
+            event = dict(value)
+            if event.get("event_type") != "gridworld-transition":
+                return None
+            grid = dict(event["grid"])
+            flags = dict(event.get("disturbance_flags", {}))
+            frame = LiveGridFrame(
+                stream_id=str(stream_id),
+                phase=str(event["phase"]),
+                method_id=str(event["method_id"]),
+                root_id=str(event["root_id"]),
+                layout_id=str(event["layout_id"]),
+                branch=None if event.get("branch") is None else str(event["branch"]),
+                episode_index=int(event["episode_index"]),
+                interaction_index=int(event["interaction_index"]),
+                environment_step=int(event["environment_step"]),
+                width=int(grid["width"]),
+                height=int(grid["height"]),
+                start=self._coordinate(grid["start"], field="grid.start"),
+                goal=self._coordinate(grid["goal"], field="grid.goal"),
+                obstacles=tuple(
+                    self._coordinate(item, field="grid.obstacles")
+                    for item in grid.get("obstacles", [])
+                ),
+                true_state=self._coordinate(event["true_state"], field="true_state"),
+                delivered_observation=self._coordinate(
+                    event["delivered_observation"], field="delivered_observation"
+                ),
+                intended_action=str(event["intended_action"]),
+                executed_action=str(event["executed_action"]),
+                reward=float(event["reward"]),
+                terminated=bool(event["terminated"]),
+                truncated=bool(event["truncated"]),
+                regime_id=None if event.get("regime_id") is None else str(event["regime_id"]),
+                disturbance_flags={str(k): bool(v) for k, v in flags.items()},
+                change_event_ids=tuple(str(item) for item in event.get("change_event_ids", [])),
+                presentation_sequence=int(event.get("presentation_sequence", 0)),
+            )
+            if frame.width <= 0 or frame.height <= 0:
+                return None
+            return frame
+        except (KeyError, TypeError, ValueError, RuntimeError):
+            return None
 
     def latest(self, study_id: str) -> tuple[LiveGridFrame, ...]:
         path = live_state_path(self.writable_root, study_id)
@@ -199,49 +326,29 @@ class DesktopLiveReadModel:
         streams = root.get("latest_by_stream")
         if not isinstance(streams, dict):
             return ()
+
         frames: list[LiveGridFrame] = []
         for stream_id, value in streams.items():
-            try:
-                event = dict(value)
-                if event.get("event_type") != "gridworld-transition":
-                    continue
-                grid = dict(event["grid"])
-                flags = dict(event.get("disturbance_flags", {}))
-                frame = LiveGridFrame(
-                    stream_id=str(stream_id),
-                    phase=str(event["phase"]),
-                    method_id=str(event["method_id"]),
-                    root_id=str(event["root_id"]),
-                    layout_id=str(event["layout_id"]),
-                    branch=None if event.get("branch") is None else str(event["branch"]),
-                    episode_index=int(event["episode_index"]),
-                    interaction_index=int(event["interaction_index"]),
-                    environment_step=int(event["environment_step"]),
-                    width=int(grid["width"]),
-                    height=int(grid["height"]),
-                    start=self._coordinate(grid["start"], field="grid.start"),
-                    goal=self._coordinate(grid["goal"], field="grid.goal"),
-                    obstacles=tuple(
-                        self._coordinate(item, field="grid.obstacles")
-                        for item in grid.get("obstacles", [])
-                    ),
-                    true_state=self._coordinate(event["true_state"], field="true_state"),
-                    delivered_observation=self._coordinate(
-                        event["delivered_observation"], field="delivered_observation"
-                    ),
-                    intended_action=str(event["intended_action"]),
-                    executed_action=str(event["executed_action"]),
-                    reward=float(event["reward"]),
-                    terminated=bool(event["terminated"]),
-                    truncated=bool(event["truncated"]),
-                    regime_id=None if event.get("regime_id") is None else str(event["regime_id"]),
-                    disturbance_flags={str(k): bool(v) for k, v in flags.items()},
-                    change_event_ids=tuple(str(item) for item in event.get("change_event_ids", [])),
-                    presentation_sequence=int(event.get("presentation_sequence", 0)),
-                )
-                if frame.width <= 0 or frame.height <= 0:
-                    continue
+            frame = self._frame_from_event(str(stream_id), value)
+            if frame is not None:
                 frames.append(frame)
-            except (KeyError, TypeError, ValueError, RuntimeError):
-                continue
+
+        matched = root.get("latest_matched_resilience")
+        if isinstance(matched, dict):
+            frozen_value = matched.get("frozen")
+            adaptive_value = matched.get("adaptive")
+            if isinstance(frozen_value, dict) and isinstance(adaptive_value, dict):
+                frozen_stream = str(frozen_value.get("stream_id", "matched-frozen"))
+                adaptive_stream = str(adaptive_value.get("stream_id", "matched-adaptive"))
+                frozen = self._frame_from_event(frozen_stream, frozen_value)
+                adaptive = self._frame_from_event(adaptive_stream, adaptive_value)
+                if frozen is not None and adaptive is not None:
+                    try:
+                        comparison = LiveGridComparison(frozen=frozen, adaptive=adaptive)
+                    except ValueError:
+                        comparison = None
+                    if comparison is not None:
+                        frames = [item for item in frames if item.stream_id != adaptive.stream_id]
+                        frames.append(replace(adaptive, comparison=comparison))
+
         return tuple(sorted(frames, key=lambda item: item.presentation_sequence, reverse=True))
