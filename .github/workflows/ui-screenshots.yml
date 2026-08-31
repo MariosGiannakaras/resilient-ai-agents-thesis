@@ -5,6 +5,7 @@ on:
     paths:
       - "src/resilient_agents/desktop/**"
       - "scripts/render_ui_screenshots.py"
+      - "scripts/render_ui_resilience_pair.py"
       - "tests/test_desktop_*.py"
       - "configs/protocols/protocol-v2.0-final.json"
       - "requirements/application-ui.txt"
@@ -68,6 +69,9 @@ jobs:
 
       - name: Render deterministic review screenshots
         run: uv run --no-sync python scripts/render_ui_screenshots.py --output ci-ui-screenshots
+
+      - name: Render matched Frozen/Adaptive resilience layout
+        run: uv run --no-sync python scripts/render_ui_resilience_pair.py --output ci-ui-screenshots
 
       - name: Upload renders and accepted references
         uses: actions/upload-artifact@v4
