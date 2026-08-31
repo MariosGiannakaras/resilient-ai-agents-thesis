@@ -87,6 +87,11 @@ class GridWorldLiveWidget(QWidget):
         *,
         title: str | None = None,
     ) -> None:
+        # QPainter keeps pen/brush state between calls. Each panel explicitly
+        # starts from a neutral brush so the first panel's agent marker cannot
+        # leak into the second panel's cell rectangles.
+        painter.setBrush(Qt.BrushStyle.NoBrush)
+
         title_height = 24.0 if title else 0.0
         if title:
             painter.setPen(QColor("#344054"))
@@ -127,6 +132,7 @@ class GridWorldLiveWidget(QWidget):
                 elif (x, y) == frame.start:
                     painter.fillRect(rect, start_brush)
                 painter.setPen(border)
+                painter.setBrush(Qt.BrushStyle.NoBrush)
                 painter.drawRect(rect)
 
         gx, gy = frame.goal
