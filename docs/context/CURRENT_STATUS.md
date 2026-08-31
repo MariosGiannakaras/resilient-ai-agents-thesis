@@ -74,7 +74,7 @@ DEC-059 application authority: `docs/decisions/DEC-059_PYSIDE6_FINAL_APPLICATION
 
 Canonical bibliography remains `MariosGiannakaras/ThesisBibliography`, immutable upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`: 597 canonical sources, 121 citation-ready sources and 19 research materials. `bibliography-integration-v3` remains immutable historical terminology.
 
-## Still intentionally gated
+## Still intentionally unfrozen
 
 - Final-reserve execution remains sealed: `final_reserve_access=false`.
 - `T-511 — Intended-user application workflow/self-explanatory UX acceptance` requires explicit user acceptance.
