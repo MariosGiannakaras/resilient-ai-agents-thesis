@@ -101,6 +101,7 @@ class EmptyState(QFrame):
         message_label.setWordWrap(True)
         layout.addWidget(title_label)
         layout.addWidget(message_label)
+        layout.addStretch(1)
 
 
 def horizontal_row(*widgets: QWidget, spacing: int = 10) -> QWidget:
