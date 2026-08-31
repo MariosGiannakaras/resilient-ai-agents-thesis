@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from ..presentation_observer import bound_presentation_sink
 from ..study.service import StudyService
 from ..study.store import StudyStore
 from .execution_policy import (
@@ -14,6 +15,7 @@ from .execution_policy import (
     infrastructure_failure_job_ids,
     running_job_ids,
 )
+from .live_events import DroppingLiveEventSink
 
 
 def _load_store(*, repo_root: Path, writable_root: Path, study_id: str) -> StudyStore:
@@ -69,10 +71,22 @@ def run_development_study(
             "study has an infrastructure failure; use the explicit retry action"
         )
 
-    executed = service.run_ready(
-        study_id,
-        stop_on_infrastructure_failure=True,
+    # T-528 presentation is a best-effort side channel outside Study evidence.
+    # The execution policy above proves this is a DEVELOPMENT Study before a
+    # live sink can be bound. The sink itself is lossy and non-blocking.
+    live_sink = DroppingLiveEventSink(
+        writable_root=writable_root,
+        study_id=study_id,
     )
+    try:
+        with bound_presentation_sink(live_sink):
+            executed = service.run_ready(
+                study_id,
+                stop_on_infrastructure_failure=True,
+            )
+    finally:
+        live_sink.close()
+
     status = service.status(study_id)
     progress = status.progress
     if int(progress.get("running", 0)):
@@ -91,6 +105,7 @@ def run_development_study(
         "current_stage": status.current_stage,
         "progress": dict(status.progress),
         "ready_job_ids": list(status.ready_job_ids),
+        "presentation_events_dropped": live_sink.dropped_events,
     }
 
 

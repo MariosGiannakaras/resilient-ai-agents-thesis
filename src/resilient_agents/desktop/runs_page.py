@@ -17,6 +17,8 @@ from PySide6.QtWidgets import (
 )
 
 from .execution_supervisor import DesktopExecutionSupervisor
+from .gridworld_widget import GridWorldLiveWidget
+from .live_events import DesktopLiveReadModel, LiveGridFrame
 from .study_read_model import DesktopStudyReadModel, StudyListItem
 from .widgets import EmptyState, MetricItem, SectionHeader, VerticalDivider
 
@@ -27,6 +29,7 @@ class RunsPage(QWidget):
     def __init__(self, read_model: DesktopStudyReadModel, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.read_model = read_model
+        self.live_read_model = DesktopLiveReadModel(writable_root=read_model.writable_root)
         self.items: tuple[StudyListItem, ...] = ()
         self.supervisor = DesktopExecutionSupervisor(
             repo_root=read_model.repo_root,
@@ -40,6 +43,9 @@ class RunsPage(QWidget):
         self.poll_timer = QTimer(self)
         self.poll_timer.setInterval(1000)
         self.poll_timer.timeout.connect(self.refresh)
+        self.live_timer = QTimer(self)
+        self.live_timer.setInterval(150)
+        self.live_timer.timeout.connect(self._refresh_live)
         self.setObjectName("Page")
 
         root = QVBoxLayout(self)
@@ -119,6 +125,10 @@ class RunsPage(QWidget):
         self.control.hide()
         root.addWidget(self.control)
 
+        self.live_surface = self._build_live_surface()
+        self.live_surface.hide()
+        root.addWidget(self.live_surface)
+
         root.addWidget(
             SectionHeader(
                 "Study history",
@@ -163,6 +173,64 @@ class RunsPage(QWidget):
         root.addWidget(self.error)
 
         self.refresh()
+
+    def _build_live_surface(self) -> QFrame:
+        surface = QFrame()
+        surface.setObjectName("Surface")
+        layout = QHBoxLayout(surface)
+        layout.setContentsMargins(18, 14, 20, 14)
+        layout.setSpacing(20)
+
+        self.live_grid = GridWorldLiveWidget()
+        layout.addWidget(self.live_grid, 0, Qt.AlignmentFlag.AlignTop)
+
+        details = QVBoxLayout()
+        details.setSpacing(6)
+        header = QHBoxLayout()
+        title = QLabel("Live GridWorld")
+        title.setObjectName("SectionTitle")
+        header.addWidget(title)
+        header.addStretch(1)
+        badge = QLabel("PRESENTATION ONLY · LOSSY")
+        badge.setObjectName("StatusDevelopment")
+        badge.setToolTip(
+            "Frames may be dropped. This stream is not Study evidence and cannot "
+            "feed information back to the learner."
+        )
+        header.addWidget(badge)
+        details.addLayout(header)
+
+        self.live_identity = QLabel()
+        self.live_identity.setObjectName("PageLead")
+        self.live_identity.setWordWrap(True)
+        details.addWidget(self.live_identity)
+
+        self.live_interaction = QLabel()
+        self.live_interaction.setObjectName("ReviewValue")
+        self.live_interaction.setWordWrap(True)
+        details.addWidget(self.live_interaction)
+
+        self.live_transition = QLabel()
+        self.live_transition.setObjectName("SectionHint")
+        self.live_transition.setWordWrap(True)
+        details.addWidget(self.live_transition)
+
+        self.live_observation = QLabel()
+        self.live_observation.setObjectName("SectionHint")
+        self.live_observation.setWordWrap(True)
+        details.addWidget(self.live_observation)
+
+        boundary = QLabel(
+            "Read-only evaluator presentation. The scientific worker never waits "
+            "for this panel; renderer disconnects or dropped frames do not change "
+            "actions, RNG, checkpoints, metrics or Study evidence."
+        )
+        boundary.setObjectName("DevelopmentText")
+        boundary.setWordWrap(True)
+        details.addWidget(boundary)
+        details.addStretch(1)
+        layout.addLayout(details, 1)
+        return surface
 
     def _clear_summary(self) -> None:
         while self.summary_layout.count():
@@ -278,10 +346,12 @@ class RunsPage(QWidget):
             self.table.selectRow(selected_row)
         else:
             self._update_control(None)
+            self._update_live(None)
 
     def _selection_changed(self) -> None:
         item = self._selected_item()
         self._update_control(item)
+        self._update_live(item)
         if item is not None:
             self.study_selected.emit(item.study_id)
 
@@ -331,6 +401,53 @@ class RunsPage(QWidget):
             self.start_button.setText("Start / Resume")
         self.start_button.setEnabled(True)
 
+    def _refresh_live(self) -> None:
+        self._update_live(self._selected_item())
+
+    def _update_live(self, item: StudyListItem | None) -> None:
+        if item is None:
+            self.live_grid.set_frame(None)
+            self.live_surface.hide()
+            return
+        frames = self.live_read_model.latest(item.study_id)
+        frame = frames[0] if frames else None
+        if frame is None:
+            self.live_grid.set_frame(None)
+            self.live_surface.hide()
+            return
+        self._show_live_frame(frame, is_running=item.running_jobs > 0)
+
+    def _show_live_frame(self, frame: LiveGridFrame, *, is_running: bool) -> None:
+        self.live_grid.set_frame(frame)
+        phase = {
+            "phase-a": "Nominal learning",
+            "phase-b": "Resilience test",
+        }.get(frame.phase, frame.phase)
+        prefix = "Live" if is_running else "Last presentation frame"
+        self.live_identity.setText(
+            f"{prefix} · {phase} · {frame.method_id.replace('_', ' ').title()} · "
+            f"root {frame.root_id} · {frame.layout_id}"
+        )
+        branch = f" · branch {frame.branch}" if frame.branch else ""
+        self.live_interaction.setText(
+            f"Interaction {frame.interaction_index:,} · episode {frame.episode_index + 1} · "
+            f"environment step {frame.environment_step}{branch}"
+        )
+        flags = [name.replace("_", " ") for name, active in frame.disturbance_flags.items() if active]
+        disturbance = ", ".join(flags) if flags else "none"
+        self.live_transition.setText(
+            f"Action: {frame.intended_action} → {frame.executed_action} · "
+            f"reward {frame.reward:g} · regime {frame.regime_id or '—'} · "
+            f"disturbance: {disturbance}"
+        )
+        observation_note = (
+            "Delivered observation matches true state."
+            if frame.delivered_observation == frame.true_state
+            else f"Delivered observation {frame.delivered_observation} differs from true state {frame.true_state}."
+        )
+        self.live_observation.setText(observation_note)
+        self.live_surface.show()
+
     def _start_selected(self) -> None:
         item = self._selected_item()
         if item is None:
@@ -360,10 +477,11 @@ class RunsPage(QWidget):
     def _worker_started(self, study_id: str) -> None:
         self.worker_message.setText(
             f"Local worker active for {study_id}. Progress below is reloaded from "
-            "the durable StudyStore; no ETA is estimated."
+            "the durable StudyStore; live GridWorld frames are a separate lossy presentation stream."
         )
         self.worker_message.show()
         self.poll_timer.start()
+        self.live_timer.start()
         self.refresh()
 
     def _worker_output(self, study_id: str, _chunk: str) -> None:
@@ -376,11 +494,13 @@ class RunsPage(QWidget):
 
     def _worker_finished(self, study_id: str, exit_code: int, output: str) -> None:
         self.poll_timer.stop()
+        self.live_timer.stop()
         self.refresh()
+        self._refresh_live()
         if exit_code == 0:
             self.worker_message.setText(
                 f"Worker finished for {study_id}. The table now reflects the "
-                "latest durable Study state."
+                "latest durable Study state; any displayed GridWorld is the last presentation frame."
             )
             self.worker_message.show()
             return

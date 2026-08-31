@@ -3,8 +3,8 @@
 
 These screenshots are presentation QA artifacts, never scientific evidence. The
 script may create one deterministic DEVELOPMENT Study fixture in a temporary
-writable workspace so Runs controls and provenance presentation can be reviewed,
-but it never executes, resumes or finalizes a Study.
+writable workspace so Runs controls, live-presentation layout and provenance can
+be reviewed, but it never executes, resumes or finalizes a Study.
 """
 from __future__ import annotations
 
@@ -30,11 +30,13 @@ from resilient_agents.desktop.app import create_application  # noqa: E402
 from resilient_agents.desktop.exploratory_study import (  # noqa: E402
     DesktopExploratoryStudyModel,
 )
+from resilient_agents.desktop.live_events import DroppingLiveEventSink  # noqa: E402
 from resilient_agents.desktop.main_window import MainWindow  # noqa: E402
 from resilient_agents.study import (  # noqa: E402
     ArtifactRole,
     EvidenceClass,
     StudyArtifact,
+    StudyStage,
     StudyStore,
 )
 
@@ -115,6 +117,67 @@ def add_presentation_provenance_fixture(
             metadata={"purpose": "presentation-qa-only", "scientific_evidence": False},
         )
     )
+
+
+def add_live_layout_fixture(*, writable_root: Path, study_id: str) -> None:
+    """Write one static presentation frame from the real DEVELOPMENT layout only.
+
+    No environment is reset or stepped. The frame is intentionally labelled
+    ``presentation-qa`` / ``not-executed`` so the screenshot cannot be mistaken
+    for an experimental outcome.
+    """
+
+    store = StudyStore.load(
+        repo_root=REPO_ROOT,
+        writable_root=writable_root,
+        study_id=study_id,
+    )
+    phase_a_job = next(job for job in store.plan.jobs if job.stage is StudyStage.PHASE_A)
+    layout = dict(phase_a_job.payload["layout"])
+    scenario = dict(layout["scenario"])
+    grid = dict(scenario["initial_state_spec"])["grid"]
+    start = list(grid["start"])
+    sink = DroppingLiveEventSink(
+        writable_root=writable_root,
+        study_id=study_id,
+        flush_interval_seconds=0.01,
+    )
+    sink.emit(
+        {
+            "schema_version": 1,
+            "event_type": "gridworld-transition",
+            "stream_id": f"presentation-qa:ui_fixture:not-executed:{layout['layout_id']}:nominal",
+            "phase": "presentation-qa",
+            "method_id": "ui_fixture",
+            "root_id": "not-executed",
+            "layout_id": str(layout["layout_id"]),
+            "branch": None,
+            "episode_index": 0,
+            "interaction_index": 0,
+            "environment_step": 0,
+            "grid": {
+                "width": int(grid["width"]),
+                "height": int(grid["height"]),
+                "start": start,
+                "goal": list(grid["goal"]),
+                "obstacles": [list(item) for item in grid["obstacles"]],
+            },
+            "true_state": start,
+            "delivered_observation": start,
+            "intended_action": "not-executed",
+            "executed_action": "not-executed",
+            "reward": 0.0,
+            "terminated": False,
+            "truncated": False,
+            "regime_id": "presentation-qa",
+            "disturbance_flags": {
+                "action_failure": False,
+                "observation_corruption": False,
+            },
+            "change_event_ids": [],
+        }
+    )
+    sink.close()
 
 
 def main() -> int:
@@ -218,14 +281,24 @@ def main() -> int:
             writable_root=writable_root,
             study_id=fixture_study_id,
         )
+        add_live_layout_fixture(
+            writable_root=writable_root,
+            study_id=fixture_study_id,
+        )
         if (writable_root / "results" / "runs").exists():
-            raise RuntimeError("provenance fixture unexpectedly executed a scientific run")
+            raise RuntimeError("presentation fixtures unexpectedly executed a scientific run")
 
         window.set_page(1)
         window.runs_page.refresh()
         window.runs_page.table.selectRow(0)
+        window.runs_page.worker_message.setText(
+            "UI REVIEW FIXTURE · Static DEVELOPMENT layout only · no environment step or scientific job executed."
+        )
+        window.runs_page.worker_message.show()
+        window.runs_page._refresh_live()
         app.processEvents()
         records.append(capture(window, output, "06b-runs-development-ready.png"))
+        records.append(capture(window, output, "06c-runs-live-presentation.png"))
 
         window.set_page(3)
         window.artifacts_page.refresh()
@@ -255,8 +328,14 @@ def main() -> int:
 
         window.set_page(1)
         window.runs_page.table.selectRow(0)
+        window.runs_page.worker_message.setText(
+            "UI REVIEW FIXTURE · Static DEVELOPMENT layout only · no environment step or scientific job executed."
+        )
+        window.runs_page.worker_message.show()
+        window.runs_page._refresh_live()
         app.processEvents()
         records.append(capture(window, output, "13-runs-development-ready-1366x768.png"))
+        records.append(capture(window, output, "13b-runs-live-presentation-1366x768.png"))
 
         window.set_page(2)
         app.processEvents()
@@ -271,13 +350,14 @@ def main() -> int:
 
         protocol_path = REPO_ROOT / "configs" / "protocols" / "protocol-v2.0-final.json"
         manifest = {
-            "schema_version": 7,
+            "schema_version": 8,
             "purpose": "T-528 deterministic presentation review; not scientific evidence",
             "visual_reference_viewport": [1480, 920],
             "final_reserve_execution": "not-authorized-and-not-executed",
             "development_fixture_created_only": True,
             "development_fixture_scientific_runs": 0,
             "presentation_provenance_fixture": "development-only-no-scientific-metrics",
+            "presentation_live_fixture": "static-development-layout-no-environment-step",
             "stored_results_fixture": "none-no-scientific-metrics-fabricated",
             "protocol_file_sha256": sha256(protocol_path),
             "screenshots": records,
