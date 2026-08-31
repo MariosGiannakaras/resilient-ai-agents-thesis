@@ -4,7 +4,9 @@
 These screenshots are presentation QA artifacts, never scientific evidence. The
 script may create one deterministic DEVELOPMENT Study fixture in a temporary
 writable workspace so Runs controls, live-presentation layout and provenance can
-be reviewed, but it never executes, resumes or finalizes a Study.
+be reviewed, but it never executes, resumes or finalizes a Study. Populated
+Results screenshots use an in-memory presentation-only package that is never
+registered in StudyStore and is visibly labelled synthetic/non-scientific.
 """
 from __future__ import annotations
 
@@ -32,6 +34,12 @@ from resilient_agents.desktop.exploratory_study import (  # noqa: E402
 )
 from resilient_agents.desktop.live_events import DroppingLiveEventSink  # noqa: E402
 from resilient_agents.desktop.main_window import MainWindow  # noqa: E402
+from resilient_agents.desktop.results_read_model import (  # noqa: E402
+    LearningSummary,
+    ResilienceSummary,
+    StoredAnalysisPackage,
+    StoredSummary,
+)
 from resilient_agents.study import (  # noqa: E402
     ArtifactRole,
     EvidenceClass,
@@ -180,6 +188,110 @@ def add_live_layout_fixture(*, writable_root: Path, study_id: str) -> None:
     sink.close()
 
 
+def _stored(mean: float, half_width: float, *, n: int = 4) -> StoredSummary:
+    return StoredSummary(
+        n=n,
+        mean=mean,
+        interval_lower=mean - half_width,
+        interval_upper=mean + half_width,
+        interval_status=None,
+    )
+
+
+def presentation_results_fixture() -> StoredAnalysisPackage:
+    """Return synthetic in-memory values solely to exercise Results rendering.
+
+    The object is never registered in StudyStore, never written as an analysis
+    package and is not sourced from any experimental run.
+    """
+
+    learning_values = (
+        ("q_learning", 0.72, 0.58),
+        ("sarsa", 0.69, 0.56),
+        ("dqn", 0.81, 0.65),
+        ("ppo", 0.77, 0.63),
+        ("dyna_q_plus", 0.75, 0.61),
+    )
+    learning = tuple(
+        LearningSummary(
+            method_id=method_id,
+            metric="presentation-qa-value",
+            direction="higher-is-better",
+            planned_root_count=4,
+            included_root_count=4,
+            final_value=_stored(final_value, 0.04),
+            time_average=_stored(time_average, 0.035),
+        )
+        for method_id, final_value, time_average in learning_values
+    )
+
+    condition_ids = (
+        "action-remap-swap-right-down",
+        "action-remap-cycle-clockwise",
+        "action-failure-0.15",
+        "observation-corruption-0.05",
+    )
+    methods = tuple(item[0] for item in learning_values)
+    resilience: list[ResilienceSummary] = []
+    for condition_index, condition_id in enumerate(condition_ids):
+        for method_index, method_id in enumerate(methods):
+            frozen_loss = 0.38 + 0.035 * condition_index + 0.018 * method_index
+            benefit = 0.12 + 0.025 * method_index - 0.012 * condition_index
+            adaptive_loss = frozen_loss - benefit
+            resilience.append(
+                ResilienceSummary(
+                    method_id=method_id,
+                    condition_id=condition_id,
+                    metric="presentation-qa-value",
+                    direction="higher-is-better",
+                    planned_root_count=4,
+                    included_root_count=4,
+                    frozen_loss=_stored(frozen_loss, 0.035),
+                    adaptive_loss=_stored(adaptive_loss, 0.03),
+                    adaptation_benefit=_stored(benefit, 0.025),
+                )
+            )
+
+    return StoredAnalysisPackage(
+        study_id="ui-review-in-memory-not-a-study",
+        recipe_sha256="1" * 64,
+        analysis_recipe="presentation-qa-only-not-scientific",
+        artifact_sha256="0" * 64,
+        relative_path="<in-memory-presentation-fixture>",
+        phase_a_metric="presentation-qa-value",
+        phase_a_direction="higher-is-better",
+        phase_b_metric="presentation-qa-value",
+        phase_b_direction="higher-is-better",
+        learning=learning,
+        resilience=tuple(resilience),
+    )
+
+
+def show_presentation_results_fixture(window: MainWindow) -> None:
+    """Populate Results directly in memory without creating durable evidence."""
+
+    page = window.results_page
+    package = presentation_results_fixture()
+    page.study_combo.blockSignals(True)
+    page.study_combo.clear()
+    page.study_combo.addItem("UI REVIEW · NOT SCIENTIFIC EVIDENCE", package.study_id)
+    page.study_combo.blockSignals(False)
+    page.selector_surface.show()
+    page.empty.hide()
+    page.content.show()
+    page.current_package = package
+    page._populate(package)
+    page.provenance_title.setText("UI REVIEW FIXTURE · PRESENTATION ONLY")
+    page.provenance_detail.setText(
+        "Synthetic in-memory values for layout QA only · not stored evidence · "
+        "not produced by a Study or scientific run."
+    )
+    page.provenance_detail.setToolTip(
+        "This CI-only fixture exists solely to verify chart/table rendering. "
+        "It is never registered in StudyStore or written to an evidence path."
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
@@ -226,6 +338,14 @@ def main() -> int:
         app.processEvents()
         records.append(capture(window, output, "reference-size-results-empty.png"))
 
+        show_presentation_results_fixture(window)
+        window.results_page._show_tab(0)
+        app.processEvents()
+        records.append(capture(window, output, "reference-size-results-learning-qa.png"))
+        window.results_page._show_tab(1)
+        app.processEvents()
+        records.append(capture(window, output, "reference-size-results-resilience-qa.png"))
+
         window.resize(QSize(1440, 900))
         window.set_page(0)
         study.show_home()
@@ -253,6 +373,7 @@ def main() -> int:
         records.append(capture(window, output, "06-runs-empty.png"))
 
         window.set_page(2)
+        window.results_page.refresh()
         app.processEvents()
         records.append(capture(window, output, "07-results-empty.png"))
 
@@ -300,6 +421,15 @@ def main() -> int:
         records.append(capture(window, output, "06b-runs-development-ready.png"))
         records.append(capture(window, output, "06c-runs-live-presentation.png"))
 
+        window.set_page(2)
+        show_presentation_results_fixture(window)
+        window.results_page._show_tab(0)
+        app.processEvents()
+        records.append(capture(window, output, "07b-results-learning-qa.png"))
+        window.results_page._show_tab(1)
+        app.processEvents()
+        records.append(capture(window, output, "07c-results-resilience-qa.png"))
+
         window.set_page(3)
         window.artifacts_page.refresh()
         window.artifacts_page.set_study(fixture_study_id)
@@ -338,8 +468,16 @@ def main() -> int:
         records.append(capture(window, output, "13b-runs-live-presentation-1366x768.png"))
 
         window.set_page(2)
+        window.results_page.refresh()
         app.processEvents()
         records.append(capture(window, output, "14-results-empty-1366x768.png"))
+        show_presentation_results_fixture(window)
+        window.results_page._show_tab(0)
+        app.processEvents()
+        records.append(capture(window, output, "14b-results-learning-qa-1366x768.png"))
+        window.results_page._show_tab(1)
+        app.processEvents()
+        records.append(capture(window, output, "14c-results-resilience-qa-1366x768.png"))
 
         window.set_page(3)
         window.artifacts_page.set_study(fixture_study_id)
@@ -350,7 +488,7 @@ def main() -> int:
 
         protocol_path = REPO_ROOT / "configs" / "protocols" / "protocol-v2.0-final.json"
         manifest = {
-            "schema_version": 8,
+            "schema_version": 9,
             "purpose": "T-528 deterministic presentation review; not scientific evidence",
             "visual_reference_viewport": [1480, 920],
             "final_reserve_execution": "not-authorized-and-not-executed",
@@ -358,7 +496,8 @@ def main() -> int:
             "development_fixture_scientific_runs": 0,
             "presentation_provenance_fixture": "development-only-no-scientific-metrics",
             "presentation_live_fixture": "static-development-layout-no-environment-step",
-            "stored_results_fixture": "none-no-scientific-metrics-fabricated",
+            "stored_results_fixture": "in-memory-synthetic-presentation-only-never-registered",
+            "stored_results_fixture_scientific_evidence": False,
             "protocol_file_sha256": sha256(protocol_path),
             "screenshots": records,
         }
