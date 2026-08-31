@@ -4,10 +4,11 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from contextlib import nullcontext
 from pathlib import Path
 from typing import Any
 
-from ..presentation_observer import bound_presentation_sink
+from ..study.ports import JobOutcomeKind
 from ..study.service import StudyService
 from ..study.store import StudyStore
 from .execution_policy import (
@@ -16,6 +17,10 @@ from .execution_policy import (
     running_job_ids,
 )
 from .live_events import DroppingLiveEventSink
+from .live_instrumentation import (
+    instrument_gridworld_for_live_presentation,
+    live_identity_from_job_payload,
+)
 
 
 def _load_store(*, repo_root: Path, writable_root: Path, study_id: str) -> StudyStore:
@@ -71,19 +76,51 @@ def run_development_study(
             "study has an infrastructure failure; use the explicit retry action"
         )
 
-    # T-528 presentation is a best-effort side channel outside Study evidence.
-    # The execution policy above proves this is a DEVELOPMENT Study before a
-    # live sink can be bound. The sink itself is lossy and non-blocking.
+    # Live presentation is a lossy DEVELOPMENT-only side channel. Scientific
+    # sources are never modified: each ready job runs under temporary worker-local
+    # GridWorld method wrappers that are restored immediately afterwards.
     live_sink = DroppingLiveEventSink(
         writable_root=writable_root,
         study_id=study_id,
     )
+    executed = []
     try:
-        with bound_presentation_sink(live_sink):
-            executed = service.run_ready(
-                study_id,
-                stop_on_infrastructure_failure=True,
+        while True:
+            store = _load_store(
+                repo_root=repo_root,
+                writable_root=writable_root,
+                study_id=study_id,
             )
+            assert_development_store_execution_allowed(store, repo_root=repo_root)
+            ready = store.lifecycle.ready_jobs()
+            if not ready:
+                break
+            next_job = ready[0]
+            identity = live_identity_from_job_payload(dict(next_job.payload))
+            observer = (
+                instrument_gridworld_for_live_presentation(
+                    sink=live_sink,
+                    identity=identity,
+                )
+                if identity is not None
+                else nullcontext()
+            )
+            with observer:
+                batch = service.run_ready(
+                    study_id,
+                    max_jobs=1,
+                    stop_on_infrastructure_failure=True,
+                )
+            if not batch:
+                break
+            result = batch[0]
+            if result.job_id != next_job.job_id:
+                raise RuntimeError(
+                    "worker/scheduler ready-job order diverged from durable Study plan"
+                )
+            executed.append(result)
+            if result.outcome.kind is JobOutcomeKind.INFRASTRUCTURE_FAILURE:
+                break
     finally:
         live_sink.close()
 
