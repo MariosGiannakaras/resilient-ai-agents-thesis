@@ -4,13 +4,21 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from resilient_agents.agents import TabularQLearningAgent, TabularQLearningConfig
 from resilient_agents.desktop.live_events import DesktopLiveReadModel, DroppingLiveEventSink
-from resilient_agents.gridworld import GridWorldEnvironment
+from resilient_agents.desktop.live_instrumentation import (
+    LiveJobIdentity,
+    instrument_gridworld_for_live_presentation,
+)
+from resilient_agents.gridworld import ACTION_NAMES, GridWorldEnvironment
 from resilient_agents.presentation_observer import (
     bound_presentation_sink,
     emit_gridworld_transition,
     emit_presentation_event,
 )
+from resilient_agents.protocol_v2 import TabularQScientificStateAdapter
+from resilient_agents.protocol_v2_runtime import ProtocolV2RootIdentity
+from resilient_agents.protocol_v2_tabular_driver import ProjectTabularPhaseADriver
 from tests.test_gridworld import fixture_seeds, fixture_spec
 
 
@@ -28,17 +36,57 @@ class _Collector:
 
 
 class PresentationObserverTests(unittest.TestCase):
-    def test_emit_helper_swallows_sink_failure(self) -> None:
-        with bound_presentation_sink(_RaisingSink()):
-            emit_presentation_event({"stream_id": "test", "event_type": "noop"})
+    @staticmethod
+    def _root() -> ProtocolV2RootIdentity:
+        return ProtocolV2RootIdentity(
+            root_id="presentation-runtime-root",
+            initialization_seed=5101,
+            exploration_seed=5102,
+            scenario_seed=5103,
+            environment_seed=5104,
+            action_disturbance_seed=5105,
+            observation_disturbance_seed=5106,
+        )
 
-    def test_gridworld_snapshot_is_copy_only_after_existing_transition(self) -> None:
-        scenario = fixture_spec(
+    @staticmethod
+    def _scenario():
+        return fixture_spec(
             action_failure=0.0,
             observation_corruption=0.0,
             max_steps=5,
             include_change=False,
         )
+
+    def _driver(self) -> tuple[ProjectTabularPhaseADriver, TabularQScientificStateAdapter]:
+        agent = TabularQLearningAgent(
+            TabularQLearningConfig(
+                agent_id="presentation-runtime-q",
+                actions=ACTION_NAMES,
+                learning_rate=0.2,
+                discount_factor=0.9,
+                exploration_epsilon=0.2,
+                learning_enabled=True,
+                bootstrap_on_truncation=True,
+                initial_q_value=0.0,
+            ),
+            checkpoint=None,
+        )
+        adapter = TabularQScientificStateAdapter(agent)
+        return (
+            ProjectTabularPhaseADriver(
+                adapter=adapter,
+                scenario=self._scenario(),
+                root=self._root(),
+            ),
+            adapter,
+        )
+
+    def test_emit_helper_swallows_sink_failure(self) -> None:
+        with bound_presentation_sink(_RaisingSink()):
+            emit_presentation_event({"stream_id": "test", "event_type": "noop"})
+
+    def test_gridworld_snapshot_is_copy_only_after_existing_transition(self) -> None:
+        scenario = self._scenario()
         environment = GridWorldEnvironment(scenario)
         collector = _Collector()
         try:
@@ -71,6 +119,45 @@ class PresentationObserverTests(unittest.TestCase):
             event["delivered_observation"],
             list(transition.delivered_observation),
         )
+
+    def test_runtime_instrumentation_preserves_tabular_scientific_state(self) -> None:
+        baseline_driver, baseline_adapter = self._driver()
+        baseline_driver.train_to_interaction(12)
+        baseline_sha = baseline_adapter.state_sha256()
+        baseline_driver.close()
+
+        with tempfile.TemporaryDirectory() as directory:
+            writable = Path(directory).resolve()
+            sink = DroppingLiveEventSink(
+                writable_root=writable,
+                study_id="runtime-invariance",
+                flush_interval_seconds=0.01,
+            )
+            observed_driver, observed_adapter = self._driver()
+            identity = LiveJobIdentity(
+                phase="phase-a",
+                method_id="q_learning",
+                root_id=self._root().root_id,
+                layout_id=self._scenario().scenario_id,
+            )
+            try:
+                with instrument_gridworld_for_live_presentation(
+                    sink=sink,
+                    identity=identity,
+                ):
+                    observed_driver.train_to_interaction(12)
+            finally:
+                observed_driver.close()
+                sink.close()
+            observed_sha = observed_adapter.state_sha256()
+            frames = DesktopLiveReadModel(writable_root=writable).latest(
+                "runtime-invariance"
+            )
+
+        self.assertEqual(observed_sha, baseline_sha)
+        self.assertGreaterEqual(len(frames), 1)
+        self.assertEqual(frames[0].method_id, "q_learning")
+        self.assertEqual(frames[0].root_id, self._root().root_id)
 
     def test_live_sink_is_outside_evidence_paths_and_readable_after_close(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
