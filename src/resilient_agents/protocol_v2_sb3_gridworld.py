@@ -18,7 +18,6 @@ import gymnasium as gym
 from .contracts import ScenarioSpec
 from .environment import EnvironmentSeeds
 from .gridworld import GridWorldEnvironment
-from .presentation_observer import emit_gridworld_transition
 from .protocol_v2_gridworld import GridWorldScientificStateAdapter
 
 
@@ -32,26 +31,16 @@ class ExplicitSeededGridWorldEnv(gym.Env):
         *,
         scenario: ScenarioSpec,
         episode_seeds: Sequence[EnvironmentSeeds],
-        presentation_method_id: str | None = None,
-        presentation_root_id: str | None = None,
     ) -> None:
         super().__init__()
         seeds = tuple(episode_seeds)
         if not seeds or any(not isinstance(item, EnvironmentSeeds) for item in seeds):
             raise ValueError("episode_seeds must be a non-empty explicit EnvironmentSeeds sequence")
-        if presentation_method_id is not None and not presentation_method_id.strip():
-            raise ValueError("presentation_method_id must be non-empty when supplied")
-        if presentation_root_id is not None and not presentation_root_id.strip():
-            raise ValueError("presentation_root_id must be non-empty when supplied")
         self._environment = GridWorldEnvironment(scenario)
         self.action_space = self._environment.gym_env.action_space
         self.observation_space = self._environment.gym_env.observation_space
         self._episode_seeds = seeds
         self._next_episode = 0
-        self._active_episode = -1
-        self._interactions = 0
-        self._presentation_method_id = presentation_method_id
-        self._presentation_root_id = presentation_root_id
 
     @property
     def environment(self) -> GridWorldEnvironment:
@@ -73,23 +62,11 @@ class ExplicitSeededGridWorldEnv(gym.Env):
         # intentionally not forwarded into the project environment; the exact
         # predeclared EnvironmentSeeds object remains authoritative.
         observation = self._environment.reset(seeds=episode_seeds)
-        self._active_episode = self._next_episode
         self._next_episode += 1
         return observation, {}
 
     def step(self, action):
         transition = self._environment.step(int(action))
-        self._interactions += 1
-        if self._presentation_method_id is not None and self._presentation_root_id is not None:
-            emit_gridworld_transition(
-                phase="phase-a",
-                method_id=self._presentation_method_id,
-                root_id=self._presentation_root_id,
-                scenario=self._environment.gym_env.spec,
-                episode_index=self._active_episode,
-                interaction_index=self._interactions,
-                transition=transition,
-            )
         return (
             transition.delivered_observation,
             float(transition.reward),
