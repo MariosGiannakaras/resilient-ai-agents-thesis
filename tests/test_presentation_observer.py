@@ -3,6 +3,7 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 from resilient_agents.agents import TabularQLearningAgent, TabularQLearningConfig
 from resilient_agents.desktop.live_events import DesktopLiveReadModel, DroppingLiveEventSink
@@ -16,7 +17,7 @@ from resilient_agents.presentation_observer import (
     emit_gridworld_transition,
     emit_presentation_event,
 )
-from resilient_agents.protocol_v2 import TabularQScientificStateAdapter
+from resilient_agents.protocol_v2 import ProtocolV2Branch, TabularQScientificStateAdapter
 from resilient_agents.protocol_v2_runtime import ProtocolV2RootIdentity
 from resilient_agents.protocol_v2_tabular_driver import ProjectTabularPhaseADriver
 from tests.test_gridworld import fixture_seeds, fixture_spec
@@ -119,6 +120,49 @@ class PresentationObserverTests(unittest.TestCase):
             event["delivered_observation"],
             list(transition.delivered_observation),
         )
+
+    def test_phase_b_runtime_instrumentation_uses_authoritative_branch_label(self) -> None:
+        from resilient_agents.study import protocol_v2_phase_b_executor as phase_b_module
+
+        scenario = self._scenario()
+        environment = GridWorldEnvironment(scenario)
+        environment.reset(seeds=fixture_seeds(action=91, observation=92))
+        collector = _Collector()
+        identity = LiveJobIdentity(
+            phase="phase-b",
+            method_id="q_learning",
+            root_id="presentation-branch-root",
+            layout_id=scenario.scenario_id,
+        )
+
+        real_driver = phase_b_module.ProjectTabularPhaseBBranchDriver
+
+        def stub_driver(**_kwargs):
+            return SimpleNamespace()
+
+        phase_b_module.ProjectTabularPhaseBBranchDriver = stub_driver
+        try:
+            with instrument_gridworld_for_live_presentation(
+                sink=collector,
+                identity=identity,
+            ):
+                # The instrumentation wraps the executor's runtime factory and
+                # observes the actual ProtocolV2Branch object passed by execute_phase_b.
+                phase_b_module.ProjectTabularPhaseBBranchDriver(
+                    branch=ProtocolV2Branch.FROZEN_DISTURBED,
+                    adaptive=False,
+                    learner=object(),
+                    environment=SimpleNamespace(environment=environment),
+                    subsequent_episode_seeds=(),
+                )
+                environment.step(1)
+        finally:
+            phase_b_module.ProjectTabularPhaseBBranchDriver = real_driver
+            environment.close()
+
+        self.assertEqual(len(collector.events), 1)
+        self.assertEqual(collector.events[0]["branch"], "FD")
+        self.assertTrue(collector.events[0]["stream_id"].endswith(":FD"))
 
     def test_runtime_instrumentation_preserves_tabular_scientific_state(self) -> None:
         baseline_driver, baseline_adapter = self._driver()
