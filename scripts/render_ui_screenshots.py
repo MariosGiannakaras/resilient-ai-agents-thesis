@@ -106,6 +106,10 @@ def main() -> int:
         app.processEvents()
         records.append(capture(window, output, "reference-size-exploratory-review.png"))
 
+        window.set_page(2)
+        app.processEvents()
+        records.append(capture(window, output, "reference-size-results-empty.png"))
+
         window.resize(QSize(1440, 900))
         window.set_page(0)
         study.show_home()
@@ -183,14 +187,19 @@ def main() -> int:
         app.processEvents()
         records.append(capture(window, output, "13-runs-development-ready-1366x768.png"))
 
+        window.set_page(2)
+        app.processEvents()
+        records.append(capture(window, output, "14-results-empty-1366x768.png"))
+
         protocol_path = REPO_ROOT / "configs" / "protocols" / "protocol-v2.0-final.json"
         manifest = {
-            "schema_version": 5,
+            "schema_version": 6,
             "purpose": "T-528 deterministic presentation review; not scientific evidence",
             "visual_reference_viewport": [1480, 920],
             "final_reserve_execution": "not-authorized-and-not-executed",
             "development_fixture_created_only": True,
             "development_fixture_scientific_runs": 0,
+            "stored_results_fixture": "none-no-scientific-metrics-fabricated",
             "protocol_file_sha256": sha256(protocol_path),
             "screenshots": records,
         }

@@ -18,8 +18,9 @@ from PySide6.QtWidgets import (
 
 from . import APP_NAME, APP_SUBTITLE
 from .artifacts_page import ArtifactsPage
-from .placeholder_page import PlaceholderPage
 from .protocol import load_frozen_protocol
+from .results_page import ResultsPage
+from .results_read_model import DesktopResultsReadModel
 from .runs_page import RunsPage
 from .study_read_model import DesktopStudyReadModel
 from .study_workspace import StudyWorkspacePage
@@ -40,6 +41,7 @@ class MainWindow(QMainWindow):
             repo_root=self.repo_root,
             writable_root=self.writable_root,
         )
+        self.results_read_model = DesktopResultsReadModel(self.study_read_model)
 
         root = QWidget()
         root.setObjectName("AppRoot")
@@ -70,10 +72,7 @@ class MainWindow(QMainWindow):
         # read-only frozen thesis review surface directly.
         self.thesis_page = self.study_page.thesis
         self.runs_page = RunsPage(self.study_read_model)
-        self.results_page = PlaceholderPage(
-            "Results",
-            "Compare Learning and Test Resilience become available from stored analysis evidence. The application will not invent example scientific outcomes.",
-        )
+        self.results_page = ResultsPage(self.results_read_model, protocol)
         self.artifacts_page = ArtifactsPage(self.study_read_model)
         self.pages = (
             self.study_page,
@@ -192,6 +191,8 @@ class MainWindow(QMainWindow):
             button.setChecked(button_index == index)
         if index == 1:
             self.runs_page.refresh()
+        elif index == 2:
+            self.results_page.refresh()
         elif index == 3:
             self.artifacts_page.refresh()
 
