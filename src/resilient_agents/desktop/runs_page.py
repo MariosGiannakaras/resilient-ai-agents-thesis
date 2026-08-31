@@ -1,7 +1,7 @@
 """Truthful durable-study Runs workspace."""
 from __future__ import annotations
 
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtCore import Qt, QTimer, Signal
 from PySide6.QtWidgets import (
     QAbstractItemView,
     QFrame,
@@ -16,6 +16,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from .execution_supervisor import DesktopExecutionSupervisor
 from .study_read_model import DesktopStudyReadModel, StudyListItem
 from .widgets import EmptyState, MetricItem, SectionHeader, VerticalDivider
 
@@ -27,18 +28,33 @@ class RunsPage(QWidget):
         super().__init__(parent)
         self.read_model = read_model
         self.items: tuple[StudyListItem, ...] = ()
+        self.supervisor = DesktopExecutionSupervisor(
+            repo_root=read_model.repo_root,
+            writable_root=read_model.writable_root,
+            parent=self,
+        )
+        self.supervisor.started.connect(self._worker_started)
+        self.supervisor.output.connect(self._worker_output)
+        self.supervisor.finished.connect(self._worker_finished)
+
+        self.poll_timer = QTimer(self)
+        self.poll_timer.setInterval(1000)
+        self.poll_timer.timeout.connect(self.refresh)
         self.setObjectName("Page")
 
         root = QVBoxLayout(self)
         root.setContentsMargins(38, 28, 42, 34)
-        root.setSpacing(17)
+        root.setSpacing(15)
 
         header = QHBoxLayout()
         title_block = QVBoxLayout()
         title_block.setSpacing(4)
         title = QLabel("Runs")
         title.setObjectName("PageTitle")
-        lead = QLabel("Durable Study lifecycle state from the Python backend — no synthesized progress or replay.")
+        lead = QLabel(
+            "Run and monitor durable development Studies from backend-owned state — "
+            "no synthesized progress, replay or ETA."
+        )
         lead.setObjectName("PageLead")
         lead.setWordWrap(True)
         title_block.addWidget(title)
@@ -46,7 +62,7 @@ class RunsPage(QWidget):
         header.addLayout(title_block, 1)
         refresh = QPushButton("Refresh")
         refresh.setObjectName("SecondaryButton")
-        refresh.setToolTip("Reload study state from the durable StudyStore on disk.")
+        refresh.setToolTip("Reload Study state from the durable StudyStore on disk.")
         refresh.clicked.connect(self.refresh)
         header.addWidget(refresh, 0, Qt.AlignmentFlag.AlignTop)
         root.addLayout(header)
@@ -58,17 +74,70 @@ class RunsPage(QWidget):
         self.summary_layout.setSpacing(16)
         root.addWidget(self.summary)
 
-        root.addWidget(SectionHeader("Study history", "Select a row to inspect its durable artifacts."))
+        self.control = QFrame()
+        self.control.setObjectName("Surface")
+        control_layout = QVBoxLayout(self.control)
+        control_layout.setContentsMargins(20, 15, 20, 15)
+        control_layout.setSpacing(8)
+
+        control_top = QHBoxLayout()
+        control_text = QVBoxLayout()
+        control_text.setSpacing(2)
+        self.control_title = QLabel("Selected study")
+        self.control_title.setObjectName("SectionTitle")
+        self.control_detail = QLabel()
+        self.control_detail.setObjectName("PageLead")
+        self.control_detail.setWordWrap(True)
+        control_text.addWidget(self.control_title)
+        control_text.addWidget(self.control_detail)
+        control_top.addLayout(control_text, 1)
+
+        self.start_button = QPushButton("Start / Resume")
+        self.start_button.setObjectName("PrimaryButton")
+        self.start_button.setToolTip(
+            "Launch a separate local worker process. The Qt GUI remains responsive "
+            "and progress continues to come from the durable StudyStore."
+        )
+        self.start_button.clicked.connect(self._start_selected)
+        control_top.addWidget(self.start_button, 0, Qt.AlignmentFlag.AlignVCenter)
+
+        self.retry_button = QPushButton("Retry failed job")
+        self.retry_button.setObjectName("SecondaryButton")
+        self.retry_button.setToolTip(
+            "Retry the single infrastructure-failed job under the same scientific "
+            "identity, then resume the Study."
+        )
+        self.retry_button.clicked.connect(self._retry_selected)
+        control_top.addWidget(self.retry_button, 0, Qt.AlignmentFlag.AlignVCenter)
+        control_layout.addLayout(control_top)
+
+        self.worker_message = QLabel()
+        self.worker_message.setObjectName("SectionHint")
+        self.worker_message.setWordWrap(True)
+        self.worker_message.hide()
+        control_layout.addWidget(self.worker_message)
+        self.control.hide()
+        root.addWidget(self.control)
+
+        root.addWidget(
+            SectionHeader(
+                "Study history",
+                "Select a development Study to start/resume execution or inspect its durable state.",
+            )
+        )
 
         self.empty = EmptyState(
             "No studies yet",
-            "No framework-neutral Study has been created in this workspace. Exploratory studies will appear here after they are created through the application.",
+            "No framework-neutral Study has been created in this workspace. "
+            "Exploratory studies will appear here after they are created through the application.",
         )
         root.addWidget(self.empty)
 
         self.table = QTableWidget(0, 7)
         self.table.setObjectName("StudyTable")
-        self.table.setHorizontalHeaderLabels(("Study", "Evidence", "Stage", "Progress", "Status", "Failures", "Finalized"))
+        self.table.setHorizontalHeaderLabels(
+            ("Study", "Evidence", "Stage", "Progress", "Status", "Failures", "Finalized")
+        )
         self.table.verticalHeader().setVisible(False)
         self.table.setAlternatingRowColors(False)
         self.table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
@@ -76,7 +145,7 @@ class RunsPage(QWidget):
         self.table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.table.setShowGrid(False)
         self.table.setSortingEnabled(False)
-        self.table.itemSelectionChanged.connect(self._emit_selection)
+        self.table.itemSelectionChanged.connect(self._selection_changed)
         header_view = self.table.horizontalHeader()
         header_view.setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
         header_view.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
@@ -100,6 +169,7 @@ class RunsPage(QWidget):
             item = self.summary_layout.takeAt(0)
             widget = item.widget()
             if widget is not None:
+                widget.setParent(None)
                 widget.deleteLater()
 
     def _populate_summary(self) -> None:
@@ -134,10 +204,29 @@ class RunsPage(QWidget):
         progress.setValue(item.resolved_jobs)
         progress.setFormat(f"{item.resolved_jobs} / {item.total_jobs}")
         progress.setTextVisible(True)
-        progress.setAccessibleName(f"{item.resolved_jobs} of {item.total_jobs} study jobs scientifically resolved")
+        progress.setAccessibleName(
+            f"{item.resolved_jobs} of {item.total_jobs} study jobs scientifically resolved"
+        )
         return progress
 
+    def _selected_study_id(self) -> str | None:
+        selected = self.table.selectionModel().selectedRows()
+        if not selected:
+            return None
+        item = self.table.item(selected[0].row(), 0)
+        if item is None:
+            return None
+        study_id = item.data(Qt.ItemDataRole.UserRole)
+        return study_id if isinstance(study_id, str) and study_id else None
+
+    def _selected_item(self) -> StudyListItem | None:
+        study_id = self._selected_study_id()
+        if study_id is None:
+            return None
+        return next((item for item in self.items if item.study_id == study_id), None)
+
     def refresh(self) -> None:
+        previous_selection = self._selected_study_id()
         self.error.hide()
         try:
             self.items = self.read_model.studies()
@@ -151,6 +240,7 @@ class RunsPage(QWidget):
 
         self._populate_summary()
         self.table.setRowCount(0)
+        selected_row: int | None = None
         for row_index, item in enumerate(self.items):
             self.table.insertRow(row_index)
             study = self._text_item(item.study_id, user_data=item.study_id)
@@ -159,26 +249,148 @@ class RunsPage(QWidget):
             self.table.setItem(row_index, 1, self._text_item(item.evidence_class.title()))
             self.table.setItem(row_index, 2, self._text_item(item.stage_label))
             self.table.setCellWidget(row_index, 3, self._progress_widget(item))
-            self.table.setItem(row_index, 4, self._text_item(item.status.replace("-", " ").title()))
+            self.table.setItem(
+                row_index,
+                4,
+                self._text_item(item.status.replace("-", " ").title()),
+            )
             failures = item.scientific_failures + item.infrastructure_failures
             failure_text = "—" if failures == 0 else str(failures)
             failure_cell = self._text_item(failure_text)
             if failures:
-                failure_cell.setToolTip(f"Scientific: {item.scientific_failures}; infrastructure: {item.infrastructure_failures}")
+                failure_cell.setToolTip(
+                    f"Scientific: {item.scientific_failures}; "
+                    f"infrastructure: {item.infrastructure_failures}"
+                )
             self.table.setItem(row_index, 5, failure_cell)
-            self.table.setItem(row_index, 6, self._text_item("Yes" if item.finalized else "No"))
+            self.table.setItem(
+                row_index,
+                6,
+                self._text_item("Yes" if item.finalized else "No"),
+            )
+            if item.study_id == previous_selection:
+                selected_row = row_index
 
         has_items = bool(self.items)
         self.empty.setVisible(not has_items)
         self.table.setVisible(has_items)
+        if selected_row is not None:
+            self.table.selectRow(selected_row)
+        else:
+            self._update_control(None)
 
-    def _emit_selection(self) -> None:
-        selected = self.table.selectionModel().selectedRows()
-        if not selected:
+    def _selection_changed(self) -> None:
+        item = self._selected_item()
+        self._update_control(item)
+        if item is not None:
+            self.study_selected.emit(item.study_id)
+
+    def _update_control(self, item: StudyListItem | None) -> None:
+        if item is None:
+            self.control.hide()
             return
-        item = self.table.item(selected[0].row(), 0)
+        self.control.show()
+        self.control_title.setText(item.study_id)
+        detail = (
+            f"{item.evidence_class.title()} evidence · {item.stage_label} · "
+            f"{item.resolved_jobs}/{item.total_jobs} jobs resolved"
+        )
+        self.control_detail.setText(detail)
+
+        is_development = item.evidence_class == "development"
+        worker_busy = self.supervisor.busy
+        active_here = self.supervisor.active_study_id == item.study_id
+
+        self.start_button.setEnabled(False)
+        self.retry_button.setEnabled(False)
+        self.retry_button.setVisible(item.infrastructure_failures > 0)
+
+        if not is_development:
+            self.start_button.setText("Final execution locked")
+            self.start_button.setToolTip(
+                "T-528 does not authorize confirmatory/final-reserve execution."
+            )
+            return
+        if item.finalized:
+            self.start_button.setText("Study complete")
+            return
+        if item.running_jobs > 0:
+            self.start_button.setText("Worker running" if active_here else "Study running")
+            return
+        if worker_busy:
+            self.start_button.setText("Another worker is active")
+            return
+        if item.infrastructure_failures > 0:
+            self.start_button.setText("Resolve infrastructure failure")
+            self.retry_button.setEnabled(True)
+            return
+
+        if item.resolved_jobs >= item.total_jobs:
+            self.start_button.setText("Finalize study")
+        else:
+            self.start_button.setText("Start / Resume")
+        self.start_button.setEnabled(True)
+
+    def _start_selected(self) -> None:
+        item = self._selected_item()
         if item is None:
             return
-        study_id = item.data(Qt.ItemDataRole.UserRole)
-        if isinstance(study_id, str) and study_id:
-            self.study_selected.emit(study_id)
+        try:
+            self.supervisor.start_or_resume(item.study_id)
+        except Exception as exc:
+            self.error.setText(
+                "Study worker could not start. No scientific state was changed by the UI.\n"
+                f"Technical detail: {type(exc).__name__}: {exc}"
+            )
+            self.error.show()
+
+    def _retry_selected(self) -> None:
+        item = self._selected_item()
+        if item is None:
+            return
+        try:
+            self.supervisor.retry_and_resume(item.study_id)
+        except Exception as exc:
+            self.error.setText(
+                "Infrastructure retry could not start.\n"
+                f"Technical detail: {type(exc).__name__}: {exc}"
+            )
+            self.error.show()
+
+    def _worker_started(self, study_id: str) -> None:
+        self.worker_message.setText(
+            f"Local worker active for {study_id}. Progress below is reloaded from "
+            "the durable StudyStore; no ETA is estimated."
+        )
+        self.worker_message.show()
+        self.poll_timer.start()
+        self.refresh()
+
+    def _worker_output(self, study_id: str, _chunk: str) -> None:
+        if self._selected_study_id() == study_id:
+            self.worker_message.setText(
+                f"Local worker active for {study_id}. Durable job state refreshes "
+                "automatically while execution continues outside the Qt thread."
+            )
+            self.worker_message.show()
+
+    def _worker_finished(self, study_id: str, exit_code: int, output: str) -> None:
+        self.poll_timer.stop()
+        self.refresh()
+        if exit_code == 0:
+            self.worker_message.setText(
+                f"Worker finished for {study_id}. The table now reflects the "
+                "latest durable Study state."
+            )
+            self.worker_message.show()
+            return
+
+        detail = output[-2500:] if output else "worker exited without diagnostic output"
+        self.error.setText(
+            "Study worker stopped with an infrastructure/runtime error. "
+            "Durable state was reloaded; scientific failures are not inferred "
+            "from the process exit code.\n"
+            f"Technical detail: {detail}"
+        )
+        self.error.show()
+        self.worker_message.hide()
