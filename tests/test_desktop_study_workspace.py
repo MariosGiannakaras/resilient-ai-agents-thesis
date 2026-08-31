@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import os
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -58,15 +59,40 @@ class StudyWorkspaceTests(unittest.TestCase):
         self.assertEqual(self.page.models.selected_method_ids(), ())
         self.assertFalse(self.page.models.continue_button.isEnabled())
 
-    def test_review_is_backend_resolved_and_create_remains_unwired(self) -> None:
-        self.page.show_exploratory()
+    def test_review_is_backend_resolved_and_creation_is_separate_from_execution(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            page = StudyWorkspacePage(
+                self.protocol,
+                repo_root=REPO_ROOT,
+                writable_root=Path(directory),
+            )
+            page.show()
+            page.show_exploratory()
+            page.show_customize()
+            page.customize.root_count.setCurrentIndex(1)
+            page.customize.layout_count.setCurrentIndex(1)
+            page._show_review()
+            self.app.processEvents()
+            self.assertTrue(page.review.create_button.isEnabled())
+            self.assertIn("Final-reserve execution remains unauthorized", page.review.detail.text())
+
+            page.review.create_button.click()
+            self.app.processEvents()
+            self.assertIsNotNone(page._created_study_id)
+            study_dir = Path(directory) / "results" / "studies" / str(page._created_study_id)
+            self.assertTrue((study_dir / "recipe.json").is_file())
+            self.assertFalse((Path(directory) / "results" / "runs").exists())
+            self.assertIn("No scientific job has executed", page.review.detail.text())
+            page.close()
+
+    def test_repeated_review_replaces_summary_without_accumulating_widgets(self) -> None:
         self.page.show_customize()
-        self.page.customize.root_count.setCurrentIndex(1)
-        self.page.customize.layout_count.setCurrentIndex(1)
+        self.page._show_review()
+        first_count = self.page.review.summary_grid.count()
+        self.page.show_customize()
         self.page._show_review()
         self.app.processEvents()
-        self.assertFalse(self.page.review.create_button.isEnabled())
-        self.assertIn("Final-reserve execution remains unauthorized", self.page.review.detail.text())
+        self.assertEqual(self.page.review.summary_grid.count(), first_count)
 
     def test_thesis_back_and_help_are_progressively_disclosed(self) -> None:
         self.page.show_thesis()
