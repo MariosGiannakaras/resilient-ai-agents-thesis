@@ -17,7 +17,6 @@ from typing import Any, Mapping, Sequence
 from .contracts import ScenarioSpec, project_for_agent
 from .environment import EnvironmentSeeds
 from .gridworld import ACTION_NAMES, GridAction, GridWorldEnvironment
-from .presentation_observer import emit_gridworld_transition
 from .protocol_v2 import (
     NativeStateAdapter,
     ScientificStateAdapter,
@@ -157,17 +156,6 @@ class ProjectTabularPhaseADriver:
             self._episode_return += float(truth.reward)
             self._episode_length += 1
             self._observation = truth.delivered_observation
-            # Presentation observes an immutable copy only after the scientific
-            # transition has already been applied to learner/environment state.
-            emit_gridworld_transition(
-                phase="phase-a",
-                method_id=self.method_id,
-                root_id=self.root.root_id,
-                scenario=self.scenario,
-                episode_index=self._episode_index,
-                interaction_index=self._interactions,
-                transition=truth,
-            )
             if truth.terminated or truth.truncated:
                 self._finish_episode(
                     outcome="terminated" if truth.terminated else "truncated"
