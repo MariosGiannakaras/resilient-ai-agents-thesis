@@ -1,0 +1,115 @@
+name: T-528 curate accepted PySide6 screenshots
+
+on:
+  push:
+    branches:
+      - feat/pre-wp7-protocol-v1.1-ui-rebuild
+    paths:
+      - ".github/workflows/t528-curate-ui-screenshots.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  curate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      QT_QPA_PLATFORM: offscreen
+      PYTHONPATH: src
+    steps:
+      - name: Checkout implementation branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/pre-wp7-protocol-v1.1-ui-rebuild
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Qt offscreen runtime
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends libegl1
+
+      - name: Install uv
+        run: python -m pip install --disable-pip-version-check --quiet uv
+
+      - name: Restore historical locked project environment
+        run: uv sync --locked --group gridworld-prototype --no-progress
+
+      - name: Overlay exact-pinned T-528 UI dependencies
+        run: uv pip install --python .venv/bin/python --requirement requirements/application-ui.txt
+
+      - name: Render accepted review candidates
+        run: |
+          uv run --no-sync python scripts/render_ui_screenshots.py --output /tmp/t528-ui
+          uv run --no-sync python scripts/render_ui_resilience_pair.py --output /tmp/t528-ui
+
+      - name: Curate PySide6 review root and archive historical NiceGUI images
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ui-screenshots/historical-nicegui ui-screenshots/pyside6
+
+          shopt -s nullglob
+          for image in ui-screenshots/*.png; do
+            git mv "$image" "ui-screenshots/historical-nicegui/$(basename "$image")"
+          done
+
+          cp /tmp/t528-ui/01-choose-study.png ui-screenshots/pyside6/01-choose-study.png
+          cp /tmp/t528-ui/02-thesis-study.png ui-screenshots/pyside6/02-thesis-study.png
+          cp /tmp/t528-ui/03-exploratory-models.png ui-screenshots/pyside6/03-exploratory-models.png
+          cp /tmp/t528-ui/04-exploratory-customize.png ui-screenshots/pyside6/04-exploratory-customize.png
+          cp /tmp/t528-ui/05-exploratory-review.png ui-screenshots/pyside6/05-exploratory-review.png
+          cp /tmp/t528-ui/16-runs-matched-resilience.png ui-screenshots/pyside6/06-runs-matched-resilience.png
+          cp /tmp/t528-ui/07b-results-learning-qa.png ui-screenshots/pyside6/07-results-compare-learning.png
+          cp /tmp/t528-ui/07c-results-resilience-qa.png ui-screenshots/pyside6/08-results-test-resilience.png
+          cp /tmp/t528-ui/08b-artifacts-provenance.png ui-screenshots/pyside6/09-artifacts-provenance.png
+
+          cat > ui-screenshots/README.md <<'EOF'
+          # UI screenshot review sets
+
+          ## `pyside6/` — current T-528 application review set
+
+          These images are the accepted visual-review surfaces for the Python/PySide6
+          application built by **T-528 — Final Application / Frontend Rebuild**.
+
+          They are presentation QA, not scientific evidence. In particular:
+
+          - Thesis Study screens read the frozen protocol contract but do not execute it.
+          - `06-runs-matched-resilience.png` uses a static DEVELOPMENT presentation fixture;
+            it executes zero environment steps and zero scientific jobs.
+          - populated Results screenshots use explicitly synthetic in-memory UI fixtures so
+            chart/table layout can be inspected; their metric values are not scientific results.
+          - Artifacts provenance uses presentation-only DEVELOPMENT fixture records.
+
+          The GitHub Actions `T-528 PySide6 UI screenshots` artifact is the authoritative
+          full QA bundle and also contains 1366x768 laptop sanity renders plus the accepted
+          historical visual references used for side-by-side comparison.
+
+          ## `historical-nicegui/` — historical prototype only
+
+          These PNGs preserve the earlier NiceGUI/prototype visual history. They are not the
+          current frontend and must not be used to claim current T-528 acceptance. They remain
+          as visual references/history only.
+          EOF
+
+          git add ui-screenshots
+          git status --short
+
+      - name: Commit curated review set
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --cached --quiet; then
+            echo "Curated screenshot set already matches."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "docs(t528): curate PySide6 UI review screenshots"
+          git push origin HEAD:feat/pre-wp7-protocol-v1.1-ui-rebuild
