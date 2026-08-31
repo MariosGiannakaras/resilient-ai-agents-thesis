@@ -52,13 +52,15 @@ class StoredIntervalBarChart(QWidget):
         self._bars: tuple[StoredBar, ...] = ()
         self._title = "Stored analysis summary"
         self._legend: tuple[tuple[str, str], ...] = ()
-        self.setMinimumHeight(205)
-        self.setMaximumHeight(285)
+        # Results must remain useful on an ordinary 1366x768 thesis laptop.
+        # Keep enough vertical space for the accompanying accessible data table.
+        self.setMinimumHeight(150)
+        self.setMaximumHeight(190)
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         self.setAccessibleName("Stored analysis chart")
 
     def sizeHint(self) -> QSize:
-        return QSize(760, 230)
+        return QSize(760, 170)
 
     def set_data(
         self,
@@ -96,11 +98,15 @@ class StoredIntervalBarChart(QWidget):
         grid_pen = QPen(QColor("#E4E7EC"), 1.0)
         axis_pen = QPen(QColor("#98A2B3"), 1.0)
         painter.setPen(title_pen)
-        painter.drawText(14, 24, self._title)
+        painter.drawText(14, 22, self._title)
 
         if not self._bars:
             painter.setPen(hint_pen)
-            painter.drawText(self.rect().adjusted(14, 38, -14, -12), Qt.AlignmentFlag.AlignCenter, "No stored values available")
+            painter.drawText(
+                self.rect().adjusted(14, 34, -14, -10),
+                Qt.AlignmentFlag.AlignCenter,
+                "No stored values available",
+            )
             return
 
         values: list[float] = [0.0]
@@ -121,26 +127,34 @@ class StoredIntervalBarChart(QWidget):
 
         left = 58.0
         right = 18.0
-        top = 44.0
-        bottom = 46.0
+        top = 38.0
+        bottom = 38.0
         if self._legend:
-            top += 20.0
-        plot = QRectF(left, top, max(1.0, self.width() - left - right), max(1.0, self.height() - top - bottom))
+            top += 17.0
+        plot = QRectF(
+            left,
+            top,
+            max(1.0, self.width() - left - right),
+            max(1.0, self.height() - top - bottom),
+        )
 
         def y_for(value: float) -> float:
             fraction = (value - minimum) / (maximum - minimum)
             return plot.bottom() - fraction * plot.height()
 
-        # Sparse horizontal guides with numeric labels.
         metrics = QFontMetrics(painter.font())
-        for step in range(5):
-            value = minimum + (maximum - minimum) * step / 4.0
+        for step in range(4):
+            value = minimum + (maximum - minimum) * step / 3.0
             y = y_for(value)
             painter.setPen(grid_pen)
             painter.drawLine(plot.left(), y, plot.right(), y)
             painter.setPen(hint_pen)
             label = f"{value:.3g}"
-            painter.drawText(QRectF(2, y - 9, left - 10, 18), Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter, label)
+            painter.drawText(
+                QRectF(2, y - 9, left - 10, 18),
+                Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter,
+                label,
+            )
 
         zero_y = y_for(0.0)
         painter.setPen(axis_pen)
@@ -155,15 +169,18 @@ class StoredIntervalBarChart(QWidget):
                     color.setAlpha(105)
                 painter.setBrush(QBrush(color))
                 painter.setPen(Qt.PenStyle.NoPen)
-                painter.drawRoundedRect(QRectF(x, 35, 10, 10), 2, 2)
+                painter.drawRoundedRect(QRectF(x, 30, 9, 9), 2, 2)
                 painter.setPen(hint_pen)
-                painter.drawText(QRectF(x + 15, 30, 120, 20), Qt.AlignmentFlag.AlignVCenter, text)
-                x += 120
+                painter.drawText(
+                    QRectF(x + 14, 25, 118, 19),
+                    Qt.AlignmentFlag.AlignVCenter,
+                    text,
+                )
+                x += 118
 
-        group_count = len({bar.label for bar in self._bars})
         bar_count = len(self._bars)
         slot = plot.width() / max(1, bar_count)
-        width = min(32.0, max(8.0, slot * 0.56))
+        width = min(30.0, max(8.0, slot * 0.56))
 
         for index, bar in enumerate(self._bars):
             center_x = plot.left() + slot * (index + 0.5)
@@ -173,7 +190,16 @@ class StoredIntervalBarChart(QWidget):
             color = self._method_color(bar.key, secondary=bar.variant == "secondary")
             painter.setBrush(QBrush(color))
             painter.setPen(Qt.PenStyle.NoPen)
-            painter.drawRoundedRect(QRectF(center_x - width / 2, rect_top, width, max(1.5, rect_bottom - rect_top)), 3, 3)
+            painter.drawRoundedRect(
+                QRectF(
+                    center_x - width / 2,
+                    rect_top,
+                    width,
+                    max(1.5, rect_bottom - rect_top),
+                ),
+                3,
+                3,
+            )
 
             if bar.lower is not None and bar.upper is not None:
                 high_y = y_for(bar.upper)
@@ -183,8 +209,7 @@ class StoredIntervalBarChart(QWidget):
                 painter.drawLine(center_x - 5, high_y, center_x + 5, high_y)
                 painter.drawLine(center_x - 5, low_y, center_x + 5, low_y)
 
-        # X labels are drawn once per consecutive label group to avoid duplicating
-        # method names for paired learning bars.
+        # Draw one method label for paired Final/Time-average bars.
         seen: dict[str, list[int]] = {}
         for index, bar in enumerate(self._bars):
             seen.setdefault(bar.label, []).append(index)
@@ -192,7 +217,15 @@ class StoredIntervalBarChart(QWidget):
             first = indexes[0]
             last = indexes[-1]
             center_x = plot.left() + slot * ((first + last) / 2.0 + 0.5)
-            text_rect = QRectF(center_x - 58, plot.bottom() + 7, 116, 30)
+            text_rect = QRectF(center_x - 58, plot.bottom() + 5, 116, 26)
             painter.setPen(hint_pen)
-            elided = metrics.elidedText(label, Qt.TextElideMode.ElideRight, int(text_rect.width()))
-            painter.drawText(text_rect, Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop, elided)
+            elided = metrics.elidedText(
+                label,
+                Qt.TextElideMode.ElideRight,
+                int(text_rect.width()),
+            )
+            painter.drawText(
+                text_rect,
+                Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop,
+                elided,
+            )
