@@ -76,6 +76,7 @@ def application_stylesheet() -> str:
     QLabel#StatusFrozen {{ color: #174EA6; background: {COLORS['accent_soft']}; border: 1px solid #B9CDF7; border-radius: 9px; padding: 3px 8px; font-size: 11px; font-weight: 700; }}
     QLabel#StatusDevelopment {{ color: {COLORS['development']}; background: {COLORS['development_bg']}; border: 1px solid {COLORS['development_border']}; border-radius: 9px; padding: 3px 8px; font-size: 11px; font-weight: 700; }}
     QFrame#DevelopmentBanner {{ background: {COLORS['development_bg']}; border: 1px solid {COLORS['development_border']}; border-radius: 9px; }}
+    QLabel#DevelopmentTitle {{ color: #234E63; font-size: 13px; font-weight: 700; }}
     QLabel#DevelopmentText {{ color: #315B70; }}
 
     QPushButton#HelpDisclosure {{ color: #24405F; background: transparent; border: 0; padding: 4px 2px; text-align: left; font-weight: 650; }}
@@ -83,11 +84,19 @@ def application_stylesheet() -> str:
     QPushButton#HelpDisclosure:checked {{ color: {COLORS['accent']}; }}
     QLabel#HelpDetail {{ color: #3F526B; background: #F7F9FC; border: 1px solid {COLORS['border']}; border-radius: 8px; padding: 10px 12px; }}
 
+    QLabel#StepComplete {{ color: #2F6A50; background: #EFF8F3; border: 1px solid #B8DCC7; border-radius: 8px; padding: 6px 11px; font-size: 11px; font-weight: 700; }}
+    QLabel#StepCurrent {{ color: {COLORS['accent']}; background: {COLORS['accent_soft']}; border: 1px solid #B9CDF7; border-radius: 8px; padding: 6px 11px; font-size: 11px; font-weight: 750; }}
+    QLabel#StepUpcoming {{ color: #667085; background: #FFFFFF; border: 1px solid {COLORS['border']}; border-radius: 8px; padding: 6px 11px; font-size: 11px; font-weight: 650; }}
+    QLabel#StepArrow {{ color: #98A2B3; font-size: 13px; }}
+
     QFrame#ModelChoiceCard {{ background: {COLORS['surface']}; border: 1px solid {COLORS['border']}; border-radius: 11px; min-height: 124px; }}
     QFrame#ModelChoiceCard:hover {{ border-color: #B8C9E7; }}
     QCheckBox#ModelChoiceCheck {{ color: {COLORS['text']}; font-size: 14px; font-weight: 700; spacing: 8px; }}
     QCheckBox#ModelChoiceCheck::indicator {{ width: 16px; height: 16px; }}
     QLabel#ModelChoiceConfig {{ color: {COLORS['accent']}; font-size: 11px; font-weight: 600; }}
+
+    QLabel#ReviewLabel {{ color: {COLORS['muted']}; font-size: 11px; font-weight: 650; }}
+    QLabel#ReviewValue {{ color: #1D2939; font-size: 13px; font-weight: 650; }}
 
     QLabel#MetricValue {{ font-size: 20px; font-weight: 700; }}
     QLabel#MetricLabel {{ color: {COLORS['muted']}; font-size: 11px; }}
@@ -106,6 +115,9 @@ def application_stylesheet() -> str:
     QPushButton#LockedButton {{ background: #F5F7FA; color: #98A2B3; border: 1px solid #E1E6ED; border-radius: 7px; padding: 9px 14px; font-weight: 600; }}
     QPushButton#TextButton {{ color: {COLORS['accent']}; background: transparent; border: 0; padding: 5px 0; font-weight: 600; text-align: left; }}
     QPushButton#TextButton:hover {{ color: {COLORS['accent_hover']}; }}
+
+    QLineEdit#StudyLabelInput, QComboBox#ScopeCombo {{ background: {COLORS['surface']}; border: 1px solid #C8D2E1; border-radius: 7px; padding: 8px 10px; min-height: 18px; }}
+    QLineEdit#StudyLabelInput:focus, QComboBox#ScopeCombo:focus {{ border-color: #84A7F7; }}
 
     QFrame#Divider {{ background: {COLORS['border']}; min-width: 1px; max-width: 1px; }}
     QTableWidget#StudyTable, QTableWidget#ArtifactTable {{ background: {COLORS['surface']}; border: 1px solid {COLORS['border']}; border-radius: 9px; selection-background-color: {COLORS['accent_soft']}; selection-color: {COLORS['text']}; outline: 0; }}

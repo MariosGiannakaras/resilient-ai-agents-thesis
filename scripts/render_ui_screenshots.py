@@ -2,8 +2,8 @@
 """Render deterministic PySide6 T-528 review screenshots in offscreen mode.
 
 These screenshots are presentation QA artifacts, never scientific evidence. The
-script reads frozen protocol metadata but does not create, execute, resume or
-finalize any Study.
+script reads frozen protocol metadata and DEVELOPMENT preview plans but does not
+create, execute, resume or finalize any Study.
 """
 from __future__ import annotations
 
@@ -51,6 +51,14 @@ def capture(window: MainWindow, output: Path, filename: str) -> dict[str, object
     }
 
 
+def prepare_review(study) -> None:
+    study.show_customize()
+    study.customize.study_label.setText("GridWorld adaptation check")
+    study.customize.root_count.setCurrentIndex(1)
+    study.customize.layout_count.setCurrentIndex(1)
+    study._show_review()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
@@ -70,6 +78,7 @@ def main() -> int:
     # states at this exact viewport so visual review is not confounded by size.
     window.resize(QSize(1480, 920))
     window.set_page(0)
+
     study.show_home()
     app.processEvents()
     records.append(capture(window, output, "reference-size-choose-study.png"))
@@ -78,14 +87,17 @@ def main() -> int:
     app.processEvents()
     records.append(capture(window, output, "reference-size-thesis-study.png"))
 
-    study.thesis.technical.show()
-    app.processEvents()
-    records.append(capture(window, output, "reference-size-thesis-study-technical.png"))
-    study.thesis.technical.hide()
-
     study.show_exploratory()
     app.processEvents()
     records.append(capture(window, output, "reference-size-exploratory-models.png"))
+
+    study.show_customize()
+    app.processEvents()
+    records.append(capture(window, output, "reference-size-exploratory-customize.png"))
+
+    prepare_review(study)
+    app.processEvents()
+    records.append(capture(window, output, "reference-size-exploratory-review.png"))
 
     window.resize(QSize(1440, 900))
     window.set_page(0)
@@ -101,10 +113,18 @@ def main() -> int:
     app.processEvents()
     records.append(capture(window, output, "03-exploratory-models.png"))
 
+    study.show_customize()
+    app.processEvents()
+    records.append(capture(window, output, "04-exploratory-customize.png"))
+
+    prepare_review(study)
+    app.processEvents()
+    records.append(capture(window, output, "05-exploratory-review.png"))
+
     for index, filename in (
-        (1, "04-runs-empty.png"),
-        (2, "05-results-empty.png"),
-        (3, "06-artifacts-empty.png"),
+        (1, "06-runs-empty.png"),
+        (2, "07-results-empty.png"),
+        (3, "08-artifacts-empty.png"),
     ):
         window.set_page(index)
         app.processEvents()
@@ -114,18 +134,27 @@ def main() -> int:
     window.set_page(0)
     study.show_home()
     app.processEvents()
-    records.append(capture(window, output, "07-choose-study-1366x768.png"))
+    records.append(capture(window, output, "09-choose-study-1366x768.png"))
 
     study.show_exploratory()
     app.processEvents()
-    records.append(capture(window, output, "08-exploratory-models-1366x768.png"))
+    records.append(capture(window, output, "10-exploratory-models-1366x768.png"))
+
+    study.show_customize()
+    app.processEvents()
+    records.append(capture(window, output, "11-exploratory-customize-1366x768.png"))
+
+    prepare_review(study)
+    app.processEvents()
+    records.append(capture(window, output, "12-exploratory-review-1366x768.png"))
 
     protocol_path = REPO_ROOT / "configs" / "protocols" / "protocol-v2.0-final.json"
     manifest = {
-        "schema_version": 3,
+        "schema_version": 4,
         "purpose": "T-528 deterministic presentation review; not scientific evidence",
         "visual_reference_viewport": [1480, 920],
         "final_reserve_execution": "not-authorized-and-not-executed",
+        "development_preview_only": True,
         "protocol_file_sha256": sha256(protocol_path),
         "screenshots": records,
     }

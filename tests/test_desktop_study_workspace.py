@@ -26,7 +26,7 @@ class StudyWorkspaceTests(unittest.TestCase):
         cls.protocol = load_frozen_protocol(REPO_ROOT)
 
     def setUp(self) -> None:
-        self.page = StudyWorkspacePage(self.protocol)
+        self.page = StudyWorkspacePage(self.protocol, repo_root=REPO_ROOT)
         self.page.show()
         self.app.processEvents()
 
@@ -34,25 +34,39 @@ class StudyWorkspaceTests(unittest.TestCase):
         self.page.close()
         self.app.processEvents()
 
-    def test_starts_at_choose_study_and_routes_between_subviews(self) -> None:
+    def test_routes_across_full_exploratory_review_journey(self) -> None:
         self.assertEqual(self.page.current_view, "choose")
         self.page.show_thesis()
         self.assertEqual(self.page.current_view, "thesis")
         self.page.show_exploratory()
         self.assertEqual(self.page.current_view, "exploratory")
+        self.page.show_customize()
+        self.assertEqual(self.page.current_view, "customize")
+        self.page._show_review()
+        self.assertEqual(self.page.current_view, "review")
         self.page.show_home()
         self.assertEqual(self.page.current_view, "choose")
 
     def test_exploratory_models_project_only_retained_implementations(self) -> None:
         expected = tuple(method.method_id for method in self.protocol.methods)
-        self.assertEqual(self.page.exploratory.selected_method_ids(), expected)
-        self.assertTrue(self.page.exploratory.continue_button.isEnabled())
+        self.assertEqual(self.page.models.selected_method_ids(), expected)
+        self.assertTrue(self.page.models.continue_button.isEnabled())
 
-        for card in self.page.exploratory.model_cards:
+        for card in self.page.models.model_cards:
             card.check.setChecked(False)
         self.app.processEvents()
-        self.assertEqual(self.page.exploratory.selected_method_ids(), ())
-        self.assertFalse(self.page.exploratory.continue_button.isEnabled())
+        self.assertEqual(self.page.models.selected_method_ids(), ())
+        self.assertFalse(self.page.models.continue_button.isEnabled())
+
+    def test_review_is_backend_resolved_and_create_remains_unwired(self) -> None:
+        self.page.show_exploratory()
+        self.page.show_customize()
+        self.page.customize.root_count.setCurrentIndex(1)
+        self.page.customize.layout_count.setCurrentIndex(1)
+        self.page._show_review()
+        self.app.processEvents()
+        self.assertFalse(self.page.review.create_button.isEnabled())
+        self.assertIn("Final-reserve execution remains unauthorized", self.page.review.detail.text())
 
     def test_thesis_back_and_help_are_progressively_disclosed(self) -> None:
         self.page.show_thesis()
