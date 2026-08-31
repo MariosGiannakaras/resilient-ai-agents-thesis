@@ -1,26 +1,24 @@
 # Current Project Status
 
-**Date:** 2026-08-30
+**Date:** 2026-08-31
 **Status:** Authoritative compact current-state summary
 
-`docs/context/TASKS.md` is the canonical ledger. Use **progressive** task-specific reading of DEC-048/049/050/051/052/053 and `docs/research/` / `docs/architecture/` only as needed.
+`docs/context/TASKS.md` is the canonical ledger. Use **progressive** task-specific reading of DEC-048/049/050/051/052/053/054/055/056/057/058/059 and `docs/research/` / `docs/architecture/` only as needed.
 
 ## Current execution state
 
 - `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable; old `T-522` must not execute.
-- `T-524`, `T-525` and `T-529` are COMPLETE.
-- `T-529` completed DEC-051's framework-neutral Study lifecycle from immutable recipe through real execution, validation, root/layout analysis and deterministic evidence export. It generated no final frontend or thesis/defense material.
-- **`T-527` is COMPLETE under accepted DEC-058; `T-526A`, `T-526` and `T-529` remain COMPLETE.** DEC-055 tuning is immutable valid-complete; sizing-v0.1 and v0.2 are immutable valid-failed and cannot be resumed/rerun.
-- The retained Phase-A bundle selected `gw-l1` (7×7) by rule and validated all 30 method/root/layout units without failure.
-- DEC-052 failed closed at 2/30 on a raw DQN envelope mismatch. The SB3 2.9.0 audit proved runtime/transport metadata (`data.start_time` and display-only class metadata) differed while the complete historical continuation state matched.
-- DEC-053 recovery validated 30/30 states with 12 retained SB3 transport mismatches and no learner mismatch/failure. Its Phase B stopped fail-closed at 8/240 before SARSA's first prefix because the exact checkpoint retained a deferred update.
-- DEC-054 proves five SARSA sources required deterministic behavior-policy settlement of their final already-counted transition; 25 sources were quiescent. Settlement used zero environment interactions and no Phase-B observation.
-- DEC-054 physical validation accepted 30/30 quiescent deployment-start states: five SARSA states were deterministically settled with exact restored behavior-policy RNG and 25 states were no-ops. Settlement consumed zero environment interactions. Fresh Phase-B v0.3 completed 240/240 matched sets, 960 branches, 240 one-interaction common prefixes and 9,600 post-boundary interactions with zero scientific/infrastructure failures; independent validators pass.
-- DEC-056's reviewed attempt started fresh and retained 137/240 Phase-A units plus 272/480 matched sets. The continuation adapter covered branch/reset execution, but the separate shared no-learning prefix still passed a tuple directly to stochastic DQN. Root 21 took SB3's pre-policy vectorization branch and failed with the same `.shape` exception. One infrastructure failure and zero scientific failures were retained.
-- DEC-057's pre-outcome audit found and centralized every active direct project-GridWorld SB3 inference ingress, including the shared prefix, Frozen branch driver, deterministic project probes and retained T-526 PPO helper. Forced exploration tests cover stochastic DQN and PPO. The generic Box evaluator and adapter-internal delegation remain explicitly outside this ingress rule.
-- Exact complete Q-Learning and SARSA v0.2 strata passed structural reuse barriers independent of performance. DEC-057 sizing-v0.3 is valid-complete at 144/144 fresh Phase-A units and 288/288 fresh matched sets with zero failures; the combined five-method package is valid-complete at 240/240 Phase-A units, 480/480 matched sets, 1,920 branches and 3,840 branch-horizon evaluations.
+- `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, `T-528` and `T-529` are COMPLETE.
+- `T-529` completed DEC-051's framework-neutral Study lifecycle from immutable recipe through real execution, validation, root/layout analysis and deterministic evidence export.
+- `T-527` is COMPLETE under DEC-058. DEC-055 tuning is immutable valid-complete; sizing-v0.1 and v0.2 are immutable valid-failed and cannot be resumed/rerun. DEC-057 sizing-v0.3 and the combined five-method sizing package are valid-complete.
 - DEC-058 accepts the final protocol-v2.0 scientific freeze. `configs/protocols/protocol-v2.0-final.json` retains `final_reserve_access=false`; issue #95 is 10/10 and CLOSED. No final-reserve scientific outcome was generated, and T-610+ remains unauthorized/unexecuted.
-- `T-528` / #93 is READY and not started; its T-527 and T-529 dependencies are satisfied. The final frontend must use a framework different from NiceGUI.
+- **`T-528 — Final Application / Frontend Rebuild` is COMPLETE under DEC-059.** The final application is Python-native PySide6 / Qt 6 Widgets over the framework-neutral Study backend; NiceGUI remains historical prototype only.
+- T-528 implements the recipe-first Thesis Study review path, clearly separated DEVELOPMENT/Exploratory Study flow, durable Study creation, non-blocking worker/supervisor execution, truthful Runs progress, matched Frozen/Adaptive live GridWorld presentation, stored-evidence Results (Compare Learning / Test Resilience), registered-artifact provenance, accessibility/help/empty/error/locked states and deterministic CI screenshot review artifacts.
+- T-528's bounded DEVELOPMENT application smoke completed the complete create -> execute -> validate -> analyze -> evidence-handoff lifecycle without final identities. The accepted implementation head before screenshot curation (`15fe9598955df1fa5fecff86fa1d9a80767045f6`) had Repository checks, Protocol-v2 checks and PySide6 UI screenshot checks all green.
+- The curated `ui-screenshots/pyside6/` review set is current; `ui-screenshots/historical-nicegui/` is historical-only. CI remains the authoritative full screenshot bundle, including laptop-width sanity renders and historical side-by-side references.
+- **`T-511 — Intended-user application workflow/self-explanatory UX acceptance` is READY and is the next application gate.** It requires explicit user acceptance; automated checks cannot close it.
+- Master tracker #87 is now **6/8** objectively complete: milestones 1, 2, 3, 4, 5 and 7. Milestone 6 awaits T-511 human acceptance; milestone 8 additionally depends on the final v2 evidence chain.
+- PR #92 remains OPEN, DRAFT and UNMERGED.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
 
 ## Completed Study-first backend
@@ -31,6 +29,22 @@ Current reusable backend/evidence foundation includes:
 - real Q-Learning/SARSA/DQN/PPO/Dyna-Q+ execution with exact checkpoints and explicit failure semantics;
 - shared-prefix atomic FN/FD/AN/AD branching, structural validation and root/layout analysis;
 - explicit status denominators and deterministic lineage-preserving CSV/JSON export.
+
+## Completed final application foundation
+
+DEC-059 selects PySide6 / Qt 6 Widgets for the final local desktop application. The UI consumes application/read-model boundaries and does not own or reimplement scientific protocol logic.
+
+Application behavior now includes:
+
+- read-only frozen Thesis Study review while `final_reserve_access=false`;
+- DEVELOPMENT-only Exploratory Study creation using non-final layouts/root namespaces;
+- server/application-side execution policy that rejects final identities and non-DEVELOPMENT study execution;
+- `QProcess`-based non-blocking local worker supervision over durable Study state;
+- Runs progress derived from `StudyStore`, with scientific/infrastructure failure distinction retained;
+- presentation-only dropping live-event sink/read model and matched FD/AD visualization that cannot feed back into action selection, RNG, checkpoints or evidence;
+- stored `analysis-package` rendering with integrity/provenance checks rather than UI-side estimand recomputation;
+- registered artifact lineage/provenance presentation without arbitrary filesystem browsing;
+- deterministic PySide6 screenshot CI plus curated review set and 1366×768 / 1440×900 visual sanity coverage.
 
 ## Protocol-v2 invariants
 
@@ -48,40 +62,26 @@ Entrypoint: `scripts/run_protocol_v2_feasibility_windows.ps1`
 
 Historical failed recovery authority/config/entrypoint: `docs/decisions/DEC-052_T526_CHECKPOINT_MATERIALIZATION_AND_PHASE_B.md`, `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json`, `scripts/run_protocol_v2_t526_recovery_phase_b_windows.ps1`.
 
-Current v0.2 authority/config/entrypoint: `docs/decisions/DEC-053_SB3_SCIENTIFIC_CONTINUATION_IDENTITY.md`, `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.2.json`, `scripts/run_protocol_v2_t526_recovery_phase_b_v02_windows.ps1`.
-
-Completed DEC-054 authority/config/entrypoint: `docs/decisions/DEC-054_PHASE_A_INTERACTION_BUDGET_SETTLEMENT.md`, `configs/protocols/protocol-v2-t526-boundary-settlement-phase-b-v0.3.json`, `scripts/run_protocol_v2_t526_boundary_settlement_phase_b_v03_windows.ps1`.
-
-DEC-054 evidence: `results/pilots/protocol-v2-feasibility-boundary-settlement-v0.1/` — valid-complete 30/30, five non-no-op SARSA states, zero environment interactions/failures, 33 hash-covered files, 4,755,471 bytes, 21.289 seconds. `results/pilots/protocol-v2-feasibility-phase-b-v0.3/` — valid-complete 240/240, 960 branches, 240 prefix + 9,600 post-boundary interactions, zero scientific/infrastructure failures, four hash-covered files, 803,558 bytes, 223.710 seconds.
-
-DEC-053 evidence: `results/pilots/protocol-v2-feasibility-v0.1-recovery-v0.2/` — valid-complete 30/30, 33 hash-covered files, 4,760,652 bytes, 132.519 seconds. `results/pilots/protocol-v2-feasibility-phase-b-v0.2/` — valid failed attempt, 8/240 matched sets, 32/960 branches, 8 prefix + 320/9,600 post-boundary interactions, one infrastructure failure, 3 hash-covered files, 24,957 bytes, 1.355 seconds.
-
-Failed recovery evidence: `results/pilots/protocol-v2-feasibility-v0.1-recovery/` — 3 attempted payloads, 2 exact matches, 1 retained checkpoint-identity failure, 499,535 hash-covered bytes. The failed-attempt validator passes. No Phase-B output directory exists; matched sets/interactions are 0/240 and 0.
-
-The predeclared one-time first pass evaluated `gw-l1` first and selected it, so the ordered ladder correctly stopped before `gw-l2`/`gw-l3`. The completed matrix contains two layouts, three roots, five core methods, 2048 actual Phase-A training interactions per unit and probes at 0/512/1024/2048.
-
-Recorded physical totals are 61,440 training interactions, 28,524 probe interactions, 129.344 summed unit wall-seconds, 459.469 summed unit process-CPU-seconds and 4,680,026 aggregate serialized checkpoint bytes. The retained five-file artifact bundle is 40,488 bytes. Per-method median unit wall times were Q-Learning 0.169 s, SARSA 0.168 s, Dyna-Q+ 0.363 s, DQN 11.792 s and PPO 8.465 s; maximum serialized checkpoint sizes were 17,225, 17,124, 49,338, 463,739 and 236,224 bytes respectively.
-
-Evidence path: `results/pilots/protocol-v2-feasibility-v0.1/`. Do not rerun, delete, rename, replace or hand-edit it.
+DEC-053 recovery and DEC-054 boundary-settlement evidence remain immutable historical/accepted scientific evidence. DEC-055/056 failed sizing attempts remain immutable failed evidence. DEC-057 sizing-v0.3 and the combined five-method matrix remain the accepted non-final sizing authority. No scientific package was rerun by T-528.
 
 ## Statistics / provenance
 
 Final statistical values and the contrast family are frozen by T-527 in DEC-058. Filesystem evidence remains authoritative and any future index/database must be rebuildable.
 
-DEC-055 authority/config/runbook/entrypoint: `docs/decisions/DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md`, `configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json`, `docs/research/T527_WINDOWS_TUNING_SIZING_RUNBOOK.md`, `scripts/run_protocol_v2_t527_tuning_sizing_windows.ps1`. The deterministic input package is `results/pilots/protocol-v2-t527-input-diagnostics-v0.1/`. The tuning package `results/pilots/protocol-v2-t527-tuning-v0.1/` is valid-complete at 180/180 (4 hash-covered files, 287,709 bytes). The sizing package `results/pilots/protocol-v2-t527-sizing-v0.1/` is valid-failed at 97/240 Phase-A units and 192/480 matched sets (101 hash-covered files, 3,911,282 bytes), with one infrastructure failure and zero hash mismatches.
-
-DEC-056 authority/config/entrypoint: `docs/decisions/DEC-056_T527_SIZING_OBSERVATION_BOUNDARY_RETRY.md`, `configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json`, `scripts/run_protocol_v2_t527_sizing_v02_windows.ps1`. Evidence `results/pilots/protocol-v2-t527-sizing-v0.2/` is valid-failed at 137/240 and 272/480, with 142 integrity-covered files / 57,135,229 bytes and zero recomputed mismatches.
-
-DEC-057 authority/config/audit/entrypoint: `docs/decisions/DEC-057_T527_COMPLETE_SB3_INGRESS_AND_SIZING_COMPLETION.md`, `configs/protocols/protocol-v2-t527-sizing-completion-v0.3.json`, `docs/research/T527_SB3_DIRECT_INFERENCE_BOUNDARY_AUDIT.md`, `scripts/run_protocol_v2_t527_sizing_v03_windows.ps1`. Evidence `results/pilots/protocol-v2-t527-sizing-v0.3/` and `results/pilots/protocol-v2-t527-sizing-combined-v0.3/` is valid-complete.
-
 DEC-058 authority/firewall: `docs/decisions/DEC-058_PROTOCOL_V2_FINAL_SCIENTIFIC_FREEZE.md` and `configs/protocols/protocol-v2.0-final.json`. The protocol is frozen with `final_reserve_access=false`; explicit later T-610+ authorization is required for final-reserve scientific execution.
+
+DEC-059 application authority: `docs/decisions/DEC-059_PYSIDE6_FINAL_APPLICATION_ARCHITECTURE.md`. T-528 application presentation and DEVELOPMENT smoke evidence do not authorize final scientific execution.
 
 Canonical bibliography remains `MariosGiannakaras/ThesisBibliography`, immutable upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`: 597 canonical sources, 121 citation-ready sources and 19 research materials. `bibliography-integration-v3` remains immutable historical terminology.
 
-## Still intentionally unfrozen
+## Still intentionally gated
 
-Final retained methods, configurations, layouts, roots, budgets, conditions and statistics are frozen by DEC-058. Final-reserve execution is not authorized by the freeze itself.
+- Final-reserve execution remains sealed: `final_reserve_access=false`.
+- `T-511 — Intended-user application workflow/self-explanatory UX acceptance` requires explicit user acceptance.
+- `T-610+` remains blocked until its dependencies and explicit scientific authorization are satisfied.
+- WP7 remains blocked by the mandatory explicit pre-WP7 user-approval gate.
+- Final Windows standalone packaging remains deferred to `T-803` / issue #94.
 
 ## Exact next action
 
-Begin T-528 application/frontend work in a later task. Do not start T-528 during this documentation-only closure hotfix, and do not execute T-610+ or access the final reserve.
+Perform `T-511 — Intended-user application workflow/self-explanatory UX acceptance` using the accepted PySide6 screenshots/application workflow. Do not execute T-610+, do not access the final reserve and do not start WP7 merely because T-528 is complete.
