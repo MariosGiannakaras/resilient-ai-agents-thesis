@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (
 )
 
 from .protocol import FrozenProtocolSummary
+from .results_charts import StoredBar, StoredIntervalBarChart
 from .results_read_model import (
     DesktopResultsReadModel,
     StoredAnalysisPackage,
@@ -179,6 +180,11 @@ class ResultsPage(QWidget):
                 "Final probe quality and interaction-axis time-average are displayed exactly from the stored Phase-A summary.",
             )
         )
+        self.learning_chart = StoredIntervalBarChart()
+        self.learning_chart.setToolTip(
+            "Visual rendering of stored backend means and intervals. The desktop UI does not calculate these values."
+        )
+        layout.addWidget(self.learning_chart)
         self.learning_table = QTableWidget(0, 6)
         self.learning_table.setObjectName("ResultsTable")
         self.learning_table.setHorizontalHeaderLabels(
@@ -196,9 +202,29 @@ class ResultsPage(QWidget):
         layout.addWidget(
             SectionHeader(
                 "Matched resilience",
-                "Frozen loss, Adaptive loss and matched adaptation benefit come directly from the stored four-branch backend analysis.",
+                "Adaptation benefit is the stored matched four-branch DiD result. Frozen and Adaptive losses remain supporting descriptive detail below.",
             )
         )
+        filter_row = QHBoxLayout()
+        filter_label = QLabel("Condition")
+        filter_label.setObjectName("ReviewLabel")
+        filter_row.addWidget(filter_label)
+        self.resilience_condition = QComboBox()
+        self.resilience_condition.setMinimumWidth(300)
+        self.resilience_condition.setToolTip(
+            "Select which stored uncertainty condition to visualize. This does not recompute the analysis."
+        )
+        self.resilience_condition.currentIndexChanged.connect(self._refresh_resilience_chart)
+        filter_row.addWidget(self.resilience_condition)
+        filter_row.addStretch(1)
+        layout.addLayout(filter_row)
+
+        self.resilience_chart = StoredIntervalBarChart()
+        self.resilience_chart.setToolTip(
+            "Primary adaptation effect from the stored matched DiD analysis, with its stored root-level interval."
+        )
+        layout.addWidget(self.resilience_chart)
+
         self.resilience_table = QTableWidget(0, 7)
         self.resilience_table.setObjectName("ResultsTable")
         self.resilience_table.setHorizontalHeaderLabels(
@@ -261,6 +287,8 @@ class ResultsPage(QWidget):
             self.current_package = None
             self.learning_table.setRowCount(0)
             self.resilience_table.setRowCount(0)
+            self.learning_chart.set_data(title="Stored nominal summary", bars=())
+            self.resilience_chart.set_data(title="Stored adaptation benefit", bars=())
 
     def _selection_changed(self, _index: int) -> None:
         self._load_selected()
@@ -314,6 +342,7 @@ class ResultsPage(QWidget):
 
     def _populate_learning(self, package: StoredAnalysisPackage) -> None:
         self.learning_table.setRowCount(len(package.learning))
+        bars: list[StoredBar] = []
         for row, summary in enumerate(package.learning):
             roots = f"{summary.included_root_count} / {summary.planned_root_count}"
             values = (
@@ -334,14 +363,44 @@ class ResultsPage(QWidget):
                         "No value was recomputed by the desktop UI."
                     )
                 self.learning_table.setItem(row, column, self._item(value, tooltip=tooltip))
+            if summary.final_value.mean is not None:
+                bars.append(
+                    StoredBar(
+                        key=summary.method_id,
+                        label=self._method_name(summary.method_id),
+                        value=summary.final_value.mean,
+                        lower=summary.final_value.interval_lower,
+                        upper=summary.final_value.interval_upper,
+                        variant="primary",
+                    )
+                )
+            if summary.time_average.mean is not None:
+                bars.append(
+                    StoredBar(
+                        key=summary.method_id,
+                        label=self._method_name(summary.method_id),
+                        value=summary.time_average.mean,
+                        lower=summary.time_average.interval_lower,
+                        upper=summary.time_average.interval_upper,
+                        variant="secondary",
+                    )
+                )
+        self.learning_chart.set_data(
+            title=f"Stored nominal summary · {package.phase_a_metric}",
+            bars=tuple(bars),
+            legend=(("Final probe", "primary"), ("Time-average", "secondary")),
+        )
 
     def _populate_resilience(self, package: StoredAnalysisPackage) -> None:
         self.resilience_table.setRowCount(len(package.resilience))
+        conditions: list[str] = []
         for row, summary in enumerate(package.resilience):
             condition = _CONDITION_NAMES.get(
                 summary.condition_id,
                 _display_identifier(summary.condition_id),
             )
+            if summary.condition_id not in conditions:
+                conditions.append(summary.condition_id)
             roots = f"{summary.included_root_count} / {summary.planned_root_count}"
             values = (
                 self._method_name(summary.method_id),
@@ -364,6 +423,44 @@ class ResultsPage(QWidget):
                         "FN/FD/AN/AD effects were computed by the backend analysis engine."
                     )
                 self.resilience_table.setItem(row, column, self._item(value, tooltip=tooltip))
+
+        previous = self.resilience_condition.currentData()
+        self.resilience_condition.blockSignals(True)
+        self.resilience_condition.clear()
+        for condition_id in conditions:
+            self.resilience_condition.addItem(
+                _CONDITION_NAMES.get(condition_id, _display_identifier(condition_id)),
+                condition_id,
+            )
+        if previous in conditions:
+            self.resilience_condition.setCurrentIndex(conditions.index(previous))
+        self.resilience_condition.blockSignals(False)
+        self._refresh_resilience_chart()
+
+    def _refresh_resilience_chart(self, _index: int = -1) -> None:
+        package = self.current_package
+        condition_id = self.resilience_condition.currentData()
+        if package is None or not isinstance(condition_id, str):
+            self.resilience_chart.set_data(title="Stored adaptation benefit", bars=())
+            return
+        bars: list[StoredBar] = []
+        for summary in package.resilience:
+            if summary.condition_id != condition_id or summary.adaptation_benefit.mean is None:
+                continue
+            bars.append(
+                StoredBar(
+                    key=summary.method_id,
+                    label=self._method_name(summary.method_id),
+                    value=summary.adaptation_benefit.mean,
+                    lower=summary.adaptation_benefit.interval_lower,
+                    upper=summary.adaptation_benefit.interval_upper,
+                )
+            )
+        condition_name = _CONDITION_NAMES.get(condition_id, _display_identifier(condition_id))
+        self.resilience_chart.set_data(
+            title=f"Matched adaptation benefit · {condition_name}",
+            bars=tuple(bars),
+        )
 
     def _apply_tab_style(self, selected: int) -> None:
         for index, button in enumerate((self.learning_button, self.resilience_button)):
