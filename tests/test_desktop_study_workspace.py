@@ -1,19 +1,24 @@
 from __future__ import annotations
 
+import importlib.util
 import os
 import unittest
 from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
-from resilient_agents.desktop.app import create_application
-from resilient_agents.desktop.protocol import load_frozen_protocol
-from resilient_agents.desktop.study_workspace import StudyWorkspacePage
+PYSIDE6_AVAILABLE = importlib.util.find_spec("PySide6") is not None
+
+if PYSIDE6_AVAILABLE:
+    from resilient_agents.desktop.app import create_application
+    from resilient_agents.desktop.protocol import load_frozen_protocol
+    from resilient_agents.desktop.study_workspace import StudyWorkspacePage
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
+@unittest.skipUnless(PYSIDE6_AVAILABLE, "PySide6 is an application-only T-528 dependency")
 class StudyWorkspaceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
