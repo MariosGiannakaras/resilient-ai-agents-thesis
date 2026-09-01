@@ -11,7 +11,7 @@ The repository's persistent execution invariant is **Complete the canonical proj
 ## Startup / resume
 
 1. Inspect Git status, branch, recent commits, upstream state, open PR and CI. Resume work marked `IN_PROGRESS` only when it belongs to the current T-534 package.
-2. Read the explicit **three-file session-start core** first and no substitute:
+2. Read only the session-start core:
    - `AGENTS.md`
    - `docs/context/TASKS.md`
    - `docs/context/CURRENT_STATUS.md`
