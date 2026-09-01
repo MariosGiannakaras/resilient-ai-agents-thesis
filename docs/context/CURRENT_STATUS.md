@@ -3,87 +3,85 @@
 **Date:** 2026-09-01  
 **Status:** Authoritative compact current-state summary
 
-`docs/context/TASKS.md` remains the canonical dependency/task ledger. Read task-specific decision/research documents **progressively**. Objective Git/GitHub/evidence state overrides stale resume prose after interruption.
+`docs/context/TASKS.md` is the canonical dependency/task ledger. Read task-specific decision/research documents **progressively**. Objective Git/GitHub/evidence state overrides stale resume prose after interruption.
 
 ## Current execution state
 
 - `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable historical evidence; old `T-522` must not execute.
-- `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, `T-528`, `T-529`, historical `T-530`, `T-531`, `T-532`, `T-511` and **`T-533` are COMPLETE**.
-- DEC-058 and `configs/protocols/protocol-v2.0-final.json` remain immutable historical protocol-v2.0 freeze authority. DEC-060 is the explicit pre-outcome amendment; it does not rewrite DEC-058 history.
-- `configs/protocols/protocol-v2.1-final.json` is the self-contained current scientific authority. It preserves the five methods, selected hyperparameters, Phase-A budget/probes, 12 final roots, 2 held-out final layouts, four Phase-B conditions and the 256-interaction horizon from DEC-058.
-- PR #92 was squash-merged into `main` as commit `feb8c70395d13f506dad2ab60f4a71d4405f6298`. Issue #98 is CLOSED/COMPLETE.
-- Exact final PR head `b722c3065368557ca06b46b1c2a374aa5f3cd085` passed Repository checks #799, Protocol-v2 pilot checks #314 and T-528 PySide6 UI screenshot checks #140 before merge. The squash merge preserves that exact tree.
-- `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory. **T-610 has not been authorized or executed. No protocol-v2 final-reserve outcome was generated, inspected or used by T-533.**
-- Master tracker #87 remains **7/8** complete; milestone 8 depends on the final v2.1 evidence chain.
+- `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, historical application baseline `T-528`, `T-529`, historical `T-530`, `T-531`, `T-532`, historical intended-user acceptance `T-511`, and `T-533` are COMPLETE.
+- `T-534` is the active dependency-valid application task: a clean protocol-v2.1 PySide6 rebuild from fresh current `main`. The paused/pre-v2.1 UI branch/worktree is not an implementation base.
+- `T-610` remains a separate **BLOCKED** scientific task. Its dependencies and methodology are unchanged; `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory.
+- Master tracker #87 remains **7/8** complete. Milestone 8 awaits the final v2.1 evidence chain.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
 
-## Completed T-533 / DEC-060 amendment
+## Scientific authority
 
-### Final research questions
+DEC-058 and `configs/protocols/protocol-v2.0-final.json` remain immutable historical protocol-v2.0 freeze authority. DEC-060 is the explicit pre-outcome amendment. `configs/protocols/protocol-v2.1-final.json` is the current self-contained pre-execution scientific authority.
 
-- **RQ1 — Nominal learning:** compare Q-Learning, SARSA, DQN, PPO and Dyna-Q+ nominal performance and learning efficiency under the common actual-environment-interaction budget and information contract.
-- **RQ2 — Resilience/adaptation:** quantify directed Frozen/Adaptive loss and preserve matched adaptation benefit `(FN-FD)-(AN-AD)`.
-- **RQ3 — Recovery speed:** quantify adaptive recovery trajectory, stable recovery and non-recovery after persistent unannounced change.
+The frozen design remains unchanged:
 
-Frozen and Adaptive/Continual remain deployment regimes, not distinct algorithms.
+- methods: Q-Learning, SARSA, DQN, PPO, Dyna-Q+;
+- common actual-environment-interaction fairness budget and information/reward/gamma semantics;
+- Phase-A independent learning and exact checkpoints;
+- Phase-B matched FN/FD/AN/AD branches;
+- 12 final roots, 2 held-out final layouts, four Phase-B conditions, 256-interaction horizon;
+- RQ2 primary adaptation benefit `(FN-FD)-(AN-AD)`;
+- RQ3 AN-vs-AD passive 32-interaction windows, primary tolerance 0.10, sensitivity 0.05/0.20, two-window stable recovery and right-censoring with `recovery_time=null`;
+- root as independent statistical unit, direct root-paired method contrasts after equal layout reduction, and pointwise Student-t intervals using the predeclared actual-root-count critical value;
+- no outcome-driven seed/root replacement and no formal p-value superiority family.
 
-### Recovery-speed contract
+No protocol-v2.1 final-reserve outcome has been generated, inspected or used.
 
-- Primary RQ3 family: persistent `action-remap/*`; action-failure and observation-corruption remain supporting diagnostics.
-- Metric: mean reward per actual environment interaction.
-- Passive fixed windows: 32 interactions across the unchanged 256-interaction horizon, crossing episode boundaries without reset/realignment.
-- Reference: Adaptive-Nominal (`AN`) versus Adaptive-Disturbed (`AD`), equal layout weighting inside each independent root.
-- Higher-is-better gap: `AN - AD`; primary tolerance `0.10`, sensitivity `0.05`/`0.20`.
-- Stable recovery: two consecutive in-tolerance windows.
-- Non-recovery: right-censored at 256 with `recovery_time=null`; 256 is never fabricated as recovery time.
-- Censoring-aware method comparison uses recovery status plus the separately named restricted fixed-horizon recovery delay. Observed recovery-time summaries remain conditional on recovery.
+## Completed pre-final implementation/readiness
 
-### Statistics and computation
+The current Study/backend/evidence chain is implemented and validated:
 
-- Root is the independent unit; layouts, episodes, probes and windows are repeated/nested observations.
-- Direct method contrasts are root-paired A-minus-B on shared roots after equal layout reduction.
-- Two-sided 95% Student-t pointwise intervals select the predeclared critical value for the actual independent-root count `n=2..12`.
-- No formal p-value superiority family or post-hoc “statistically significant” relabeling is authorized.
-- Actual environment interactions remain the primary fairness axis. Wall-clock/process CPU and interpretable method-native update counts are secondary descriptive evidence.
+`Study recipe/plan -> Phase A -> exact checkpoint -> FN/FD/AN/AD -> passive temporal evidence -> validation -> root reduction -> RQ1/RQ2/RQ3 analysis -> recovery/direct contrasts -> deterministic exports -> stored-evidence application read model`.
 
-## Completed implementation chain
+Pre-final readiness additionally includes:
 
-The complete pre-final path is versioned and isolated from historical v2.0/T-526/T-527 code:
+- deny-by-default final execution in `StudyService`;
+- read-only final preflight that verifies the frozen v2.1 matrix while making zero final attempts/artifacts;
+- DEVELOPMENT-only synthetic end-to-end smoke through validation, v2.1 analysis, deterministic export and finalized/reloaded StudyStore;
+- `docs/research/RQ_EVIDENCE_TRACEABILITY.md`;
+- focused Protocol-v2 CI coverage for v2.1 temporal/recovery/analysis/export/preflight contracts.
 
-`Phase-B execution -> passive temporal windows -> schema-v2 records -> structural validation -> root reduction -> recovery/direct contrasts -> deterministic exports -> stored-evidence PySide6 presentation`.
+These checks do not authorize `T-610`.
 
-The v2.1 Study recipe materializer fails closed if the final-reserve lock or explicit T-610 gate is altered. PPO/DQN temporal capture does not impose artificial 32-step learning boundaries. A numerical `1e-12` guard only prevents binary floating-point representation from changing an exact frozen tolerance-boundary classification.
+## Application state
 
-PySide6 Results supports stored Recovery & Comparisons summaries, AN-vs-AD trajectory rows and direct method contrasts for schema-v2/v2.1 packages. Legacy schema-v1 packages remain supported and do not expose recovery. The UI never chooses thresholds, reduces roots or recomputes scientific estimands.
+DEC-059 selects PySide6 / Qt 6 Widgets over the framework-neutral Study backend. `T-528` remains historically COMPLETE and records the previous architecture/workflow/read-model/application baseline; `T-511` remains its historical intended-user acceptance record.
 
-Any separately paused Codex UI working copy that started before the protocol-v2.1 merge must be treated as non-authoritative partial work. Restart UI implementation from current `main`, read `AGENTS.md`, `docs/context/TASKS.md` and this file first, and re-derive UI behavior from the merged v2.1 backend/evidence contracts rather than carrying forward pre-v2.1 assumptions.
+The canonical application state has now moved to `T-534` because the active roadmap and Definition of Done require a fresh protocol-v2.1 rebuild. The rebuild must start from current `main`, audit `src/resilient_agents/desktop/`, preserve still-correct UI-neutral Study/evidence/provenance/execution-policy contracts, and freely replace presentation windows/pages/widgets/styles/navigation where appropriate.
 
-## Pre-final readiness hardening
+The rebuilt UI must:
 
-- Final pre-experiment checks are implemented as read-only/preflight logic and preserve the separate final-experiment authorization gate.
-- The framework-neutral `StudyService` now denies confirmatory/final execution by default unless a separate explicit final-experiment authorization token is supplied; application/UI code cannot bypass this by calling the generic backend facade directly.
-- The preflight materializes the frozen protocol-v2.1 recipe and verifies the exact final matrix dimensions while confirming `final_reserve_access=false`, `execution_authorization=requires-explicit-t610-gate`, no committed final v2.1 Study bundle, and zero final execution attempts/artifacts.
-- A synthetic DEVELOPMENT-only end-to-end smoke exercises standardized Phase-A/Phase-B evidence -> validation -> protocol-v2.1 root analysis -> deterministic v2 evidence export -> StudyStore finalization/reload. It uses only synthetic identities and exercises both recovered and right-censored recovery outcomes.
-- `docs/research/RQ_EVIDENCE_TRACEABILITY.md` maps RQ1/RQ2/RQ3 to source evidence, root-level estimands and deterministic output artifacts without adding new scientific claims.
-- Focused Protocol-v2 CI explicitly covers the protocol-v2.1 authority, temporal/recovery contracts, v2.1 analysis/export and preflight smoke in addition to the historical protocol-v2 conformance suite.
-- The substantive readiness head `d5e84287652289e0e429402a8bc255c1193b897c` passed Repository checks #804 and Protocol-v2 pilot checks #317; the latter ran 191 focused tests and the explicit pre-final readiness script successfully. The final documentation-only closure head was subsequently subjected to one additional CI cycle before merge.
+- keep Frozen Thesis Study and DEVELOPMENT/Exploratory experiences unmistakably separate;
+- present only validated stored RQ1/RQ2/RQ3 evidence, including v2.1 recovery/right-censoring/direct contrasts when available;
+- keep historical schema-v1 evidence truthful;
+- never recompute scientific thresholds, root reductions, estimands, conclusions, RNG/checkpoints or evidence finalization in Qt;
+- never grant/bypass final-experiment authorization;
+- remain novice-first, compact, self-explanatory and accessible with progressive disclosure and truthful locked/error/loading/empty states;
+- use DEVELOPMENT/synthetic fixtures for implementation tests/screenshots.
 
-## Documentation / thesis preparation
+## Repository integration / provenance
 
-`TASKS.md`, DEC-060, the decision index, `RESEARCH_BRIEF.md`, `MODEL_CANDIDATES.md`, `docs/experiments/EXPERIMENTAL_REQUIREMENTS.md` and the structure-only `THESIS_STRUCTURE_DRAFT.md` are reconciled to protocol-v2.1. Results, Discussion and conclusion claims remain explicitly evidence-gated.
+PR #92 is historical and was squash-merged into `main` as `feb8c70395d13f506dad2ab60f4a71d4405f6298`; there is no remaining PR #92 integration step. Protocol-v2.1 readiness and pre-UI context cleanup were subsequently merged as well.
 
-Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/`. `bibliography-integration-v3` remains immutable historical terminology; no parallel bibliography system was created.
+Only deliberate provenance archive refs remain alongside `main`; they are not active implementation branches and must not be merged into current development merely to reduce branch count.
 
-The repository remains public by explicit user decision. `thesis/source-material/ThesisApplication.pdf` and the existing source-material structure remain unchanged; privacy migration/history rewrite is not a scientific blocker.
+Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/`. `bibliography-integration-v3` remains immutable historical terminology; no parallel bibliography system exists.
 
 ## Still intentionally unfrozen
 
-- Final-reserve **execution authorization** remains unfrozen/withheld even though the protocol recipe is frozen: `final_reserve_access=false`.
-- T-610 is dependency-valid after T-533 but remains **BLOCKED by the separate explicit scientific authorization gate**.
-- T-611/T-612/T-613 remain blocked downstream of T-610.
-- WP7 remains blocked by final evidence plus the later explicit pre-WP7 user-approval gate.
-- Final Windows standalone packaging remains deferred to `T-803` / issue #94.
+- Final-reserve **execution authorization** remains withheld even though the protocol recipe is frozen.
+- `T-610` remains BLOCKED by the separate explicit scientific authorization gate.
+- `T-611`/`T-612`/`T-613` remain blocked downstream of `T-610`.
+- WP7 remains blocked by final evidence plus later explicit pre-WP7 user approval.
+- Final standalone Windows packaging remains deferred to `T-803` / issue #94.
 
 ## Exact next action
 
-Before restarting application UI implementation, repository housekeeping may remove only branches/worktrees/artifacts that are objectively obsolete or fully merged while preserving `main`, canonical scientific authority, required automation/integration branches and any branch with unique unmerged work. Then restart the UI cleanly from current `main` using the merged protocol-v2.1 contracts as authority. Scientifically, stop at the **separate explicit authorization gate for T-610**: do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, or begin Results/Discussion writing without that authorization.
+Execute `T-534` as the active application package from one fresh branch created from the latest current `main`. First read `AGENTS.md`, `docs/context/TASKS.md` and this file, then derive the clean PySide6 rebuild from the merged protocol-v2.1/Study/evidence contracts rather than pre-v2.1 UI assumptions.
+
+Scientifically, stop at the separate `T-610` authorization gate: do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, inspect final outcomes, or begin Results/Discussion without explicit authorization.
