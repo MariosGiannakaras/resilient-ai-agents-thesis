@@ -78,7 +78,9 @@ DEVELOPMENT configuration is a sub-flow inside Experiment:
 
 Only settings explicitly supported by the backend are editable. Method selection may be offered here when supported. DEVELOPMENT scope must never expose final-reserve roots/layouts/outcomes and must remain visibly non-confirmatory.
 
-The pre-create review shows human-readable resolved scope, selected methods, planned phases/work, validation blockers and consequences. Backend job counts may appear as secondary planning detail, not as the main description of the experiment.
+### Pre-run review
+
+Before creation or supported execution, show a readable resolved summary of purpose/evidence class, methods, phases/conditions, locked versus selected settings, validation blockers and DEVELOPMENT/non-confirmatory status. For the final Thesis experiment, show the final-execution lock rather than an editable authorization control. Backend job counts and exact identities are secondary detail.
 
 ## Run
 
@@ -252,9 +254,13 @@ Progressive disclosure can expose:
 
 Only backend-registered evidence is shown. The UI does not browse arbitrary filesystem content and whatever happens to be visible on screen is never the authoritative export source.
 
-## Help and onboarding
+## Self-explanatory UX contract
 
-Provide short replayable/skippable onboarding after the main structure stabilizes, using **Previous / Next / Skip / Finish** controls. It should orient the user to:
+The application must remain understandable without programming, RL, repository or StudyStore knowledge. Use human-readable primary labels, concise visible explanations of methods/regimes/RQs, progressive disclosure for technical identifiers, and actionable loading/empty/warning/error/disabled/unavailable/locked states. Required workflow or scientific meaning cannot exist only in tooltips. Status uses text plus stable icon/symbol and accessible semantic treatment rather than color alone. Avoid unnecessary confirmations and excessive permanent cards, banners or help paragraphs.
+
+## Help and lightweight onboarding
+
+Provide short replayable/skippable **lightweight onboarding** after the main structure stabilizes, using **Previous / Next / Skip / Finish** controls. It should orient the user to:
 
 1. Experiment and the five methods;
 2. Phase A nominal learning;
