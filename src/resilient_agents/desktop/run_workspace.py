@@ -200,6 +200,7 @@ class RunWorkspacePage(QWidget):
             entry = self.method_strip.takeAt(0)
             widget = entry.widget()
             if widget is not None:
+                widget.hide()
                 widget.deleteLater()
 
     def _add_method_status(self, method_id: str, status: str) -> None:
@@ -277,10 +278,12 @@ class RunWorkspacePage(QWidget):
         changes = ", ".join(frame.change_event_ids) or "none"
         return (
             f"root={frame.root_id} · layout={frame.layout_id} · "
-            f"condition={frame.condition_id or 'none'} · branch={frame.branch or 'nominal'} · "
-            f"true_state={frame.true_state} · delivered_observation={frame.delivered_observation} · "
+            f"condition={frame.condition_id or 'none'} · "
+            f"branch={frame.branch or 'nominal'} · true_state={frame.true_state} · "
+            f"delivered_observation={frame.delivered_observation} · "
             f"regime={frame.regime_id or 'none'} · disturbance_flags={flags} · "
-            f"change_events={changes} · presentation_sequence={frame.presentation_sequence}"
+            f"change_events={changes} · "
+            f"presentation_sequence={frame.presentation_sequence}"
         )
 
     def refresh_live(self) -> None:
