@@ -7,6 +7,7 @@
 
 ## Current execution state
 
+- `T-100` target-machine validation and `T-200` research framing are complete.
 - Protocol-v1.0 / FINAL-* / R0 evidence remain immutable history; superseded `T-522` must not execute.
 - Scientific/pre-final implementation through `T-533` is complete. `T-534` experiment-first PySide6 rebuild and `T-535` intended-user workflow hardening are COMPLETE and remain historical accepted records.
 - `T-536` is **IN_PROGRESS** on issue #112 / PR #113. It is the final bounded UI/UX visual-polish and richer in-app result-visualization package; it does not reopen T-534/T-535 or amend science.
@@ -46,7 +47,7 @@ The first T-536 candidate passed Repository checks #876 and UI acceptance #180, 
 - PR #110 / T-535 merged as `225df138c5c5be0c39c9e474ef7fdbce6b11245b` after Repository checks #872 and UI acceptance #179; merged-state verification completed.
 - Post-T-535 canonical reconciliation is on `main` as `3cc4728aee0e3ca4efe6dd86b6b7ce6b58e05100`.
 - PR #113 / `feat/t-536-final-visual-polish` is the active package; #112 is its operational checklist.
-- Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/`.
+- Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/`; `bibliography-integration-v3` is immutable historical terminology, not a parallel system.
 
 ## Still intentionally unfrozen
 
