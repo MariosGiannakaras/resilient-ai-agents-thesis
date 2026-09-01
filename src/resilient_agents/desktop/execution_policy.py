@@ -42,8 +42,6 @@ def assert_development_recipe_execution_allowed(recipe: StudyRecipe) -> None:
         raise RuntimeError("desktop worker refuses frozen recipes")
     if recipe.protocol_version not in _ALLOWED_DEVELOPMENT_PROTOCOLS:
         raise RuntimeError("desktop worker refuses non-DEVELOPMENT protocol identities")
-    if "final" in recipe.recipe_id.lower() or "confirmatory" in recipe.scientific_status.lower():
-        raise RuntimeError("desktop worker refuses final/confirmatory recipe identity")
 
 
 def assert_development_store_execution_allowed(
