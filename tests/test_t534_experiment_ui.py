@@ -37,7 +37,10 @@ class T534ExperimentUiTests(unittest.TestCase):
             page.set_mode(page.THESIS)
             self.assertEqual(len(page.protocol.methods), 5)
             self.assertEqual(page.stack.currentWidget().findChildren(QCheckBox), [])
-            text = " ".join(label.text() for label in page.stack.currentWidget().findChildren(QLabel))
+            text = " ".join(
+                label.text()
+                for label in page.stack.currentWidget().findChildren(QLabel)
+            )
             for name in ("Q-Learning", "SARSA", "DQN", "PPO", "Dyna-Q+"):
                 self.assertIn(name, text)
             self.assertIn("Frozen", text)
@@ -71,6 +74,35 @@ class T534ExperimentUiTests(unittest.TestCase):
             )
             self.assertEqual(window.protocol.protocol_id, "protocol-v2.1")
             self.assertTrue(window.protocol.final_execution_locked)
+            window.close()
+
+    def test_empty_run_surface_shows_five_locked_thesis_methods(self) -> None:
+        from resilient_agents.desktop.main_window import MainWindow
+
+        with tempfile.TemporaryDirectory() as directory:
+            window = MainWindow(repo_root=REPO_ROOT, writable_root=Path(directory))
+            labels = [
+                label.text()
+                for label in window.runs_page.findChildren(QLabel)
+                if label.objectName() == "MethodStatus"
+            ]
+            self.assertEqual(len(labels), 5)
+            for name in ("Q-Learning", "SARSA", "DQN", "PPO", "Dyna-Q+"):
+                self.assertTrue(any(name in label and "Locked" in label for label in labels))
+            self.assertIn("DEVELOPMENT", window.runs_page.frame_summary.text())
+            self.assertIn("final Thesis experiment remains locked", window.runs_page.frame_summary.text())
+            window.close()
+
+    def test_empty_evidence_surface_explains_registered_state_and_next_action(self) -> None:
+        from resilient_agents.desktop.main_window import MainWindow
+
+        with tempfile.TemporaryDirectory() as directory:
+            window = MainWindow(repo_root=REPO_ROOT, writable_root=Path(directory))
+            page = window.evidence_page
+            self.assertIn("never inferred from arbitrary files", page.summary.text())
+            self.assertEqual(page.outputs.text(), "Registered outputs: none.")
+            self.assertIn("create a DEVELOPMENT experiment", page.next_action.text())
+            window.close()
 
 
 if __name__ == "__main__":
