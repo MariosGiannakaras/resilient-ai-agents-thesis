@@ -18,6 +18,17 @@ from .study_read_model import ArtifactListItem, DesktopStudyReadModel, StudyList
 from .widgets import StatusPill
 
 
+_OUTPUT_LABELS = {
+    "analysis-data": "analysis data",
+    "analysis-table": "analysis table",
+    "figure": "figure",
+    "thesis-table": "thesis table",
+    "thesis-figure": "thesis figure",
+    "presentation-asset": "presentation asset",
+    "evidence-package": "evidence package",
+}
+
+
 class EvidencePage(QWidget):
     def __init__(self, model: DesktopStudyReadModel, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -34,7 +45,8 @@ class EvidencePage(QWidget):
         title = QLabel("Evidence")
         title.setObjectName("PageTitle")
         lead = QLabel(
-            "See what is ready and reproducible first. Artifact IDs, paths and hashes are available as technical detail."
+            "See what is ready and reproducible first. Artifact IDs, paths and "
+            "hashes are available as technical detail."
         )
         lead.setObjectName("PageLead")
         lead.setWordWrap(True)
@@ -69,9 +81,23 @@ class EvidencePage(QWidget):
         cards.addWidget(self.export_card[0], 0, 2)
         root.addLayout(cards)
 
+        self.outputs = QLabel()
+        self.outputs.setObjectName("SectionHint")
+        self.outputs.setWordWrap(True)
+        self.outputs.setAccessibleName("Registered result and export outputs")
+        root.addWidget(self.outputs)
+
+        self.next_action = QLabel()
+        self.next_action.setObjectName("ReviewValue")
+        self.next_action.setWordWrap(True)
+        self.next_action.setAccessibleName("Evidence next action")
+        root.addWidget(self.next_action)
+
         self.technical_button = QPushButton("Technical / reproducibility details")
         self.technical_button.setCheckable(True)
-        self.technical_button.setAccessibleName("Show evidence technical and reproducibility details")
+        self.technical_button.setAccessibleName(
+            "Show evidence technical and reproducibility details"
+        )
         root.addWidget(self.technical_button, 0, Qt.AlignmentFlag.AlignLeft)
 
         self.technical_scroll = QScrollArea()
@@ -130,16 +156,31 @@ class EvidencePage(QWidget):
 
     def _selection_changed(self, *_args) -> None:
         study_id = self.selected_study_id()
-        item = next((entry for entry in self._studies if entry.study_id == study_id), None)
+        item = next(
+            (entry for entry in self._studies if entry.study_id == study_id),
+            None,
+        )
         self._artifacts = () if study_id is None else self.model.artifacts(study_id)
         self._render(item)
 
     def _render(self, item: StudyListItem | None) -> None:
         if item is None:
-            self.summary.setText("No durable experiment record is available yet.")
-            for _, state, detail in (self.validation_card, self.analysis_card, self.export_card):
+            self.summary.setText(
+                "No durable experiment record is available yet. Evidence is never "
+                "inferred from arbitrary files."
+            )
+            for _, state, detail in (
+                self.validation_card,
+                self.analysis_card,
+                self.export_card,
+            ):
                 state.setText("Unavailable")
-                detail.setText("No registered evidence to show.")
+                detail.setText("No backend-registered evidence is available.")
+            self.outputs.setText("Registered outputs: none.")
+            self.next_action.setText(
+                "Next: create a DEVELOPMENT experiment in Experiment, then run it "
+                "to produce backend-registered evidence."
+            )
             self._render_technical(None)
             return
 
@@ -149,28 +190,67 @@ class EvidencePage(QWidget):
             else item.evidence_class.upper()
         )
         self.summary.setText(
-            f"{evidence_label} · {item.study_id} · {item.stage_label} · {item.resolved_jobs}/{item.total_jobs} jobs resolved. "
-            "Unavailable evidence is shown as unavailable rather than inferred from the filesystem."
+            f"{evidence_label} · {item.study_id} · {item.stage_label} · "
+            f"{item.resolved_jobs}/{item.total_jobs} jobs resolved. Unavailable "
+            "evidence stays unavailable rather than being inferred from the filesystem."
         )
         roles = {artifact.role for artifact in self._artifacts}
+        validation_ready = "validation-report" in roles
+        analysis_ready = bool({"analysis-data", "analysis-table"} & roles)
+        export_ready = "evidence-package" in roles
         self._set_card(
             self.validation_card,
-            available="validation-report" in roles,
-            available_text="Validation report registered",
-            unavailable_text="Validation has not produced a registered report yet.",
+            available=validation_ready,
+            available_text="A backend-registered validation report is available.",
+            unavailable_text=(
+                "No validation report is registered. Complete the required run and "
+                "validation stage before analysis."
+            ),
         )
         self._set_card(
             self.analysis_card,
-            available=bool({"analysis-data", "analysis-table"} & roles),
-            available_text="Analysis outputs registered",
-            unavailable_text="Validated analysis outputs are not registered yet.",
+            available=analysis_ready,
+            available_text="Backend-registered analysis outputs are available.",
+            unavailable_text=(
+                "No validated analysis output is registered. Validation must complete "
+                "before analysis can become available."
+            ),
         )
         self._set_card(
             self.export_card,
-            available="evidence-package" in roles,
-            available_text="Evidence package registered",
-            unavailable_text="A reproducible evidence package is not registered yet.",
+            available=export_ready,
+            available_text="A reproducible backend-registered evidence package is available.",
+            unavailable_text=(
+                "No evidence package is registered. Analysis/export must complete "
+                "before a reproducible package can be shown."
+            ),
         )
+        output_names = sorted(
+            {_OUTPUT_LABELS[role] for role in roles if role in _OUTPUT_LABELS}
+        )
+        self.outputs.setText(
+            "Registered outputs: " + (", ".join(output_names) if output_names else "none") + "."
+        )
+        if export_ready:
+            self.next_action.setText(
+                "Next: inspect the registered evidence package or open Technical / "
+                "reproducibility details for lineage and checksums."
+            )
+        elif analysis_ready:
+            self.next_action.setText(
+                "Next: complete the registered export stage to produce a reproducible "
+                "evidence package."
+            )
+        elif validation_ready:
+            self.next_action.setText(
+                "Next: complete the registered analysis stage; the UI will display "
+                "only stored validated outputs."
+            )
+        else:
+            self.next_action.setText(
+                "Next: complete the durable experiment and validation stage. No "
+                "analysis or export is inferred ahead of the backend."
+            )
         self._render_technical(item)
 
     @staticmethod
@@ -183,6 +263,7 @@ class EvidencePage(QWidget):
     ) -> None:
         _, state, detail = card
         state.setText("Available" if available else "Not available yet")
+        state.setAccessibleName(state.text())
         detail.setText(available_text if available else unavailable_text)
 
     def _render_technical(self, item: StudyListItem | None) -> None:
@@ -192,13 +273,16 @@ class EvidencePage(QWidget):
             if widget is not None:
                 widget.deleteLater()
         if item is None:
-            self.technical_layout.addWidget(QLabel("No registered provenance detail is available."))
+            self.technical_layout.addWidget(
+                QLabel("No registered provenance detail is available.")
+            )
             self.technical_layout.addStretch(1)
             return
 
         intro = QLabel(
-            f"Protocol: {item.protocol_version} · evidence class: {item.evidence_class} · backend state: {item.status}. "
-            "Only backend-registered artifact lineage appears below."
+            f"Protocol: {item.protocol_version} · evidence class: "
+            f"{item.evidence_class} · backend state: {item.status}. Only "
+            "backend-registered artifact lineage appears below."
         )
         intro.setObjectName("SectionHint")
         intro.setWordWrap(True)
@@ -214,7 +298,8 @@ class EvidencePage(QWidget):
             title.setObjectName("ReviewValue")
             detail = QLabel(
                 f"Path: {artifact.relative_path}\nSHA-256: {artifact.sha256}\n"
-                f"Sources: {artifact.source_job_count} job(s), {artifact.source_artifact_count} artifact(s)"
+                f"Sources: {artifact.source_job_count} job(s), "
+                f"{artifact.source_artifact_count} artifact(s)"
             )
             detail.setObjectName("SectionHint")
             detail.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
