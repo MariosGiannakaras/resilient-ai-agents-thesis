@@ -43,6 +43,7 @@ class StatusPill(QLabel):
         super().__init__(f"{symbol}  {text}", parent)
         self.setObjectName(object_name)
         self.setAccessibleName(text)
+        self.setToolTip(text)
         self.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
 
