@@ -151,7 +151,7 @@ class T536VisualPolishTests(unittest.TestCase):
             page._refresh_method_orientation(item, current_method_id="q_learning")
             labels = [
                 label
-                for label in page.findChildren(QLabel)
+                for label in page.method_overview.findChildren(QLabel)
                 if label.objectName() in {"MethodStatus", "CurrentMethodStatus"}
             ]
             self.assertEqual(len(labels), 5)
@@ -161,7 +161,8 @@ class T536VisualPolishTests(unittest.TestCase):
                 1,
             )
             self.assertTrue(any("Dyna-Q+ · Not selected" in label.text() for label in labels))
-            self.assertGreaterEqual(page.grid.minimumHeight(), 285)
+            self.assertEqual(page.method_strip.count(), 0)
+            self.assertGreaterEqual(page.grid.minimumHeight(), 260)
             page.close()
 
     def test_results_charts_have_more_visual_weight_and_rq3_uses_stored_trajectory_chart(self) -> None:
