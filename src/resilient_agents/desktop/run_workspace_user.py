@@ -127,7 +127,12 @@ class RunWorkspacePage(_RunWorkspacePage):
                 "shown by the current live presentation frame; it is not a score or ranking."
             )
             self.method_overview_layout.addWidget(label)
+            # Refreshes can occur after the window is already visible. Explicitly
+            # show replacement labels so the compact strip is present in the real
+            # rendered workspace, not only in the QObject tree.
+            label.show()
         self.method_overview_layout.addStretch(1)
+        self.method_overview.show()
 
         if item is None:
             self.current_method_label.setText("Final execution gated")
