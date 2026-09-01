@@ -71,6 +71,7 @@ def emit_gridworld_transition(
     interaction_index: int,
     transition: GroundTruthTransition,
     branch: str | None = None,
+    condition_id: str | None = None,
 ) -> None:
     """Emit an immutable JSON-shaped GridWorld presentation snapshot.
 
@@ -89,12 +90,13 @@ def emit_gridworld_transition(
             "event_type": "gridworld-transition",
             "stream_id": (
                 f"{phase}:{method_id}:{root_id}:{scenario.scenario_id}:"
-                f"{branch or 'nominal'}"
+                f"{condition_id or 'nominal-condition'}:{branch or 'nominal'}"
             ),
             "phase": str(phase),
             "method_id": str(method_id),
             "root_id": str(root_id),
             "layout_id": str(scenario.scenario_id),
+            "condition_id": None if condition_id is None else str(condition_id),
             "branch": None if branch is None else str(branch),
             "episode_index": int(episode_index),
             "interaction_index": int(interaction_index),
