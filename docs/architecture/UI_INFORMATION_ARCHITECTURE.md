@@ -209,9 +209,9 @@ Purpose: inspect and hand off reproducible stored evidence.
 
 Whatever happens to be visible on screen is never the authoritative export source.
 
-## Help and onboarding
+## Help and lightweight onboarding
 
-Provide short replayable/skippable onboarding after the main structure stabilizes: orientation, Thesis Study versus DEVELOPMENT, review, run/monitor, results, evidence/export/help. Every page remains understandable if onboarding is skipped.
+Provide short replayable/skippable **lightweight onboarding** after the main structure stabilizes: orientation, Thesis Study versus DEVELOPMENT, review, run/monitor, results, evidence/export/help. Use explicit **Previous / Next / Skip / Finish** controls. It is local, replayable and non-blocking; every page remains understandable if onboarding is skipped.
 
 Contextual help should explain:
 
