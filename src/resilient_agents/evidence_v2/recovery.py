@@ -139,7 +139,7 @@ def assess_recovery(
         else:
             directed_gap = disturbed_value - nominal_value
         within = directed_gap <= tolerance
-        window_start = index * definition.window_size
+        window_start = index * definition.window_size + 1
         window_end = (index + 1) * definition.window_size
         points.append(
             RecoveryTrajectoryPoint(
