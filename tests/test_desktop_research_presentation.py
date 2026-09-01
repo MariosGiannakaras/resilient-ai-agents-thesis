@@ -168,7 +168,7 @@ class DesktopResearchPresentationTests(unittest.TestCase):
             dialog = OnboardingDialog(window)
             self.assertEqual(dialog.stack.count(), 7)
             self.assertEqual(dialog.progress.text(), "1 of 7")
-            self.assertTrue(dialog.skip_button.isVisible() or not dialog.isVisible())
+            self.assertFalse(dialog.skip_button.isHidden())
             self.assertFalse(dialog.previous_button.isEnabled())
 
             text = " ".join(label.text() for label in dialog.findChildren(QLabel))
@@ -183,8 +183,8 @@ class DesktopResearchPresentationTests(unittest.TestCase):
                 dialog.next()
             self.assertEqual(dialog.progress.text(), "7 of 7")
             self.assertTrue(dialog.previous_button.isEnabled())
-            self.assertFalse(dialog.next_button.isVisible())
-            self.assertTrue(dialog.finish_button.isVisible())
+            self.assertTrue(dialog.next_button.isHidden())
+            self.assertFalse(dialog.finish_button.isHidden())
             dialog.close()
             window.close()
 
