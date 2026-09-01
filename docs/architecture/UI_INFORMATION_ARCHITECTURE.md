@@ -123,7 +123,7 @@ When exact matched presentation frames exist, show two **large side-by-side** pa
 - **Frozen — learning off**
 - **Adaptive — learning continues**
 
-They must share the authoritative matched method/root/layout/interaction identity. Never display unrelated frames as a pair. If exact pairing is temporarily unavailable because the lossy presentation stream dropped frames, show an explicit unavailable/waiting state rather than fabricate synchronization.
+They must share the authoritative matched method/root/layout/**condition**/interaction identity. Condition is part of the presentation-pair identity because two otherwise matching frames from different disturbance conditions are not a valid scientific comparison. Never display unrelated frames as a pair. If exact pairing is temporarily unavailable because the lossy presentation stream dropped frames, show an explicit unavailable/waiting state rather than fabricate synchronization.
 
 Primary Phase-B context:
 
@@ -257,81 +257,3 @@ Only backend-registered evidence is shown. The UI does not browse arbitrary file
 ## Self-explanatory UX contract
 
 The application must remain understandable without programming, RL, repository or StudyStore knowledge. Use human-readable primary labels, concise visible explanations of methods/regimes/RQs, progressive disclosure for technical identifiers, and actionable loading/empty/warning/error/disabled/unavailable/locked states. Required workflow or scientific meaning cannot exist only in tooltips. Status uses text plus stable icon/symbol and accessible semantic treatment rather than color alone. Avoid unnecessary confirmations and excessive permanent cards, banners or help paragraphs.
-
-## Help and lightweight onboarding
-
-Provide short replayable/skippable **lightweight onboarding** after the main structure stabilizes, using **Previous / Next / Skip / Finish** controls. It should orient the user to:
-
-1. Experiment and the five methods;
-2. Phase A nominal learning;
-3. Phase B Frozen vs Adaptive matched deployment;
-4. Run/GridWorld observation;
-5. RQ1/RQ2/RQ3 Results;
-6. Evidence/export and the final-experiment lock.
-
-Every primary surface remains understandable when onboarding is skipped.
-
-Contextual help explains methods, disturbances, FN/FD/AN/AD, Frozen/Adaptive, RQ metrics, recovery/right-censoring, evidence classes and provenance. Required scientific meaning is visible in the normal interface and not hidden only in tooltips.
-
-## Existing desktop component classification
-
-### Preserve / adapt
-
-- `study_read_model.py`: safe read-only durable Study/evidence projection; use mainly for secondary status/evidence views.
-- `results_read_model.py`: verified stored-analysis projection; extend only to expose additional already-stored trajectory/result data without UI-side scientific recomputation.
-- `execution_supervisor.py`: non-blocking QProcess execution boundary.
-- `live_events.py`: transient non-blocking presentation stream and exact FD/AD matched-pair semantics.
-- `live_instrumentation.py`: presentation-only runtime observer seam, subject to regression tests proving no scientific feedback.
-- DEVELOPMENT creation/execution adapters that still delegate validation/planning/execution to the backend.
-- `gridworld_widget.py` drawing behavior, refactored as needed so Phase A gets one large panel and Phase B gets two large panels.
-
-### Redesign / replace presentation
-
-- `main_window.py`: replace Study/Runs/Results/Artifacts shell and stale v2.0/T-528 status copy.
-- `protocol.py`: replace v2.0-only presentation loader with protocol-v2.1-aware read-only projection.
-- `study_flow.py`, `study_workspace.py`, `study_page.py`: retain useful DEVELOPMENT orchestration contracts but redesign user-facing flow as Experiment-first.
-- `runs_page.py`: replace Study-history-first hierarchy; make live experiment/GridWorld primary and move history/technical metadata secondary.
-- `results_page.py`: retain correct stored-evidence semantics but reorganize explicitly by RQ1/RQ2/RQ3 and add truthful trajectory visualizations where stored outputs permit.
-- `artifacts_page.py`: fold its safe registered-artifact/provenance capability into Evidence rather than keep it as primary navigation.
-- `theme.py`, `widgets.py`, onboarding/help copy: freely redesign for the new hierarchy; avoid excessive cards/banners/static explanatory text.
-
-## Protocol-v2.1 migration checks
-
-The active desktop implementation currently contains stale protocol-v2.0/DEC-058/T-528 assumptions in repo-root discovery, frozen-protocol loading, execution-policy copy, shell labels, Study copy and Run lock messages. T-534 must remove these from active presentation behavior.
-
-The current backend `StudyService` final-execution guard remains the authoritative deny-by-default control. Desktop-side DEVELOPMENT guards may add defense in depth but must not become a divergent final-authorization implementation.
-
-## Visual/interaction principles
-
-- Modern compact desktop application, not a web-dashboard clone and not an administrative console.
-- Strong hierarchy with GridWorld/charts receiving meaningful visual space.
-- Information-dense without clutter or excessive permanent cards/banners/help paragraphs.
-- Stable typography/spacing and consistent method identity across Run/Results without color-only encoding.
-- Technical identifiers secondary.
-- Actionable loading/empty/warning/error/locked/unavailable states.
-- Clear keyboard focus and sensible tab order; common controls have accessible names.
-- Purposeful motion only; respect reduced-motion expectations where practical.
-- Never animate fabricated scientific progress/data.
-
-## T-534 implementation acceptance
-
-T-534 is ready for acceptance when:
-
-- the four primary surfaces Experiment / Run / Results / Evidence are coherent end to end;
-- the final Thesis experiment always contains the five frozen methods and is read-only;
-- DEVELOPMENT configuration permits only backend-supported choices and stays visibly non-confirmatory;
-- Run prioritizes one large Phase-A GridWorld or two exact-matched Phase-B Frozen/Adaptive GridWorlds with compact five-method status;
-- primary live information is method/phase/condition/interaction/action/executed-action/reward and technical detail is secondary;
-- Results are explicitly RQ1/RQ2/RQ3 and consume only validated stored outputs;
-- RQ1 uses real stored learning trajectories where scientifically supported;
-- RQ2 keeps adaptation benefit primary and Frozen/Adaptive losses separate;
-- RQ3 shows correct trajectory/status/conditional time/restricted delay/right-censoring semantics;
-- no winner/superiority language is invented;
-- Evidence is user-friendly first and provenance-rich on demand;
-- active protocol-v2.0/T-528 presentation assumptions are removed;
-- UI cannot bypass final execution authorization or alter scientific execution;
-- historical schema-v1 evidence remains truthful;
-- DEVELOPMENT/synthetic workflow tests and deterministic render/screenshot checks cover representative states, including Phase-B matched side-by-side and a right-censored RQ3 result;
-- launcher behavior and exact-head repository CI are green.
-
-Completing T-534 does not authorize T-610, final-reserve access, final-outcome inspection or Results/Discussion thesis writing.
