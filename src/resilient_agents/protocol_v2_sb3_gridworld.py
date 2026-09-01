@@ -4,10 +4,9 @@ The facades do not add information or scientific defaults.
 
 * ``ExplicitSeededGridWorldEnv`` is for nominal learning and consumes an exact,
   caller-supplied sequence of ``EnvironmentSeeds`` at episode resets.
-* ``BranchContinuationGridWorldEnv`` is for one exact post-boundary Phase-B
-  segment. Its first reset returns the already-delivered branch-point
-  observation without mutating the underlying GridWorld. A second reset fails
-  closed until multi-episode Phase-B reset semantics are frozen by T-526/T-527.
+* ``BranchContinuationGridWorldEnv`` is for exact post-boundary Phase-B
+  continuation. Temporal reward evidence is observed passively here so method-
+  native learner rollout/update boundaries remain unchanged.
 """
 from __future__ import annotations
 
@@ -19,6 +18,7 @@ from .contracts import ScenarioSpec
 from .environment import EnvironmentSeeds
 from .gridworld import GridWorldEnvironment
 from .protocol_v2_gridworld import GridWorldScientificStateAdapter
+from .protocol_v2_temporal import FixedRewardWindowRecorder, RewardWindow
 
 
 class ExplicitSeededGridWorldEnv(gym.Env):
@@ -80,11 +80,15 @@ class ExplicitSeededGridWorldEnv(gym.Env):
 
 
 class BranchContinuationGridWorldEnv(gym.Env):
-    """Expose one exact already-started protocol-v2 branch to SB3.
+    """Expose an exact already-started protocol-v2 branch to SB3.
 
     The first reset is an attachment handshake only. It returns the last
     delivered observation already present in the exact branch state and does
     not reset position, regime, disturbance RNGs or Gymnasium RNG state.
+
+    Fixed reward windows are recorded after environment interactions. The
+    recorder is observational only and cannot alter learner stepping or update
+    cadence, including PPO rollout boundaries.
     """
 
     metadata = {"render_modes": []}
@@ -106,6 +110,7 @@ class BranchContinuationGridWorldEnv(gym.Env):
         self._return_sum = 0.0
         self._terminated = False
         self._truncated = False
+        self._reward_recorder = FixedRewardWindowRecorder(window_size=32)
 
     @property
     def interactions(self) -> int:
@@ -122,6 +127,13 @@ class BranchContinuationGridWorldEnv(gym.Env):
     @property
     def truncated(self) -> bool:
         return self._truncated
+
+    @property
+    def reward_windows(self) -> tuple[RewardWindow, ...]:
+        return self._reward_recorder.completed_windows
+
+    def require_complete_reward_windows(self, *, total_interactions: int) -> None:
+        self._reward_recorder.require_complete(total_interactions=total_interactions)
 
     def reset(self, *, seed: int | None = None, options: dict[str, Any] | None = None):
         del seed, options
@@ -143,6 +155,7 @@ class BranchContinuationGridWorldEnv(gym.Env):
         transition = self.branch.environment.step(int(action))
         self._interactions += 1
         self._return_sum += float(transition.reward)
+        self._reward_recorder.record(float(transition.reward))
         self._terminated = bool(transition.terminated)
         self._truncated = bool(transition.truncated)
         return (
