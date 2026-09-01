@@ -1,6 +1,6 @@
 # UI Information Architecture
 
-**Status:** current application information/interaction contract for T-534 under DEC-059 + DEC-061.  
+**Status:** accepted application information/interaction contract implemented by completed T-534 under DEC-059 + DEC-061.  
 **Scientific authority:** DEC-058 historical freeze, DEC-060 amendment, `configs/protocols/protocol-v2.1-final.json`.  
 **Application framework:** PySide6 / Qt 6 Widgets.
 
@@ -8,7 +8,7 @@ The application is an **experiment-first thin client** over the framework-neutra
 
 ## Clean-rebuild rule
 
-The historical/pre-v2.1 PySide6 presentation is reference only. Start T-534 from fresh current `main` and classify existing `src/resilient_agents/desktop/` code before editing:
+T-534 was rebuilt from fresh current `main`; the historical/pre-v2.1 PySide6 presentation remains reference only. The accepted implementation follows this classification of `src/resilient_agents/desktop/`:
 
 - preserve still-correct UI-neutral Study/evidence read models, execution supervision, live-observer boundaries and provenance adapters;
 - reuse Qt drawing primitives when they remain truthful and useful;
@@ -334,6 +334,6 @@ T-534 is ready for acceptance when:
 - DEVELOPMENT/synthetic workflow tests and deterministic render/screenshot checks cover representative states, including Phase-B matched side-by-side and a right-censored RQ3 result;
 - launcher behavior and exact-head repository CI are green.
 
-The current PR #107 implementation satisfies the behavioral/visual acceptance clauses above subject to final documentation-inclusive exact-head CI and merged-state verification. Objective acceptance does not convert T-534 to COMPLETE before those repository gates are satisfied.
+PR #107 satisfied the behavioral/visual acceptance clauses above, exact head `0fff019d8bd1b90bd1809f2c2f5b0c0662d743da` passed Repository checks #864 and T-534 PySide6 UI acceptance #174, the deterministic render set was visually reviewed, and the PR was squash-merged into `main` as `c372c581b88c63f3b07c96bd50bbc17b9b83f835`. Merged-state verification confirmed the accepted implementation on `main`; T-534 is complete.
 
 Completing T-534 does not authorize T-610, final-reserve access, final-outcome inspection or Results/Discussion thesis writing.

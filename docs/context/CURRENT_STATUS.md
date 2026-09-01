@@ -8,12 +8,11 @@
 ## Current execution state
 
 - `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable historical evidence; old `T-522` must not execute.
-- `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, historical application baseline `T-528`, `T-529`, historical `T-530`, `T-531`, `T-532`, historical intended-user acceptance `T-511`, and `T-533` are COMPLETE.
-- `T-534` is **IN_PROGRESS / final pre-merge gate** on PR #107 (`feat/t-534-experiment-first-ui`), created from the then-current `main` and still zero commits behind current `main` at the latest base check. The experiment-first implementation, targeted validation, deterministic laptop/desktop render review and canonical pre-merge reconciliation are objectively accepted; final exact-head CI, squash merge and merged-main verification remain.
-- **GitHub issue #104 is the operational implementation/acceptance checklist for T-534.** It is deliberately detailed so a short instruction such as “start the UI” does not require inventing product behavior. It is a tracking/execution view, not a competing authority; canonical repository decisions/configs/docs win if any wording diverges.
-- **T-534 execution cadence:** implement the largest safe coherent batches, use targeted deterministic checks during development, avoid CI for every small edit/checklist item, and require full repository CI at meaningful checkpoints plus one final exact-head pre-merge pass. Reconcile issue #104 from objective implementation/test/render evidence; do not estimate checklist completion or conflate it with the separate master-project milestone count.
-- DEC-061 is the current T-534 product/UX amendment: it preserves DEC-059's PySide6/runtime boundary but replaces the old Study/Runs/Results/Artifacts product model with **Experiment / Run / Results / Evidence**.
-- `T-610` remains a separate **BLOCKED** scientific task. Its dependencies and methodology are unchanged; `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory.
+- `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, historical application baseline `T-528`, `T-529`, historical `T-530`, `T-531`, `T-532`, historical intended-user acceptance `T-511`, `T-533`, and `T-534` are COMPLETE.
+- `T-534` is **COMPLETE**. PR #107 was squash-merged into `main` as `c372c581b88c63f3b07c96bd50bbc17b9b83f835` after exact-head Repository checks #864 and T-534 PySide6 UI acceptance #174 passed, deterministic 1366×768/1440×900 renders were visually reviewed, and the merged `main` was verified to contain the accepted experiment-first implementation.
+- GitHub issue #104 is the completed operational implementation/acceptance record for T-534. It remains a tracking/execution view rather than scientific authority; canonical repository decisions/configs/docs remain authoritative.
+- DEC-061 is the accepted T-534 product/UX amendment: it preserves DEC-059's PySide6/runtime boundary and defines the final experiment-first **Experiment / Run / Results / Evidence** application model.
+- `T-610` remains a separate **BLOCKED** scientific task. T-534 completion does not authorize it; `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory.
 - Master tracker #87 remains **7/8** complete. Milestone 8 awaits the final v2.1 evidence chain.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
 
@@ -47,7 +46,7 @@ Pre-final readiness includes deny-by-default final execution in `StudyService`, 
 
 DEC-059 selects PySide6 / Qt 6 Widgets over the framework-neutral Study backend. `T-528` and `T-511` remain historical completed application/acceptance records; their presentation is not the implementation authority for T-534.
 
-PR #107 implements DEC-061 and `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` as the experiment-first **Experiment / Run / Results / Evidence** application. The active UI now projects protocol-v2.1 fail-closed; the final Thesis experiment is immutable with all five methods; DEVELOPMENT uses backend-constrained Configure → Review → Create; Run uses truthful durable method status plus presentation-only GridWorld frames; Phase B requires exact method/root/layout/condition/interaction FD/AD pairing; Results remain RQ1/RQ2/RQ3 projections of stored validated outputs; Evidence leads with readiness and exposes backend-registered lineage on demand.
+T-534 is complete on `main` through squash merge commit `c372c581b88c63f3b07c96bd50bbc17b9b83f835`. The accepted application implements DEC-061 and `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` as the experiment-first **Experiment / Run / Results / Evidence** workflow. The active UI projects protocol-v2.1 fail-closed; the final Thesis experiment is immutable with all five methods; DEVELOPMENT uses backend-constrained Configure → Review → Create; Run uses truthful durable method status plus presentation-only GridWorld frames; Phase B requires exact method/root/layout/condition/interaction FD/AD pairing; Results remain RQ1/RQ2/RQ3 projections of stored validated outputs; Evidence leads with readiness and exposes backend-registered lineage on demand.
 
 Active protocol-v2.0/DEC-058/T-528 presentation assumptions discovered during T-534 have been removed from current user-facing behavior. Historical decisions, compatibility support for historical DEVELOPMENT records and explicitly historical documentation remain intact rather than being rewritten.
 
@@ -59,7 +58,7 @@ Objective review findings were fixed narrowly rather than hidden by fixture chan
 
 PR #92 is historical and was squash-merged into `main` as `feb8c70395d13f506dad2ab60f4a71d4405f6298`; there is no remaining PR #92 integration step. PR #103 subsequently merged DEC-061 and the experiment-first T-534 UI specification into `main` as `f960991c3ba71130178946fbc8051875b9fecac6`.
 
-PR #107 is the single coherent T-534 implementation PR. Its implementation heads repeatedly passed Repository checks and the T-534 PySide6 UI acceptance workflow while objective render findings were fixed narrowly. The final documentation-inclusive exact-head CI pass is the remaining pre-merge validation gate; a failed documentation-consistency run caused by a truncated UI-IA replacement was diagnosed and corrected by restoring the complete canonical contract rather than weakening validation.
+PR #107 was the single coherent T-534 implementation PR and was squash-merged into `main` as `c372c581b88c63f3b07c96bd50bbc17b9b83f835`. Its exact head `0fff019d8bd1b90bd1809f2c2f5b0c0662d743da` passed Repository checks #864 and T-534 PySide6 UI acceptance #174 before merge. Merged-state verification confirmed the accepted protocol-v2.1 four-surface application on `main`.
 
 Only deliberate provenance archive refs remain alongside `main`; they are not active implementation branches and must not be merged merely to reduce branch count.
 
@@ -75,6 +74,4 @@ Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `researc
 
 ## Exact next action
 
-Run and verify the final exact-head Repository checks and T-534 UI acceptance workflows on PR #107 after the complete canonical documentation reconciliation. If both are green, reconcile issue #104 to the objective pre-merge state, confirm current `main` has not advanced and the PR remains mergeable with no blocking review, then squash-merge. After merge, verify the accepted implementation on `main` and only then mark `T-534` complete in canonical status/docs and close issue #104.
-
-Scientifically, stop at the separate `T-610` authorization gate: do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, inspect final outcomes, or begin Results/Discussion without explicit authorization.
+Stop at the separate `T-610` scientific authorization gate. The application package is complete; do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, inspect final outcomes, or begin Results/Discussion unless the user separately and explicitly authorizes the final scientific experiment.
