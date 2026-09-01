@@ -1,87 +1,97 @@
 # Current Project Status
 
-**Date:** 2026-09-01
+**Date:** 2026-09-01  
 **Status:** Authoritative compact current-state summary
 
-`docs/context/TASKS.md` is the canonical ledger. Use **progressive** task-specific reading of DEC-048/049/050/051/052/053/054/055/056/057/058/059 and `docs/research/` / `docs/architecture/` only as needed.
+`docs/context/TASKS.md` remains the canonical dependency/task ledger. Read task-specific decision/research documents progressively. Objective Git/GitHub/evidence state overrides stale resume prose after interruption.
 
 ## Current execution state
 
-- `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable; old `T-522` must not execute.
-- `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, `T-528` and `T-529` are COMPLETE.
-- `T-529` completed DEC-051's framework-neutral Study lifecycle from immutable recipe through real execution, validation, root/layout analysis and deterministic evidence export.
-- `T-527` is COMPLETE under DEC-058. DEC-055 tuning is immutable valid-complete; sizing-v0.1 and v0.2 are immutable valid-failed and cannot be resumed/rerun. DEC-057 sizing-v0.3 and the combined five-method sizing package are valid-complete.
-- DEC-058 accepts the final protocol-v2.0 scientific freeze. `configs/protocols/protocol-v2.0-final.json` retains `final_reserve_access=false`; issue #95 is 10/10 and CLOSED. No final-reserve scientific outcome was generated, and T-610+ remains unauthorized/unexecuted.
-- **`T-528 — Final Application / Frontend Rebuild` is COMPLETE under DEC-059.** The final application is Python-native PySide6 / Qt 6 Widgets over the framework-neutral Study backend; NiceGUI remains historical prototype only.
-- T-528 implements the recipe-first Thesis Study review path, clearly separated DEVELOPMENT/Exploratory Study flow, durable Study creation, non-blocking worker/supervisor execution, truthful Runs progress, matched Frozen/Adaptive live GridWorld presentation, stored-evidence Results (Compare Learning / Test Resilience), registered-artifact provenance, accessibility/help/empty/error/locked states and deterministic CI screenshot review artifacts. T-511 review hardening exposes both matched branch actions/rewards/states and change context, adds redundant GridWorld symbols/direction cues, separates stored adaptation-benefit and Frozen/Adaptive-loss charts, and adds explicit research-use/onboarding guidance.
-- T-528's bounded DEVELOPMENT application smoke completed the complete create -> execute -> validate -> analyze -> evidence-handoff lifecycle without final identities. T-511 review-hardening implementation head (`8e8a863d51584923eb325ee7d11e4e4a2d0cbf83`) had Repository checks, Protocol-v2 checks and PySide6 UI screenshot checks all green; exact-head screenshot artifact `9788923062` was visually inspected at 1366x768, 1440x900 and 1480x920.
-- The final curated `ui-screenshots/pyside6/` set contains ten current PySide6 review images from the inspected artifact, including separate adaptation-benefit and Frozen/Adaptive-loss views. Superseded NiceGUI PNGs were removed from the active tree and remain recoverable from Git history. CI retains the authoritative complete 1366x768 / 1440x900 / 1480x920 bundle.
-- **`T-511 — Intended-user application workflow/self-explanatory UX acceptance` is COMPLETE.** On 2026-09-01 the user explicitly delegated acceptance based on the completed UI/research-workflow audit and verified screenshot/live-presentation requirements. This does not authorize final-reserve execution or accept future scientific results.
-- Master tracker #87 is now **7/8** objectively complete: milestones 1 through 7. Milestone 8 depends on the final v2 evidence chain.
-- PR #92 is the accepted application checkpoint selected for squash merge.
+- `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable historical evidence; old `T-522` must not execute.
+- `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, `T-528`, `T-529` and `T-511` are COMPLETE. Historical completed work is not reopened by the new scientific requirement.
+- DEC-058 and `configs/protocols/protocol-v2.0-final.json` remain immutable historical protocol-v2.0 freeze authority. Their final roots/layouts, five retained methods, hyperparameters, conditions, Phase-A budgets/probes and 256-interaction Phase-B horizon remain unchanged.
+- **T-530 is now IN_PROGRESS under issue #98 and DEC-060.** It is an explicit pre-outcome protocol-v2.1 amendment required before T-610, not a silent rewrite of DEC-058.
+- DEC-060 / `configs/protocols/protocol-v2.1-amendment.json` freezes final RQ1/RQ2/RQ3, true recovery-speed semantics, right-censoring/non-recovery, direct root-paired method contrasts and estimation-oriented interpretation.
+- `final_reserve_access=false` remains mandatory. T-610 has not been authorized or executed and no protocol-v2/T-610 result exists in the canonical run index inspected during T-530 recovery.
+- `T-528 — Final Application / Frontend Rebuild` remains COMPLETE under DEC-059. The current application is PySide6 / Qt 6 Widgets over the Study backend; NiceGUI is historical prototype only.
+- `T-511 — Intended-user application workflow/self-explanatory UX acceptance` remains COMPLETE. That acceptance does not authorize final-reserve execution or accept future scientific results.
+- Master tracker #87 remains 7/8 complete; milestone 8 depends on the final v2 evidence chain.
+- PR #92 remains the active draft integration PR on `feat/pre-wp7-protocol-v1.1-ui-rebuild`. Its previously selected merge checkpoint is superseded only in sequencing: T-530 must be completed and validated on the same branch/PR before merge/final authorization.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
 
-## Completed Study-first backend
+## T-530 scientific amendment
 
-Current reusable backend/evidence foundation includes:
+### Final research questions
+
+- **RQ1 — Nominal learning:** compare the five retained methods' nominal performance and learning efficiency under the common actual-environment-interaction budget and information contract.
+- **RQ2 — Resilience/adaptation:** quantify disturbance-associated Frozen/Adaptive loss and preserve the matched adaptation-benefit estimand `(FN-FD)-(AN-AD)` with metric-direction handling.
+- **RQ3 — Recovery speed:** after persistent unannounced change, quantify adaptive recovery trajectory, stable recovery time and non-recovery against matched Adaptive-Nominal behavior.
+
+The five methods remain Q-Learning, SARSA, DQN, PPO and Dyna-Q+. Frozen and Adaptive/Continual remain deployment regimes, not distinct algorithms.
+
+### Recovery-speed freeze
+
+Primary RQ3 conditions are the persistent `action-remap/*` changes. Action-failure and observation-corruption remain supporting robustness/adaptation diagnostics unless a later explicit pre-outcome justification changes that role.
+
+The frozen primary recovery definition is:
+
+- temporal axis: actual post-boundary environment interactions;
+- fixed windows: 32 interactions across the unchanged 256-interaction horizon (8 windows), crossing episode boundaries without reset/realignment;
+- trajectory metric: mean reward per actual interaction within each window;
+- matched reference: Adaptive-Nominal (AN) versus Adaptive-Disturbed (AD), equal layout weighting within each independent root before inference;
+- higher-is-better directed recovery gap: `AN - AD`;
+- primary tolerance: `0.10` reward per interaction; predeclared sensitivity tolerances `0.05` and `0.20`;
+- stability: two consecutive in-tolerance windows;
+- recovery time: end of the first window in the first stable run; confirmation time: end of the second required window;
+- non-recovery: right-censored at interaction 256 with `recovery_time=null`, never an artificial recovery time of 256.
+
+The 0.10 primary tolerance was frozen before final outcomes from the known task reward scale (`step=-0.1`, `collision=-0.25`, `goal=1.0`), avoiding unstable percentage denominators for signed returns.
+
+### Direct method comparison
+
+Method comparison is root-paired and estimation-oriented. Layouts, episodes, probes and temporal windows are not independent samples.
+
+- Primary contrasts: RQ1 final nominal performance, RQ2 adaptation benefit, RQ3 recovery time/status on action-remap conditions.
+- Secondary: RQ1 time-average performance, RQ2 Frozen loss and Adaptive loss.
+- Exploratory/supporting: other disturbance diagnostics, computational observations and recovery sensitivity thresholds.
+- Report effect estimates with root-level pointwise uncertainty intervals. Pointwise intervals are not simultaneous inference and must not be relabeled post hoc as “statistically significant.” No formal p-value superiority family is authorized by DEC-060.
+
+No composite resilience score is introduced. Nominal capability, immediate degradation/resistance, adaptation benefit, recovery profile/time and non-recovery remain distinct constructs.
+
+## Existing Study/backend invariants retained
 
 - immutable recipes/evidence, stable-ID DAG barriers and restart-safe `StudyStore`/`StudyService`;
-- real Q-Learning/SARSA/DQN/PPO/Dyna-Q+ execution with exact checkpoints and explicit failure semantics;
-- shared-prefix atomic FN/FD/AN/AD branching, structural validation and root/layout analysis;
-- explicit status denominators and deterministic lineage-preserving CSV/JSON export.
+- independent Phase-A learning with actual-interaction accounting and isolated no-learning probes;
+- exact method-native scientific checkpoints for all five retained methods;
+- exact shared-prefix FN/FD/AN/AD Phase-B branching with adaptive updates only after the boundary;
+- replay/optimizer/exploration/warm-up/model/recency/schedule/counter/RNG continuity rather than silent reset;
+- scientific failures retained with reasons and no outcome-driven seed/root replacement;
+- filesystem evidence/provenance remains scientific authority; UI/index/database layers are derived/read-only.
 
-## Completed final application foundation
+## Application state
 
-DEC-059 selects PySide6 / Qt 6 Widgets for the final local desktop application. The UI consumes application/read-model boundaries and does not own or reimplement scientific protocol logic.
+DEC-059 remains application authority. The UI consumes Study/read-model/evidence boundaries and must not own scientific protocol logic.
 
-Application behavior now includes:
+Existing stored-evidence learning/adaptation/loss views remain valid. T-530 may extend Results with recovery trajectory/status/time and method contrasts only from validated stored analysis/export artifacts; thresholds/estimands must not be recomputed or selected inside the UI. Aesthetic redesign unrelated to the research correction is out of scope.
 
-- read-only frozen Thesis Study review while `final_reserve_access=false`;
-- DEVELOPMENT-only Exploratory Study creation using non-final layouts/root namespaces;
-- server/application-side execution policy that rejects final identities and non-DEVELOPMENT study execution;
-- `QProcess`-based non-blocking local worker supervision over durable Study state;
-- Runs progress derived from `StudyStore`, with scientific/infrastructure failure distinction retained;
-- presentation-only dropping live-event sink/read model and exact-interaction matched FD/AD visualization, including explicit branch action/reward/state/observation/change context, that cannot feed back into action selection, RNG, checkpoints or evidence;
-- stored `analysis-package` rendering with integrity/provenance checks and separate adaptation-benefit and Frozen/Adaptive-loss views rather than UI-side estimand recomputation;
-- registered artifact lineage/provenance presentation without arbitrary filesystem browsing;
-- deterministic PySide6 screenshot CI plus curated review set and 1366×768 / 1440×900 visual sanity coverage.
+## Computational evidence
 
-## Protocol-v2 invariants
+Actual environment interactions remain the primary fairness axis. Existing wall-clock and process-CPU evidence, plus method-specific update counts where scientifically interpretable, are secondary descriptive computational observations rather than a new primary RQ.
 
-Phase A independently trains each retained method under common semantic task/information/action/reward/gamma semantics and a principal actual-environment-interaction budget, with isolated no-learning probes.
+## Bibliography and public-repository constraints
 
-Each Phase-B `method × root × layout` starts from its own exact Phase-A checkpoint. The exact branch point is cloned into FN/FD/AN/AD. Adaptive updates begin only after the boundary; replay, optimizer, exploration, warm-up, model/recency, schedules, counters and RNG state are not silently reset.
+Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/` under the existing synchronization rules. No parallel bibliography system is permitted.
 
-Primary adaptation benefit remains matched four-branch DiD. Root/run is the independent unit; layouts/episodes/checkpoints are blocked/repeated observations. Scientific failures remain retained outcomes and seeds are not replaced from outcomes.
+The repository remains **public** by explicit user decision. `thesis/source-material/ThesisApplication.pdf` and the existing source-material structure remain unchanged. File removal, history rewrite or private-repository migration is neither required nor a blocker for thesis completion.
 
-## T-526 physical gate
+## Still blocked / intentionally sealed
 
-Plan: `configs/protocols/protocol-v2-feasibility-v0.1.json`  
-Runbook: `docs/research/T526_WINDOWS_FEASIBILITY_RUNBOOK.md`  
-Entrypoint: `scripts/run_protocol_v2_feasibility_windows.ps1`
-
-Historical failed recovery authority/config/entrypoint: `docs/decisions/DEC-052_T526_CHECKPOINT_MATERIALIZATION_AND_PHASE_B.md`, `configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json`, `scripts/run_protocol_v2_t526_recovery_phase_b_windows.ps1`.
-
-DEC-053 recovery and DEC-054 boundary-settlement evidence remain immutable historical/accepted scientific evidence. DEC-055/056 failed sizing attempts remain immutable failed evidence. DEC-057 sizing-v0.3 and the combined five-method matrix remain the accepted non-final sizing authority. No scientific package was rerun by T-528.
-
-## Statistics / provenance
-
-Final statistical values and the contrast family are frozen by T-527 in DEC-058. Filesystem evidence remains authoritative and any future index/database must be rebuildable.
-
-DEC-058 authority/firewall: `docs/decisions/DEC-058_PROTOCOL_V2_FINAL_SCIENTIFIC_FREEZE.md` and `configs/protocols/protocol-v2.0-final.json`. The protocol is frozen with `final_reserve_access=false`; explicit later T-610+ authorization is required for final-reserve scientific execution.
-
-DEC-059 application authority: `docs/decisions/DEC-059_PYSIDE6_FINAL_APPLICATION_ARCHITECTURE.md`. T-528 application presentation and DEVELOPMENT smoke evidence do not authorize final scientific execution.
-
-Canonical bibliography remains `MariosGiannakaras/ThesisBibliography`, immutable upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`: 597 canonical sources, 121 citation-ready sources and 19 research materials. `bibliography-integration-v3` remains immutable historical terminology.
-
-## Still intentionally unfrozen
-
-- Final-reserve execution remains sealed: `final_reserve_access=false`.
-- T-511 application workflow acceptance is complete; later real screenshot/GIF/video captures still require `ASSET-*` provenance records and static fallbacks.
-- `T-610+` remains blocked by the separate explicit scientific authorization while `final_reserve_access=false`.
-- WP7 remains blocked by the mandatory explicit pre-WP7 user-approval gate.
+- `final_reserve_access=false`.
+- T-610 and all final-reserve scientific outcomes remain blocked until T-530 implementation, deterministic validation, affected CI, documentation reconciliation and objective review are complete.
+- No final roots/layouts/seeds may be used to tune recovery thresholds or analysis choices.
+- WP7 remains blocked by the later explicit pre-WP7 gate.
 - Final Windows standalone packaging remains deferred to `T-803` / issue #94.
 
 ## Exact next action
 
-Squash-merge the accepted PR #92 checkpoint. Then obtain separate explicit scientific authorization before T-610; do not access the final reserve or start WP7 from application acceptance alone.
+Complete T-530 on the existing PR #92 branch: wire fixed-window Phase-B temporal evidence into validated analysis records, produce recovery/root-paired contrast analysis and deterministic exports, expose those stored results in PySide6 where required, reconcile active methodology/task documents, and pass affected CI. Then stop at the explicit authorization gate immediately before T-610. Do **not** access the final reserve or begin Results/Discussion writing.
