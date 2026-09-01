@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "decision_id": "DEC-060",
+  "protocol_id": "protocol-v2.1",
+  "amends": "configs/protocols/protocol-v2.0-final.json",
+  "amends_decision_id": "DEC-058",
+  "tracking_task_id": "T-533",
+  "scientific_status": "pre-outcome-final-amendment",
+  "final_reserve_access": false,
+  "unchanged_from_v2_0": [
+    "retained_methods",
+    "task_and_agent_visible_semantics",
+    "phase_a_training_budget_and_probes",
+    "method_hyperparameters",
+    "final_roots",
+    "final_layouts",
+    "phase_b_conditions",
+    "phase_b_branch_design_FN_FD_AN_AD",
+    "phase_b_interaction_horizon_256",
+    "failure_retention_and_no_root_replacement"
+  ],
+  "research_questions": {
+    "RQ1": "Nominal learning performance and learning efficiency under the common actual-environment-interaction budget.",
+    "RQ2": "Resilience and matched adaptation benefit after controlled uncertainty/change, retaining (FN-FD)-(AN-AD).",
+    "RQ3": "Recovery speed and non-recovery after persistent unannounced change using matched Adaptive-Nominal and Adaptive-Disturbed trajectories."
+  },
+  "recovery_speed": {
+    "primary_condition_prefix": "action-remap/",
+    "supporting_conditions": [
+      "action-failure",
+      "observation-corruption"
+    ],
+    "metric": "mean_reward_per_actual_environment_interaction",
+    "metric_direction": "higher-is-better",
+    "window_size_interactions": 32,
+    "observation_horizon_interactions": 256,
+    "window_count": 8,
+    "episode_boundary_handling": "fixed interaction windows continue across episode boundaries; boundaries do not reset or realign windows",
+    "matched_reference_branch": "AN",
+    "target_branch": "AD",
+    "primary_tolerance_reward_per_interaction": 0.1,
+    "sensitivity_tolerances_reward_per_interaction": [
+      0.05,
+      0.2
+    ],
+    "stability_windows": 2,
+    "recovery_rule": "for higher-is-better performance, AD is in tolerance when AN-AD <= tolerance; stable recovery is the first run of two consecutive in-tolerance windows",
+    "recovery_time_definition": "end interaction of the first window in the first stable run",
+    "confirmation_time_definition": "end interaction of the final window required by the stability rule",
+    "non_recovery_rule": "right-censored at interaction 256 with recovery_time=null",
+    "layout_reduction": "equal weighting within independent root before recovery inference",
+    "independent_unit": "root"
+  },
+  "method_contrasts": {
+    "pairing_unit": "root",
+    "layout_policy": "layouts are repeated/blocked observations reduced equally within root",
+    "orientation": "method_a_minus_method_b",
+    "primary": [
+      "RQ1 final nominal performance",
+      "RQ2 adaptation benefit",
+      "RQ3 recovery time/status on action-remap conditions"
+    ],
+    "secondary": [
+      "RQ1 nominal time-average performance",
+      "RQ2 Frozen loss",
+      "RQ2 Adaptive loss"
+    ],
+    "exploratory": [
+      "supporting disturbance diagnostics",
+      "computational observations",
+      "recovery sensitivity thresholds"
+    ],
+    "inference": "effect-estimation with pointwise root-level intervals; no formal p-value superiority testing",
+    "simultaneous_inference": false,
+    "posthoc_statistical_significance_language_allowed": false
+  },
+  "computational_evidence": {
+    "primary_fairness_axis": "actual_environment_interactions",
+    "secondary_descriptive": [
+      "wall_clock_seconds",
+      "process_cpu_seconds",
+      "method_specific_update_counts_when_interpretable"
+    ]
+  },
+  "gate": {
+    "required_before_T_610": "T-533 implementation, validation, documentation reconciliation, affected CI and objective review",
+    "T_610_authorized_by_this_amendment": false
+  }
+}

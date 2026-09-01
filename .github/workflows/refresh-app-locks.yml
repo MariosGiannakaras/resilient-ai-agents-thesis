@@ -1,0 +1,43 @@
+name: T-528 application UI dependency check
+
+on:
+  push:
+    branches:
+      - feat/pre-wp7-protocol-v1.1-ui-rebuild
+    paths:
+      - requirements/application-ui.txt
+      - .github/workflows/refresh-app-locks.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-ui-overlay:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout implementation branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/pre-wp7-protocol-v1.1-ui-rebuild
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Verify historical project lock without mutation
+        run: |
+          uv lock --check
+          uv sync --locked --group gridworld-prototype --no-progress
+
+      - name: Validate application-only UI overlay
+        run: |
+          uv pip install --python .venv/bin/python --requirement requirements/application-ui.txt
+          uv run --no-sync python -c "import PySide6; print(PySide6.__version__)"
+
+      - name: Assert root authority inputs stayed clean
+        run: git diff --exit-code -- pyproject.toml uv.lock

@@ -3,111 +3,180 @@
 **Official Greek title:** Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα  
 **Official English title:** Comparison and Evaluation of Resilient AI Agents in Uncertain Environments
 
-Version-controlled repository for the complete thesis lifecycle: research context, bibliography consumer, experimental software, runs/results, analysis artifacts, thesis writing, defense presentation, and final deliverables.
+Version-controlled repository for the complete thesis lifecycle: research context, bibliography consumer, scientific implementation, controlled experiments, evidence validation, analysis, thesis assets, defense assets and final delivery.
 
 ## Project principle
 
-The goal is a scientifically valid, reproducible, and realistically completable thesis. The application supports the research; it is not the main research contribution.
+The research contribution is the controlled comparison of resilient AI-agent strategies under uncertainty/change. GridWorld is the common controlled testbed and visualization surface; the application supports the research and is not the research contribution itself.
 
 > **Polished outside, bounded inside.**
 
-The final tool is local and single-user. It must let the user configure, execute, monitor, compare, and export experiments without manual coding or routine Git work, while avoiding production-platform complexity.
+The final tool is local and single-user. Scientific validity, reproducibility and a realistic thesis scope take priority over production-platform complexity.
 
-## Current implementation baseline
+## Current architecture
 
-The canonical bibliography lifecycle remains in `MariosGiannakaras/ThesisBibliography`. This repository consumes its verified immutable complete research-corpus export under `research/bibliography/`, with the nested `citation-ready/` layer as the only automatic formal-citation surface. The current synchronized baseline is `bibliography-integration-v3` and contains 585 canonical sources, 113 citation-ready sources, 19 research materials, metadata for 281 indexed original PDFs, and 1,568 integrity-covered corpus files. Bibliography PDFs, structured originals, and bibliography Git LFS objects remain upstream and are not imported here.
-
-The active research implementation lives in the importable package:
+The active scientific/backend implementation lives in:
 
 ```text
 src/resilient_agents/
 ```
 
-The accepted architecture uses:
+The current protocol-v2 architecture is **study-first**.
 
-- Python 3.12;
-- `uv`, `pyproject.toml`, `.python-version`, and committed `uv.lock`;
-- explicit scenario/experiment/protocol contracts;
+```text
+immutable Study recipe
+        -> deterministic job plan
+        -> Phase A independent nominal learning
+        -> exact scientific checkpoints
+        -> Phase B FN / FD / AN / AD branches
+        -> evidence validation
+        -> root-level statistical analysis
+        -> thesis / defense export package
+```
+
+A `Run` remains a lower-level scientific evidence unit. A `Study` is the authoritative parent lifecycle.
+
+### Scientific core
+
+The validated protocol-v2 scientific layer includes:
+
+- project-owned Gymnasium-compatible GridWorld;
 - strict separation of evaluator ground truth from agent-visible information;
-- independent deterministic RNG streams;
-- filesystem-first experiment run bundles with provenance and checksums;
-- a validated CLI/core headless runner with real multi-seed F0/C0/R0 execution, atomic root-boundary recovery, and matched episode-return curves;
-- fail-closed finalization with a last-written completion marker plus marker/manifest/checksum/run-index agreement before automatic publication;
-- one guarded automatic Git commit and push per finalized whole experiment, never per seed;
-- selective Git LFS for large thesis-produced artifacts;
-- a future thin Streamlit dashboard after the headless core and pilots establish the real workflow.
+- independent scoped RNG streams;
+- actual environment-interaction accounting;
+- Q-Learning, SARSA, DQN, PPO and Dyna-Q+ candidate implementations;
+- isolated no-learning evaluation probes;
+- exact method-specific scientific checkpoint/restore semantics;
+- matched Frozen nominal / Frozen disturbed / Adaptive nominal / Adaptive disturbed Phase-B execution;
+- fail-closed information, checkpoint and branch invariants.
 
-No final research question, model set, GridWorld scientific parameters, uncertainty severities, seed count, budgets, hyperparameters, recovery threshold, statistical plan, or final protocol is frozen yet.
+### Study orchestration
 
-## Current control files
+`src/resilient_agents/study/` owns framework-neutral application/backend orchestration:
 
-- `docs/context/CURRENT_STATUS.md` — shortest authoritative current-state summary.
-- `docs/context/TASKS.md` — canonical concrete checklist and resumable Codex progress ledger.
-- `docs/context/PROJECT_CONTEXT.md` — current integrated project context.
-- `docs/context/IMPLEMENTATION_ROADMAP.md` — phase/dependency explanation.
-- `docs/context/EXECUTION_WORKFLOW.md` — execution responsibilities and major handoffs.
-- `docs/context/DOCUMENTATION_GOVERNANCE.md` — mandatory reconciliation rules.
-- `docs/decisions/DECISION_LOG.md` — accepted/superseded/pending decision index.
-- `docs/context/CODEX_EXECUTION_PROMPT.md` — single tracked, canonical Codex execution bootstrap and Goal-mode entrypoint.
-- `docs/thesis/PRESENTATION_WORKFLOW.md` — deferred but already-defined final PowerPoint/speaker-material workflow.
+- immutable content-addressed `StudyRecipe`;
+- evidence classes separating development/tuning/confirmatory/derived/history;
+- deterministic recipe-to-job DAG materialization;
+- scientific-vs-infrastructure failure semantics;
+- restart-safe study persistence and artifact lineage;
+- sequential stage barriers;
+- generic executor registry/scheduler;
+- framework-neutral `StudyService` facade.
 
-After cloning/updating the repository on the thesis machine, start Codex with the `/goal` command shown under **User entrypoint** in `docs/context/CODEX_EXECUTION_PROMPT.md`. Goal mode keeps the complete canonical project objective active while Codex executes one bounded dependency-valid scope at a time. Routine Git/PR/CI/objective review/squash-merge/task-reconciliation boundaries do not pause it; only genuinely external/user-only input or an explicit external approval requirement does. Every Codex session must inspect `TASKS.md` before selecting/resuming work. Available session memory is used together with branch/working-tree/PR state; durable repository evidence is the fallback when a session or model quota is interrupted.
+### Protocol-v2 evidence and analysis
 
-Historical bootstrap/pre-import files are not current instructions. Useful historical records are explicitly labelled historical; obsolete active files are removed rather than left to drift.
+`src/resilient_agents/evidence_v2/` is the new v2-only evidence path. It remains separate from historical v1.x analysis so historical finalized evidence stays reproducible.
+
+It owns:
+
+- planned-vs-produced evidence validation;
+- exact Phase-A checkpoint -> Phase-B lineage validation;
+- standardized heterogeneous method analysis records;
+- root/layout statistical primitives;
+- deterministic analysis/export work as T-529 progresses.
+
+## Legacy boundary
+
+Historical protocol-v1.0 / v1.1 scientific code and finalized evidence remain auditable and reproducible. They are not silently reinterpreted as protocol-v2 confirmatory evidence.
+
+The superseded NiceGUI application, v1.1 application runtime service, old native/package validation surface and UI-only tests were removed from the **active tree** during DEC-051/T-529 reconstruction. Git history remains the audit trail.
+
+The accepted final frontend is a native PySide6 / Qt 6 Widgets application under
+`src/resilient_agents/desktop/`. It consumes the Study backend directly and does
+not reimplement scientific protocol logic. The superseded NiceGUI frontend remains
+available through Git history only.
+
+From PowerShell on the validated Windows thesis machine, restore the locked runtime,
+install the exact-pinned application overlay, and launch from source with:
+
+```powershell
+& "$env:USERPROFILE\.local\bin\uv.exe" sync --locked --group gridworld-prototype --group protocol-v2-pilot --no-progress
+& "$env:USERPROFILE\.local\bin\uv.exe" pip install --python .venv\Scripts\python.exe --requirement requirements\application-ui.txt
+.\.venv\Scripts\python.exe -m resilient_agents.desktop
+```
+
+Standalone Windows packaging remains a later delivery task; the source application
+is the accepted T-511 research workflow.
+
+## Current scientific gate
+
+T-511 application workflow acceptance is complete. T-610 final protocol-v2
+execution remains sealed by `final_reserve_access=false` until a separate explicit
+scientific authorization. Historical protocol-v1.0 results remain immutable and
+must not be presented as the not-yet-produced final protocol-v2 evidence.
 
 ## Repository map
 
 ```text
-src/resilient_agents/                  Independent scientific/research core
-app/                                   Future thin local dashboard
-configs/                               Version-controlled experiment/scenario configs
+src/resilient_agents/                  Scientific core + study backend
+src/resilient_agents/study/            Study recipe/DAG/store/scheduler/service
+src/resilient_agents/evidence_v2/      Protocol-v2 validation/analysis/export
+
+configs/                               Version-controlled protocol/scenario inputs
 scripts/                               Reproducibility and maintenance utilities
-tests/                                 Unit/integration/reproducibility tests
+tests/                                 Risk-based scientific/backend regression tests
 
-research/bibliography/                 Generated bibliography research corpus
-results/runs/                          Whole-experiment run bundles
-results/summaries/                     Derived summaries
-results/thesis-final/                  Frozen final thesis evidence
-artifacts/figures/                     Reproducible figures
-artifacts/tables/                      Reproducible tables
-artifacts/exports/                     Exports and reports
+research/bibliography/                 Immutable consumed bibliography corpus
+results/runs/                          Lower-level whole-run bundles
+results/studies/                       Study-level parent lifecycle/evidence bundles
+results/thesis-final/                  Frozen final thesis evidence when authorized
+artifacts/                             Reproducible generated figures/tables/exports
 
-thesis/source-material/                Official thesis source material
-thesis/chapters/                       Writing-stage chapter drafts
-thesis/final/                          Final thesis deliverables
+thesis/                                Source material and later thesis deliverables
+presentation/                          Later defense sources/assets/final deck
 
-presentation/source/                   Future slide outline/evidence map/speaker script sources
-presentation/assets/                   Future evidence-backed figures/screenshots/demo assets
-presentation/final/                    Future final PowerPoint and defense deliverables
-
-docs/context/                          Current scope, tasks, requirements, workflow, roadmap
-docs/research/                         Research framing and selection work
-docs/experiments/                      Protocol, run, storage, and provenance rules
-docs/architecture/                     Core/UI architecture
-docs/thesis/                           Thesis-writing and defense-presentation workflow rules
+docs/context/                          Current status/tasks/workflow
+docs/research/                         Methodology and protocol research
+docs/experiments/                      Experiment/provenance rules
+docs/architecture/                     Backend/frontend architecture
+docs/thesis/                           Deferred thesis/defense workflows
 docs/decisions/                        Decisions and ADRs
 ```
 
-The `presentation/` directories are a future output contract; they do not need to exist until the defense phase is executed.
+## Bibliography boundary
 
-## Lifecycle handoff
+`MariosGiannakaras/ThesisBibliography` is the canonical bibliography lifecycle repository. This repository consumes only an immutable generated snapshot. Formal automatic citation trust is limited to `research/bibliography/citation-ready/`.
 
-The intended end-to-end chain is:
+The current protocol-v2 consumer snapshot is pinned to upstream SHA:
 
-> validated application -> frozen final experiments -> frozen evidence/analysis -> thesis evidence package -> Greek thesis/review/final freeze -> PowerPoint + speaker notes/script -> final audit/delivery
+`f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`
 
-The application is therefore not the end of the project. It is the validated execution surface that hands off into the final experiment campaign. The thesis and presentation are downstream artifacts of the same frozen evidence chain.
+with 597 canonical sources, 121 citation-ready sources and 19 research materials.
 
-## Experiment publication
+## Current control files
 
-A `run_id` means one whole experiment and may contain many seeds/episodes. The experiment writes its resolved configuration, capability snapshot, events/traces, summary, manifest, and SHA-256 checksums under `results/runs/<run-id>/`.
+Always use these as current authority:
 
-A run becomes publishable only after finalization writes the `FINALIZED` sentinel as its last step. Before any Git staging, the publisher verifies that the marker agrees with the manifest and that the manifest payload metadata, file sizes, checksum scope/SHA-256 values, provenance, and exactly one matching run-index entry are internally consistent. Corrupted, partial, duplicate-index, or manually fabricated finalized-looking evidence therefore fails closed.
+1. `AGENTS.md`
+2. `docs/context/TASKS.md`
+3. `docs/context/CURRENT_STATUS.md`
 
-When the verified experiment finalizes, the normal workflow can automatically create one commit and push containing only that run and the run index. The publisher also refuses unsafe mixed-provenance/dirty-state/non-fast-forward publication, but never deletes the local experiment data when publication cannot proceed.
+Important supporting decisions/specifications include:
 
-Useful large thesis-produced outputs are retained while storage permits. Large traces and other configured formats use Git LFS. Bibliography PDFs and bibliography LFS objects remain upstream and are never imported here.
+- `docs/decisions/DEC-048_PROTOCOL_V2_INDEPENDENT_LEARNING_AND_MATCHED_RESILIENCE.md`
+- `docs/decisions/DEC-049_FRONTEND_RESELECTION_AFTER_PROTOCOL_V2_BACKEND.md`
+- `docs/decisions/DEC-050_PROTOCOL_V2_CLOSURE_REFINEMENTS.md`
+- `docs/decisions/DEC-051_STUDY_FIRST_BACKEND_RECONSTRUCTION.md`
+- `docs/architecture/STUDY_BACKEND_REDESIGN.md`
 
-## Scientific integrity
+Historical bootstrap, UI and candidate-protocol documentation is context only where explicitly marked historical/superseded.
 
-Do not fabricate sources, data, runs, metrics, progress, figures, tables, presentation claims, or conclusions. Every final thesis/result/presentation claim must trace to real source evidence, a versioned protocol/configuration, recorded run data, and reproducible analysis/evidence mappings as applicable.
+## Evidence and integrity principles
+
+- Filesystem evidence is authoritative; indexes/databases must be rebuildable.
+- Finalized evidence is immutable and checksum/provenance protected.
+- Scientific failures remain outcomes and are not replaced by favorable roots.
+- Infrastructure failures are distinct and may retry only under the same scientific identity/provenance rules.
+- Development/tuning/custom outputs cannot silently become confirmatory evidence.
+- Phase-B results must trace to the exact Phase-A scientific checkpoint that generated them.
+- Final figures/tables/results are regenerated from frozen evidence, not transcribed from the UI.
+- No final reserve is accessed before its protocol gate.
+- No thesis writing starts before the explicit pre-WP7 user approval gate.
+
+## End-to-end lifecycle
+
+The intended project chain is:
+
+> methodology/bibliography -> feasibility -> protocol freeze -> validated study backend/application -> frozen protocol-v2 final Study -> evidence validation -> predeclared analysis -> thesis evidence package -> explicit user approval -> Greek thesis/review -> defense presentation -> final audit/delivery
+
+The application therefore becomes a client of the research backend, not the source of scientific truth.

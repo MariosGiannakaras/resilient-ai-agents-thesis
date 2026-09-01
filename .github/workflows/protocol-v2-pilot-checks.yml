@@ -1,0 +1,127 @@
+name: Protocol-v2 pilot checks
+
+on:
+  pull_request:
+    paths:
+      - "pyproject.toml"
+      - "uv.lock"
+      - "configs/protocols/protocol-v2-feasibility-v0.1.json"
+      - "configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json"
+      - "configs/protocols/protocol-v2-t526-recovery-phase-b-v0.2.json"
+      - "configs/protocols/protocol-v2-t526-boundary-settlement-phase-b-v0.3.json"
+      - "configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json"
+      - "configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json"
+      - "configs/protocols/protocol-v2-t527-sizing-completion-v0.3.json"
+      - "docs/decisions/DEC-052_T526_CHECKPOINT_MATERIALIZATION_AND_PHASE_B.md"
+      - "docs/decisions/DEC-053_SB3_SCIENTIFIC_CONTINUATION_IDENTITY.md"
+      - "docs/decisions/DEC-054_PHASE_A_INTERACTION_BUDGET_SETTLEMENT.md"
+      - "docs/decisions/DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md"
+      - "docs/decisions/DEC-056_T527_SIZING_OBSERVATION_BOUNDARY_RETRY.md"
+      - "docs/decisions/DEC-057_T527_COMPLETE_SB3_INGRESS_AND_SIZING_COMPLETION.md"
+      - "scripts/run_protocol_v2_t526_recovery_phase_b_windows.ps1"
+      - "scripts/run_protocol_v2_t526_recovery_phase_b_v02_windows.ps1"
+      - "scripts/run_protocol_v2_t526_boundary_settlement_phase_b_v03_windows.ps1"
+      - "scripts/run_protocol_v2_t527_tuning_sizing_windows.ps1"
+      - "scripts/run_protocol_v2_t527_sizing_v02_windows.ps1"
+      - "scripts/run_protocol_v2_t527_sizing_v03_windows.ps1"
+      - "src/resilient_agents/protocol_v2*.py"
+      - "src/resilient_agents/study/*.py"
+      - "src/resilient_agents/evidence_v2/*.py"
+      - "tests/test_protocol_v2*.py"
+      - "tests/test_study_*.py"
+      - "tests/test_evidence_v2*.py"
+      - ".github/workflows/protocol-v2-pilot-checks.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "pyproject.toml"
+      - "uv.lock"
+      - "configs/protocols/protocol-v2-feasibility-v0.1.json"
+      - "configs/protocols/protocol-v2-t526-recovery-phase-b-v0.1.json"
+      - "configs/protocols/protocol-v2-t526-recovery-phase-b-v0.2.json"
+      - "configs/protocols/protocol-v2-t526-boundary-settlement-phase-b-v0.3.json"
+      - "configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json"
+      - "configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json"
+      - "configs/protocols/protocol-v2-t527-sizing-completion-v0.3.json"
+      - "src/resilient_agents/protocol_v2*.py"
+      - "src/resilient_agents/study/*.py"
+      - "src/resilient_agents/evidence_v2/*.py"
+      - "tests/test_protocol_v2*.py"
+      - "tests/test_study_*.py"
+      - "tests/test_evidence_v2*.py"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: protocol-v2-pilot-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  focused-conformance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install locked protocol-v2 pilot environment
+        run: |
+          uv lock --check
+          uv sync --locked --group protocol-v2-pilot --no-progress
+
+      - name: Verify CPU-only PyTorch runtime
+        run: |
+          uv run --group protocol-v2-pilot python - <<'PY'
+          import torch
+          assert torch.__version__.startswith("2.9.0"), torch.__version__
+          assert torch.version.cuda is None, torch.version.cuda
+          assert not torch.cuda.is_available()
+          print(f"torch={torch.__version__} cuda={torch.version.cuda}")
+          PY
+
+      - name: Run focused protocol-v2 conformance tests
+        env:
+          CUDA_VISIBLE_DEVICES: ""
+        run: |
+          uv run --group protocol-v2-pilot python -m unittest \
+            tests.test_protocol_v2 \
+            tests.test_protocol_v2_runtime \
+            tests.test_protocol_v2_gridworld \
+            tests.test_protocol_v2_implementations \
+            tests.test_protocol_v2_executor \
+            tests.test_protocol_v2_prefix \
+            tests.test_protocol_v2_sb3 \
+            tests.test_protocol_v2_sb3_driver \
+            tests.test_protocol_v2_sb3_phase_b \
+            tests.test_protocol_v2_sb3_seeding \
+            tests.test_protocol_v2_tabular_driver \
+            tests.test_protocol_v2_tabular_phase_b \
+            tests.test_protocol_v2_feasibility \
+            tests.test_protocol_v2_t526_recovery \
+            tests.test_protocol_v2_t526_recovery_v02 \
+            tests.test_protocol_v2_sb3_identity \
+            tests.test_protocol_v2_boundary_settlement \
+            tests.test_protocol_v2_t527 \
+            tests.test_study_backend \
+            tests.test_study_planner \
+            tests.test_study_scheduler \
+            tests.test_study_service \
+            tests.test_study_default_registry \
+            tests.test_study_reference_executor \
+            tests.test_study_protocol_v2_phase_b_executor \
+            tests.test_evidence_v2_validation \
+            tests.test_evidence_v2_executor \
+            tests.test_evidence_v2_statistics \
+            tests.test_evidence_v2_denominators -q

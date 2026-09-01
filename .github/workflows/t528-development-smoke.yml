@@ -1,0 +1,147 @@
+name: T-528 bounded development application smoke
+
+on:
+  push:
+    branches:
+      - feat/pre-wp7-protocol-v1.1-ui-rebuild
+    paths:
+      - ".github/workflows/t528-development-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      PYTHONPATH: src
+      CUDA_VISIBLE_DEVICES: ""
+    steps:
+      - name: Checkout implementation branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/pre-wp7-protocol-v1.1-ui-rebuild
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Restore locked project environment
+        run: uv sync --locked --group protocol-v2-pilot --no-progress
+
+      - name: Execute one bounded DEVELOPMENT application journey
+        shell: bash
+        run: |
+          set -euo pipefail
+          uv run --group protocol-v2-pilot python - <<'PY'
+          import json
+          import tempfile
+          from pathlib import Path
+
+          from resilient_agents.desktop.exploratory_study import DesktopExploratoryStudyModel
+          from resilient_agents.desktop.results_read_model import DesktopResultsReadModel
+          from resilient_agents.desktop.study_read_model import DesktopStudyReadModel
+          from resilient_agents.desktop.study_worker import run_development_study
+          from resilient_agents.study import StudyStore
+
+          repo_root = Path.cwd().resolve()
+          study_id = "t528-dev-application-acceptance-smoke"
+
+          with tempfile.TemporaryDirectory(prefix="t528-dev-smoke-") as directory:
+              writable_root = Path(directory).resolve()
+              model = DesktopExploratoryStudyModel(
+                  repo_root=repo_root,
+                  writable_root=writable_root,
+              )
+              created = model.create(
+                  selected_method_ids=("q_learning",),
+                  root_count=1,
+                  layout_count=1,
+                  study_label="T-528 bounded acceptance smoke",
+                  study_id=study_id,
+              )
+              assert created.total_jobs > 3, created
+
+              store = StudyStore.load(
+                  repo_root=repo_root,
+                  writable_root=writable_root,
+                  study_id=study_id,
+              )
+              recipe_text = json.dumps(store.recipe.to_dict(), sort_keys=True)
+              forbidden = [
+                  "gw-l1-final-a",
+                  "gw-l1-final-b",
+                  *[f"t527-final-r{i:02d}" for i in range(1, 13)],
+              ]
+              assert not any(token in recipe_text for token in forbidden), recipe_text
+              assert '"evidence_class": "development"' in recipe_text
+
+              summary = run_development_study(
+                  repo_root=repo_root,
+                  writable_root=writable_root,
+                  study_id=study_id,
+              )
+              assert summary["finalized"] is True, summary
+              assert summary["progress"]["resolved"] == summary["progress"]["total"], summary
+
+              read_model = DesktopStudyReadModel(
+                  repo_root=repo_root,
+                  writable_root=writable_root,
+              )
+              studies = {item.study_id: item for item in read_model.studies()}
+              assert studies[study_id].finalized is True
+              artifacts = {item.artifact_id: item for item in read_model.artifacts(study_id)}
+              assert "analysis-package" in artifacts, sorted(artifacts)
+              assert "evidence-handoff-package" in artifacts, sorted(artifacts)
+
+              results = DesktopResultsReadModel(read_model).load(study_id)
+              assert results.study_id == study_id
+              assert {item.method_id for item in results.learning} == {"q_learning"}
+              assert results.resilience
+
+              presentation_path = writable_root / "results" / "presentation" / study_id
+              assert presentation_path.is_dir()
+              final_protocol = json.loads(
+                  (repo_root / "configs/protocols/protocol-v2.0-final.json").read_text(
+                      encoding="utf-8"
+                  )
+              )
+              assert final_protocol["final_reserve_access"] is False
+
+              report = {
+                  "schema_version": 1,
+                  "purpose": "T-528 bounded DEVELOPMENT application acceptance smoke",
+                  "study_id": study_id,
+                  "evidence_class": "development",
+                  "method": "q_learning",
+                  "roots": 1,
+                  "layouts": 1,
+                  "executed_jobs": summary["executed_jobs"],
+                  "total_jobs": summary["progress"]["total"],
+                  "finalized": summary["finalized"],
+                  "analysis_learning_rows": len(results.learning),
+                  "analysis_resilience_rows": len(results.resilience),
+                  "final_reserve_access": False,
+                  "final_identities_used": False,
+              }
+              Path("t528-development-smoke-report.json").write_text(
+                  json.dumps(report, indent=2, sort_keys=True) + "\n",
+                  encoding="utf-8",
+              )
+              print(json.dumps(report, sort_keys=True))
+          PY
+
+      - name: Upload smoke acceptance report
+        uses: actions/upload-artifact@v4
+        with:
+          name: t528-development-smoke-${{ github.sha }}
+          path: t528-development-smoke-report.json
+          if-no-files-found: error
+          retention-days: 14

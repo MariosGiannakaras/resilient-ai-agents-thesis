@@ -1,87 +1,78 @@
 # Current Project Status
 
-**Date:** 2026-08-27
-**Status:** Authoritative current-state summary
+**Date:** 2026-09-01  
+**Status:** Authoritative compact current-state summary
 
-This file is intentionally short. Detailed policy, history, requirements, and design rationale live in the source-of-truth documents routed by `AGENTS.md`; do not grow this file into a second project manual.
+`docs/context/TASKS.md` remains the canonical dependency/task ledger. Read task-specific decision/research documents **progressively**. Objective Git/GitHub/evidence state overrides stale resume prose after interruption.
 
 ## Current execution state
 
-- Canonical concrete ledger: `docs/context/TASKS.md`.
-- `T-100` and `T-101` were accepted and squash-merged in PR #55 (`45e04cd`).
-- `T-102` was objectively reviewed, CI-validated, and squash-merged in PR #57 (`48f7124`); the accepted snapshot now cites durable merged-main source provenance.
-- Current work package: **WP4 — Pilot protocol and headless experiment system**.
-- `T-200` passed canonical CI and objective diff review, then squash-merged through PR #58 (`67bb423`).
-- `T-210` passed canonical CI and objective review, then squash-merged through PR #60 (`ff3b970`).
-- DEC-032 completed `T-211`, passed canonical CI/review, and squash-merged through PR #61 (`9df6787`).
-- `T-212`/`T-213` passed canonical CI/review and squash-merged through PR #62 (`e7352d5`).
-- `T-300`/`T-301` passed canonical CI/review and squash-merged through PR #63 (`25f67bb`).
-- `T-310`/`T-311` passed canonical CI/review and squash-merged through PR #64 (`e7d97a5`).
-- `T-312` passed canonical CI/review and squash-merged through PR #65 (`6f596a3`).
-- `T-400` passed canonical CI/review and squash-merged through PR #66 (`1502bfd`).
-- `T-401` passed canonical CI/review and squash-merged through PR #67 (`8ddfcc2`).
-- `T-402` passed canonical CI/review and squash-merged through PR #68 (`34ca10b`).
-- `T-410` completed the bounded pilot lifecycle. PR #71 (`1b94ebb`) merged the v0.2 amendment; all 14 PV02 children are published and the validated analysis contains 336 units plus 18,144 sensitivity records with no v0.2 failure/exclusion. The retained v0.1 failure and superseded attempts remain explicit.
-- Pilot evidence confirms CPU/runtime/storage feasibility but makes two final-freeze constraints mandatory: R0's current configuration has approximately 96% nominal truncation and recovery classification varies across metric settings in 33/42 agent-condition-layout cells. No final claim or favorable threshold/model selection is allowed from these diagnostics.
-- `T-411` freshness review completed in canonical `ThesisBibliography`; no new evidence required protocol change.
-- `T-412` completed under its restored original acceptance contract; protocol/statistical-plan evidence is preserved.
-- `T-500` corrective audit completed: experiment_manager uses canonical FINALIZATION_MARKER from run_bundle.py, full integrity validation (checksums, marker-manifest agreement, run-id identity), tests use real RunBundle finalization semantics.
-- `T-510` corrective repair completed: Compare/Artifacts pages operate on real data, lifecycle gate protects final reserve, protocol eligibility is validated, and resource telemetry uses the actual schema.
-- `T-511` is **USER_VALIDATION_REQUIRED**; automated checks do not substitute for the intended user's real end-to-end acceptance.
-- `T-600` completed: 14 execution commits preserved durably in `archive/final-campaign-execution`.
-- `T-601` completed: freeze manifest validates exact file bytes and provenance reachability.
-- `T-602` completed: reproducible analysis generated exactly 896 valid units.
-- `T-603` completed: generated artifacts and primary metric figures.
-- `T-604` completed: evidence package constructed with claim-to-result mapping.
-- **Pre-WP7 user approval: NOT APPROVED.** The user explicitly wants further refinement of the application, agent choices/behavior, experiments/runs, and results before writing; existing WP5/WP6 outputs remain preserved baseline evidence, not final user acceptance.
-- **Current work package:** pre-WP7 user-directed refinement/acceptance. **Current task:** `T-700`, BLOCKED. Exact next action: do not start any `T-700+` work; execute user-directed pre-writing refinements first, then explicitly ask for WP7 approval. Only a direct affirmative response unlocks WP7/WP8.
+- `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable historical evidence; old `T-522` must not execute.
+- `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, `T-528`, `T-529`, historical `T-530`, `T-531`, `T-532`, `T-511` and **`T-533` are COMPLETE**.
+- DEC-058 and `configs/protocols/protocol-v2.0-final.json` remain immutable historical protocol-v2.0 freeze authority. DEC-060 is the explicit pre-outcome amendment; it does not rewrite DEC-058 history.
+- `configs/protocols/protocol-v2.1-final.json` is the self-contained current scientific authority. It preserves the five methods, selected hyperparameters, Phase-A budget/probes, 12 final roots, 2 held-out final layouts, four Phase-B conditions and 256-interaction horizon from DEC-058.
+- `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory. **T-610 has not been authorized or executed. No protocol-v2 final-reserve outcome was generated, inspected or used by T-533.**
+- Master tracker #87 remains **7/8** complete; milestone 8 depends on the final v2.1 evidence chain.
+- T-533 closure head `72c293d0678111880ec6d260fe9c05a1970475ed` passed Repository checks #795, Protocol-v2 pilot checks #310 and T-528 PySide6 UI screenshot checks #136. Later tracker-only reconciliation does not change scientific code or protocol authority.
+- Issue #98 is CLOSED/COMPLETE. PR #92 remains OPEN, DRAFT and mergeable on `feat/pre-wp7-protocol-v1.1-ui-rebuild`.
+- Repository integration is the only remaining operational step before the T-610 authorization gate. The connected GitHub tool cannot mark PR #92 ready because its GraphQL mutation currently fails on an unsupported `fullDatabaseId` field; direct squash merge is therefore rejected by GitHub while the PR remains draft. This is a tooling/integration blocker, not a scientific blocker.
+- **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
 
-## Accepted repository / Codex baseline
+## Completed T-533 / DEC-060 amendment
 
-- Python 3.12 + `uv` + committed lockfile.
-- Independent research package: `src/resilient_agents/`.
-- Ground-truth/agent-visible information boundary and independent deterministic RNG streams are established.
-- Filesystem-first run bundles, provenance/checksums, selective Git LFS, and guarded one-commit/one-push publication per finalized whole experiment are established.
-- Run publication fails closed on inconsistent finalization/checksums/index/provenance; analysis exclusion remains separate from the original execution outcome.
-- Untracked non-output repository inputs are treated as dirty source provenance; generated `results/**`/`artifacts/**` do not create a false source-dirty state.
-- Future Streamlit UI remains a thin layer over the validated headless core after pilots.
+### Final research questions
 
-Codex uses progressive disclosure: the session-start core is exactly `AGENTS.md`, `TASKS.md`, and this file. The canonical tracked execution bootstrap is `docs/context/CODEX_EXECUTION_PROMPT.md`. Goal mode persists across the canonical lifecycle: routine task completion, PR creation, CI, objective diff review, squash merge, reconciliation, and next-task selection are autonomous execution steps rather than stop conditions when available permissions and repository policy allow them. The mandatory pre-WP7 user gate in `TASKS.md` is an explicit stop condition.
+- **RQ1 — Nominal learning:** compare Q-Learning, SARSA, DQN, PPO and Dyna-Q+ nominal performance and learning efficiency under the common actual-environment-interaction budget and information contract.
+- **RQ2 — Resilience/adaptation:** quantify directed Frozen/Adaptive loss and preserve matched adaptation benefit `(FN-FD)-(AN-AD)`.
+- **RQ3 — Recovery speed:** quantify adaptive recovery trajectory, stable recovery and non-recovery after persistent unannounced change.
 
-Testing is risk-based and proportional: targeted local checks while implementing, PR CI as the canonical full-suite pre-merge guard when available, no duplicate full-suite runs for reassurance, and no arbitrary coverage/mutation/fuzz/property/combinatorial expansion without a concrete risk.
+Frozen and Adaptive/Continual remain deployment regimes, not distinct algorithms.
 
-Codex reports objective `X/Y` progress only from real denominators in `TASKS.md` and preserves recoverable `IN_PROGRESS`/branch checkpoints across interruptions.
+### Recovery-speed contract
 
-## Bibliography baseline
+- Primary RQ3 family: persistent `action-remap/*`; action-failure and observation-corruption remain supporting diagnostics.
+- Metric: mean reward per actual environment interaction.
+- Passive fixed windows: 32 interactions across the unchanged 256-interaction horizon, crossing episode boundaries without reset/realignment.
+- Reference: Adaptive-Nominal (`AN`) versus Adaptive-Disturbed (`AD`), equal layout weighting inside each independent root.
+- Higher-is-better gap: `AN - AD`; primary tolerance `0.10`, sensitivity `0.05`/`0.20`.
+- Stable recovery: two consecutive in-tolerance windows.
+- Non-recovery: right-censored at 256 with `recovery_time=null`; 256 is never fabricated as recovery time.
+- Censoring-aware method comparison uses recovery status plus the separately named restricted fixed-horizon recovery delay. Observed recovery-time summaries remain conditional on recovery.
 
-`MariosGiannakaras/ThesisBibliography` remains the canonical bibliography source of truth and is currently private. The accepted immutable thesis import is `bibliography-integration-v3`:
+### Statistics and computation
 
-- resolved checkout: `71995373ae0da64149583cae8d7a2c17e5ab1a0a`
-- complete-corpus source: `e46693d4201cf47c118eb61c216243f3c5798e28`
-- citation-ready source: `822891fb585c98dbe4464602e97998704d1609c5`
-- 585 canonical sources; 113 citation-ready; 19 research materials
-- 281 indexed original PDFs as metadata only; 1,568 integrity-covered consumer files
+- Root is the independent unit; layouts, episodes, probes and windows are repeated/nested observations.
+- Direct method contrasts are root-paired A-minus-B on shared roots after equal layout reduction.
+- Two-sided 95% Student-t pointwise intervals select the predeclared critical value for the actual independent-root count `n=2..12`.
+- No formal p-value superiority family or post-hoc “statistically significant” relabeling is authorized.
+- Actual environment interactions remain the primary fairness axis. Wall-clock/process CPU and interpretable method-native update counts are secondary descriptive evidence.
 
-`research/bibliography/citation-ready/` is the strict automatic formal-citation layer. Upstream promotion/refresh occurs in `ThesisBibliography`, followed by a new immutable synchronization; primary bibliography originals/PDFs/LFS objects are not copied here.
+## Completed implementation chain
 
-## Target-machine baseline
+The complete pre-final path is versioned and isolated from historical v2.0/T-526/T-527 code:
 
-The actual target-machine baseline is accepted in `SYSTEM_CAPABILITY_REPORT.md` and the generated schema-v2 snapshot `system-capability.accepted.json` (DEC-031). The machine provides a Ryzen 5 2600X (6 cores/12 threads), about 31.9 GiB usable RAM, a Radeon RX 570 with 8 GiB VRAM, and about 169.4 GiB free on the repository filesystem at collection. The canonical runtime is native Windows CPython 3.12 managed by the locked `uv` environment. CPU execution remains mandatory; NVIDIA/CUDA is absent and no AMD scientific-compute backend is validated, so no accelerator-specific dependency is accepted yet.
+`Phase-B execution -> passive temporal windows -> schema-v2 records -> structural validation -> root reduction -> recovery/direct contrasts -> deterministic exports -> stored-evidence PySide6 presentation`.
 
-## Lifecycle gates
+The v2.1 Study recipe materializer fails closed if the final-reserve lock or explicit T-610 gate is altered. PPO/DQN temporal capture does not impose artificial 32-step learning boundaries. A numerical `1e-12` guard only prevents binary floating-point representation from changing an exact frozen tolerance-boundary classification.
 
-The accepted sequence remains:
+PySide6 Results supports stored Recovery & Comparisons summaries, AN-vs-AD trajectory rows and direct method contrasts for schema-v2/v2.1 packages. Legacy schema-v1 packages remain supported and do not expose recovery. The UI never chooses thresholds, reduces roots or recomputes scientific estimands.
 
-> target-machine baseline → research framing/GridWorld → metrics/agent selection → pilots → protocol/statistical-plan freeze → experiment management/dashboard → validated application → final experiment campaign → frozen evidence/statistics → thesis evidence package → **explicit user pre-WP7 approval** → Greek thesis/review/freeze → defense presentation → final audit/delivery
+## Documentation / thesis preparation
 
-Before WP7, user-directed refinements may reopen or supersede earlier work. If scientific design changes, preserve existing finalized evidence and use an explicit amendment/new version/new Run-IDs rather than mutating old runs. No WP7/WP8 task may begin until the agent explicitly asks whether to enter WP7 and the user answers unambiguously yes.
+`TASKS.md`, DEC-060, the decision index, `RESEARCH_BRIEF.md`, `MODEL_CANDIDATES.md`, `docs/experiments/EXPERIMENTAL_REQUIREMENTS.md` and the structure-only `THESIS_STRUCTURE_DRAFT.md` are reconciled to protocol-v2.1. Results, Discussion and conclusion claims remain explicitly evidence-gated.
+
+Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/`. `bibliography-integration-v3` remains immutable historical terminology; no parallel bibliography system was created.
+
+The repository remains public by explicit user decision. `thesis/source-material/ThesisApplication.pdf` and the existing source-material structure remain unchanged; privacy migration/history rewrite is not a scientific blocker.
 
 ## Still intentionally unfrozen
 
-The T-200 construct-level RQ/hypothesis framing is complete but remains explicitly provisional. Scientific choices the user asks to revisit may be reopened only through an evidence-preserving amendment/version path when frozen evidence would otherwise be affected.
+- Final-reserve **execution authorization** remains unfrozen/withheld even though the protocol recipe is frozen: `final_reserve_access=false`.
+- T-610 is dependency-valid after T-533 but remains **BLOCKED by the separate explicit scientific authorization gate**.
+- T-611/T-612/T-613 remain blocked downstream of T-610.
+- WP7 remains blocked by final evidence plus the later explicit pre-WP7 user-approval gate.
+- Final Windows standalone packaging remains deferred to `T-803` / issue #94.
 
-Supervisor identity, future corrections, deadlines, example theses, final Word formatting, and exact defense/submission rules are later-stage inputs and do not block pre-WP7 refinement. Current official guidance is rechecked only after the mandatory WP7 user-approval gate is explicitly opened.
+## Exact next action
 
-## Repository visibility
-
-The thesis repository may be temporarily public at explicit user direction to use public GitHub Actions. Public CI availability is an operational choice, not approval for permanent public release; privacy, copyright/licensing, source-material, secret, provenance, and final-release checks remain required before any intended public distribution.
+First complete repository integration: manually change PR #92 from **Draft** to **Ready for review**, then squash-merge it into `main` (the PR is otherwise mergeable and the T-533 implementation has already passed its closure CI). After that, stop at the **separate explicit scientific authorization gate for T-610**. Do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, or begin Results/Discussion writing without that authorization.

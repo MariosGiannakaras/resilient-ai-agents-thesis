@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "decision_id": "DEC-057",
+  "study_id": "protocol-v2-t527-sizing-completion-v0.3",
+  "scientific_status": "non-final-development-sizing-completion-only",
+  "purpose": "One fresh three-method sizing completion after exhaustive direct-SB3 GridWorld ingress correction, composed only with structurally unaffected complete Q-Learning and SARSA strata",
+  "final_reserve_access": false,
+  "required_host": {"platform": "Windows", "python": "3.12", "device": "cpu"},
+  "source_authority": {
+    "decision": "DEC-056",
+    "plan": "configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json",
+    "plan_sha256": "c469076d2e6ff1d65df62f439ab4c7ee6d42e6f31caeaa5493b890bcdac01a04",
+    "tuning": "results/pilots/protocol-v2-t527-tuning-v0.1",
+    "sizing_v01": "results/pilots/protocol-v2-t527-sizing-v0.1",
+    "sizing_v02": "results/pilots/protocol-v2-t527-sizing-v0.2",
+    "sizing_v02_integrity_sha256": "eab7fc0b580616a180482354ad8db70a27bd62f7a9f8039f1abdc0f6178b9079",
+    "sizing_v02_manifest_sha256": "3206f964bff8fb76ff5b502502b21adb96dcf4731a342c4b6712c54399007fd6",
+    "sizing_v02_phase_a_sha256": "f98ba6dd521c22d9fdf731415012daaff883be528a58907181031315941edaea",
+    "sizing_v02_phase_b_sha256": "fcc8002379e790186d127587df957183599de56015cb9973579f586f8f4679b9",
+    "sizing_v02_failures_sha256": "1477aa33f2b15294371abb0a8ee201fed1b8aeb2b1e1ba615634bc7750ba87c2"
+  },
+  "execution_scope": {
+    "mode": "fresh-three-method-completion",
+    "fresh_methods": ["dqn", "ppo", "dyna_q_plus"],
+    "reused_complete_methods": ["q_learning", "sarsa"],
+    "expected_fresh_phase_a_units": 144,
+    "expected_fresh_matched_sets": 288,
+    "expected_fresh_branches": 1152,
+    "expected_fresh_branch_horizon_evaluations": 2304,
+    "start_identity": ["dqn", "t527-size-r01", "gw-l1-a"],
+    "reuse_incomplete_dqn_v02": false,
+    "reuse_any_sizing_v01": false
+  },
+  "reuse_authority": {
+    "basis": "pre-outcome structural-integrity-code-lineage-only",
+    "source_package": "results/pilots/protocol-v2-t527-sizing-v0.2",
+    "methods": {
+      "q_learning": {
+        "phase_a_units": 48,
+        "matched_sets": 96,
+        "phase_a_rows_sha256": "8b710d864ccb1ff6698f24fb792d7a2ec3cb31f9e353725af9ab0af582b9a28d",
+        "phase_b_rows_sha256": "8cceb2bb605886a1cbfc93becd962f04d7d7d0d2f2f6dbfbd1bdbbceae849ab2",
+        "checkpoint_index_sha256": "fd9dcc87fae617445d914be778b0d3f50275dd7984a7e9500fa3d3eac9939e30"
+      },
+      "sarsa": {
+        "phase_a_units": 48,
+        "matched_sets": 96,
+        "phase_a_rows_sha256": "5097ef276ae136f07c9bcc2e8d382d164793c34b7d8c53dbf72fe4069673be5d",
+        "phase_b_rows_sha256": "15ca15c33d1b0b157940b1fbc51d065a8061bf3e8d943cce1d634375cdd085ba",
+        "checkpoint_index_sha256": "c0188f17251047653347357d6ddac5f5a15f64406fd3d2e395f942c048dbd2dc"
+      }
+    },
+    "required_roots": 24,
+    "required_layouts": ["gw-l1-a", "gw-l1-b"],
+    "required_conditions": ["action-remap-swap-right-down", "action-remap-cycle-clockwise"],
+    "required_horizons": [256, 512],
+    "required_phase_a_budget": 8192,
+    "required_prefix_interactions": 1,
+    "new_correction_is_sb3_only": true,
+    "performance_values_permitted_for_reuse_decision": false
+  },
+  "outputs": {
+    "fresh_sizing": "results/pilots/protocol-v2-t527-sizing-v0.3",
+    "combined_sizing": "results/pilots/protocol-v2-t527-sizing-combined-v0.3"
+  }
+}

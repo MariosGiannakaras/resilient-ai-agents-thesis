@@ -1,103 +1,93 @@
-# Agent and Model Role Selection
+# Agent / Method Selection
 
-**Status:** `T-310`/`T-311` selection/evidence, `T-312` correctness implementation, and `T-410` pilot diagnosis are complete. Exact final retention/hyperparameters/budgets remain open for `T-411`/`T-412`.
+**Status:** Final retained method set frozen by DEC-058 and preserved by DEC-060.  
+**Current protocol authority:** `configs/protocols/protocol-v2.1-final.json`
 
-## Selection outcome
+GridWorld is the controlled experimental testbed and visualization surface. The thesis subject is the comparison/evaluation of resilient reinforcement-learning agents under uncertainty and environmental change.
 
-The smallest set that answers the retained provisional RQs uses two implementations in three declared capability regimes:
+## Final retained methods
 
-| ID | Exact method / regime | Scientific role | Inclusion |
-|---|---|---|---|
-| F0 | `tabular_q_learning_v1` loaded from the common nominal checkpoint, action selection active, Q updates disabled | Frozen nominal resistance reference | **RETAIN** |
-| C0 | The same `tabular_q_learning_v1` checkpoint and action-selection schedule, Q updates continued through the persistent change | Naive model-free online adaptation baseline | **RETAIN** |
-| R0 | `rectangular_robust_value_iteration_v1`, planned before deployment over an explicit finite s,a-rectangular transition uncertainty set, then frozen | Declared-set robustness and nominal-conservativeness comparator | **RETAIN** |
+| Method | Family | Policy relation | Representation | Scientific role |
+|---|---|---|---|---|
+| **Q-Learning** | value learning | off-policy | tabular | classical low-complexity value-learning baseline |
+| **SARSA** | value learning | on-policy | tabular | on-policy tabular contrast |
+| **DQN** | deep value learning | off-policy | neural | function approximation, replay and target-network dynamics |
+| **PPO** | policy optimization / actor-critic | on-policy | neural | policy-gradient/actor-critic optimization with clipped updates |
+| **Dyna-Q+** | learned-model planning | Q/value based | tabular + empirical model | planning plus recency-directed re-exploration under change |
 
-Pilot execution refined R0's observation-boundary handling: when an active episode delivers a corrupted observation that aliases a modeled terminal state, robust-plan schema v2 uses the recorded zero-value seeded action tie. It never consults evaluator truth to decide whether the apparent terminal state is real. The complete `pilot-v0.2` retry then executed consistently, but approximately 96% of R0's nominal evaluation episodes truncated. The current R0 prior/policy/horizon combination therefore cannot be frozen unchanged even though its implementation and information boundary are correct.
+The confirmatory set is exactly these five methods. It is no longer provisional.
 
-F0 and C0 are separate evaluation regimes of one implementation, not inflated algorithm count. Their identical nominal checkpoint, action-selection schedule, exploration RNG policy, and agent-visible information isolate the effect of permitting post-change updates. R0 is intentionally a different information regime: its model and uncertainty family are declared prior knowledge and must be reported as such.
+## Frozen selected configurations
 
-This is the implementation/pilot set, not a promise that every role survives final protocol freeze. A role is removed if correctness, assumption fit, fairness, repeated-run feasibility, or distinct empirical behavior fails the later gates.
+- Q-Learning: `q-c06`
+- SARSA: `sarsa-c06`
+- DQN: `dqn-c05`
+- PPO: `ppo-c06`
+- Dyna-Q+: `dyna-c03`
 
-## Exact algorithm identities
+Their complete parameters and implementation identifiers are defined only by `configs/protocols/protocol-v2.1-final.json`; this document does not duplicate mutable parameter values.
 
-### F0/C0 — tabular Q-learning
+## Method is not deployment regime
 
-Use the standard off-policy one-step update for delivered state/observation `s`, intended action `a`, reward `r`, and next delivered observation `s'`:
+Protocol v2.x separates learning method from post-training deployment/adaptation regime.
 
-`Q(s,a) ← Q(s,a) + α [r + γ max_a' Q(s',a') − Q(s,a)]`
+For every retained method:
 
-Terminal/truncated episode handling, learning rate, discount, initialization, exploration schedule, tie breaking, budgets, and checkpoint lifecycle are explicit configuration with no library defaults. F0 and C0 start shifted evaluation from the same serialized nominal Q table. F0 suppresses all learning-state mutation; C0 applies the same update continuously. Both receive only the accepted `AgentTransition` projection and never true state, executed action, regime ID, disturbance flags, or changepoint truth under the strict policy.
+1. train independently from method-appropriate initialization;
+2. retain an exact method-specific scientific checkpoint;
+3. create matched `FN`, `FD`, `AN`, `AD` branches from one exact branch point;
+4. keep Frozen branches non-learning and Adaptive branches on ordinary method-native continuation;
+5. preserve replay, optimizer, exploration, rollout/update, planning/model and RNG state required for exact continuation.
 
-Citation-ready `SRC-D52DF7B9A4` supports Q-learning's tabular off-policy update and stationary convergence boundary. Citation-ready `SRC-70772C0629` prevents the false claim that ordinary Q-learning is universally incapable under all non-stationarity, while also showing that structured long-run switching convergence does not predict rapid recovery after this thesis's single persistent change.
+Frozen and Adaptive/Continual are regimes, not additional algorithms.
 
-### R0 — finite rectangular robust value iteration
+## Fair comparison contract
 
-For each observable state/action pair, configure a non-empty finite set of explicit candidate next-state probability rows. Its convex hull is the local s,a-rectangular uncertainty set. Because the robust Bellman objective is linear in the row, the inner minimum is evaluated over the declared extreme rows:
+Fairness does **not** mean identical hyperparameters or identical optimizer/planning update counts across algorithms.
 
-`Q_R(s,a) = min_{p ∈ U(s,a)} Σ_s' p(s') [r(s,a,s') + γ V_R(s')]`
+The frozen comparison instead requires:
 
-and `V_R(s) = max_a Q_R(s,a)` until the explicit convergence rule or iteration limit. Goal states are terminal. The uncertainty-set construction, candidate kernels, whether the realized post-change kernel is in-set, discount, convergence tolerance, iteration cap, model source, and planning cost are recorded. R0 is frozen during evaluation and receives no true active kernel or changepoint signal.
+- same controlled task/reward/action semantics;
+- same agent-visible information contract;
+- common primary actual-environment-interaction budget;
+- independent Phase-A learning for every method;
+- method-appropriate configurations selected through the completed bounded tuning process;
+- exact no-learning probes at the frozen checkpoints;
+- common final roots/layouts and matched Phase-B branch origins;
+- root as the independent unit, with layouts blocked/equally reduced within root;
+- scientific failures retained and no outcome-driven root/seed replacement;
+- no final-reserve access during selection/tuning.
 
-Citation-ready `SRC-52E62452B8` is sufficient formal support for rectangular transition uncertainty and robust Bellman dynamic programming. It explicitly distinguishes stationary/time-varying uncertainty and warns that broad sets can be overly conservative. Citation-ready `SRC-FC42D9798A` supports the robustness-versus-online-adaptation conceptual boundary but is not used to claim a need for function approximation. Citation-ready `SRC-3C0F7CC819` supports tabular robust-RL feasibility but does not establish changepoint detection or faster recovery. No further upstream bibliography promotion is required for the retained bounded claims, satisfying `T-311`.
+Neural methods receive a deterministic numeric encoding of the same semantic position observation. They receive no pixels, hidden map truth, disturbance flags, change indicator, regime identity, or executed-action feedback unavailable to tabular methods.
 
-## RQ and metric mapping
+## Secondary/historical methods
 
-| Contrast | Capability isolated | Required schema-v1 evidence |
-|---|---|---|
-| F0 vs C0 | Benefit/cost of ordinary continued updating from the same nominal knowledge | nominal performance, immediate/worst degradation, recovery status/delay, terminal gap, cumulative deficit |
-| F0 vs R0 | Declared-set pre-deployment robustness and conservativeness versus nominal training | nominal performance/gap, immediate/worst degradation, terminal gap, in-set/out-of-set label |
-| C0 vs R0 | Online sample-driven adaptation versus stronger-prior frozen robustness | full post-change curves and all component estimands; no unqualified universal ranking |
+### Dyna-Q
 
-Observation corruption and action failure reuse these roles as supporting robustness diagnostics. No extra observation/action-robust algorithm is added merely to enlarge the matrix.
+Dyna-Q remains a useful historical/mechanistic ablation for distinguishing planning from Dyna-Q+'s recency-directed re-exploration. It is not part of the final five-method confirmatory matrix.
 
-## Information and fairness contract
+### A2C
 
-| Property | F0 | C0 | R0 |
-|---|---|---|---|
-| Agent-visible online information | observation, intended action, reward, lifecycle | same | same |
-| True state/regime/change/disturbance/executed action | hidden | hidden | hidden |
-| Nominal checkpoint | common learned Q table | same common Q table | not applicable; planned model recorded |
-| Post-change learning | none | ordinary Q updates | none |
-| Prior transition model | none online beyond learned values | none online beyond learned values | explicit nominal model + declared uncertainty rows |
-| True realized post-change kernel | hidden | hidden | hidden; only in-set/out-of-set evaluated by evaluator |
-| Exploration/action selection | matched explicit schedule and RNG policy | identical to F0 | explicit comparable deployment action-selection policy |
+A2C remains a technically plausible actor-critic candidate from earlier design work but was not retained for the final matrix. It must not be introduced into T-610 without a new explicit pre-outcome protocol amendment.
 
-R0's stronger prior means the thesis compares declared capability/assumption regimes, not equal-information algorithms. Interaction, planning/model queries, tuning trials, CPU time, and memory are controlled or reported separately. Hyperparameters are selected only on development/tuning/pilot partitions and frozen before final trajectories, following citation-ready `SRC-76B2247457`.
+### Historical R0 robust planner
 
-## Excluded or deferred candidates
+The robust value-iteration path remains immutable historical negative/diagnostic evidence. It is not part of the protocol-v2.1 confirmatory matrix and is not to be redesigned opportunistically after final outcomes.
 
-| Candidate | Decision | Evidence-backed reason / reopening condition |
-|---|---|---|
-| Context Q-learning / context memory | **EXCLUDE from current set** | Citation-ready `SRC-E6A5B7584B` supports a change/context-aware method but assumes detectable structured contexts. The retained RQs contain one novel persistent change, not recurring-context recall; adding detector/context storage would introduce a new RQ, calibration surface, and matrix branch without current necessity. Reopen only if pilots or final framing retain recurring-context recall as distinct. |
-| Detector-triggered reset/restart | **EXCLUDE from current set** | Citation-ready `SRC-7456165CEA` shows detection delay/false alarms and relearning are distinct and explicitly recommends feasibility validation. Detector mechanism attribution is not a retained RQ. Reopen only if F0/C0/R0 results cannot explain adaptation mechanisms and a bounded detector question is formally added before protocol freeze. |
-| Changepoint oracle | **EXCLUDE as scientific agent** | Evaluator truth would violate the common information contract. It may be a clearly labelled debugging upper bound only, never mixed into agent rankings. |
-| Sarsa, Double Q-learning, recency/window variants | **EXCLUDE initially** | They duplicate the ordinary tabular role unless a concrete Q-learning regression/instability appears in pilots. Reopen only for a demonstrated failure that changes the scientific interpretation. |
-| Deep DQN/PPO/SAC, meta-learning, neural context/robust methods | **DEFER/EXCLUDE** | The finite observable GridWorld needs no function approximation; extra architecture/optimizer variance, tuning and compute would reduce independent-run evidence without a distinct RQ capability. Reopen only if tabular representation becomes inadequate under an accepted amendment. |
-| Dedicated action/observation robust agents | **EXCLUDE** | Those disturbances are supporting diagnostics, not separate primary agent-role questions. |
-| Random policy or optimal/oracle planner | **REFERENCE FIXTURE ONLY** | Useful for correctness/scale checks, not a scientifically comparable resilience capability role. |
+### References/oracles
 
-## T-312 correctness and feasibility results
+Random or privileged/oracle strategies may remain calibration/debug references where already defined, but they are not fair-ranked members of the five-method confirmatory comparison if they receive different information or model access.
 
-### Common tabular implementation
+## Continual deployment caveat
 
-- deterministic seeded tie-breaking/exploration and exact replay;
-- hand-computed one-step Q update and tiny-MDP optimal policy;
-- stable versioned Q-table serialization;
-- common nominal checkpoint checksum for F0/C0;
-- F0 mutation prohibition and C0 update confirmation;
-- terminal/truncation behavior explicit;
-- no evaluator-only information in action/update paths.
+Adaptive/Continual means ordinary continued learning by the retained base method under its frozen method-native semantics. It does not imply a purpose-built continual-learning algorithm.
 
-### Robust planner
+Potential interference, forgetting, loss of plasticity, replay effects, policy instability or planning-model behavior under non-stationarity are legitimate empirical outcomes. They must not be hidden with post-change resets or special interventions not frozen in the protocol.
 
-- probability rows and uncertainty sets validate and fail closed;
-- singleton nominal uncertainty reduces to ordinary value iteration;
-- hand-computed robust Bellman backup matches exactly;
-- wider set changes only declared transition uncertainty;
-- in-set/out-of-set labeling remains evaluator-only;
-- frozen deployment cannot update planning state;
-- CPU runtime is measured before pilot matrix construction.
+## Historical candidate-v1.1 status
 
-## Remaining freeze gates
+The former v1.1 strategy set and old T-522 tuning/freeze path remain valid historical context only. Historical T-530/T-531/T-532 application/prototype tasks likewise retain their original meanings. They do not override DEC-058/DEC-060 or the five-method independent-learning protocol.
 
-`T-312` implements and validates these gates in `src/resilient_agents/agents.py` and `tests/test_agents.py`: focused tests cover exact Q updates, terminal behavior, common checkpoint/frozen mutation, deterministic replay/round-trip state, hidden-information rejection, singleton and worst-row robust backups, frozen deployment, and invalid model/probability failure. `T-410` confirms C0/F0 execution feasibility and finds distinct R0 in-set/out-of-set behavior, but its nominal censoring fails the unchanged-retention gate. `T-411` refreshes decision-driving evidence; `T-412` must then objectively validate a bounded non-final R0 revision or remove/reframe that role before freezing the fair statistical protocol and before any final outcomes are inspected.
+## Current gate
+
+T-533 may implement/validate protocol-v2.1 recovery and direct-comparison evidence mechanics without touching final outcomes. The method set itself is closed. `final_reserve_access=false` remains sealed until a separate explicit T-610 authorization.

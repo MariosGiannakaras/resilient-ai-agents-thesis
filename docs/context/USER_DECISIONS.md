@@ -1,198 +1,126 @@
 # User Decisions
 
-This file contains explicit current user decisions. Old conversations do not create decisions by themselves.
+This file records explicit current user decisions. Historical chats provide context but do not override later instructions, accepted evidence or repository decisions.
 
-## Overall project direction
+## Overall direction
 
-- The primary goal is a correct, completable, and scientifically adequate thesis.
-- The application is not the main research contribution and must not become a production-grade platform.
-- The application remains an important deliverable and must be polished, modern, consistent, and easy to use.
-- Simplification applies to architecture, feature count, and unnecessary engineering; it does not mean a rough or scientifically incomplete UI.
-- The UI should hide irrelevant technical complexity without hiding scientifically important information.
-- The repository covers the complete thesis lifecycle: research context, program/application, experiments, results, analysis artifacts, thesis writing, defense presentation, and final deliverables, with bibliography lifecycle ownership as the explicit external-repository exception.
+- Primary goal: a correct, scientifically adequate and realistically completable thesis.
+- Thesis subject: **comparison/evaluation of resilient AI agent strategies in uncertain/changing environments**.
+- GridWorld is the common controlled experimental testbed and visualization surface; it is not the thesis subject.
+- The standalone application is an important experiment/control/analysis/demonstration deliverable, but not the main scientific contribution.
+- Simplify unnecessary architecture/features, not scientific completeness, usability or visual quality.
+- Research/protocol/application/evidence remain current priority. Normal thesis writing stays blocked until the explicit pre-WP7 approval gate.
 
-## Priority order
+## Current scientific strategy set
 
-1. Clear and bounded research question.
-2. Simple and properly validated GridWorld.
-3. Small, scientifically justified set of models and uncertainty types.
-4. Fair and reproducible experimental protocol.
-5. Reliable and comparable results.
-6. Modern complete UI for execution, monitoring, and understanding.
-7. Advanced features only when there is a real need and low completion risk.
+DEC-047 is the current agent-selection direction. Candidate v1.1 targets five main strategies, subject to implementation/non-final validation/freeze:
 
-## Application scope
+1. **Fixed Q-Learning** — uses the learned nominal policy but does not learn during evaluation; historical technical identity `F0`.
+2. **Adaptive Q-Learning** — continues ordinary off-policy Q-learning online; historical technical identity `C0`.
+3. **SARSA** — on-policy continual model-free adaptation.
+4. **Dyna-Q** — continual learning plus an empirical learned model and planning, without recency bonus.
+5. **Dyna-Q+** — Dyna-Q-style planning plus directed re-exploration of long-untried actions; historical technical identity `D0`.
 
-- Local single-user application.
-- No authentication, roles, or multi-user support.
-- No required public deployment, mandatory cloud, mobile application, or live public demo.
-- The user must be able to execute required experiments without code or console commands.
-- The dashboard must support real configuration, execution, progress, logs, GridWorld visualization, history, comparison, metrics, charts, tables, and export.
-- Screenshots and real results will be used in the thesis and presentation.
-- A lightweight visual/debug surface may be used early for validation; the polished final dashboard follows a functional validated independent core and pilot evidence.
-- The final interface is a polished bounded research dashboard, not a minimal demo.
-- Application completion means the intended real user workflow is validated end to end, not merely that the UI renders.
+The set is mechanism-driven: no adaptation → off-policy model-free adaptation → on-policy model-free adaptation → model-based planning → planning plus explicit re-exploration.
 
-## Self-explanatory UI and onboarding
+- Historical R0 robust-planner pilot evidence is retained, but unchanged R0 is not reinstated after severe nominal truncation.
+- A redesigned Robust Planner may become a conditional sixth main comparator only if a small predeclared non-final nominal-viability/fairness/runtime gate passes.
+- **Random Agent** may be used as a clearly labelled non-ranked lower/reference fixture.
+- A nominal/fully-informed planner may be used only as a clearly privileged scale/debug reference, never in a fair ranking.
+- Expected SARSA and extra tabular variants remain deferred unless a distinct non-final scientific need appears.
+- Do not add DQN/PPO/SAC/deep/meta-learning merely to increase model count; reopen deep methods only if the accepted RQ/representation actually requires function approximation.
 
-- The final UI should be understandable without separate training or a manual for the normal workflow.
-- Use clear human-readable labels, helper text, visible units, accurate messages and consistent terminology throughout the application.
-- Non-obvious scientific/technical concepts and controls should have concise tooltips; longer explanations should use contextual help/popovers or expandable detail rather than cluttering the primary screen.
-- Statuses, warnings, errors and validation states should use understandable text together with consistent symbols/icons and semantic visual treatment.
-- Colors must be purposeful, consistent and accessible; color alone must never carry essential meaning.
-- Empty/loading/disabled/error states should explain what is happening, why an action/content is unavailable when non-obvious, and what the user can do next.
-- Before launch, show a clear summary of the resolved experiment configuration, protocol, run count and blocking validation issues so the user understands what will actually execute.
-- Use confirmations only for destructive/high-impact actions where accidental activation matters; avoid unnecessary confirmation friction elsewhere.
-- Show a clear next recommended action at important workflow boundaries where one objectively exists.
-- After the final dashboard structure is stable, add a short first-run onboarding/tutorial for the essential application flow with Previous, Next, Skip and Finish controls and a Help/Getting Started option to replay it later.
-- The onboarding must be lightweight, skippable and non-blocking, with only a local completion/preference flag; it must not require accounts or a new persistence subsystem.
-- Prefer native/lightweight Streamlit UI/state/dialog/popover mechanisms. Do not introduce a heavyweight custom JavaScript/DOM coach-mark framework only for onboarding unless the completed dashboard demonstrates a real need that cannot be satisfied simply.
+## Scientific settings and experimental integrity
 
-## Scope restraint
+- Preserve validated Fixed/Adaptive Q-Learning alpha `0.5`, gamma `0.96875`, epsilon `0.125`, 512 training episodes/layout, 16 pre-change episodes, 32 post-change episodes, horizon 48 and current target 32 paired final roots unless explicit evidence-backed amendment changes them.
+- SARSA may receive only a small predeclared fairness-relevant non-final tuning surface.
+- Dyna-Q and Dyna-Q+ should share learned-model/planning machinery and matched planning-step budgets where appropriate; Dyna-Q has explicit no-recency-bonus semantics.
+- Candidate v1.1 keeps seven single-factor conditions, structural remap names `action-remap-2-swap` / `action-remap-4-cycle`, four fresh held-out final layouts and a fresh precommitted final seed bank.
+- Multiple settings mean **protocol-approved resolved configurations**, not an unrestricted hyperparameter playground.
+- Every compared configuration has stable identity/hash/provenance and multiple predefined roots/repetitions. Single-run ranking, best-seed selection, best-final switching and post-hoc favorable parameter selection are forbidden.
+- Development/tuning/pilot/exploratory/final evidence remain separated. Failed/cancelled/interrupted/incomplete/invalid/excluded runs remain recorded.
+- Primary v1.1 reporting: cumulative deficit, immediate degradation and terminal performance/gap. Recovery remains secondary/sensitivity; no opaque composite resilience score.
+- Paired effects, 95% confidence intervals, explicit `n` and layout-aware interpretation are required for v1.1 final analysis.
+- Final figures/tables come only from real stored frozen evidence.
+- Agent-visible information and evaluator ground truth remain strictly separated. No scientific agent receives true state, executed-action truth, changepoint/regime identity or disturbance flags unless a future protocol explicitly changes the information question.
 
-- Do not implement production infrastructure, microservices, Kubernetes, distributed workers, complex permissions, or enterprise observability.
-- Queue priorities, plugin systems, remote execution, complex checkpoint UX, advanced orchestration, and AI assistance remain optional/deferred until a real need is demonstrated.
-- Every feature must map to a research, reproducibility, usability, or thesis-delivery requirement.
-- Prefer consolidated workflows and fewer screens rather than exposing internal architecture in the UI.
+## User-facing model naming
 
-## Research and experiments
+- Ordinary users must not be expected to understand `F0`, `C0`, `D0`, method schema IDs or config hashes.
+- Primary UI concept is **Agent strategy**.
+- Use the five full human-readable strategy names above in New Experiment, Runs, Compare, charts, legends, screenshots and thesis/presentation-facing exports.
+- Each strategy has a plain one-sentence explanation plus useful mechanism badges such as `Does not adapt`, `Model-free`, `On-policy`, `Off-policy`, `Uses planning`, `Re-explores for change`.
+- Historical/internal IDs, schema names and hashes remain available only under **Technical details / Reproducibility**.
+- The thesis may introduce stable abbreviations after the full names, but must not rely on unexplained repository IDs.
 
-- Models, baselines, metrics, GridWorld scientific rules, hyperparameters, seeds, repetitions, severities, and budgets are selected from current evidence/pilots rather than historical chats.
-- Old chats are context, not preferences or a shortlist.
-- Experimental design must remain small, understandable, executable, and easy to explain.
-- The UI must not expose unjustifiably many models or settings.
-- Single-run comparison is forbidden.
-- Development, tuning, pilot/exploratory, and final runs remain separated.
-- Failed, cancelled, interrupted, incomplete, invalid, and excluded runs are recorded.
-- Pause/resume/stop/cancel/restart are supported only where genuinely useful and technically safe.
-- Resolved parameters and provenance are stored for every experiment.
-- Figures and tables are produced from real stored data.
-- The normal final experiment campaign begins only after both the final protocol and intended user-facing application workflow are validated.
-- A headless fallback may exist for reliability, but it must use the same scientific core/configuration path and be explicitly documented if used for final work.
+## Application architecture and execution
 
-## Experiment Git automation and storage
+- Local single-user application; no authentication, roles, mandatory cloud/public deployment, mobile app or enterprise observability.
+- Scientific core remains independent under `src/resilient_agents/`; UI is a control/observation/analysis layer, never a second scientific runner.
+- Current framework: **NiceGUI 3.16 native mode (`pywebview`)** over Python runtime/scientific services.
+- Historical Streamlit and temporary React/Vite implementations are superseded; no active second frontend stack.
+- Root `run_app.bat` remains one-click repository-checkout launcher.
+- Final delivery also contains a cleaned Windows NiceGUI/PyInstaller `onedir + windowed` application folder opening in its own desktop window without recipient-installed Python/Node or browser/terminal interaction.
+- Pause/resume/stop/cancel/restart appear only when technically safe; unsupported controls are explicit rather than simulated.
+- Resource telemetry is a lightweight truthful CPU/RAM/disk/supported-GPU snapshot, not an observability subsystem.
 
-- A run ID represents one **whole experiment**, potentially containing many seeds/episodes.
-- Intermediate data may be persisted continuously, but there must not be one permanent Git commit per seed or episode.
-- When an entire experiment finalizes correctly, the system should automatically create one complete, informative Git commit and push for that experiment.
-- The user should not have to stage, commit, move, or upload routine experiment data manually.
-- Commit/push messages must contain useful experiment identity/provenance rather than generic text.
-- Prefer fewer meaningful commits; coherent implementation PRs should normally reach `main` as one squash merge when branch tooling generated many mechanical commits.
-- Useful large thesis-produced result files should also be retained when storage permits.
-- Git LFS may be used automatically for appropriate large result/artifact formats.
-- Do not discard useful result data merely to avoid large files unless a real storage/LFS limit requires a deliberate retention change.
+Required workflow without code/console/routine manual Git:
 
-## Codex task continuity, progress, and quota interruptions
+> Dashboard → configure approved experiment/strategy/settings → understand resolved configuration → launch → monitor truthful live state/GridWorld/charts → history/detail → compare compatible strategies/configurations → inspect/export artifacts.
 
-- Maintain one canonical task registry with checkboxes/stable task IDs so required work cannot be forgotten across the long thesis lifecycle.
-- Every Codex session must pass through the task registry before selecting or resuming work.
-- The persistent Codex `/goal` should continue through the **entire dependency-valid project lifecycle**, one bounded task/coherent work package at a time, rather than stopping after each task or PR and waiting for the user to say “continue”.
-- Routine branch creation, commits, PR creation, GitHub CI, objective diff review, correction of failures/findings, squash merge, task/status reconciliation, and selection of the next `READY` task are Codex-owned execution work and must not be treated as user gates when available permissions and repository policy allow them.
-- Codex must not submit an `APPROVE` review on its own PR, but after green CI and objective diff review it may squash-merge its own validated PR when no distinct human approval is explicitly required.
-- Evidence-backed research, architecture, implementation, testing, and ADR choices should be resolved autonomously when the active task's evidence and acceptance conditions are sufficient; a generic “scientific” or “review” label is not by itself a reason to stop.
-- Pause the long-running Goal only for genuinely non-objective user choices, required supervisor/Department/private input, another physical machine that is actually required, unavailable credentials/access, safety/privacy/legal/licensing blockers, or an explicit external approval requirement in the controlling task/specification/repository protection.
-- Codex should use its available session/conversation memory to remember where it left off; the task registry and Git/repository state supplement that memory and provide recovery when the session/model quota ends.
-- If a task has started but is unfinished, preserve exactly where it stopped: active branch/PR, last validated point, tests, relevant changed files, and exact next action.
-- If model quota ends abruptly, the next session must inspect existing branch commits, working-tree diff, PR/test state, and the registry before assuming the task needs to restart.
-- Use intermediate branch checkpoint commits where useful for recovery, while still preferring one coherent squash commit in `main` per completed implementation PR.
-- Newly discovered required work must be added to the canonical registry rather than being left only in chat or informal notes.
-- The user should not have to manually remember or reconstruct unfinished Codex work between quota windows.
-- A task marked `READY` must actually have its required task dependencies complete; future dependency-blocked tasks are not labelled ready just because they are planned.
-- During long execution, Codex should provide concise progress updates after meaningful completed/validated checkpoints or genuine blockers rather than narrating every command.
-- Use `X/Y` only when `Y` is objectively defined. Project and work-package/deliverable counts come from canonical `TASKS.md`; an active-task fraction is shown only when the task has a genuine finite substep set. In-progress or failed work never counts as complete and no second progress tracker is created.
+After application acceptance, approved/frozen experiments run directly from the desktop application on the validated thesis machine. Codex/console is not required merely to execute them; Codex remains for code/protocol/debugging changes. Backend owns resolved config, seeds, execution, persistence/provenance, finalization and guarded Git publication.
 
-## Testing effort and model quota
+## Novice-first UI and interaction
 
-- Testing must be risk-based and proportional; it must not become a parallel project that consumes more implementation time or model quota without meaningful risk reduction.
-- During implementation, Codex should run the smallest relevant targeted tests rather than the full suite after every small edit.
-- Add tests for task acceptance conditions, scientific invariants, critical reliability/security boundaries, and concrete regressions likely to recur.
-- Prefer a small number of strong known-answer, contract, invariant, or representative integration tests over many near-duplicate cases.
-- Do not pursue a coverage percentage for its own sake.
-- Do not add mutation testing, broad fuzz/property testing, exhaustive parameter combinations, snapshot proliferation, or large end-to-end matrices unless a concrete task-specific risk justifies them.
-- CI uses tiny deterministic fixtures/smoke runs; pilot and final experiment matrices are not tests.
-- When GitHub Actions is available, PR CI is the canonical full-suite pre-merge verification. Do not duplicate the full suite locally merely because a branch is ready for review.
-- Successful CI should be recorded as a conclusion without repeated log analysis. On failure, inspect and reproduce the narrowest failing step first; run a local full suite only when CI is unavailable, CI/test infrastructure itself needs reproduction, or a specific failure requires it.
-- Stop adding tests when the acceptance condition and material risks are covered.
+- UI must be understandable by someone with no coding, RL, model, experiment-setting or repository knowledge.
+- Plain-language primary labels; technical identifiers secondary.
+- Explain strategies, uncertainty conditions, settings, metrics, units, ranges and consequences with concise helper text, info icons/tooltips and contextual/expandable help.
+- Tooltips supplement rather than hide information required for safe decisions.
+- Use progressive disclosure for advanced/model-specific settings.
+- Pre-run review shows readable strategy/layout/condition/seeds/repetitions/budgets/hyperparameters/protocol/stage/run count/retention/evidence classification and blocking validation.
+- Status uses stable text + icons/symbols + accessible semantic colors; color is never the sole meaning.
+- Empty/loading/disabled/warning/error/unavailable states explain what happened and the useful next action.
+- Confirm destructive/high-impact actions only; ordinary use remains friction-light.
+- Short first-run onboarding is skippable/replayable; every page remains understandable without it.
+- Modern compact information-dense UI with consistent iconography/spacing/typography/cards/tables/filters.
+- Restrained hover/focus/selection micro-interactions and smooth purposeful GridWorld/chart/status animations are desired, but animation must never fabricate progress/trajectory/data or affect execution/RNG/timing.
+- Desktop/laptop responsiveness required; mobile parity is not.
 
-## End-to-end lifecycle and user journey
+## Visual analytics and screenshots
 
-- The repository workflow must continue reliably beyond application implementation through final experiments, statistical analysis, thesis writing/review, defense presentation, and final delivery.
-- `TASKS.md` remains the concrete execution checklist; `IMPLEMENTATION_ROADMAP.md` and `EXECUTION_WORKFLOW.md` explain the phase order, responsibilities and handoffs without duplicating task status.
-- After final runs and analysis, create a frozen thesis/defense evidence package mapping research questions, protocol/method references, citation-ready sources, result/run IDs, figures/tables, captions, and planned claims.
-- Thesis and presentation work should consume that frozen evidence package rather than reconstructing conclusions later from raw results or memory.
-- The user should not manage routine Git, result-file movement, provenance, task state, analysis regeneration, or presentation evidence mapping.
-- The user's later responsibilities are mainly genuinely non-objective academic/product choices, providing/relaying supervisor or official guidance when required, reviewing scientific interpretation/thesis wording at explicit review gates, and rehearsing the defense.
+- **Plotly:** stored scientific/thesis/presentation-ready comparisons, distributions, heatmaps, paired effects/CIs where available.
+- **ECharts:** real live/provisional telemetry and compatible multi-strategy/configuration overlays.
+- **Mermaid:** explanatory strategy/experiment/information-flow infographics using human-readable names.
+- **AG Grid Community:** filterable/sortable/selectable analytical run/result/artifact tables.
+- Historical v1.0 error bars remain truthfully labelled SD until real paired CI artifacts exist.
+- `LIVE / PROVISIONAL`, finalized-run and versioned analysis/evidence are visibly distinct.
+- Root `ui-screenshots/` contains stable accepted UI review screenshots; diagnostic fixture captures are clearly non-scientific.
+- User will capture useful real screenshots/GIF/video for thesis/defense when instructed. Later each receives an `ASSET-*` record with exact state/run/config, crop, target section/slide, caption, placement/size, evidence identity and static fallback.
 
-## Thesis writing and review
+## Repository, continuity and testing
 
-- The thesis is written in Greek and final delivery is Microsoft Word unless official guidance changes.
-- Current official instructions override historical examples.
-- Normal chapter drafting/final styling occur after evidence-producing research is mature and the final evidence package exists.
-- A review-ready Word thesis should be produced before final freeze.
-- Supervisor/reviewer corrections received later must be incorporated through an explicit revision cycle; affected citations, figures, tables, result claims, and methodology descriptions must be revalidated.
-- Final thesis claims use only citation-ready bibliography evidence and frozen experiment evidence as appropriate.
+- One active implementation branch/PR for the current pre-WP7 package.
+- `TASKS.md` is the canonical resumable ledger; every Codex session reads AGENTS/TASKS/CURRENT_STATUS and inspects actual Git/PR/CI state.
+- Newly discovered work/decisions go into durable tasks/issues/decisions/status so chat/quota changes do not lose them.
+- Use X/Y only from objective canonical denominators; in-progress/failed work never counts complete.
+- Material changes reconcile related active docs/issues/prompts/tests/workflows in the same PR.
+- Testing is risk-based/proportional: strong known-answer/contract/invariant/representative integration tests, no arbitrary coverage/fuzz/mutation/snapshot project and no pilot/final matrices in CI.
+- PR CI is the canonical full-suite guard.
+- Historical finalized evidence is immutable; no fabricated citations/data/results/progress/conclusions.
 
-## Defense presentation
+## Thesis, review and defense
 
-- After the thesis is stable/finalized, create a complete PowerPoint presentation for the examination/defense.
-- The presentation must contain the necessary thesis context, methodology, experiments, main results, conclusions, limitations, and appropriate application/demo material without becoming a chapter-by-chapter copy of the thesis.
-- The final defense package must include a `.pptx`, embedded speaker notes, and a separate full spoken Greek script detailed enough to follow/read during rehearsal or presentation preparation.
-- The presentation must remain traceable to the final thesis, citation-ready bibliography, frozen results, and repository-generated figures/screenshots.
-- Speaker notes/script must be synchronized with slide order and use spoken, presentation-appropriate Greek rather than pasted thesis prose.
-- Final presentation duration/content/file requirements must be rechecked from current official guidance near the defense; do not invent them now.
-- Rehearsal/timing, PowerPoint rendering, legibility, factual/numerical consistency, and demo fallback must be validated before presentation freeze.
-- Preferred tool split: Codex prepares/verifies repository-backed evidence, figures, tables, screenshots, evidence mappings, and reproducible assets; ChatGPT prepares/refines the slide narrative, Greek slide copy, speaker notes/full script, and consistency review; PowerPoint-capable generation tooling produces the `.pptx`; Microsoft PowerPoint is the final inspection/rehearsal surface.
-- Canva or similar tools are optional visual-polish tools only. If used, the exported `.pptx` must be revalidated and presentation tooling must never become the scientific source of truth.
+- Project continues through v1.1 final evidence, Greek Word thesis, review/revision, final freeze, PowerPoint defense and final audits.
+- WP7 remains blocked until scientific/application refinement, T-511 human acceptance and explicit user approval.
+- Thesis main language is Greek and final thesis deliverable is Microsoft Word unless official guidance changes.
+- Current official instructions override historical examples; later supplied theses are contextual examples only.
+- ChatGPT is preferred for later Greek drafting/review/narrative/placement guidance; Codex/repository automation owns reproducible evidence/assets/technical checks.
+- Microsoft Word is final `.docx` composition/inspection surface; Microsoft PowerPoint is final `.pptx` inspection/rehearsal surface; Canva is optional polish only.
+- Final defense package includes `.pptx`, embedded speaker notes, separate full spoken Greek script and tested live-demo/static fallback.
 
-## GridWorld
+## Bibliography and language
 
-- The project is built afresh; legacy code is not required.
-- Current technical research compares suitable libraries/frameworks with a project-owned minimal implementation.
-- Third-party code is integrated only after source, license, maintenance, compatibility, and prototype review.
-- There is no legacy preselected GridWorld repository.
-- The final solution should be the simplest one that fully supports the approved research design.
-
-## Hardware and tooling
-
-- Codex automatically collects CPU, RAM, GPU/VRAM, OS, drivers, runtimes, and storage from the real execution machine.
-- The user does not manually transcribe information the system can inspect.
-- NVIDIA/CUDA is not assumed.
-- Compute-dependent decisions follow accepted inventory/capability evidence.
-- The accepted current technical baseline is Python 3.12 + `uv`/lockfile + the importable `src/resilient_agents/` research core architecture defined by DEC-023.
-
-## Bibliography boundary
-
-- `MariosGiannakaras/ThesisBibliography` is the canonical repository for source discovery, originals, conversion/OCR, scientific analysis, verified evidence, and source selection.
-- New PDF/Markdown/NotebookLM bibliography material is processed there, not in this thesis repository.
-- This repository consumes the verified generated complete corpus under `research/bibliography/` through controlled immutable synchronization.
-- The nested citation-ready layer is the formal citation surface.
-- Source-derived scientific text and citation-ready evidence remain in the original language of the source.
-
-## Repository language
-
-- Repository-authored operational and technical material is written in English for consistency with Codex, code, APIs, tests, and technical documentation.
-- Preserve exact official Greek text where required.
-- Scientific source-derived text/evidence stays in its original language.
-- The final thesis and expected defense-language materials remain Greek unless official guidance changes.
-
-## Documentation consistency
-
-- When a material implementation, architecture, status, workflow, research, storage, protocol, task-state, lifecycle-handoff, thesis, presentation, or UX decision changes, all related active files must be updated in the same change.
-- Do not leave old active prompts/status/task files to be corrected later.
-- Delete obsolete files when they are no longer useful; preserve old records only when they have historical value and mark them clearly as historical.
-- The current Codex execution prompt, task registry, roadmap/workflow, UI architecture, and presentation workflow must be kept synchronized with repository state.
-- Automated checks should enforce consistency where stale states can be detected mechanically.
-
-## Thesis and repository
-
-- This repository is the source of truth for thesis context, code, experiments, results, writing, defense presentation, and final deliverables, with the explicit bibliography boundary above.
-- Repository visibility may be changed temporarily, at explicit user direction, for CI/Actions. Temporary public visibility is an operational choice and is not a decision to publish or permanently redistribute the thesis package.
-- The official application remains stored unchanged. Tokens, credentials and tracked secrets remain forbidden regardless of visibility.
-- Any deliberate public release/distribution still requires the final privacy, copyright, licensing, and redaction audit; temporary CI visibility does not waive it.
-- Raw chat exports are not committed.
-- Fabricated citations, data, results, presentation claims, progress, and conclusions are forbidden.
-
-## Optional AI
-
-- Add an AI feature only if measurable practical value is demonstrated.
-- It must not alter experimental data, replace statistics, or present hypotheses as facts.
+- `MariosGiannakaras/ThesisBibliography` owns source discovery/originals/OCR/conversion/scientific analysis/evidence/source selection.
+- Thesis repo consumes verified generated corpus; `citation-ready/` is the formal citation surface.
+- Source-derived evidence remains in original source language.
+- Repository-authored operational/technical material is English; exact official Greek text remains exact; thesis/expected defense materials remain Greek unless rules change.

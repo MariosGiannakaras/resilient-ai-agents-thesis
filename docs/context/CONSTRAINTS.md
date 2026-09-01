@@ -2,107 +2,102 @@
 
 ## Compute and hardware
 
-- The accepted actual-machine inventory is `SYSTEM_CAPABILITY_REPORT.md` plus the generated `system-capability.accepted.json`; Codex regenerates it automatically after material host/runtime changes.
-- CPU execution is the required supported baseline. The observed Radeon RX 570 is not treated as a validated scientific-compute backend; NVIDIA/CUDA tooling is absent.
-- Do not assume usable ROCm, DirectML, or unlimited compute.
-- Compute-dependent model/dependency/budget choices remain unfrozen until relevant prototypes and pilots establish feasibility; historical hardware references are not decision inputs.
-- The final experiment matrix must remain practically executable on the measured hardware or an explicitly approved alternative.
+- Accepted actual-machine inventory is `SYSTEM_CAPABILITY_REPORT.md` plus `system-capability.accepted.json`; regenerate after material host/runtime changes.
+- CPU execution is the required supported scientific baseline. The observed Radeon RX 570 is not a validated scientific-compute backend; do not assume CUDA/ROCm/DirectML.
+- The experiment matrix must remain practical on measured hardware or an explicitly approved alternative.
 
 ## Accepted technical baseline
 
-- Python 3.12 is the current execution baseline.
-- Dependency/environment management uses `uv`, `pyproject.toml`, `.python-version`, and committed `uv.lock`.
-- Scientific logic lives in `src/resilient_agents/` and works independently of the UI.
-- Evaluator ground truth is separated from agent-visible information.
-- Randomness uses independently derived deterministic streams.
-- Filesystem run bundles are the evidence source of truth; any later database/index is rebuildable cache.
-- A run ID represents one whole experiment and may contain many seeds/episodes.
-- A finalized whole experiment uses at most one guarded automatic Git commit/push; never one permanent result commit per seed.
-- The polished dashboard is a later thin local Streamlit layer unless pilot evidence justifies a different architecture.
+- Python 3.12; dependency/environment management uses `uv`, `pyproject.toml`, `.python-version`, committed `uv.lock`.
+- Scientific logic lives in `src/resilient_agents/` and works independently from the UI.
+- Evaluator ground truth is separated from agent-visible information; scientific randomness uses independently derived deterministic streams.
+- Filesystem run bundles are the evidence source of truth; indexes/databases are rebuildable caches only.
+- A run ID is one whole experiment and may contain many seeds/episodes; a finalized whole experiment uses at most one guarded automatic Git commit/push.
+- Historical Streamlit/React frontend directions are superseded. DEC-044 selects **NiceGUI 3.16 native mode** over the same Python core/runtime service boundary.
 
-## Execution and deployment
+## Application execution and delivery
 
-- Local, single-user operation.
-- No required public deployment, cloud infrastructure, mobile client, multi-user authentication, or distributed orchestration.
-- Normal research workflows should work offline after dependencies and required project inputs are installed.
-- The user should not need routine manual Git staging/committing/pushing for experiments.
+- Local, single-user operation; no required cloud/public deployment/mobile/multi-user authentication/distributed orchestration.
+- Normal research workflows should work offline after required dependencies/project assets are installed.
+- The user should not need routine code/console/manual Git for supported application workflows.
+- Root `run_app.bat` is the one-click launcher for a repository checkout.
+- Final thesis delivery includes a cleaned Windows NiceGUI/PyInstaller **onedir + windowed** application folder that opens in its own desktop window without requiring recipient-installed Python/Node or browser interaction.
+- Native packaging must use safe writable run/output locations and must not rely on temporary PyInstaller extraction paths.
 
 ## Testing and validation budget
 
-- Testing is risk-based and proportional to the changed behavior, task acceptance condition, and scientific/reliability impact.
-- During implementation, use targeted tests; do not repeatedly run the full suite after every small edit.
-- When GitHub Actions is available, PR CI is the canonical full-suite pre-merge guard. Do not run an otherwise unnecessary local full suite merely to duplicate it.
-- On successful CI, record the conclusion without repeatedly reading or summarizing logs. On failure, inspect the narrowest failed step first and reproduce only what is useful.
-- A local full-suite run is reserved for unavailable CI, CI/test-infrastructure changes where local reproduction is useful, or a specific failure that requires it.
-- There is no coverage-percentage target.
-- Mutation testing, broad fuzz/property testing, exhaustive parameter matrices, snapshot proliferation, and large end-to-end test suites are out of scope unless a concrete task-specific risk justifies them.
-- CI uses tiny deterministic fixtures, known-answer cases, contracts, and representative smoke/integration paths. Pilot and final experiment matrices are never used as tests.
-- Test work stops when task acceptance conditions and material risks are covered; theoretical completeness does not justify delaying implementation or consuming model quota.
-- Required configuration/contracts/schema/provenance/lifecycle conditions fail closed at clear boundaries; optional unavailability must remain explicit rather than being interpreted as successful evidence.
+- Testing is risk-based/proportional to changed behavior and scientific/reliability impact.
+- Use targeted tests during implementation; PR CI is the canonical full-suite guard when available.
+- There is no coverage-percentage target. Broad fuzz/property/mutation/exhaustive matrices/snapshot proliferation/large E2E suites require a concrete risk justification.
+- CI uses tiny deterministic fixtures, known-answer cases, contracts and representative smoke/integration paths; pilot/final experiment matrices are never tests.
+- On CI failure inspect the narrowest failed step; do not repeatedly reanalyse successful CI.
+- Required config/schema/provenance/lifecycle conditions fail closed. Optional unavailability remains explicit.
 
-## Dashboard UX complexity
+## UI/UX complexity
 
-- The normal dashboard workflow must be self-explanatory through clear labels/messages/units, concise contextual help, semantic status treatment, and actionable states rather than a separate training/manual dependency.
-- Tooltips and contextual explanations must stay synchronized with actual scientific definitions and implemented behavior.
-- Status meaning must not rely on color alone; text plus consistent symbols/icons and accessible semantic visual treatment are required.
-- The first-run onboarding is implemented only after the final dashboard structure is stable and remains short, skippable, replayable, and locally stateful.
-- Do not introduce accounts, a new persistence subsystem, or a heavyweight custom JavaScript/DOM coach-mark/tour framework merely for onboarding.
-- Exact palette values, decorative motion, and similar visual details are finalized against the real implemented UI; do not create premature design-system complexity that does not improve usability.
+- DEC-046 is authoritative: normal use must be understandable to a non-programmer with no prior RL/model/configuration/repository knowledge.
+- Use plain-language primary labels, technical IDs as secondary detail, helper text, visible units/ranges/consequences, info icons/tooltips, contextual explanations and progressive disclosure.
+- Tooltips/help must stay synchronized with scientific definitions and implemented behavior; required workflow information cannot exist only in a tooltip.
+- Status meaning uses text + consistent symbols/icons + accessible semantic visual treatment; color alone never carries essential meaning.
+- Pre-run review exposes readable resolved configuration, protocol/stage, agent(s), condition/layout, seeds/repetitions, episode budgets, relevant parameters, run count and blocking issues.
+- Empty/loading/disabled/warning/error/unavailable states are actionable.
+- First-run onboarding is short, skippable, replayable and locally stateful; do not introduce accounts or a second heavyweight tour/frontend subsystem.
+- UI is modern and compact rather than sparse/oversized. Consistent icons, restrained hover/focus/selection micro-interactions and purposeful status/chart/GridWorld animations are allowed when they improve comprehension.
+- Animation/interpolation must never fabricate progress/trajectory/data or alter scientific timing/actions/RNG; essential state remains understandable with reduced motion where practical.
 
 ## Research scope
 
-- The official topic requires a simple simulated environment, comparison under uncertainty/dynamic change, resilience, and recovery speed.
-- Final research question, final GridWorld/model/metric roles and values, final severities/seeds/budgets/hyperparameters/thresholds, and statistical protocol remain unfrozen. Versioned `pilot-v0.1` values are explicit diagnostic inputs only and cannot be relabelled as final evidence.
-- Old conversations are not shortlists/defaults.
-- Every scientific selection requires current bibliography evidence, environment validity, feasibility, and/or pilot justification.
-- The final matrix must remain small enough to explain and complete.
+- Official topic uses a simple controlled environment and compares resilient decision agents under uncertainty/dynamic change.
+- Current candidate-v1.1 direction is F0 frozen Q-learning, C0 continual Q-learning and D0 Dyna-Q+; historical R0 pilot evidence remains but the accepted R0 construction is not reinstated unchanged.
+- Preserve validated F0/C0 alpha `0.5`, gamma `0.96875`, epsilon `0.125`, 512 training episodes/layout, 16 pre-change, 32 post-change, horizon 48 and 32 paired final roots.
+- Candidate v1.1 uses seven single-factor conditions, four fresh held-out final layouts, fresh precommitted final seeds and bounded D0-only tuning. Exact D0 planning parameters and final reserve values remain unfrozen until T-521/T-522.
+- Primary reporting is cumulative deficit, immediate degradation and terminal performance/gap; recovery is secondary/sensitivity. Paired effects/95% CIs and explicit n are required.
+- No composite resilience score, post-hoc favorable threshold or deep-RL expansion merely to increase model count.
 
 ## GridWorld and third-party code
 
 - There is no requirement to recover an old codebase.
-- Third-party code is integrated only after source, license, maintenance, security, API, testability, determinism, and suitability review.
-- Every dependency or copied/adapted component requires a pinned version/commit and attribution where applicable.
-- DEC-032 selects the project-owned schema-v1 GridWorld using locked Gymnasium 1.3.0; MiniGrid/Pygame remain prototype-only rather than core dependencies.
-- Any selected environment must use the shared contracts rather than introducing a second scientific execution interface.
+- Third-party code requires source/license/maintenance/security/API/testability/determinism/suitability review and pinned versions where applicable.
+- DEC-032 selects the project-owned schema-v1 GridWorld using Gymnasium 1.3.0; MiniGrid/Pygame remain prototype-only.
+- Environment and agents use shared core contracts rather than a second scientific execution interface.
 
 ## Reproducibility, results, and large files
 
-- Every experiment requires resolved config, seeds, source Git commit, software/runtime information, and capability/provenance metadata.
-- Finalized raw results are immutable and checksummed.
-- Failures, cancellations, interruptions, invalid runs, and exclusions are retained with reasons.
-- Final figures/tables are generated only through version-controlled processing from real stored data.
-- Useful thesis-produced experiment outputs are retained by default, including large outputs when storage permits.
-- Configured large formats use Git LFS. Do not manually discard useful evidence merely to keep Git small.
-- Retention/pruning changes require an explicit decision only if real repository/LFS/storage limits become a practical problem.
-- Bibliography PDFs and bibliography Git LFS objects remain upstream and are never copied into this repository.
+- Every experiment stores resolved config, seeds, source Git commit, runtime/capability/provenance metadata.
+- Finalized raw results are immutable/checksummed; failures/cancellations/interruptions/invalid/excluded runs are retained with reasons.
+- Final figures/tables are generated only by version-controlled processing from real stored data.
+- Useful thesis-produced outputs are retained when storage permits; configured large formats use Git LFS. Bibliography PDFs/LFS objects remain upstream.
+
+## Live application truthfulness
+
+- T-530 provides the UI-independent Python runtime service; NiceGUI never becomes a second scientific runner.
+- Live GridWorld is read-only observer state and live charts consume real runtime DTOs only.
+- Live/provisional values, finalized run values and versioned analysis/evidence are visibly distinct; provisional values are never automatically promoted into thesis evidence.
+- Historical runs lacking retained step trace explicitly show replay unavailable; never synthesize a plausible path.
+- Lifecycle controls are capability-based. Unsupported pause/resume/stop/cancel/restart operations are not simulated.
 
 ## Lifecycle and evidence handoffs
 
-- The normal final experiment campaign does not begin before both the final protocol and intended application workflow are validated.
-- Thesis/presentation writing does not begin from ad-hoc raw final-run inspection; a frozen downstream evidence package is created after final analysis.
-- Final thesis and defense materials must not silently contradict frozen evidence or citation-ready bibliography support.
-- Any supervisor/reviewer correction that changes a claim, figure, table, method statement, or interpretation requires corresponding evidence/citation revalidation.
+- The v1.1 final campaign waits for candidate protocol non-final validation/freeze and intended application acceptance according to `TASKS.md`.
+- Thesis/presentation writing remains blocked until the explicit pre-WP7 user approval gate.
+- After final analysis, a frozen evidence package maps RQs, methods, source IDs, runs, figures/tables/captions and planned claims.
+- Supervisor/reviewer corrections affecting evidence or claims require corresponding revalidation.
 
 ## Documentation/source-of-truth consistency
 
-- A material change is incomplete until related active documentation, prompts, tasks, lifecycle handoffs, decisions, status, tests, and workflows are reconciled in the same PR.
-- Obsolete active files are deleted; useful old records are marked historical and linked to current authority.
-- Generated bibliography content is never manually edited for consistency.
-- Follow `docs/context/DOCUMENTATION_GOVERNANCE.md`.
+- A material change is incomplete until affected active docs/prompts/tasks/issues/decisions/status/tests/workflows are reconciled in the same PR.
+- Obsolete active files are deleted; useful historical decisions are explicitly marked superseded.
+- Generated bibliography content is never manually edited. Follow `DOCUMENTATION_GOVERNANCE.md`.
 
 ## Privacy and repository
 
-- Repository visibility may be changed temporarily at explicit user direction for CI/Actions. Temporary public visibility is an operational choice, not a permanent public-release or redistribution decision.
-- Tokens, passwords, API keys, credentials, and local secrets are forbidden in tracked content regardless of repository visibility.
-- Raw conversation exports are not stored in the repository.
-- Temporary CI visibility does not waive privacy, personal-data, copyright, licensing, or provenance obligations.
-- Any deliberate public release/distribution requires a privacy/license/copyright audit and appropriate redaction or exclusion first.
+- Temporary public repository visibility for CI is operational, not a permanent public-release decision.
+- Secrets/credentials/raw conversation exports are forbidden in tracked content.
+- Deliberate public release requires final privacy/license/copyright audit and redaction/exclusion where necessary.
 
 ## Academic delivery and defense
 
-- No final deadline or verified defense schedule is currently known.
-- Current final Word template/submission package remains a later verification item.
-- Exact current defense duration, required content, presentation language, slide/template rules, live-demo rules, and submission procedure are not assumed; recheck them near delivery.
-- The planned defense output is a PowerPoint `.pptx` plus embedded speaker notes and a separate full spoken Greek script, subject to later official requirements.
-- Microsoft PowerPoint is the final rendering/rehearsal target for the `.pptx`; optional design tools must be revalidated after export.
-- Supervisor-specific instructions, when actually provided, are recorded as explicit changes and override lower-level generic conventions where applicable.
+- No final deadline or verified defense schedule is currently known; do not invent them.
+- Current Word template/submission rules and exact defense duration/content/file/live-demo rules are rechecked near delivery.
+- Planned defense output is PowerPoint `.pptx` plus embedded speaker notes and separate full spoken Greek script, subject to current official requirements.
+- Microsoft PowerPoint remains final rendering/rehearsal target; later supervisor-specific instructions are recorded as explicit changes.

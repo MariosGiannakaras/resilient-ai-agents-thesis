@@ -94,3 +94,8 @@ docs/context/system-capability.local.json
 OldConvo.*
 chat-export*/
 conversation-export*/
+
+# User-supplied third-party example theses for future T-701 review.
+# Keep only the instruction README tracked; the actual PDF/DOCX inputs stay local.
+local-inputs/example-theses/*
+!local-inputs/example-theses/README.md

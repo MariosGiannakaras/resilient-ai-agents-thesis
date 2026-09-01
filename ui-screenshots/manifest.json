@@ -1,0 +1,21 @@
+{
+  "description": "Final accepted PySide6 UI screenshot set for the Resilient AI Agents thesis application.",
+  "scientific_evidence": false,
+  "note": "Presentation and workflow-review artifacts only; populated Results and live views use explicit non-scientific fixtures.",
+  "capture_branch": "feat/pre-wp7-protocol-v1.1-ui-rebuild",
+  "capture_implementation_head": "8e8a863d51584923eb325ee7d11e4e4a2d0cbf83",
+  "source_ci_artifact": 9789027919,
+  "task": "T-511",
+  "screenshots": [
+    {"filename": "pyside6/01-choose-study.png", "state": "Choose Thesis or Exploratory Study"},
+    {"filename": "pyside6/02-thesis-study.png", "state": "Frozen Thesis Study review"},
+    {"filename": "pyside6/03-exploratory-models.png", "state": "Choose retained models"},
+    {"filename": "pyside6/04-exploratory-customize.png", "state": "Customize DEVELOPMENT preview"},
+    {"filename": "pyside6/05-exploratory-review.png", "state": "Review backend-resolved DEVELOPMENT plan"},
+    {"filename": "pyside6/06-runs-matched-resilience.png", "state": "Matched Frozen and Adaptive live GridWorld presentation"},
+    {"filename": "pyside6/07-results-compare-learning.png", "state": "Stored nominal-learning comparison"},
+    {"filename": "pyside6/08-results-test-resilience.png", "state": "Stored adaptation-benefit comparison"},
+    {"filename": "pyside6/09-results-frozen-adaptive-losses.png", "state": "Stored Frozen and Adaptive loss comparison"},
+    {"filename": "pyside6/10-artifacts-provenance.png", "state": "Registered artifact provenance"}
+  ]
+}

@@ -1,0 +1,85 @@
+name: T-528 curate accepted PySide6 screenshots
+
+on:
+  push:
+    branches:
+      - feat/pre-wp7-protocol-v1.1-ui-rebuild
+    paths:
+      - ".github/workflows/t528-curate-ui-screenshots.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  curate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      QT_QPA_PLATFORM: offscreen
+      PYTHONPATH: src
+    steps:
+      - name: Checkout implementation branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/pre-wp7-protocol-v1.1-ui-rebuild
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Qt offscreen runtime
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends libegl1
+
+      - name: Install uv
+        run: python -m pip install --disable-pip-version-check --quiet uv
+
+      - name: Restore historical locked project environment
+        run: uv sync --locked --group gridworld-prototype --no-progress
+
+      - name: Overlay exact-pinned T-528 UI dependencies
+        run: uv pip install --python .venv/bin/python --requirement requirements/application-ui.txt
+
+      - name: Render accepted review candidates
+        run: |
+          uv run --no-sync python scripts/render_ui_screenshots.py --output /tmp/t528-ui
+          uv run --no-sync python scripts/render_ui_resilience_pair.py --output /tmp/t528-ui
+
+      - name: Curate final accepted PySide6 review set
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ui-screenshots/pyside6
+          git rm -r --ignore-unmatch ui-screenshots/historical-nicegui
+
+          cp /tmp/t528-ui/01-choose-study.png ui-screenshots/pyside6/01-choose-study.png
+          cp /tmp/t528-ui/02-thesis-study.png ui-screenshots/pyside6/02-thesis-study.png
+          cp /tmp/t528-ui/03-exploratory-models.png ui-screenshots/pyside6/03-exploratory-models.png
+          cp /tmp/t528-ui/04-exploratory-customize.png ui-screenshots/pyside6/04-exploratory-customize.png
+          cp /tmp/t528-ui/05-exploratory-review.png ui-screenshots/pyside6/05-exploratory-review.png
+          cp /tmp/t528-ui/16-runs-matched-resilience.png ui-screenshots/pyside6/06-runs-matched-resilience.png
+          cp /tmp/t528-ui/07b-results-learning-qa.png ui-screenshots/pyside6/07-results-compare-learning.png
+          cp /tmp/t528-ui/07c-results-resilience-qa.png ui-screenshots/pyside6/08-results-test-resilience.png
+          cp /tmp/t528-ui/07d-results-losses-qa.png ui-screenshots/pyside6/09-results-frozen-adaptive-losses.png
+          cp /tmp/t528-ui/08b-artifacts-provenance.png ui-screenshots/pyside6/10-artifacts-provenance.png
+          rm -f ui-screenshots/pyside6/09-artifacts-provenance.png
+
+          git add ui-screenshots
+          git status --short
+
+      - name: Commit curated review set
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --cached --quiet; then
+            echo "Curated screenshot set already matches."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "docs(t528): curate PySide6 UI review screenshots"
+          git push origin HEAD:feat/pre-wp7-protocol-v1.1-ui-rebuild

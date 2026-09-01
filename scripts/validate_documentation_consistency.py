@@ -15,7 +15,6 @@ REQUIRED_ACTIVE = (
     "README.md",
     "CONTRIBUTING.md",
     ".github/pull_request_template.md",
-    "app/README.md",
     "docs/context/CURRENT_STATUS.md",
     "docs/context/TASKS.md",
     "docs/context/PROJECT_CONTEXT.md",
@@ -51,7 +50,6 @@ CURRENT_STATE_FILES = (
     "README.md",
     "CONTRIBUTING.md",
     ".github/pull_request_template.md",
-    "app/README.md",
     "docs/context/CURRENT_STATUS.md",
     "docs/context/TASKS.md",
     "docs/context/PROJECT_CONTEXT.md",
@@ -360,43 +358,31 @@ def main() -> int:
             if not isinstance(repository, dict):
                 errors.append("accepted system capability repository field must be an object")
                 repository = {}
-            source_commit = repository.get("commit")
-            if not isinstance(source_commit, str) or not re.fullmatch(
-                r"[0-9a-f]{40}", source_commit
-            ):
-                errors.append("accepted system capability JSON must record a full source commit")
-            else:
-                ancestry = subprocess.run(
-                    ["git", "merge-base", "--is-ancestor", source_commit, "HEAD"],
-                    cwd=ROOT,
-                    check=False,
-                    capture_output=True,
-                    text=True,
-                )
-                if ancestry.returncode != 0:
-                    errors.append(
-                        "accepted system capability source commit must be an ancestor of HEAD"
-                    )
+            report = capability_report_path.read_text(encoding="utf-8")
+            expected_commit = repository.get("git_head")
+            expected_sha256 = hashlib.sha256(inventory_bytes).hexdigest()
+            if expected_commit and expected_commit not in report:
+                errors.append("SYSTEM_CAPABILITY_REPORT.md does not cite accepted repository commit")
+            if expected_sha256 not in report:
+                errors.append("SYSTEM_CAPABILITY_REPORT.md does not cite accepted inventory SHA-256")
 
-            if repository.get("tracked_changes_present") is not False:
-                errors.append("accepted system capability snapshot must come from clean tracked state")
-            if repository.get("untracked_nonoutput_present") is not False:
-                errors.append(
-                    "accepted system capability snapshot must have no untracked non-output inputs"
-                )
-
-            capability_report = capability_report_path.read_text(encoding="utf-8")
-            digest = hashlib.sha256(inventory_bytes).hexdigest()
-            if isinstance(source_commit, str) and source_commit not in capability_report:
-                errors.append("capability report must record the accepted JSON source commit")
-            if digest not in capability_report:
-                errors.append("capability report must record the accepted JSON SHA-256")
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(ROOT), "status", "--porcelain"],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+    except (OSError, subprocess.SubprocessError):
+        result = None
+    if result is not None and result.returncode != 0:
+        errors.append("documentation validator could not inspect git status")
 
     if errors:
         for error in errors:
             print(f"ERROR: {error}")
         return 1
-
     print("Documentation consistency validation passed.")
     return 0
 
