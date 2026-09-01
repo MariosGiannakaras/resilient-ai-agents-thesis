@@ -32,6 +32,7 @@ from .protocol_v2_runtime import (
     PhaseBInteractionLedger,
     ProbeResult,
 )
+from .protocol_v2_temporal import RewardWindow
 
 
 @runtime_checkable
@@ -178,6 +179,7 @@ class BranchExecutionResult:
     metrics: Mapping[str, float]
     final_learner_state_sha256: str
     final_environment_state_sha256: str
+    reward_windows: tuple[RewardWindow, ...] = ()
 
     def __post_init__(self) -> None:
         if not isinstance(self.branch, ProtocolV2Branch):
@@ -190,6 +192,15 @@ class BranchExecutionResult:
             raise ValueError("branch metrics must be explicit and non-empty")
         if not self.final_learner_state_sha256 or not self.final_environment_state_sha256:
             raise ValueError("final state digests must be non-empty")
+        previous_end = 0
+        for window in self.reward_windows:
+            if not isinstance(window, RewardWindow):
+                raise ValueError("reward_windows must contain RewardWindow values")
+            if window.start_interaction != previous_end + 1:
+                raise ValueError("reward windows must be contiguous and ordered")
+            if window.end_interaction > self.interactions:
+                raise ValueError("reward window exceeds branch interaction count")
+            previous_end = window.end_interaction
 
 
 @runtime_checkable
@@ -290,6 +301,10 @@ def execute_phase_b(
             raise RuntimeError(
                 f"branch {branch.value} failed exact post-boundary interaction target"
             )
+        require_windows = getattr(branch_driver, "require_complete_reward_windows", None)
+        if callable(require_windows) and interaction_budget_per_branch % 32 == 0:
+            require_windows(total_interactions=interaction_budget_per_branch)
+        reward_windows = tuple(getattr(branch_driver, "reward_windows", ()))
         ledger.record(branch, branch_driver.interactions)
         results.append(
             BranchExecutionResult(
@@ -298,6 +313,7 @@ def execute_phase_b(
                 metrics=dict(metrics),
                 final_learner_state_sha256=branch_driver.learner.state_sha256(),
                 final_environment_state_sha256=branch_driver.environment.state_sha256(),
+                reward_windows=reward_windows,
             )
         )
 
