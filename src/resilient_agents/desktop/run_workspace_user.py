@@ -64,13 +64,22 @@ class RunWorkspacePage(_RunWorkspacePage):
         if hasattr(self, "current_method_label"):
             self._refresh_method_orientation(item, current_method_id=None)
 
+    def _detach_method_strip(self) -> None:
+        while self.method_strip.count():
+            entry = self.method_strip.takeAt(0)
+            widget = entry.widget()
+            if widget is not None:
+                widget.hide()
+                widget.setParent(None)
+                widget.deleteLater()
+
     def _refresh_method_orientation(
         self,
         item: StudyListItem | None,
         *,
         current_method_id: str | None,
     ) -> None:
-        self._clear_method_strip()
+        self._detach_method_strip()
         status_by_id = {} if item is None else dict(item.method_statuses)
         selected = set() if item is None else set(item.method_ids)
 
