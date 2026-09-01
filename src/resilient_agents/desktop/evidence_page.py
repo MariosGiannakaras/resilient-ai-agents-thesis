@@ -15,7 +15,7 @@ from PySide6.QtWidgets import (
 )
 
 from .study_read_model import ArtifactListItem, DesktopStudyReadModel, StudyListItem
-from .widgets import SectionHeader, StatusPill
+from .widgets import StatusPill
 
 
 class EvidencePage(QWidget):
@@ -143,8 +143,13 @@ class EvidencePage(QWidget):
             self._render_technical(None)
             return
 
+        evidence_label = (
+            "DEVELOPMENT · NON-CONFIRMATORY"
+            if item.evidence_class == "development"
+            else item.evidence_class.upper()
+        )
         self.summary.setText(
-            f"{item.study_id} · {item.stage_label} · {item.resolved_jobs}/{item.total_jobs} jobs resolved. "
+            f"{evidence_label} · {item.study_id} · {item.stage_label} · {item.resolved_jobs}/{item.total_jobs} jobs resolved. "
             "Unavailable evidence is shown as unavailable rather than inferred from the filesystem."
         )
         roles = {artifact.role for artifact in self._artifacts}

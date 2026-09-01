@@ -1,4 +1,4 @@
-name: T-528 PySide6 UI screenshots
+name: T-534 PySide6 UI acceptance renders
 
 on:
   pull_request:
@@ -7,9 +7,9 @@ on:
       - "scripts/render_ui_screenshots.py"
       - "scripts/render_ui_resilience_pair.py"
       - "tests/test_desktop_*.py"
-      - "configs/protocols/protocol-v2.0-final.json"
+      - "tests/test_t534_*.py"
+      - "configs/protocols/protocol-v2.1-final.json"
       - "requirements/application-ui.txt"
-      - "requirements/visual-reference-commit.txt"
       - ".github/workflows/ui-screenshots.yml"
   workflow_dispatch:
 
@@ -17,7 +17,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: t528-ui-${{ github.event.pull_request.number || github.ref }}
+  group: t534-ui-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
       QT_QPA_PLATFORM: offscreen
       PYTHONPATH: src
     steps:
-      - name: Checkout with historical UI references
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -47,38 +47,27 @@ jobs:
       - name: Install uv
         run: python -m pip install --disable-pip-version-check --quiet uv
 
-      - name: Restore historical locked project environment
+      - name: Restore locked project environment
         run: uv sync --locked --group gridworld-prototype --no-progress
 
-      - name: Overlay exact-pinned T-528 UI dependencies
+      - name: Overlay exact-pinned application UI dependencies
         run: uv pip install --python .venv/bin/python --requirement requirements/application-ui.txt
 
-      - name: Validate desktop read-only boundaries
-        run: uv run --no-sync python -m unittest discover -s tests -p 'test_desktop_*.py' -v
-
-      - name: Extract accepted historical UI references
-        shell: bash
+      - name: Validate desktop and T-534 UI contracts
         run: |
-          set -euo pipefail
-          REF="$(tr -d '\r\n' < requirements/visual-reference-commit.txt)"
-          mkdir -p ci-ui-references
-          git show "${REF}:ui-screenshots/07-dashboard-help.png" > ci-ui-references/07-dashboard-help.png
-          git show "${REF}:ui-screenshots/08-experiment-tooltips.png" > ci-ui-references/08-experiment-tooltips.png
-          git show "${REF}:ui-screenshots/09-sidebar-navigation.png" > ci-ui-references/09-sidebar-navigation.png
-          printf '%s\n' "$REF" > ci-ui-references/reference-commit.txt
+          uv run --no-sync python -m unittest discover -s tests -p 'test_desktop_*.py' -v
+          uv run --no-sync python -m unittest discover -s tests -p 'test_t534_*.py' -v
 
-      - name: Render deterministic review screenshots
+      - name: Render deterministic T-534 review screenshots
         run: uv run --no-sync python scripts/render_ui_screenshots.py --output ci-ui-screenshots
 
-      - name: Render matched Frozen/Adaptive resilience layout
+      - name: Validate exact matched Frozen/Adaptive render
         run: uv run --no-sync python scripts/render_ui_resilience_pair.py --output ci-ui-screenshots
 
-      - name: Upload renders and accepted references
+      - name: Upload T-534 review renders
         uses: actions/upload-artifact@v4
         with:
-          name: t528-ui-review-${{ github.sha }}
-          path: |
-            ci-ui-screenshots/
-            ci-ui-references/
+          name: t534-ui-review-${{ github.sha }}
+          path: ci-ui-screenshots/
           if-no-files-found: error
           retention-days: 14
