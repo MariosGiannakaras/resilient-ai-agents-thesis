@@ -17,7 +17,8 @@
 - The accepted application remains **Experiment / Run / Results / Evidence**, with `Locked Thesis experiment`, five immutable Thesis methods and simultaneous matched Frozen/Adaptive presentation.
 - `docs/research/T-613_THESIS_FIGURE_INVENTORY.md` remains the downstream T-613 output contract: a rich reproducible main-thesis + appendix + defense figure/table package generated from validated stored final outputs, not quantitative UI screenshots.
 - A final **read-only merged-main preflight** was completed after the T-536 merge. It confirmed `final_reserve_access=false`, `execution_authorization=requires-explicit-t610-gate`, no committed `protocol-v2.1-final` Study bundle, deny-by-default final execution, and the canonical 603-job plan with `final_execution_authorized=false`. T-537 changed no execution/scientific code, so those gate semantics remain unchanged.
-- `T-610` remains **BLOCKED solely by the separate explicit final-scientific-experiment authorization gate**. All declared pre-final implementation/application/hygiene dependencies are complete.
+- `T-610` is **IN_PROGRESS** after the user supplied the required separate explicit final-scientific-experiment authorization on 2026-09-02. Authorization is limited to executing the unchanged frozen protocol-v2.1 Study; it does not authorize downstream validation/analysis/assets or WP7.
+- Native Windows CPython 3.12 preflight on synchronized `main` re-derived the canonical 603-job plan, confirmed recipe SHA-256 `8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154`, proved default backend denial, and found no existing `protocol-v2.1-final` Study. The DEVELOPMENT synthetic downstream smoke finalized successfully without final identities.
 - Master tracker #87 remains **7/8**; milestone 8 awaits the final v2.1 evidence chain.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
 
@@ -53,11 +54,11 @@ The accepted PySide6 application is experiment-first. T-535 guarantees created-r
 
 ## Still intentionally unfrozen
 
-- Final-reserve execution authorization remains withheld.
-- T-610 remains blocked solely by the separate explicit authorization gate; T-611/T-612/T-613 remain downstream blocked.
+- Final-reserve execution authorization is granted for T-610 only through the accepted backend token. The committed `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` fields remain unchanged.
+- T-611/T-612/T-613 remain downstream blocked and WP7 remains separately unauthorized.
 - WP7 remains blocked by final evidence plus later explicit pre-WP7 approval.
 - Standalone Windows packaging remains deferred to T-803 / issue #94.
 
 ## Exact next action
 
-Stop at the separate `T-610` scientific authorization gate. Do not access or execute the final reserve, inspect final outcomes, or begin WP7/Results/Discussion unless the user separately and explicitly authorizes the final scientific experiment. All declared pre-final implementation/application/hygiene work is complete.
+Merge the authorization/status checkpoint to current `main`, rerun native Windows preflight, then create or resume and execute only the single frozen `protocol-v2.1-final` Study through the authorized backend path. Stop after T-610 reaches its objective terminal state; do not begin T-611/T-612/T-613, inspect outcomes for interpretation, or begin WP7/Results/Discussion.

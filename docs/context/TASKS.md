@@ -21,8 +21,8 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 
 - **Package:** protocol-v2.0 methodology/scientific freeze remains immutable through DEC-058; the framework-neutral Study backend is complete through DEC-051/T-529; historical PySide6 application work remains complete through DEC-059/T-528; DEC-060/T-533, pre-final readiness hardening, DEC-061/T-534, intended-user hardening T-535, final visual polish/richer result visualization T-536, and final pre-T610 active-tree hygiene T-537 are complete. DEC-042/047 and candidate v1.1 remain auditable predecessor design; historical NiceGUI remains prototype history only.
 - **Project:** **7/8** master milestones objectively complete (#87: 1, 2, 3, 4, 5, 6, 7). Milestone 8 awaits the final v2.1 evidence chain.
-- **Current task:** `T-537` is **COMPLETE**. PR #117 was squash-merged into `main` as `8fd32fbf68d7374ff1de5c70db21e9f95b129c1c`; exact head `2d779b85c6be81b29920df4fd61406dce50c9094` passed Repository checks #892 and PySide6 UI acceptance #191, and merged-state verification confirmed the accepted cleanup.
-- **Separate scientific gate:** `T-610` remains **BLOCKED solely pending separate explicit final-scientific-experiment authorization**. All declared pre-final implementation/application/hygiene dependencies are complete. Cleanup, UI CI, screenshots, DEVELOPMENT/synthetic fixtures or preflight do not authorize final execution.
+- **Current task:** `T-610` is **IN_PROGRESS**. The user supplied the required separate explicit final-scientific-experiment authorization on 2026-09-02. This authorizes only execution of the unchanged frozen protocol-v2.1 final Study through the accepted backend token/path and does not authorize T-611/T-612/T-613 or WP7.
+- **Separate scientific gate:** SATISFIED for T-610 only. The committed protocol continues to retain `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate`; authorization is supplied separately through the backend `PROTOCOL_V21_FINAL_EXECUTION_AUTHORIZATION` token without changing those immutable fields or weakening the guard.
 - **State:** DEC-055 tuning remains immutable valid-complete; DEC-055/056 sizing packages remain immutable valid-failed. DEC-057 sizing-v0.3 and the combined five-method sizing package are valid-complete. DEC-058 remains the historical frozen protocol-v2.0 authority. DEC-060 plus `configs/protocols/protocol-v2.1-final.json` define the current pre-execution amendment while preserving final roots/layouts, five methods, hyperparameters, conditions, budgets and 256-interaction Phase-B horizon. `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory.
 - **T-533 implementation:** COMPLETE. The isolated protocol-v2.1 path includes passive fixed 32-interaction Phase-B reward windows, schema-v2 temporal evidence/validation, right-censored recovery/non-recovery analysis, direct root-paired method contrasts, actual-root-count Student-t interval selection, deterministic evidence exports with v2.1 provenance, protocol-aware executor routers, fail-closed self-contained recipe materialization, and PySide6 stored-evidence recovery/contrast presentation with no UI-side estimand computation.
 - **Completed Study backend:** `T-529` is COMPLETE. The framework-neutral Study lifecycle covers immutable recipe -> deterministic plan -> real Phase A -> exact checkpoint -> optional common no-learning prefix -> atomic FN/FD/AN/AD -> validation -> root/layout analysis with explicit denominators -> deterministic machine-readable evidence export, with restart-safe provenance and no frontend dependency.
@@ -34,7 +34,7 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 - **Historical science:** protocol-v1.0 / FINAL-* / R0 evidence immutable. Candidate v1.1 remains non-final history; old `T-522` must not execute. Historical `T-530`, `T-531` and `T-532` remain completed/superseded history and are not repurposed.
 - **Bibliography:** immutable protocol-v2 consumer snapshot remains upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`, merged through thesis PR #96 and validated in the integrated repository.
 - **Pre-WP7 approval:** NOT APPROVED; `T-700+` remains blocked.
-- **Exact next action:** stop at the separate `T-610` scientific authorization gate. Do not access the final reserve, execute the final protocol-v2.1 matrix, inspect final outcomes, or begin WP7/Results/Discussion without the required separate explicit authorization.
+- **Exact next action:** after merging this authorization/status checkpoint to current `main`, rerun the native Windows read-only preflight, create or resume the single `protocol-v2.1-final` Study, and execute its exact outstanding jobs through the authorized `StudyService` path. Do not begin T-611/T-612/T-613 or WP7 and do not interpret final outcomes during T-610.
 
 ## Quota/interruption resilience
 
@@ -208,9 +208,9 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
 - [x] `T-603` — Historical v1.0 figures/tables/artifacts.
 - [x] `T-604` — Historical v1.0 evidence package.
 
-- [ ] BLOCKED `T-610` — Execute frozen protocol-v2.1 final matrix through the accepted study-first execution path.
+- [ ] IN_PROGRESS `T-610` — Execute frozen protocol-v2.1 final matrix through the accepted study-first execution path.
   - Depends on: `T-527`, `T-529`, `T-511`, `T-533`, `T-535`, `T-536`, `T-537` — satisfied.
-  - State: final-reserve access remains sealed and a separate explicit scientific execution authorization is mandatory before any final-reserve access or execution. All declared pre-final implementation/application/hygiene work is complete; none substitutes for authorization.
+  - State: the required separate explicit scientific execution authorization was supplied by the user on 2026-09-02. The immutable protocol fields remain sealed; the accepted backend authorization token is used only by the T-610 execution service. Native Windows preflight re-derived the unchanged 603-job plan and confirmed no existing final Study before this checkpoint.
 - [ ] BLOCKED `T-611` — Validate/freeze v2.1 final evidence.
   - Depends on: `T-610`.
 - [ ] BLOCKED `T-612` — Predeclared v2.1 nominal-learning/resilience/recovery statistical analysis and sensitivity diagnostics.

@@ -2,6 +2,13 @@
 
 Record only material changes to the project source of truth. Detailed commit-by-commit history remains in Git; accepted decisions remain indexed in `docs/decisions/DECISION_LOG.md`.
 
+## 2026-09-02 — T-610 final scientific execution authorized
+
+- Recorded the user's separate explicit authorization to execute only the unchanged frozen protocol-v2.1 final Study through the accepted backend token/path.
+- Kept `final_reserve_access=false`, `execution_authorization=requires-explicit-t610-gate`, the backend guard, and every frozen scientific choice unchanged.
+- Re-derived the 603-job plan and recipe SHA-256 on native Windows CPython 3.12, confirmed no existing final Study, and passed the DEVELOPMENT-only downstream smoke before execution.
+- Marked T-610 IN_PROGRESS while keeping T-611/T-612/T-613 and WP7 blocked; final outcomes remain outside interpretation during T-610.
+
 ## 2026-08-26 — Bounded GridWorld prototype comparison
 
 - Validated project-owned Gymnasium and MiniGrid-adaptation mechanics against the same explicit research/information contract and deterministic fixture on the accepted native Windows runtime.

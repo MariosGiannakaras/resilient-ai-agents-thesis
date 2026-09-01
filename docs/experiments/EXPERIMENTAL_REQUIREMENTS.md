@@ -184,4 +184,4 @@ Every final figure/table must identify or inherit traceable provenance for:
 
 ## Final-reserve gate
 
-T-533 may run synthetic/non-final mechanics validation only. It must not execute, inspect or tune against final-reserve outcomes. T-610 remains blocked until T-533 code/docs/CI are complete and a separate explicit scientific authorization is provided. Final scientific execution must stop immediately if the committed final-reserve firewall/gate is not satisfied.
+T-533 may run synthetic/non-final mechanics validation only. It must not execute, inspect or tune against final-reserve outcomes. The required separate T-610 authorization was supplied on 2026-09-02 after T-533 and all declared pre-final dependencies completed. Final scientific execution must still stop immediately if the committed final-reserve firewall/gate is not satisfied; authorization is supplied only through the accepted backend token and does not change the frozen authority fields.
