@@ -10,6 +10,7 @@
 - `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable historical evidence; old `T-522` must not execute.
 - `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, historical application baseline `T-528`, `T-529`, historical `T-530`, `T-531`, `T-532`, historical intended-user acceptance `T-511`, and `T-533` are COMPLETE.
 - `T-534` is the active dependency-valid application task: a clean protocol-v2.1 PySide6 rebuild from fresh current `main`. The paused/pre-v2.1 UI branch/worktree is not an implementation base.
+- DEC-061 is the current T-534 product/UX amendment: it preserves DEC-059's PySide6/runtime boundary but replaces the old Study/Runs/Results/Artifacts product model with **Experiment / Run / Results / Evidence**.
 - `T-610` remains a separate **BLOCKED** scientific task. Its dependencies and methodology are unchanged; `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory.
 - Master tracker #87 remains **7/8** complete. Milestone 8 awaits the final v2.1 evidence chain.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
@@ -52,16 +53,28 @@ These checks do not authorize `T-610`.
 
 DEC-059 selects PySide6 / Qt 6 Widgets over the framework-neutral Study backend. `T-528` remains historically COMPLETE and records the previous architecture/workflow/read-model/application baseline; `T-511` remains its historical intended-user acceptance record.
 
-The canonical application state has now moved to `T-534` because the active roadmap and Definition of Done require a fresh protocol-v2.1 rebuild. The rebuild must start from current `main`, audit `src/resilient_agents/desktop/`, preserve still-correct UI-neutral Study/evidence/provenance/execution-policy contracts, and freely replace presentation windows/pages/widgets/styles/navigation where appropriate.
+DEC-061 now controls the T-534 **product model and information architecture**. The application is experiment-first, not StudyStore/job/artifact-first. Primary navigation is **Experiment / Run / Results / Evidence**; Help/onboarding and technical/reproducibility details are contextual/secondary.
+
+The rebuild must start from current `main`, audit `src/resilient_agents/desktop/`, preserve still-correct UI-neutral Study/evidence/provenance/execution contracts, and freely replace historical presentation windows/pages/widgets/styles/navigation where appropriate.
+
+The current desktop audit identified real migration targets: active presentation code still contains protocol-v2.0/DEC-058/T-528-specific root discovery, protocol loading, shell/status/help and desktop execution-policy wording. These are not current v2.1 presentation authority.
 
 The rebuilt UI must:
 
-- keep Frozen Thesis Study and DEVELOPMENT/Exploratory experiences unmistakably separate;
-- present only validated stored RQ1/RQ2/RQ3 evidence, including v2.1 recovery/right-censoring/direct contrasts when available;
-- keep historical schema-v1 evidence truthful;
-- never recompute scientific thresholds, root reductions, estimands, conclusions, RNG/checkpoints or evidence finalization in Qt;
+- make the scientific experiment understandable before backend administration;
+- keep all five final methods fixed in the Thesis experiment; method selection is DEVELOPMENT-only where backend-supported;
+- present Frozen and Adaptive as simultaneous matched Phase-B regimes, never algorithms or mutually exclusive choices;
+- make one large Phase-A GridWorld or two exact-matched Phase-B Frozen/Adaptive GridWorlds the dominant Run visualization, with compact five-method status;
+- keep primary live facts to method/phase/condition/interaction/intended→executed action/reward and move roots/states/observations/IDs/flags/hashes to technical disclosure;
+- organize Results explicitly by **RQ1 Learning / RQ2 Resilience & Adaptation / RQ3 Recovery**;
+- use real stored Phase-A trajectory/probe information for RQ1 when scientifically supported, never a UI-invented aggregate;
+- preserve RQ2 adaptation-benefit and Frozen/Adaptive-loss separation;
+- preserve RQ3 trajectory/status/conditional observed time/restricted-delay/right-censoring semantics, never showing 256 as observed recovery time for a censored root;
+- make Evidence user-friendly first and provenance-rich on demand;
+- present only validated stored scientific outputs and keep historical schema-v1 truthful;
+- never recompute scientific thresholds, root reductions, estimands, intervals, recovery, conclusions, RNG/checkpoints or evidence finalization in Qt;
 - never grant/bypass final-experiment authorization;
-- remain novice-first, compact, self-explanatory and accessible with progressive disclosure and truthful locked/error/loading/empty states;
+- remain novice-first, compact, self-explanatory and accessible with truthful locked/error/loading/empty states;
 - use DEVELOPMENT/synthetic fixtures for implementation tests/screenshots.
 
 ## Repository integration / provenance
@@ -82,6 +95,6 @@ Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `researc
 
 ## Exact next action
 
-Execute `T-534` as the active application package from one fresh branch created from the latest current `main`. First read `AGENTS.md`, `docs/context/TASKS.md` and this file, then derive the clean PySide6 rebuild from the merged protocol-v2.1/Study/evidence contracts rather than pre-v2.1 UI assumptions.
+Execute `T-534` as the active application package from one fresh implementation branch created from the latest current `main`. First read `AGENTS.md`, `docs/context/TASKS.md` and this file, then DEC-059/DEC-060/DEC-061, the protocol-v2.1 config, RQ evidence traceability and current UI information architecture. Implement the experiment-first **Experiment / Run / Results / Evidence** application from the merged protocol-v2.1/Study/evidence contracts rather than inheriting pre-v2.1 presentation assumptions.
 
 Scientifically, stop at the separate `T-610` authorization gate: do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, inspect final outcomes, or begin Results/Discussion without explicit authorization.
