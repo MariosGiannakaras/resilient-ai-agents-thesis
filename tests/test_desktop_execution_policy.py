@@ -15,40 +15,35 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 class DesktopExecutionPolicyTests(unittest.TestCase):
-    def test_application_development_recipe_is_execution_eligible_without_final_identities(self) -> None:
+    def test_current_development_recipe_is_execution_eligible(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            model = DesktopExploratoryStudyModel(
-                repo_root=REPO_ROOT,
-                writable_root=Path(directory),
-            )
+            model = DesktopExploratoryStudyModel(repo_root=REPO_ROOT, writable_root=Path(directory))
             recipe = model.build_recipe(
                 selected_method_ids=("q_learning", "ppo"),
                 root_count=2,
                 layout_count=2,
-                study_id="t528-dev-policy-test",
+                study_id="t534-dev-policy-test",
             )
             assert_final_reserve_locked(REPO_ROOT)
             assert_development_recipe_execution_allowed(recipe)
-            encoded = str(recipe.to_dict())
-            self.assertNotIn("gw-l1-final-a", encoded)
-            self.assertNotIn("t527-final-r01", encoded)
+            self.assertEqual(recipe.protocol_version, "protocol-v2.1-development")
 
-    def test_execution_policy_rejects_final_identity_even_when_mislabeled_development(self) -> None:
+    def test_execution_policy_rejects_final_protocol_even_if_mislabeled_development(self) -> None:
         recipe = StudyRecipe(
-            recipe_id="t528-dev-invalid",
-            protocol_version="protocol-v2.0-development",
+            recipe_id="dev-invalid",
+            protocol_version="protocol-v2.1",
             evidence_class=EvidenceClass.DEVELOPMENT,
             scientific_status="non-final-development-ui",
             frozen=False,
-            study={"layout_id": "gw-l1-final-a"},
+            study={"purpose": "guard-test"},
         )
-        with self.assertRaisesRegex(RuntimeError, "final-reserve identities"):
+        with self.assertRaisesRegex(RuntimeError, "non-DEVELOPMENT protocol"):
             assert_development_recipe_execution_allowed(recipe)
 
     def test_execution_policy_rejects_confirmatory_recipe(self) -> None:
         recipe = StudyRecipe(
             recipe_id="confirmatory-test",
-            protocol_version="protocol-v2.0",
+            protocol_version="protocol-v2.1",
             evidence_class=EvidenceClass.CONFIRMATORY,
             scientific_status="frozen-final",
             frozen=True,

@@ -8,9 +8,11 @@ from pathlib import Path
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 try:
-    from PySide6.QtWidgets import QApplication
-except ImportError:  # application overlay is intentionally optional for core-only installs
+    from PySide6.QtWidgets import QApplication, QCheckBox, QLabel
+except ImportError:
     QApplication = None  # type: ignore[assignment]
+    QCheckBox = None  # type: ignore[assignment]
+    QLabel = None  # type: ignore[assignment]
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -23,7 +25,6 @@ class T534ExperimentUiTests(unittest.TestCase):
         cls.app = QApplication.instance() or QApplication([])
 
     def test_thesis_mode_has_fixed_five_methods_and_no_method_checkboxes(self) -> None:
-        from PySide6.QtWidgets import QCheckBox
         from resilient_agents.desktop.experiment_page import ExperimentPage
         from resilient_agents.desktop.protocol import load_frozen_protocol
 
@@ -36,7 +37,7 @@ class T534ExperimentUiTests(unittest.TestCase):
             page.set_mode(page.THESIS)
             self.assertEqual(len(page.protocol.methods), 5)
             self.assertEqual(page.stack.currentWidget().findChildren(QCheckBox), [])
-            text = " ".join(label.text() for label in page.stack.currentWidget().findChildren(__import__("PySide6.QtWidgets", fromlist=["QLabel"]).QLabel))
+            text = " ".join(label.text() for label in page.stack.currentWidget().findChildren(QLabel))
             for name in ("Q-Learning", "SARSA", "DQN", "PPO", "Dyna-Q+"):
                 self.assertIn(name, text)
             self.assertIn("Frozen", text)
@@ -56,7 +57,7 @@ class T534ExperimentUiTests(unittest.TestCase):
             for check in page.method_checks.values():
                 check.setChecked(False)
             page.review_development()
-            self.assertTrue(page.configure_error.isVisibleTo(page))
+            self.assertFalse(page.configure_error.isHidden())
             self.assertIsNone(page._preview)
 
     def test_main_window_primary_navigation_is_exactly_four_experiment_first_destinations(self) -> None:
@@ -64,10 +65,12 @@ class T534ExperimentUiTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as directory:
             window = MainWindow(repo_root=REPO_ROOT, writable_root=Path(directory))
-            self.assertEqual([button.text() for button in window.nav_buttons], [
-                "Experiment", "Run", "Results", "Evidence"
-            ])
-            self.assertIn("protocol-v2.1", window.statusBar().currentMessage() if window.statusBar() else "protocol-v2.1")
+            self.assertEqual(
+                [button.text() for button in window.nav_buttons],
+                ["Experiment", "Run", "Results", "Evidence"],
+            )
+            self.assertEqual(window.protocol.protocol_id, "protocol-v2.1")
+            self.assertTrue(window.protocol.final_execution_locked)
 
 
 if __name__ == "__main__":
