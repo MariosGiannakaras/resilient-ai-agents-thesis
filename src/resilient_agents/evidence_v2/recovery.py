@@ -10,7 +10,12 @@ from dataclasses import dataclass
 from itertools import combinations
 from typing import Mapping, Sequence
 
-from .statistics import MetricDirection, MeanInterval, paired_root_differences, student_t_mean_interval
+from .statistics import (
+    MeanInterval,
+    MetricDirection,
+    paired_root_differences,
+    student_t_mean_interval,
+)
 
 
 @dataclass(frozen=True)
@@ -24,9 +29,17 @@ class RecoveryDefinition:
     direction: MetricDirection = MetricDirection.HIGHER_IS_BETTER
 
     def __post_init__(self) -> None:
-        if not isinstance(self.window_size, int) or isinstance(self.window_size, bool) or self.window_size <= 0:
+        if (
+            not isinstance(self.window_size, int)
+            or isinstance(self.window_size, bool)
+            or self.window_size <= 0
+        ):
             raise ValueError("window_size must be an integer > 0")
-        if not isinstance(self.observation_horizon, int) or isinstance(self.observation_horizon, bool) or self.observation_horizon <= 0:
+        if (
+            not isinstance(self.observation_horizon, int)
+            or isinstance(self.observation_horizon, bool)
+            or self.observation_horizon <= 0
+        ):
             raise ValueError("observation_horizon must be an integer > 0")
         if self.observation_horizon % self.window_size != 0:
             raise ValueError("observation_horizon must be divisible by window_size")
@@ -34,7 +47,11 @@ class RecoveryDefinition:
             raise ValueError("tolerance must be numeric")
         if not math.isfinite(float(self.tolerance)) or float(self.tolerance) < 0.0:
             raise ValueError("tolerance must be finite and >= 0")
-        if not isinstance(self.stability_windows, int) or isinstance(self.stability_windows, bool) or self.stability_windows <= 0:
+        if (
+            not isinstance(self.stability_windows, int)
+            or isinstance(self.stability_windows, bool)
+            or self.stability_windows <= 0
+        ):
             raise ValueError("stability_windows must be an integer > 0")
         if not isinstance(self.direction, MetricDirection):
             raise ValueError("direction must be MetricDirection")
@@ -114,7 +131,9 @@ def assess_recovery(
     confirmation_time: int | None = None
     tolerance = float(definition.tolerance)
 
-    for index, (nominal_value, disturbed_value) in enumerate(zip(nominal, disturbed, strict=True)):
+    for index, (nominal_value, disturbed_value) in enumerate(
+        zip(nominal, disturbed, strict=True)
+    ):
         if definition.direction is MetricDirection.HIGHER_IS_BETTER:
             directed_gap = nominal_value - disturbed_value
         else:
@@ -165,14 +184,16 @@ class MethodContrast:
 def pairwise_method_contrasts(
     root_values_by_method: Mapping[str, Mapping[str, float]],
     *,
-    confidence: float = 0.95,
+    critical_value: float,
 ) -> tuple[MethodContrast, ...]:
-    """Return estimation-oriented, root-paired A-minus-B method contrasts.
+    """Return pointwise root-paired A-minus-B method contrasts.
 
-    Only roots present for both methods are paired. Layouts and episodes must
-    already have been reduced within root and are never promoted to independent
-    samples here. The returned Student-t intervals are pointwise estimation
-    intervals, not simultaneous multiple-comparison inference.
+    Layouts and episodes must already have been reduced within each independent
+    root. When a scientific failure leaves asymmetric method root sets, only the
+    shared roots form the paired estimand and their identities remain explicit.
+    ``critical_value`` is supplied by the frozen analysis recipe; this function
+    never chooses alpha/df or upgrades pointwise intervals to simultaneous
+    multiple-comparison inference.
     """
 
     methods = tuple(sorted(root_values_by_method))
@@ -180,18 +201,23 @@ def pairwise_method_contrasts(
     for method_a, method_b in combinations(methods, 2):
         left = root_values_by_method[method_a]
         right = root_values_by_method[method_b]
-        differences_map = paired_root_differences(left, right)
-        roots = tuple(sorted(differences_map))
-        if not roots:
+        common_roots = tuple(sorted(set(left).intersection(right)))
+        if len(common_roots) < 2:
             continue
-        differences = tuple(float(differences_map[root]) for root in roots)
+        left_common = {root_id: left[root_id] for root_id in common_roots}
+        right_common = {root_id: right[root_id] for root_id in common_roots}
+        differences_map = paired_root_differences(left_common, right_common)
+        differences = tuple(float(differences_map[root]) for root in common_roots)
         contrasts.append(
             MethodContrast(
                 method_a=method_a,
                 method_b=method_b,
-                root_ids=roots,
+                root_ids=common_roots,
                 differences=differences,
-                interval=student_t_mean_interval(differences, confidence=confidence),
+                interval=student_t_mean_interval(
+                    differences,
+                    critical_value=critical_value,
+                ),
             )
         )
     return tuple(contrasts)
