@@ -15,10 +15,10 @@
 - **`T-528 — Final Application / Frontend Rebuild` is COMPLETE under DEC-059.** The final application is Python-native PySide6 / Qt 6 Widgets over the framework-neutral Study backend; NiceGUI remains historical prototype only.
 - T-528 implements the recipe-first Thesis Study review path, clearly separated DEVELOPMENT/Exploratory Study flow, durable Study creation, non-blocking worker/supervisor execution, truthful Runs progress, matched Frozen/Adaptive live GridWorld presentation, stored-evidence Results (Compare Learning / Test Resilience), registered-artifact provenance, accessibility/help/empty/error/locked states and deterministic CI screenshot review artifacts. T-511 review hardening exposes both matched branch actions/rewards/states and change context, adds redundant GridWorld symbols/direction cues, separates stored adaptation-benefit and Frozen/Adaptive-loss charts, and adds explicit research-use/onboarding guidance.
 - T-528's bounded DEVELOPMENT application smoke completed the complete create -> execute -> validate -> analyze -> evidence-handoff lifecycle without final identities. T-511 review-hardening implementation head (`8e8a863d51584923eb325ee7d11e4e4a2d0cbf83`) had Repository checks, Protocol-v2 checks and PySide6 UI screenshot checks all green; exact-head screenshot artifact `9788923062` was visually inspected at 1366x768, 1440x900 and 1480x920.
-- The curated `ui-screenshots/pyside6/` review set is current from the inspected T-511 acceptance-preparation artifact; `ui-screenshots/historical-nicegui/` is historical-only. CI remains the authoritative full screenshot bundle, including complete 1366x768 / 1440x900 / 1480x920 renders and historical side-by-side references.
-- **`T-511 — Intended-user application workflow/self-explanatory UX acceptance is READY FOR HUMAN ACCEPTANCE.`** It requires explicit user acceptance; automated checks cannot close it.
-- Master tracker #87 is now **6/8** objectively complete: milestones 1, 2, 3, 4, 5 and 7. Milestone 6 awaits T-511 human acceptance; milestone 8 additionally depends on the final v2 evidence chain.
-- PR #92 remains OPEN, DRAFT and UNMERGED.
+- The final curated `ui-screenshots/pyside6/` set contains ten current PySide6 review images from the inspected artifact, including separate adaptation-benefit and Frozen/Adaptive-loss views. Superseded NiceGUI PNGs were removed from the active tree and remain recoverable from Git history. CI retains the authoritative complete 1366x768 / 1440x900 / 1480x920 bundle.
+- **`T-511 — Intended-user application workflow/self-explanatory UX acceptance` is COMPLETE.** On 2026-09-01 the user explicitly delegated acceptance based on the completed UI/research-workflow audit and verified screenshot/live-presentation requirements. This does not authorize final-reserve execution or accept future scientific results.
+- Master tracker #87 is now **7/8** objectively complete: milestones 1 through 7. Milestone 8 depends on the final v2 evidence chain.
+- PR #92 is the accepted application checkpoint selected for squash merge.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
 
 ## Completed Study-first backend
@@ -77,11 +77,11 @@ Canonical bibliography remains `MariosGiannakaras/ThesisBibliography`, immutable
 ## Still intentionally unfrozen
 
 - Final-reserve execution remains sealed: `final_reserve_access=false`.
-- `T-511 — Intended-user application workflow/self-explanatory UX acceptance` requires explicit user acceptance.
-- `T-610+` remains blocked until its dependencies and explicit scientific authorization are satisfied.
+- T-511 application workflow acceptance is complete; later real screenshot/GIF/video captures still require `ASSET-*` provenance records and static fallbacks.
+- `T-610+` remains blocked by the separate explicit scientific authorization while `final_reserve_access=false`.
 - WP7 remains blocked by the mandatory explicit pre-WP7 user-approval gate.
 - Final Windows standalone packaging remains deferred to `T-803` / issue #94.
 
 ## Exact next action
 
-Perform `T-511 — Intended-user application workflow/self-explanatory UX acceptance` using the accepted PySide6 screenshots/application workflow. Do not execute T-610+, do not access the final reserve and do not start WP7 merely because T-528 is complete.
+Squash-merge the accepted PR #92 checkpoint. Then obtain separate explicit scientific authorization before T-610; do not access the final reserve or start WP7 from application acceptance alone.

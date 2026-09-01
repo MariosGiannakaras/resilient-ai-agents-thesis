@@ -81,23 +81,29 @@ Historical protocol-v1.0 / v1.1 scientific code and finalized evidence remain au
 
 The superseded NiceGUI application, v1.1 application runtime service, old native/package validation surface and UI-only tests were removed from the **active tree** during DEC-051/T-529 reconstruction. Git history remains the audit trail.
 
-The final frontend is intentionally absent. T-528 will select a framework **different from NiceGUI** and rebuild the application from scratch only after the remaining scientific contract (T-527) and study-first backend (T-529) are stable.
+The accepted final frontend is a native PySide6 / Qt 6 Widgets application under
+`src/resilient_agents/desktop/`. It consumes the Study backend directly and does
+not reimplement scientific protocol logic. The superseded NiceGUI frontend remains
+available through Git history only.
+
+From PowerShell on the validated Windows thesis machine, restore the locked runtime,
+install the exact-pinned application overlay, and launch from source with:
+
+```powershell
+& "$env:USERPROFILE\.local\bin\uv.exe" sync --locked --group gridworld-prototype --group protocol-v2-pilot --no-progress
+& "$env:USERPROFILE\.local\bin\uv.exe" pip install --python .venv\Scripts\python.exe --requirement requirements\application-ui.txt
+.\.venv\Scripts\python.exe -m resilient_agents.desktop
+```
+
+Standalone Windows packaging remains a later delivery task; the source application
+is the accepted T-511 research workflow.
 
 ## Current scientific gate
 
-T-526 is the next external scientific evidence gate. It uses the predeclared non-final plan:
-
-```text
-configs/protocols/protocol-v2-feasibility-v0.1.json
-```
-
-On the validated physical Windows thesis machine, the committed entrypoint is:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\run_protocol_v2_feasibility_windows.ps1
-```
-
-Hosted CI does not substitute for that physical-machine evidence. T-529 backend reconstruction may continue in parallel but must not invent or consume values that remain T-526/T-527 gated.
+T-511 application workflow acceptance is complete. T-610 final protocol-v2
+execution remains sealed by `final_reserve_access=false` until a separate explicit
+scientific authorization. Historical protocol-v1.0 results remain immutable and
+must not be presented as the not-yet-produced final protocol-v2 evidence.
 
 ## Repository map
 

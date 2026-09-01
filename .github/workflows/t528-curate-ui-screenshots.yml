@@ -49,16 +49,12 @@ jobs:
           uv run --no-sync python scripts/render_ui_screenshots.py --output /tmp/t528-ui
           uv run --no-sync python scripts/render_ui_resilience_pair.py --output /tmp/t528-ui
 
-      - name: Curate PySide6 review root and archive historical NiceGUI images
+      - name: Curate final accepted PySide6 review set
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p ui-screenshots/historical-nicegui ui-screenshots/pyside6
-
-          shopt -s nullglob
-          for image in ui-screenshots/*.png; do
-            git mv "$image" "ui-screenshots/historical-nicegui/$(basename "$image")"
-          done
+          mkdir -p ui-screenshots/pyside6
+          git rm -r --ignore-unmatch ui-screenshots/historical-nicegui
 
           cp /tmp/t528-ui/01-choose-study.png ui-screenshots/pyside6/01-choose-study.png
           cp /tmp/t528-ui/02-thesis-study.png ui-screenshots/pyside6/02-thesis-study.png
@@ -68,35 +64,9 @@ jobs:
           cp /tmp/t528-ui/16-runs-matched-resilience.png ui-screenshots/pyside6/06-runs-matched-resilience.png
           cp /tmp/t528-ui/07b-results-learning-qa.png ui-screenshots/pyside6/07-results-compare-learning.png
           cp /tmp/t528-ui/07c-results-resilience-qa.png ui-screenshots/pyside6/08-results-test-resilience.png
-          cp /tmp/t528-ui/08b-artifacts-provenance.png ui-screenshots/pyside6/09-artifacts-provenance.png
-
-          cat > ui-screenshots/README.md <<'EOF'
-          # UI screenshot review sets
-
-          ## `pyside6/` — current T-528 application review set
-
-          These images are the accepted visual-review surfaces for the Python/PySide6
-          application built by **T-528 — Final Application / Frontend Rebuild**.
-
-          They are presentation QA, not scientific evidence. In particular:
-
-          - Thesis Study screens read the frozen protocol contract but do not execute it.
-          - `06-runs-matched-resilience.png` uses a static DEVELOPMENT presentation fixture;
-            it executes zero environment steps and zero scientific jobs.
-          - populated Results screenshots use explicitly synthetic in-memory UI fixtures so
-            chart/table layout can be inspected; their metric values are not scientific results.
-          - Artifacts provenance uses presentation-only DEVELOPMENT fixture records.
-
-          The GitHub Actions `T-528 PySide6 UI screenshots` artifact is the authoritative
-          full QA bundle and also contains 1366x768 laptop sanity renders plus the accepted
-          historical visual references used for side-by-side comparison.
-
-          ## `historical-nicegui/` — historical prototype only
-
-          These PNGs preserve the earlier NiceGUI/prototype visual history. They are not the
-          current frontend and must not be used to claim current T-528 acceptance. They remain
-          as visual references/history only.
-          EOF
+          cp /tmp/t528-ui/07d-results-losses-qa.png ui-screenshots/pyside6/09-results-frozen-adaptive-losses.png
+          cp /tmp/t528-ui/08b-artifacts-provenance.png ui-screenshots/pyside6/10-artifacts-provenance.png
+          rm -f ui-screenshots/pyside6/09-artifacts-provenance.png
 
           git add ui-screenshots
           git status --short
