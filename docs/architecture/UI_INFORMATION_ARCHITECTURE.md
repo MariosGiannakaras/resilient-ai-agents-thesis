@@ -123,7 +123,7 @@ When exact matched presentation frames exist, show two **large side-by-side** pa
 - **Frozen — learning off**
 - **Adaptive — learning continues**
 
-They must share the authoritative matched method/root/layout/interaction identity. Never display unrelated frames as a pair. If exact pairing is temporarily unavailable because the lossy presentation stream dropped frames, show an explicit unavailable/waiting state rather than fabricate synchronization.
+They must share the authoritative matched method/root/layout/**condition**/interaction identity. Condition is part of the presentation-pair identity because two otherwise matching frames from different disturbance conditions are not a valid scientific comparison. Never display unrelated frames as a pair. If exact pairing is temporarily unavailable because the lossy presentation stream dropped frames, show an explicit unavailable/waiting state rather than fabricate synchronization.
 
 Primary Phase-B context:
 
@@ -280,7 +280,7 @@ Contextual help explains methods, disturbances, FN/FD/AN/AD, Frozen/Adaptive, RQ
 - `study_read_model.py`: safe read-only durable Study/evidence projection; use mainly for secondary status/evidence views.
 - `results_read_model.py`: verified stored-analysis projection; extend only to expose additional already-stored trajectory/result data without UI-side scientific recomputation.
 - `execution_supervisor.py`: non-blocking QProcess execution boundary.
-- `live_events.py`: transient non-blocking presentation stream and exact FD/AD matched-pair semantics.
+- `live_events.py`: transient non-blocking presentation stream and exact condition-aware FD/AD matched-pair semantics.
 - `live_instrumentation.py`: presentation-only runtime observer seam, subject to regression tests proving no scientific feedback.
 - DEVELOPMENT creation/execution adapters that still delegate validation/planning/execution to the backend.
 - `gridworld_widget.py` drawing behavior, refactored as needed so Phase A gets one large panel and Phase B gets two large panels.
@@ -297,7 +297,7 @@ Contextual help explains methods, disturbances, FN/FD/AN/AD, Frozen/Adaptive, RQ
 
 ## Protocol-v2.1 migration checks
 
-The active desktop implementation currently contains stale protocol-v2.0/DEC-058/T-528 assumptions in repo-root discovery, frozen-protocol loading, execution-policy copy, shell labels, Study copy and Run lock messages. T-534 must remove these from active presentation behavior.
+T-534 removes stale protocol-v2.0/DEC-058/T-528 assumptions from active repo-root discovery, protocol loading, execution-policy copy, shell labels, Experiment copy and Run lock/help behavior. Historical decisions and compatibility-only support remain history rather than active presentation authority.
 
 The current backend `StudyService` final-execution guard remains the authoritative deny-by-default control. Desktop-side DEVELOPMENT guards may add defense in depth but must not become a divergent final-authorization implementation.
 
@@ -333,5 +333,7 @@ T-534 is ready for acceptance when:
 - historical schema-v1 evidence remains truthful;
 - DEVELOPMENT/synthetic workflow tests and deterministic render/screenshot checks cover representative states, including Phase-B matched side-by-side and a right-censored RQ3 result;
 - launcher behavior and exact-head repository CI are green.
+
+The current PR #107 implementation satisfies the behavioral/visual acceptance clauses above subject to final documentation-inclusive exact-head CI and merged-state verification. Objective acceptance does not convert T-534 to COMPLETE before those repository gates are satisfied.
 
 Completing T-534 does not authorize T-610, final-reserve access, final-outcome inspection or Results/Discussion thesis writing.

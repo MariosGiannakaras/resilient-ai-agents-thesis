@@ -1,11 +1,14 @@
 """Read-only desktop projection over durable framework-neutral Study state."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any, Mapping
 
+from ..study.model import JobState
 from ..study.scheduler import StudyExecutorRegistry
 from ..study.service import StudyService
+from ..study.store import StudyStore
 
 
 @dataclass(frozen=True)
@@ -22,6 +25,8 @@ class StudyListItem:
     scientific_failures: int
     infrastructure_failures: int
     finalized: bool
+    method_ids: tuple[str, ...] = ()
+    method_statuses: tuple[tuple[str, str], ...] = ()
 
     @property
     def progress_fraction(self) -> float:
@@ -32,8 +37,8 @@ class StudyListItem:
     @property
     def stage_label(self) -> str:
         labels = {
-            "phase-a": "Nominal learning",
-            "phase-b": "Resilience test",
+            "phase-a": "Phase A — Nominal learning",
+            "phase-b": "Phase B — Frozen vs Adaptive",
             "validation": "Validation",
             "analysis": "Analysis",
             "export": "Export",
@@ -54,6 +59,7 @@ class ArtifactListItem:
     sha256: str
     source_job_ids: tuple[str, ...]
     source_artifact_ids: tuple[str, ...]
+    metadata: Mapping[str, Any] = field(default_factory=dict)
 
     @property
     def source_job_count(self) -> int:
@@ -74,9 +80,7 @@ class DesktopStudyReadModel:
 
     def __init__(self, *, repo_root: Path, writable_root: Path | None = None) -> None:
         self.repo_root = Path(repo_root).resolve()
-        self.writable_root = (
-            Path(writable_root).resolve() if writable_root else self.repo_root
-        )
+        self.writable_root = Path(writable_root).resolve() if writable_root else self.repo_root
         self._service = StudyService(
             repo_root=self.repo_root,
             writable_root=self.writable_root,
@@ -87,6 +91,7 @@ class DesktopStudyReadModel:
         items: list[StudyListItem] = []
         for status in self._service.list_studies():
             progress = status.progress
+            method_ids, method_statuses = self._method_projection(status.study_id)
             items.append(
                 StudyListItem(
                     study_id=status.study_id,
@@ -101,6 +106,8 @@ class DesktopStudyReadModel:
                     scientific_failures=int(progress.get("scientific_failed", 0)),
                     infrastructure_failures=int(progress.get("infrastructure_failed", 0)),
                     finalized=status.finalized,
+                    method_ids=method_ids,
+                    method_statuses=method_statuses,
                 )
             )
         return tuple(items)
@@ -115,6 +122,60 @@ class DesktopStudyReadModel:
                 sha256=artifact.sha256,
                 source_job_ids=tuple(artifact.source_job_ids),
                 source_artifact_ids=tuple(artifact.source_artifact_ids),
+                metadata=dict(artifact.metadata),
             )
             for artifact in self._service.artifacts(study_id)
         )
+
+    def _method_projection(
+        self,
+        study_id: str,
+    ) -> tuple[tuple[str, ...], tuple[tuple[str, str], ...]]:
+        store = StudyStore.load(
+            repo_root=self.repo_root,
+            writable_root=self.writable_root,
+            study_id=study_id,
+        )
+        phase_a = store.recipe.study.get("phase_a")
+        if not isinstance(phase_a, Mapping):
+            return (), ()
+        methods = phase_a.get("methods")
+        if not isinstance(methods, list):
+            return (), ()
+
+        ordered: list[str] = []
+        for raw in methods:
+            if not isinstance(raw, Mapping):
+                continue
+            method_id = raw.get("method_id")
+            if isinstance(method_id, str) and method_id and method_id not in ordered:
+                ordered.append(method_id)
+
+        states = store.lifecycle.snapshot_states()
+        failures = {
+            JobState.SCIENTIFIC_FAILED,
+            JobState.INFRASTRUCTURE_FAILED,
+            JobState.SKIPPED,
+            JobState.CANCELLED,
+        }
+        projected: list[tuple[str, str]] = []
+        for method_id in ordered:
+            method_states: list[JobState] = []
+            for job in store.plan.jobs:
+                raw_method = job.payload.get("method")
+                if not isinstance(raw_method, Mapping):
+                    continue
+                if raw_method.get("method_id") == method_id:
+                    method_states.append(states[job.job_id])
+
+            if any(state in failures for state in method_states):
+                label = "Failed"
+            elif any(state is JobState.RUNNING for state in method_states):
+                label = "Running"
+            elif method_states and all(state is JobState.COMPLETED for state in method_states):
+                label = "Complete"
+            else:
+                label = "Pending"
+            projected.append((method_id, label))
+
+        return tuple(ordered), tuple(projected)

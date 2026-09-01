@@ -12,11 +12,12 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 PYSIDE6_AVAILABLE = importlib.util.find_spec("PySide6") is not None
 
 if PYSIDE6_AVAILABLE:
-    from PySide6.QtWidgets import QMessageBox
+    from PySide6.QtWidgets import QLabel
 
     from resilient_agents.desktop.app import create_application
     from resilient_agents.desktop.live_events import LiveGridComparison, LiveGridFrame
     from resilient_agents.desktop.main_window import MainWindow
+    from resilient_agents.desktop.onboarding import OnboardingDialog
     from resilient_agents.desktop.protocol import load_frozen_protocol
     from resilient_agents.desktop.results_page import ResultsPage
     from resilient_agents.desktop.results_read_model import (
@@ -157,15 +158,34 @@ class DesktopResearchPresentationTests(unittest.TestCase):
         self.assertEqual(page.resilience_chart_stack.currentIndex(), 1)
         page.close()
 
-    def test_getting_started_explains_full_research_workflow(self) -> None:
+    def test_getting_started_is_replayable_skippable_and_explains_t534_workflow(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             window = MainWindow(repo_root=REPO_ROOT, writable_root=Path(directory))
-            with patch.object(QMessageBox, "information") as information:
+            with patch("resilient_agents.desktop.main_window.OnboardingDialog.exec", return_value=0) as execute:
                 window._show_getting_started()
-            message = information.call_args.args[2]
-            self.assertIn("1. Choose Study", message)
-            self.assertIn("7. Verify Artifacts", message)
-            self.assertIn("cannot be presented as final thesis evidence", message)
+            execute.assert_called_once_with()
+
+            dialog = OnboardingDialog(window)
+            self.assertEqual(dialog.stack.count(), 7)
+            self.assertEqual(dialog.progress.text(), "1 of 7")
+            self.assertFalse(dialog.skip_button.isHidden())
+            self.assertFalse(dialog.previous_button.isEnabled())
+
+            text = " ".join(label.text() for label in dialog.findChildren(QLabel))
+            self.assertIn("Five fixed methods form the Thesis experiment", text)
+            self.assertIn("Frozen means learning off", text)
+            self.assertIn("Adaptive means learning continues", text)
+            self.assertIn("RQ1 reports nominal learning", text)
+            self.assertIn("Evidence shows readiness", text)
+            self.assertIn("requires separate T-610 authorization", text)
+
+            for _ in range(dialog.stack.count() - 1):
+                dialog.next()
+            self.assertEqual(dialog.progress.text(), "7 of 7")
+            self.assertTrue(dialog.previous_button.isEnabled())
+            self.assertTrue(dialog.next_button.isHidden())
+            self.assertFalse(dialog.finish_button.isHidden())
+            dialog.close()
             window.close()
 
 

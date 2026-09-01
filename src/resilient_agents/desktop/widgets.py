@@ -28,14 +28,22 @@ class StatusPill(QLabel):
         "frozen": "StatusFrozen",
         "development": "StatusDevelopment",
     }
+    _SYMBOLS = {
+        "locked": "⊘",
+        "frozen": "■",
+        "development": "◇",
+    }
 
     def __init__(self, text: str, *, kind: str, parent: QWidget | None = None) -> None:
-        super().__init__(text, parent)
         try:
             object_name = self._OBJECT_NAMES[kind]
+            symbol = "⊘" if "LOCK" in text.upper() else self._SYMBOLS[kind]
         except KeyError as exc:
             raise ValueError(f"unsupported status pill kind: {kind!r}") from exc
+        super().__init__(f"{symbol}  {text}", parent)
         self.setObjectName(object_name)
+        self.setAccessibleName(text)
+        self.setToolTip(text)
         self.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
 

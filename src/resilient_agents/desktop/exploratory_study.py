@@ -1,10 +1,9 @@
-"""Authorized non-final Study creation for the T-528 desktop application.
+"""Authorized non-final DEVELOPMENT experiment creation for T-534.
 
-This application adapter creates DEVELOPMENT Study recipes only.  It reuses the
-validated protocol-v2 executors and retained method implementations while
-keeping final held-out roots/layouts and final-reserve execution inaccessible.
-Creation is durable but has no execution side effect; starting jobs is a
-separate application action.
+The adapter delegates planning/creation to the framework-neutral Study backend.
+It uses the development layout/condition pool and current protocol-v2.1 method
+configuration authority while keeping final-reserve execution inaccessible.
+Creation is durable and has no execution side effect.
 """
 from __future__ import annotations
 
@@ -21,7 +20,7 @@ from ..study.recipe import StudyRecipe
 from ..study.service import StudyService, StudyStatus
 
 _DEVELOPMENT_PROFILE = Path("configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json")
-_FINAL_PROTOCOL = Path("configs/protocols/protocol-v2.0-final.json")
+_CURRENT_PROTOCOL = Path("configs/protocols/protocol-v2.1-final.json")
 _RESET_POLICY = "dec-055-persistent-multi-episode-deployment-v1"
 _ACTION_VECTORS = {
     "up": [0, -1],
@@ -58,11 +57,13 @@ class DesktopExploratoryStudyModel:
             Path(writable_root).resolve() if writable_root is not None else self.repo_root
         )
         self._development = self._read_json(_DEVELOPMENT_PROFILE)
-        self._final = self._read_json(_FINAL_PROTOCOL)
+        self._current = self._read_json(_CURRENT_PROTOCOL)
         if self._development.get("final_reserve_access") is not False:
             raise RuntimeError("development profile must keep final reserve closed")
-        if self._final.get("final_reserve_access") is not False:
-            raise RuntimeError("T-528 refuses final protocol with reserve access enabled")
+        if self._current.get("final_reserve_access") is not False:
+            raise RuntimeError("T-534 refuses current protocol with final reserve enabled")
+        if self._current.get("protocol_id") != "protocol-v2.1":
+            raise RuntimeError("DEVELOPMENT creation requires current protocol-v2.1 authority")
 
         layouts = self._development.get("development_layouts")
         if not isinstance(layouts, list) or len(layouts) < self.MAX_LAYOUTS:
@@ -75,8 +76,8 @@ class DesktopExploratoryStudyModel:
             raise RuntimeError("development conditions are unavailable")
         self._development_conditions = tuple(dict(item) for item in conditions)
 
-        retained = self._final.get("retained_methods")
-        configs = self._mapping(self._final.get("selected_configs"), "final.selected_configs")
+        retained = self._current.get("retained_methods")
+        configs = self._mapping(self._current.get("selected_configs"), "current.selected_configs")
         if not isinstance(retained, list) or not retained:
             raise RuntimeError("retained method list is unavailable")
         self._retained_methods = tuple(str(item) for item in retained)
@@ -101,12 +102,8 @@ class DesktopExploratoryStudyModel:
             study_label=study_label,
             study_id=study_id,
         )
-        service = StudyService(
-            repo_root=self.repo_root,
-            writable_root=self.writable_root,
-        )
-        status = service.create(recipe)
-        return self._created(status)
+        service = StudyService(repo_root=self.repo_root, writable_root=self.writable_root)
+        return self._created(service.create(recipe))
 
     def build_recipe(
         self,
@@ -119,30 +116,26 @@ class DesktopExploratoryStudyModel:
     ) -> StudyRecipe:
         methods = self._validated_methods(selected_method_ids)
         if not 1 <= root_count <= self.MAX_ROOTS:
-            raise ValueError("root_count must be within the T-528 development pool")
+            raise ValueError("root_count must be within the DEVELOPMENT pool")
         if not 1 <= layout_count <= self.MAX_LAYOUTS:
-            raise ValueError("layout_count must be within the T-528 development pool")
+            raise ValueError("layout_count must be within the DEVELOPMENT pool")
 
         resolved_id = study_id or self.suggest_study_id(study_label)
         if "final" in resolved_id.lower():
-            raise ValueError("exploratory study_id must not imply final evidence")
+            raise ValueError("DEVELOPMENT study_id must not imply final evidence")
 
-        final_phase_a = self._mapping(self._final.get("phase_a"), "final.phase_a")
-        final_phase_b = self._mapping(self._final.get("phase_b"), "final.phase_b")
+        phase_a = self._mapping(self._current.get("phase_a"), "current.phase_a")
+        phase_b = self._mapping(self._current.get("phase_b"), "current.phase_b")
         task = self._mapping(self._development.get("task"), "development.task")
         condition_ids = [str(item["condition_id"]) for item in self._development_conditions]
-
         method_records = [self._method_record(method_id, condition_ids) for method_id in methods]
         roots = [self._root_record(resolved_id, index) for index in range(1, root_count + 1)]
-        layouts = [
-            self._layout_record(item, task=task)
-            for item in self._development_layouts[:layout_count]
-        ]
+        layouts = [self._layout_record(item, task=task) for item in self._development_layouts[:layout_count]]
+        branch_horizon = int(phase_b["horizon"])
 
-        branch_horizon = int(final_phase_b["horizon"])
         recipe = StudyRecipe(
             recipe_id=resolved_id,
-            protocol_version="protocol-v2.0-development",
+            protocol_version="protocol-v2.1-development",
             evidence_class=EvidenceClass.DEVELOPMENT,
             scientific_status="non-final-development-ui",
             frozen=False,
@@ -150,24 +143,14 @@ class DesktopExploratoryStudyModel:
                 "matrix_schema_version": 2,
                 "phase_a": {
                     "execution": {
-                        "training_interaction_budget": int(
-                            final_phase_a["training_interaction_budget"]
-                        ),
-                        "probe_interaction_indices": list(
-                            final_phase_a["probe_interaction_indices"]
-                        ),
-                        "episodes_per_probe": int(final_phase_a["episodes_per_probe"]),
+                        "training_interaction_budget": int(phase_a["training_interaction_budget"]),
+                        "probe_interaction_indices": list(phase_a["probe_interaction_indices"]),
+                        "episodes_per_probe": int(phase_a["episodes_per_probe"]),
                         "task": {
                             "gamma": float(task["gamma"]),
-                            "reward_contract": dict(
-                                self._mapping(task.get("reward_spec"), "task.reward_spec")
-                            ),
-                            "administrative_truncation": bool(
-                                task["administrative_truncation"]
-                            ),
-                            "bootstrap_on_truncation": bool(
-                                task["bootstrap_on_truncation"]
-                            ),
+                            "reward_contract": dict(self._mapping(task.get("reward_spec"), "task.reward_spec")),
+                            "administrative_truncation": bool(task["administrative_truncation"]),
+                            "bootstrap_on_truncation": bool(task["bootstrap_on_truncation"]),
                         },
                     },
                     "methods": method_records,
@@ -177,11 +160,7 @@ class DesktopExploratoryStudyModel:
                 },
                 "phase_b": {
                     "execution": {
-                        "prefix_interactions": int(
-                            final_phase_b[
-                                "common_nominal_no_learning_prefix_interactions"
-                            ]
-                        ),
+                        "prefix_interactions": int(phase_b["common_nominal_no_learning_prefix_interactions"]),
                         "interaction_budget_per_branch": branch_horizon,
                         "episode_reset_policy_id": _RESET_POLICY,
                         "subsequent_episode_seed_count": branch_horizon,
@@ -192,8 +171,8 @@ class DesktopExploratoryStudyModel:
                 "postprocessing": {
                     "validation": {"validator": "protocol-v2-study-v1"},
                     "analysis": {
-                        "analysis_recipe": "protocol-v2-root-level-v1",
-                        "phase_a_metric": "terminated_rate",
+                        "analysis_recipe": "protocol-v2-root-level-v2.1",
+                        "phase_a_metric": "return_mean",
                         "phase_a_direction": "higher-is-better",
                         "phase_b_metric": "return_sum",
                         "phase_b_direction": "higher-is-better",
@@ -208,7 +187,7 @@ class DesktopExploratoryStudyModel:
                 },
             },
         )
-        self._assert_no_final_identity(recipe)
+        self._assert_development_only(recipe)
         return recipe
 
     @staticmethod
@@ -216,7 +195,7 @@ class DesktopExploratoryStudyModel:
         normalized = re.sub(r"[^a-z0-9]+", "-", label.strip().lower()).strip("-")
         slug = (normalized or "exploratory")[:32].rstrip("-")
         stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
-        return f"t528-dev-{stamp}-{slug}"
+        return f"t534-dev-{stamp}-{slug}"
 
     def _method_record(self, method_id: str, condition_ids: list[str]) -> dict[str, Any]:
         raw = dict(self._configs[method_id])
@@ -233,16 +212,14 @@ class DesktopExploratoryStudyModel:
 
     @staticmethod
     def _root_record(study_id: str, index: int) -> dict[str, Any]:
-        # A high, development-only deterministic namespace prevents accidental
-        # reuse of the low-valued frozen final root streams (71k-76k).
         def seed(stream: str) -> int:
             digest = hashlib.sha256(
-                f"t528-development:{study_id}:root:{index}:{stream}".encode("utf-8")
+                f"t534-development:{study_id}:root:{index}:{stream}".encode("utf-8")
             ).digest()
             return 900_000_000 + int.from_bytes(digest[:4], "big") % 90_000_000
 
         return {
-            "root_id": f"t528-dev-r{index:02d}",
+            "root_id": f"t534-dev-r{index:02d}",
             "initialization_seed": seed("initialization"),
             "exploration_seed": seed("exploration"),
             "scenario_seed": seed("scenario"),
@@ -275,10 +252,7 @@ class DesktopExploratoryStudyModel:
                 "coordinate_order": "x-y",
                 "reset_observation": "true-state",
             },
-            "action_disturbance_spec": {
-                "type": "no-op-failure",
-                "failure_probability": 0.0,
-            },
+            "action_disturbance_spec": {"type": "no-op-failure", "failure_probability": 0.0},
             "observation_disturbance_spec": {
                 "type": "position-mislocalization",
                 "mislocalization_probability": 0.0,
@@ -291,24 +265,26 @@ class DesktopExploratoryStudyModel:
     def _validated_methods(self, values: Sequence[str]) -> tuple[str, ...]:
         methods = tuple(str(item) for item in values)
         if not methods:
-            raise ValueError("at least one exploratory method is required")
+            raise ValueError("at least one DEVELOPMENT method is required")
         if len(set(methods)) != len(methods):
-            raise ValueError("exploratory method identities must be unique")
+            raise ValueError("DEVELOPMENT method identities must be unique")
         unknown = tuple(item for item in methods if item not in self._retained_methods)
         if unknown:
-            raise ValueError(f"unsupported exploratory methods: {unknown}")
+            raise ValueError(f"unsupported DEVELOPMENT methods: {unknown}")
         return methods
 
-    def _assert_no_final_identity(self, recipe: StudyRecipe) -> None:
-        encoded = json.dumps(recipe.to_dict(), sort_keys=True)
-        forbidden = [
-            "gw-l1-final-a",
-            "gw-l1-final-b",
-            *(f"t527-final-r{index:02d}" for index in range(1, 13)),
-        ]
-        used = [item for item in forbidden if item in encoded]
-        if used:
-            raise RuntimeError(f"development recipe leaked final-reserve identities: {used}")
+    def _assert_development_only(self, recipe: StudyRecipe) -> None:
+        if recipe.evidence_class is not EvidenceClass.DEVELOPMENT or recipe.frozen:
+            raise RuntimeError("desktop-created recipe must remain non-frozen DEVELOPMENT evidence")
+        if recipe.protocol_version != "protocol-v2.1-development":
+            raise RuntimeError("desktop-created recipe must use protocol-v2.1 DEVELOPMENT semantics")
+        allowed_layouts = set(str(item["layout_id"]) for item in self._development_layouts)
+        for root in recipe.study["phase_a"]["roots"]:
+            if not str(root.get("root_id", "")).startswith("t534-dev-r"):
+                raise RuntimeError("DEVELOPMENT recipe contains a non-development root identity")
+        for layout in recipe.study["phase_a"]["layouts"]:
+            if str(layout.get("layout_id", "")) not in allowed_layouts:
+                raise RuntimeError("DEVELOPMENT recipe contains a layout outside the development pool")
 
     def _read_json(self, relative: Path) -> Mapping[str, Any]:
         path = self.repo_root / relative

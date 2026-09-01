@@ -9,15 +9,24 @@ from resilient_agents.desktop.live_events import DesktopLiveReadModel, DroppingL
 
 class DesktopLivePairingTests(unittest.TestCase):
     @staticmethod
-    def _event(*, branch: str, interaction: int, state: tuple[int, int]) -> dict:
+    def _event(
+        *,
+        branch: str,
+        interaction: int,
+        state: tuple[int, int],
+        condition_id: str = "action-remap-test",
+    ) -> dict:
         return {
             "schema_version": 1,
             "event_type": "gridworld-transition",
-            "stream_id": f"phase-b:q_learning:dev-root:dev-layout:{branch}",
+            "stream_id": (
+                f"phase-b:q_learning:dev-root:dev-layout:{condition_id}:{branch}"
+            ),
             "phase": "phase-b",
             "method_id": "q_learning",
             "root_id": "dev-root",
             "layout_id": "dev-layout",
+            "condition_id": condition_id,
             "branch": branch,
             "episode_index": 0,
             "interaction_index": interaction,
@@ -56,7 +65,9 @@ class DesktopLivePairingTests(unittest.TestCase):
             sink.emit(self._event(branch="AD", interaction=7, state=(1, 0)))
             sink.close()
 
-            frames = DesktopLiveReadModel(writable_root=writable).latest("live-pair-test")
+            frames = DesktopLiveReadModel(writable_root=writable).latest(
+                "live-pair-test"
+            )
 
         self.assertGreaterEqual(len(frames), 1)
         paired = next(frame for frame in frames if frame.comparison is not None)
@@ -64,10 +75,45 @@ class DesktopLivePairingTests(unittest.TestCase):
         assert comparison is not None
         self.assertEqual(comparison.frozen.branch, "FD")
         self.assertEqual(comparison.adaptive.branch, "AD")
+        self.assertEqual(comparison.frozen.condition_id, "action-remap-test")
+        self.assertEqual(comparison.adaptive.condition_id, "action-remap-test")
         self.assertEqual(comparison.frozen.interaction_index, 7)
         self.assertEqual(comparison.adaptive.interaction_index, 7)
         self.assertEqual(comparison.frozen.true_state, (0, 1))
         self.assertEqual(comparison.adaptive.true_state, (1, 0))
+
+    def test_mismatched_conditions_are_never_exposed_as_one_comparison(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            writable = Path(directory).resolve()
+            sink = DroppingLiveEventSink(
+                writable_root=writable,
+                study_id="live-pair-condition-test",
+                flush_interval_seconds=0.01,
+            )
+            sink.emit(
+                self._event(
+                    branch="FD",
+                    interaction=7,
+                    state=(0, 1),
+                    condition_id="action-remap-a",
+                )
+            )
+            sink.emit(
+                self._event(
+                    branch="AD",
+                    interaction=7,
+                    state=(1, 0),
+                    condition_id="action-remap-b",
+                )
+            )
+            sink.close()
+
+            frames = DesktopLiveReadModel(writable_root=writable).latest(
+                "live-pair-condition-test"
+            )
+
+        self.assertTrue(frames)
+        self.assertTrue(all(frame.comparison is None for frame in frames))
 
     def test_new_fd_branch_invalidates_previous_exposed_pair_until_new_ad_matches(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

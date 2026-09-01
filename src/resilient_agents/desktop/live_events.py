@@ -1,4 +1,4 @@
-"""Transient, lossy live-presentation stream for the T-528 desktop worker.
+"""Transient, lossy live-presentation stream for the desktop application.
 
 The stream is explicitly not Study evidence. It lives outside ``results/studies``
 and ``results/runs`` and may drop frames whenever the consumer/writer cannot keep
@@ -38,9 +38,10 @@ class DroppingLiveEventSink:
 
     For Phase-B presentation only, the writer also keeps a bounded in-memory tail
     of Frozen-Disturbed (FD) frames. When an Adaptive-Disturbed (AD) frame arrives
-    at the same method/root/layout/interaction identity, the latest matched pair
-    is emitted to the transient snapshot. The history is presentation-only, never
-    persisted as Study evidence, and never participates in scientific control flow.
+    at the same method/root/layout/condition/interaction identity, the latest
+    matched pair is emitted to the transient snapshot. The history is
+    presentation-only, never persisted as Study evidence, and never participates
+    in scientific control flow.
     """
 
     def __init__(
@@ -68,7 +69,7 @@ class DroppingLiveEventSink:
         self._sequence = 0
         self._thread = threading.Thread(
             target=self._writer_loop,
-            name=f"t528-live-{study_id}",
+            name=f"desktop-live-{study_id}",
             daemon=True,
         )
         self._thread.start()
@@ -94,13 +95,16 @@ class DroppingLiveEventSink:
         self._thread.join(timeout=2.0)
 
     @staticmethod
-    def _pair_key(event: Mapping[str, Any]) -> tuple[str, str, str, str, int] | None:
+    def _pair_key(
+        event: Mapping[str, Any],
+    ) -> tuple[str, str, str, str, str, int] | None:
         try:
             return (
                 str(event["phase"]),
                 str(event["method_id"]),
                 str(event["root_id"]),
                 str(event["layout_id"]),
+                str(event.get("condition_id") or ""),
                 int(event["interaction_index"]),
             )
         except (KeyError, TypeError, ValueError):
@@ -109,7 +113,7 @@ class DroppingLiveEventSink:
     def _writer_loop(self) -> None:
         latest: dict[str, dict[str, Any]] = {}
         frozen_history: OrderedDict[
-            tuple[str, str, str, str, int], dict[str, Any]
+            tuple[str, str, str, str, str, int], dict[str, Any]
         ] = OrderedDict()
         latest_pair: dict[str, dict[str, Any]] | None = None
         dirty = False
@@ -216,6 +220,7 @@ class LiveGridFrame:
     disturbance_flags: Mapping[str, bool]
     change_event_ids: tuple[str, ...]
     presentation_sequence: int
+    condition_id: str | None = None
     comparison: "LiveGridComparison | None" = None
 
 
@@ -234,6 +239,7 @@ class LiveGridComparison:
             self.frozen.method_id,
             self.frozen.root_id,
             self.frozen.layout_id,
+            self.frozen.condition_id,
             self.frozen.interaction_index,
         )
         adaptive_identity = (
@@ -241,6 +247,7 @@ class LiveGridComparison:
             self.adaptive.method_id,
             self.adaptive.root_id,
             self.adaptive.layout_id,
+            self.adaptive.condition_id,
             self.adaptive.interaction_index,
         )
         if frozen_identity != adaptive_identity:
@@ -301,6 +308,9 @@ class DesktopLiveReadModel:
                 disturbance_flags={str(k): bool(v) for k, v in flags.items()},
                 change_event_ids=tuple(str(item) for item in event.get("change_event_ids", [])),
                 presentation_sequence=int(event.get("presentation_sequence", 0)),
+                condition_id=None
+                if event.get("condition_id") is None
+                else str(event["condition_id"]),
             )
             if frame.width <= 0 or frame.height <= 0:
                 return None
