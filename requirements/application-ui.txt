@@ -1,8 +1,8 @@
-# T-528 presentation-only UI overlay.
+# T-534 presentation-only PySide6 UI overlay.
 #
 # Keep this file separate from pyproject.toml and uv.lock. Those root files are
 # byte-exact historical scientific-authority inputs and must not change for UI
-# work. The Qt desktop application is installed as an overlay only.
+# work. The desktop application is installed as an exact-pinned overlay only.
 PySide6==6.11.2
 PySide6_Addons==6.11.2
 PySide6_Essentials==6.11.2
