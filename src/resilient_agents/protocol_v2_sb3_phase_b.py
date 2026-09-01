@@ -5,9 +5,8 @@ unchanged while behavior RNG may advance. Adaptive branches resume ordinary
 method-native SB3 learning from the exact learner checkpoint while the first
 environment reset attaches to the already-restored GridWorld branch point.
 
-This driver intentionally supports one exact post-boundary segment only.
-Environment reset after termination/truncation remains fail-closed until the
-multi-episode Phase-B lifecycle is frozen by T-526/T-527.
+Temporal reward windows are exposed from the passive continuation environment;
+they do not split or otherwise alter method-native DQN/PPO learning calls.
 """
 from __future__ import annotations
 
@@ -23,6 +22,7 @@ from .protocol_v2_sb3_observation import (
     predict_sb3_gridworld_action,
 )
 from .protocol_v2_sb3 import SB3ScientificStateAdapter
+from .protocol_v2_temporal import RewardWindow
 
 
 def _scalar_action(action: Any) -> Any:
@@ -101,6 +101,15 @@ class SB3PhaseBBranchDriver:
     @property
     def interactions(self) -> int:
         return self._interactions
+
+    @property
+    def reward_windows(self) -> tuple[RewardWindow, ...]:
+        return self._continuation.reward_windows
+
+    def require_complete_reward_windows(self, *, total_interactions: int) -> None:
+        self._continuation.require_complete_reward_windows(
+            total_interactions=total_interactions
+        )
 
     def _run_frozen_to(self, target_interaction: int) -> Mapping[str, float]:
         if self._interactions == 0:
