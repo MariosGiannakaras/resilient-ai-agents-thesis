@@ -1,4 +1,4 @@
-"""Main PySide6 desktop shell and navigation."""
+"""Protocol-v2.1 experiment-first PySide6 shell."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -9,7 +9,6 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QMainWindow,
-    QMessageBox,
     QPushButton,
     QStackedWidget,
     QVBoxLayout,
@@ -18,12 +17,13 @@ from PySide6.QtWidgets import (
 
 from . import APP_NAME, APP_SUBTITLE
 from .artifacts_page import ArtifactsPage
+from .experiment_page import ExperimentPage
+from .onboarding import OnboardingDialog
 from .protocol import load_frozen_protocol
 from .results_page import ResultsPage
 from .results_read_model import DesktopResultsReadModel
 from .runs_page import RunsPage
 from .study_read_model import DesktopStudyReadModel
-from .study_workspace import StudyWorkspacePage
 from .widgets import NavButton
 
 
@@ -36,7 +36,7 @@ class MainWindow(QMainWindow):
         self.resize(1440, 900)
         self.setMinimumSize(1100, 700)
 
-        protocol = load_frozen_protocol(self.repo_root)
+        self.protocol = load_frozen_protocol(self.repo_root)
         self.study_read_model = DesktopStudyReadModel(
             repo_root=self.repo_root,
             writable_root=self.writable_root,
@@ -54,76 +54,65 @@ class MainWindow(QMainWindow):
         body_layout = QHBoxLayout(body)
         body_layout.setContentsMargins(0, 0, 0, 0)
         body_layout.setSpacing(0)
-
         sidebar = QWidget()
         sidebar.setObjectName("Sidebar")
-        sidebar.setFixedWidth(300)
+        sidebar.setFixedWidth(220)
         sidebar_layout = QVBoxLayout(sidebar)
-        sidebar_layout.setContentsMargins(24, 22, 20, 18)
+        sidebar_layout.setContentsMargins(18, 20, 14, 18)
         sidebar_layout.setSpacing(7)
 
-        workspace = QLabel("WORKSPACE")
+        workspace = QLabel("THESIS WORKSPACE")
         workspace.setObjectName("SidebarSection")
         sidebar_layout.addWidget(workspace)
-        sidebar_layout.addSpacing(10)
+        sidebar_layout.addSpacing(8)
 
-        self.study_page = StudyWorkspacePage(protocol)
-        # Compatibility handle for presentation QA and callers that need the
-        # read-only frozen thesis review surface directly.
-        self.thesis_page = self.study_page.thesis
+        self.experiment_page = ExperimentPage(
+            self.protocol,
+            repo_root=self.repo_root,
+            writable_root=self.writable_root,
+        )
         self.runs_page = RunsPage(self.study_read_model)
-        self.results_page = ResultsPage(self.results_read_model, protocol)
-        self.artifacts_page = ArtifactsPage(self.study_read_model)
+        self.results_page = ResultsPage(self.results_read_model, self.protocol)
+        # T-534 batch 1 keeps the proven registered-artifact adapter while the
+        # user-facing destination is Evidence. The Evidence presentation is
+        # replaced in the next coherent batch without changing its authority.
+        self.evidence_page = ArtifactsPage(self.study_read_model)
+        self.artifacts_page = self.evidence_page  # compatibility for existing tests/callers
         self.pages = (
-            self.study_page,
+            self.experiment_page,
             self.runs_page,
             self.results_page,
-            self.artifacts_page,
+            self.evidence_page,
         )
-
         self.stack = QStackedWidget()
         for page in self.pages:
             self.stack.addWidget(page)
-        self.runs_page.study_selected.connect(self._show_artifacts_for_study)
+        self.experiment_page.study_created.connect(self._study_created)
+        self.runs_page.study_selected.connect(self._show_evidence_for_study)
 
         self.nav_buttons: list[NavButton] = []
         nav_items = (
-            ("▦   Study", "Choose a thesis review or prepare a development-only exploratory study."),
-            ("▶   Runs", "Inspect durable Study records and real execution state."),
-            ("↔   Results", "Compare stored learning and resilience analysis when evidence exists."),
-            ("▣   Artifacts", "Inspect artifacts registered by durable Study records."),
+            ("Experiment", "Understand the Thesis experiment or prepare a DEVELOPMENT experiment."),
+            ("Run", "Execute supported DEVELOPMENT work and observe truthful live GridWorld state."),
+            ("Results", "Inspect validated stored outputs organized by the research questions."),
+            ("Evidence", "Inspect registered evidence, readiness and reproducibility details."),
         )
         for index, (label, tooltip) in enumerate(nav_items):
             button = NavButton(label)
-            button.setToolTip(tooltip)
+            button.setAccessibleName(f"Open {label}")
+            button.setToolTip(f"Alt+{index + 1} · {tooltip}")
             button.clicked.connect(lambda checked=False, i=index: self.set_page(i))
             sidebar_layout.addWidget(button)
             self.nav_buttons.append(button)
 
-        sidebar_layout.addSpacing(20)
-        sidebar_rule = QWidget()
-        sidebar_rule.setFixedHeight(1)
-        sidebar_rule.setStyleSheet("background:#DDE3EC;")
-        sidebar_layout.addWidget(sidebar_rule)
-        sidebar_layout.addSpacing(20)
-
-        scientific_state = QLabel("SCIENTIFIC STATE")
-        scientific_state.setObjectName("SidebarSection")
-        sidebar_layout.addWidget(scientific_state)
-        sidebar_layout.addSpacing(8)
-        for text, tooltip in (
-            ("✓  Protocol v2.0 frozen", "DEC-058 frozen scientific protocol."),
-            ("▣  Final reserve locked", "Final scientific execution remains sealed until explicit later authorization."),
-        ):
-            state = QLabel(text)
-            state.setObjectName("SidebarState")
-            state.setToolTip(tooltip)
-            sidebar_layout.addWidget(state)
-
         sidebar_layout.addStretch(1)
-        utility = QLabel("DEC-058 authority\nPresentation layer: T-528")
-        utility.setObjectName("SidebarUtility")
-        sidebar_layout.addWidget(utility)
+        state = QLabel("protocol-v2.1\nFinal experiment locked")
+        state.setObjectName("SidebarState")
+        state.setWordWrap(True)
+        state.setToolTip(
+            "Final-reserve execution remains blocked until separate explicit T-610 authorization."
+        )
+        sidebar_layout.addWidget(state)
 
         body_layout.addWidget(sidebar)
         body_layout.addWidget(self.stack, 1)
@@ -131,67 +120,55 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(root)
 
         self.set_page(0)
-        QShortcut(QKeySequence("Alt+1"), self, activated=lambda: self.set_page(0))
-        QShortcut(QKeySequence("Alt+2"), self, activated=lambda: self.set_page(1))
-        QShortcut(QKeySequence("Alt+3"), self, activated=lambda: self.set_page(2))
-        QShortcut(QKeySequence("Alt+4"), self, activated=lambda: self.set_page(3))
+        for index in range(4):
+            QShortcut(
+                QKeySequence(f"Alt+{index + 1}"),
+                self,
+                activated=lambda i=index: self.set_page(i),
+            )
 
     def _build_top_header(self) -> QWidget:
         header = QWidget()
         header.setObjectName("TopHeader")
-        header.setFixedHeight(64)
+        header.setFixedHeight(62)
         layout = QHBoxLayout(header)
-        layout.setContentsMargins(30, 0, 30, 0)
+        layout.setContentsMargins(24, 0, 24, 0)
         layout.setSpacing(12)
-
-        mark = QLabel("✦")
-        mark.setStyleSheet("color:#245DE8;font-size:24px;font-weight:700;")
-        mark.setToolTip("Resilient AI Agents research application")
-        layout.addWidget(mark)
 
         brand_group = QVBoxLayout()
         brand_group.setSpacing(0)
         brand = QLabel(APP_NAME)
         brand.setObjectName("HeaderBrand")
-        subtitle = QLabel("Local thesis research application")
+        subtitle = QLabel("Resilient learning thesis experiment")
         subtitle.setObjectName("HeaderSubtitle")
         brand_group.addWidget(brand)
         brand_group.addWidget(subtitle)
         layout.addLayout(brand_group)
         layout.addStretch(1)
 
-        help_button = QPushButton("?  Getting started")
+        help_button = QPushButton("Getting started")
         help_button.setObjectName("HeaderHelp")
-        help_button.setToolTip(
-            "Open a short guide to the application surfaces and scientific boundary."
-        )
+        help_button.setAccessibleName("Open getting started guide")
+        help_button.setToolTip("Replay the short, skippable guide to Experiment, Run, Results and Evidence.")
         help_button.clicked.connect(self._show_getting_started)
         layout.addWidget(help_button)
 
-        lock = QLabel("FINAL RESERVE LOCKED")
+        lock = QLabel("FINAL EXPERIMENT LOCKED")
         lock.setObjectName("HeaderLock")
         lock.setAlignment(Qt.AlignmentFlag.AlignCenter)
         lock.setFixedHeight(24)
-        lock.setToolTip("Final-reserve execution is not authorized during T-528.")
+        lock.setToolTip(
+            "The desktop UI cannot authorize final execution. T-610 remains separately blocked."
+        )
         layout.addWidget(lock)
         return header
 
     def _show_getting_started(self) -> None:
-        QMessageBox.information(
-            self,
-            "Getting started",
-            "1. Choose Study: review the frozen Thesis Study or prepare a DEVELOPMENT-only Exploratory Study.\n"
-            "2. Review the plan: models, roots, layouts, conditions and job counts come from the backend planner.\n"
-            "3. Create the Study: creation records the durable plan; it does not start scientific execution.\n"
-            "4. Run and monitor: Runs starts/resumes supported DEVELOPMENT work and reports only durable backend progress.\n"
-            "5. Read GridWorld: the live view is lossy, presentation-only and cannot affect agents, RNG, metrics or evidence.\n"
-            "6. Interpret Results: compare stored learning and matched resilience summaries, intervals and root denominators—never screenshots as quantitative evidence.\n"
-            "7. Verify Artifacts: use registered paths, SHA-256 hashes and lineage for reproducible handoff.\n\n"
-            "Research boundary: final-reserve execution remains locked until a later explicit authorization gate. "
-            "Exploratory output is DEVELOPMENT evidence and cannot be presented as final thesis evidence.",
-        )
+        OnboardingDialog(self).exec()
 
     def set_page(self, index: int) -> None:
+        if not 0 <= index < len(self.pages):
+            raise IndexError("page index out of range")
         self.stack.setCurrentIndex(index)
         for button_index, button in enumerate(self.nav_buttons):
             button.setChecked(button_index == index)
@@ -200,8 +177,12 @@ class MainWindow(QMainWindow):
         elif index == 2:
             self.results_page.refresh()
         elif index == 3:
-            self.artifacts_page.refresh()
+            self.evidence_page.refresh()
 
-    def _show_artifacts_for_study(self, study_id: str) -> None:
-        self.artifacts_page.refresh()
-        self.artifacts_page.set_study(study_id)
+    def _study_created(self, study_id: str) -> None:
+        self.runs_page.refresh()
+        self.set_page(1)
+
+    def _show_evidence_for_study(self, study_id: str) -> None:
+        self.evidence_page.refresh()
+        self.evidence_page.set_study(study_id)

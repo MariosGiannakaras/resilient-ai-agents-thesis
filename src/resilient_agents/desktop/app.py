@@ -11,14 +11,16 @@ from . import APP_NAME
 from .main_window import MainWindow
 from .theme import application_stylesheet
 
+_PROTOCOL_FILE = Path("configs/protocols/protocol-v2.1-final.json")
+
 
 def find_repo_root(start: Path | None = None) -> Path:
     override = os.environ.get("RESILIENT_AGENTS_REPO_ROOT")
     if override:
         root = Path(override).expanduser().resolve()
-        if (root / "configs" / "protocols" / "protocol-v2.0-final.json").is_file():
+        if (root / _PROTOCOL_FILE).is_file():
             return root
-        raise RuntimeError("RESILIENT_AGENTS_REPO_ROOT does not contain protocol-v2.0-final.json")
+        raise RuntimeError("RESILIENT_AGENTS_REPO_ROOT does not contain protocol-v2.1-final.json")
 
     origin = (start or Path.cwd()).resolve()
     candidates = (origin, *origin.parents, Path(__file__).resolve().parents[3])
@@ -27,7 +29,7 @@ def find_repo_root(start: Path | None = None) -> Path:
         if candidate in seen:
             continue
         seen.add(candidate)
-        if (candidate / "configs" / "protocols" / "protocol-v2.0-final.json").is_file():
+        if (candidate / _PROTOCOL_FILE).is_file():
             return candidate
     raise RuntimeError(
         "cannot locate repository root; run from the thesis repository or set RESILIENT_AGENTS_REPO_ROOT"
