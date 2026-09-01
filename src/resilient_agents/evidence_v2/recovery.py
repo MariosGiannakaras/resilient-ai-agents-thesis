@@ -17,6 +17,12 @@ from .statistics import (
     student_t_mean_interval,
 )
 
+# Numerical guard only: values mathematically equal to a frozen decimal
+# threshold such as 0.10 must not be reclassified by binary floating-point
+# representation (for example 0.10000000000000003). This does not widen the
+# scientific recovery neighborhood in any practically measurable way.
+_THRESHOLD_ABS_TOLERANCE = 1e-12
+
 
 @dataclass(frozen=True)
 class RecoveryDefinition:
@@ -101,6 +107,15 @@ def _finite_series(values: Sequence[float], *, field: str) -> tuple[float, ...]:
     return tuple(result)
 
 
+def _within_frozen_tolerance(directed_gap: float, tolerance: float) -> bool:
+    return directed_gap <= tolerance or math.isclose(
+        directed_gap,
+        tolerance,
+        rel_tol=0.0,
+        abs_tol=_THRESHOLD_ABS_TOLERANCE,
+    )
+
+
 def assess_recovery(
     *,
     nominal_windows: Sequence[float],
@@ -115,6 +130,9 @@ def assess_recovery(
     reported as recovery_time; confirmation_time is the end of the final window
     required by the stability rule. If no stable run occurs, recovery_time is
     None and the observation is explicitly right-censored at the fixed horizon.
+
+    A tiny absolute floating-point guard is used only when a directed gap is
+    numerically indistinguishable from the already-frozen tolerance boundary.
     """
 
     nominal = _finite_series(nominal_windows, field="nominal_windows")
@@ -138,7 +156,7 @@ def assess_recovery(
             directed_gap = nominal_value - disturbed_value
         else:
             directed_gap = disturbed_value - nominal_value
-        within = directed_gap <= tolerance
+        within = _within_frozen_tolerance(directed_gap, tolerance)
         window_start = index * definition.window_size + 1
         window_end = (index + 1) * definition.window_size
         points.append(
