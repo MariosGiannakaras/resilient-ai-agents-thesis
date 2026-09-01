@@ -7,22 +7,23 @@ Version-controlled repository for the complete thesis lifecycle: research contex
 
 ## Project status
 
-The project is currently at the **final scientific-experiment authorization gate**.
+The project is at the final pre-experiment repository-hygiene pass immediately before the **final scientific-experiment authorization gate**.
 
 | Item | Current state |
 |---|---|
 | Master progress | **7/8 milestones complete** |
 | Scientific/pre-final implementation | **Complete** through protocol-v2.1, Study backend and pre-final readiness |
 | Accepted application | **Complete** through T-534, T-535 and T-536 |
-| Final read-only preflight | **Complete** on merged `main` |
+| Final repository hygiene | **T-537 IN_PROGRESS** — non-scientific active-tree cleanup only |
+| Final read-only preflight | **Complete** on merged `main` before T-537; cleanup does not change science |
 | Final protocol-v2.1 reserve | **Sealed** — `final_reserve_access=false` |
 | Final execution authorization | **Not granted** — `requires-explicit-t610-gate` |
-| Current gate | **T-610 BLOCKED only by separate explicit scientific authorization** |
+| Current gate | Complete T-537, then **T-610 remains blocked only by separate explicit scientific authorization** |
 | Final v2.1 outcomes | **Not generated or inspected yet** |
 | Thesis writing | **Not authorized yet**; separate pre-WP7 approval is required after accepted final evidence |
 | Standalone Windows packaging | Deferred to **T-803** after the thesis deliverable |
 
-All declared implementation/application dependencies for T-610 are complete. The next scientific action is therefore not more software development: it is the explicit authorization of the frozen final experiment.
+T-537 removes only superseded non-scientific residue from the active tree. Historical scientific protocols, configs, evidence, freeze manifests, decisions and reproducibility-critical code remain intact. After T-537 is merged and verified, the next scientific action is the explicit authorization of the frozen final experiment rather than additional software development.
 
 > `docs/context/TASKS.md` is the canonical task/dependency ledger and `docs/context/CURRENT_STATUS.md` is the authoritative compact state. The task table in this README is a human-readable snapshot only; the canonical files win if the project state changes.
 
@@ -141,6 +142,8 @@ Current accepted UI behavior includes:
 
 The application uses **Frozen** only for the scientific regime. The overall read-only Thesis state is named **Locked Thesis experiment** to avoid ambiguity.
 
+Generated UI review screenshots are CI/local QA artifacts and are not committed as active scientific evidence. Superseded historical T-528 screenshot copies remain auditable through Git history and their exact-head Actions artifact.
+
 From PowerShell on the validated Windows thesis machine, the source application can be launched with:
 
 ```powershell
@@ -155,16 +158,17 @@ Standalone Windows packaging is intentionally deferred to T-803.
 
 The remaining path is sequential and evidence-gated:
 
-1. **Authorize T-610 separately.** This is the only current pre-run gate. Authorization must be explicit; README/CI/UI/preflight completion does not grant it.
-2. **T-610 — Execute the frozen protocol-v2.1 final matrix.** No outcome-driven protocol changes are allowed.
-3. **T-611 — Validate and freeze final evidence.** Check completeness, integrity, provenance and scientific validity before accepting evidence for analysis.
-4. **T-612 — Run the predeclared statistical analysis.** Produce RQ1/RQ2/RQ3 estimands, sensitivity diagnostics and direct method contrasts from the frozen evidence.
-5. **T-613 — Produce the final figure/table/export package.** Generate the rich reproducible thesis + appendix + defense assets defined in `docs/research/T-613_THESIS_FIGURE_INVENTORY.md`.
-6. **Explicit pre-WP7 user approval.** Even accepted final evidence does not automatically authorize thesis writing.
-7. **WP7 — Thesis and defense.** Recheck current university rules, review example theses, draft the Greek thesis, create the review-ready Word document, apply corrections, freeze the thesis, and prepare/rehearse the defense deck.
-8. **WP8 — Final audit/delivery.** Bibliography/citation audit, reproducibility/privacy/licensing/delivery audit, final academic readiness and eventually the standalone Windows application package.
+1. **T-537 — Finish the final repository-hygiene pass.** Remove only superseded non-scientific residue, run the normal repository/UI validation, merge and verify `main`.
+2. **Authorize T-610 separately.** After T-537, this is the only pre-run gate. Authorization must be explicit; cleanup/README/CI/UI/preflight completion does not grant it.
+3. **T-610 — Execute the frozen protocol-v2.1 final matrix.** No outcome-driven protocol changes are allowed.
+4. **T-611 — Validate and freeze final evidence.** Check completeness, integrity, provenance and scientific validity before accepting evidence for analysis.
+5. **T-612 — Run the predeclared statistical analysis.** Produce RQ1/RQ2/RQ3 estimands, sensitivity diagnostics and direct method contrasts from the frozen evidence.
+6. **T-613 — Produce the final figure/table/export package.** Generate the rich reproducible thesis + appendix + defense assets defined in `docs/research/T-613_THESIS_FIGURE_INVENTORY.md`.
+7. **Explicit pre-WP7 user approval.** Even accepted final evidence does not automatically authorize thesis writing.
+8. **WP7 — Thesis and defense.** Recheck current university rules, review example theses, draft the Greek thesis, create the review-ready Word document, apply corrections, freeze the thesis, and prepare/rehearse the defense deck.
+9. **WP8 — Final audit/delivery.** Bibliography/citation audit, reproducibility/privacy/licensing/delivery audit, final academic readiness and eventually the standalone Windows application package.
 
-There is therefore **no additional software/application merge required before T-610** apart from ordinary documentation maintenance such as this README update.
+T-537 is the final requested repository-maintenance package before T-610. It is not a scientific amendment and does not inspect or modify final outcomes.
 
 ## Thesis/defense result assets
 
@@ -184,7 +188,7 @@ Application screenshots are suitable for illustrating the software workflow; the
 
 ## Task registry snapshot
 
-Status legend: **Complete** = accepted task finished; **Superseded** = historical task intentionally replaced and must not execute; **Blocked** = dependency/approval gate not satisfied; **Deferred** = intentionally scheduled for a later lifecycle stage.
+Status legend: **Complete** = accepted task finished; **In progress** = active bounded package; **Superseded** = historical task intentionally replaced and must not execute; **Blocked** = dependency/approval gate not satisfied; **Deferred** = intentionally scheduled for a later lifecycle stage.
 
 | WP | Task | Status | Scope |
 |---|---|---|---|
@@ -239,12 +243,13 @@ Status legend: **Complete** = accepted task finished; **Superseded** = historica
 | WP5 | T-534 | ✅ Complete | Clean protocol-v2.1 experiment-first PySide6 UI rebuild |
 | WP5 | T-535 | ✅ Complete | Pre-T610 intended-user workflow/UX hardening |
 | WP5 | T-536 | ✅ Complete | Final visual polish and richer in-app result visualization |
+| WP5 | T-537 | 🧹 In progress | Final pre-T610 repository hygiene and active-tree cleanup |
 | WP6 | T-600 | ✅ Complete · historical | Frozen protocol-v1.0 final matrix |
 | WP6 | T-601 | ✅ Complete · historical | v1.0 evidence validation/freeze |
 | WP6 | T-602 | ✅ Complete · historical | v1.0 statistical analysis |
 | WP6 | T-603 | ✅ Complete · historical | v1.0 figures/tables/artifacts |
 | WP6 | T-604 | ✅ Complete · historical | v1.0 evidence package |
-| WP6 | T-610 | 🔒 Blocked — authorization only | Execute frozen protocol-v2.1 final matrix |
+| WP6 | T-610 | 🔒 Blocked by T-537 + authorization | Execute frozen protocol-v2.1 final matrix |
 | WP6 | T-611 | 🔒 Blocked by T-610 | Validate/freeze protocol-v2.1 final evidence |
 | WP6 | T-612 | 🔒 Blocked by T-611 | Predeclared v2.1 RQ1/RQ2/RQ3 statistical analysis |
 | WP6 | T-613 | 🔒 Blocked by T-612 | Final v2.1 figures/tables/exports + thesis/defense evidence package |
@@ -277,7 +282,7 @@ tests/                                 Risk-based scientific/backend/UI regressi
 research/bibliography/                 Immutable consumed bibliography corpus
 results/runs/                          Lower-level whole-run bundles
 results/studies/                       Study-level parent lifecycle/evidence bundles
-results/thesis-final/                  Frozen final thesis evidence when authorized
+results/thesis-final/                  Historical/frozen thesis evidence namespaces; v2.1 final only after authorization
 artifacts/                             Reproducible generated figures/tables/exports
 
 thesis/                                Source material and later thesis deliverables
@@ -320,7 +325,7 @@ Important current supporting specifications include:
 - `docs/research/RQ_EVIDENCE_TRACEABILITY.md`
 - `docs/research/T-613_THESIS_FIGURE_INVENTORY.md`
 
-Historical bootstrap, UI and candidate-protocol documentation is context only where explicitly marked historical/superseded.
+Historical bootstrap, UI and candidate-protocol documentation is context only where explicitly marked historical/superseded. Superseded presentation artifacts need not remain duplicated in the active tree when Git history and recorded CI artifacts preserve the audit trail.
 
 ## Evidence and integrity principles
 
@@ -339,6 +344,6 @@ Historical bootstrap, UI and candidate-protocol documentation is context only wh
 
 The intended project chain is:
 
-> methodology/bibliography → feasibility/pilots → protocol freeze → validated Study backend/application → **explicit T-610 authorization** → frozen protocol-v2.1 final Study → evidence validation/freeze → predeclared RQ1/RQ2/RQ3 analysis → rich thesis/appendix/defense evidence package → **explicit pre-WP7 approval** → Greek thesis/review → defense presentation → final audit/delivery
+> methodology/bibliography → feasibility/pilots → protocol freeze → validated Study backend/application → final active-tree hygiene → **explicit T-610 authorization** → frozen protocol-v2.1 final Study → evidence validation/freeze → predeclared RQ1/RQ2/RQ3 analysis → rich thesis/appendix/defense evidence package → **explicit pre-WP7 approval** → Greek thesis/review → defense presentation → final audit/delivery
 
 The application is a client and presentation surface of the research backend, not the source of scientific truth.

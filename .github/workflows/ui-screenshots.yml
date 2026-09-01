@@ -1,4 +1,4 @@
-name: T-534 PySide6 UI acceptance renders
+name: PySide6 UI acceptance renders
 
 on:
   pull_request:
@@ -19,7 +19,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: t534-ui-${{ github.event.pull_request.number || github.ref }}
+  group: pyside6-ui-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -62,16 +62,16 @@ jobs:
           uv run --no-sync python -m unittest discover -s tests -p 'test_t535_*.py' -v
           uv run --no-sync python -m unittest discover -s tests -p 'test_t536_*.py' -v
 
-      - name: Render deterministic T-534 review screenshots
+      - name: Render deterministic review screenshots
         run: uv run --no-sync python scripts/render_ui_screenshots.py --output ci-ui-screenshots
 
       - name: Validate exact matched Frozen/Adaptive render
         run: uv run --no-sync python scripts/render_ui_resilience_pair.py --output ci-ui-screenshots
 
-      - name: Upload T-534 review renders
+      - name: Upload UI review renders
         uses: actions/upload-artifact@v4
         with:
-          name: t534-ui-review-${{ github.sha }}
+          name: pyside6-ui-review-${{ github.sha }}
           path: ci-ui-screenshots/
           if-no-files-found: error
           retention-days: 14

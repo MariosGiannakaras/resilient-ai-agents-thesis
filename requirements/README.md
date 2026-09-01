@@ -1,5 +1,5 @@
 # Application-only requirements
 
-The root `pyproject.toml` and `uv.lock` are historical scientific-authority inputs and are intentionally not modified by T-528 UI work.
+The root `pyproject.toml` and `uv.lock` remain the locked scientific/runtime authority and are not rewritten by desktop presentation work.
 
-`application-ui.txt` is a presentation/runtime overlay for the PySide6 desktop application. CI restores the historical locked project environment first, then installs this exact-pinned overlay into that environment without updating the root lock.
+`application-ui.txt` is the exact-pinned presentation/runtime overlay for the accepted PySide6 desktop application. CI restores the locked project environment first, then installs this overlay without updating the root lock.
