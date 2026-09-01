@@ -1,7 +1,6 @@
 """Runtime-only GridWorld presentation instrumentation for the desktop worker.
 
-This module deliberately does not modify protocol-v2 driver sources. The T-528
-DEVELOPMENT worker may temporarily wrap public runtime objects inside its own
+The DEVELOPMENT worker may temporarily wrap public runtime objects inside its own
 subprocess. Scientific methods are called first; presentation copying happens
 afterwards and every presentation failure is swallowed. Original runtime objects
 are restored on context exit.
@@ -27,12 +26,15 @@ class LiveJobIdentity:
     method_id: str
     root_id: str
     layout_id: str
+    condition_id: str | None = None
 
     def __post_init__(self) -> None:
         for field_name in ("phase", "method_id", "root_id", "layout_id"):
             value = getattr(self, field_name)
             if not isinstance(value, str) or not value.strip():
                 raise ValueError(f"{field_name} must be a non-empty string")
+        if self.condition_id is not None and not self.condition_id.strip():
+            raise ValueError("condition_id must be None or a non-empty string")
 
 
 def live_identity_from_job_payload(payload: dict) -> LiveJobIdentity | None:
@@ -51,12 +53,22 @@ def live_identity_from_job_payload(payload: dict) -> LiveJobIdentity | None:
     if not isinstance(method, dict) or not isinstance(root, dict) or not isinstance(layout, dict):
         return None
     phase = "phase-a" if job_type == "phase-a-training" else "phase-b"
+    condition_id: str | None = None
+    if phase == "phase-b":
+        condition = payload.get("condition")
+        if not isinstance(condition, dict):
+            return None
+        raw_condition_id = condition.get("condition_id")
+        if not isinstance(raw_condition_id, str) or not raw_condition_id.strip():
+            return None
+        condition_id = raw_condition_id
     try:
         return LiveJobIdentity(
             phase=phase,
             method_id=str(method["method_id"]),
             root_id=str(root["root_id"]),
             layout_id=str(layout["layout_id"]),
+            condition_id=condition_id,
         )
     except (KeyError, TypeError, ValueError):
         return None
@@ -164,6 +176,7 @@ def instrument_gridworld_for_live_presentation(
                 interaction_index=interaction_index[key],
                 transition=transition,
                 branch=branch,
+                condition_id=identity.condition_id,
             )
         except Exception:
             pass
