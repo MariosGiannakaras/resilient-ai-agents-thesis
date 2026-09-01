@@ -148,13 +148,21 @@ class T536VisualPolishTests(unittest.TestCase):
                 method_ids=("q_learning", "sarsa"),
                 method_statuses=(("q_learning", "Running"), ("sarsa", "Pending")),
             )
+            page.resize(1118, 620)
+            page.show()
+            self.app.processEvents()
+            # Exercise the real failure mode: replacement labels after the page
+            # is already visible must themselves become visible.
             page._refresh_method_orientation(item, current_method_id="q_learning")
+            self.app.processEvents()
             labels = [
                 label
                 for label in page.method_overview.findChildren(QLabel)
                 if label.objectName() in {"MethodStatus", "CurrentMethodStatus"}
             ]
             self.assertEqual(len(labels), 5)
+            self.assertTrue(page.method_overview.isVisible())
+            self.assertTrue(all(label.isVisible() and label.width() > 0 for label in labels))
             self.assertEqual(page.current_method_label.text(), "Method 1 of 5 · Q-Learning")
             self.assertEqual(
                 len([label for label in labels if label.objectName() == "CurrentMethodStatus"]),
