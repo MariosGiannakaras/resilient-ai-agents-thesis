@@ -1,7 +1,7 @@
 """Intended-user hardening and final visual polish for the accepted Run workspace."""
 from __future__ import annotations
 
-from PySide6.QtWidgets import QLabel, QSizePolicy, QWidget
+from PySide6.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QWidget
 
 from .protocol import FrozenProtocolSummary
 from .run_workspace import RunWorkspacePage as _RunWorkspacePage
@@ -21,33 +21,47 @@ class RunWorkspacePage(_RunWorkspacePage):
 
         root = self.layout()
         if root is not None:
-            root.setContentsMargins(28, 18, 30, 22)
-            root.setSpacing(9)
+            root.setContentsMargins(28, 18, 30, 20)
+            root.setSpacing(8)
 
-        self.current_method_label = QLabel(
-            "Five-method Thesis sequence · waiting for a live presentation frame"
-        )
-        self.current_method_label.setObjectName("CurrentMethod")
-        self.current_method_label.setAccessibleName("Current method in live presentation")
-        self.current_method_label.setWordWrap(True)
         status_frame = self.progress.parentWidget()
         status_layout = status_frame.layout() if status_frame is not None else None
-        if status_layout is not None:
-            status_layout.insertWidget(2, self.current_method_label)
+        top_layout = status_layout.itemAt(0).layout() if status_layout is not None else None
 
-        # The GridWorld pair is the primary visual evidence on Run. The previous
-        # cap left too much unused laptop space; this remains responsive rather
-        # than forcing a fixed pixel canvas.
-        self.grid.setMinimumHeight(285)
-        self.grid.setMaximumSize(900, 470)
+        self.current_method_label = QLabel("Awaiting live method")
+        self.current_method_label.setObjectName("CurrentMethod")
+        self.current_method_label.setAccessibleName("Current method in live presentation")
+        self.current_method_label.setWordWrap(False)
+        if top_layout is not None:
+            # Keep current-method orientation in the existing stage row so the
+            # compact status card does not steal height from the primary GridWorld.
+            top_layout.insertWidget(1, self.current_method_label)
+
+        self.method_overview = QWidget(status_frame)
+        self.method_overview.setObjectName("MethodOverview")
+        self.method_overview_layout = QHBoxLayout(self.method_overview)
+        self.method_overview_layout.setContentsMargins(0, 0, 0, 0)
+        self.method_overview_layout.setSpacing(6)
+        if status_layout is not None:
+            status_layout.insertWidget(
+                status_layout.indexOf(self.progress) + 1,
+                self.method_overview,
+            )
+
+        # The GridWorld pair is the primary visual evidence on Run. The accepted
+        # baseline rendered roughly 205 px-square panels at 1366x768; this target
+        # allows ~260 px-square panels while remaining responsive and unclipped.
+        self.grid.setMinimumHeight(260)
+        self.grid.setMaximumSize(980, 500)
         self.grid.setSizePolicy(
             QSizePolicy.Policy.Expanding,
             QSizePolicy.Policy.Expanding,
         )
         live_layout = self.grid.parentWidget().layout() if self.grid.parentWidget() else None
         if live_layout is not None:
-            live_layout.setSpacing(6)
+            live_layout.setSpacing(5)
 
+        self._clear_inherited_method_strip()
         self._refresh_method_orientation(self._selected_item(), current_method_id=None)
 
     def _render_status(self, item: StudyListItem | None) -> None:
@@ -61,12 +75,23 @@ class RunWorkspacePage(_RunWorkspacePage):
                 "controlled by the separate backend authorization gate and cannot "
                 "be granted from this desktop application."
             )
-        if hasattr(self, "current_method_label"):
+        if hasattr(self, "method_overview_layout"):
+            self._clear_inherited_method_strip()
             self._refresh_method_orientation(item, current_method_id=None)
 
-    def _detach_method_strip(self) -> None:
+    def _clear_inherited_method_strip(self) -> None:
+        """Remove base strip labels after reading their durable status projection."""
         while self.method_strip.count():
             entry = self.method_strip.takeAt(0)
+            widget = entry.widget()
+            if widget is not None:
+                widget.hide()
+                widget.setParent(None)
+                widget.deleteLater()
+
+    def _clear_method_overview(self) -> None:
+        while self.method_overview_layout.count():
+            entry = self.method_overview_layout.takeAt(0)
             widget = entry.widget()
             if widget is not None:
                 widget.hide()
@@ -79,7 +104,7 @@ class RunWorkspacePage(_RunWorkspacePage):
         *,
         current_method_id: str | None,
     ) -> None:
-        self._detach_method_strip()
+        self._clear_method_overview()
         status_by_id = {} if item is None else dict(item.method_statuses)
         selected = set() if item is None else set(item.method_ids)
 
@@ -101,20 +126,14 @@ class RunWorkspacePage(_RunWorkspacePage):
                 "Durable method lifecycle status. Highlighting identifies the method "
                 "shown by the current live presentation frame; it is not a score or ranking."
             )
-            self.method_strip.addWidget(label)
-        self.method_strip.addStretch(1)
+            self.method_overview_layout.addWidget(label)
+        self.method_overview_layout.addStretch(1)
 
-        if not hasattr(self, "current_method_label"):
-            return
         if item is None:
-            self.current_method_label.setText(
-                "Five-method Thesis sequence · final scientific execution is gated"
-            )
+            self.current_method_label.setText("Final execution gated")
             return
         if current_method_id is None:
-            self.current_method_label.setText(
-                "Method progress · awaiting a live presentation frame"
-            )
+            self.current_method_label.setText("Awaiting live method")
             return
 
         ordered_ids = [method.method_id for method in self.protocol.methods]
@@ -122,7 +141,7 @@ class RunWorkspacePage(_RunWorkspacePage):
             index = ordered_ids.index(current_method_id) + 1
         except ValueError:
             self.current_method_label.setText(
-                f"Current live method · {self._method_name(current_method_id)}"
+                f"Current · {self._method_name(current_method_id)}"
             )
             return
         self.current_method_label.setText(
@@ -131,7 +150,7 @@ class RunWorkspacePage(_RunWorkspacePage):
 
     def refresh_live(self) -> None:
         super().refresh_live()
-        if not hasattr(self, "current_method_label"):
+        if not hasattr(self, "method_overview_layout"):
             return
         item = self._selected_item()
         frame = self._latest_frame
