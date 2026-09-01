@@ -34,19 +34,25 @@ class GridWorldLiveWidget(QWidget):
             self.setAccessibleDescription("No live GridWorld frame is available.")
         elif frame.comparison is not None:
             pair = frame.comparison
+            condition = pair.adaptive.condition_id or "unavailable"
             self.setAccessibleDescription(
-                f"Matched Frozen and Adaptive GridWorld presentation at interaction "
-                f"{pair.adaptive.interaction_index}. Frozen true state "
-                f"{pair.frozen.true_state}, executed action {pair.frozen.executed_action}, "
-                f"reward {pair.frozen.reward:g}; Adaptive true state "
-                f"{pair.adaptive.true_state}, executed action {pair.adaptive.executed_action}, "
-                f"reward {pair.adaptive.reward:g}; goal {pair.adaptive.goal}."
+                f"Matched Frozen and Adaptive GridWorld presentation for condition "
+                f"{condition} at interaction {pair.adaptive.interaction_index}. Frozen, "
+                f"learning off, true state {pair.frozen.true_state}, intended action "
+                f"{pair.frozen.intended_action}, executed action "
+                f"{pair.frozen.executed_action}, reward {pair.frozen.reward:g}; "
+                f"Adaptive, learning continues, true state {pair.adaptive.true_state}, "
+                f"intended action {pair.adaptive.intended_action}, executed action "
+                f"{pair.adaptive.executed_action}, reward {pair.adaptive.reward:g}; "
+                f"goal {pair.adaptive.goal}."
             )
         else:
             self.setAccessibleDescription(
                 f"{frame.width} by {frame.height} GridWorld. Agent true state "
-                f"{frame.true_state}; goal {frame.goal}; interaction {frame.interaction_index}; "
-                f"executed action {frame.executed_action}; reward {frame.reward:g}."
+                f"{frame.true_state}; goal {frame.goal}; interaction "
+                f"{frame.interaction_index}; intended action "
+                f"{frame.intended_action}; executed action {frame.executed_action}; "
+                f"reward {frame.reward:g}."
             )
         self.updateGeometry()
         self.update()
@@ -79,8 +85,18 @@ class GridWorldLiveWidget(QWidget):
         panel_width = max(1.0, (full.width() - gap) / 2.0)
         left = QRectF(full.left(), full.top(), panel_width, full.height())
         right = QRectF(left.right() + gap, full.top(), panel_width, full.height())
-        self._paint_grid(painter, comparison.frozen, left, title="Frozen disturbed")
-        self._paint_grid(painter, comparison.adaptive, right, title="Adaptive disturbed")
+        self._paint_grid(
+            painter,
+            comparison.frozen,
+            left,
+            title="Frozen — learning off",
+        )
+        self._paint_grid(
+            painter,
+            comparison.adaptive,
+            right,
+            title="Adaptive — learning continues",
+        )
 
     @staticmethod
     def _paint_grid(
@@ -193,7 +209,12 @@ class GridWorldLiveWidget(QWidget):
         if direction is None:
             painter.setPen(QColor("#FFFFFF"))
             painter.drawText(
-                QRectF(center.x() - radius, center.y() - radius, radius * 2, radius * 2),
+                QRectF(
+                    center.x() - radius,
+                    center.y() - radius,
+                    radius * 2,
+                    radius * 2,
+                ),
                 Qt.AlignmentFlag.AlignCenter,
                 "A",
             )
@@ -224,6 +245,4 @@ class GridWorldLiveWidget(QWidget):
         painter.drawLine(tail, tip)
         painter.setBrush(QBrush(QColor("#FFFFFF")))
         painter.setPen(Qt.PenStyle.NoPen)
-        painter.drawPolygon(
-            QPolygonF([tip, head_left, head_right])
-        )
+        painter.drawPolygon(QPolygonF([tip, head_left, head_right]))
