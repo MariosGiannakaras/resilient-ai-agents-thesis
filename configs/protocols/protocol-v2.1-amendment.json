@@ -4,6 +4,7 @@
   "protocol_id": "protocol-v2.1",
   "amends": "configs/protocols/protocol-v2.0-final.json",
   "amends_decision_id": "DEC-058",
+  "tracking_task_id": "T-533",
   "scientific_status": "pre-outcome-final-amendment",
   "final_reserve_access": false,
   "unchanged_from_v2_0": [
@@ -82,7 +83,7 @@
     ]
   },
   "gate": {
-    "required_before_T_610": "T-530 implementation, validation, documentation reconciliation, affected CI and objective review",
+    "required_before_T_610": "T-533 implementation, validation, documentation reconciliation, affected CI and objective review",
     "T_610_authorized_by_this_amendment": false
   }
 }
