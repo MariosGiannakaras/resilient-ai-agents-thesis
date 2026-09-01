@@ -94,35 +94,54 @@ The final reserve has not been executed or inspected.
 
 ## Application architecture and current restart
 
-DEC-059 is the current application authority: **PySide6 / Qt 6 Widgets** over the framework-neutral Study backend. Historical Streamlit/React/NiceGUI implementations are superseded and exist only as history/reference.
+DEC-059 remains the **PySide6 / Qt 6 Widgets framework/runtime authority** over the framework-neutral Study backend. DEC-061 is the current T-534 product/UX amendment. Historical Streamlit/React/NiceGUI implementations are superseded and exist only as history/reference.
 
-The previously paused UI implementation is not the basis for continued work. The next UI implementation must start from a fresh current `main`, read the current protocol-v2.1/scientific contracts, and rebuild the presentation layer from today's project state rather than carrying forward pre-v2.1 assumptions.
+The T-534 application is **experiment-first**. Its primary user-facing architecture is:
+
+> **Experiment / Run / Results / Evidence**
+
+The user should understand the scientific experiment before StudyStore/jobs/artifacts:
+
+- all five final methods are fixed in the Thesis experiment;
+- Phase A is nominal learning;
+- each exact Phase-A state enters matched Phase B;
+- Frozen means learning off and Adaptive means learning continues;
+- Frozen/Adaptive are simultaneous matched regimes, not algorithms or alternatives;
+- Results answer RQ1 Learning, RQ2 Resilience/Adaptation and RQ3 Recovery;
+- Evidence exposes validation/exports/readiness first and reproducibility internals on demand.
+
+The previously paused/historical UI implementation is not the basis for continued presentation work. T-534 starts from fresh current `main` and derives its design from current protocol-v2.1/scientific contracts and DEC-061 rather than pre-v2.1 assumptions.
 
 Existing `src/resilient_agents/desktop/` code must be classified before replacement:
 
-- preserve UI-neutral read-model, Study/evidence adapter, provenance and execution-policy behavior that encodes current backend contracts;
-- presentation widgets/windows/pages/styles may be replaced from scratch as needed;
-- never move scientific reduction, thresholds, RNG, checkpoint identity or finalization into Qt state;
+- preserve UI-neutral Study/results/evidence read models, execution supervision/policy, live-observer/event and provenance behavior that still encodes current backend contracts;
+- reuse truthful GridWorld drawing primitives where useful;
+- presentation widgets/windows/pages/styles/navigation/copy may be replaced from scratch as needed;
+- remove active protocol-v2.0/DEC-058-only/T-528 presentation assumptions;
+- never move scientific reduction, thresholds, recovery decisions, intervals, RNG, checkpoint identity or finalization into Qt state;
 - UI displays validated stored evidence and DEVELOPMENT/synthetic fixtures only during implementation/testing;
 - no UI action may bypass the separate final-scientific-experiment authorization gate.
+
+Run must prioritize the GridWorld: one large nominal panel in Phase A and two exact-matched large Frozen/Adaptive panels side-by-side in Phase B. Results are organized explicitly by RQ1/RQ2/RQ3. Technical IDs, roots/layouts, states/observations, hashes and lineage use progressive disclosure rather than dominate primary screens.
 
 Final standalone Windows packaging remains post-thesis/deferred and is not a blocker for the UI restart.
 
 ## Repository state and hygiene
 
-`main` is the only active implementation base. Historical scientific/evidence history remains in Git and must not be rewritten. Remote merged/stale working branches may be removed after confirming they contain no unique required work; deliberate archive/provenance branches may remain.
+`main` is the only implementation base. Historical scientific/evidence history remains in Git and must not be rewritten. Remote merged/stale working branches may be removed after confirming they contain no unique required work; deliberate archive/provenance branches may remain.
 
-For the UI restart, prefer one fresh branch from current `main` and one corresponding PR. Do not continue an old paused worktree or branch.
+For the UI implementation, use one fresh branch from current `main` and one corresponding PR. Do not continue an old paused worktree or branch.
 
 ## Current lifecycle
 
 Canonical concrete state is in `TASKS.md` and `CURRENT_STATUS.md`.
 
 1. Protocol-v2.1 scientific authority, recovery/comparison amendment and pre-final readiness hardening are complete.
-2. Repository cleanup and fresh UI restart are allowed without opening the final reserve.
-3. Final scientific execution remains blocked by a separate explicit authorization gate.
-4. Validation/analysis/evidence packaging follow only after the authorized final execution.
-5. Explicit user approval is still required before thesis Results/Discussion/WP7 writing.
-6. Final Windows standalone packaging remains deferred until after the thesis.
+2. DEC-061 now fixes the experiment-first T-534 product/UX contract without changing science.
+3. T-534 UI implementation is allowed without opening the final reserve.
+4. Final scientific execution remains blocked by a separate explicit authorization gate.
+5. Validation/analysis/evidence packaging follow only after the authorized final execution.
+6. Explicit user approval is still required before thesis Results/Discussion/WP7 writing.
+7. Final Windows standalone packaging remains deferred until after the thesis.
 
 No green CI, UI screenshot, synthetic smoke, repository cleanup or completed implementation task by itself authorizes the final scientific experiment or thesis Results/Discussion writing.

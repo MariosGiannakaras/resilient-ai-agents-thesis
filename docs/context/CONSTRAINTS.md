@@ -41,11 +41,16 @@
 
 ## Application architecture
 
-- DEC-059 is the current application architecture authority: Python-native PySide6 / Qt 6 Widgets over the framework-neutral Study backend.
+- DEC-059 is the current framework/runtime authority: Python-native PySide6 / Qt 6 Widgets over the framework-neutral Study backend.
+- DEC-061 is the current T-534 product/UX authority: the user-facing application is experiment-first with primary surfaces **Experiment / Run / Results / Evidence**.
 - Historical Streamlit/React/NiceGUI application implementations are superseded history, not current implementation guidance.
 - The current UI restart must begin from fresh `main` and may replace the presentation layer from scratch. Existing pre-restart widgets/layouts/styles/screenshots are reference/history only, not design authority.
-- Preserve UI-neutral Study backend, evidence read-model, execution-policy and provenance contracts unless a concrete defect requires a bounded backend fix.
-- Qt presentation state never owns scientific identity, RNG, checkpoint state, experiment configuration, evidence reduction, recovery thresholds or finalization.
+- Preserve UI-neutral Study backend, results/evidence read-model, execution-supervision/policy, live-observer and provenance contracts unless a concrete defect requires a bounded backend fix.
+- The final Thesis experiment always contains all five frozen methods; method selection is DEVELOPMENT-only where the backend supports it.
+- Frozen and Adaptive are matched Phase-B regimes of the same method, not algorithms or mutually exclusive UI choices.
+- Run gives primary space to one large Phase-A GridWorld or two exact-matched Phase-B Frozen/Adaptive GridWorlds. Administrative Study/job/artifact metadata is secondary.
+- Results are organized by RQ1/RQ2/RQ3 and consume validated stored outputs only; Evidence is user-friendly first and exposes hashes/lineage under progressive disclosure.
+- Qt presentation state never owns scientific identity, RNG, checkpoint state, experiment configuration, evidence reduction, recovery thresholds/status/time, intervals/direct comparisons or finalization.
 - The UI presents validated stored evidence; it does not recompute scientific estimands from raw evidence.
 - Local single-user operation; no required cloud/public deployment, authentication, mobile app or distributed orchestration.
 - Root `run_app.bat` remains the repository-checkout launcher unless the accepted UI rebuild deliberately replaces it with an equivalent supported launcher.
@@ -55,10 +60,15 @@
 
 - Normal use must be understandable to a non-programmer with no prior RL/model/configuration/repository knowledge.
 - Use plain-language primary labels, technical IDs as secondary detail, concise helper text, visible units/ranges/consequences, tooltips/contextual help and progressive disclosure.
-- Required workflow information cannot exist only in a tooltip.
+- Required workflow/scientific information cannot exist only in a tooltip.
+- Primary navigation remains limited to Experiment / Run / Results / Evidence; Help/onboarding and technical/provenance detail are contextual/secondary.
+- Primary live information is method, phase, condition, interaction, intended/executed action and reward; roots/layouts/states/observations/IDs/flags/hashes are technical detail unless needed for an error.
+- RQ1 uses real stored learning/probe trajectory information where scientifically supported; the UI does not invent a new aggregate solely for visualization.
+- RQ3 never represents a right-censored horizon 256 as an observed recovery time.
+- The UI never invents winner/best-algorithm/significance/statistical-superiority language unsupported by stored validated analysis.
 - Status meaning uses text plus consistent symbols/icons and accessible semantic visual treatment; color alone never carries essential meaning.
 - Empty/loading/disabled/warning/error/unavailable states are actionable and self-explanatory.
-- The interface should be modern, compact and information-dense without becoming visually noisy.
+- The interface should be modern, compact and information-dense without becoming visually noisy; permanent cards/banners/help text are restrained.
 - Animation/interpolation must never fabricate progress, trajectories or data and must never alter scientific timing/actions/RNG.
 - Development/synthetic/test data must be clearly labelled and never visually promoted as thesis evidence.
 

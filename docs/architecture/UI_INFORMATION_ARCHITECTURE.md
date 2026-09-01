@@ -1,234 +1,337 @@
 # UI Information Architecture
 
-**Status:** current application information/interaction contract for the clean PySide6 / Qt 6 Widgets rebuild under DEC-059. Presentation composition may be redesigned, but scientific and Study/evidence boundaries below are authoritative.
+**Status:** current application information/interaction contract for T-534 under DEC-059 + DEC-061.  
+**Scientific authority:** DEC-058 historical freeze, DEC-060 amendment, `configs/protocols/protocol-v2.1-final.json`.  
+**Application framework:** PySide6 / Qt 6 Widgets.
 
-The application is a client of the framework-neutral `StudyService`/stored-evidence backend. It exposes research intent, execution state and validated results while the backend owns scientific mechanics such as roots, exact checkpoints, FN/FD/AN/AD construction, validation, root reduction, recovery semantics and evidence lineage.
+The application is an **experiment-first thin client** over the framework-neutral Study/evidence backend. The user-facing hierarchy explains the scientific experiment; the backend continues to own recipes, jobs, roots, checkpoints, branch construction, validation, aggregation, recovery semantics, analysis, evidence finalization and authorization.
 
 ## Clean-rebuild rule
 
-The paused/pre-v2.1 UI implementation is not the implementation base for continuation. Start from fresh current `main` and classify existing `src/resilient_agents/desktop/` code before editing:
+The historical/pre-v2.1 PySide6 presentation is reference only. Start T-534 from fresh current `main` and classify existing `src/resilient_agents/desktop/` code before editing:
 
-- preserve UI-neutral Study/evidence read-model, provenance and execution-policy behavior that remains correct;
-- windows/pages/widgets/styles/navigation may be rebuilt from scratch;
-- old screenshots/layouts are reference/history only;
-- never move scientific configuration, RNG, checkpoint identity, estimand calculation, recovery thresholds or evidence finalization into Qt state.
+- preserve still-correct UI-neutral Study/evidence read models, execution supervision, live-observer boundaries and provenance adapters;
+- reuse Qt drawing primitives when they remain truthful and useful;
+- windows/pages/navigation/layout/theme/copy may be rebuilt from scratch;
+- old screenshots are historical visual evidence, not layout authority;
+- remove active protocol-v2.0/T-528 presentation assumptions;
+- never move scientific configuration, RNG, checkpoint identity, root/layout reduction, estimand calculation, recovery decisions or evidence finalization into Qt state.
 
-## Primary product model
+## Primary navigation
 
-There are two clearly separated experiences.
+Use four primary destinations only:
 
-### Frozen Thesis Study
+1. **Experiment** — understand/review the experiment; configure DEVELOPMENT work where permitted.
+2. **Run** — execute/observe supported work with the GridWorld as the dominant live surface.
+3. **Results** — inspect validated stored outputs organized explicitly by RQ1/RQ2/RQ3.
+4. **Evidence** — inspect validation/export/readiness state and reproducibility details.
 
-The confirmatory protocol-v2.1 Study is predeclared and currently **execution-locked** pending the separate explicit final-scientific-experiment authorization.
+Help/onboarding is available from the header and contextually within these surfaces. Study history, artifacts, provenance and technical identifiers are secondary/drill-down content rather than extra primary navigation destinations.
 
-Primary journey before authorization:
+## Global shell
 
-> **Overview → Protocol/Study review → Execution lock explanation → Existing validated evidence/results/export when available**
+Keep the shell visually restrained:
 
-After legitimate authorization/execution later, the same product area may expose:
+- compact app identity and current evidence/mode state;
+- four-item navigation;
+- contextual Help/onboarding affordance;
+- concise final-experiment lock indication when relevant;
+- no permanent large sidebar blocks for protocol IDs, task IDs or administrative state.
 
-> **Run/Monitor → Validate → Results → Export**
+The shell should remain usable at 1366×768 and comfortable at 1440×900. Important status combines text + icon/symbol + accessible semantic treatment; color alone is insufficient.
 
-The UI never grants or synthesizes authorization.
+## Experiment
 
-### DEVELOPMENT / Exploratory Study
+### Purpose
 
-Primary configurable journey:
+Explain **what is being tested and why** before exposing orchestration details.
 
-> **Configure → Review → Create → Run → Monitor → Results/Compare → History/Artifacts/Export**
+The scientific story should be understandable without StudyStore/job terminology:
 
-Only authorized development settings are editable. DEVELOPMENT/synthetic evidence remains visibly non-confirmatory.
+> five methods learn nominally → exact learned state enters matched Phase B → disturbances are applied → Frozen and Adaptive deployments are compared → RQ1/RQ2/RQ3 are answered from validated stored evidence.
 
-## Recommended primary navigation
+### Frozen Thesis experiment
 
-A compact PySide6 navigation model should cover:
+The final Thesis experiment is read-only. It must clearly show:
 
-1. **Home / Studies** — durable Study state, next actions and recent studies;
-2. **New / Exploratory Study** — approved DEVELOPMENT configuration and review;
-3. **Run / Monitor** — truthful current execution and lightweight live views;
-4. **Results / Compare** — RQ-aligned stored scientific outputs;
-5. **History / Artifacts** — study/job/run lineage, states and provenance;
-6. **Export / Evidence** — deterministic evidence package/result index/tables;
-7. **Help / About** — onboarding, terminology and reproducibility details.
+- protocol-v2.1 identity and final-execution lock;
+- all five fixed methods: Q-Learning, SARSA, DQN, PPO, Dyna-Q+;
+- concise accurate method explanations;
+- Phase A as independent nominal learning with a common actual-environment-interaction fairness budget;
+- exact checkpoint handoff into matched Phase B;
+- disturbance/condition families at a human-readable level;
+- Frozen = learning off and Adaptive = learning continues;
+- Frozen and Adaptive as **paired deployment regimes of each method**, never algorithm choices;
+- an understandable FN/FD/AN/AD explanation;
+- how the experiment maps to RQ1 Learning, RQ2 Resilience/Adaptation and RQ3 Recovery;
+- the fact that scientific settings are frozen and cannot be edited from the UI.
 
-Labels may be refined during implementation if the information model remains clear and complete.
+The user cannot deselect any of the five methods in the final Thesis experiment.
 
-## Self-explanatory UX contract
+Exact root IDs, layout IDs, config IDs, checkpoint hashes, recipe hashes and authorization strings belong under **Technical details** unless they are needed to explain an error.
 
-The application must be usable by a non-programmer with no prior RL/model/configuration/repository knowledge.
+### DEVELOPMENT / Exploratory experiment
 
-- Human-readable primary labels; technical IDs are secondary reproducibility detail.
-- Explain retained methods, uncertainty/change conditions, Frozen/Adaptive regimes, study/evidence classes, metrics and interval meanings.
-- Use concise helper text, info/tooltips and contextual/expandable help. Required workflow information cannot exist only in tooltips.
-- Use consistent terminology across review, execution, history, results and export.
-- Important status combines understandable text + stable icon/symbol + accessible semantic visual treatment; color alone is insufficient.
-- Warning/error/locked states state what happened, what is affected and the useful next action.
-- Empty/loading/disabled/unavailable states explain why and what can be done next.
-- Confirm only destructive/high-impact operations; routine interaction remains friction-light.
-- Progressive disclosure hides implementation detail, not scientific meaning.
-- Never fabricate telemetry, trajectory motion, progress, metrics, comparisons or completed artifacts.
+DEVELOPMENT configuration is a sub-flow inside Experiment:
 
-## Scientific configuration boundary
+> **Configure → Review → Create**
 
-### Frozen protocol-v2.1 mode
+Only settings explicitly supported by the backend are editable. Method selection may be offered here when supported. DEVELOPMENT scope must never expose final-reserve roots/layouts/outcomes and must remain visibly non-confirmatory.
 
-The UI loads immutable recipe/read-model values and may not silently alter:
+### Pre-run review
 
-- task/reward/gamma/information semantics;
-- retained method configurations;
-- roots/seeds and held-out final layouts;
-- uncertainty/change families/severities/mappings;
-- Phase-A or Phase-B interaction budgets/probe cadence;
-- FN/FD/AN/AD branch contract/checkpoint origins;
-- recovery window/tolerance/stability/censoring policy;
-- root/layout aggregation or statistical contrast/interval policy.
+Before creation or supported execution, show a readable resolved summary of purpose/evidence class, methods, phases/conditions, locked versus selected settings, validation blockers and DEVELOPMENT/non-confirmatory status. For the final Thesis experiment, show the final-execution lock rather than an editable authorization control. Backend job counts and exact identities are secondary detail.
 
-The UI shows those values readably and explains why they are locked.
+## Run
 
-### DEVELOPMENT / exploratory mode
+### Purpose
 
-Only explicitly permitted development settings are editable. Every generated Study/configuration keeps stable identity/provenance and cannot later masquerade as confirmatory evidence.
+Make the scientific process visible without allowing the visualization to influence it.
 
-- distinguish fixed, editable, advanced and unavailable settings;
-- validate method-specific settings and compatibility before Study creation;
-- avoid a free-form panel capable of constructing invalid protocol combinations;
-- never expose “try another seed” as a way to replace a poor scientific outcome.
+The hierarchy is:
 
-## Study review / pre-run review
+1. current method / phase / condition and truthful execution state;
+2. large GridWorld visualization;
+3. primary live transition facts;
+4. compact progress for all five methods;
+5. technical/backend detail on demand.
 
-Before creation/execution, present a readable resolved Study summary:
+Study history tables, artifact inventories and raw job metadata do not occupy the main Run workspace.
 
-- purpose, evidence class and protocol version;
-- selected/permitted methods and roles;
-- layouts/conditions at a human-readable level;
-- planned independent roots and scientific job/unit counts;
-- Phase-A/Phase-B stages;
-- known resource implications where evidence supports them;
-- locked versus user-selected settings;
-- validation/blocking issues;
-- explicit label for DEVELOPMENT/non-thesis evidence;
-- for frozen final Study, final-experiment authorization/lock state.
+### Five-method status strip
 
-The user does not manually enumerate FN/FD/AN/AD or checkpoint IDs.
+Show a compact persistent status for the five retained methods when the current experiment contains them. Each method can be Pending / Running / Complete / Failed (or the truthful backend equivalent), with text/icon semantics. The status strip is navigation/context, not a scientific ranking.
 
-## Home / Studies
+For DEVELOPMENT studies containing a subset, show only the actual configured methods while retaining a clear DEVELOPMENT label.
 
-Purpose: durable Study state and objective next actions.
+### Phase A — Nominal learning
 
-- frozen Thesis Study card/state, including execution lock when applicable;
-- current/ready/running/recent DEVELOPMENT studies;
-- protocol/evidence class/frozen state;
-- current stage and truthful completed/failed/skipped/pending counts;
-- actionable failures/warnings;
-- quick actions to create/open/inspect results/evidence.
+For the current method:
 
-Resource status remains a lightweight current snapshot, not an observability platform.
+- show one **large nominal GridWorld** as the dominant surface;
+- label `Phase A — Nominal learning`;
+- show truthful interaction/job progress from backend counters only;
+- primary transition fields: method, phase, interaction, intended action → executed action, reward;
+- condition is omitted/nominal where not applicable.
 
-## Run / Monitor
+Episode, environment step, root/layout identity, true state, delivered observation, flags and IDs are secondary technical detail.
 
-Purpose: observe real execution without influencing it.
+### Phase B — Frozen vs Adaptive
 
-- truthful Study stage/job state from durable backend data;
-- method/root/layout/condition currently executing when useful;
-- progress based on real scientific interaction/job counters, never elapsed-time animation pretending to be progress;
-- read-only GridWorld/trajectory data only when scientifically isolated backend observation is available;
-- real warnings/errors/events and lightweight resources;
-- cancellation/retry only where lifecycle semantics permit; unsupported controls remain explicit.
+When exact matched presentation frames exist, show two **large side-by-side** panels simultaneously:
 
-If historical evidence lacks step-level replay, say so rather than synthesizing it.
+- **Frozen — learning off**
+- **Adaptive — learning continues**
 
-## History / Artifacts
+They must share the authoritative matched method/root/layout/interaction identity. Never display unrelated frames as a pair. If exact pairing is temporarily unavailable because the lossy presentation stream dropped frames, show an explicit unavailable/waiting state rather than fabricate synchronization.
 
-- Search/filter by Study, method, configuration/root/layout/condition, state, evidence class and date when available.
-- Completed/scientific-failed/infrastructure-failed/skipped/cancelled/interrupted units remain attributable.
-- Study-first primary hierarchy with drill-down to jobs/runs/artifacts.
-- Retry/rerun respects scientific identity; no favorable-seed replacement shortcut.
-- Provenance, checksums, recipe/checkpoint/result identifiers use progressive disclosure.
+Primary Phase-B context:
 
-## Results / Compare
+- method;
+- `Phase B — Disturbance / resilience`;
+- condition/disturbance;
+- interaction;
+- Frozen intended → executed action and reward;
+- Adaptive intended → executed action and reward.
 
-The UI consumes validated stored analysis/read-model outputs. It never recomputes scientific estimands from raw evidence.
+Technical disclosure may additionally show true states, delivered observations, branch identifiers, root/layout IDs, regime IDs, disturbance flags, change-event IDs and presentation sequence.
 
-### RQ1 — Nominal learning
+### Live-science boundary
 
-Show, where available:
+Live events are transient, lossy and presentation-only. They may drop frames and may be rendered/interpolated only for visual continuity where that cannot imply fabricated scientific transitions. They never:
 
-- final standardized Phase-A no-learning performance;
-- learning trajectory/time-average summary;
-- root-level distributions and explicit denominators;
-- direct root-paired method contrasts/pointwise intervals emitted by the validated analysis;
-- resource/computational evidence separately from policy quality.
+- select or modify actions;
+- alter observations delivered to learners;
+- change RNG/checkpoints/method state;
+- block/backpressure scientific execution;
+- alter interaction counts or timing;
+- become scientific evidence;
+- change validation/analysis outcomes.
 
-### RQ2 — Resilience/adaptation
+If historical evidence lacks live/replay data, say so. Do not synthesize replay.
 
-Show component effects separately:
+## Results
+
+### Purpose
+
+Answer the research questions from **validated stored backend outputs**. The Results page never recomputes scientific estimands from raw evidence.
+
+The top-level organization is:
+
+1. **RQ1 — Learning**
+2. **RQ2 — Resilience / Adaptation**
+3. **RQ3 — Recovery**
+
+A compact selected-evidence control may switch between compatible validated Studies/packages. Provenance details should not visually precede the research result.
+
+### RQ1 — Learning
+
+Primary intent: show how methods learned under the common interaction budget and how their nominal performance compares.
+
+Where validated stored Phase-A probes allow it, prefer an interaction-axis **learning curve**. The visualization may directly project stored probe/root/summary outputs; it must not perform a new root/layout aggregation in the UI. If the backend does not emit an aggregate trajectory suitable for a mean curve, show stored root-level trajectories/points or a truthful non-aggregated representation instead of inventing a curve.
+
+Also expose stored:
+
+- final standardized nominal value;
+- pointwise interval and included/planned root denominator;
+- trajectory/time-average summary;
+- root-level distribution/detail where available;
+- direct root-paired method contrasts;
+- computational/resource evidence separately from policy quality.
+
+Do not label the highest visual value as a winner.
+
+### RQ2 — Resilience / Adaptation
+
+Primary effect:
+
+`(FN-FD) - (AN-AD)`
+
+Present stored adaptation benefit as the primary chart/table. Supporting views separately show:
 
 - Frozen disturbance loss `FN-FD`;
 - Adaptive disturbance loss `AN-AD`;
-- primary adaptation benefit `(FN-FD)-(AN-AD)`;
-- branch-level FN/FD/AN/AD details on demand;
-- condition-family separation;
-- direct method contrasts and denominators/failure state from stored analysis.
+- condition/family filtering;
+- intervals and root denominators;
+- stored direct method contrasts;
+- branch-level FN/FD/AN/AD detail under progressive disclosure when useful.
 
-### RQ3 — Recovery speed
+Frozen and Adaptive remain matched regimes, not selectable algorithms.
 
-For protocol-v2.1 schema-v2 evidence, show stored:
+### RQ3 — Recovery
 
-- AN-vs-AD 32-interaction recovery trajectories;
-- recovery status by method/condition/root where appropriate;
-- observed recovery time conditional on recovery;
+For protocol-v2.1 schema-v2 evidence present stored:
+
+- AN-vs-AD recovery trajectory over 32-interaction windows;
+- recovered versus non-recovered status;
+- observed recovery time **conditional on recovery**;
 - separately named restricted fixed-horizon recovery delay;
-- right-censored non-recovery without inventing a 256-step observed recovery time;
-- primary action-remap family plus supporting diagnostics;
-- sensitivity outputs when present;
+- right-censored roots;
+- primary action-remap condition family plus supporting diagnostics;
+- sensitivity outputs when stored;
 - direct method contrasts emitted by analysis.
 
-Do not derive the 0.10/0.05/0.20 thresholds, stable-window logic or root reductions in the UI. They come from validated stored evidence/metadata.
+Right-censored roots retain `recovery_time=null`; **256 is the observation horizon, never an invented observed recovery time**.
 
-Historical schema-v1 packages remain truthful historical evidence and do not expose synthetic v2.1 recovery semantics.
+Historical schema-v1 packages remain truthful historical evidence and do not acquire synthetic v2.1 recovery status/trajectory semantics.
 
-### Comparison rules
+### Result-interpretation rules
 
-- Compare only scientifically compatible protocol/evidence definitions.
-- Show effect sizes/intervals only when emitted by validated analysis.
+- Compare only compatible protocol/evidence definitions.
+- Higher reward is better where declared by stored metadata.
+- Show effect sizes/intervals only as emitted by validated analysis.
 - Never relabel SD as CI or pointwise intervals as formal superiority tests.
-- No best-run-only view, unlabeled composite resilience score or post-hoc best-setting selection.
+- Never create `winner`, `best algorithm`, p-value/significance or unsupported statistical-superiority claims.
 - Explain incomplete/common-root blocks and retained failures rather than silently dropping them.
 
-## Evidence / Export
+## Evidence
 
-Purpose: inspect and hand off reproducible stored evidence.
+### Purpose
 
-- evidence-handoff manifest and result index;
-- deterministic analysis/root/recovery/direct-comparison CSV/JSON outputs;
-- stable result/evidence IDs and source Study/recipe/protocol/evidence-class summary;
-- full checksums/provenance/lineage under progressive disclosure;
-- thesis-ready tables/figures only when generated from validated/frozen evidence;
-- clear separation between scientific evidence and illustrative UI screenshots/GIF/video;
-- empty states explain which upstream stage is required.
+Give the user a clear handoff/readiness view first and reproducibility internals second.
 
-Whatever happens to be visible on screen is never the authoritative export source.
+Primary sections should communicate:
+
+- evidence class/state: DEVELOPMENT, provisional, finalized, validated/derived as applicable;
+- validation/analysis/export readiness;
+- available result/export packages;
+- thesis-ready figures/tables/exports when they legitimately exist;
+- useful next action when evidence is incomplete or unavailable.
+
+Evidence may include study history and artifact drill-down, but the default view should not begin with hashes or producer job IDs.
+
+### Technical details
+
+Progressive disclosure can expose:
+
+- Study/recipe/protocol/result identifiers;
+- artifact IDs and registered paths;
+- SHA-256 checksums;
+- source job IDs / source artifact IDs;
+- checkpoint lineage;
+- result index and integrity manifest;
+- complete evidence lineage.
+
+Only backend-registered evidence is shown. The UI does not browse arbitrary filesystem content and whatever happens to be visible on screen is never the authoritative export source.
+
+## Self-explanatory UX contract
+
+The application must remain understandable without programming, RL, repository or StudyStore knowledge. Use human-readable primary labels, concise visible explanations of methods/regimes/RQs, progressive disclosure for technical identifiers, and actionable loading/empty/warning/error/disabled/unavailable/locked states. Required workflow or scientific meaning cannot exist only in tooltips. Status uses text plus stable icon/symbol and accessible semantic treatment rather than color alone. Avoid unnecessary confirmations and excessive permanent cards, banners or help paragraphs.
 
 ## Help and lightweight onboarding
 
-Provide short replayable/skippable **lightweight onboarding** after the main structure stabilizes: orientation, Thesis Study versus DEVELOPMENT, review, run/monitor, results, evidence/export/help. Use explicit **Previous / Next / Skip / Finish** controls. It is local, replayable and non-blocking; every page remains understandable if onboarding is skipped.
+Provide short replayable/skippable **lightweight onboarding** after the main structure stabilizes, using **Previous / Next / Skip / Finish** controls. It should orient the user to:
 
-Contextual help should explain:
+1. Experiment and the five methods;
+2. Phase A nominal learning;
+3. Phase B Frozen vs Adaptive matched deployment;
+4. Run/GridWorld observation;
+5. RQ1/RQ2/RQ3 Results;
+6. Evidence/export and the final-experiment lock.
 
-- the five retained methods;
-- Frozen/Adaptive and FN/FD/AN/AD methodology;
-- RQ1/RQ2/RQ3 metrics/estimands/interval/censoring concepts;
-- evidence classes and final-experiment lock;
-- provenance/checksums/recipe hashes;
-- advanced DEVELOPMENT configuration and resource/storage warnings.
+Every primary surface remains understandable when onboarding is skipped.
 
-## Visual principles
+Contextual help explains methods, disturbances, FN/FD/AN/AD, Frozen/Adaptive, RQ metrics, recovery/right-censoring, evidence classes and provenance. Required scientific meaning is visible in the normal interface and not hidden only in tooltips.
 
-- Stable small navigation and clear hierarchy.
-- Modern compact desktop/laptop density rather than oversized decoration.
-- Consistent typography, spacing, icons, tables and charts.
-- Method identity consistent across GridWorld/charts/tables without relying on color alone.
-- Restrained hover/focus/selection feedback and purposeful chart/GridWorld animation may improve comprehension.
-- Respect reduced motion and never animate fabricated scientific progress/data.
-- Separate execution controls, provisional interpretation and finalized evidence interpretation.
-- Every visible scientific value comes from real backend/read-model data and a versioned definition.
+## Existing desktop component classification
+
+### Preserve / adapt
+
+- `study_read_model.py`: safe read-only durable Study/evidence projection; use mainly for secondary status/evidence views.
+- `results_read_model.py`: verified stored-analysis projection; extend only to expose additional already-stored trajectory/result data without UI-side scientific recomputation.
+- `execution_supervisor.py`: non-blocking QProcess execution boundary.
+- `live_events.py`: transient non-blocking presentation stream and exact FD/AD matched-pair semantics.
+- `live_instrumentation.py`: presentation-only runtime observer seam, subject to regression tests proving no scientific feedback.
+- DEVELOPMENT creation/execution adapters that still delegate validation/planning/execution to the backend.
+- `gridworld_widget.py` drawing behavior, refactored as needed so Phase A gets one large panel and Phase B gets two large panels.
+
+### Redesign / replace presentation
+
+- `main_window.py`: replace Study/Runs/Results/Artifacts shell and stale v2.0/T-528 status copy.
+- `protocol.py`: replace v2.0-only presentation loader with protocol-v2.1-aware read-only projection.
+- `study_flow.py`, `study_workspace.py`, `study_page.py`: retain useful DEVELOPMENT orchestration contracts but redesign user-facing flow as Experiment-first.
+- `runs_page.py`: replace Study-history-first hierarchy; make live experiment/GridWorld primary and move history/technical metadata secondary.
+- `results_page.py`: retain correct stored-evidence semantics but reorganize explicitly by RQ1/RQ2/RQ3 and add truthful trajectory visualizations where stored outputs permit.
+- `artifacts_page.py`: fold its safe registered-artifact/provenance capability into Evidence rather than keep it as primary navigation.
+- `theme.py`, `widgets.py`, onboarding/help copy: freely redesign for the new hierarchy; avoid excessive cards/banners/static explanatory text.
+
+## Protocol-v2.1 migration checks
+
+The active desktop implementation currently contains stale protocol-v2.0/DEC-058/T-528 assumptions in repo-root discovery, frozen-protocol loading, execution-policy copy, shell labels, Study copy and Run lock messages. T-534 must remove these from active presentation behavior.
+
+The current backend `StudyService` final-execution guard remains the authoritative deny-by-default control. Desktop-side DEVELOPMENT guards may add defense in depth but must not become a divergent final-authorization implementation.
+
+## Visual/interaction principles
+
+- Modern compact desktop application, not a web-dashboard clone and not an administrative console.
+- Strong hierarchy with GridWorld/charts receiving meaningful visual space.
+- Information-dense without clutter or excessive permanent cards/banners/help paragraphs.
+- Stable typography/spacing and consistent method identity across Run/Results without color-only encoding.
+- Technical identifiers secondary.
+- Actionable loading/empty/warning/error/locked/unavailable states.
+- Clear keyboard focus and sensible tab order; common controls have accessible names.
+- Purposeful motion only; respect reduced-motion expectations where practical.
+- Never animate fabricated scientific progress/data.
+
+## T-534 implementation acceptance
+
+T-534 is ready for acceptance when:
+
+- the four primary surfaces Experiment / Run / Results / Evidence are coherent end to end;
+- the final Thesis experiment always contains the five frozen methods and is read-only;
+- DEVELOPMENT configuration permits only backend-supported choices and stays visibly non-confirmatory;
+- Run prioritizes one large Phase-A GridWorld or two exact-matched Phase-B Frozen/Adaptive GridWorlds with compact five-method status;
+- primary live information is method/phase/condition/interaction/action/executed-action/reward and technical detail is secondary;
+- Results are explicitly RQ1/RQ2/RQ3 and consume only validated stored outputs;
+- RQ1 uses real stored learning trajectories where scientifically supported;
+- RQ2 keeps adaptation benefit primary and Frozen/Adaptive losses separate;
+- RQ3 shows correct trajectory/status/conditional time/restricted delay/right-censoring semantics;
+- no winner/superiority language is invented;
+- Evidence is user-friendly first and provenance-rich on demand;
+- active protocol-v2.0/T-528 presentation assumptions are removed;
+- UI cannot bypass final execution authorization or alter scientific execution;
+- historical schema-v1 evidence remains truthful;
+- DEVELOPMENT/synthetic workflow tests and deterministic render/screenshot checks cover representative states, including Phase-B matched side-by-side and a right-censored RQ3 result;
+- launcher behavior and exact-head repository CI are green.
+
+Completing T-534 does not authorize T-610, final-reserve access, final-outcome inspection or Results/Discussion thesis writing.

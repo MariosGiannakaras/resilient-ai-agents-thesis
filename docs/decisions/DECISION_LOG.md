@@ -209,7 +209,7 @@ File: `DEC-057_T527_COMPLETE_SB3_INGRESS_AND_SIZING_COMPLETION.md`.
 File: `DEC-058_PROTOCOL_V2_FINAL_SCIENTIFIC_FREEZE.md`.
 
 ## DEC-059 — PySide6 final application architecture
-**CURRENT FINAL APPLICATION AUTHORITY.** The accepted final application is Python-native PySide6 / Qt 6 Widgets over the framework-neutral Study backend. The UI is a research interface/read model, not scientific authority; final standalone packaging remains deferred.
+**CURRENT FRAMEWORK/RUNTIME APPLICATION AUTHORITY.** The accepted final application remains Python-native PySide6 / Qt 6 Widgets over the framework-neutral Study backend. The UI is a research interface/read model, not scientific authority; final standalone packaging remains deferred. Its historical recipe-first/product-navigation clauses are superseded for T-534 by DEC-061.
 
 File: `DEC-059_PYSIDE6_FINAL_APPLICATION_ARCHITECTURE.md`.
 
@@ -217,6 +217,11 @@ File: `DEC-059_PYSIDE6_FINAL_APPLICATION_ARCHITECTURE.md`.
 **CURRENT PRE-FINAL SCIENTIFIC AMENDMENT.** Preserves every DEC-058 experimental choice while freezing final RQ1/RQ2/RQ3, passive fixed-window recovery evidence, recovery threshold/stability/censoring semantics, direct root-paired method comparisons, actual-root-count pointwise Student-t intervals and secondary computational evidence. Censoring-aware RQ3 direct comparison uses recovery status plus a separately named restricted fixed-horizon recovery delay; observed recovery time remains conditional on recovery. `final_reserve_access=false` and the explicit T-610 authorization gate remain mandatory.
 
 File: `DEC-060_PROTOCOL_V2_1_RECOVERY_AND_COMPARISON_AMENDMENT.md`.
+
+## DEC-061 — T-534 experiment-first application UX
+**CURRENT T-534 PRODUCT/UX AUTHORITY.** Preserves DEC-059's PySide6/runtime/scientific firewall and replaces only its old recipe-first/Study-Runs-Results-Artifacts presentation model with the experiment-first **Experiment / Run / Results / Evidence** architecture. The final Thesis experiment always includes all five frozen methods; Frozen and Adaptive are simultaneous matched Phase-B regimes; Run prioritizes large GridWorld visualization; Results are explicitly RQ1/RQ2/RQ3; Evidence is user-friendly first and provenance-rich on demand. No scientific method, protocol-v2.1 rule or T-610 gate is changed.
+
+File: `DEC-061_T534_EXPERIMENT_FIRST_APPLICATION_UX.md`.
 
 ## Downstream tool/workflow policy
 
@@ -226,7 +231,7 @@ File: `DEC-060_PROTOCOL_V2_1_RECOVERY_AND_COMPARISON_AMENDMENT.md`.
 
 Only genuinely downstream evidence- or user-gated choices remain:
 
-- completion and objective acceptance of T-533/DEC-060 implementation/CI;
+- completion and objective acceptance of T-534 under DEC-061;
 - separate explicit T-610 authorization before any final-reserve execution;
 - T-613 final figure/table selection and evidence-to-thesis/defense asset map after validated final evidence exists;
 - explicit pre-WP7 user approval before thesis writing;

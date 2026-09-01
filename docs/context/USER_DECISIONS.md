@@ -44,6 +44,7 @@ Historical F0/C0/D0, R0 and protocol-v1.1 choices remain auditable history only.
 - Local single-user application; no authentication, roles, mandatory cloud/public deployment, mobile app or enterprise observability.
 - Scientific core and Study backend remain independent under `src/resilient_agents/`; the UI is control/observation/presentation, never a second scientific runner.
 - Current application framework: **PySide6 / Qt 6 Widgets** under DEC-059.
+- DEC-061 controls the current T-534 experiment-first product/UX model while preserving DEC-059's framework/runtime/scientific-firewall clauses.
 - Historical Streamlit/React/NiceGUI implementations are superseded and must not guide the new implementation except as optional historical reference.
 - Final standalone Windows packaging is intentionally deferred until after the thesis and will target the finally accepted rebuilt UI.
 - Pause/resume/stop/cancel/restart controls appear only when technically safe; unsupported controls are explicit rather than simulated.
@@ -53,13 +54,33 @@ Historical F0/C0/D0, R0 and protocol-v1.1 choices remain auditable history only.
 
 - The previously paused UI implementation is considered incomplete/non-authoritative for continuation.
 - Restart implementation from a **fresh current `main`**, not from the paused branch/worktree or pre-v2.1 assumptions.
-- Before implementing, read `AGENTS.md`, `TASKS.md`, `CURRENT_STATUS.md`, DEC-059, DEC-060, `configs/protocols/protocol-v2.1-final.json` and `docs/research/RQ_EVIDENCE_TRACEABILITY.md`.
+- Before implementing, read `AGENTS.md`, `TASKS.md`, `CURRENT_STATUS.md`, DEC-059, DEC-060, DEC-061, `configs/protocols/protocol-v2.1-final.json` and `docs/research/RQ_EVIDENCE_TRACEABILITY.md`.
 - Rebuild the presentation layer from today's protocol-v2.1 and Study/evidence contracts.
 - Existing PySide6 presentation code may be replaced from scratch where useful. First classify `src/resilient_agents/desktop/` so UI-neutral read-model, evidence adapter, provenance and execution-policy contracts are preserved.
 - The UI must never calculate recovery thresholds, root reductions, estimands or final scientific conclusions from raw evidence. It presents validated stored evidence/read models.
 - UI implementation/testing uses DEVELOPMENT/synthetic fixtures only unless and until separately authorized real evidence exists.
 - No UI path may bypass the backend final-experiment authorization guard.
 - Everything user-facing should be self-explanatory through appropriate wording, hierarchy, symbols/icons, semantic visual treatment, help/tooltips and actionable states.
+
+## Experiment-first T-534 product model
+
+- The application is organized around the **scientific experiment**, not around StudyStore/jobs/artifacts.
+- Primary navigation is deliberately limited to **Experiment / Run / Results / Evidence**. Help/onboarding and technical details are contextual/secondary.
+- The final Thesis experiment always contains all five frozen methods. The user cannot deselect methods from the final experiment.
+- Method selection is permitted only in DEVELOPMENT/Exploratory configuration where the backend explicitly supports it.
+- Frozen and Adaptive are matched Phase-B deployment regimes of the same method. They are never shown as algorithms or a mutually exclusive `Frozen OR Adaptive` choice.
+- Experiment should explain the complete scientific story: nominal learning → exact checkpoint → matched Phase B → disturbances → Frozen vs Adaptive → RQ1/RQ2/RQ3.
+- Study history, job counts, artifact IDs, hashes and lineage remain available but are secondary reproducibility/technical detail rather than the main user journey.
+
+## Run / live presentation
+
+- The GridWorld is a major Run-screen surface, not a small widget below administrative tables.
+- During Phase A, show one large nominal GridWorld for the current method.
+- During Phase B, show **Frozen — learning off** and **Adaptive — learning continues** simultaneously as two large side-by-side GridWorlds when an exact matched interaction pair is available.
+- A compact status strip shows progress/state across the five methods without implying ranking.
+- Primary live information is method, phase, condition, interaction, intended/executed action and reward.
+- Root/layout identity, episode/environment-step detail, true state, delivered observation, branch/regime IDs, disturbance flags, change-event IDs and hashes belong under progressive technical disclosure unless needed to explain an error.
+- Live visualization is presentation-only, lossy and non-blocking; missing matched frames are shown as unavailable/waiting rather than fabricated.
 
 ## Novice-first UI and interaction
 
@@ -72,15 +93,22 @@ Historical F0/C0/D0, R0 and protocol-v1.1 choices remain auditable history only.
 - Empty/loading/disabled/warning/error/unavailable states explain what happened and the useful next action.
 - Confirm destructive/high-impact actions only; ordinary use remains friction-light.
 - The UI should be modern, compact and information-dense rather than sparse/oversized.
+- Avoid excessive permanent cards, banners and help paragraphs; preserve a clear visual hierarchy.
 - Purposeful hover/focus/selection transitions and GridWorld/chart/status animation are allowed, but must never fabricate progress/trajectory/data or alter scientific execution/RNG/timing.
 - Desktop/laptop usability is required; mobile parity is not.
 
 ## Results and evidence presentation
 
+- Results are organized explicitly as **RQ1 — Learning / RQ2 — Resilience & Adaptation / RQ3 — Recovery**.
+- RQ1 should use a real interaction-axis learning curve where validated stored Phase-A probe outputs support one. The UI must not invent a new aggregate/root reduction merely to draw a curve.
+- RQ1 also exposes final nominal performance, stored intervals/denominators, trajectory/time-average evidence and stored direct method comparisons where available.
+- RQ2 keeps primary adaptation benefit `(FN-FD)-(AN-AD)` separate from supporting Frozen loss `FN-FD` and Adaptive loss `AN-AD`, with condition filtering and stored direct contrasts.
+- RQ3 exposes stored AN-vs-AD recovery trajectory, recovery/non-recovery status, observed recovery time conditional on recovery, separately named restricted fixed-horizon delay, right-censoring and stored sensitivities/contrasts where available.
+- A right-censored non-recovery at horizon 256 is never displayed as `recovery time = 256`; observed recovery time remains missing/null.
+- The interface must not declare a winner, best algorithm, significance or statistical superiority unsupported by the frozen analysis contract.
 - Clearly distinguish DEVELOPMENT/synthetic fixtures, live/provisional state, finalized run state and validated versioned evidence.
-- Results views should expose the stored outputs needed for RQ1/RQ2/RQ3, including v2.1 recovery summaries/trajectories and direct method contrasts where validated evidence is available.
 - Historical schema-v1 evidence remains truthful historical evidence and must not be silently upgraded to v2.1 recovery semantics.
-- Technical provenance/IDs/hashes remain available under progressive disclosure rather than dominating the primary interface.
+- Evidence is user-friendly first: validation/evidence state, results/exports and thesis-ready outputs when legitimate. Provenance/IDs/hashes/lineage remain available under progressive disclosure rather than dominating the primary interface.
 - Existing screenshots are historical review assets/reference only; the clean rebuild is not required to preserve their layout or styling.
 
 ## Repository and continuity
