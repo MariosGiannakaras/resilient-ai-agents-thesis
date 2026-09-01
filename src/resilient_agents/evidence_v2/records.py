@@ -6,8 +6,10 @@ from dataclasses import dataclass, field
 from typing import Any, Mapping
 
 from ..protocol_v2 import ProtocolV2Branch
+from ..protocol_v2_temporal import RewardWindow
 
 ANALYSIS_RECORD_SCHEMA_VERSION = 1
+PHASE_B_TEMPORAL_SCHEMA_VERSION = 2
 
 
 def _identifier(value: Any, *, field_name: str) -> str:
@@ -153,12 +155,16 @@ class PhaseBAnalysisRecord:
     checkpoint_artifact_id: str
     metrics: Mapping[str, float]
     resource_metrics: Mapping[str, float] = field(default_factory=dict)
+    reward_windows: tuple[RewardWindow, ...] = ()
     schema_version: int = ANALYSIS_RECORD_SCHEMA_VERSION
     record_type: str = "phase-b"
 
     def __post_init__(self) -> None:
-        if self.schema_version != ANALYSIS_RECORD_SCHEMA_VERSION:
-            raise ValueError("unsupported analysis record schema_version")
+        if self.schema_version not in {
+            ANALYSIS_RECORD_SCHEMA_VERSION,
+            PHASE_B_TEMPORAL_SCHEMA_VERSION,
+        }:
+            raise ValueError("unsupported Phase-B analysis record schema_version")
         if self.record_type != "phase-b":
             raise ValueError("PhaseBAnalysisRecord record_type must be phase-b")
         for field_name in (
@@ -180,9 +186,30 @@ class PhaseBAnalysisRecord:
                 "resource_metrics",
                 _finite_mapping(self.resource_metrics, field_name="resource_metrics"),
             )
+        if self.schema_version == ANALYSIS_RECORD_SCHEMA_VERSION:
+            if self.reward_windows:
+                raise ValueError("schema v1 Phase-B records cannot contain reward_windows")
+            return
+        if not self.reward_windows:
+            raise ValueError("schema v2 Phase-B records require reward_windows")
+        previous_end = 0
+        window_size: int | None = None
+        for window in self.reward_windows:
+            if not isinstance(window, RewardWindow):
+                raise ValueError("reward_windows must contain RewardWindow values")
+            if window.start_interaction != previous_end + 1:
+                raise ValueError("Phase-B reward windows must be contiguous and ordered")
+            if window_size is None:
+                window_size = window.interaction_count
+            elif window.interaction_count != window_size:
+                raise ValueError("Phase-B reward windows must have a fixed width")
+            previous_end = window.end_interaction
+        environment_interactions = self.resource_metrics.get("environment_interactions")
+        if environment_interactions is not None and previous_end != int(environment_interactions):
+            raise ValueError("reward windows must cover all recorded environment interactions")
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        payload = {
             "schema_version": self.schema_version,
             "record_type": self.record_type,
             "study_id": self.study_id,
@@ -196,9 +223,15 @@ class PhaseBAnalysisRecord:
             "metrics": dict(self.metrics),
             "resource_metrics": dict(self.resource_metrics),
         }
+        if self.schema_version == PHASE_B_TEMPORAL_SCHEMA_VERSION:
+            payload["reward_windows"] = [item.to_dict() for item in self.reward_windows]
+        return payload
 
     @classmethod
     def from_dict(cls, payload: Mapping[str, Any]) -> "PhaseBAnalysisRecord":
+        if not isinstance(payload, Mapping):
+            raise ValueError("Phase-B analysis record must be an object")
+        schema_version = payload.get("schema_version")
         expected = {
             "schema_version",
             "record_type",
@@ -213,14 +246,21 @@ class PhaseBAnalysisRecord:
             "metrics",
             "resource_metrics",
         }
-        if not isinstance(payload, Mapping) or set(payload) != expected:
+        if schema_version == PHASE_B_TEMPORAL_SCHEMA_VERSION:
+            expected = expected | {"reward_windows"}
+        elif schema_version != ANALYSIS_RECORD_SCHEMA_VERSION:
+            raise ValueError("unsupported Phase-B analysis record schema_version")
+        if set(payload) != expected:
             raise ValueError("Phase-B analysis record keys mismatch")
         try:
             branch = ProtocolV2Branch(str(payload["branch"]))
         except ValueError as exc:
             raise ValueError("unsupported Phase-B branch") from exc
+        windows_payload = payload.get("reward_windows", [])
+        if not isinstance(windows_payload, list):
+            raise ValueError("Phase-B reward_windows must be a list")
         return cls(
-            schema_version=payload["schema_version"],
+            schema_version=schema_version,
             record_type=payload["record_type"],
             study_id=payload["study_id"],
             job_id=payload["job_id"],
@@ -232,4 +272,5 @@ class PhaseBAnalysisRecord:
             checkpoint_artifact_id=payload["checkpoint_artifact_id"],
             metrics=payload["metrics"],
             resource_metrics=payload["resource_metrics"],
+            reward_windows=tuple(RewardWindow.from_dict(item) for item in windows_payload),
         )
