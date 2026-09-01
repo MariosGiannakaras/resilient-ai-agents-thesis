@@ -80,13 +80,13 @@ Actual environment interactions remain the primary fairness axis. Existing wall-
 
 ## Bibliography and public-repository constraints
 
-Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/` under the existing synchronization rules. No parallel bibliography system is permitted.
+Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/` under the existing synchronization rules. `bibliography-integration-v3` remains immutable historical terminology; no parallel bibliography system is permitted.
 
 The repository remains **public** by explicit user decision. `thesis/source-material/ThesisApplication.pdf` and the existing source-material structure remain unchanged. File removal, history rewrite or private-repository migration is neither required nor a blocker for thesis completion.
 
-## Still blocked / intentionally sealed
+## Still intentionally unfrozen
 
-- `final_reserve_access=false`.
+- `final_reserve_access=false`; final-reserve execution itself remains intentionally unfrozen and unauthorized.
 - T-610 and all final-reserve scientific outcomes remain blocked until T-530 implementation, deterministic validation, affected CI, documentation reconciliation and objective review are complete.
 - No final roots/layouts/seeds may be used to tune recovery thresholds or analysis choices.
 - WP7 remains blocked by the later explicit pre-WP7 gate.
@@ -94,4 +94,4 @@ The repository remains **public** by explicit user decision. `thesis/source-mate
 
 ## Exact next action
 
-Complete T-530 on the existing PR #92 branch: wire fixed-window Phase-B temporal evidence into validated analysis records, produce recovery/root-paired contrast analysis and deterministic exports, expose those stored results in PySide6 where required, reconcile active methodology/task documents, and pass affected CI. Then stop at the explicit authorization gate immediately before T-610. Do **not** access the final reserve or begin Results/Discussion writing.
+Complete T-530 on the existing PR #92 branch: finish the isolated protocol-v2.1 temporal execution path, produce recovery/root-paired contrast analysis and deterministic exports, expose those stored results in PySide6 where required, reconcile active methodology/task documents, and pass affected CI. Then stop at the explicit authorization gate immediately before T-610. Do **not** access the final reserve or begin Results/Discussion writing.
