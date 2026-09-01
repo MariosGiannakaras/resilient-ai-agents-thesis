@@ -4,9 +4,10 @@ from __future__ import annotations
 from dataclasses import replace
 
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QLabel, QPushButton, QTableWidget, QWidget
+from PySide6.QtWidgets import QLabel, QPushButton, QSizePolicy, QTableWidget, QWidget
 
 from .protocol import FrozenProtocolSummary
+from .recovery_chart import RecoveryTrajectoryChart
 from .results_page import (
     ResultsPage as _StoredResultsPage,
     _display_identifier,
@@ -27,6 +28,14 @@ class ResultsWorkspacePage(_StoredResultsPage):
         self._context_study_id: str | None = None
         super().__init__(model, protocol, parent)
 
+        root_layout = self.layout()
+        if root_layout is not None:
+            root_layout.setContentsMargins(32, 22, 36, 28)
+            root_layout.setSpacing(11)
+        content_layout = self.content.layout()
+        if content_layout is not None:
+            content_layout.setSpacing(10)
+
         self.learning_button.setText("RQ1 — Learning")
         self.resilience_button.setText("RQ2 — Resilience / Adaptation")
         self.recovery_button.setText("RQ3 — Recovery")
@@ -38,6 +47,21 @@ class ResultsWorkspacePage(_StoredResultsPage):
             "AN-vs-AD recovery under the registered 32-interaction window contract; non-recovery remains right-censored."
         )
         self.recovery_view.setItemText(2, "Recovery method contrasts")
+
+        # Charts should dominate their supporting tables on ordinary thesis laptops.
+        for chart in (
+            self.learning_chart,
+            self.resilience_chart,
+            self.resilience_loss_chart,
+        ):
+            chart.setMinimumHeight(215)
+            chart.setMaximumHeight(260)
+            chart.setSizePolicy(
+                QSizePolicy.Policy.Expanding,
+                QSizePolicy.Policy.Preferred,
+            )
+        self.learning_table.setMaximumHeight(220)
+        self.resilience_table.setMaximumHeight(220)
 
         replacements = {
             "Nominal learning": "RQ1 — Learning",
@@ -59,7 +83,6 @@ class ResultsWorkspacePage(_StoredResultsPage):
         self.context_notice.setWordWrap(True)
         self.context_notice.setAccessibleName("Results context notice")
         self.context_notice.hide()
-        root_layout = self.layout()
         if root_layout is not None:
             root_layout.insertWidget(2, self.context_notice)
 
@@ -72,7 +95,6 @@ class ResultsWorkspacePage(_StoredResultsPage):
             "Show the registered analysis recipe and checksums. Research results remain primary."
         )
         self.provenance_toggle.toggled.connect(self.provenance.setVisible)
-        content_layout = self.content.layout()
         if content_layout is not None:
             content_layout.insertWidget(
                 0,
@@ -80,6 +102,19 @@ class ResultsWorkspacePage(_StoredResultsPage):
                 0,
                 Qt.AlignmentFlag.AlignLeft,
             )
+
+        self.recovery_chart = RecoveryTrajectoryChart()
+        self.recovery_chart.setToolTip(
+            "Each line is one stored root-level directed-gap trajectory. The tolerance, "
+            "window grid, recovery-time summary and censoring counts come from the "
+            "validated backend analysis; the UI performs no root reduction."
+        )
+        recovery_layout = self.recovery_page.layout()
+        if recovery_layout is not None:
+            # Section header, guidance and controls remain above the scientific visual.
+            recovery_layout.insertWidget(3, self.recovery_chart)
+        self.recovery_stack.setMinimumHeight(150)
+        self.recovery_stack.setMaximumHeight(220)
 
         self.learning_contrast_button, self.learning_contrast_table = self._add_contrast_disclosure(
             self.learning_page,
@@ -91,6 +126,7 @@ class ResultsWorkspacePage(_StoredResultsPage):
         )
         if self.current_package is not None:
             self._populate_rq_contrasts(self.current_package)
+            self._update_recovery_chart()
 
     def _add_contrast_disclosure(
         self,
@@ -136,6 +172,8 @@ class ResultsWorkspacePage(_StoredResultsPage):
         super()._populate(package)
         if hasattr(self, "learning_contrast_table"):
             self._populate_rq_contrasts(package)
+        if hasattr(self, "recovery_chart"):
+            self._update_recovery_chart()
 
     def _populate_method_contrasts(self, package: StoredAnalysisPackage) -> None:
         """Keep the RQ3 built-in contrast view recovery-specific."""
@@ -193,6 +231,59 @@ class ResultsWorkspacePage(_StoredResultsPage):
                     column,
                     self._item(text, tooltip=tooltip),
                 )
+
+    def _recovery_condition_changed(self, _index: int = -1) -> None:
+        super()._recovery_condition_changed(_index)
+        if hasattr(self, "recovery_chart"):
+            self._update_recovery_chart()
+
+    def _refresh_recovery_trajectory(self, _index: int = -1) -> None:
+        super()._refresh_recovery_trajectory(_index)
+        if hasattr(self, "recovery_chart"):
+            self._update_recovery_chart()
+
+    def _clear_recovery(self) -> None:
+        super()._clear_recovery()
+        if hasattr(self, "recovery_chart"):
+            self.recovery_chart.clear()
+
+    def _update_recovery_chart(self) -> None:
+        package = self.current_package
+        recovery = package.recovery if package is not None else None
+        condition_id = self.recovery_condition.currentData()
+        method_id = self.recovery_method.currentData()
+        if recovery is None or not isinstance(condition_id, str) or not isinstance(method_id, str):
+            self.recovery_chart.clear()
+            return
+
+        points = tuple(
+            point
+            for point in recovery.trajectories
+            if point.condition_id == condition_id and point.method_id == method_id
+        )
+        summary = next(
+            (
+                item
+                for item in recovery.summaries
+                if item.condition_id == condition_id and item.method_id == method_id
+            ),
+            None,
+        )
+        if summary is None:
+            self.recovery_chart.clear()
+            return
+
+        condition = _display_identifier(condition_id)
+        self.recovery_chart.set_data(
+            title=f"Stored directed-gap recovery trajectories · {self._method_name(method_id)} · {condition}",
+            points=points,
+            tolerance=recovery.primary_tolerance,
+            window_size=recovery.window_size,
+            horizon=recovery.observation_horizon,
+            recovered_count=summary.recovered_root_count,
+            censored_count=summary.right_censored_root_count,
+            stored_recovery_time_mean=summary.recovery_time_conditional_on_recovery.mean,
+        )
 
     def set_study(self, study_id: str) -> None:
         """Follow Run context when compatible without pretending unavailable results exist."""
