@@ -1,7 +1,7 @@
 """Read-only desktop projection over durable framework-neutral Study state."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -59,6 +59,7 @@ class ArtifactListItem:
     sha256: str
     source_job_ids: tuple[str, ...]
     source_artifact_ids: tuple[str, ...]
+    metadata: Mapping[str, Any] = field(default_factory=dict)
 
     @property
     def source_job_count(self) -> int:
@@ -121,6 +122,7 @@ class DesktopStudyReadModel:
                 sha256=artifact.sha256,
                 source_job_ids=tuple(artifact.source_job_ids),
                 source_artifact_ids=tuple(artifact.source_artifact_ids),
+                metadata=dict(artifact.metadata),
             )
             for artifact in self._service.artifacts(study_id)
         )
