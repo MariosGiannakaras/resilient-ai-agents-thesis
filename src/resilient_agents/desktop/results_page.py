@@ -53,6 +53,12 @@ def _format_interval(summary: StoredSummary) -> str:
     return "—"
 
 
+def _format_bounds(lower: float | None, upper: float | None) -> str:
+    if lower is None or upper is None:
+        return "—"
+    return f"[{_format_number(lower)}, {_format_number(upper)}]"
+
+
 class ResultsPage(QWidget):
     def __init__(
         self,
@@ -76,8 +82,8 @@ class ResultsPage(QWidget):
         title = QLabel("Results")
         title.setObjectName("PageTitle")
         lead = QLabel(
-            "Compare stored learning and resilience analysis produced by the backend. "
-            "This view does not recompute estimands, intervals or rankings."
+            "Inspect stored learning, resilience and recovery evidence produced by the backend. "
+            "This view does not recompute estimands, thresholds, intervals or rankings."
         )
         lead.setObjectName("PageLead")
         lead.setWordWrap(True)
@@ -148,9 +154,12 @@ class ResultsPage(QWidget):
         tabs.setSpacing(8)
         self.learning_button = QPushButton("Compare Learning")
         self.resilience_button = QPushButton("Test Resilience")
+        self.recovery_button = QPushButton("Recovery & Comparisons")
         self.tab_group = QButtonGroup(self)
         self.tab_group.setExclusive(True)
-        for index, button in enumerate((self.learning_button, self.resilience_button)):
+        for index, button in enumerate(
+            (self.learning_button, self.resilience_button, self.recovery_button)
+        ):
             button.setCheckable(True)
             button.setCursor(Qt.CursorShape.PointingHandCursor)
             self.tab_group.addButton(button, index)
@@ -159,6 +168,11 @@ class ResultsPage(QWidget):
         self.learning_button.setChecked(True)
         self.learning_button.setAccessibleName("Show stored nominal learning results")
         self.resilience_button.setAccessibleName("Show stored matched resilience results")
+        self.recovery_button.setAccessibleName("Show stored recovery and direct method comparisons")
+        self.recovery_button.setToolTip(
+            "Enabled only when the selected analysis package contains stored protocol-v2.1 recovery/comparison evidence."
+        )
+        self.recovery_button.setEnabled(False)
         self.tab_group.idClicked.connect(self._show_tab)
         self._apply_tab_style(0)
         content_layout.addLayout(tabs)
@@ -166,8 +180,10 @@ class ResultsPage(QWidget):
         self.stack = QStackedWidget()
         self.learning_page = self._build_learning_page()
         self.resilience_page = self._build_resilience_page()
+        self.recovery_page = self._build_recovery_page()
         self.stack.addWidget(self.learning_page)
         self.stack.addWidget(self.resilience_page)
+        self.stack.addWidget(self.recovery_page)
         content_layout.addWidget(self.stack, 1)
         root.addWidget(self.content, 1)
 
@@ -178,11 +194,7 @@ class ResultsPage(QWidget):
         layout = QVBoxLayout(page)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(9)
-        layout.addWidget(
-            SectionHeader(
-                "Nominal learning",
-            )
-        )
+        layout.addWidget(SectionHeader("Nominal learning"))
         self.learning_guidance = QLabel()
         self.learning_guidance.setObjectName("SectionHint")
         self.learning_guidance.setWordWrap(True)
@@ -207,11 +219,7 @@ class ResultsPage(QWidget):
         layout = QVBoxLayout(page)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(9)
-        layout.addWidget(
-            SectionHeader(
-                "Matched resilience",
-            )
-        )
+        layout.addWidget(SectionHeader("Matched resilience"))
         filter_row = QHBoxLayout()
         filter_label = QLabel("Condition")
         filter_label.setObjectName("ReviewLabel")
@@ -288,6 +296,102 @@ class ResultsPage(QWidget):
         layout.addWidget(self.resilience_table, 1)
         return page
 
+    def _build_recovery_page(self) -> QWidget:
+        page = QWidget()
+        layout = QVBoxLayout(page)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(9)
+        layout.addWidget(SectionHeader("Recovery & direct comparisons"))
+
+        self.recovery_guidance = QLabel(
+            "No protocol-v2.1 recovery evidence is stored for the selected Study."
+        )
+        self.recovery_guidance.setObjectName("SectionHint")
+        self.recovery_guidance.setWordWrap(True)
+        layout.addWidget(self.recovery_guidance)
+
+        controls = QHBoxLayout()
+        view_label = QLabel("Stored view")
+        view_label.setObjectName("ReviewLabel")
+        controls.addWidget(view_label)
+        self.recovery_view = QComboBox()
+        self.recovery_view.addItem("Recovery summary", 0)
+        self.recovery_view.addItem("AN vs AD trajectories", 1)
+        self.recovery_view.addItem("Direct method contrasts", 2)
+        self.recovery_view.setAccessibleName("Stored recovery evidence view")
+        self.recovery_view.setToolTip(
+            "Switch between already-computed backend evidence. No scientific value is recalculated here."
+        )
+        view_label.setBuddy(self.recovery_view)
+        self.recovery_view.currentIndexChanged.connect(self._refresh_recovery_view)
+        controls.addWidget(self.recovery_view)
+
+        condition_label = QLabel("Condition")
+        condition_label.setObjectName("ReviewLabel")
+        controls.addWidget(condition_label)
+        self.recovery_condition = QComboBox()
+        self.recovery_condition.setMinimumWidth(250)
+        self.recovery_condition.setAccessibleName("Recovery condition")
+        self.recovery_condition.currentIndexChanged.connect(self._recovery_condition_changed)
+        condition_label.setBuddy(self.recovery_condition)
+        controls.addWidget(self.recovery_condition)
+
+        method_label = QLabel("Trajectory method")
+        method_label.setObjectName("ReviewLabel")
+        controls.addWidget(method_label)
+        self.recovery_method = QComboBox()
+        self.recovery_method.setMinimumWidth(160)
+        self.recovery_method.setAccessibleName("Recovery trajectory method")
+        self.recovery_method.currentIndexChanged.connect(self._refresh_recovery_trajectory)
+        method_label.setBuddy(self.recovery_method)
+        controls.addWidget(self.recovery_method)
+        controls.addStretch(1)
+        layout.addLayout(controls)
+
+        self.recovery_stack = QStackedWidget()
+
+        self.recovery_summary_table = QTableWidget(0, 8)
+        self.recovery_summary_table.setObjectName("ResultsTable")
+        self.recovery_summary_table.setAccessibleName("Stored recovery summaries")
+        self.recovery_summary_table.setHorizontalHeaderLabels(
+            (
+                "Method",
+                "Condition",
+                "Recovered roots",
+                "Censored roots",
+                "Recovered proportion",
+                "Recovery time*",
+                "Restricted delay",
+                "Stored interval",
+            )
+        )
+        self._configure_table(self.recovery_summary_table, stretch_columns=(0, 1))
+        self.recovery_summary_table.setToolTip(
+            "*Recovery time is conditional on roots that actually recovered. Censored roots keep recovery_time missing."
+        )
+
+        self.recovery_trajectory_table = QTableWidget(0, 7)
+        self.recovery_trajectory_table.setObjectName("ResultsTable")
+        self.recovery_trajectory_table.setAccessibleName("Stored AN versus AD recovery trajectories")
+        self.recovery_trajectory_table.setHorizontalHeaderLabels(
+            ("Root", "Window end", "AN mean", "AD mean", "Directed gap", "In tolerance", "Primary axis")
+        )
+        self._configure_table(self.recovery_trajectory_table, stretch_columns=(0,))
+
+        self.method_contrast_table = QTableWidget(0, 8)
+        self.method_contrast_table.setObjectName("ResultsTable")
+        self.method_contrast_table.setAccessibleName("Stored direct method contrasts")
+        self.method_contrast_table.setHorizontalHeaderLabels(
+            ("Scope", "Estimand", "Condition", "Method A", "Method B", "A − B", "Stored interval", "Roots")
+        )
+        self._configure_table(self.method_contrast_table, stretch_columns=(1, 2))
+
+        self.recovery_stack.addWidget(self.recovery_summary_table)
+        self.recovery_stack.addWidget(self.recovery_trajectory_table)
+        self.recovery_stack.addWidget(self.method_contrast_table)
+        layout.addWidget(self.recovery_stack, 1)
+        return page
+
     @staticmethod
     def _configure_table(table: QTableWidget, *, stretch_columns: tuple[int, ...]) -> None:
         table.verticalHeader().setVisible(False)
@@ -333,6 +437,7 @@ class ResultsPage(QWidget):
             self.current_package = None
             self.learning_table.setRowCount(0)
             self.resilience_table.setRowCount(0)
+            self._clear_recovery()
             self.learning_chart.set_data(title="Stored nominal summary", bars=())
             self.resilience_chart.set_data(title="Stored adaptation benefit", bars=())
             self.resilience_loss_chart.set_data(title="Stored disturbance losses", bars=())
@@ -351,6 +456,7 @@ class ResultsPage(QWidget):
             self.current_package = None
             self.learning_table.setRowCount(0)
             self.resilience_table.setRowCount(0)
+            self._clear_recovery()
             self._show_error(exc)
             return
         self.current_package = package
@@ -394,6 +500,7 @@ class ResultsPage(QWidget):
         )
         self._populate_learning(package)
         self._prepare_resilience(package)
+        self._prepare_recovery(package)
 
     def _method_name(self, method_id: str) -> str:
         return self.method_names.get(method_id, _display_identifier(method_id))
@@ -571,6 +678,194 @@ class ResultsPage(QWidget):
             legend=(("Frozen loss", "primary"), ("Adaptive loss", "secondary")),
         )
 
+    def _clear_recovery(self) -> None:
+        self.recovery_button.setEnabled(False)
+        self.recovery_summary_table.setRowCount(0)
+        self.recovery_trajectory_table.setRowCount(0)
+        self.method_contrast_table.setRowCount(0)
+        self.recovery_condition.blockSignals(True)
+        self.recovery_condition.clear()
+        self.recovery_condition.blockSignals(False)
+        self.recovery_method.blockSignals(True)
+        self.recovery_method.clear()
+        self.recovery_method.blockSignals(False)
+        self.recovery_guidance.setText(
+            "No protocol-v2.1 recovery evidence is stored for the selected Study."
+        )
+        if self.stack.currentIndex() == 2:
+            self.learning_button.setChecked(True)
+            self.stack.setCurrentIndex(0)
+            self._apply_tab_style(0)
+
+    def _prepare_recovery(self, package: StoredAnalysisPackage) -> None:
+        recovery = package.recovery
+        if recovery is None:
+            self._clear_recovery()
+            return
+        self.recovery_button.setEnabled(True)
+        self.recovery_guidance.setText(
+            f"Stored recovery contract: {recovery.metric}, {recovery.window_size}-interaction windows "
+            f"through {recovery.observation_horizon}, primary tolerance {_format_number(recovery.primary_tolerance)}, "
+            f"{recovery.stability_windows} consecutive windows. Recovery time is conditional on observed "
+            "recovery; non-recovery remains right-censored. The desktop UI only displays these stored outputs."
+        )
+
+        conditions: list[str] = []
+        for summary in recovery.summaries:
+            if summary.condition_id not in conditions:
+                conditions.append(summary.condition_id)
+        previous_condition = self.recovery_condition.currentData()
+        self.recovery_condition.blockSignals(True)
+        self.recovery_condition.clear()
+        for condition_id in conditions:
+            self.recovery_condition.addItem(
+                _CONDITION_NAMES.get(condition_id, _display_identifier(condition_id)),
+                condition_id,
+            )
+        if previous_condition in conditions:
+            self.recovery_condition.setCurrentIndex(conditions.index(previous_condition))
+        self.recovery_condition.blockSignals(False)
+        self._recovery_condition_changed()
+        self._populate_method_contrasts(package)
+        self._refresh_recovery_view()
+
+    def _recovery_condition_changed(self, _index: int = -1) -> None:
+        self._populate_recovery_summary()
+        package = self.current_package
+        recovery = package.recovery if package is not None else None
+        condition_id = self.recovery_condition.currentData()
+        methods: list[str] = []
+        if recovery is not None and isinstance(condition_id, str):
+            for point in recovery.trajectories:
+                if point.condition_id == condition_id and point.method_id not in methods:
+                    methods.append(point.method_id)
+        previous_method = self.recovery_method.currentData()
+        self.recovery_method.blockSignals(True)
+        self.recovery_method.clear()
+        for method_id in methods:
+            self.recovery_method.addItem(self._method_name(method_id), method_id)
+        if previous_method in methods:
+            self.recovery_method.setCurrentIndex(methods.index(previous_method))
+        self.recovery_method.blockSignals(False)
+        self._refresh_recovery_trajectory()
+
+    def _populate_recovery_summary(self) -> None:
+        package = self.current_package
+        recovery = package.recovery if package is not None else None
+        condition_id = self.recovery_condition.currentData()
+        if recovery is None or not isinstance(condition_id, str):
+            self.recovery_summary_table.setRowCount(0)
+            return
+        rows = tuple(
+            summary for summary in recovery.summaries if summary.condition_id == condition_id
+        )
+        self.recovery_summary_table.setRowCount(len(rows))
+        for row_index, summary in enumerate(rows):
+            conditional_time = summary.recovery_time_conditional_on_recovery
+            restricted_delay = summary.restricted_recovery_delay_through_horizon
+            values = (
+                self._method_name(summary.method_id),
+                _CONDITION_NAMES.get(summary.condition_id, _display_identifier(summary.condition_id)),
+                str(summary.recovered_root_count),
+                str(summary.right_censored_root_count),
+                _format_number(summary.recovered_proportion),
+                _format_number(conditional_time.mean),
+                _format_number(restricted_delay.mean),
+                _format_interval(restricted_delay),
+            )
+            for column, text in enumerate(values):
+                tooltip = None
+                if column == 5:
+                    tooltip = (
+                        "Backend summary conditional on roots with observed recovery. "
+                        "Right-censored roots do not receive an invented recovery time."
+                    )
+                elif column in {6, 7}:
+                    tooltip = (
+                        "Stored fixed-horizon restricted recovery-delay estimand. "
+                        "This is distinct from recovery_time."
+                    )
+                self.recovery_summary_table.setItem(
+                    row_index, column, self._item(text, tooltip=tooltip)
+                )
+
+    def _refresh_recovery_trajectory(self, _index: int = -1) -> None:
+        package = self.current_package
+        recovery = package.recovery if package is not None else None
+        condition_id = self.recovery_condition.currentData()
+        method_id = self.recovery_method.currentData()
+        if recovery is None or not isinstance(condition_id, str) or not isinstance(method_id, str):
+            self.recovery_trajectory_table.setRowCount(0)
+            return
+        points = tuple(
+            point
+            for point in recovery.trajectories
+            if point.condition_id == condition_id and point.method_id == method_id
+        )
+        self.recovery_trajectory_table.setRowCount(len(points))
+        for row_index, point in enumerate(points):
+            values = (
+                point.root_id,
+                str(point.window_end),
+                _format_number(point.nominal_value),
+                _format_number(point.disturbed_value),
+                _format_number(point.directed_gap),
+                "Yes" if point.within_tolerance else "No",
+                "Yes" if point.primary_recovery_axis else "Supporting",
+            )
+            for column, text in enumerate(values):
+                tooltip = None
+                if column in {2, 3, 4, 5}:
+                    tooltip = (
+                        "Stored backend trajectory value/classification. The UI did not calculate "
+                        "the gap or apply the tolerance."
+                    )
+                self.recovery_trajectory_table.setItem(
+                    row_index, column, self._item(text, tooltip=tooltip)
+                )
+
+    def _populate_method_contrasts(self, package: StoredAnalysisPackage) -> None:
+        rows = package.method_contrasts
+        self.method_contrast_table.setRowCount(len(rows))
+        for row_index, contrast in enumerate(rows):
+            condition = (
+                "—"
+                if contrast.condition_id is None
+                else _CONDITION_NAMES.get(
+                    contrast.condition_id,
+                    _display_identifier(contrast.condition_id),
+                )
+            )
+            values = (
+                _display_identifier(contrast.source),
+                _display_identifier(contrast.estimand),
+                condition,
+                self._method_name(contrast.method_a),
+                self._method_name(contrast.method_b),
+                _format_number(contrast.mean_difference),
+                _format_bounds(contrast.interval_lower, contrast.interval_upper),
+                str(len(contrast.root_ids)),
+            )
+            for column, text in enumerate(values):
+                tooltip = None
+                if column in {5, 6, 7}:
+                    tooltip = (
+                        "Stored root-paired A-minus-B backend contrast. Roots were reduced/paired "
+                        "before this read-only desktop presentation."
+                    )
+                self.method_contrast_table.setItem(
+                    row_index, column, self._item(text, tooltip=tooltip)
+                )
+
+    def _refresh_recovery_view(self, _index: int = -1) -> None:
+        selected = self.recovery_view.currentData()
+        if not isinstance(selected, int):
+            selected = 0
+        self.recovery_stack.setCurrentIndex(selected)
+        is_trajectory = selected == 1
+        self.recovery_condition.setEnabled(selected in {0, 1})
+        self.recovery_method.setEnabled(is_trajectory)
+
     def _apply_resilience_chart_style(self, selected: int) -> None:
         for index, button in enumerate(
             (self.benefit_chart_button, self.loss_chart_button)
@@ -586,11 +881,15 @@ class ResultsPage(QWidget):
         self._apply_resilience_chart_style(index)
 
     def _apply_tab_style(self, selected: int) -> None:
-        for index, button in enumerate((self.learning_button, self.resilience_button)):
+        for index, button in enumerate(
+            (self.learning_button, self.resilience_button, self.recovery_button)
+        ):
             button.setObjectName("PrimaryButton" if index == selected else "SecondaryButton")
             button.style().unpolish(button)
             button.style().polish(button)
 
     def _show_tab(self, index: int) -> None:
+        if index == 2 and not self.recovery_button.isEnabled():
+            return
         self.stack.setCurrentIndex(index)
         self._apply_tab_style(index)
