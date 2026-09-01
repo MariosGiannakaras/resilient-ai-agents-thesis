@@ -1,14 +1,13 @@
 """Study executor for one atomic protocol-v2 Phase-B matched set.
 
-A Phase-B Study job is one method/root/layout/condition unit.  It restores the
+A Phase-B Study job is one method/root/layout/condition unit. It restores the
 exact Phase-A scientific checkpoint, advances one common nominal no-learning
 prefix, then delegates FN/FD/AN/AD creation and execution atomically to the
 validated protocol-v2 executor.
 
-No multi-episode reset semantics are invented here.  The shared prefix and each
-post-boundary branch must fit inside one exact GridWorld segment; otherwise the
-existing protocol-v2 drivers fail closed until T-526/T-527 freezes a lifecycle
-amendment.
+When a branch horizon ends on complete fixed reward windows, the executor emits
+versioned temporal evidence. Legacy/non-temporal study fixtures remain readable
+through the original schema rather than being silently reinterpreted.
 """
 from __future__ import annotations
 
@@ -20,7 +19,10 @@ from pathlib import Path
 from typing import Any
 
 from ..contracts import ChangeEvent, ScenarioSpec
-from ..evidence_v2.records import PhaseBAnalysisRecord
+from ..evidence_v2.records import (
+    PHASE_B_TEMPORAL_SCHEMA_VERSION,
+    PhaseBAnalysisRecord,
+)
 from ..gridworld import ACTION_NAMES, gridworld_scenario_to_dict
 from ..protocol_v2 import (
     ProtocolV2Branch,
@@ -302,6 +304,19 @@ def _restore_learner(
     raise ValueError(f"unsupported Phase-B method: {method_id!r}")
 
 
+def _has_complete_temporal_evidence(matched: Any, *, branch_budget: int) -> bool:
+    if branch_budget < 32 or branch_budget % 32:
+        return False
+    expected_endpoints = tuple(range(32, branch_budget + 1, 32))
+    for result in matched.results:
+        windows = tuple(result.reward_windows)
+        if tuple(item.end_interaction for item in windows) != expected_endpoints:
+            return False
+        if any(item.interaction_count != 32 for item in windows):
+            return False
+    return True
+
+
 class ProtocolV2PhaseBStudyExecutor:
     """Execute one matched FN/FD/AN/AD Study unit from one exact Phase-A state."""
 
@@ -505,9 +520,13 @@ class ProtocolV2PhaseBStudyExecutor:
         wall_seconds = time.perf_counter() - wall_start
         cpu_seconds = time.process_time() - cpu_start
 
+        temporal_evidence = _has_complete_temporal_evidence(
+            matched,
+            branch_budget=branch_budget,
+        )
         checkpoint_artifact_id = f"checkpoint__{phase_a_job_id}"
         matched_payload = {
-            "schema_version": 1,
+            "schema_version": PHASE_B_TEMPORAL_SCHEMA_VERSION if temporal_evidence else 1,
             "record_type": "phase-b-matched-set",
             "study_id": context.study_id,
             "job_id": job.job_id,
@@ -526,6 +545,15 @@ class ProtocolV2PhaseBStudyExecutor:
                     "branch": item.branch.value,
                     "interactions": item.interactions,
                     "metrics": dict(item.metrics),
+                    **(
+                        {
+                            "reward_windows": [
+                                window.to_dict() for window in item.reward_windows
+                            ]
+                        }
+                        if temporal_evidence
+                        else {}
+                    ),
                     "final_learner_state_sha256": item.final_learner_state_sha256,
                     "final_environment_state_sha256": item.final_environment_state_sha256,
                 }
@@ -552,6 +580,10 @@ class ProtocolV2PhaseBStudyExecutor:
                 resource_metrics={
                     "environment_interactions": float(result.interactions),
                 },
+                reward_windows=result.reward_windows if temporal_evidence else (),
+                schema_version=(
+                    PHASE_B_TEMPORAL_SCHEMA_VERSION if temporal_evidence else 1
+                ),
             )
             filename = f"analysis-data-{result.branch.value.lower()}.json"
             analysis_paths.append(
@@ -570,6 +602,10 @@ class ProtocolV2PhaseBStudyExecutor:
             "prefix_interactions": prefix_interactions,
             "interaction_budget_per_branch": branch_budget,
             "total_post_boundary_interactions": branch_budget * 4,
+            "temporal_reward_window_size": 32 if temporal_evidence else None,
+            "temporal_reward_window_count_per_branch": (
+                branch_budget // 32 if temporal_evidence else 0
+            ),
             "branch_point_learner_sha256": matched.branch_point_learner_sha256,
             "branch_point_environment_sha256": matched.branch_point_environment_sha256,
             "wall_seconds": wall_seconds,
@@ -624,6 +660,7 @@ class ProtocolV2PhaseBStudyExecutor:
                 "prefix_interactions": prefix_interactions,
                 "interaction_budget_per_branch": branch_budget,
                 "post_boundary_interactions": branch_budget * 4,
+                "temporal_reward_window_size": 32 if temporal_evidence else 0,
                 "wall_seconds": wall_seconds,
                 "process_cpu_seconds": cpu_seconds,
             },
