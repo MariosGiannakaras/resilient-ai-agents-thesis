@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping
 
+from ..study.model import JobState
 from ..study.scheduler import StudyExecutorRegistry
 from ..study.service import StudyService
 from ..study.store import StudyStore
@@ -25,6 +26,7 @@ class StudyListItem:
     infrastructure_failures: int
     finalized: bool
     method_ids: tuple[str, ...] = ()
+    method_statuses: tuple[tuple[str, str], ...] = ()
 
     @property
     def progress_fraction(self) -> float:
@@ -88,6 +90,7 @@ class DesktopStudyReadModel:
         items: list[StudyListItem] = []
         for status in self._service.list_studies():
             progress = status.progress
+            method_ids, method_statuses = self._method_projection(status.study_id)
             items.append(
                 StudyListItem(
                     study_id=status.study_id,
@@ -102,7 +105,8 @@ class DesktopStudyReadModel:
                     scientific_failures=int(progress.get("scientific_failed", 0)),
                     infrastructure_failures=int(progress.get("infrastructure_failed", 0)),
                     finalized=status.finalized,
-                    method_ids=self._method_ids(status.study_id),
+                    method_ids=method_ids,
+                    method_statuses=method_statuses,
                 )
             )
         return tuple(items)
@@ -121,7 +125,10 @@ class DesktopStudyReadModel:
             for artifact in self._service.artifacts(study_id)
         )
 
-    def _method_ids(self, study_id: str) -> tuple[str, ...]:
+    def _method_projection(
+        self,
+        study_id: str,
+    ) -> tuple[tuple[str, ...], tuple[tuple[str, str], ...]]:
         store = StudyStore.load(
             repo_root=self.repo_root,
             writable_root=self.writable_root,
@@ -129,10 +136,11 @@ class DesktopStudyReadModel:
         )
         phase_a = store.recipe.study.get("phase_a")
         if not isinstance(phase_a, Mapping):
-            return ()
+            return (), ()
         methods = phase_a.get("methods")
         if not isinstance(methods, list):
-            return ()
+            return (), ()
+
         ordered: list[str] = []
         for raw in methods:
             if not isinstance(raw, Mapping):
@@ -140,4 +148,32 @@ class DesktopStudyReadModel:
             method_id = raw.get("method_id")
             if isinstance(method_id, str) and method_id and method_id not in ordered:
                 ordered.append(method_id)
-        return tuple(ordered)
+
+        states = store.lifecycle.snapshot_states()
+        failures = {
+            JobState.SCIENTIFIC_FAILED,
+            JobState.INFRASTRUCTURE_FAILED,
+            JobState.SKIPPED,
+            JobState.CANCELLED,
+        }
+        projected: list[tuple[str, str]] = []
+        for method_id in ordered:
+            method_states: list[JobState] = []
+            for job in store.plan.jobs:
+                raw_method = job.payload.get("method")
+                if not isinstance(raw_method, Mapping):
+                    continue
+                if raw_method.get("method_id") == method_id:
+                    method_states.append(states[job.job_id])
+
+            if any(state in failures for state in method_states):
+                label = "Failed"
+            elif any(state is JobState.RUNNING for state in method_states):
+                label = "Running"
+            elif method_states and all(state is JobState.COMPLETED for state in method_states):
+                label = "Complete"
+            else:
+                label = "Pending"
+            projected.append((method_id, label))
+
+        return tuple(ordered), tuple(projected)
