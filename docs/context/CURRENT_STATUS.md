@@ -8,18 +8,21 @@
 ## Current execution state
 
 - `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable historical evidence; old `T-522` must not execute.
-- `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, `T-528`, `T-529` and `T-511` are COMPLETE. Historical completed work is not reopened by the new scientific requirement.
+- `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, `T-528`, `T-529`, historical `T-530`, `T-531`, `T-532` and `T-511` are COMPLETE. Historical completed work is not reopened by the new scientific requirement.
 - DEC-058 and `configs/protocols/protocol-v2.0-final.json` remain immutable historical protocol-v2.0 freeze authority. Their final roots/layouts, five retained methods, hyperparameters, conditions, Phase-A budgets/probes and 256-interaction Phase-B horizon remain unchanged.
-- **T-530 is now IN_PROGRESS under issue #98 and DEC-060.** It is an explicit pre-outcome protocol-v2.1 amendment required before T-610, not a silent rewrite of DEC-058.
-- DEC-060 / `configs/protocols/protocol-v2.1-amendment.json` freezes final RQ1/RQ2/RQ3, true recovery-speed semantics, right-censoring/non-recovery, direct root-paired method contrasts and estimation-oriented interpretation.
-- `final_reserve_access=false` remains mandatory. T-610 has not been authorized or executed and no protocol-v2/T-610 result exists in the canonical run index inspected during T-530 recovery.
+- **T-533 is IN_PROGRESS under issue #98 and DEC-060.** It is an explicit pre-outcome protocol-v2.1 amendment required before T-610. The previously reused T-530 identifier was corrected because T-530 is already immutable completed history.
+- DEC-060 / `configs/protocols/protocol-v2.1-amendment.json` freezes final RQ1/RQ2/RQ3, recovery-speed semantics, right-censoring/non-recovery, direct root-paired method contrasts and estimation-oriented interpretation.
+- `configs/protocols/protocol-v2.1-final.json` is the self-contained current scientific authority. It preserves DEC-058 experimental choices and keeps `final_reserve_access=false` plus `execution_authorization=requires-explicit-t610-gate`.
+- A deterministic `protocol_v2_1_recipe` materializer maps the self-contained authority into the existing Study matrix while failing closed if the final-reserve lock/gate is altered. Materialization itself does not authorize execution.
+- The isolated v2.1 execution/evidence path now includes fixed-window Phase-B reward evidence, schema-v2 records/validation, recovery and direct-comparison analysis, actual-root-count Student-t interval selection, deterministic v2 evidence exports with v2.1 provenance, and protocol-aware Phase-B/analysis/export routing. Historical v2.0/T-526/T-527 execution sources remain unchanged.
+- `final_reserve_access=false` remains mandatory. T-610 has not been authorized or executed and no protocol-v2/T-610 result was used in T-533 design or implementation.
 - `T-528 — Final Application / Frontend Rebuild` remains COMPLETE under DEC-059. The current application is PySide6 / Qt 6 Widgets over the Study backend; NiceGUI is historical prototype only.
 - `T-511 — Intended-user application workflow/self-explanatory UX acceptance` remains COMPLETE. That acceptance does not authorize final-reserve execution or accept future scientific results.
 - Master tracker #87 remains 7/8 complete; milestone 8 depends on the final v2 evidence chain.
-- PR #92 remains the active draft integration PR on `feat/pre-wp7-protocol-v1.1-ui-rebuild`. Its previously selected merge checkpoint is superseded only in sequencing: T-530 must be completed and validated on the same branch/PR before merge/final authorization.
+- PR #92 remains the active draft integration PR on `feat/pre-wp7-protocol-v1.1-ui-rebuild`. Its previous merge sequencing is superseded: T-533 must be completed and validated on the same branch/PR before merge/final authorization.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
 
-## T-530 scientific amendment
+## T-533 scientific amendment
 
 ### Final research questions
 
@@ -51,7 +54,7 @@ The 0.10 primary tolerance was frozen before final outcomes from the known task 
 
 Method comparison is root-paired and estimation-oriented. Layouts, episodes, probes and temporal windows are not independent samples.
 
-- Primary contrasts: RQ1 final nominal performance, RQ2 adaptation benefit, RQ3 recovery time/status on action-remap conditions.
+- Primary contrasts: RQ1 final nominal performance, RQ2 adaptation benefit, RQ3 recovery status/restricted fixed-horizon recovery delay on action-remap conditions; observed recovery time remains explicitly conditional on recovery.
 - Secondary: RQ1 time-average performance, RQ2 Frozen loss and Adaptive loss.
 - Exploratory/supporting: other disturbance diagnostics, computational observations and recovery sensitivity thresholds.
 - Report effect estimates with root-level pointwise uncertainty intervals. Pointwise intervals are not simultaneous inference and must not be relabeled post hoc as “statistically significant.” No formal p-value superiority family is authorized by DEC-060.
@@ -72,7 +75,7 @@ No composite resilience score is introduced. Nominal capability, immediate degra
 
 DEC-059 remains application authority. The UI consumes Study/read-model/evidence boundaries and must not own scientific protocol logic.
 
-Existing stored-evidence learning/adaptation/loss views remain valid. T-530 may extend Results with recovery trajectory/status/time and method contrasts only from validated stored analysis/export artifacts; thresholds/estimands must not be recomputed or selected inside the UI. Aesthetic redesign unrelated to the research correction is out of scope.
+Existing stored-evidence learning/adaptation/loss views remain valid. T-533 may extend Results with recovery trajectory/status/time and method contrasts only from validated stored analysis/export artifacts; thresholds/estimands must not be recomputed or selected inside the UI. Aesthetic redesign unrelated to the research correction is out of scope.
 
 ## Computational evidence
 
@@ -86,12 +89,12 @@ The repository remains **public** by explicit user decision. `thesis/source-mate
 
 ## Still intentionally unfrozen
 
-- `final_reserve_access=false`; final-reserve execution itself remains intentionally unfrozen and unauthorized.
-- T-610 and all final-reserve scientific outcomes remain blocked until T-530 implementation, deterministic validation, affected CI, documentation reconciliation and objective review are complete.
+- `final_reserve_access=false`; final-reserve execution remains unauthorized.
+- T-610 and all final-reserve scientific outcomes remain blocked until T-533 implementation, deterministic validation, affected CI, documentation reconciliation and objective review are complete.
 - No final roots/layouts/seeds may be used to tune recovery thresholds or analysis choices.
 - WP7 remains blocked by the later explicit pre-WP7 gate.
 - Final Windows standalone packaging remains deferred to `T-803` / issue #94.
 
 ## Exact next action
 
-Complete T-530 on the existing PR #92 branch: finish the isolated protocol-v2.1 temporal execution path, produce recovery/root-paired contrast analysis and deterministic exports, expose those stored results in PySide6 where required, reconcile active methodology/task documents, and pass affected CI. Then stop at the explicit authorization gate immediately before T-610. Do **not** access the final reserve or begin Results/Discussion writing.
+Complete T-533 on the existing PR #92 branch: finish stored-evidence PySide6 recovery/direct-comparison presentation where required, reconcile active methodology/task documents, and pass affected CI including the self-contained protocol-v2.1 recipe parity tests. Then stop at the explicit authorization gate immediately before T-610. Do **not** access the final reserve or begin Results/Discussion writing.
