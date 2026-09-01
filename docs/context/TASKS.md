@@ -138,7 +138,8 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Historical completion is preserved. `T-534` is the new clean rebuild and does not reopen or erase this record.
 
 - [ ] READY `T-534` — **Clean protocol-v2.1 PySide6 UI rebuild from current `main`.**
-  - Depends on: `T-527`, `T-529`, `T-533` — satisfied. `T-610` is not a dependency and remains separately BLOCKED.
+  - Depends on: `T-527`, `T-529`, `T-533` — satisfied.
+  - Separate scientific gate: `T-610` remains BLOCKED and is not a dependency of `T-534`.
   - Authority: DEC-059 for PySide6/runtime/scientific-firewall architecture; DEC-061 for the current experiment-first product/UX model; DEC-060 + `configs/protocols/protocol-v2.1-final.json` for current science; `docs/research/RQ_EVIDENCE_TRACEABILITY.md` for stored evidence; `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` for detailed interaction/acceptance guidance.
   - Start from one fresh implementation branch created from latest current `main`; do not continue the paused/pre-v2.1 UI branch/worktree or treat its presentation assumptions as authority.
   - Audit `src/resilient_agents/desktop/` before replacement. Preserve still-correct UI-neutral Study/evidence read models, results projection, execution supervision/policy, live-observer/event boundary and evidence/provenance adapters; presentation windows/pages/navigation/layout/theme/copy may be rebuilt.
