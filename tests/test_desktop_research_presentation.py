@@ -158,7 +158,7 @@ class DesktopResearchPresentationTests(unittest.TestCase):
         self.assertEqual(page.resilience_chart_stack.currentIndex(), 1)
         page.close()
 
-    def test_getting_started_is_replayable_skippable_and_explains_t534_workflow(self) -> None:
+    def test_getting_started_is_replayable_skippable_and_explains_experiment_workflow(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             window = MainWindow(repo_root=REPO_ROOT, writable_root=Path(directory))
             with patch("resilient_agents.desktop.main_window.OnboardingDialog.exec", return_value=0) as execute:
@@ -177,7 +177,8 @@ class DesktopResearchPresentationTests(unittest.TestCase):
             self.assertIn("Adaptive means learning continues", text)
             self.assertIn("RQ1 reports nominal learning", text)
             self.assertIn("Evidence shows readiness", text)
-            self.assertIn("requires separate T-610 authorization", text)
+            self.assertIn("separate backend authorization gate", text)
+            self.assertIn("cannot grant final-reserve access", text)
 
             for _ in range(dialog.stack.count() - 1):
                 dialog.next()

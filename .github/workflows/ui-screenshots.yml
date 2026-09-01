@@ -8,6 +8,7 @@ on:
       - "scripts/render_ui_resilience_pair.py"
       - "tests/test_desktop_*.py"
       - "tests/test_t534_*.py"
+      - "tests/test_t535_*.py"
       - "configs/protocols/protocol-v2.1-final.json"
       - "requirements/application-ui.txt"
       - ".github/workflows/ui-screenshots.yml"
@@ -53,10 +54,11 @@ jobs:
       - name: Overlay exact-pinned application UI dependencies
         run: uv pip install --python .venv/bin/python --requirement requirements/application-ui.txt
 
-      - name: Validate desktop and T-534 UI contracts
+      - name: Validate desktop and experiment-first UI contracts
         run: |
           uv run --no-sync python -m unittest discover -s tests -p 'test_desktop_*.py' -v
           uv run --no-sync python -m unittest discover -s tests -p 'test_t534_*.py' -v
+          uv run --no-sync python -m unittest discover -s tests -p 'test_t535_*.py' -v
 
       - name: Render deterministic T-534 review screenshots
         run: uv run --no-sync python scripts/render_ui_screenshots.py --output ci-ui-screenshots

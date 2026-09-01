@@ -42,8 +42,9 @@ _STEPS = (
         "Evidence shows readiness, registered exports and reproducibility lineage. Technical IDs and hashes are available on demand rather than dominating the workflow.",
     ),
     (
-        "Final experiment lock",
-        "The final experiment remains locked during T-534. This application cannot authorize final-reserve execution; that gate stays in the Study backend and requires separate T-610 authorization.",
+        "Final execution gate",
+        "Final scientific execution is controlled by a separate backend authorization gate. "
+        "This desktop application cannot grant final-reserve access or synthesize authorization; it only presents supported durable state and evidence.",
     ),
 )
 
