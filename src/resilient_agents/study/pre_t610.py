@@ -28,11 +28,11 @@ from ..protocol_v2 import ProtocolV2Branch
 from ..protocol_v2_temporal import RewardWindow
 from .model import ArtifactRole, EvidenceClass, StudyArtifact, StudyJobSpec, StudyPlan, StudyStage
 from .planner import StudyPlanner
+from .protocol_v2_1_recipe import load_protocol_v21_final_recipe
 from .recipe import StudyRecipe
 from .scheduler import StudyExecutorRegistry, StudyScheduler
 from .service import StudyService
 from .store import StudyStore
-from .protocol_v2_1_recipe import load_protocol_v21_final_recipe
 
 _FINAL_AUTHORITY = Path("configs/protocols/protocol-v2.1-final.json")
 _FINAL_STUDY_ID = "protocol-v2.1-final"
@@ -116,13 +116,14 @@ def _synthetic_recipe_and_plan() -> tuple[StudyRecipe, StudyPlan]:
         frozen=False,
         study={"purpose": "synthetic protocol-v2.1 downstream scientific pipeline smoke"},
     )
-    jobs: list[StudyJobSpec] = []
+    phase_a_jobs: list[StudyJobSpec] = []
+    phase_b_jobs: list[StudyJobSpec] = []
     phase_b_ids: list[str] = []
     for method in _METHODS:
         for root in _ROOTS:
             pa_id = f"pa__{method}__{root}__{_LAYOUT}"
             pb_id = f"pb__{method}__{root}__{_LAYOUT}__{_CONDITION}"
-            jobs.append(
+            phase_a_jobs.append(
                 StudyJobSpec(
                     job_id=pa_id,
                     stage=StudyStage.PHASE_A,
@@ -135,7 +136,7 @@ def _synthetic_recipe_and_plan() -> tuple[StudyRecipe, StudyPlan]:
                     },
                 )
             )
-            jobs.append(
+            phase_b_jobs.append(
                 StudyJobSpec(
                     job_id=pb_id,
                     stage=StudyStage.PHASE_B,
@@ -163,41 +164,42 @@ def _synthetic_recipe_and_plan() -> tuple[StudyRecipe, StudyPlan]:
                 )
             )
             phase_b_ids.append(pb_id)
-    jobs.extend(
-        (
-            StudyJobSpec(
-                job_id="validate-study",
-                stage=StudyStage.VALIDATION,
-                evidence_class=EvidenceClass.DERIVED,
-                dependencies=tuple(phase_b_ids),
-                payload={
-                    "job_type": "study-validation",
-                    "specification": {"validator": "protocol-v2.1-study-temporal"},
+    derived = (
+        StudyJobSpec(
+            job_id="validate-study",
+            stage=StudyStage.VALIDATION,
+            evidence_class=EvidenceClass.DERIVED,
+            dependencies=tuple(phase_b_ids),
+            payload={
+                "job_type": "study-validation",
+                "specification": {"validator": "protocol-v2.1-study-temporal"},
+            },
+        ),
+        StudyJobSpec(
+            job_id="analyze-study",
+            stage=StudyStage.ANALYSIS,
+            evidence_class=EvidenceClass.DERIVED,
+            dependencies=("validate-study",),
+            payload={"job_type": "study-analysis", "specification": _analysis_spec()},
+        ),
+        StudyJobSpec(
+            job_id="export-study",
+            stage=StudyStage.EXPORT,
+            evidence_class=EvidenceClass.DERIVED,
+            dependencies=("analyze-study",),
+            payload={
+                "job_type": "study-export",
+                "specification": {
+                    "package": "protocol-v2-evidence-handoff-v2",
+                    "emit_csv": True,
                 },
-            ),
-            StudyJobSpec(
-                job_id="analyze-study",
-                stage=StudyStage.ANALYSIS,
-                evidence_class=EvidenceClass.DERIVED,
-                dependencies=("validate-study",),
-                payload={"job_type": "study-analysis", "specification": _analysis_spec()},
-            ),
-            StudyJobSpec(
-                job_id="export-study",
-                stage=StudyStage.EXPORT,
-                evidence_class=EvidenceClass.DERIVED,
-                dependencies=("analyze-study",),
-                payload={
-                    "job_type": "study-export",
-                    "specification": {
-                        "package": "protocol-v2-evidence-handoff-v2",
-                        "emit_csv": True,
-                    },
-                },
-            ),
-        )
+            },
+        ),
     )
-    return recipe, StudyPlan(study_id=recipe.recipe_id, jobs=tuple(jobs))
+    return recipe, StudyPlan(
+        study_id=recipe.recipe_id,
+        jobs=tuple((*phase_a_jobs, *phase_b_jobs, *derived)),
+    )
 
 
 def _phase_a_value(method: str, root: str) -> float:
@@ -237,13 +239,12 @@ def _branch_windows(
     return _window_series(adaptive_disturbed[(method, root)])
 
 
-def _record_synthetic_scientific_evidence(store: StudyStore) -> None:
+def _record_phase_a_synthetic_evidence(store: StudyStore) -> dict[tuple[str, str], str]:
     root = store.writable_root
+    checkpoints: dict[tuple[str, str], str] = {}
     for method in _METHODS:
         for root_id in _ROOTS:
             pa_id = f"pa__{method}__{root_id}__{_LAYOUT}"
-            pb_id = f"pb__{method}__{root_id}__{_LAYOUT}__{_CONDITION}"
-
             store.start_job(pa_id)
             run_rel, run_sha = _write_json(root, f"results/runs/{pa_id}/run.json", {"synthetic": True})
             run_artifact_id = f"{pa_id}-run"
@@ -260,6 +261,7 @@ def _record_synthetic_scientific_evidence(store: StudyStore) -> None:
             )
             cp_rel, cp_sha = _write_bytes(root, f"results/runs/{pa_id}/checkpoint.bin", b"synthetic-checkpoint")
             checkpoint_id = f"{pa_id}-checkpoint"
+            checkpoints[(method, root_id)] = checkpoint_id
             store.record_artifact(
                 StudyArtifact(
                     artifact_id=checkpoint_id,
@@ -299,7 +301,18 @@ def _record_synthetic_scientific_evidence(store: StudyStore) -> None:
                 )
             )
             store.complete_job(pa_id)
+    return checkpoints
 
+
+def _record_phase_b_synthetic_evidence(
+    store: StudyStore,
+    checkpoints: Mapping[tuple[str, str], str],
+) -> None:
+    root = store.writable_root
+    for method in _METHODS:
+        for root_id in _ROOTS:
+            pb_id = f"pb__{method}__{root_id}__{_LAYOUT}__{_CONDITION}"
+            checkpoint_id = checkpoints[(method, root_id)]
             store.start_job(pb_id)
             pb_run_rel, pb_run_sha = _write_json(root, f"results/runs/{pb_id}/run.json", {"synthetic": True})
             pb_run_id = f"{pb_id}-run"
@@ -348,6 +361,11 @@ def _record_synthetic_scientific_evidence(store: StudyStore) -> None:
                     )
                 )
             store.complete_job(pb_id)
+
+
+def _record_synthetic_scientific_evidence(store: StudyStore) -> None:
+    checkpoints = _record_phase_a_synthetic_evidence(store)
+    _record_phase_b_synthetic_evidence(store, checkpoints)
 
 
 def run_synthetic_protocol_v21_pipeline_smoke(repo_root: Path) -> dict[str, Any]:
