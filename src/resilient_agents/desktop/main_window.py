@@ -8,13 +8,13 @@ from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import QHBoxLayout, QLabel, QMainWindow, QPushButton, QStackedWidget, QVBoxLayout, QWidget
 
 from . import APP_NAME, APP_SUBTITLE
-from .evidence_page import EvidencePage
+from .evidence_workspace import EvidencePage
 from .experiment_page import ExperimentPage
 from .onboarding import OnboardingDialog
 from .protocol import load_frozen_protocol
 from .results_read_model import DesktopResultsReadModel
 from .results_workspace import ResultsWorkspacePage
-from .run_workspace import RunWorkspacePage
+from .run_workspace_user import RunWorkspacePage
 from .study_read_model import DesktopStudyReadModel
 from .widgets import NavButton
 
@@ -68,7 +68,7 @@ class MainWindow(QMainWindow):
         for page in self.pages:
             self.stack.addWidget(page)
         self.experiment_page.study_created.connect(self._study_created)
-        self.runs_page.study_selected.connect(self._show_evidence_for_study)
+        self.runs_page.study_selected.connect(self._sync_selected_study)
 
         self.nav_buttons: list[NavButton] = []
         nav_items = (
@@ -85,10 +85,13 @@ class MainWindow(QMainWindow):
             sidebar_layout.addWidget(button)
             self.nav_buttons.append(button)
         sidebar_layout.addStretch(1)
-        state = QLabel("protocol-v2.1\nFinal experiment locked")
+        state = QLabel("protocol-v2.1\nFinal execution gated")
         state.setObjectName("SidebarState")
         state.setWordWrap(True)
-        state.setToolTip("Final-reserve execution remains blocked until separate explicit T-610 authorization.")
+        state.setToolTip(
+            "Final scientific execution is controlled by a separate backend authorization gate; "
+            "the desktop UI cannot grant it."
+        )
         sidebar_layout.addWidget(state)
 
         body_layout.addWidget(sidebar)
@@ -122,11 +125,13 @@ class MainWindow(QMainWindow):
         help_button.setToolTip("Replay the short, skippable guide to Experiment, Run, Results and Evidence.")
         help_button.clicked.connect(self._show_getting_started)
         layout.addWidget(help_button)
-        lock = QLabel("FINAL EXPERIMENT LOCKED")
+        lock = QLabel("FINAL EXECUTION GATED")
         lock.setObjectName("HeaderLock")
         lock.setAlignment(Qt.AlignmentFlag.AlignCenter)
         lock.setFixedHeight(24)
-        lock.setToolTip("The desktop UI cannot authorize final execution. T-610 remains separately blocked.")
+        lock.setToolTip(
+            "Final execution requires separate backend authorization. This desktop UI cannot grant it."
+        )
         layout.addWidget(lock)
         return header
 
@@ -147,9 +152,11 @@ class MainWindow(QMainWindow):
             self.evidence_page.refresh()
 
     def _study_created(self, study_id: str) -> None:
-        self.runs_page.refresh()
         self.set_page(1)
+        self.runs_page.set_study(study_id)
+        self._sync_selected_study(study_id)
 
-    def _show_evidence_for_study(self, study_id: str) -> None:
+    def _sync_selected_study(self, study_id: str) -> None:
         self.evidence_page.refresh()
         self.evidence_page.set_study(study_id)
+        self.results_page.set_study(study_id)
