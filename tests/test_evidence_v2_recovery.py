@@ -39,9 +39,11 @@ class EvidenceV2RecoveryTests(unittest.TestCase):
             disturbed_windows=[0.0, 0.1, 0.2, 0.39, 0.41, 0.42, 0.43, 0.44],
             definition=_definition(),
         )
+        # Window 128 is still outside the 0.10 neighborhood: 0.50 - 0.39 = 0.11.
+        # Windows ending 160 and 192 are the first stable in-tolerance pair.
         self.assertEqual(result.status, "recovered")
-        self.assertEqual(result.recovery_time, 128)
-        self.assertEqual(result.confirmation_time, 160)
+        self.assertEqual(result.recovery_time, 160)
+        self.assertEqual(result.confirmation_time, 192)
 
     def test_never_recovered_is_right_censored_without_artificial_horizon_time(self) -> None:
         result = assess_recovery(
@@ -98,6 +100,20 @@ class EvidenceV2RecoveryTests(unittest.TestCase):
         self.assertEqual(first, second)
         self.assertEqual([point.nominal_value for point in first.trajectory], nominal)
         self.assertEqual(first.recovery_time, 128)
+        self.assertEqual(first.confirmation_time, 160)
+
+    def test_decimal_gap_equal_to_frozen_tolerance_is_not_lost_to_binary_rounding(self) -> None:
+        result = assess_recovery(
+            nominal_windows=[0.46] * 8,
+            disturbed_windows=[0.0, 0.0, 0.36, 0.36, 0.0, 0.0, 0.0, 0.0],
+            definition=_definition(),
+        )
+        # Python represents 0.46 - 0.36 slightly above 0.10 on some paths;
+        # the scientific rule is mathematical <= 0.10, not binary-float > 0.10.
+        self.assertEqual(result.recovery_time, 96)
+        self.assertEqual(result.confirmation_time, 128)
+        self.assertTrue(result.trajectory[2].within_tolerance)
+        self.assertTrue(result.trajectory[3].within_tolerance)
 
     def test_pairwise_method_contrasts_pair_only_common_independent_roots(self) -> None:
         contrasts = pairwise_method_contrasts(
