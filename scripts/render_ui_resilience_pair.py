@@ -7,6 +7,7 @@ import json
 import os
 import sys
 import tempfile
+from dataclasses import replace
 from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
@@ -144,6 +145,25 @@ def write_condition_aware_pair(*, writable_root: Path, study_id: str) -> str:
     return condition_id
 
 
+def _project_phase_b_render_state(window: MainWindow, study_id: str) -> None:
+    """Adjust only the in-memory QA read projection; never mutate Study lifecycle."""
+
+    item = next(entry for entry in window.runs_page._items if entry.study_id == study_id)
+    projected = replace(
+        item,
+        current_stage="phase-b",
+        resolved_jobs=1,
+        completed_jobs=1,
+        running_jobs=1,
+        method_statuses=(("q_learning", "Running"),),
+    )
+    window.runs_page._items = tuple(
+        projected if entry.study_id == study_id else entry
+        for entry in window.runs_page._items
+    )
+    window.runs_page._render_status(projected)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
@@ -179,6 +199,7 @@ def main() -> int:
         window.runs_page.study_combo.setCurrentIndex(
             window.runs_page.study_combo.findData(study_id)
         )
+        _project_phase_b_render_state(window, study_id)
         window.runs_page.refresh_live()
         frame = window.runs_page._latest_frame
         if frame is None or frame.comparison is None:
@@ -202,6 +223,8 @@ def main() -> int:
             raise RuntimeError("Frozen learning-off meaning is missing from Run summary")
         if "Adaptive — learning continues" not in window.runs_page.frame_summary.text():
             raise RuntimeError("Adaptive learning-continuation meaning is missing")
+        if window.runs_page.stage_label.text() != "Phase B — Frozen vs Adaptive":
+            raise RuntimeError("focused Phase-B QA render has contradictory stage text")
 
         records = []
         for size, suffix in (
@@ -216,12 +239,13 @@ def main() -> int:
         (output / "matched-resilience-manifest.json").write_text(
             json.dumps(
                 {
-                    "schema_version": 3,
+                    "schema_version": 4,
                     "purpose": (
                         "T-534 exact matched Phase-B presentation QA; not scientific evidence"
                     ),
                     "scientific_jobs_executed": 0,
                     "environment_steps_executed": 0,
+                    "durable_job_state_mutated": False,
                     "final_reserve_accessed": False,
                     "condition_id": condition_id,
                     "pairing": (
