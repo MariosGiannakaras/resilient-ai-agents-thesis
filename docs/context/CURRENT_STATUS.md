@@ -58,6 +58,16 @@ PySide6 Results supports stored Recovery & Comparisons summaries, AN-vs-AD traje
 
 Any separately paused Codex UI working copy that started before the protocol-v2.1 merge must be treated as non-authoritative partial work. Restart UI implementation from current `main`, read `AGENTS.md`, `docs/context/TASKS.md` and this file first, and re-derive UI behavior from the merged v2.1 backend/evidence contracts rather than carrying forward pre-v2.1 assumptions.
 
+## Pre-final readiness hardening
+
+- Final pre-experiment checks are implemented as read-only/preflight logic and preserve the separate final-experiment authorization gate.
+- The framework-neutral `StudyService` now denies confirmatory/final execution by default unless a separate explicit final-experiment authorization token is supplied; application/UI code cannot bypass this by calling the generic backend facade directly.
+- The preflight materializes the frozen protocol-v2.1 recipe and verifies the exact final matrix dimensions while confirming `final_reserve_access=false`, `execution_authorization=requires-explicit-t610-gate`, no committed final v2.1 Study bundle, and zero final execution attempts/artifacts.
+- A synthetic DEVELOPMENT-only end-to-end smoke exercises standardized Phase-A/Phase-B evidence -> validation -> protocol-v2.1 root analysis -> deterministic v2 evidence export -> StudyStore finalization/reload. It uses only synthetic identities and exercises both recovered and right-censored recovery outcomes.
+- `docs/research/RQ_EVIDENCE_TRACEABILITY.md` maps RQ1/RQ2/RQ3 to source evidence, root-level estimands and deterministic output artifacts without adding new scientific claims.
+- Focused Protocol-v2 CI explicitly covers the protocol-v2.1 authority, temporal/recovery contracts, v2.1 analysis/export and preflight smoke in addition to the historical protocol-v2 conformance suite.
+- The substantive readiness head `d5e84287652289e0e429402a8bc255c1193b897c` passed Repository checks #804 and Protocol-v2 pilot checks #317; the latter ran 191 focused tests and the explicit pre-final readiness script successfully. The final documentation-only closure head was subsequently subjected to one additional CI cycle before merge.
+
 ## Documentation / thesis preparation
 
 `TASKS.md`, DEC-060, the decision index, `RESEARCH_BRIEF.md`, `MODEL_CANDIDATES.md`, `docs/experiments/EXPERIMENTAL_REQUIREMENTS.md` and the structure-only `THESIS_STRUCTURE_DRAFT.md` are reconciled to protocol-v2.1. Results, Discussion and conclusion claims remain explicitly evidence-gated.
@@ -76,4 +86,4 @@ The repository remains public by explicit user decision. `thesis/source-material
 
 ## Exact next action
 
-For application work, a paused pre-v2.1 Codex UI implementation may now restart cleanly from current `main` using the merged protocol-v2.1 contracts as authority. Scientifically, stop at the **separate explicit authorization gate for T-610**: do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, or begin Results/Discussion writing without that authorization.
+Before restarting application UI implementation, repository housekeeping may remove only branches/worktrees/artifacts that are objectively obsolete or fully merged while preserving `main`, canonical scientific authority, required automation/integration branches and any branch with unique unmerged work. Then restart the UI cleanly from current `main` using the merged protocol-v2.1 contracts as authority. Scientifically, stop at the **separate explicit authorization gate for T-610**: do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, or begin Results/Discussion writing without that authorization.

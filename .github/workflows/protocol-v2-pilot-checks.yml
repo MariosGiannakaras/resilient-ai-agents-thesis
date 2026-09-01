@@ -12,18 +12,23 @@ on:
       - "configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json"
       - "configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json"
       - "configs/protocols/protocol-v2-t527-sizing-completion-v0.3.json"
+      - "configs/protocols/protocol-v2.0-final.json"
+      - "configs/protocols/protocol-v2.1-final.json"
       - "docs/decisions/DEC-052_T526_CHECKPOINT_MATERIALIZATION_AND_PHASE_B.md"
       - "docs/decisions/DEC-053_SB3_SCIENTIFIC_CONTINUATION_IDENTITY.md"
       - "docs/decisions/DEC-054_PHASE_A_INTERACTION_BUDGET_SETTLEMENT.md"
       - "docs/decisions/DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md"
       - "docs/decisions/DEC-056_T527_SIZING_OBSERVATION_BOUNDARY_RETRY.md"
       - "docs/decisions/DEC-057_T527_COMPLETE_SB3_INGRESS_AND_SIZING_COMPLETION.md"
+      - "docs/decisions/DEC-058_PROTOCOL_V2_FINAL_SCIENTIFIC_FREEZE.md"
+      - "docs/decisions/DEC-060_PROTOCOL_V2_1_RECOVERY_AND_COMPARISON_AMENDMENT.md"
       - "scripts/run_protocol_v2_t526_recovery_phase_b_windows.ps1"
       - "scripts/run_protocol_v2_t526_recovery_phase_b_v02_windows.ps1"
       - "scripts/run_protocol_v2_t526_boundary_settlement_phase_b_v03_windows.ps1"
       - "scripts/run_protocol_v2_t527_tuning_sizing_windows.ps1"
       - "scripts/run_protocol_v2_t527_sizing_v02_windows.ps1"
       - "scripts/run_protocol_v2_t527_sizing_v03_windows.ps1"
+      - "scripts/check_protocol_v2_1_pre_t610.py"
       - "src/resilient_agents/protocol_v2*.py"
       - "src/resilient_agents/study/*.py"
       - "src/resilient_agents/evidence_v2/*.py"
@@ -44,6 +49,11 @@ on:
       - "configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json"
       - "configs/protocols/protocol-v2-t527-sizing-retry-v0.2.json"
       - "configs/protocols/protocol-v2-t527-sizing-completion-v0.3.json"
+      - "configs/protocols/protocol-v2.0-final.json"
+      - "configs/protocols/protocol-v2.1-final.json"
+      - "docs/decisions/DEC-058_PROTOCOL_V2_FINAL_SCIENTIFIC_FREEZE.md"
+      - "docs/decisions/DEC-060_PROTOCOL_V2_1_RECOVERY_AND_COMPARISON_AMENDMENT.md"
+      - "scripts/check_protocol_v2_1_pre_t610.py"
       - "src/resilient_agents/protocol_v2*.py"
       - "src/resilient_agents/study/*.py"
       - "src/resilient_agents/evidence_v2/*.py"
@@ -114,6 +124,10 @@ jobs:
             tests.test_protocol_v2_sb3_identity \
             tests.test_protocol_v2_boundary_settlement \
             tests.test_protocol_v2_t527 \
+            tests.test_protocol_v2_final \
+            tests.test_protocol_v2_1_final_recipe \
+            tests.test_protocol_v2_temporal \
+            tests.test_protocol_v2_1_pre_t610 \
             tests.test_study_backend \
             tests.test_study_planner \
             tests.test_study_scheduler \
@@ -124,4 +138,13 @@ jobs:
             tests.test_evidence_v2_validation \
             tests.test_evidence_v2_executor \
             tests.test_evidence_v2_statistics \
-            tests.test_evidence_v2_denominators -q
+            tests.test_evidence_v2_denominators \
+            tests.test_evidence_v2_recovery \
+            tests.test_evidence_v2_temporal_records \
+            tests.test_evidence_v2_exports_v2 -q
+
+      - name: Run pre-final protocol-v2.1 readiness smoke
+        env:
+          CUDA_VISIBLE_DEVICES: ""
+        run: |
+          uv run --group protocol-v2-pilot python scripts/check_protocol_v2_1_pre_t610.py
