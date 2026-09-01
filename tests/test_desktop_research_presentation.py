@@ -101,10 +101,10 @@ class DesktopResearchPresentationTests(unittest.TestCase):
             page = RunsPage(read_model)
             page._show_live_frame(frame, is_running=True)
 
-            self.assertIn("exact FD/AD pair", page.live_interaction.text())
+            self.assertIn("Exact FD/AD match", page.live_interaction.text())
             self.assertIn("Frozen — action right", page.live_transition.text())
             self.assertIn("Adaptive — action down", page.live_transition.text())
-            self.assertIn("change-1", page.live_context.text())
+            self.assertIn("change-1", page.live_observation.text())
             self.assertIn("Frozen and Adaptive", page.live_grid.accessibleDescription())
             page.close()
 

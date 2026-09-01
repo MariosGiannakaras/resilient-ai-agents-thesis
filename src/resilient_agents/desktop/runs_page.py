@@ -207,8 +207,7 @@ class RunsPage(QWidget):
         details.addWidget(self.live_identity)
 
         legend = QLabel(
-            "A/arrow Agent + direction · G Goal · S Start · ■ Wall · "
-            "dashed box Observation"
+            "A agent · → action · G goal · S start · ■ wall · dashed box observation"
         )
         legend.setObjectName("GridLegend")
         legend.setWordWrap(True)
@@ -236,8 +235,7 @@ class RunsPage(QWidget):
         details.addWidget(self.live_context)
 
         boundary = QLabel(
-            "Read-only presentation. Dropped frames never affect actions, RNG, "
-            "checkpoints, metrics or Study evidence."
+            "Read-only; dropped frames never affect scientific execution or evidence."
         )
         boundary.setObjectName("DevelopmentText")
         boundary.setWordWrap(True)
@@ -458,9 +456,8 @@ class RunsPage(QWidget):
             frozen = comparison.frozen
             adaptive = comparison.adaptive
             self.live_interaction.setText(
-                f"Matched interaction {adaptive.interaction_index:,} · episode "
-                f"{adaptive.episode_index + 1} · environment step "
-                f"{adaptive.environment_step} · exact FD/AD pair"
+                f"Exact FD/AD match · interaction {adaptive.interaction_index:,} · "
+                f"episode {adaptive.episode_index + 1} · step {adaptive.environment_step}"
             )
             self.live_transition.setText(
                 f"Frozen — action {frozen.intended_action} → {frozen.executed_action} · "
@@ -472,11 +469,9 @@ class RunsPage(QWidget):
                 frozen.delivered_observation == frozen.true_state
                 and adaptive.delivered_observation == adaptive.true_state
             ):
-                self.live_observation.setText(
-                    "Both delivered observations match their true states."
-                )
+                observation = "Both observations match their true states"
             else:
-                self.live_observation.setText(
+                observation = (
                     f"Frozen: {self._observation_note(frozen)}\n"
                     f"Adaptive: {self._observation_note(adaptive)}"
                 )
@@ -488,10 +483,16 @@ class RunsPage(QWidget):
         ]
         disturbance = ", ".join(flags) if flags else "none"
         change_events = ", ".join(frame.change_event_ids) if frame.change_event_ids else "none"
-        self.live_context.setText(
-            f"Regime: {frame.regime_id or '—'} · disturbance flags: {disturbance} · "
+        context = (
+            f"regime: {frame.regime_id or '—'} · flags: {disturbance} · "
             f"change: {change_events}"
         )
+        if comparison is None:
+            self.live_context.setText(context.capitalize())
+            self.live_context.show()
+        else:
+            self.live_observation.setText(f"{observation} · {context}")
+            self.live_context.hide()
         self.live_surface.show()
 
     @staticmethod
