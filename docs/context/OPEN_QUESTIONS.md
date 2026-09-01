@@ -1,48 +1,40 @@
 # Open Questions
 
-This file contains only issues that are genuinely unresolved after current repository evidence and accepted decisions. Superseded historical questions are listed as resolved rather than silently carried forward.
+This file contains only issues that are genuinely unresolved after current repository evidence and accepted decisions. Superseded historical questions are not carried forward as active uncertainty.
 
-## Resolved since earlier versions
+## Resolved and no longer open
 
-The following are **not open questions anymore**:
+The following are already decided or completed:
 
-- bibliography ownership/import/authentication/provenance baseline;
-- Python 3.12 + `uv`, filesystem run bundles, information boundary, deterministic RNG and guarded whole-experiment publication;
-- actual target-machine CPU/RAM/storage/GPU/runtime baseline;
-- project-owned Gymnasium GridWorld implementation strategy;
-- historical F0/C0/R0 pilot diagnosis and the decision **not** to freeze the accepted R0 construction unchanged;
-- current comparator direction: F0 frozen Q-learning, C0 continual Q-learning and D0 Dyna-Q+ as three scientifically distinct resilience/adaptation roles for candidate v1.1;
-- validated common F0/C0 alpha `0.5`, gamma `0.96875`, epsilon `0.125`, 512 training episodes/layout, 16 pre-change, 32 post-change, horizon 48 and 32 paired final roots;
-- seven single-factor condition structure and the new structural remap naming direction;
-- primary metric direction: cumulative deficit, immediate degradation and terminal performance/gap; recovery is secondary/sensitivity rather than the sole headline outcome;
-- need for paired effects/95% confidence intervals and explicit sample counts in v1.1 analysis;
-- application framework: NiceGUI 3.16 native mode, not Streamlit/React/Vite;
-- standalone own-window/cleaned Windows application-folder delivery target;
-- Plotly/ECharts/Mermaid/AG Grid visual roles;
-- novice-first self-explanatory UI contract, contextual tooltips/help, compact modern design, semantic icons/colors, micro-interactions and purposeful animation;
-- canonical resumable Codex task/checkpoint workflow and one active implementation branch/PR;
-- overall application -> final experiments -> evidence -> thesis/review -> defense -> delivery lifecycle.
+- bibliography ownership/import/provenance boundary;
+- Python 3.12 + `uv`, project-owned Gymnasium GridWorld, deterministic RNG and evaluator/agent information boundary;
+- target-machine CPU baseline and protocol-v2 feasibility/tuning/sizing;
+- retained final methods: Q-Learning, SARSA, DQN, PPO and Dyna-Q+;
+- selected method-specific configurations and protocol-v2.1 final matrix dimensions;
+- final Phase-A budget/probe/checkpoint semantics;
+- final Phase-B matched FN/FD/AN/AD contract and 256-interaction horizon;
+- protocol-v2.1 RQ1/RQ2/RQ3 estimands, direct comparisons, recovery definition/censoring and actual-root Student-t interval policy;
+- application framework: PySide6 / Qt 6 Widgets under DEC-059;
+- framework-neutral Study backend and stored-evidence read-model boundary;
+- novice-first/self-explanatory UI requirements;
+- final-reserve execution remains separately authorization-gated;
+- standalone Windows packaging is intentionally deferred until after the thesis.
 
-Historical pilot/v1.0 evidence remains immutable; resolving a question for v1.1 never relabels old evidence.
+Historical v1.0/v1.1/pilot evidence remains auditable history; resolving current questions never relabels old evidence.
 
 ## Current open questions
 
-| ID | Open issue | Why open | Needed by | Blocks? | Resolver / safe rule |
+| ID | Open issue | Why open | Needed by | Blocks now? | Resolver / safe rule |
 |---|---|---|---|---|---|
-| OQ-ACA-001 | Are supervisor-specific corrections introduced later? | None currently exist. | When feedback arrives. | No. | User/supervisor; record as explicit change when received. |
-| OQ-ACA-002 | What is the eventual submission/presentation schedule? | No verified date provided. | Delivery planning. | No. | User/Department; never invent dates. |
-| OQ-ACA-003 | Is there a current official Word template/submission package? | Not needed for current implementation. | WP7/final QA. | No. | Recheck official sources near writing/submission. |
-| OQ-ACA-004 | What are the exact current defense duration/language/file/template/live-demo/submission rules? | May change and have not been verified for final delivery. | Defense freeze. | No now. | Recheck official guidance near WP7/defense; do not invent slide count/duration. |
-| OQ-V11-001 | Which bounded D0 `planning_steps` and `kappa` values should be selected? | D0 integration is validated, but D0-only tuning must use predeclared non-final evidence. | T-521/T-522. | Yes for v1.1 freeze. | Define a small search in T-521; select only from development/tuning/non-final evidence in T-522. |
-| OQ-V11-002 | What exact four fresh held-out final layouts and final seed values are frozen for v1.1? | Counts/constraints are decided, exact reserve values must be generated/precommitted before inspection. | T-521. | Yes for v1.1 final. | Generate/validate/freeze before any v1.1 final execution; never choose from observed final outcomes. |
-| OQ-V11-003 | What exact paired interval/effect implementation is frozen? | Paired 95% CI requirement is accepted; implementation details/aggregation must be encoded before final evidence. | T-521/T-522. | Yes for final analysis. | Use paired seed/layout structure, explicit n and predeclared deterministic/statistically justified CI procedure; no post-hoc favorable method. |
-| OQ-V11-004 | Does the candidate v1.1 pass non-final tuning/pilot acceptance without further amendment? | Cannot be known before T-522 evidence. | T-522. | Yes for freeze. | Freeze, amend or reject based on predeclared non-final criteria; retain failures/non-recovery. |
-| OQ-RUNTIME-001 | Which lifecycle controls are actually safe in the active-run service? | Stop/cancel/restart are desired where safe; pause/resume may not be. | T-530. | Yes for corresponding UI controls. | Capability-based service; unsupported actions remain visibly unsupported. |
-| OQ-PKG-001 | Does the NiceGUI/pywebview/PyInstaller `onedir + windowed` build pass on the actual Windows thesis machine? | CI/browser validation cannot substitute for native target-machine packaging behavior. | T-532. | Yes for final application delivery. | Validate native launch/close/restart, WebView2/runtime assets and writable paths on Windows; document any prerequisite that cannot be bundled. |
-| OQ-UI-001 | Which optional advanced controls survive after the real v1.1/runtime workflow is integrated? | Core UX is confirmed; speculative advanced controls remain unnecessary until real workflow proves value. | T-531. | No now. | Implement required novice-first workflow first; add only evidence-backed low-risk controls. |
-| OQ-AI-001 | Is any optional AI feature useful in the application? | No demonstrated need. | Late UI only. | No. | Do not integrate unless measurable value appears. |
-| OQ-PRIV-001 | What must be redacted/licensed differently before deliberate public distribution? | Temporary CI visibility is not a public-release decision. | Final release. | No now. | Run final privacy/secret/copyright/licensing audit. |
+| OQ-ACA-001 | Are supervisor-specific corrections introduced later? | None currently exist. | When feedback arrives. | No. | User/supervisor; record as an explicit change when received. |
+| OQ-ACA-002 | What is the eventual submission/presentation schedule? | No verified date has been provided. | Delivery planning. | No. | User/Department; never invent dates. |
+| OQ-ACA-003 | Is there a current official Word template/submission package? | Not required for current implementation and may change. | Thesis composition/final QA. | No. | Recheck official sources near writing/submission. |
+| OQ-ACA-004 | What are the exact current defense duration/language/file/template/live-demo/submission rules? | They have not been verified for final delivery and may change. | Defense freeze. | No. | Recheck official guidance near defense; do not invent slide count/duration. |
+| OQ-UI-001 | What exact visual composition survives the clean protocol-v2.1 UI rebuild? | Architecture and UX constraints are frozen, but page composition can be improved during implementation. | Current UI rebuild. | No scientific block. | Start from fresh `main`; preserve backend/read-model contracts, replace presentation code where useful, and validate with representative DEVELOPMENT/synthetic states. |
+| OQ-PKG-001 | What exact post-thesis standalone Windows packaging recipe is finally delivered? | Packaging is intentionally deferred and should target the finally accepted rebuilt UI. | Post-thesis delivery. | No. | Resolve in issue #94 after thesis/UI freeze; validate on the actual Windows machine. |
+| OQ-AI-001 | Is any optional AI feature useful inside the application? | No demonstrated need. | Late UI only, if ever. | No. | Do not integrate unless a concrete measurable benefit appears. |
+| OQ-PRIV-001 | Are any additional privacy/licensing/copyright changes required before deliberate wider distribution? | Repository is public, but final distribution packaging has its own audit. | Final delivery. | No. | Run final secret/privacy/license/copyright audit before release packaging. |
 
 ## Current authority
 
-Concrete status/dependencies are in `TASKS.md`; the immediate work is `T-521`. Questions resolved by an accepted task/decision must be removed from the open table in the same reconciliation checkpoint rather than remaining as stale uncertainty.
+Concrete status/dependencies are in `TASKS.md`; compact current state is in `CURRENT_STATUS.md`. The final scientific experiment is not an open design question: its protocol is frozen, but execution remains blocked until the separate explicit authorization gate is given.
