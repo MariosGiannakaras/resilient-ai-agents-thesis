@@ -60,6 +60,10 @@ def application_stylesheet() -> str:
     QLabel#PageLead {{ font-size: 14px; color: {COLORS['muted']}; }}
     QLabel#SectionTitle {{ font-size: 16px; font-weight: 700; }}
     QLabel#SectionHint {{ color: {COLORS['muted']}; font-size: 12px; }}
+    QLabel#GridLegend {{ color: #3F526B; background: #F7F9FC; border: 1px solid {COLORS['border']}; border-radius: 6px; padding: 5px 8px; font-size: 11px; }}
+    QPushButton#ChartToggleActive {{ color: #174EA6; background: {COLORS['accent_soft']}; border: 1px solid #B9CDF7; border-radius: 6px; padding: 5px 9px; font-weight: 650; }}
+    QPushButton#ChartToggleInactive {{ color: #344054; background: {COLORS['surface']}; border: 1px solid #D0D5DD; border-radius: 6px; padding: 5px 9px; font-weight: 600; }}
+    QPushButton#ChartToggleActive:focus, QPushButton#ChartToggleInactive:focus {{ border: 2px solid {COLORS['accent']}; }}
 
     QFrame#HeroSurface {{ background: {COLORS['surface']}; border: 1px solid {COLORS['border']}; border-radius: 16px; }}
     QFrame#Surface {{ background: {COLORS['surface']}; border: 1px solid {COLORS['border']}; border-radius: 11px; }}

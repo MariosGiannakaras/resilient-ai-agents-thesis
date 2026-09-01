@@ -206,6 +206,15 @@ class RunsPage(QWidget):
         self.live_identity.setWordWrap(True)
         details.addWidget(self.live_identity)
 
+        legend = QLabel(
+            "A / arrow  Agent and executed direction   ·   G  Goal   ·   "
+            "S  Start   ·   ■  Wall   ·   dashed outline  Delivered observation"
+        )
+        legend.setObjectName("GridLegend")
+        legend.setWordWrap(True)
+        legend.setAccessibleName("GridWorld visual key")
+        details.addWidget(legend)
+
         self.live_interaction = QLabel()
         self.live_interaction.setObjectName("ReviewValue")
         self.live_interaction.setWordWrap(True)
@@ -220,6 +229,11 @@ class RunsPage(QWidget):
         self.live_observation.setObjectName("SectionHint")
         self.live_observation.setWordWrap(True)
         details.addWidget(self.live_observation)
+
+        self.live_context = QLabel()
+        self.live_context.setObjectName("SectionHint")
+        self.live_context.setWordWrap(True)
+        details.addWidget(self.live_context)
 
         boundary = QLabel(
             "Read-only evaluator presentation. The scientific worker never waits "
@@ -429,25 +443,58 @@ class RunsPage(QWidget):
             f"{prefix} · {phase} · {frame.method_id.replace('_', ' ').title()} · "
             f"root {frame.root_id} · {frame.layout_id}"
         )
-        branch = f" · branch {frame.branch}" if frame.branch else ""
-        self.live_interaction.setText(
-            f"Interaction {frame.interaction_index:,} · episode {frame.episode_index + 1} · "
-            f"environment step {frame.environment_step}{branch}"
-        )
-        flags = [name.replace("_", " ") for name, active in frame.disturbance_flags.items() if active]
+        comparison = frame.comparison
+        if comparison is None:
+            branch = f" · branch {frame.branch}" if frame.branch else ""
+            self.live_interaction.setText(
+                f"Interaction {frame.interaction_index:,} · episode {frame.episode_index + 1} · "
+                f"environment step {frame.environment_step}{branch}"
+            )
+            self.live_transition.setText(
+                f"Action: {frame.intended_action} → {frame.executed_action} · "
+                f"reward {frame.reward:g} · true state {frame.true_state}"
+            )
+            self.live_observation.setText(self._observation_note(frame))
+        else:
+            frozen = comparison.frozen
+            adaptive = comparison.adaptive
+            self.live_interaction.setText(
+                f"Matched interaction {adaptive.interaction_index:,} · episode "
+                f"{adaptive.episode_index + 1} · environment step "
+                f"{adaptive.environment_step} · exact FD/AD pair"
+            )
+            self.live_transition.setText(
+                f"Frozen — action {frozen.intended_action} → {frozen.executed_action} · "
+                f"reward {frozen.reward:g} · true state {frozen.true_state}\n"
+                f"Adaptive — action {adaptive.intended_action} → {adaptive.executed_action} · "
+                f"reward {adaptive.reward:g} · true state {adaptive.true_state}"
+            )
+            self.live_observation.setText(
+                f"Frozen: {self._observation_note(frozen)}\n"
+                f"Adaptive: {self._observation_note(adaptive)}"
+            )
+
+        flags = [
+            name.replace("_", " ")
+            for name, active in frame.disturbance_flags.items()
+            if active
+        ]
         disturbance = ", ".join(flags) if flags else "none"
-        self.live_transition.setText(
-            f"Action: {frame.intended_action} → {frame.executed_action} · "
-            f"reward {frame.reward:g} · regime {frame.regime_id or '—'} · "
-            f"disturbance: {disturbance}"
+        change_events = ", ".join(frame.change_event_ids) if frame.change_event_ids else "none"
+        self.live_context.setText(
+            f"Regime: {frame.regime_id or '—'} · active disturbance flags: {disturbance} · "
+            f"change events: {change_events}"
         )
-        observation_note = (
-            "Delivered observation matches true state."
-            if frame.delivered_observation == frame.true_state
-            else f"Delivered observation {frame.delivered_observation} differs from true state {frame.true_state}."
-        )
-        self.live_observation.setText(observation_note)
         self.live_surface.show()
+
+    @staticmethod
+    def _observation_note(frame: LiveGridFrame) -> str:
+        if frame.delivered_observation == frame.true_state:
+            return "delivered observation matches true state."
+        return (
+            f"delivered observation {frame.delivered_observation} differs from "
+            f"true state {frame.true_state}."
+        )
 
     def _start_selected(self) -> None:
         item = self._selected_item()

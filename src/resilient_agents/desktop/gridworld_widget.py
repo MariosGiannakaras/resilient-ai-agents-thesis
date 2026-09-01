@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from PySide6.QtCore import QPointF, QRectF, QSize, Qt
-from PySide6.QtGui import QBrush, QColor, QPainter, QPen
+from PySide6.QtGui import QBrush, QColor, QPainter, QPen, QPolygonF
 from PySide6.QtWidgets import QSizePolicy, QWidget
 
 from .live_events import LiveGridFrame
@@ -37,13 +37,16 @@ class GridWorldLiveWidget(QWidget):
             self.setAccessibleDescription(
                 f"Matched Frozen and Adaptive GridWorld presentation at interaction "
                 f"{pair.adaptive.interaction_index}. Frozen true state "
-                f"{pair.frozen.true_state}; Adaptive true state {pair.adaptive.true_state}; "
-                f"goal {pair.adaptive.goal}."
+                f"{pair.frozen.true_state}, executed action {pair.frozen.executed_action}, "
+                f"reward {pair.frozen.reward:g}; Adaptive true state "
+                f"{pair.adaptive.true_state}, executed action {pair.adaptive.executed_action}, "
+                f"reward {pair.adaptive.reward:g}; goal {pair.adaptive.goal}."
             )
         else:
             self.setAccessibleDescription(
                 f"{frame.width} by {frame.height} GridWorld. Agent true state "
-                f"{frame.true_state}; goal {frame.goal}; interaction {frame.interaction_index}."
+                f"{frame.true_state}; goal {frame.goal}; interaction {frame.interaction_index}; "
+                f"executed action {frame.executed_action}; reward {frame.reward:g}."
             )
         self.updateGeometry()
         self.update()
@@ -145,6 +148,18 @@ class GridWorldLiveWidget(QWidget):
         painter.setPen(QPen(QColor("#067647"), max(1.0, cell * 0.045)))
         painter.setBrush(Qt.BrushStyle.NoBrush)
         painter.drawEllipse(goal_rect)
+        painter.setPen(QColor("#067647"))
+        painter.drawText(goal_rect, Qt.AlignmentFlag.AlignCenter, "G")
+
+        sx, sy = frame.start
+        start_rect = QRectF(
+            origin_x + sx * cell,
+            origin_y + sy * cell,
+            cell,
+            cell,
+        )
+        painter.setPen(QColor("#315B70"))
+        painter.drawText(start_rect, Qt.AlignmentFlag.AlignCenter, "S")
 
         if frame.delivered_observation != frame.true_state:
             ox, oy = frame.delivered_observation
@@ -167,3 +182,48 @@ class GridWorldLiveWidget(QWidget):
         painter.setPen(QPen(QColor("#173F98"), max(1.0, cell * 0.04)))
         painter.setBrush(QBrush(QColor("#245DE8")))
         painter.drawEllipse(center, radius, radius)
+
+        directions = {
+            "up": QPointF(0.0, -1.0),
+            "right": QPointF(1.0, 0.0),
+            "down": QPointF(0.0, 1.0),
+            "left": QPointF(-1.0, 0.0),
+        }
+        direction = directions.get(frame.executed_action.lower())
+        if direction is None:
+            painter.setPen(QColor("#FFFFFF"))
+            painter.drawText(
+                QRectF(center.x() - radius, center.y() - radius, radius * 2, radius * 2),
+                Qt.AlignmentFlag.AlignCenter,
+                "A",
+            )
+            return
+
+        perpendicular = QPointF(-direction.y(), direction.x())
+        tail = QPointF(
+            center.x() - direction.x() * radius * 0.48,
+            center.y() - direction.y() * radius * 0.48,
+        )
+        tip = QPointF(
+            center.x() + direction.x() * radius * 0.55,
+            center.y() + direction.y() * radius * 0.55,
+        )
+        head_base = QPointF(
+            center.x() + direction.x() * radius * 0.08,
+            center.y() + direction.y() * radius * 0.08,
+        )
+        head_left = QPointF(
+            head_base.x() + perpendicular.x() * radius * 0.32,
+            head_base.y() + perpendicular.y() * radius * 0.32,
+        )
+        head_right = QPointF(
+            head_base.x() - perpendicular.x() * radius * 0.32,
+            head_base.y() - perpendicular.y() * radius * 0.32,
+        )
+        painter.setPen(QPen(QColor("#FFFFFF"), max(1.5, cell * 0.055)))
+        painter.drawLine(tail, tip)
+        painter.setBrush(QBrush(QColor("#FFFFFF")))
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.drawPolygon(
+            QPolygonF([tip, head_left, head_right])
+        )

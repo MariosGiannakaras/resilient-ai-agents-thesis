@@ -157,6 +157,8 @@ class ResultsPage(QWidget):
             tabs.addWidget(button)
         tabs.addStretch(1)
         self.learning_button.setChecked(True)
+        self.learning_button.setAccessibleName("Show stored nominal learning results")
+        self.resilience_button.setAccessibleName("Show stored matched resilience results")
         self.tab_group.idClicked.connect(self._show_tab)
         self._apply_tab_style(0)
         content_layout.addLayout(tabs)
@@ -179,9 +181,12 @@ class ResultsPage(QWidget):
         layout.addWidget(
             SectionHeader(
                 "Nominal learning",
-                "Final probe quality and interaction-axis time-average are displayed exactly from the stored Phase-A summary.",
             )
         )
+        self.learning_guidance = QLabel()
+        self.learning_guidance.setObjectName("SectionHint")
+        self.learning_guidance.setWordWrap(True)
+        layout.addWidget(self.learning_guidance)
         self.learning_chart = StoredIntervalBarChart()
         self.learning_chart.setToolTip(
             "Visual rendering of stored backend means and intervals. The desktop UI does not calculate these values."
@@ -205,7 +210,6 @@ class ResultsPage(QWidget):
         layout.addWidget(
             SectionHeader(
                 "Matched resilience",
-                "Adaptation benefit is the stored matched four-branch DiD result. Frozen and Adaptive losses remain supporting descriptive detail below.",
             )
         )
         filter_row = QHBoxLayout()
@@ -224,11 +228,47 @@ class ResultsPage(QWidget):
         filter_row.addStretch(1)
         layout.addLayout(filter_row)
 
+        self.resilience_guidance = QLabel()
+        self.resilience_guidance.setObjectName("SectionHint")
+        self.resilience_guidance.setWordWrap(True)
+        layout.addWidget(self.resilience_guidance)
+
+        chart_controls = QHBoxLayout()
+        chart_label = QLabel("Chart")
+        chart_label.setObjectName("ReviewLabel")
+        chart_controls.addWidget(chart_label)
+        self.benefit_chart_button = QPushButton("Adaptation benefit")
+        self.loss_chart_button = QPushButton("Frozen vs Adaptive losses")
+        self.resilience_chart_group = QButtonGroup(self)
+        self.resilience_chart_group.setExclusive(True)
+        for index, button in enumerate(
+            (self.benefit_chart_button, self.loss_chart_button)
+        ):
+            button.setCheckable(True)
+            button.setCursor(Qt.CursorShape.PointingHandCursor)
+            self.resilience_chart_group.addButton(button, index)
+            chart_controls.addWidget(button)
+        self.benefit_chart_button.setChecked(True)
+        self.benefit_chart_button.setAccessibleName("Show matched adaptation benefit chart")
+        self.loss_chart_button.setAccessibleName("Show Frozen and Adaptive loss chart")
+        self.resilience_chart_group.idClicked.connect(self._show_resilience_chart)
+        chart_controls.addStretch(1)
+        layout.addLayout(chart_controls)
+
         self.resilience_chart = StoredIntervalBarChart()
         self.resilience_chart.setToolTip(
             "Primary adaptation effect from the stored matched DiD analysis, with its stored root-level interval."
         )
-        layout.addWidget(self.resilience_chart)
+        self.resilience_loss_chart = StoredIntervalBarChart()
+        self.resilience_loss_chart.setToolTip(
+            "Supporting stored Frozen and Adaptive disturbance-associated losses. "
+            "The desktop UI does not calculate these values."
+        )
+        self.resilience_chart_stack = QStackedWidget()
+        self.resilience_chart_stack.addWidget(self.resilience_chart)
+        self.resilience_chart_stack.addWidget(self.resilience_loss_chart)
+        layout.addWidget(self.resilience_chart_stack)
+        self._apply_resilience_chart_style(0)
 
         self.resilience_table = QTableWidget(0, 7)
         self.resilience_table.setObjectName("ResultsTable")
@@ -295,6 +335,7 @@ class ResultsPage(QWidget):
             self.resilience_table.setRowCount(0)
             self.learning_chart.set_data(title="Stored nominal summary", bars=())
             self.resilience_chart.set_data(title="Stored adaptation benefit", bars=())
+            self.resilience_loss_chart.set_data(title="Stored disturbance losses", bars=())
 
     def _selection_changed(self, _index: int) -> None:
         self._load_selected()
@@ -327,11 +368,29 @@ class ResultsPage(QWidget):
         recipe_short = package.recipe_sha256[:12]
         self.provenance_detail.setText(
             f"{package.analysis_recipe} · artifact SHA-256 {artifact_short}… · "
-            f"Study recipe SHA-256 {recipe_short}…"
+            f"Study recipe SHA-256 {recipe_short}…\n"
+            "Research use: quantitative thesis claims must use registered, versioned "
+            "exports—not screenshots of this inspection page."
         )
         self.provenance_detail.setToolTip(
             f"Artifact: {package.artifact_sha256}\nRecipe: {package.recipe_sha256}\n"
             f"Path: {package.relative_path}"
+        )
+        direction = (
+            "Higher values are better"
+            if package.phase_a_direction == "higher-is-better"
+            else "Lower values are better"
+        )
+        self.learning_guidance.setText(
+            f"Stored metric: {package.phase_a_metric} · {direction}. Read final probe "
+            "and interaction-axis time-average as separate outcomes; inspect stored "
+            "intervals and included/planned roots before comparing methods."
+        )
+        self.resilience_guidance.setText(
+            "Positive adaptation benefit means continued learning reduced the "
+            "disturbance-associated loss relative to its matched nominal reference; "
+            "zero means no matched benefit. Inspect Frozen/Adaptive losses and root "
+            "denominators before interpreting the effect."
         )
         self._populate_learning(package)
         self._prepare_resilience(package)
@@ -422,6 +481,7 @@ class ResultsPage(QWidget):
         if package is None or not isinstance(condition_id, str):
             self.resilience_table.setRowCount(0)
             self.resilience_chart.set_data(title="Stored adaptation benefit", bars=())
+            self.resilience_loss_chart.set_data(title="Stored disturbance losses", bars=())
             return
 
         summaries = tuple(
@@ -431,6 +491,7 @@ class ResultsPage(QWidget):
         )
         self.resilience_table.setRowCount(len(summaries))
         bars: list[StoredBar] = []
+        loss_bars: list[StoredBar] = []
         for row, summary in enumerate(summaries):
             condition = _CONDITION_NAMES.get(
                 summary.condition_id,
@@ -472,6 +533,28 @@ class ResultsPage(QWidget):
                         upper=summary.adaptation_benefit.interval_upper,
                     )
                 )
+            if summary.frozen_loss.mean is not None:
+                loss_bars.append(
+                    StoredBar(
+                        key=summary.method_id,
+                        label=self._method_name(summary.method_id),
+                        value=summary.frozen_loss.mean,
+                        lower=summary.frozen_loss.interval_lower,
+                        upper=summary.frozen_loss.interval_upper,
+                        variant="primary",
+                    )
+                )
+            if summary.adaptive_loss.mean is not None:
+                loss_bars.append(
+                    StoredBar(
+                        key=summary.method_id,
+                        label=self._method_name(summary.method_id),
+                        value=summary.adaptive_loss.mean,
+                        lower=summary.adaptive_loss.interval_lower,
+                        upper=summary.adaptive_loss.interval_upper,
+                        variant="secondary",
+                    )
+                )
 
         condition_name = _CONDITION_NAMES.get(
             condition_id,
@@ -480,7 +563,27 @@ class ResultsPage(QWidget):
         self.resilience_chart.set_data(
             title=f"Matched adaptation benefit · {condition_name}",
             bars=tuple(bars),
+            zero_label="No matched benefit",
         )
+        self.resilience_loss_chart.set_data(
+            title=f"Disturbance-associated loss · {condition_name}",
+            bars=tuple(loss_bars),
+            legend=(("Frozen loss", "primary"), ("Adaptive loss", "secondary")),
+        )
+
+    def _apply_resilience_chart_style(self, selected: int) -> None:
+        for index, button in enumerate(
+            (self.benefit_chart_button, self.loss_chart_button)
+        ):
+            button.setObjectName(
+                "ChartToggleActive" if index == selected else "ChartToggleInactive"
+            )
+            button.style().unpolish(button)
+            button.style().polish(button)
+
+    def _show_resilience_chart(self, index: int) -> None:
+        self.resilience_chart_stack.setCurrentIndex(index)
+        self._apply_resilience_chart_style(index)
 
     def _apply_tab_style(self, selected: int) -> None:
         for index, button in enumerate((self.learning_button, self.resilience_button)):

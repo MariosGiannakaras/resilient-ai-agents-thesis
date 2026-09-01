@@ -52,6 +52,7 @@ class StoredIntervalBarChart(QWidget):
         self._bars: tuple[StoredBar, ...] = ()
         self._title = "Stored analysis summary"
         self._legend: tuple[tuple[str, str], ...] = ()
+        self._zero_label: str | None = None
         # Results must remain useful on an ordinary 1366x768 thesis laptop.
         # Keep enough vertical space for the accompanying accessible data table.
         self.setMinimumHeight(150)
@@ -68,10 +69,12 @@ class StoredIntervalBarChart(QWidget):
         title: str,
         bars: tuple[StoredBar, ...],
         legend: tuple[tuple[str, str], ...] = (),
+        zero_label: str | None = None,
     ) -> None:
         self._title = title
         self._bars = tuple(bars)
         self._legend = tuple(legend)
+        self._zero_label = zero_label
         parts = [title]
         for bar in self._bars:
             interval = ""
@@ -159,16 +162,27 @@ class StoredIntervalBarChart(QWidget):
         zero_y = y_for(0.0)
         painter.setPen(axis_pen)
         painter.drawLine(plot.left(), zero_y, plot.right(), zero_y)
+        if self._zero_label and plot.top() + 9 <= zero_y <= plot.bottom() - 9:
+            painter.setPen(hint_pen)
+            painter.drawText(
+                QRectF(plot.left() + 5, zero_y - 18, 150, 17),
+                Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter,
+                self._zero_label,
+            )
 
         if self._legend:
             x = plot.left()
             painter.setPen(hint_pen)
             for text, variant in self._legend:
-                color = QColor("#245DE8")
+                color = QColor("#344054")
                 if variant == "secondary":
-                    color.setAlpha(105)
-                painter.setBrush(QBrush(color))
-                painter.setPen(Qt.PenStyle.NoPen)
+                    fill = QColor(color)
+                    fill.setAlpha(55)
+                    painter.setBrush(QBrush(fill))
+                    painter.setPen(QPen(color, 1.0))
+                else:
+                    painter.setBrush(QBrush(color))
+                    painter.setPen(Qt.PenStyle.NoPen)
                 painter.drawRoundedRect(QRectF(x, 30, 9, 9), 2, 2)
                 painter.setPen(hint_pen)
                 painter.drawText(
@@ -189,7 +203,11 @@ class StoredIntervalBarChart(QWidget):
             rect_bottom = max(value_y, zero_y)
             color = self._method_color(bar.key, secondary=bar.variant == "secondary")
             painter.setBrush(QBrush(color))
-            painter.setPen(Qt.PenStyle.NoPen)
+            if bar.variant == "secondary":
+                outline = self._method_color(bar.key)
+                painter.setPen(QPen(outline, 1.2))
+            else:
+                painter.setPen(Qt.PenStyle.NoPen)
             painter.drawRoundedRect(
                 QRectF(
                     center_x - width / 2,

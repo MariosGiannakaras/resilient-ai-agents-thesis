@@ -180,9 +180,15 @@ class MainWindow(QMainWindow):
         QMessageBox.information(
             self,
             "Getting started",
-            "Study lets you review the frozen thesis design or begin development-only exploratory configuration. "
-            "Runs shows durable execution state. Results exposes stored analysis only, and Artifacts shows registered outputs.\n\n"
-            "Final-reserve scientific execution remains locked until a later explicit authorization gate.",
+            "1. Choose Study: review the frozen Thesis Study or prepare a DEVELOPMENT-only Exploratory Study.\n"
+            "2. Review the plan: models, roots, layouts, conditions and job counts come from the backend planner.\n"
+            "3. Create the Study: creation records the durable plan; it does not start scientific execution.\n"
+            "4. Run and monitor: Runs starts/resumes supported DEVELOPMENT work and reports only durable backend progress.\n"
+            "5. Read GridWorld: the live view is lossy, presentation-only and cannot affect agents, RNG, metrics or evidence.\n"
+            "6. Interpret Results: compare stored learning and matched resilience summaries, intervals and root denominators—never screenshots as quantitative evidence.\n"
+            "7. Verify Artifacts: use registered paths, SHA-256 hashes and lineage for reproducible handoff.\n\n"
+            "Research boundary: final-reserve execution remains locked until a later explicit authorization gate. "
+            "Exploratory output is DEVELOPMENT evidence and cannot be presented as final thesis evidence.",
         )
 
     def set_page(self, index: int) -> None:

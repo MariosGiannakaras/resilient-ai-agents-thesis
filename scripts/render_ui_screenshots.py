@@ -290,7 +290,9 @@ def show_presentation_results_fixture(window: MainWindow) -> None:
     page.provenance_title.setText("UI REVIEW FIXTURE · PRESENTATION ONLY")
     page.provenance_detail.setText(
         "Synthetic in-memory values for layout QA only · not stored evidence · "
-        "not produced by a Study or scientific run."
+        "not produced by a Study or scientific run.\n"
+        "Research use: quantitative thesis claims must use registered, versioned "
+        "exports—not screenshots of this inspection page."
     )
     page.provenance_detail.setToolTip(
         "This CI-only fixture exists solely to verify chart/table rendering. "
@@ -349,8 +351,12 @@ def main() -> int:
         app.processEvents()
         records.append(capture(window, output, "reference-size-results-learning-qa.png"))
         window.results_page._show_tab(1)
+        window.results_page._show_resilience_chart(0)
         app.processEvents()
         records.append(capture(window, output, "reference-size-results-resilience-qa.png"))
+        window.results_page._show_resilience_chart(1)
+        app.processEvents()
+        records.append(capture(window, output, "reference-size-results-losses-qa.png"))
 
         window.resize(QSize(1440, 900))
         window.set_page(0)
@@ -433,8 +439,12 @@ def main() -> int:
         app.processEvents()
         records.append(capture(window, output, "07b-results-learning-qa.png"))
         window.results_page._show_tab(1)
+        window.results_page._show_resilience_chart(0)
         app.processEvents()
         records.append(capture(window, output, "07c-results-resilience-qa.png"))
+        window.results_page._show_resilience_chart(1)
+        app.processEvents()
+        records.append(capture(window, output, "07d-results-losses-qa.png"))
 
         window.set_page(3)
         window.artifacts_page.refresh()
@@ -486,8 +496,12 @@ def main() -> int:
         app.processEvents()
         records.append(capture(window, output, "14b-results-learning-qa-1366x768.png"))
         window.results_page._show_tab(1)
+        window.results_page._show_resilience_chart(0)
         app.processEvents()
         records.append(capture(window, output, "14c-results-resilience-qa-1366x768.png"))
+        window.results_page._show_resilience_chart(1)
+        app.processEvents()
+        records.append(capture(window, output, "14d-results-losses-qa-1366x768.png"))
 
         window.set_page(3)
         window.artifacts_page.set_study(fixture_study_id)
