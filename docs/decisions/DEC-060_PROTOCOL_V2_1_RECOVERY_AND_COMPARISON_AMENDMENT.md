@@ -3,7 +3,7 @@
 **Status:** Accepted pre-outcome amendment  
 **Date:** 2026-09-01  
 **Amends:** DEC-058 / `configs/protocols/protocol-v2.0-final.json`  
-**Tracking:** T-530 / GitHub issue #98
+**Tracking:** T-533 / GitHub issue #98
 
 ## Context
 
@@ -94,7 +94,7 @@ The primary fairness criterion remains actual environment interactions. Wall-clo
 
 ## Evidence and implementation consequences
 
-Before T-610, T-530 must make the complete chain consistent:
+Before T-610, T-533 must make the complete chain consistent:
 
 `Phase-B execution -> raw temporal evidence -> validated analysis records -> root reduction -> recovery/direct-contrast statistics -> deterministic exports -> PySide6 stored-evidence presentation`.
 
@@ -106,8 +106,8 @@ This amendment was made before final-reserve execution and does not change final
 
 ## Public-repository constraint
 
-The repository remains public by explicit user decision. `thesis/source-material/ThesisApplication.pdf` and the existing source-material structure remain in place. No privacy migration, file removal or history rewrite is required for scientific completion and this matter is not a T-530/T-610 blocker.
+The repository remains public by explicit user decision. `thesis/source-material/ThesisApplication.pdf` and the existing source-material structure remain in place. No privacy migration, file removal or history rewrite is required for scientific completion and this matter is not a T-533/T-610 blocker.
 
 ## Gate
 
-`final_reserve_access=false` remains in force. T-610 remains blocked until T-530 implementation, deterministic validation, affected CI, documentation reconciliation and objective review are complete. Completion of T-530 stops at the authorization gate immediately before the first final-reserve scientific execution; it does not itself authorize T-610.
+`final_reserve_access=false` remains in force. T-610 remains blocked until T-533 implementation, deterministic validation, affected CI, documentation reconciliation and objective review are complete. Completion of T-533 stops at the authorization gate immediately before the first final-reserve scientific execution; it does not itself authorize T-610.
