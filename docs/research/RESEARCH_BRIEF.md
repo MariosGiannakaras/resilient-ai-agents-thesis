@@ -1,169 +1,165 @@
 # Research Brief
 
-**Status:** T-200 bounded framing complete; final operational RQ/hypotheses remain provisional until the listed feasibility and protocol gates close.
+**Status:** Active pre-final research authority; RQ1/RQ2/RQ3 frozen by DEC-060 before final-reserve execution.  
+**Protocol authority:** `configs/protocols/protocol-v2.1-final.json`  
+**Historical authority retained:** DEC-058 / `configs/protocols/protocol-v2.0-final.json`
 
-This file defines the current research problem and freeze criteria. Historical/pre-import workspaces may explain earlier reasoning but do not override this active brief.
+This file states the active research framing only. Historical/pre-import framing remains auditable history but does not override DEC-060 or the self-contained protocol-v2.1 authority.
 
 ## Confirmed identity and purpose
 
 - **Greek title:** Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα.
 - **English title:** Comparison and Evaluation of Resilient AI Agents in Uncertain Environments.
 - **Institution:** University of West Attica, School of Engineering, Department of Informatics and Computer Engineering.
-- Compare resilient decision agents in a simple controlled simulated environment under uncertainty/dynamic change.
-- GridWorld is the confirmed environment direction.
-- Official examples include observation/data noise, rule changes, and action-execution failures.
-- Evaluation must address resilience and recovery speed.
+- GridWorld is the controlled experimental and visualization testbed, not the thesis subject.
+- The study compares five retained reinforcement-learning methods under a shared controlled task and agent-visible information contract.
+- The official uncertainty examples remain represented by persistent rule/dynamics change, action-execution failure and observation corruption.
+- Evaluation explicitly separates nominal learning, degradation/resilience, adaptation benefit and recovery speed/non-recovery.
 
-## Evidence state
+## Evidence state and literature boundary
 
-The complete bibliography corpus is already imported and pinned. Formal thesis claims use only the nested citation-ready layer.
+The bibliography corpus is imported and pinned. Formal thesis claims use the canonical citation-ready layer rather than ad-hoc external citations.
 
-Current decision-driving citation-ready anchors include:
+Decision-driving anchors already retained in the project include:
 
-- `SRC-70772C0629` — structured switching/non-stationarity cautions against describing ordinary Q-learning as universally incapable;
-- `SRC-9464421E55` — motivates practical finite-horizon validation of detector/restart behavior under non-stationarity;
-- `SRC-76B2247457` — supports a strict tuning/pilot/final-evaluation boundary in continual-RL evaluation;
-- `SRC-FC42D9798A` and `SRC-3C0F7CC819` — distinguish policy robustness within an explicit model-uncertainty set from detection and recovery after an unknown persistent change. They support the conceptual distinction, not the inclusion or expected superiority of a robust-MDP comparator.
+- `SRC-70772C0629` — structured switching/non-stationarity cautions against blanket claims that ordinary Q-learning is universally incapable;
+- `SRC-9464421E55` — supports finite-horizon validation of detection/restart behavior when such mechanisms are studied;
+- `SRC-76B2247457` — supports strict tuning/pilot/final-evaluation separation in continual-RL evaluation;
+- `SRC-FC42D9798A` and `SRC-3C0F7CC819` — support the conceptual distinction between robustness inside an explicit uncertainty set and recovery after an unknown persistent change.
 
-## Current bounded direction — proposed, not frozen
+These sources motivate constructs and validity boundaries; they do not predetermine the final ranking of the five retained methods.
 
-- Separate robustness from post-change adaptation/recovery.
-- Use persistent rule/dynamics change as the leading recovery axis.
-- Keep observation corruption and action-execution failure as supporting robustness diagnostics unless a distinct final RQ justifies more.
-- Compare a small number of scientifically distinct capability roles, not a catalogue of algorithms.
-- Preserve nominal performance, immediate/worst degradation, recovery trajectory/time, post-change performance, non-recovery, and across-run uncertainty.
-- Keep development/tuning/pilot/final scenarios separated and prevent information leakage.
-- Keep the final matrix CPU-feasible under the accepted target-machine baseline; the detected Radeon adapter is not a validated scientific-compute backend.
+## Final research questions
 
-## T-200 bounded research framing
+### RQ1 — Nominal learning
 
-### Provisional main research question
+Under the common controlled GridWorld task, shared agent-visible information contract and common actual-environment-interaction budget, how do Q-Learning, SARSA, DQN, PPO and Dyna-Q+ differ in nominal learning performance and learning efficiency?
 
-> Under a common agent-visible information contract, how do a small set of scientifically distinct decision-agent capability roles differ in nominal performance, immediate degradation, recovery trajectory and time, post-change performance, and non-recovery after an unannounced persistent rule or dynamics change in a controlled GridWorld?
+Operational mapping:
 
-This question is bounded to the implemented finite-horizon GridWorld regime. It does not claim that one algorithm is generally superior in non-stationary reinforcement learning, and it does not assume that a method labelled robust or adaptive will recover in the selected setting.
+- Phase A independently trains every method from method-appropriate initialization.
+- Primary nominal estimand: final no-learning probe performance.
+- Secondary nominal estimand: predeclared time-average learning-trajectory performance.
+- Independent statistical unit: root identity.
+- The two final layouts are repeated/blocked observations and are equally reduced within root before inference.
+- Direct comparisons use root-paired method A-minus-B contrasts on shared independent roots.
 
-### Minimal provisional secondary questions
+Interpretation is limited to the controlled task, information contract, actual-interaction budget and selected method configurations; it is not a universal algorithm ranking.
 
-1. **Robustness versus adaptation:** Under matched environment changes and information access, how do frozen-policy resistance and permitted online adaptation differ in nominal cost, immediate degradation, and later recovery profile?
-2. **Supporting disturbance diagnostics:** How robust are the same retained agent roles to controlled observation corruption and action-execution failure under an explicitly declared frozen or adaptive regime, without describing stressed performance as recovery when no post-change adaptation occurs?
+### RQ2 — Resilience and adaptation benefit
 
-Recurring-context recall and detector quality remain method-conditional diagnostics rather than research questions. They become secondary questions only if `T-310` establishes a distinct retained capability role without disproportionate matrix growth.
+After controlled uncertainty/change, how much does each retained method degrade, and how much does ordinary continued online learning reduce disturbance-associated loss relative to its matched frozen deployment?
 
-### Provisional, falsifiable hypothesis candidates
+Operational mapping:
 
-These are not confirmed directional findings. `T-300`/`T-310` provide validated estimands and selected roles, while the completed `pilot-v0.2` campaign supplies bounded diagnostic parameters, units, variance, censoring, and decision inputs. It shows that R0's current nominally saturated configuration cannot be frozen unchanged and that recovery classification is parameter-sensitive. `T-411`/`T-412` must still establish practical-effect/equivalence bounds, final role retention, and final decision rules before final evaluation is inspected.
+- Phase B uses exact matched `FN`, `FD`, `AN`, `AD` branches from one scientific branch point.
+- Frozen and Adaptive/Continual are deployment regimes, not separate algorithms.
+- All four frozen Phase-B conditions remain in the final matrix.
+- Directed Frozen loss and Adaptive loss preserve metric direction.
+- Matched adaptation benefit remains `(FN-FD)-(AN-AD)` after direction normalization.
+- Roots are independent; layouts are equally reduced within root before inference.
+- Direct root-paired method contrasts are predeclared for adaptation benefit and, secondarily, Frozen/Adaptive loss.
 
-- **H-P1 — online-adaptation recovery:** for at least one validated primary persistent-change condition, an information-matched role permitted to update online will have a more favorable post-change recovery profile than its corresponding frozen evaluation after nominal-performance cost is reported. It is falsified if the predeclared recovery and post-change estimands show no practically meaningful advantage, or show a disadvantage, across the retained primary conditions.
-- **H-P2 — phase-dependent capability trade-off:** comparative conclusions will depend on evaluation phase: nominal performance, immediate resistance, and later recovery/post-change performance will not collapse into one invariant agent ordering. It is falsified if the predeclared role-by-phase contrasts are practically equivalent and ordering remains stable across the retained primary conditions.
+Adaptation benefit is not recovery speed and must not be described as such.
 
-No hypothesis asserts that ordinary Q-learning must fail, that a detector must activate usefully, or that a robust-MDP policy must recover. Those claims are excluded by the current evidence boundaries.
+### RQ3 — Recovery speed and non-recovery
 
-### Evidence-to-framing map
+After persistent unannounced change, how quickly does each adaptive method return to its matched adaptive-nominal performance neighborhood, what trajectory does it show, and when does it fail to recover within the fixed observation horizon?
 
-| Framing decision | Evidence | Supported use | Boundary retained |
-|---|---|---|---|
-| Compare agents under uncertainty/dynamic change and address resilience/recovery speed. | Official approved thesis application, represented by `REQ-RES-001` and `REQ-RES-003`. | Establishes the research objective and required constructs. | Does not prescribe algorithms, disturbance parameters, metrics, or statistical thresholds. |
-| Make an unannounced persistent rule/dynamics change the primary recovery axis; keep observation/action disturbances as supporting diagnostics. | Official examples plus the citation-ready non-stationarity anchors summarized below. | Gives recovery a temporal changepoint interpretation while retaining the official uncertainty examples. | Exact change family, severity, onset, horizon, and observation/action mechanisms remain open. |
-| Treat ordinary continual learning as a legitimate empirical comparator. | `SRC-70772C0629`. | Structured switching results prevent a blanket claim that ordinary Q-learning is inherently incapable under all non-stationarity. | Its assumptions and infinite-horizon convergence target do not predict rapid recovery after the thesis changepoint. |
-| Validate detector behavior separately from return if a detector is retained. | `SRC-9464421E55`. | Requires finite-horizon activation, delay, and error diagnostics. | Its empirical results are from piecewise-stationary bandits and do not establish GridWorld superiority. |
-| Separate development/tuning/pilots from frozen final evaluation. | `SRC-76B2247457`. | Prevents final-lifetime/change-schedule leakage into hyperparameter selection. | No universal tuning fraction or budget is imported from the paper. |
-| Separate robustness within a declared uncertainty set from online changepoint adaptation. | `SRC-52E62452B8`; `SRC-FC42D9798A`; `SRC-3C0F7CC819`. | Supports finite rectangular robust dynamic programming, the frozen-robustness versus online-recovery construct distinction, and conservativeness reporting. | These sources do not detect this thesis's changepoint or prove faster recovery; R0's stronger prior remains explicit. |
+Operational mapping:
 
-### Open feasibility and freeze gates
+- Primary recovery family: persistent `action-remap` conditions.
+- Action-failure and observation-corruption remain supporting robustness/adaptation diagnostics.
+- Matched branches: Adaptive-Nominal (`AN`) versus Adaptive-Disturbed (`AD`).
+- Primary trajectory metric: mean reward per actual environment interaction in deterministic 32-interaction windows.
+- Horizon: 256 post-boundary interactions, yielding 8 windows with endpoints 32, 64, 96, 128, 160, 192, 224 and 256.
+- Episode boundaries do not reset or realign the windows.
+- The two final layouts are equally weighted within root at each window before recovery inference.
+- Higher-is-better directed gap: `AN - AD`.
+- Primary recovery tolerance: `0.10` reward per interaction; sensitivity tolerances: `0.05` and `0.20`.
+- Stability requirement: two consecutive in-tolerance windows.
+- Recovery time: end of the first window in the first stable run; confirmation time: end of the second required window.
+- If no stable run is confirmed, the root is right-censored at interaction 256 with `recovery_time=null`; 256 is never fabricated as a recovery time.
+- Recovery-time summaries are explicitly conditional on observed recovery. A separately named restricted fixed-horizon recovery-delay estimand may use the horizon for censored roots for method comparison without reclassifying those roots as recovered.
 
-- `T-210`–`T-213`: select and validate a GridWorld whose hidden truth, agent observation, intended/executed actions, persistent change, and deterministic traces match the framing.
-- `T-300`–`T-301` complete operational schema-v1 estimands and known-answer validation; pilots/freeze still select numeric windows/tolerance/stability, metric roles, and statistical aggregation.
-- `T-310`–`T-312` select and correctness-validate F0 frozen/C0 continual common tabular Q-learning plus R0 rectangular robust value iteration, including strict information/fairness boundaries and sufficient citation-ready robust-DP support.
-- `T-400`–`T-410` complete the amended pilot contract, execution, and diagnostic evidence used to constrain feasible final budgets, severities, repetitions, variance handling, recovery behavior, and role retention; `T-411` refreshes decision-driving evidence before `T-412` freezes them.
-- `T-411`–`T-412`: refresh decision-driving literature, then freeze the final protocol, research questions, hypotheses, and statistical analysis plan before final results are inspected.
+The 0.10 tolerance was fixed before final outcomes from the known task reward scale (`step=-0.1`, `collision=-0.25`, `goal=1.0`), not selected from final-reserve behavior.
 
-If prototypes or pilots cannot support scientifically distinct roles, identifiable recovery, or a feasible repeated-run design, the main question must be narrowed rather than forcing the current candidate framing.
+## Frozen method set and information fairness
 
-## Research question freeze prerequisites
+The final method set is exactly:
 
-Already complete:
+1. Q-Learning;
+2. SARSA;
+3. DQN;
+4. PPO;
+5. Dyna-Q+.
 
-- official application analysis;
-- complete bibliography import and evidence trust boundary;
-- initial post-import evidence synthesis;
-- technical architecture for information isolation, deterministic randomness, protocol partitions, run provenance, and automatic publication.
-- accepted target-machine inventory and CPU-first runtime/tooling constraints (DEC-031).
-- bounded GridWorld comparison/ADR/core/invariant validation (DEC-032; `T-210`–`T-213`).
-- operational resilience estimands and synthetic known-answer validation (`T-300`/`T-301`).
-- exact bounded agent implementation/pilot roles and robust-MDP citation sufficiency (`T-310`/`T-311`; DEC-034).
+Each method receives the same semantic position observation and action space. Neural methods may encode that observation numerically but receive no pixels, hidden map truth, disturbance flags, change indicator, regime identity or executed-action feedback unavailable to the tabular methods.
 
-Still required before final freeze:
+The primary fairness axis is actual environment interactions, not identical algorithm hyperparameters or identical numbers of optimizer/planning updates. Method-appropriate hyperparameters are frozen from the completed tuning/sizing process.
 
-1. pilot evidence for runtime, variance, storage, recovery behavior, tuning budget, final role retention, metric parameters/roles, and statistical choices.
+## Final experimental structure
 
-## Valid research-question form
+- Phase-A training budget: 8,192 actual environment interactions per method/root/layout.
+- Final independent roots: 12.
+- Final held-out layouts: 2.
+- Phase-B conditions per layout: 4.
+- Phase-B post-boundary horizon: 256 actual interactions per branch.
+- Common nominal no-learning prefix before branching: 1 interaction.
+- Branches: exact `FN`, `FD`, `AN`, `AD`.
+- Failures remain scientific outcomes; roots/seeds are never replaced from observed outcomes.
+- Final layouts/seeds remain sealed until separate T-610 authorization.
 
-The final main RQ must identify:
+## Statistical interpretation policy
 
-- compared agent class/roles;
-- environment and information assumptions;
-- uncertainty/change regime;
-- adaptation/evaluation regime;
-- primary outcome constructs;
-- scope within which conclusions are valid.
+- Root is the independent unit; episodes, layouts, probes and temporal windows are not independent replicates.
+- Layouts are equally reduced inside each root before method inference.
+- Direct comparisons are method A-minus-B on common independent roots.
+- Two-sided 95% Student-t pointwise intervals use the predeclared critical value corresponding to the actual independent-root count `n=2..12`.
+- No formal p-value superiority family is authorized by DEC-060.
+- Pointwise interval overlap/non-overlap must not be relabeled post hoc as “statistical significance”.
+- No composite resilience score is introduced.
+- Recovery censoring and non-recovery remain explicit rather than being silently converted into complete recovery times.
 
-Secondary questions are added only for distinct scientific effects, validity checks, or explanatory trade-offs.
+## Computational evidence
 
-## Hypothesis policy
+Actual environment interactions remain the primary fairness/accounting axis. Wall-clock time, process CPU time and method-native update counts where scientifically interpretable are secondary descriptive evidence. They do not define a new primary research question.
 
-- No algorithm-specific or final directional hypothesis is currently confirmed; H-P1 and H-P2 are construct-level candidates.
-- Hypotheses must follow verified theory/prior evidence and the final environment/model/metric design.
-- Exploratory questions remain labelled exploratory rather than rewritten post hoc.
-- Final hypotheses identify independent/dependent variables, expected direction/equivalence claim where appropriate, unit of analysis, and falsification criterion.
-
-## Expected contribution
-
-The likely contribution is comparative/empirical rather than invention of a new algorithm. Candidate contribution forms include:
-
-- validated controlled evaluation environment;
-- reproducible disturbance/change protocol;
-- defensible operationalization of resilience/recovery;
-- fair comparative evidence across distinct agent capabilities;
-- reproducible software/provenance infrastructure;
-- negative/boundary-condition findings.
-
-The final contribution statement is written only after the final evidence exists.
-
-## Threats to validity
+## Threats to validity retained
 
 ### Internal
-- unequal information/tuning access;
-- implementation errors;
-- leakage from final evaluation into selection;
-- selective exclusions;
-- inconsistent adaptation regimes.
+
+- unequal information or tuning access;
+- implementation errors or hidden state resets;
+- final-reserve leakage into selection;
+- selective failures/exclusions;
+- mismatched Frozen/Adaptive branch origins.
 
 ### Construct
-- ambiguous resilience/recovery definitions;
-- invalid thresholds/windows;
-- reward changes that destroy comparability;
-- conflating training performance with resilience.
+
+- conflating nominal capability, immediate degradation, adaptation benefit and recovery speed;
+- threshold/window definitions that are selected from outcomes;
+- treating supporting stochastic disturbances as the same construct as persistent-change recovery.
 
 ### External
-- conclusions limited to selected GridWorld layouts/disturbances/compute regime;
-- simplified environment properties;
-- model set constrained by feasible local resources.
+
+- conclusions remain limited to the selected GridWorld task, held-out layouts, disturbances, local CPU regime and five retained configurations.
 
 ### Statistical
-- insufficient independent seeds;
-- treating nested episodes as independent replicates;
-- post-hoc primary outcomes;
-- censoring/non-recovery;
-- inappropriate multiple-comparison handling.
+
+- treating layouts/episodes/windows as independent;
+- unreported missing/scientific-failure roots;
+- incorrect pairing after asymmetric failures;
+- ignoring right-censoring/non-recovery;
+- post-hoc multiplicity or significance claims.
 
 ### Reproducibility
+
 - uncontrolled randomness;
-- missing configs/provenance;
-- mutable final results;
-- manual final values;
-- hidden third-party semantics.
+- mutable recipe/evidence artifacts;
+- incomplete checkpoint or RNG continuity;
+- manual result values detached from registered evidence lineage.
 
-## Freeze gate
+## Final-reserve gate
 
-This brief becomes frozen methodology only when every final question maps to validated environment factors, agents, estimands, and analysis; the design is feasible on measured hardware; pilot evidence resolves practical protocol choices; and the decision log records inclusions/exclusions and limitations.
+`final_reserve_access=false` remains in force. T-533 may validate mechanics only with synthetic/non-final evidence. T-610 requires a separate explicit scientific authorization after T-533 implementation, documentation and affected CI are complete. No final results, Results/Discussion prose, or outcome-driven protocol changes are authorized by this brief.
