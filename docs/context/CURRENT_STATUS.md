@@ -3,98 +3,74 @@
 **Date:** 2026-09-01  
 **Status:** Authoritative compact current-state summary
 
-`docs/context/TASKS.md` remains the canonical dependency/task ledger. Read task-specific decision/research documents progressively. Objective Git/GitHub/evidence state overrides stale resume prose after interruption.
+`docs/context/TASKS.md` remains the canonical dependency/task ledger. Read task-specific decision/research documents **progressively**. Objective Git/GitHub/evidence state overrides stale resume prose after interruption.
 
 ## Current execution state
 
 - `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable historical evidence; old `T-522` must not execute.
-- `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, `T-528`, `T-529`, historical `T-530`, `T-531`, `T-532` and `T-511` are COMPLETE. Historical completed work is not reopened by the new scientific requirement.
-- DEC-058 and `configs/protocols/protocol-v2.0-final.json` remain immutable historical protocol-v2.0 freeze authority. Their final roots/layouts, five retained methods, hyperparameters, conditions, Phase-A budgets/probes and 256-interaction Phase-B horizon remain unchanged.
-- **T-533 is IN_PROGRESS under issue #98 and DEC-060.** It is an explicit pre-outcome protocol-v2.1 amendment required before T-610. The previously reused T-530 identifier was corrected because T-530 is already immutable completed history.
-- DEC-060 / `configs/protocols/protocol-v2.1-amendment.json` freezes final RQ1/RQ2/RQ3, recovery-speed semantics, right-censoring/non-recovery, direct root-paired method contrasts and estimation-oriented interpretation.
-- `configs/protocols/protocol-v2.1-final.json` is the self-contained current scientific authority. It preserves DEC-058 experimental choices and keeps `final_reserve_access=false` plus `execution_authorization=requires-explicit-t610-gate`.
-- A deterministic `protocol_v2_1_recipe` materializer maps the self-contained authority into the existing Study matrix while failing closed if the final-reserve lock/gate is altered. Materialization itself does not authorize execution.
-- The isolated v2.1 execution/evidence path now includes fixed-window Phase-B reward evidence, schema-v2 records/validation, recovery and direct-comparison analysis, actual-root-count Student-t interval selection, deterministic v2 evidence exports with v2.1 provenance, and protocol-aware Phase-B/analysis/export routing. Historical v2.0/T-526/T-527 execution sources remain unchanged.
-- `final_reserve_access=false` remains mandatory. T-610 has not been authorized or executed and no protocol-v2/T-610 result was used in T-533 design or implementation.
-- `T-528 — Final Application / Frontend Rebuild` remains COMPLETE under DEC-059. The current application is PySide6 / Qt 6 Widgets over the Study backend; NiceGUI is historical prototype only.
-- `T-511 — Intended-user application workflow/self-explanatory UX acceptance` remains COMPLETE. That acceptance does not authorize final-reserve execution or accept future scientific results.
-- Master tracker #87 remains 7/8 complete; milestone 8 depends on the final v2 evidence chain.
-- PR #92 remains the active draft integration PR on `feat/pre-wp7-protocol-v1.1-ui-rebuild`. Its previous merge sequencing is superseded: T-533 must be completed and validated on the same branch/PR before merge/final authorization.
-- **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
+- `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, `T-528`, `T-529`, historical `T-530`, `T-531`, `T-532`, `T-511` and **`T-533` are COMPLETE**.
+- DEC-058 and `configs/protocols/protocol-v2.0-final.json` remain immutable historical protocol-v2.0 freeze authority. DEC-060 is the explicit pre-outcome amendment; it does not rewrite DEC-058 history.
+- `configs/protocols/protocol-v2.1-final.json` is the self-contained current scientific authority. It preserves the five methods, selected hyperparameters, Phase-A budget/probes, 12 final roots, 2 held-out final layouts, four Phase-B conditions and 256-interaction horizon from DEC-058.
+- `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory. **T-610 has not been authorized or executed. No protocol-v2 final-reserve outcome was generated, inspected or used by T-533.**
+- Master tracker #87 remains **7/8** complete; milestone 8 depends on the final v2 evidence chain.
+- PR #92 remains the active integration PR on `feat/pre-wp7-protocol-v1.1-ui-rebuild`: OPEN, DRAFT, UNMERGED and currently mergeable. T-533 implementation head `cd56c68b4a9e84c702d0702e733ddedd200c02a3` passed Repository checks, Protocol-v2 pilot checks and T-528 PySide6 UI screenshot checks.
+- **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
 
-## T-533 scientific amendment
+## Completed T-533 / DEC-060 amendment
 
 ### Final research questions
 
-- **RQ1 — Nominal learning:** compare the five retained methods' nominal performance and learning efficiency under the common actual-environment-interaction budget and information contract.
-- **RQ2 — Resilience/adaptation:** quantify disturbance-associated Frozen/Adaptive loss and preserve the matched adaptation-benefit estimand `(FN-FD)-(AN-AD)` with metric-direction handling.
-- **RQ3 — Recovery speed:** after persistent unannounced change, quantify adaptive recovery trajectory, stable recovery time and non-recovery against matched Adaptive-Nominal behavior.
+- **RQ1 — Nominal learning:** compare Q-Learning, SARSA, DQN, PPO and Dyna-Q+ nominal performance and learning efficiency under the common actual-environment-interaction budget and information contract.
+- **RQ2 — Resilience/adaptation:** quantify directed Frozen/Adaptive loss and preserve matched adaptation benefit `(FN-FD)-(AN-AD)`.
+- **RQ3 — Recovery speed:** quantify adaptive recovery trajectory, stable recovery and non-recovery after persistent unannounced change.
 
-The five methods remain Q-Learning, SARSA, DQN, PPO and Dyna-Q+. Frozen and Adaptive/Continual remain deployment regimes, not distinct algorithms.
+Frozen and Adaptive/Continual remain deployment regimes, not distinct algorithms.
 
-### Recovery-speed freeze
+### Recovery-speed contract
 
-Primary RQ3 conditions are the persistent `action-remap/*` changes. Action-failure and observation-corruption remain supporting robustness/adaptation diagnostics unless a later explicit pre-outcome justification changes that role.
+- Primary RQ3 family: persistent `action-remap/*`; action-failure and observation-corruption remain supporting diagnostics.
+- Metric: mean reward per actual environment interaction.
+- Passive fixed windows: 32 interactions across the unchanged 256-interaction horizon, crossing episode boundaries without reset/realignment.
+- Reference: Adaptive-Nominal (`AN`) versus Adaptive-Disturbed (`AD`), equal layout weighting inside each independent root.
+- Higher-is-better gap: `AN - AD`; primary tolerance `0.10`, sensitivity `0.05`/`0.20`.
+- Stable recovery: two consecutive in-tolerance windows.
+- Non-recovery: right-censored at 256 with `recovery_time=null`; 256 is never fabricated as recovery time.
+- Censoring-aware method comparison uses recovery status plus the separately named restricted fixed-horizon recovery delay. Observed recovery-time summaries remain conditional on recovery.
 
-The frozen primary recovery definition is:
+### Statistics and computation
 
-- temporal axis: actual post-boundary environment interactions;
-- fixed windows: 32 interactions across the unchanged 256-interaction horizon (8 windows), crossing episode boundaries without reset/realignment;
-- trajectory metric: mean reward per actual interaction within each window;
-- matched reference: Adaptive-Nominal (AN) versus Adaptive-Disturbed (AD), equal layout weighting within each independent root before inference;
-- higher-is-better directed recovery gap: `AN - AD`;
-- primary tolerance: `0.10` reward per interaction; predeclared sensitivity tolerances `0.05` and `0.20`;
-- stability: two consecutive in-tolerance windows;
-- recovery time: end of the first window in the first stable run; confirmation time: end of the second required window;
-- non-recovery: right-censored at interaction 256 with `recovery_time=null`, never an artificial recovery time of 256.
+- Root is the independent unit; layouts, episodes, probes and windows are repeated/nested observations.
+- Direct method contrasts are root-paired A-minus-B on shared roots after equal layout reduction.
+- Two-sided 95% Student-t pointwise intervals select the predeclared critical value for the actual independent-root count `n=2..12`.
+- No formal p-value superiority family or post-hoc “statistically significant” relabeling is authorized.
+- Actual environment interactions remain the primary fairness axis. Wall-clock/process CPU and interpretable method-native update counts are secondary descriptive evidence.
 
-The 0.10 primary tolerance was frozen before final outcomes from the known task reward scale (`step=-0.1`, `collision=-0.25`, `goal=1.0`), avoiding unstable percentage denominators for signed returns.
+## Completed implementation chain
 
-### Direct method comparison
+The complete pre-final path is now versioned and isolated from historical v2.0/T-526/T-527 code:
 
-Method comparison is root-paired and estimation-oriented. Layouts, episodes, probes and temporal windows are not independent samples.
+`Phase-B execution -> passive temporal windows -> schema-v2 records -> structural validation -> root reduction -> recovery/direct contrasts -> deterministic exports -> stored-evidence PySide6 presentation`.
 
-- Primary contrasts: RQ1 final nominal performance, RQ2 adaptation benefit, RQ3 recovery status/restricted fixed-horizon recovery delay on action-remap conditions; observed recovery time remains explicitly conditional on recovery.
-- Secondary: RQ1 time-average performance, RQ2 Frozen loss and Adaptive loss.
-- Exploratory/supporting: other disturbance diagnostics, computational observations and recovery sensitivity thresholds.
-- Report effect estimates with root-level pointwise uncertainty intervals. Pointwise intervals are not simultaneous inference and must not be relabeled post hoc as “statistically significant.” No formal p-value superiority family is authorized by DEC-060.
+The v2.1 Study recipe materializer fails closed if the final-reserve lock or explicit T-610 gate is altered. PPO/DQN temporal capture does not impose artificial 32-step learning boundaries. A numerical `1e-12` guard only prevents binary floating-point representation from changing an exact frozen tolerance-boundary classification.
 
-No composite resilience score is introduced. Nominal capability, immediate degradation/resistance, adaptation benefit, recovery profile/time and non-recovery remain distinct constructs.
+PySide6 Results now supports stored Recovery & Comparisons summaries, AN-vs-AD trajectory rows and direct method contrasts for schema-v2/v2.1 packages. Legacy schema-v1 packages remain supported and do not expose recovery. The UI never chooses thresholds, reduces roots or recomputes scientific estimands.
 
-## Existing Study/backend invariants retained
+## Documentation / thesis preparation
 
-- immutable recipes/evidence, stable-ID DAG barriers and restart-safe `StudyStore`/`StudyService`;
-- independent Phase-A learning with actual-interaction accounting and isolated no-learning probes;
-- exact method-native scientific checkpoints for all five retained methods;
-- exact shared-prefix FN/FD/AN/AD Phase-B branching with adaptive updates only after the boundary;
-- replay/optimizer/exploration/warm-up/model/recency/schedule/counter/RNG continuity rather than silent reset;
-- scientific failures retained with reasons and no outcome-driven seed/root replacement;
-- filesystem evidence/provenance remains scientific authority; UI/index/database layers are derived/read-only.
+`TASKS.md`, DEC-060, the decision index, `RESEARCH_BRIEF.md`, `MODEL_CANDIDATES.md`, `docs/experiments/EXPERIMENTAL_REQUIREMENTS.md` and the structure-only `THESIS_STRUCTURE_DRAFT.md` are reconciled to protocol-v2.1. Results, Discussion and conclusion claims remain explicitly evidence-gated.
 
-## Application state
+Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/`. `bibliography-integration-v3` remains immutable historical terminology; no parallel bibliography system was created.
 
-DEC-059 remains application authority. The UI consumes Study/read-model/evidence boundaries and must not own scientific protocol logic.
-
-Existing stored-evidence learning/adaptation/loss views remain valid. T-533 may extend Results with recovery trajectory/status/time and method contrasts only from validated stored analysis/export artifacts; thresholds/estimands must not be recomputed or selected inside the UI. Aesthetic redesign unrelated to the research correction is out of scope.
-
-## Computational evidence
-
-Actual environment interactions remain the primary fairness axis. Existing wall-clock and process-CPU evidence, plus method-specific update counts where scientifically interpretable, are secondary descriptive computational observations rather than a new primary RQ.
-
-## Bibliography and public-repository constraints
-
-Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/` under the existing synchronization rules. `bibliography-integration-v3` remains immutable historical terminology; no parallel bibliography system is permitted.
-
-The repository remains **public** by explicit user decision. `thesis/source-material/ThesisApplication.pdf` and the existing source-material structure remain unchanged. File removal, history rewrite or private-repository migration is neither required nor a blocker for thesis completion.
+The repository remains public by explicit user decision. `thesis/source-material/ThesisApplication.pdf` and the existing source-material structure remain unchanged; privacy migration/history rewrite is not a scientific blocker.
 
 ## Still intentionally unfrozen
 
-- `final_reserve_access=false`; final-reserve execution remains unauthorized.
-- T-610 and all final-reserve scientific outcomes remain blocked until T-533 implementation, deterministic validation, affected CI, documentation reconciliation and objective review are complete.
-- No final roots/layouts/seeds may be used to tune recovery thresholds or analysis choices.
-- WP7 remains blocked by the later explicit pre-WP7 gate.
+- Final-reserve **execution authorization** remains unfrozen/withheld even though the protocol recipe is frozen: `final_reserve_access=false`.
+- T-610 is dependency-valid after T-533 but remains **BLOCKED by the separate explicit scientific authorization gate**.
+- T-611/T-612/T-613 remain blocked downstream of T-610.
+- WP7 remains blocked by final evidence plus the later explicit pre-WP7 user-approval gate.
 - Final Windows standalone packaging remains deferred to `T-803` / issue #94.
 
 ## Exact next action
 
-Complete T-533 on the existing PR #92 branch: finish stored-evidence PySide6 recovery/direct-comparison presentation where required, reconcile active methodology/task documents, and pass affected CI including the self-contained protocol-v2.1 recipe parity tests. Then stop at the explicit authorization gate immediately before T-610. Do **not** access the final reserve or begin Results/Discussion writing.
+Obtain a **separate explicit scientific authorization for T-610**. Until that authorization is given, stop: do not access final roots/layouts/seeds, do not execute the protocol-v2.1 final matrix, and do not begin Results/Discussion writing.
