@@ -3,8 +3,7 @@
 ## Status taxonomy
 
 - **CONFIRMED:** established by approved application, explicit user direction, accepted decision or validated evidence.
-- **RESEARCH_REQUIRED:** needs evidence before selection.
-- **CANDIDATE:** defined but not yet frozen for final evidence.
+- **FROZEN:** predeclared and not changeable from final outcomes.
 - **SUPERSEDED:** preserved history that no longer controls future execution.
 - **DEFERRED:** intentionally later and non-blocking now.
 
@@ -21,141 +20,109 @@ GridWorld is the controlled experimental testbed and visualization environment, 
 
 `MariosGiannakaras/ThesisBibliography` owns discovery, originals, conversion/OCR, scientific analysis, evidence verification and citation-ready corpus generation. This repo consumes versioned generated output read-only.
 
-The current protocol-v2 consumer state is pinned to immutable upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`: 597 canonical sources, 121 citation-ready sources and 19 research materials. The generated sync was merged through thesis PR #96. `bibliography-integration-v3` remains immutable historical baseline terminology; no generated bibliography content is hand-edited here.
+The current protocol-v2 consumer snapshot is pinned to upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5` through thesis PR #96. `bibliography-integration-v3` remains immutable historical terminology; generated bibliography content is not hand-edited here.
 
 ## Immutable historical science
 
-- `protocol-v1.0`, FINAL-* bundles and frozen v1.0 analysis/evidence are immutable.
-- v1.0 is a valid within-Q-learning experiment: Fixed and Continual Q-learning start from the same selected nominal Q checkpoint, isolating the effect of post-change online learning.
-- Historical R0 robust-value-iteration pilot evidence remains negative/diagnostic; its severe nominal truncation is not hidden or rewritten.
-- Candidate protocol-v1.1 remains auditable non-final research history. Its common selected tabular-Q starting knowledge makes it unsuitable as an end-to-end independent algorithm-learning benchmark.
-- Old `T-522` v1.1 tuning/freeze execution is **SUPERSEDED** and must not run.
+- `protocol-v1.0`, FINAL-* bundles and frozen v1.0 analysis/evidence are immutable historical evidence.
+- Historical R0 pilot evidence remains negative/diagnostic and is not rewritten.
+- Candidate protocol-v1.1 and its F0/C0/D0-era implementation remain auditable non-final history only.
+- Old v1.1 final/tuning execution paths are superseded and must not be restarted.
+- DEC-058 and `configs/protocols/protocol-v2.0-final.json` remain immutable historical protocol-v2.0 freeze authority.
 
-## Current science — protocol v2
+## Current science — protocol v2.1
 
-DEC-048, refined by DEC-050, defines the successor methodology.
+DEC-060 explicitly amends DEC-058 before any final-reserve execution. `configs/protocols/protocol-v2.1-final.json` is the self-contained current scientific authority.
 
-### RQ-A — nominal learning
+### RQ1 — nominal learning
 
-Compare independently trained retained RL methods under the same semantic environment, information, action/reward contract and principal **actual environment-interaction budget**. Separate learning dynamics, standardized no-learning nominal policy performance, variability and CPU/runtime cost.
+Compare independently trained Q-Learning, SARSA, DQN, PPO and Dyna-Q+ under the same semantic environment, agent-visible information contract and principal actual-environment-interaction budget. Primary evidence is standardized Phase-A no-learning probe performance, with final nominal value and learning-trajectory/time-average summaries.
 
-### RQ-B — resilience/adaptation
+### RQ2 — resilience/adaptation
 
-For each method/root/layout, begin from that unit's own exact Phase-A trained scientific state. After any shared nominal no-learning prefix, fork the exact branch point into:
+For each method/root/layout, Phase B starts from that unit's own exact Phase-A scientific checkpoint and matched branch point:
 
 - **FN — Frozen nominal**;
 - **FD — Frozen disturbed**;
 - **AN — Adaptive nominal**;
 - **AD — Adaptive disturbed**.
 
-Adaptive learning begins only on the first post-boundary transition. The primary within-method adaptation benefit is the matched disturbed-vs-nominal interaction, not an unmatched AD-vs-FD comparison.
+Primary adaptation benefit is `(FN-FD)-(AN-AD)`. Frozen and Adaptive are deployment regimes, not separate algorithms.
 
-### Candidate methods
+### RQ3 — recovery speed
 
-Strong core candidates, still pilot-gated:
+Primary recovery family is persistent action remapping; supporting disturbance families remain diagnostics. Recovery is based on passive 32-interaction reward windows over the unchanged 256-interaction Phase-B horizon, comparing AN with AD after equal layout reduction inside each root.
 
-1. Q-Learning — tabular off-policy value learning;
-2. SARSA — tabular on-policy value learning;
-3. DQN — neural off-policy value approximation;
-4. PPO — neural on-policy actor-critic/policy-gradient optimization;
-5. Dyna-Q+ — learned-model planning plus directed recency-based re-exploration.
+Primary tolerance is `AN - AD <= 0.10`; sensitivity tolerances are `0.05` and `0.20`. Stable recovery requires two consecutive in-tolerance windows. Non-recovery is right-censored with `recovery_time=null`; cross-method comparison separates recovery status from the restricted fixed-horizon recovery delay.
 
-Secondary roles:
-
-- Dyna-Q — targeted planning ablation for Dyna-Q+;
-- A2C — promotion-only actor-critic candidate if non-final evidence shows distinct scientific value beyond PPO at acceptable matrix/runtime cost;
-- Random — non-ranked calibration/reference policy;
-- historical R0 — negative/diagnostic only.
-
-No final retained method count is frozen before T-526/T-527.
+See `docs/research/RQ_EVIDENCE_TRACEABILITY.md` for the concise RQ → evidence → estimand → output map.
 
 ## Fair experimental contract
 
 Fairness does not mean equal hyperparameters or equal optimizer updates.
 
 - same project-owned task/environment semantics and agent-visible information;
-- common principal actual interaction/timestep learning budget;
-- bounded algorithm-specific tuning spaces with equivalent predeclared tuning opportunity;
-- multiple independent roots for every retained configuration;
-- periodic standardized **no-learning evaluation** checkpoints;
-- wall-clock/CPU cost reported separately;
-- no final-reserve tuning or outcome-driven final parameter changes;
-- seeds are randomization units, never tunable parameters;
-- episodes nested within a root are not independent replicates;
-- scientific failures remain retained outcomes and are never replaced by favorable seeds.
+- common principal actual environment-interaction learning budget;
+- method-appropriate selected hyperparameters and native update mechanics;
+- 12 independent final roots and 2 held-out final layouts as frozen by protocol-v2.1;
+- standardized no-learning Phase-A probes/checkpoint semantics;
+- exact matched FN/FD/AN/AD Phase-B branching;
+- no final-reserve tuning or outcome-driven root/seed replacement;
+- scientific failures remain retained outcomes;
+- layouts/episodes/probes/windows are repeated observations, not independent replicates.
 
 Exact continuation state is method-native. DQN replay/target/optimizer/exploration state, PPO optimizer/schedule/RNG/update-boundary state and Dyna-Q+ model/recency/planning state are part of the scientific checkpoint where required.
 
-## Environment and uncertainty
+## Scientific implementation foundation
 
-Do not add pixels, partial observability or a large external benchmark merely to justify deep learning.
+Current reusable infrastructure includes:
 
-Protocol-v2 pilots use a bounded project-owned GridWorld complexity ladder and retain the simplest task family that avoids clear floor/ceiling effects while remaining interpretable and CPU-feasible on the validated Windows thesis machine. Neural methods receive a deterministic numeric representation of the same semantic observation, never extra evaluator truth.
-
-Current uncertainty candidates:
-
-- primary persistent dynamics/rule change: action remapping;
-- supporting actuation uncertainty: action-execution failure;
-- supporting perceptual uncertainty: observation corruption with explicit frequency and support/magnitude.
-
-Additional dynamic obstacles/reward shifts/drift/recurrence require an explicit later research decision before inclusion.
-
-## Metrics/statistics
-
-Historical component resilience measures remain useful as background, but protocol-v2 analysis is organized around independently trained Phase-A learning and matched four-branch Phase-B effects.
-
-Current implemented analysis foundation supports:
-
-- standardized Phase-A final probe values and equal-grid trapezoidal time-average/AUC-style learning summaries;
-- root/layout blocked aggregation;
-- Phase-B Frozen loss, Adaptive loss and matched adaptation benefit from FN/FD/AN/AD;
-- explicit planned/completed/scientific-failure/skipped/infrastructure denominators;
-- recipe-selected metric direction and complete-layout policy;
-- explicit optional Student-t mean interval primitive when the critical value is frozen by the analysis recipe.
-
-Final root count, interval/sensitivity/multiplicity recipe, contrast family and figure selection remain T-527/T-612/T-613 decisions. No composite resilience score is permitted.
-
-## Scientific and study-first implementation foundation
-
-Validated/current reusable infrastructure includes:
-
-- Python 3.12 + locked `uv` environment;
+- Python 3.12 + locked `uv` research environment;
 - project-owned Gymnasium GridWorld and strict evaluator-vs-agent information boundary;
 - deterministic separated RNG streams;
-- Q-Learning, SARSA and Dyna-Q+ project implementations;
-- Stable-Baselines3 2.9.0 DQN/PPO exact scientific-state adapters on CPU-only PyTorch 2.9.0;
-- actual-interaction Phase-A drivers and isolated no-learning probes;
-- exact scientific checkpoint/restore/continuation and branch clone conformance;
-- exact shared no-learning Phase-B prefix primitive;
-- atomic matched FN/FD/AN/AD Phase-B execution;
-- filesystem run bundles/provenance/checksums;
+- project Q-Learning, SARSA and Dyna-Q+ implementations;
+- Stable-Baselines3 DQN/PPO exact scientific-state adapters on CPU-only PyTorch;
+- actual-interaction Phase-A execution and isolated no-learning probes;
+- exact scientific checkpoint/restore/continuation and matched Phase-B branch cloning;
+- passive protocol-v2.1 temporal reward windows;
 - immutable `StudyRecipe`, deterministic Study job plan, durable `StudyStore`, stage barriers and restart-safe scheduler;
-- framework-neutral `StudyService` with concrete default protocol-v2 executors;
-- real recipe-driven Phase-A -> exact-checkpoint -> common-prefix -> atomic Phase-B execution;
-- v2 evidence validation, root/layout analysis, explicit outcome denominators and deterministic machine-readable evidence handoff with stable result IDs and lineage.
+- framework-neutral `StudyService` with deny-by-default confirmatory/final execution authorization;
+- schema-v2 validation, equal-layout root reduction, recovery/direct method contrasts and deterministic v2 evidence exports;
+- read-only pre-final readiness checks and a synthetic DEVELOPMENT-only end-to-end scientific-pipeline smoke.
 
-T-529 has completed this framework-neutral backend foundation. The currently validated Phase-B lifecycle remains bounded by the scientific core's fail-closed lifecycle rules; T-526/T-527, not application code, decide any final multi-episode lifecycle amendment.
+The final reserve has not been executed or inspected.
 
-## Application status
+## Application architecture and current restart
 
-DEC-051 makes the study-first backend the final application-facing architecture. The active NiceGUI runtime/application/packaging surface has been removed; Git history retains it as prototype evidence. The final frontend is **not selected or implemented yet**.
+DEC-059 is the current application authority: **PySide6 / Qt 6 Widgets** over the framework-neutral Study backend. Historical Streamlit/React/NiceGUI implementations are superseded and exist only as history/reference.
 
-T-528 will choose a framework different from NiceGUI and build the UI from scratch only after T-527 freezes the remaining scientific/runtime contract. T-529's backend dependency is complete. Historical screenshot/PyInstaller work is prototype context only. Final Windows standalone packaging remains post-thesis T-803.
+The previously paused UI implementation is not the basis for continued work. The next UI implementation must start from a fresh current `main`, read the current protocol-v2.1/scientific contracts, and rebuild the presentation layer from today's project state rather than carrying forward pre-v2.1 assumptions.
+
+Existing `src/resilient_agents/desktop/` code must be classified before replacement:
+
+- preserve UI-neutral read-model, Study/evidence adapter, provenance and execution-policy behavior that encodes current backend contracts;
+- presentation widgets/windows/pages/styles may be replaced from scratch as needed;
+- never move scientific reduction, thresholds, RNG, checkpoint identity or finalization into Qt state;
+- UI displays validated stored evidence and DEVELOPMENT/synthetic fixtures only during implementation/testing;
+- no UI action may bypass the separate final-scientific-experiment authorization gate.
+
+Final standalone Windows packaging remains post-thesis/deferred and is not a blocker for the UI restart.
+
+## Repository state and hygiene
+
+`main` is the only active implementation base. Historical scientific/evidence history remains in Git and must not be rewritten. Remote merged/stale working branches may be removed after confirming they contain no unique required work; deliberate archive/provenance branches may remain.
+
+For the UI restart, prefer one fresh branch from current `main` and one corresponding PR. Do not continue an old paused worktree or branch.
 
 ## Current lifecycle
 
-Canonical concrete state is in `TASKS.md`.
+Canonical concrete state is in `TASKS.md` and `CURRENT_STATUS.md`.
 
-1. `T-524` — protocol-v2 scientific contract — **COMPLETE**.
-2. `T-525` — framework-neutral multimethod scientific execution foundation — **COMPLETE**.
-3. `T-529` — study-first recipe/orchestration/evidence/analysis/export backend reconstruction — **COMPLETE**.
-4. `T-526` — bounded physical Windows environment/method/severity feasibility gate — **READY**, external; the latest attempt stopped before scientific execution because repository preflight was not clean/current.
-5. `T-527` — fair tuning, precision/runtime sizing, statistics and machine-readable protocol-v2 freeze — **BLOCKED on T-526**.
-6. `T-528` — new-framework final UI rebuild — **BLOCKED on T-527**; its T-529 dependency is satisfied.
-7. `T-511` — explicit intended-user acceptance.
-8. `T-610..T-613` — frozen v2 final execution, validation, analysis and evidence package.
-9. Explicit user approval before any WP7 writing.
-10. T-700+ thesis/review/defense workflow.
-11. `T-803` post-thesis standalone Windows package.
+1. Protocol-v2.1 scientific authority, recovery/comparison amendment and pre-final readiness hardening are complete.
+2. Repository cleanup and fresh UI restart are allowed without opening the final reserve.
+3. Final scientific execution remains blocked by a separate explicit authorization gate.
+4. Validation/analysis/evidence packaging follow only after the authorized final execution.
+5. Explicit user approval is still required before thesis Results/Discussion/WP7 writing.
+6. Final Windows standalone packaging remains deferred until after the thesis.
 
-No green CI, pilot, screenshot, packaged app or completed analysis alone authorizes WP7.
+No green CI, UI screenshot, synthetic smoke, repository cleanup or completed implementation task by itself authorizes the final scientific experiment or thesis Results/Discussion writing.

@@ -2,118 +2,94 @@
 
 Project-level completion conditions only. Concrete task IDs/status/dependencies/resume state live in `docs/context/TASKS.md`; phase intent lives in `IMPLEMENTATION_ROADMAP.md`.
 
-## Foundation and bibliography
+## Foundation, bibliography and reproducibility
 
-- [x] Official application examined; exact titles/context recorded.
-- [x] Raw chat exports excluded and historical chats removed from decision authority.
-- [x] `ThesisBibliography` ownership boundary, complete immutable consumer, provenance and citation-ready trust established.
-- [x] Protocol-v2 bibliography/source closure consumed from immutable upstream SHA with later-writing source crosswalk retained.
-- [x] Confirmed requirements/decisions/constraints/contradictions/open questions documented with stale-state validation.
+- [x] Official application/titles/context recorded; raw chat exports excluded from decision authority.
+- [x] `ThesisBibliography` ownership boundary, immutable generated consumer, provenance and citation-ready trust established.
+- [x] Python 3.12 + locked `uv` research environment and independent `src/resilient_agents/` scientific core.
+- [x] Evaluator/agent information boundary, independent deterministic RNG streams and project-owned Gymnasium GridWorld.
+- [x] Filesystem evidence bundles, provenance/checksums, persistence/resume and guarded publication primitives.
+- [x] Historical v1.0/v1.1/pilot evidence remains immutable and auditable.
+- [x] Canonical resumable Codex/Git/CI/documentation workflow is established.
 
-## Scientific/reproducibility infrastructure
+## Protocol-v2.1 scientific contract and execution foundation
 
-- [x] Python 3.12 + `uv` locked environment and independent `src/resilient_agents/` core.
-- [x] Evaluator/agent information boundary and independent deterministic RNG streams.
-- [x] Project-owned Gymnasium GridWorld and known-answer/determinism/disturbance tests.
-- [x] Filesystem run bundles, provenance/checksums, persistence/resume and guarded publication primitives.
-- [x] Historical pilot/v1.0 analysis and immutable final evidence baseline preserved.
-- [x] Canonical resumable Codex task/interruption workflow and documentation governance.
+- [x] Physical feasibility/discrimination, fair tuning/sizing and method selection are complete.
+- [x] Retained methods are Q-Learning, SARSA, DQN, PPO and Dyna-Q+ with method-appropriate selected configurations.
+- [x] DEC-058 remains immutable historical protocol-v2.0 freeze authority; DEC-060 plus `configs/protocols/protocol-v2.1-final.json` are current pre-execution authority.
+- [x] Common task/information/reward semantics and principal actual-environment-interaction fairness budget are frozen.
+- [x] Standardized isolated Phase-A no-learning probes/checkpoints and exact method-native continuation are implemented.
+- [x] Matched FN/FD/AN/AD Phase-B execution preserves Frozen immutability and Adaptive method-native continuation.
+- [x] Protocol-v2.1 passive 32-interaction temporal evidence over horizon 256 is implemented without altering learning boundaries.
+- [x] RQ1/RQ2/RQ3 estimands, recovery tolerance/stability/censoring, direct root-paired method contrasts and actual-root Student-t interval policy are frozen.
+- [x] Scientific failures/cancellations/invalid/skipped units remain attributable; no outcome-driven root/seed replacement is permitted.
+- [x] Concise RQ → evidence → estimand → output traceability is documented.
 
-## Protocol-v2 scientific contract and execution foundation
+## Study-first backend and evidence pipeline
 
-- [x] Independent Phase-A learning versus matched Phase-B resilience/adaptation design frozen at the methodology level by DEC-048/050.
-- [x] Common task/information/reward/gamma semantics and principal actual-environment-interaction budget contract implemented.
-- [x] Q-Learning, SARSA, DQN, PPO and Dyna-Q+ pilot-capable scientific adapters/drivers implemented without forcing neural methods into a Q-table abstraction.
-- [x] Standardized isolated no-learning probes implemented with separate interaction accounting.
-- [x] Exact scientific checkpoint semantics cover all state required for continuation, including DQN replay/target/optimizer/schedules/RNG, PPO legal update-boundary state and Dyna-Q+ model/recency/planning state.
-- [x] `train -> serialize -> destroy -> restore -> continue` and branch-clone conformance is covered by focused tests.
-- [x] Exact Frozen/Adaptive Phase-B one-segment branch drivers preserve Frozen learning state and begin Adaptive updates only after the boundary.
-- [ ] Physical Windows T-526 feasibility/discrimination and severity-calibration evidence accepted.
-- [ ] T-527 freezes retained methods, final task/layout/severity/budget/root/statistical recipe and exact multi-episode Phase-B lifecycle before final reserve access.
+- [x] Immutable `StudyRecipe`, deterministic job DAG, stage barriers and exact Phase-A→Phase-B dependencies.
+- [x] Durable `StudyStore` with lifecycle state, attempts, failure semantics, artifact lineage and finalization integrity.
+- [x] Concrete Phase-A and Phase-B Study executors emit standardized evidence and exact checkpoint lineage.
+- [x] Structural/schema-v2 evidence validation covers complete temporal FN/FD/AN/AD records and retained failures/skips.
+- [x] Root/layout analysis computes Phase-A final/time-average learning, Phase-B Frozen/Adaptive losses, adaptation benefit, recovery and direct method contrasts.
+- [x] Planned/observed denominators remain explicit; repeated layouts/episodes/probes/windows are not treated as independent roots.
+- [x] Deterministic evidence handoff exports stable machine-readable summaries/contrasts/recovery records/result index/integrity manifest.
+- [x] Framework-neutral restart-safe `StudyService` exposes Study planning/status/history/artifacts/execution/retry/finalization.
+- [x] Confirmatory/final Study execution is denied by default unless the separate explicit final-experiment authorization token is supplied.
+- [x] Read-only protocol-v2.1 final preflight verifies the frozen matrix/lock and absence of a committed final Study bundle.
+- [x] DEVELOPMENT-only synthetic end-to-end smoke validates evidence → validation → v2.1 analysis → deterministic export → finalized/reloaded StudyStore, including recovered and right-censored cases.
 
-## Study-first backend/application API
+## Application architecture and clean rebuild
 
-- [x] Superseded active NiceGUI application/runtime/packaging implementation removed while Git/history and historical scientific evidence remain auditable.
-- [x] Immutable `StudyRecipe`, evidence classes, deterministic job DAG, stage barriers and exact Phase-A→Phase-B dependencies implemented.
-- [x] Durable filesystem `StudyStore` preserves lifecycle state, attempts, scientific versus infrastructure failure semantics, artifact lineage and finalization integrity.
-- [x] Real Phase-A Study executor emits finalized run evidence, exact scientific checkpoint and standardized analysis data for validated core methods.
-- [x] Shared no-learning prefix and atomic matched FN/FD/AN/AD Phase-B Study execution are implemented and fail closed when currently unfrozen reset semantics would be required.
-- [x] Explicit Random supporting reference execution is available; unknown/oracle reference identities are not silently invented.
-- [x] Structural evidence validation reconciles planned jobs, required artifacts, exact checkpoint lineage and retained scientific failures/skips.
-- [x] Root/layout analysis foundation computes Phase-A final/time-average learning summaries and Phase-B matched Frozen loss/Adaptive loss/adaptation benefit without composite scoring.
-- [x] Analysis retains explicit planned/completed/scientific-failure/skipped/infrastructure denominators and receives interval/layout policy from an explicit recipe.
-- [x] Deterministic evidence handoff emits machine-readable root/summary tables, stable `RESULT-*` IDs, result index and integrity manifest from the analysis package.
-- [x] Framework-neutral restart-safe `StudyService` exposes planning/status/history/artifacts/execution/retry/finalization and uses the concrete protocol-v2 executor registry by default.
-- [x] T-529 final correctness/docs/CI closure completed with no active v1.x/NiceGUI product path competing with the Study API.
-
-## Final application completion
-
-The final UI is deliberately not implemented before T-527 freezes the remaining scientific/runtime contract. T-529's backend contract is complete.
-
-- [ ] T-528 selects a frontend framework **different from NiceGUI** and records the selection rationale for local Windows use, scientific visualization, accessibility, maintainability and Python-service integration.
-- [ ] Final application is rebuilt from scratch as a client of `StudyService`; scientific orchestration is not duplicated in frontend state.
-- [ ] Default journey is study-first: choose study/intent → choose permitted methods/settings → pre-run review → run/monitor → results → export.
-- [ ] Frozen thesis-study mode loads immutable recipe values; frontend defaults cannot silently choose gamma/rewards/hyperparameters/seeds/roots/severities/probe cadence/branches/statistical tests.
-- [ ] Exploratory/custom mode is permanently distinguishable from confirmatory evidence.
-- [ ] Real approved Study execution runs end to end through the application using the same backend/evidence path as headless execution.
-- [ ] Live/provisional views use real backend events/data only and cannot alter agent-visible information, actions, timing or RNG.
-- [ ] History is study-first with attributable completed/scientific-failed/infrastructure-failed/skipped/cancelled/interrupted units.
-- [ ] Results show scientifically compatible Phase-A and matched Phase-B component effects with explicit denominators/interval meanings; no best-run cherry-picking or unlabeled composite score.
-- [ ] Evidence/export surfaces expose real result IDs, tables/figures/data and provenance from deterministic backend artifacts.
+- [x] DEC-059 selects PySide6 / Qt 6 Widgets over the framework-neutral Study backend.
+- [x] Historical Streamlit/React/NiceGUI product paths are superseded; Git history retains them as history/reference only.
+- [x] UI-neutral Study/evidence read-model, provenance and execution-policy contracts exist and are testable independently of presentation layout.
+- [x] Previous PySide6 application work established the architecture/workflow/read-model foundation and intended-user acceptance history.
+- [ ] A fresh protocol-v2.1 UI rebuild starts from current `main`, not the paused/pre-v2.1 working branch/worktree.
+- [ ] Existing `src/resilient_agents/desktop/` is classified before replacement: UI-neutral backend/read-model/provenance/execution-policy behavior is preserved; presentation windows/pages/widgets/styles may be rebuilt from scratch.
+- [ ] Frozen Thesis Study views clearly present protocol identity, scientific configuration and final-execution lock without exposing forbidden editability.
+- [ ] DEVELOPMENT/Exploratory workflow is coherent: Configure → Review → Create → Run → Monitor → Results/Compare → History/Artifacts/Export.
+- [ ] Results present validated stored RQ1/RQ2/RQ3 outputs, including v2.1 recovery status/trajectory/speed and direct method contrasts when available.
+- [ ] Historical schema-v1 evidence remains truthful and is not silently assigned v2.1 recovery semantics.
+- [ ] Qt presentation code never owns scientific RNG, checkpoint identity, root reduction, recovery thresholds/estimands, evidence finalization or final-experiment authorization.
 
 ### Self-explanatory UX
 
 - [ ] A non-programmer with no RL/model/config/repository knowledge can understand the main workflow without a separate manual.
-- [ ] Plain-language labels, secondary technical IDs, helper text, visible units/ranges/consequences, tooltips/info icons and contextual explanations accurately describe methods, conditions, study modes and metrics.
-- [ ] Advanced settings use progressive disclosure; pre-run review shows readable Study intent, evidence class, planned scientific units, locked/editable settings and blocking issues.
-- [ ] Status/loading/empty/warning/error/disabled/unavailable states use understandable text + stable icons/symbols + accessible semantic visual treatment; color is never the sole signal.
-- [ ] Modern compact desktop/laptop hierarchy is consistent across cards/charts/tables/filters rather than oversized/decorative.
-- [ ] Purposeful interactions/animations never fabricate progress/data, never alter scientific execution and remain understandable with reduced motion.
-- [ ] Destructive/high-impact actions use proportionate confirmation; routine interactions remain friction-light.
-- [ ] Short first-run onboarding supports Previous/Next/Skip/Finish, is replayable/local/skippable and every page remains understandable if onboarding is skipped.
+- [ ] Plain-language labels, secondary technical IDs, concise helper text, visible units/consequences and contextual help accurately describe methods, conditions, study modes and metrics.
+- [ ] Advanced/technical details use progressive disclosure; required workflow information is not tooltip-only.
+- [ ] Loading/empty/warning/error/disabled/unavailable/locked states are truthful, accessible and explain the useful next action.
+- [ ] Modern compact desktop/laptop hierarchy is consistent across navigation, cards, charts, tables and filters.
+- [ ] Purposeful animation/interaction never fabricates progress/data or alters scientific execution/RNG.
+- [ ] DEVELOPMENT/synthetic/test fixtures are clearly labelled and never visually promoted as thesis evidence.
 
 ## Application validation and later standalone delivery
 
-- [ ] T-511 intended-user E2E acceptance is complete; automated screenshots/render/package checks alone are insufficient.
-- [ ] Accepted review screenshots use real data/state or explicitly labelled diagnostic fixtures and are never scientific evidence substitutes.
-- [ ] Native Windows launch/close/restart and writable-path behavior are validated for the framework chosen at T-528.
-- [ ] Post-thesis T-803 produces the cleaned standalone Windows package using delivery technology appropriate to the accepted final framework.
-- [ ] Recipient does not need to understand repository internals or manually reconstruct the scientific workflow.
+- [ ] Clean UI rebuild has targeted contract tests plus representative workflow/render/screenshot validation on DEVELOPMENT/synthetic fixtures.
+- [ ] Repository CI is green on the exact UI PR head and affected active docs are reconciled.
+- [ ] Native Windows launch/close/restart/writable-path behavior is revalidated for the accepted rebuilt UI.
+- [ ] Post-thesis issue #94 produces the final cleaned standalone Windows package; this is not a pre-UI or pre-final-experiment requirement.
 
-## Final protocol-v2 experimental/evidence phase
+## Final protocol-v2.1 experimental/evidence phase
 
-- [ ] Frozen protocol-v2 final Study matrix executes only after T-527, T-529 and application acceptance.
-- [ ] Required final scientific units complete or are transparently accounted for; scientific failures/cancelled/invalid/skipped units remain attributable according to the frozen protocol.
-- [ ] Finalized raw results/checkpoints immutable/checksummed and accepted final evidence set frozen.
-- [ ] Predeclared root-level nominal-learning/matched-resilience analysis and sensitivity diagnostics reproduce from frozen evidence.
-- [ ] Every final quantitative figure/table has machine-readable provenance and traces to frozen analysis/result IDs.
-- [ ] Superseding thesis/defense evidence package maps RQs, protocol/methods, source IDs, run/checkpoint/result IDs, figures/tables/captions and planned claims.
+- [ ] User explicitly authorizes the separate final scientific experiment; until then `final_reserve_access=false` remains sealed.
+- [ ] Frozen protocol-v2.1 final Study matrix executes only after that authorization on the accepted execution path.
+- [ ] Required final scientific units complete or are transparently accounted for without replacement/cherry-picking.
+- [ ] Finalized raw results/checkpoints are immutable/checksummed and accepted final evidence is frozen.
+- [ ] Predeclared root-level RQ1/RQ2/RQ3 analysis and sensitivity diagnostics reproduce from frozen evidence.
+- [ ] Every final quantitative figure/table has machine-readable provenance to frozen analysis/result IDs.
+- [ ] Thesis/defense evidence handoff maps RQs, protocol/methods, source IDs, run/checkpoint/result IDs, figures/tables/captions and planned claims.
 
 ## Mandatory writing gate
 
-- [ ] User explicitly approves starting WP7 **after** final evidence/application acceptance. No technical milestone, green CI, screenshot or package substitutes for this approval.
+- [ ] User explicitly approves starting Results/Discussion/WP7 writing after final evidence/application acceptance. No technical milestone, green CI, screenshot, cleanup or package substitutes for this approval.
 
-## Thesis phase
+## Thesis, defense and final delivery
 
-- [ ] Current official thesis/template/submission/defense rules reverified.
-- [ ] Bibliography freshness/evidence sync confirmed.
-- [ ] User-supplied completed example theses reviewed as contextual structure/style references if provided.
-- [ ] Complete Greek thesis drafted from citation-ready sources + frozen protocol-v2 evidence package.
-- [ ] Review-ready Word document includes required bilingual/front matter and validated figures/tables/cross-references.
-- [ ] Supervisor/reviewer corrections incorporated and affected evidence/citations revalidated.
-- [ ] Final thesis `.docx`/required exports frozen/versioned.
-
-## Defense phase
-
-- [ ] Current official defense requirements reverified.
-- [ ] Slide narrative/evidence map complete; final `.pptx` grounded in final thesis/frozen evidence.
-- [ ] Embedded speaker notes and separate full spoken Greek script synchronized with slide order.
-- [ ] Real application screenshots/demo assets and non-live fallback validated.
-- [ ] PowerPoint rendering, legibility, factual consistency and timing rehearsal pass.
-
-## Final repository/delivery
-
-- [ ] Privacy/secret/license audit passed.
-- [ ] Reproduction guide validated on a clean environment.
-- [ ] Thesis, presentation, speaker material, standalone application and frozen evidence agree.
-- [ ] Required final delivery files are present, validated and frozen.
+- [ ] Current official thesis/template/submission/defense rules are reverified near delivery.
+- [ ] Bibliography freshness/evidence sync is confirmed and any supplied example theses are used only as contextual structure/style references.
+- [ ] Complete Greek thesis is drafted/reviewed/frozen in Microsoft Word from citation-ready sources plus frozen protocol-v2.1 evidence.
+- [ ] Supervisor/reviewer corrections are incorporated with affected evidence/citations revalidated.
+- [ ] Final PowerPoint narrative, evidence map, speaker notes/script, app media/fallback, rendering and timing rehearsal pass.
+- [ ] Privacy/secret/license/reproducibility audit passes on final repository/delivery state.
+- [ ] Thesis, presentation, speaker material, standalone application and frozen scientific evidence agree.
