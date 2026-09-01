@@ -9,7 +9,7 @@
 
 - `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable historical evidence; old `T-522` must not execute.
 - `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, historical application baseline `T-528`, `T-529`, historical `T-530`, `T-531`, `T-532`, historical intended-user acceptance `T-511`, and `T-533` are COMPLETE.
-- `T-534` is **IN_PROGRESS / pre-merge reconciliation** on PR #107 (`feat/t-534-experiment-first-ui`), created from the then-current `main` and still zero commits behind current `main`. The experiment-first implementation, targeted validation and deterministic laptop/desktop render review are objectively accepted; merge/post-merge verification remains.
+- `T-534` is **IN_PROGRESS / final pre-merge gate** on PR #107 (`feat/t-534-experiment-first-ui`), created from the then-current `main` and still zero commits behind current `main` at the latest base check. The experiment-first implementation, targeted validation, deterministic laptop/desktop render review and canonical pre-merge reconciliation are objectively accepted; final exact-head CI, squash merge and merged-main verification remain.
 - **GitHub issue #104 is the operational implementation/acceptance checklist for T-534.** It is deliberately detailed so a short instruction such as “start the UI” does not require inventing product behavior. It is a tracking/execution view, not a competing authority; canonical repository decisions/configs/docs win if any wording diverges.
 - **T-534 execution cadence:** implement the largest safe coherent batches, use targeted deterministic checks during development, avoid CI for every small edit/checklist item, and require full repository CI at meaningful checkpoints plus one final exact-head pre-merge pass. Reconcile issue #104 from objective implementation/test/render evidence; do not estimate checklist completion or conflate it with the separate master-project milestone count.
 - DEC-061 is the current T-534 product/UX amendment: it preserves DEC-059's PySide6/runtime boundary but replaces the old Study/Runs/Results/Artifacts product model with **Experiment / Run / Results / Evidence**.
@@ -53,11 +53,13 @@ Active protocol-v2.0/DEC-058/T-528 presentation assumptions discovered during T-
 
 The deterministic T-534 review set covers 1366×768 and 1440×900 Experiment, DEVELOPMENT review, Phase-A GridWorld, exact Phase-B Frozen/Adaptive pairing, RQ1, RQ2, recovered/right-censored RQ3, Evidence readiness/technical lineage and onboarding/final-lock states. Fixtures are DEVELOPMENT/synthetic only; render manifests assert zero scientific jobs/environment steps and no final-reserve access.
 
+Objective review findings were fixed narrowly rather than hidden by fixture changes: stale onboarding test behavior, exact-pair condition identity, truthful per-method Run status, primary live action/reward facts, Qt deferred-delete overlap, laptop Run layout pressure, full registered Evidence lineage and non-color-only status semantics. The UI information architecture was reconciled to retain its complete onboarding/component/acceptance contract and explicitly include condition in the presentation pair identity.
+
 ## Repository integration / provenance
 
 PR #92 is historical and was squash-merged into `main` as `feb8c70395d13f506dad2ab60f4a71d4405f6298`; there is no remaining PR #92 integration step. PR #103 subsequently merged DEC-061 and the experiment-first T-534 UI specification into `main` as `f960991c3ba71130178946fbc8051875b9fecac6`.
 
-PR #107 is the single coherent T-534 implementation PR. Its implementation heads have repeatedly passed Repository checks and the T-534 PySide6 UI acceptance workflow while objective render findings were fixed narrowly. The final pre-merge exact-head CI pass must include this documentation reconciliation before squash merge.
+PR #107 is the single coherent T-534 implementation PR. Its implementation heads repeatedly passed Repository checks and the T-534 PySide6 UI acceptance workflow while objective render findings were fixed narrowly. The final documentation-inclusive exact-head CI pass is the remaining pre-merge validation gate; a failed documentation-consistency run caused by a truncated UI-IA replacement was diagnosed and corrected by restoring the complete canonical contract rather than weakening validation.
 
 Only deliberate provenance archive refs remain alongside `main`; they are not active implementation branches and must not be merged merely to reduce branch count.
 
@@ -73,6 +75,6 @@ Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `researc
 
 ## Exact next action
 
-Finish T-534 pre-merge reconciliation on PR #107: align issue #104 with objective implementation/test/render evidence, run the final exact-head repository/UI CI after canonical documentation changes, confirm current `main` has not advanced, perform the final PR diff/mergeability review, then squash-merge only if all objective gates remain green. After merge, verify the accepted implementation on `main` and only then mark `T-534` complete in canonical status/docs and close issue #104.
+Run and verify the final exact-head Repository checks and T-534 UI acceptance workflows on PR #107 after the complete canonical documentation reconciliation. If both are green, reconcile issue #104 to the objective pre-merge state, confirm current `main` has not advanced and the PR remains mergeable with no blocking review, then squash-merge. After merge, verify the accepted implementation on `main` and only then mark `T-534` complete in canonical status/docs and close issue #104.
 
 Scientifically, stop at the separate `T-610` authorization gate: do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, inspect final outcomes, or begin Results/Discussion without explicit authorization.
