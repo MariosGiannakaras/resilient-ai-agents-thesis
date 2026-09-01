@@ -410,10 +410,10 @@ def run_synthetic_protocol_v21_pipeline_smoke(repo_root: Path) -> dict[str, Any]
             "validation-report",
             "analysis-package",
             "evidence-handoff-package",
-            "phase-a-method-contrasts",
-            "phase-b-method-contrasts",
-            "recovery-method-contrasts",
-            "recovery-trajectory-records",
+            "thesis-table-phase-a-method-contrasts",
+            "thesis-table-phase-b-method-contrasts",
+            "thesis-table-recovery-method-contrasts",
+            "analysis-table-recovery-trajectories",
         }
         missing = sorted(required - set(artifacts))
         if missing:
