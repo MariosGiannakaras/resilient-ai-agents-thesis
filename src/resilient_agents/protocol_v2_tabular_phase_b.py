@@ -5,9 +5,10 @@ point. Behavior RNG and inference-only counters may advance because they affect
 or record action execution, but Q values, SARSA deferred-learning state and
 Dyna-Q+ model/recency/planning state may not change.
 
-Temporal reward evidence is recorded passively after actual environment
-interactions and therefore does not alter action selection, learning updates,
-episode resets, or branch execution cadence.
+The driver executes one exact post-boundary environment segment. It deliberately
+fails if the configured branch interaction target would require an environment
+reset; multi-episode Phase-B lifecycle semantics remain a T-526/T-527 protocol
+choice rather than being invented inside the backend implementation.
 """
 from __future__ import annotations
 
@@ -28,7 +29,6 @@ from .protocol_v2 import (
 )
 from .protocol_v2_gridworld import GridWorldScientificStateAdapter
 from .protocol_v2_multi_episode import reset_gridworld_branch_episode
-from .protocol_v2_temporal import FixedRewardWindowRecorder, RewardWindow
 
 
 def _agent(adapter: ScientificStateAdapter) -> Any:
@@ -180,18 +180,10 @@ class ProjectTabularPhaseBBranchDriver:
         self._truncated = False
         self._episodes_started = 1
         self._episodes_completed = 0
-        self._reward_recorder = FixedRewardWindowRecorder(window_size=32)
 
     @property
     def interactions(self) -> int:
         return self._interactions
-
-    @property
-    def reward_windows(self) -> tuple[RewardWindow, ...]:
-        return self._reward_recorder.completed_windows
-
-    def require_complete_reward_windows(self, *, total_interactions: int) -> None:
-        self._reward_recorder.require_complete(total_interactions=total_interactions)
 
     def run_to_interaction(self, target_interaction: int) -> Mapping[str, float]:
         if (
@@ -252,7 +244,6 @@ class ProjectTabularPhaseBBranchDriver:
             self._next_agent_step += 1
             self._interactions += 1
             self._return_sum += float(truth.reward)
-            self._reward_recorder.record(float(truth.reward))
             self._terminated = bool(truth.terminated)
             self._truncated = bool(truth.truncated)
             if self._terminated or self._truncated:
