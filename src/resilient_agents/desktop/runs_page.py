@@ -207,8 +207,8 @@ class RunsPage(QWidget):
         details.addWidget(self.live_identity)
 
         legend = QLabel(
-            "A / arrow  Agent and executed direction   ·   G  Goal   ·   "
-            "S  Start   ·   ■  Wall   ·   dashed outline  Delivered observation"
+            "A/arrow Agent + direction · G Goal · S Start · ■ Wall · "
+            "dashed box Observation"
         )
         legend.setObjectName("GridLegend")
         legend.setWordWrap(True)
@@ -236,9 +236,8 @@ class RunsPage(QWidget):
         details.addWidget(self.live_context)
 
         boundary = QLabel(
-            "Read-only evaluator presentation. The scientific worker never waits "
-            "for this panel; renderer disconnects or dropped frames do not change "
-            "actions, RNG, checkpoints, metrics or Study evidence."
+            "Read-only presentation. Dropped frames never affect actions, RNG, "
+            "checkpoints, metrics or Study evidence."
         )
         boundary.setObjectName("DevelopmentText")
         boundary.setWordWrap(True)
@@ -469,10 +468,18 @@ class RunsPage(QWidget):
                 f"Adaptive — action {adaptive.intended_action} → {adaptive.executed_action} · "
                 f"reward {adaptive.reward:g} · true state {adaptive.true_state}"
             )
-            self.live_observation.setText(
-                f"Frozen: {self._observation_note(frozen)}\n"
-                f"Adaptive: {self._observation_note(adaptive)}"
-            )
+            if (
+                frozen.delivered_observation == frozen.true_state
+                and adaptive.delivered_observation == adaptive.true_state
+            ):
+                self.live_observation.setText(
+                    "Both delivered observations match their true states."
+                )
+            else:
+                self.live_observation.setText(
+                    f"Frozen: {self._observation_note(frozen)}\n"
+                    f"Adaptive: {self._observation_note(adaptive)}"
+                )
 
         flags = [
             name.replace("_", " ")
@@ -482,8 +489,8 @@ class RunsPage(QWidget):
         disturbance = ", ".join(flags) if flags else "none"
         change_events = ", ".join(frame.change_event_ids) if frame.change_event_ids else "none"
         self.live_context.setText(
-            f"Regime: {frame.regime_id or '—'} · active disturbance flags: {disturbance} · "
-            f"change events: {change_events}"
+            f"Regime: {frame.regime_id or '—'} · disturbance flags: {disturbance} · "
+            f"change: {change_events}"
         )
         self.live_surface.show()
 

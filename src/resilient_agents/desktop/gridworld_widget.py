@@ -25,7 +25,7 @@ class GridWorldLiveWidget(QWidget):
 
     def sizeHint(self) -> QSize:
         if self._frame is not None and self._frame.comparison is not None:
-            return QSize(520, 250)
+            return QSize(520, 270)
         return QSize(250, 250)
 
     def set_frame(self, frame: LiveGridFrame | None) -> None:
