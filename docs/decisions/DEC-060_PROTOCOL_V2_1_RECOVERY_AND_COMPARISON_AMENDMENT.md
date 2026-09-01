@@ -82,9 +82,21 @@ Method comparison is estimation-oriented. The canonical contrast is A-minus-B on
 
 Contrast policy:
 
-- **Primary:** pairwise contrasts for RQ1 final nominal performance, RQ2 adaptation benefit, and RQ3 observed recovery-time/recovery-status summaries on the two primary action-remap conditions.
+- **Primary:** pairwise contrasts for RQ1 final nominal performance, RQ2 adaptation benefit, and RQ3 recovery-time/recovery-status summaries on the two primary action-remap conditions.
 - **Secondary:** pairwise contrasts for RQ1 time-average learning performance and RQ2 Frozen/Adaptive losses.
 - **Exploratory/supporting:** contrasts for action-failure/observation-corruption diagnostics, resource observations, and sensitivity-threshold recovery summaries.
+
+#### Pre-outcome implementation clarification — censoring-aware RQ3 comparison
+
+The RQ3 wording above is narrowed here before any final-reserve outcome is observed. Because `recovery_time` is right-censored for non-recovered roots, a direct scalar method contrast must not encode a censored root as if recovery occurred at interaction 256.
+
+Therefore the canonical cross-method RQ3 evidence is:
+
+- root-level **recovery-status indicator** (`recovered` versus `right-censored`), retained explicitly;
+- root-level **restricted recovery delay through the fixed 256-interaction horizon**, defined as observed recovery time when recovery occurs and 256 only for the separately named fixed-horizon restricted-delay estimand when it does not;
+- observed `recovery_time` summaries reported **conditional on recovery** and never used to imply that censored roots recovered at the horizon.
+
+Pairwise method contrasts may be produced for recovery status and restricted fixed-horizon delay on common independent roots. The restricted-delay quantity is not renamed as recovery time. This clarification changes neither the recovery threshold nor the event definition; it only makes the predeclared comparison censoring-compatible.
 
 Report effect estimates and uncertainty intervals. Student-t root intervals remain primary where the estimand is a scalar root value; root bootstrap remains a sensitivity analysis. Pointwise intervals are not simultaneous inference. Formal null-hypothesis p-value testing is not part of this amendment, so the final thesis must not relabel non-overlap or pointwise intervals as “statistically significant.” If formal multiple-comparison superiority testing is later required, its multiplicity strategy must be frozen before final-reserve access.
 
