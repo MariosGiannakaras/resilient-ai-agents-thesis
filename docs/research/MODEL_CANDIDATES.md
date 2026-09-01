@@ -1,98 +1,93 @@
-# Agent / Method Candidate Selection
+# Agent / Method Selection
 
-**Status:** Current pre-WP7 method-role authority under DEC-048 / issue #95.  
-**Exact final set:** intentionally unfrozen until bounded literature, environment-discrimination and Windows CPU feasibility pilots complete.
+**Status:** Final retained method set frozen by DEC-058 and preserved by DEC-060.  
+**Current protocol authority:** `configs/protocols/protocol-v2.1-final.json`
 
-GridWorld is the controlled experimental testbed and visualization surface. The thesis subject is the comparison/evaluation of resilient RL agents under uncertainty and environmental change.
+GridWorld is the controlled experimental testbed and visualization surface. The thesis subject is the comparison/evaluation of resilient reinforcement-learning agents under uncertainty and environmental change.
+
+## Final retained methods
+
+| Method | Family | Policy relation | Representation | Scientific role |
+|---|---|---|---|---|
+| **Q-Learning** | value learning | off-policy | tabular | classical low-complexity value-learning baseline |
+| **SARSA** | value learning | on-policy | tabular | on-policy tabular contrast |
+| **DQN** | deep value learning | off-policy | neural | function approximation, replay and target-network dynamics |
+| **PPO** | policy optimization / actor-critic | on-policy | neural | policy-gradient/actor-critic optimization with clipped updates |
+| **Dyna-Q+** | learned-model planning | Q/value based | tabular + empirical model | planning plus recency-directed re-exploration under change |
+
+The confirmatory set is exactly these five methods. It is no longer provisional.
+
+## Frozen selected configurations
+
+- Q-Learning: `q-c06`
+- SARSA: `sarsa-c06`
+- DQN: `dqn-c05`
+- PPO: `ppo-c06`
+- Dyna-Q+: `dyna-c03`
+
+Their complete parameters and implementation identifiers are defined only by `configs/protocols/protocol-v2.1-final.json`; this document does not duplicate mutable parameter values.
 
 ## Method is not deployment regime
 
-Protocol v2 separates the learning **method** from post-training **deployment/adaptation regime**.
+Protocol v2.x separates learning method from post-training deployment/adaptation regime.
 
 For every retained method:
 
-1. train independently from method-appropriate fresh initialization;
-2. freeze a reproducible method-specific trained checkpoint;
-3. clone that exact checkpoint into matched `Frozen` and `Continual` branches;
-4. evaluate both under the same uncertainty/change design and same-regime nominal references.
+1. train independently from method-appropriate initialization;
+2. retain an exact method-specific scientific checkpoint;
+3. create matched `FN`, `FD`, `AN`, `AD` branches from one exact branch point;
+4. keep Frozen branches non-learning and Adaptive branches on ordinary method-native continuation;
+5. preserve replay, optimizer, exploration, rollout/update, planning/model and RNG state required for exact continuation.
 
-`Frozen Q-Learning` and `Adaptive Q-Learning` remain valid historical/user-facing descriptions for protocol-v1.0/v1.1 contexts. In v2, Q-Learning is the method and Frozen/Continual are deployment regimes.
-
-## Strong core candidates — pilot-gated
-
-| Method | Family | Policy relation | Representation | Distinct scientific role |
-|---|---|---|---|---|
-| **Q-Learning** | value learning | off-policy | tabular | classical low-complexity value-learning baseline |
-| **SARSA** | value learning | on-policy | tabular | isolates on-policy tabular learning/exploration behavior |
-| **DQN** | deep value learning | off-policy | neural | adds function approximation, replay and target-network dynamics |
-| **PPO** | policy optimization / actor-critic | on-policy | neural | adds policy-gradient/actor-critic optimization with clipped updates |
-| **Dyna-Q+** | learned-model planning | Q/value based | tabular + empirical model | adds planning plus recency-directed re-exploration, directly relevant to change |
-
-These five are **candidates**, not a target count. A method reaches the confirmatory matrix only if it adds a useful distinct contrast and passes feasibility/discrimination/fair-tuning gates.
-
-## Secondary candidates / ablations
-
-### Dyna-Q
-
-Retained implementation and scientifically useful ablation:
-
-> Does Dyna-Q+ benefit from planning itself or specifically from directed recency-based re-exploration?
-
-It need not automatically double the full final matrix. Depending on pilot results, it may remain a focused ablation/non-final mechanism comparison while Dyna-Q+ represents planning/change-directed behavior in the main matrix.
-
-### A2C
-
-Technically compatible with discrete actions and CPU execution through maintained RL libraries. It is a valid actor-critic method, but it overlaps substantially with PPO at the family/mechanism level. Promote it to the full final matrix only if literature/pilots show a distinct useful RQ/contrast that justifies the additional tuning, roots and Frozen/Continual runs.
-
-### Historical R0 Robust Planner
-
-Historical robust value iteration remains immutable negative/diagnostic pilot evidence. The accepted pilot suffered severe nominal truncation. Protocol v2 does not require redesigning it. Reopen only if a distinct pre-deployment-robustness RQ is justified before protocol freeze.
-
-## Reference strategies
-
-- **Random Agent:** lower behavioral/correctness reference only; never fair-ranked.
-- **Privileged/oracle planner:** optional analytical/debug upper reference only; never fair-ranked if it receives evaluator/model knowledge unavailable to scientific agents.
-
-## Why deep methods are candidates, not automatic winners
-
-DQN/PPO/A2C are technically compatible with the discrete GridWorld action space, but technical compatibility is insufficient scientific justification.
-
-The current 7×7 position-state task may be too small/easy to reveal meaningful representation/optimization differences. Conversely, increasing environment complexity solely to make neural methods look useful would bias the study. Protocol v2 therefore pilots a small number of project-owned complexity levels and keeps the **simplest** one that avoids obvious floor/ceiling effects and remains interpretable/CPU-feasible.
-
-Neural methods receive a deterministic numeric/one-hot encoding of the same semantic observation available to tabular methods. They do not receive pixels, hidden map truth, disturbance flags or extra evaluator information merely because they use a neural network.
+Frozen and Adaptive/Continual are regimes, not additional algorithms.
 
 ## Fair comparison contract
 
-Do **not** force identical hyperparameters across algorithms.
+Fairness does **not** mean identical hyperparameters or identical optimizer/planning update counts across algorithms.
 
-Fairness is instead defined by:
+The frozen comparison instead requires:
 
-- same environment semantics, action/reward and agent-visible information;
-- common main environment-interaction/timestep budget;
-- matched environment/root schedules where meaningful;
-- bounded literature-backed algorithm-specific configuration candidates;
-- equivalent predeclared tuning opportunity and tuning partitions;
-- multiple independent roots for every candidate configuration;
-- standardized periodic no-learning evaluation checkpoints;
-- separate wall-clock/CPU reporting;
-- no final-reserve access during tuning/model selection.
+- same controlled task/reward/action semantics;
+- same agent-visible information contract;
+- common primary actual-environment-interaction budget;
+- independent Phase-A learning for every method;
+- method-appropriate configurations selected through the completed bounded tuning process;
+- exact no-learning probes at the frozen checkpoints;
+- common final roots/layouts and matched Phase-B branch origins;
+- root as the independent unit, with layouts blocked/equally reduced within root;
+- scientific failures retained and no outcome-driven root/seed replacement;
+- no final-reserve access during selection/tuning.
 
-Historical Q-learning hyperparameters remain valid for historical v1.0. For v2 they are not treated as an unfair permanent advantage: the v2 tuning policy decides whether the historical Q configuration is one candidate or whether Q receives a bounded fresh tuning allowance equivalent to other methods.
+Neural methods receive a deterministic numeric encoding of the same semantic position observation. They receive no pixels, hidden map truth, disturbance flags, change indicator, regime identity, or executed-action feedback unavailable to tabular methods.
+
+## Secondary/historical methods
+
+### Dyna-Q
+
+Dyna-Q remains a useful historical/mechanistic ablation for distinguishing planning from Dyna-Q+'s recency-directed re-exploration. It is not part of the final five-method confirmatory matrix.
+
+### A2C
+
+A2C remains a technically plausible actor-critic candidate from earlier design work but was not retained for the final matrix. It must not be introduced into T-610 without a new explicit pre-outcome protocol amendment.
+
+### Historical R0 robust planner
+
+The robust value-iteration path remains immutable historical negative/diagnostic evidence. It is not part of the protocol-v2.1 confirmatory matrix and is not to be redesigned opportunistically after final outcomes.
+
+### References/oracles
+
+Random or privileged/oracle strategies may remain calibration/debug references where already defined, but they are not fair-ranked members of the five-method confirmatory comparison if they receive different information or model access.
 
 ## Continual deployment caveat
 
-`Continual` means ordinary continued learning by the base method under a predeclared update schedule. It does **not** mean the method is a purpose-built continual-learning algorithm.
+Adaptive/Continual means ordinary continued learning by the retained base method under its frozen method-native semantics. It does not imply a purpose-built continual-learning algorithm.
 
-Deep agents can suffer catastrophic interference/forgetting or loss of plasticity under non-stationarity. These are legitimate findings, not implementation failures to hide through post-hoc resets.
-
-Method-specific scientific checkpoints preserve whatever is required for exact continuation. DQN replay buffer/target network/optimizer/exploration state and actor-critic optimizer/schedule/update-boundary state are therefore part of the deployment contract. Resetting replay/optimizer/network state after change is a separate intervention and must not happen silently.
+Potential interference, forgetting, loss of plasticity, replay effects, policy instability or planning-model behavior under non-stationarity are legitimate empirical outcomes. They must not be hidden with post-change resets or special interventions not frozen in the protocol.
 
 ## Historical candidate-v1.1 status
 
-The former five-strategy v1.1 set — Fixed Q-Learning, Adaptive Q-Learning, SARSA, Dyna-Q, Dyna-Q+ — remains a valid **adaptation-mechanism candidate design** because all agents began from common selected tabular-Q knowledge. It is not deleted or reinterpreted as an independent-learning benchmark.
-
-Old T-522/v1.1 tuning/freeze execution is superseded. Future confirmatory evidence is governed by protocol v2 after its pilot gates.
+The former v1.1 strategy set and old T-522 tuning/freeze path remain valid historical context only. Historical T-530/T-531/T-532 application/prototype tasks likewise retain their original meanings. They do not override DEC-058/DEC-060 or the five-method independent-learning protocol.
 
 ## Current gate
 
-`T-524` / issue #95 must finish source-backed RQ/estimand/method-role definition before `T-525` implements deep-method adapters. The final method set is frozen only after `T-526` environment/method feasibility pilots and `T-527` fair tuning/statistical/resource review.
+T-533 may implement/validate protocol-v2.1 recovery and direct-comparison evidence mechanics without touching final outcomes. The method set itself is closed. `final_reserve_access=false` remains sealed until a separate explicit T-610 authorization.
