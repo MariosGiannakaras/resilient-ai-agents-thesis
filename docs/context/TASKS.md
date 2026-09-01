@@ -19,21 +19,21 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 
 ## Resume state
 
-- **Package:** protocol-v2.0 methodology/scientific freeze remains immutable through DEC-058; the framework-neutral Study backend is complete through DEC-051/T-529; historical PySide6 application work remains complete through DEC-059/T-528; DEC-060/T-533, pre-final readiness hardening, and the DEC-061 protocol-v2.1 experiment-first PySide6 rebuild `T-534` are complete. DEC-042/047 and candidate v1.1 remain auditable predecessor design; historical NiceGUI remains prototype history only.
+- **Package:** protocol-v2.0 methodology/scientific freeze remains immutable through DEC-058; the framework-neutral Study backend is complete through DEC-051/T-529; historical PySide6 application work remains complete through DEC-059/T-528; DEC-060/T-533, pre-final readiness hardening, and the DEC-061 protocol-v2.1 experiment-first PySide6 rebuild `T-534` are complete. `T-535` is the active bounded pre-T610 intended-user UX hardening discovered by post-T-534 workflow/screenshot review. DEC-042/047 and candidate v1.1 remain auditable predecessor design; historical NiceGUI remains prototype history only.
 - **Project:** **7/8** master milestones objectively complete (#87: 1, 2, 3, 4, 5, 6, 7). Milestone 8 awaits the final v2.1 evidence chain.
-- **Current task:** `T-534` is **COMPLETE**. PR #107 was squash-merged into `main` as `c372c581b88c63f3b07c96bd50bbc17b9b83f835` after exact-head Repository checks #864 and T-534 PySide6 UI acceptance #174 passed; merged-state verification confirmed the accepted experiment-first implementation on `main`.
-- **Separate scientific gate:** `T-610` remains **BLOCKED** pending separate explicit final-scientific-experiment authorization. Completion of `T-534`, UI CI, screenshots or DEVELOPMENT/synthetic runs does not authorize it.
+- **Current task:** `T-535` is **IN_PROGRESS** on issue #109 / PR #110 from current `main`. It is presentation/workflow hardening only and preserves T-534 as COMPLETE history.
+- **Separate scientific gate:** `T-610` remains **BLOCKED**. T-535 must complete first, and a separate explicit final-scientific-experiment authorization remains mandatory afterward. UI CI, screenshots, DEVELOPMENT/synthetic runs, or T-535 completion do not authorize final execution.
 - **State:** DEC-055 tuning remains immutable valid-complete; DEC-055/056 sizing packages remain immutable valid-failed. DEC-057 sizing-v0.3 and the combined five-method sizing package are valid-complete. DEC-058 remains the historical frozen protocol-v2.0 authority. DEC-060 plus `configs/protocols/protocol-v2.1-final.json` define the current pre-execution amendment while preserving final roots/layouts, five methods, hyperparameters, conditions, budgets and 256-interaction Phase-B horizon. `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory.
 - **T-533 implementation:** COMPLETE. The isolated protocol-v2.1 path includes passive fixed 32-interaction Phase-B reward windows, schema-v2 temporal evidence/validation, right-censored recovery/non-recovery analysis, direct root-paired method contrasts, actual-root-count Student-t interval selection, deterministic evidence exports with v2.1 provenance, protocol-aware executor routers, fail-closed self-contained recipe materialization, and PySide6 stored-evidence recovery/contrast presentation with no UI-side estimand computation.
 - **Completed Study backend:** `T-529` is COMPLETE. The framework-neutral Study lifecycle covers immutable recipe -> deterministic plan -> real Phase A -> exact checkpoint -> optional common no-learning prefix -> atomic FN/FD/AN/AD -> validation -> root/layout analysis with explicit denominators -> deterministic machine-readable evidence export, with restart-safe provenance and no frontend dependency.
 - **Historical completed application baseline:** `T-528` remains COMPLETE and is not repurposed. It records the accepted PySide6 architecture/workflow/read-model/application baseline and prior intended-user acceptance history. Its presentation implementation is not the authority for the completed T-534 rebuild; reusable UI-neutral contracts were preserved after audit where still correct.
-- **Pre-final readiness:** COMPLETE. Read-only preflight, backend deny-by-default final execution guard, synthetic DEVELOPMENT scientific-pipeline smoke and `docs/research/RQ_EVIDENCE_TRACEABILITY.md` are present; the final reserve remained sealed.
-- **Repository integration:** PR #92 is historical and was squash-merged into `main` as `feb8c70395d13f506dad2ab60f4a71d4405f6298`. Subsequent protocol-v2.1 readiness and pre-UI context cleanup were also merged. PR #107 was squash-merged into `main` as `c372c581b88c63f3b07c96bd50bbc17b9b83f835` and is the completed T-534 implementation record.
-- **Trackers:** #87 master 7/8; #95 protocol-v2 10/10 CLOSED; #98 T-533 CLOSED/COMPLETE; #88 closed/superseded; #89 complete/closed; #93 T-528 complete/closed; #94 DEFERRED post-thesis; #104 T-534 COMPLETE/CLOSED.
+- **Pre-final readiness:** COMPLETE scientifically. Read-only preflight, backend deny-by-default final execution guard, synthetic DEVELOPMENT scientific-pipeline smoke and `docs/research/RQ_EVIDENCE_TRACEABILITY.md` are present; the final reserve remains sealed. T-535 is an application UX/workflow hardening package, not a scientific amendment.
+- **Repository integration:** PR #92 is historical and was squash-merged into `main` as `feb8c70395d13f506dad2ab60f4a71d4405f6298`. Subsequent protocol-v2.1 readiness and pre-UI context cleanup were also merged. PR #107 was squash-merged into `main` as `c372c581b88c63f3b07c96bd50bbc17b9b83f835` and is the completed T-534 implementation record. PR #110 is the active T-535 hardening PR.
+- **Trackers:** #87 master 7/8; #95 protocol-v2 10/10 CLOSED; #98 T-533 CLOSED/COMPLETE; #88 closed/superseded; #89 complete/closed; #93 T-528 complete/closed; #94 DEFERRED post-thesis; #104 T-534 COMPLETE/CLOSED; #109 T-535 IN_PROGRESS.
 - **Historical science:** protocol-v1.0 / FINAL-* / R0 evidence immutable. Candidate v1.1 remains non-final history; old `T-522` must not execute. Historical `T-530`, `T-531` and `T-532` remain completed/superseded history and are not repurposed.
 - **Bibliography:** immutable protocol-v2 consumer snapshot remains upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`, merged through thesis PR #96 and validated in the integrated repository.
 - **Pre-WP7 approval:** NOT APPROVED; `T-700+` remains blocked.
-- **Exact next action:** stop at the separate `T-610` scientific authorization gate. Do not access the final reserve, execute the final protocol-v2.1 matrix, inspect final outcomes, or begin WP7/Results/Discussion without the required separate approvals.
+- **Exact next action:** finish T-535 through focused validation, exact-head repository/UI CI, deterministic screenshot review, canonical reconciliation, squash merge and merged-main verification. Then stop at the separate T-610 scientific authorization gate; do not access the final reserve, execute the final protocol-v2.1 matrix, inspect final outcomes, or begin WP7/Results/Discussion without the required separate approvals.
 
 ## Quota/interruption resilience
 
@@ -154,6 +154,21 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
   - Completion validation: exact PR head `0fff019d8bd1b90bd1809f2c2f5b0c0662d743da` passed Repository checks #864 and T-534 PySide6 UI acceptance #174; deterministic renders were visually reviewed; PR #107 was squash-merged; merged `main` was verified to contain the accepted implementation.
   - Completion of T-534 does **not** authorize `T-610`, final-reserve access, final results inspection or WP7/Results/Discussion writing.
 
+- [ ] IN_PROGRESS `T-535` — **Pre-T610 intended-user UX hardening** (#109 / PR #110).
+  - Depends on: `T-534` — satisfied.
+  - Origin: post-T-534 intended-user workflow analysis plus exact-head 1366×768/1440×900 screenshot review identified bounded presentation/workflow gaps not requiring any scientific amendment.
+  - Preserve T-534 as COMPLETE historical implementation/acceptance; do not rewrite its record.
+  - Preserve protocol-v2.1 science, Study/read-model authority, final-reserve sealing and backend execution authorization unchanged.
+  - Correct DEVELOPMENT Create → Run so the newly created experiment record becomes the active Run context even when older durable records exist.
+  - Propagate selected Run experiment context to Evidence and to Results when compatible; when the current run has no stored analysis, state that explicitly instead of silently implying an older result package belongs to it.
+  - Use consistent primary `Experiment record` terminology; stable record IDs may remain identifiers where no separate human label exists.
+  - Keep direct method comparisons inside their scientific question: Phase-A comparisons in RQ1, Phase-B comparisons in RQ2, recovery comparisons in RQ3, all from already-stored backend contrasts only.
+  - Keep Results provenance and direct-comparison detail behind progressive disclosure so the research result remains visually primary at laptop viewports.
+  - Hide infrastructure retry when there is no infrastructure failure and make Evidence next actions name the application surface/action the user should take.
+  - Remove stale T-534-specific onboarding/final-gate copy while keeping final execution controlled exclusively by the separate backend authorization gate.
+  - Acceptance: focused deterministic Qt tests, exact-head Repository checks and PySide6 render workflow green; review deterministic 1366×768/1440×900 screenshots for regression; reconcile canonical docs; squash merge; verify merged main; close #109.
+  - Explicit boundary: no final roots/layouts/seeds/outcomes, no final-reserve access, no T-610 activation, and no scientific configuration/estimand/analysis change.
+
 - [x] `T-511` — **Historical intended-user application workflow/self-explanatory UX acceptance.**
   - Depends on: `T-512`, `T-528` — satisfied.
   - Accepted: 2026-09-01, after the user explicitly delegated intended-user acceptance of the then-current PySide6 workflow and verified screenshot/live-presentation requirements.
@@ -170,8 +185,8 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
 - [x] `T-604` — Historical v1.0 evidence package.
 
 - [ ] BLOCKED `T-610` — Execute frozen protocol-v2.1 final matrix through the accepted study-first execution path.
-  - Depends on: `T-527`, `T-529`, `T-511`, `T-533` — satisfied.
-  - State: all declared scientific/pre-final dependencies, including the separate T-534 application rebuild, are complete, but `final_reserve_access=false` is sealed and a separate explicit scientific execution authorization is mandatory before any final-reserve access or execution. T-534 completion does not substitute for this gate.
+  - Depends on: `T-527`, `T-529`, `T-511`, `T-533`, `T-535` — scientific dependencies satisfied; `T-535` currently IN_PROGRESS.
+  - State: final-reserve access remains sealed. After T-535 completes, a separate explicit scientific execution authorization is still mandatory before any final-reserve access or execution. Neither T-534 nor T-535 completion substitutes for this gate.
 - [ ] BLOCKED `T-611` — Validate/freeze v2.1 final evidence.
   - Depends on: `T-610`.
 - [ ] BLOCKED `T-612` — Predeclared v2.1 nominal-learning/resilience/recovery statistical analysis and sensitivity diagnostics.
