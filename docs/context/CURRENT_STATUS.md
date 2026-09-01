@@ -10,12 +10,11 @@
 - `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable historical evidence; old `T-522` must not execute.
 - `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, `T-528`, `T-529`, historical `T-530`, `T-531`, `T-532`, `T-511` and **`T-533` are COMPLETE**.
 - DEC-058 and `configs/protocols/protocol-v2.0-final.json` remain immutable historical protocol-v2.0 freeze authority. DEC-060 is the explicit pre-outcome amendment; it does not rewrite DEC-058 history.
-- `configs/protocols/protocol-v2.1-final.json` is the self-contained current scientific authority. It preserves the five methods, selected hyperparameters, Phase-A budget/probes, 12 final roots, 2 held-out final layouts, four Phase-B conditions and 256-interaction horizon from DEC-058.
+- `configs/protocols/protocol-v2.1-final.json` is the self-contained current scientific authority. It preserves the five methods, selected hyperparameters, Phase-A budget/probes, 12 final roots, 2 held-out final layouts, four Phase-B conditions and the 256-interaction horizon from DEC-058.
+- PR #92 was squash-merged into `main` as commit `feb8c70395d13f506dad2ab60f4a71d4405f6298`. Issue #98 is CLOSED/COMPLETE.
+- Exact final PR head `b722c3065368557ca06b46b1c2a374aa5f3cd085` passed Repository checks #799, Protocol-v2 pilot checks #314 and T-528 PySide6 UI screenshot checks #140 before merge. The squash merge preserves that exact tree.
 - `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory. **T-610 has not been authorized or executed. No protocol-v2 final-reserve outcome was generated, inspected or used by T-533.**
 - Master tracker #87 remains **7/8** complete; milestone 8 depends on the final v2.1 evidence chain.
-- T-533 closure head `72c293d0678111880ec6d260fe9c05a1970475ed` passed Repository checks #795, Protocol-v2 pilot checks #310 and T-528 PySide6 UI screenshot checks #136. Later tracker-only reconciliation does not change scientific code or protocol authority.
-- Issue #98 is CLOSED/COMPLETE. PR #92 remains OPEN, DRAFT and mergeable on `feat/pre-wp7-protocol-v1.1-ui-rebuild`.
-- Repository integration is the only remaining operational step before the T-610 authorization gate. The connected GitHub tool cannot mark PR #92 ready because its GraphQL mutation currently fails on an unsupported `fullDatabaseId` field; direct squash merge is therefore rejected by GitHub while the PR remains draft. This is a tooling/integration blocker, not a scientific blocker.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
 
 ## Completed T-533 / DEC-060 amendment
@@ -57,6 +56,8 @@ The v2.1 Study recipe materializer fails closed if the final-reserve lock or exp
 
 PySide6 Results supports stored Recovery & Comparisons summaries, AN-vs-AD trajectory rows and direct method contrasts for schema-v2/v2.1 packages. Legacy schema-v1 packages remain supported and do not expose recovery. The UI never chooses thresholds, reduces roots or recomputes scientific estimands.
 
+Any separately paused Codex UI working copy that started before the protocol-v2.1 merge must be treated as non-authoritative partial work. Restart UI implementation from current `main`, read `AGENTS.md`, `docs/context/TASKS.md` and this file first, and re-derive UI behavior from the merged v2.1 backend/evidence contracts rather than carrying forward pre-v2.1 assumptions.
+
 ## Documentation / thesis preparation
 
 `TASKS.md`, DEC-060, the decision index, `RESEARCH_BRIEF.md`, `MODEL_CANDIDATES.md`, `docs/experiments/EXPERIMENTAL_REQUIREMENTS.md` and the structure-only `THESIS_STRUCTURE_DRAFT.md` are reconciled to protocol-v2.1. Results, Discussion and conclusion claims remain explicitly evidence-gated.
@@ -75,4 +76,4 @@ The repository remains public by explicit user decision. `thesis/source-material
 
 ## Exact next action
 
-First complete repository integration: manually change PR #92 from **Draft** to **Ready for review**, then squash-merge it into `main` (the PR is otherwise mergeable and the T-533 implementation has already passed its closure CI). After that, stop at the **separate explicit scientific authorization gate for T-610**. Do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, or begin Results/Discussion writing without that authorization.
+For application work, a paused pre-v2.1 Codex UI implementation may now restart cleanly from current `main` using the merged protocol-v2.1 contracts as authority. Scientifically, stop at the **separate explicit authorization gate for T-610**: do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, or begin Results/Discussion writing without that authorization.
