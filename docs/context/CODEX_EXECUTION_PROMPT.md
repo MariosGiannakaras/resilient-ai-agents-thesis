@@ -2,92 +2,98 @@
 
 ## User entrypoint
 
-Give Codex only:
+For ordinary repository continuation, Codex should recover current repository state and follow the canonical authority rather than a historical chat/session:
 
-> `/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely. Complete the canonical project task registry autonomously, one bounded dependency-valid task or coherent package at a time. Treat routine Git, PR creation, CI, objective diff review, corrections, task reconciliation, and next-task selection as work to perform, not reasons to stop. Recover actual repository/Git/GitHub/evidence state before acting. Never bypass BLOCKED/DEFERRED/SUPERSEDED work, fabricate evidence, cross an external approval gate, or create a parallel branch when the active package pins one.`
+> Read `AGENTS.md`, `docs/context/TASKS.md`, and `docs/context/CURRENT_STATUS.md` first. Inspect actual Git/GitHub/CI state, then execute only the current dependency-valid work. Historical protocol-v1.x, old UI branches and superseded prompts are context only. Never cross an explicit scientific/user approval gate.
 
-Repository/Git/GitHub/evidence state beats stale chat/session memory or stale prose.
+Repository/Git/GitHub/evidence state beats stale session memory or stale prose.
 
-## Active package
+## Current package
 
-DEC-048/050 controls protocol-v2 methodology, DEC-051 controls the completed Study-first backend, and issue #95 tracks the scientific successor.
+The protocol-v2.1 scientific design and pre-final readiness hardening are complete. DEC-058 remains immutable historical protocol-v2.0 freeze authority; DEC-060 plus `configs/protocols/protocol-v2.1-final.json` are current pre-execution authority.
 
-- Use `feat/pre-wp7-protocol-v1.1-ui-rebuild` / draft PR #92; no parallel main-repo implementation branch and no early merge.
-- Preserve protocol-v1.0, FINAL-* and historical R0 evidence immutably.
-- Candidate v1.1 remains auditable non-final history; do not execute old T-522 or inspect/generate its final reserve.
-- T-524, T-525 and T-529 are COMPLETE.
-- T-526 is READY and is the next dependency-valid scientific gate on the validated physical Windows thesis machine.
-- T-527 is BLOCKED on T-526; final methods/layouts/budgets/hyperparameters/severities/roots/statistics remain unfrozen.
-- T-528 is BLOCKED on T-527; its T-529 backend dependency is satisfied. The final frontend must use a framework different from NiceGUI.
-- T-511 remains later intended-user acceptance; T-700+ remains blocked until accepted final evidence/application and explicit user approval.
+Current facts:
+
+- retained methods: Q-Learning, SARSA, DQN, PPO and Dyna-Q+;
+- final protocol dimensions/configurations/statistics are frozen;
+- the framework-neutral Study backend and deterministic evidence pipeline are implemented;
+- protocol-v2.1 temporal/recovery/direct-comparison evidence contracts are implemented;
+- the generic Study service denies confirmatory/final execution unless the separate explicit authorization token is supplied;
+- final reserve remains sealed and no protocol-v2.1 final outcome has been generated or inspected;
+- PySide6 / Qt 6 Widgets is the current application architecture under DEC-059;
+- the paused/pre-v2.1 UI implementation is not an implementation base for continuation;
+- final standalone Windows packaging remains deferred until after the thesis.
 
 ## Startup / resume
 
-1. Inspect `git status`, staged/unstaged/untracked work, branch, recent commits, upstream/ahead-behind state and current remote head.
-2. Read only the session-start core:
+1. Inspect `git status`, branch, recent commits, upstream/ahead-behind state and current PR/check state.
+2. Read exactly the session-start core:
    - `AGENTS.md`
    - `docs/context/TASKS.md`
    - `docs/context/CURRENT_STATUS.md`
-3. Inspect PR #92/current-head CI and resume valid `IN_PROGRESS` work before READY work.
-4. Preserve interrupted work; never use destructive cleanup merely to obtain a clean tree.
-5. Read only task-specific decisions/research required by the recovered active task.
+3. Resume valid current work from objective Git state; never recreate completed work because an old note says it is incomplete.
+4. Read only task-specific decisions/specifications needed for the recovered task.
+5. Preserve unique interrupted work; do not use destructive cleanup merely to obtain a clean tree.
 
-When objective Git/GitHub/finalized-evidence state proves prose stale, preserve completed work, reconcile the docs at the next coherent checkpoint and continue. Never repeat completed work solely because a resume note is stale.
+## Clean UI restart
 
-## Current T-526 physical gate
+When the active goal is the application rebuild/restart:
 
-T-526 may execute only on the validated physical Windows thesis machine through:
+1. start from a **fresh branch from current `main`**; do not continue an old paused UI branch/worktree;
+2. additionally read:
+   - `docs/decisions/DEC-059_PYSIDE6_FINAL_APPLICATION_ARCHITECTURE.md`
+   - `docs/decisions/DEC-060_PROTOCOL_V2_1_RECOVERY_AND_COMPARISON_AMENDMENT.md`
+   - `configs/protocols/protocol-v2.1-final.json`
+   - `docs/research/RQ_EVIDENCE_TRACEABILITY.md`
+   - relevant `docs/architecture/` UI guidance;
+3. audit `src/resilient_agents/desktop/` before editing:
+   - preserve current UI-neutral read-model, Study/evidence adapter, provenance and execution-policy contracts;
+   - presentation widgets/windows/pages/styles may be replaced from scratch;
+4. derive UI behavior from current Study/evidence contracts, not pre-v2.1 assumptions or historical screenshots;
+5. use only DEVELOPMENT/synthetic fixtures for implementation tests/screenshots unless real evidence has already been separately validated and is read-only;
+6. never calculate scientific thresholds, root reductions, estimands or conclusions inside Qt presentation code;
+7. never access or authorize the final reserve from the UI.
 
-`powershell -ExecutionPolicy Bypass -File .\scripts\run_protocol_v2_feasibility_windows.ps1`
+The UI should be novice-first, self-explanatory, compact and coherent. Primary labels are plain language; technical IDs/provenance use progressive disclosure. Empty/loading/disabled/warning/error/locked states must explain the useful next action. Motion must not fabricate progress/data.
 
-The latest physical attempt did not execute scientific work: repository preflight failed because the checkout was stale and contained untracked prior PR draft `temp_body.md`. No T-526 output directory or scientific evidence was produced.
+## Scientific contract that UI/backend work must preserve
 
-Before retrying:
+- Phase A independently trains each retained method under the common semantic task/information contract and actual-environment-interaction fairness budget.
+- Phase B branches exact scientific state into FN/FD/AN/AD; Frozen state cannot learn and Adaptive learning follows the frozen method-native contract.
+- Root is the independent unit; layouts/episodes/probes/windows are repeated observations.
+- RQ2 primary adaptation benefit is `(FN-FD)-(AN-AD)`.
+- RQ3 uses AN versus AD passive 32-interaction reward windows over horizon 256, primary tolerance 0.10, sensitivity 0.05/0.20, two-window stable recovery and right-censoring with `recovery_time=null` for non-recovery.
+- Direct method contrasts are root-paired on common roots after equal layout reduction.
+- Pointwise Student-t intervals use the predeclared critical value for the actual independent-root count.
+- Scientific failures remain outcomes; seeds/roots are not replaced from outcomes.
 
-1. inspect `temp_body.md` and preserve any unique content; remove it from the working tree only if confirmed obsolete;
-2. fetch and fast-forward the physical active branch to the reviewed current remote head without destructive reset/force operations;
-3. verify native-Windows Git is clean and the committed plan/runbook/entrypoint are present;
-4. execute the predeclared runner exactly once;
-5. retain all scientific failures/evidence as-is and never replace roots based on outcomes.
+## Final-experiment gate
 
-Hosted CI/WSL/another machine cannot substitute for T-526 runtime evidence.
+The final scientific experiment is **not authorized** by repository cleanup, UI implementation, CI, screenshots, synthetic smoke or completion of pre-final work.
 
-## Protocol-v2 scientific contract
+Do not:
 
-Phase A independently trains every retained method under the same semantic environment/information/action/reward/gamma contract and principal actual-environment-interaction budget, with isolated no-learning probes.
+- enable `final_reserve_access`;
+- inspect final outcomes;
+- run the final protocol-v2.1 matrix;
+- tune from final roots/layouts/seeds;
+- begin Results/Discussion writing.
 
-For each method/root/layout, Phase B starts from that unit's own exact Phase-A scientific checkpoint. Any common prefix is no-learning. At the exact boundary clone identical scientific state into FN, FD, AN and AD. Adaptive updates begin only on the first post-boundary transition; Frozen learning state cannot mutate. Do not reset replay, optimizer, exploration, warm-up, model/recency, schedules, counters or RNG state at change unless a later frozen protocol explicitly defines it.
-
-Primary adaptation benefit is matched four-branch DiD. Root/run is the independent unit; layouts/checkpoints/episodes are blocked/repeated measurements. Scientific failures remain outcomes and seeds are never replaced from outcomes.
-
-Pilot-gated core candidates are Q-Learning, SARSA, DQN, PPO and Dyna-Q+. Dyna-Q is an ablation; A2C remains conditional; Random is a supporting reference. Do not freeze final scientific choices before T-527.
-
-## Completed T-529 boundary
-
-DEC-051/T-529 makes `Study` the application-facing aggregate. The implemented UI-independent chain is:
-
-> immutable recipe -> deterministic plan -> real Phase A -> exact checkpoint -> optional common no-learning prefix -> atomic FN/FD/AN/AD -> validation -> root/layout analysis -> deterministic evidence export
-
-It includes restart-safe `StudyStore`/`StudyService`, stable identities/lineage, scientific-vs-infrastructure failure semantics, explicit outcome denominators, default real protocol-v2 executors and machine-readable CSV/JSON/result-ID/provenance handoff. T-529 generates no thesis prose, final thesis figures or PPTX. Do not re-audit/rebuild it without new objective regression evidence.
-
-## Task order
-
-Remaining dependency chain:
-
-`T-526 -> T-527 -> T-528 -> T-511 -> T-610..T-613 -> explicit user approval -> WP7`.
-
-T-529 is already a satisfied dependency. Do not access final reserve early or use hosted CI as a physical-pilot substitute.
+Stop at the separate explicit authorization gate if final execution becomes the next scientific action.
 
 ## Validation and Git
 
-For each **one bounded scope**, validate acceptance, implement the smallest complete solution, run the smallest relevant deterministic checks, inspect the diff, reconcile docs/issues and push a coherent recoverable checkpoint.
+For each bounded scope:
 
-Testing is proportional: scientific invariants, information boundaries, determinism, checkpoint fidelity, configuration, lifecycle/provenance, statistical known answers and representative integration. Scientific experiment matrices are not CI tests. PR CI is the canonical full-repository guard.
+1. implement the smallest complete solution;
+2. run targeted deterministic checks during development;
+3. inspect the diff and reconcile affected active docs/tests/workflows;
+4. use PR CI as the canonical full-repository guard;
+5. fix actual failures narrowly rather than expanding test scope for reassurance;
+6. normally squash-merge one coherent validated PR.
 
-Do not submit an `APPROVE` review on your own PR. Historical workflow may permit an **own-PR squash merge**, but this active draft PR remains unmerged until its integration gates allow it.
-
-Report `Project: X/Y` only from a real canonical finite denominator. In-progress/failed work never counts as complete.
+Do not submit an `APPROVE` review on your own PR. Do not create parallel implementation branches for the same active package.
 
 ## Stop conditions
 
-Continue routine repository work, Git/GitHub, CI diagnosis, objective review, reconciliation and dependency-valid next-task selection autonomously. Stop only when the next valid action genuinely requires unavailable physical-machine evidence, access/credentials, a safety/privacy/legal/licensing boundary, a user-reserved subjective choice, mandatory intended-user/supervisor acceptance or explicit pre-WP7 approval.
+Continue routine Git/GitHub, implementation, CI diagnosis, objective review and documentation reconciliation autonomously. Stop only when the next action genuinely requires an explicit user/supervisor/external-machine/scientific authorization or another non-resolvable external boundary.
