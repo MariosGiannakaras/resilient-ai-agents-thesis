@@ -334,4 +334,6 @@ T-534 is ready for acceptance when:
 - DEVELOPMENT/synthetic workflow tests and deterministic render/screenshot checks cover representative states, including Phase-B matched side-by-side and a right-censored RQ3 result;
 - launcher behavior and exact-head repository CI are green.
 
+The current PR #107 implementation satisfies the behavioral/visual acceptance clauses above subject to final documentation-inclusive exact-head CI and merged-state verification. Objective acceptance does not convert T-534 to COMPLETE before those repository gates are satisfied.
+
 Completing T-534 does not authorize T-610, final-reserve access, final-outcome inspection or Results/Discussion thesis writing.
