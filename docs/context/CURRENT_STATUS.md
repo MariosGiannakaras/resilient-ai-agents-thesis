@@ -12,8 +12,10 @@
 - DEC-058 and `configs/protocols/protocol-v2.0-final.json` remain immutable historical protocol-v2.0 freeze authority. DEC-060 is the explicit pre-outcome amendment; it does not rewrite DEC-058 history.
 - `configs/protocols/protocol-v2.1-final.json` is the self-contained current scientific authority. It preserves the five methods, selected hyperparameters, Phase-A budget/probes, 12 final roots, 2 held-out final layouts, four Phase-B conditions and 256-interaction horizon from DEC-058.
 - `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory. **T-610 has not been authorized or executed. No protocol-v2 final-reserve outcome was generated, inspected or used by T-533.**
-- Master tracker #87 remains **7/8** complete; milestone 8 depends on the final v2 evidence chain.
-- PR #92 remains the integration PR on `feat/pre-wp7-protocol-v1.1-ui-rebuild`. T-533 closure head `72c293d0678111880ec6d260fe9c05a1970475ed` passed Repository checks #795, Protocol-v2 pilot checks #310 and T-528 PySide6 UI screenshot checks #136; subsequent tracker-only reconciliation does not change scientific code or protocol authority.
+- Master tracker #87 remains **7/8** complete; milestone 8 depends on the final v2.1 evidence chain.
+- T-533 closure head `72c293d0678111880ec6d260fe9c05a1970475ed` passed Repository checks #795, Protocol-v2 pilot checks #310 and T-528 PySide6 UI screenshot checks #136. Later tracker-only reconciliation does not change scientific code or protocol authority.
+- Issue #98 is CLOSED/COMPLETE. PR #92 remains OPEN, DRAFT and mergeable on `feat/pre-wp7-protocol-v1.1-ui-rebuild`.
+- Repository integration is the only remaining operational step before the T-610 authorization gate. The connected GitHub tool cannot mark PR #92 ready because its GraphQL mutation currently fails on an unsupported `fullDatabaseId` field; direct squash merge is therefore rejected by GitHub while the PR remains draft. This is a tooling/integration blocker, not a scientific blocker.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
 
 ## Completed T-533 / DEC-060 amendment
@@ -47,13 +49,13 @@ Frozen and Adaptive/Continual remain deployment regimes, not distinct algorithms
 
 ## Completed implementation chain
 
-The complete pre-final path is now versioned and isolated from historical v2.0/T-526/T-527 code:
+The complete pre-final path is versioned and isolated from historical v2.0/T-526/T-527 code:
 
 `Phase-B execution -> passive temporal windows -> schema-v2 records -> structural validation -> root reduction -> recovery/direct contrasts -> deterministic exports -> stored-evidence PySide6 presentation`.
 
 The v2.1 Study recipe materializer fails closed if the final-reserve lock or explicit T-610 gate is altered. PPO/DQN temporal capture does not impose artificial 32-step learning boundaries. A numerical `1e-12` guard only prevents binary floating-point representation from changing an exact frozen tolerance-boundary classification.
 
-PySide6 Results now supports stored Recovery & Comparisons summaries, AN-vs-AD trajectory rows and direct method contrasts for schema-v2/v2.1 packages. Legacy schema-v1 packages remain supported and do not expose recovery. The UI never chooses thresholds, reduces roots or recomputes scientific estimands.
+PySide6 Results supports stored Recovery & Comparisons summaries, AN-vs-AD trajectory rows and direct method contrasts for schema-v2/v2.1 packages. Legacy schema-v1 packages remain supported and do not expose recovery. The UI never chooses thresholds, reduces roots or recomputes scientific estimands.
 
 ## Documentation / thesis preparation
 
@@ -73,4 +75,4 @@ The repository remains public by explicit user decision. `thesis/source-material
 
 ## Exact next action
 
-Obtain a **separate explicit scientific authorization for T-610**. Until that authorization is given, stop: do not access final roots/layouts/seeds, do not execute the protocol-v2.1 final matrix, and do not begin Results/Discussion writing.
+First complete repository integration: manually change PR #92 from **Draft** to **Ready for review**, then squash-merge it into `main` (the PR is otherwise mergeable and the T-533 implementation has already passed its closure CI). After that, stop at the **separate explicit scientific authorization gate for T-610**. Do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, or begin Results/Discussion writing without that authorization.
