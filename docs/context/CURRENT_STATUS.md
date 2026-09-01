@@ -9,7 +9,8 @@
 
 - `T-100` target validation and `T-200` framing are complete. Protocol-v1.0, FINAL-* and R0 evidence remain immutable historical evidence; old `T-522` must not execute.
 - `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, historical application baseline `T-528`, `T-529`, historical `T-530`, `T-531`, `T-532`, historical intended-user acceptance `T-511`, and `T-533` are COMPLETE.
-- `T-534` is the active dependency-valid application task: a clean protocol-v2.1 PySide6 rebuild from fresh current `main`. The paused/pre-v2.1 UI branch/worktree is not an implementation base.
+- `T-534` is the active dependency-valid application task: a clean protocol-v2.1 PySide6 rebuild from fresh current `main`.
+- **GitHub issue #104 is the operational implementation/acceptance checklist for T-534.** It is deliberately detailed so a short instruction such as “start the UI” does not require inventing product behavior. It is a tracking/execution view, not a competing authority; canonical repository decisions/configs/docs win if any wording diverges.
 - DEC-061 is the current T-534 product/UX amendment: it preserves DEC-059's PySide6/runtime boundary but replaces the old Study/Runs/Results/Artifacts product model with **Experiment / Run / Results / Evidence**.
 - `T-610` remains a separate **BLOCKED** scientific task. Its dependencies and methodology are unchanged; `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory.
 - Master tracker #87 remains **7/8** complete. Milestone 8 awaits the final v2.1 evidence chain.
@@ -39,49 +40,23 @@ The current Study/backend/evidence chain is implemented and validated:
 
 `Study recipe/plan -> Phase A -> exact checkpoint -> FN/FD/AN/AD -> passive temporal evidence -> validation -> root reduction -> RQ1/RQ2/RQ3 analysis -> recovery/direct contrasts -> deterministic exports -> stored-evidence application read model`.
 
-Pre-final readiness additionally includes:
-
-- deny-by-default final execution in `StudyService`;
-- read-only final preflight that verifies the frozen v2.1 matrix while making zero final attempts/artifacts;
-- DEVELOPMENT-only synthetic end-to-end smoke through validation, v2.1 analysis, deterministic export and finalized/reloaded StudyStore;
-- `docs/research/RQ_EVIDENCE_TRACEABILITY.md`;
-- focused Protocol-v2 CI coverage for v2.1 temporal/recovery/analysis/export/preflight contracts.
-
-These checks do not authorize `T-610`.
+Pre-final readiness includes deny-by-default final execution in `StudyService`, read-only final preflight, DEVELOPMENT-only synthetic end-to-end smoke, `docs/research/RQ_EVIDENCE_TRACEABILITY.md`, and focused protocol-v2.1 CI coverage. None of these authorize `T-610`.
 
 ## Application state
 
-DEC-059 selects PySide6 / Qt 6 Widgets over the framework-neutral Study backend. `T-528` remains historically COMPLETE and records the previous architecture/workflow/read-model/application baseline; `T-511` remains its historical intended-user acceptance record.
+DEC-059 selects PySide6 / Qt 6 Widgets over the framework-neutral Study backend. `T-528` and `T-511` remain historical completed application/acceptance records; their presentation is not the implementation authority for T-534.
 
-DEC-061 now controls the T-534 **product model and information architecture**. The application is experiment-first, not StudyStore/job/artifact-first. Primary navigation is **Experiment / Run / Results / Evidence**; Help/onboarding and technical/reproducibility details are contextual/secondary.
+DEC-061 and `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` define the current experiment-first product model. The detailed operational sequence, component reuse/redesign checklist, UX/scientific invariants, representative tests/screenshots and Definition of Complete are tracked in **issue #104**.
 
-The rebuild must start from current `main`, audit `src/resilient_agents/desktop/`, preserve still-correct UI-neutral Study/evidence/provenance/execution contracts, and freely replace historical presentation windows/pages/widgets/styles/navigation where appropriate.
+The implementation must still preserve these top-level boundaries: final Thesis mode keeps all five methods fixed; Frozen/Adaptive are matched regimes rather than algorithms; Run prioritizes truthful GridWorld presentation; Results are RQ1/RQ2/RQ3 and use validated stored outputs only; Evidence is user-friendly first with provenance under progressive disclosure; Qt does not recompute scientific estimands/recovery/intervals or authorize final execution.
 
-The current desktop audit identified real migration targets: active presentation code still contains protocol-v2.0/DEC-058/T-528-specific root discovery, protocol loading, shell/status/help and desktop execution-policy wording. These are not current v2.1 presentation authority.
-
-The rebuilt UI must:
-
-- make the scientific experiment understandable before backend administration;
-- keep all five final methods fixed in the Thesis experiment; method selection is DEVELOPMENT-only where backend-supported;
-- present Frozen and Adaptive as simultaneous matched Phase-B regimes, never algorithms or mutually exclusive choices;
-- make one large Phase-A GridWorld or two exact-matched Phase-B Frozen/Adaptive GridWorlds the dominant Run visualization, with compact five-method status;
-- keep primary live facts to method/phase/condition/interaction/intended→executed action/reward and move roots/states/observations/IDs/flags/hashes to technical disclosure;
-- organize Results explicitly by **RQ1 Learning / RQ2 Resilience & Adaptation / RQ3 Recovery**;
-- use real stored Phase-A trajectory/probe information for RQ1 when scientifically supported, never a UI-invented aggregate;
-- preserve RQ2 adaptation-benefit and Frozen/Adaptive-loss separation;
-- preserve RQ3 trajectory/status/conditional observed time/restricted-delay/right-censoring semantics, never showing 256 as observed recovery time for a censored root;
-- make Evidence user-friendly first and provenance-rich on demand;
-- present only validated stored scientific outputs and keep historical schema-v1 truthful;
-- never recompute scientific thresholds, root reductions, estimands, intervals, recovery, conclusions, RNG/checkpoints or evidence finalization in Qt;
-- never grant/bypass final-experiment authorization;
-- remain novice-first, compact, self-explanatory and accessible with truthful locked/error/loading/empty states;
-- use DEVELOPMENT/synthetic fixtures for implementation tests/screenshots.
+The current desktop code contains known protocol-v2.0/DEC-058/T-528 presentation assumptions. Issue #104 explicitly tracks their protocol-v2.1 migration rather than treating existing screens as design authority.
 
 ## Repository integration / provenance
 
-PR #92 is historical and was squash-merged into `main` as `feb8c70395d13f506dad2ab60f4a71d4405f6298`; there is no remaining PR #92 integration step. Protocol-v2.1 readiness and pre-UI context cleanup were subsequently merged as well.
+PR #92 is historical and was squash-merged into `main` as `feb8c70395d13f506dad2ab60f4a71d4405f6298`; there is no remaining PR #92 integration step. PR #103 subsequently merged DEC-061 and the experiment-first T-534 UI specification into `main` as `f960991c3ba71130178946fbc8051875b9fecac6`.
 
-Only deliberate provenance archive refs remain alongside `main`; they are not active implementation branches and must not be merged into current development merely to reduce branch count.
+Only deliberate provenance archive refs remain alongside `main`; they are not active implementation branches and must not be merged merely to reduce branch count.
 
 Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/`. `bibliography-integration-v3` remains immutable historical terminology; no parallel bibliography system exists.
 
@@ -95,6 +70,6 @@ Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `researc
 
 ## Exact next action
 
-Execute `T-534` as the active application package from one fresh implementation branch created from the latest current `main`. First read `AGENTS.md`, `docs/context/TASKS.md` and this file, then DEC-059/DEC-060/DEC-061, the protocol-v2.1 config, RQ evidence traceability and current UI information architecture. Implement the experiment-first **Experiment / Run / Results / Evidence** application from the merged protocol-v2.1/Study/evidence contracts rather than inheriting pre-v2.1 presentation assumptions.
+Execute `T-534` from one fresh implementation branch created from the latest current `main`. After the mandatory three-file session-start core, read **GitHub issue #104 in full** and use its unchecked items as the operational implementation/validation/acceptance checklist, with DEC-059/060/061, protocol-v2.1, RQ evidence traceability and the UI information architecture as canonical authority.
 
 Scientifically, stop at the separate `T-610` authorization gate: do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, inspect final outcomes, or begin Results/Discussion without explicit authorization.
