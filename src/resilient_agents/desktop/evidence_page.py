@@ -1,6 +1,8 @@
 """User-first Evidence surface over backend-registered artifacts only."""
 from __future__ import annotations
 
+import json
+
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QComboBox,
@@ -229,7 +231,9 @@ class EvidencePage(QWidget):
             {_OUTPUT_LABELS[role] for role in roles if role in _OUTPUT_LABELS}
         )
         self.outputs.setText(
-            "Registered outputs: " + (", ".join(output_names) if output_names else "none") + "."
+            "Registered outputs: "
+            + (", ".join(output_names) if output_names else "none")
+            + "."
         )
         if export_ready:
             self.next_action.setText(
@@ -271,6 +275,7 @@ class EvidencePage(QWidget):
             entry = self.technical_layout.takeAt(0)
             widget = entry.widget()
             if widget is not None:
+                widget.hide()
                 widget.deleteLater()
         if item is None:
             self.technical_layout.addWidget(
@@ -296,10 +301,24 @@ class EvidencePage(QWidget):
             layout.setContentsMargins(12, 9, 12, 9)
             title = QLabel(f"{artifact.role} · {artifact.artifact_id}")
             title.setObjectName("ReviewValue")
+            source_jobs = ", ".join(artifact.source_job_ids) or "none"
+            source_artifacts = ", ".join(artifact.source_artifact_ids) or "none"
+            metadata = (
+                json.dumps(
+                    dict(artifact.metadata),
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                )
+                if artifact.metadata
+                else "none"
+            )
             detail = QLabel(
-                f"Path: {artifact.relative_path}\nSHA-256: {artifact.sha256}\n"
-                f"Sources: {artifact.source_job_count} job(s), "
-                f"{artifact.source_artifact_count} artifact(s)"
+                f"Path: {artifact.relative_path}\n"
+                f"SHA-256: {artifact.sha256}\n"
+                f"Source job IDs: {source_jobs}\n"
+                f"Source artifact IDs: {source_artifacts}\n"
+                f"Registered metadata: {metadata}"
             )
             detail.setObjectName("SectionHint")
             detail.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
