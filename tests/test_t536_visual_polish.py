@@ -211,6 +211,9 @@ class T536VisualPolishTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as directory:
             window = MainWindow(repo_root=REPO_ROOT, writable_root=Path(directory))
+            experiment_labels = [label.text() for label in window.experiment_page.findChildren(QLabel)]
+            self.assertIn("Locked Thesis experiment", experiment_labels)
+            self.assertNotIn("Frozen Thesis experiment", experiment_labels)
             self.assertGreaterEqual(window.experiment_page.review_surface.minimumHeight(), 178)
             for frame, _state, _detail in (
                 window.evidence_page.validation_card,
