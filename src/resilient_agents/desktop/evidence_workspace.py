@@ -1,14 +1,14 @@
-"""Intended-user Evidence copy over the backend-registered evidence surface."""
+"""Intended-user Evidence copy and final visual polish over registered evidence."""
 from __future__ import annotations
 
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QSizePolicy, QWidget
 
 from .evidence_page import EvidencePage as _EvidencePage
 from .study_read_model import DesktopStudyReadModel, StudyListItem
 
 
 class EvidencePage(_EvidencePage):
-    """Keep evidence/provenance semantics unchanged while making next steps actionable."""
+    """Keep evidence/provenance semantics unchanged while strengthening readiness hierarchy."""
 
     def __init__(
         self,
@@ -16,6 +16,24 @@ class EvidencePage(_EvidencePage):
         parent: QWidget | None = None,
     ) -> None:
         super().__init__(model, parent)
+        root = self.layout()
+        if root is not None:
+            root.setContentsMargins(30, 20, 32, 24)
+            root.setSpacing(10)
+
+        self.summary.setMinimumHeight(44)
+        self.outputs.setMinimumHeight(32)
+        self.next_action.setMinimumHeight(48)
+        for frame, _state, _detail in (
+            self.validation_card,
+            self.analysis_card,
+            self.export_card,
+        ):
+            frame.setMinimumHeight(142)
+            frame.setSizePolicy(
+                QSizePolicy.Policy.Expanding,
+                QSizePolicy.Policy.Preferred,
+            )
 
     def _render(self, item: StudyListItem | None) -> None:
         super()._render(item)

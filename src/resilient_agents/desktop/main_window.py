@@ -9,7 +9,7 @@ from PySide6.QtWidgets import QHBoxLayout, QLabel, QMainWindow, QPushButton, QSt
 
 from . import APP_NAME, APP_SUBTITLE
 from .evidence_workspace import EvidencePage
-from .experiment_page import ExperimentPage
+from .experiment_workspace import ExperimentPage
 from .onboarding import OnboardingDialog
 from .protocol import load_frozen_protocol
 from .results_read_model import DesktopResultsReadModel
