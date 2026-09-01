@@ -1,10 +1,13 @@
 """Structural/integrity validation for protocol-v2 study evidence."""
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from typing import Any, Mapping
 
+from ..protocol_v2 import ProtocolV2Branch
 from ..study import ArtifactRole, JobState, StudyArtifact, StudyStore
+from .records import PHASE_B_TEMPORAL_SCHEMA_VERSION, PhaseBAnalysisRecord
 
 
 @dataclass(frozen=True)
@@ -75,6 +78,10 @@ class StudyEvidenceValidator:
     Scientific failures are valid outcomes when explicitly recorded. Missing or
     ambiguous evidence, broken Phase-A -> matched-Phase-B checkpoint lineage and
     unclassified/infrastructure-incomplete units are validation errors.
+
+    Protocol-v2.1 additionally requires complete fixed-window Phase-B evidence
+    for every completed matched set. The validator checks stored records only;
+    it never derives recovery outcomes or reads final-reserve results.
     """
 
     _SCIENTIFIC_JOB_TYPES = {
@@ -114,6 +121,7 @@ class StudyEvidenceValidator:
             if state is JobState.COMPLETED:
                 completed += 1
                 self._validate_completed_job(
+                    store=store,
                     job=job,
                     job_type=job_type,
                     produced=produced,
@@ -192,6 +200,7 @@ class StudyEvidenceValidator:
     def _validate_completed_job(
         self,
         *,
+        store: StudyStore,
         job: Any,
         job_type: str,
         produced: list[StudyArtifact],
@@ -288,3 +297,126 @@ class StudyEvidenceValidator:
                         artifact_id=artifact.artifact_id,
                     )
                 )
+
+        if str(store.recipe.protocol_version).startswith("protocol-v2.1"):
+            self._validate_temporal_phase_b(
+                store=store,
+                job=job,
+                produced=produced,
+                findings=findings,
+            )
+
+    def _validate_temporal_phase_b(
+        self,
+        *,
+        store: StudyStore,
+        job: Any,
+        produced: list[StudyArtifact],
+        findings: list[EvidenceValidationFinding],
+    ) -> None:
+        execution = job.payload.get("execution")
+        if not isinstance(execution, Mapping):
+            findings.append(
+                EvidenceValidationFinding(
+                    code="PHASE_B_TEMPORAL_EXECUTION_SPEC_MISSING",
+                    severity="error",
+                    message="Protocol-v2.1 Phase-B job lacks an execution specification.",
+                    job_id=job.job_id,
+                )
+            )
+            return
+        budget = execution.get("interaction_budget_per_branch")
+        if not isinstance(budget, int) or isinstance(budget, bool) or budget <= 0:
+            findings.append(
+                EvidenceValidationFinding(
+                    code="PHASE_B_TEMPORAL_BUDGET_INVALID",
+                    severity="error",
+                    message="Protocol-v2.1 Phase-B interaction budget is invalid.",
+                    job_id=job.job_id,
+                )
+            )
+            return
+        if budget % 32:
+            findings.append(
+                EvidenceValidationFinding(
+                    code="PHASE_B_TEMPORAL_BUDGET_NOT_WINDOW_ALIGNED",
+                    severity="error",
+                    message="Protocol-v2.1 Phase-B budget must be divisible by the frozen 32-interaction window.",
+                    job_id=job.job_id,
+                )
+            )
+            return
+
+        branch_artifacts = [
+            artifact
+            for artifact in produced
+            if artifact.role is ArtifactRole.ANALYSIS_DATA
+            and artifact.metadata.get("record_type") == "phase-b"
+        ]
+        if len(branch_artifacts) != 4:
+            findings.append(
+                EvidenceValidationFinding(
+                    code="PHASE_B_TEMPORAL_BRANCH_RECORD_COUNT_INVALID",
+                    severity="error",
+                    message=(
+                        "Protocol-v2.1 matched set must retain exactly four branch analysis records."
+                    ),
+                    job_id=job.job_id,
+                )
+            )
+            return
+        expected_branches = set(ProtocolV2Branch)
+        observed_branches: set[ProtocolV2Branch] = set()
+        expected_endpoints = tuple(range(32, budget + 1, 32))
+        for artifact in branch_artifacts:
+            path = store.writable_root / artifact.relative_path
+            try:
+                raw = json.loads(path.read_text(encoding="utf-8"))
+                record = PhaseBAnalysisRecord.from_dict(raw)
+            except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as exc:
+                findings.append(
+                    EvidenceValidationFinding(
+                        code="PHASE_B_TEMPORAL_RECORD_INVALID",
+                        severity="error",
+                        message=f"Protocol-v2.1 Phase-B record is unreadable or invalid: {exc}",
+                        job_id=job.job_id,
+                        artifact_id=artifact.artifact_id,
+                    )
+                )
+                continue
+            observed_branches.add(record.branch)
+            if record.schema_version != PHASE_B_TEMPORAL_SCHEMA_VERSION:
+                findings.append(
+                    EvidenceValidationFinding(
+                        code="PHASE_B_TEMPORAL_SCHEMA_REQUIRED",
+                        severity="error",
+                        message="Protocol-v2.1 Phase-B analysis requires temporal schema v2.",
+                        job_id=job.job_id,
+                        artifact_id=artifact.artifact_id,
+                    )
+                )
+                continue
+            endpoints = tuple(window.end_interaction for window in record.reward_windows)
+            if endpoints != expected_endpoints or any(
+                window.interaction_count != 32 for window in record.reward_windows
+            ):
+                findings.append(
+                    EvidenceValidationFinding(
+                        code="PHASE_B_TEMPORAL_WINDOWS_INCOMPLETE",
+                        severity="error",
+                        message=(
+                            "Protocol-v2.1 Phase-B temporal evidence does not contain the exact fixed-window grid."
+                        ),
+                        job_id=job.job_id,
+                        artifact_id=artifact.artifact_id,
+                    )
+                )
+        if observed_branches != expected_branches:
+            findings.append(
+                EvidenceValidationFinding(
+                    code="PHASE_B_TEMPORAL_BRANCH_SET_INVALID",
+                    severity="error",
+                    message="Protocol-v2.1 Phase-B temporal records do not cover exact FN/FD/AN/AD branches.",
+                    job_id=job.job_id,
+                )
+            )
