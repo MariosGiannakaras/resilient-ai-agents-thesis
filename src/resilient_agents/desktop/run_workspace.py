@@ -9,7 +9,6 @@ from PySide6.QtWidgets import (
     QLabel,
     QProgressBar,
     QPushButton,
-    QScrollArea,
     QVBoxLayout,
     QWidget,
 )
@@ -19,7 +18,7 @@ from .gridworld_widget import GridWorldLiveWidget
 from .live_events import DesktopLiveReadModel, LiveGridFrame
 from .protocol import FrozenProtocolSummary
 from .study_read_model import DesktopStudyReadModel, StudyListItem
-from .widgets import SectionHeader, StatusPill
+from .widgets import StatusPill
 
 
 class RunWorkspacePage(QWidget):
@@ -55,7 +54,8 @@ class RunWorkspacePage(QWidget):
         title = QLabel("Run")
         title.setObjectName("PageTitle")
         lead = QLabel(
-            "Observe the experiment as it executes. GridWorld is the primary live view; technical job detail stays secondary."
+            "Observe the experiment as it executes. GridWorld is the primary live "
+            "view; technical job detail stays secondary."
         )
         lead.setObjectName("PageLead")
         lead.setWordWrap(True)
@@ -92,7 +92,9 @@ class RunWorkspacePage(QWidget):
         top = QHBoxLayout()
         self.stage_label = QLabel("No DEVELOPMENT experiment selected")
         self.stage_label.setObjectName("SectionTitle")
-        self.progress_label = QLabel("Create a DEVELOPMENT experiment from Experiment to execute locally.")
+        self.progress_label = QLabel(
+            "Create a DEVELOPMENT experiment from Experiment to execute locally."
+        )
         self.progress_label.setObjectName("SectionHint")
         self.progress_label.setWordWrap(True)
         top.addWidget(self.stage_label)
@@ -102,6 +104,7 @@ class RunWorkspacePage(QWidget):
         self.progress = QProgressBar()
         self.progress.setRange(0, 1000)
         self.progress.setTextVisible(False)
+        self.progress.setAccessibleName("Durable experiment progress")
         status_layout.addWidget(self.progress)
         self.method_strip = QHBoxLayout()
         self.method_strip.setSpacing(8)
@@ -116,7 +119,8 @@ class RunWorkspacePage(QWidget):
         self.live_title = QLabel("Live GridWorld")
         self.live_title.setObjectName("SectionTitle")
         self.live_explanation = QLabel(
-            "Presentation-only stream. Frames may be dropped and never affect actions, observations, RNG, timing, metrics or evidence."
+            "Presentation-only stream. Frames may be dropped and never affect "
+            "actions, observations, RNG, timing, metrics or evidence."
         )
         self.live_explanation.setObjectName("SectionHint")
         self.live_explanation.setWordWrap(True)
@@ -138,7 +142,9 @@ class RunWorkspacePage(QWidget):
         self.technical_text = QLabel()
         self.technical_text.setObjectName("SectionHint")
         self.technical_text.setWordWrap(True)
-        self.technical_text.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+        self.technical_text.setTextInteractionFlags(
+            Qt.TextInteractionFlag.TextSelectableByMouse
+        )
         self.technical_text.hide()
         self.technical_button.toggled.connect(self.technical_text.setVisible)
         root.addWidget(self.technical_button, 0, Qt.AlignmentFlag.AlignLeft)
@@ -189,82 +195,173 @@ class RunWorkspacePage(QWidget):
         if item is not None:
             self.study_selected.emit(item.study_id)
 
-    def _render_status(self, item: StudyListItem | None) -> None:
+    def _clear_method_strip(self) -> None:
         while self.method_strip.count():
             entry = self.method_strip.takeAt(0)
             widget = entry.widget()
             if widget is not None:
                 widget.deleteLater()
+
+    def _add_method_status(self, method_id: str, status: str) -> None:
+        name = self._method_name(method_id)
+        label = QLabel(f"{name} · {status}")
+        label.setObjectName("MethodStatus")
+        label.setAccessibleName(f"{name}: {status}")
+        label.setToolTip(
+            "Method status is projected from the durable backend lifecycle; it is "
+            "not a performance score or ranking."
+        )
+        self.method_strip.addWidget(label)
+
+    def _render_status(self, item: StudyListItem | None) -> None:
+        self._clear_method_strip()
         if item is None:
-            self.stage_label.setText("No DEVELOPMENT experiment selected")
-            self.progress_label.setText("Configure and create one from Experiment. Creation never starts execution automatically.")
+            self.stage_label.setText("Thesis experiment — execution locked")
+            self.progress_label.setText(
+                "The five frozen Thesis methods are visible below. Final execution "
+                "remains sealed behind the separate T-610 gate; create a "
+                "DEVELOPMENT experiment in Experiment for local execution."
+            )
             self.progress.setValue(0)
             self.start_button.setEnabled(False)
             self.retry_button.setEnabled(False)
-            self.technical_text.setText("Final execution remains sealed behind the separate T-610 gate.")
+            for method in self.protocol.methods:
+                self._add_method_status(method.method_id, "Locked")
+            self.method_strip.addStretch(1)
+            self.technical_text.setText(
+                "No DEVELOPMENT record is selected. The final Thesis experiment "
+                "cannot be authorized from this application during T-534."
+            )
             return
 
         self.stage_label.setText(item.stage_label)
+        evidence = (
+            "DEVELOPMENT · NON-CONFIRMATORY"
+            if item.evidence_class == "development"
+            else item.evidence_class.upper()
+        )
         self.progress_label.setText(
-            f"{item.resolved_jobs}/{item.total_jobs} jobs resolved · {item.running_jobs} running · "
-            f"{item.scientific_failures} scientific failure(s) retained · {item.infrastructure_failures} infrastructure failure(s)."
+            f"{evidence} · {item.resolved_jobs}/{item.total_jobs} jobs resolved · "
+            f"{item.running_jobs} running · {item.scientific_failures} scientific "
+            f"failure(s) retained · {item.infrastructure_failures} infrastructure "
+            "failure(s)."
         )
         self.progress.setValue(round(item.progress_fraction * 1000))
-        names = {method.method_id: method.name for method in self.protocol.methods}
+        status_by_id = dict(item.method_statuses)
         for method_id in item.method_ids:
-            label = QLabel(names.get(method_id, method_id))
-            label.setObjectName("MethodStatus")
-            label.setToolTip("Configured method in this durable experiment record.")
-            self.method_strip.addWidget(label)
+            self._add_method_status(method_id, status_by_id.get(method_id, "Pending"))
         self.method_strip.addStretch(1)
 
-        executable = item.evidence_class == "development" and not item.finalized and not self.supervisor.busy
+        executable = (
+            item.evidence_class == "development"
+            and not item.finalized
+            and not self.supervisor.busy
+        )
         self.start_button.setEnabled(executable)
         self.retry_button.setEnabled(executable and item.infrastructure_failures > 0)
-        self.technical_text.setText(
-            f"Study ID: {item.study_id} · protocol: {item.protocol_version} · evidence: {item.evidence_class} · "
-            f"backend status: {item.status} · finalized: {item.finalized}. "
-            "The desktop execution path accepts DEVELOPMENT evidence only."
+        self.technical_text.setText(self._study_technical(item))
+
+    def _study_technical(self, item: StudyListItem) -> str:
+        return (
+            f"Study ID: {item.study_id} · protocol: {item.protocol_version} · "
+            f"evidence: {item.evidence_class} · backend status: {item.status} · "
+            f"finalized: {item.finalized}. The desktop execution path accepts "
+            "DEVELOPMENT evidence only."
+        )
+
+    @staticmethod
+    def _frame_technical(frame: LiveGridFrame) -> str:
+        flags = ", ".join(
+            name for name, active in frame.disturbance_flags.items() if active
+        ) or "none"
+        changes = ", ".join(frame.change_event_ids) or "none"
+        return (
+            f"root={frame.root_id} · layout={frame.layout_id} · "
+            f"condition={frame.condition_id or 'none'} · branch={frame.branch or 'nominal'} · "
+            f"true_state={frame.true_state} · delivered_observation={frame.delivered_observation} · "
+            f"regime={frame.regime_id or 'none'} · disturbance_flags={flags} · "
+            f"change_events={changes} · presentation_sequence={frame.presentation_sequence}"
         )
 
     def refresh_live(self) -> None:
         item = self._selected_item()
         if item is None:
             self._latest_frame = None
+            self.live_title.setText("Live GridWorld — no DEVELOPMENT run selected")
             self.grid.set_frame(None)
+            self.frame_summary.setText(
+                "Configure and create a DEVELOPMENT experiment in Experiment to "
+                "observe a live run. The final Thesis experiment remains locked."
+            )
             return
+
         frames = self.live_model.latest(item.study_id)
         frame = frames[0] if frames else None
         self._latest_frame = frame
         if frame is None:
             self.live_title.setText("Live GridWorld")
             self.grid.set_frame(None)
-            self.frame_summary.setText("Awaiting a presentation frame. Durable Study progress above remains authoritative.")
+            self.frame_summary.setText(
+                "Awaiting a live presentation frame. Durable backend progress above "
+                "remains authoritative; no historical replay is synthesized."
+            )
+            self.technical_text.setText(self._study_technical(item))
             return
 
+        method = self._method_name(frame.method_id)
         if frame.phase == "phase-b":
+            condition = frame.condition_id or "condition unavailable"
             if frame.comparison is None:
                 self.live_title.setText("Phase B — Frozen vs Adaptive")
                 self.grid.set_frame(None)
                 self.frame_summary.setText(
-                    "Awaiting an exact matched Frozen-disturbed / Adaptive-disturbed interaction pair. "
-                    "No side-by-side comparison is shown until identity matching is valid."
+                    f"{method} · condition {condition} · interaction "
+                    f"{frame.interaction_index}. Awaiting an exact matched "
+                    "Frozen-disturbed / Adaptive-disturbed pair. No side-by-side "
+                    "comparison is shown until method/root/layout/condition/interaction "
+                    "identity matches."
+                )
+                self.technical_text.setText(
+                    self._study_technical(item)
+                    + "\nCurrent unmatched presentation frame: "
+                    + self._frame_technical(frame)
                 )
                 return
+
             pair = frame.comparison
+            frozen = pair.frozen
+            adaptive = pair.adaptive
+            condition = adaptive.condition_id or "condition unavailable"
             self.live_title.setText("Phase B — Frozen vs Adaptive")
             self.grid.set_frame(frame)
             self.frame_summary.setText(
-                f"Exact matched interaction {pair.adaptive.interaction_index}. Frozen: learning off. "
-                "Adaptive: learning continues. Both panels are the same method/root/layout/interaction identity."
+                f"{self._method_name(adaptive.method_id)} · condition {condition} · "
+                f"interaction {adaptive.interaction_index}. Frozen — learning off: "
+                f"{frozen.intended_action} → {frozen.executed_action} · reward "
+                f"{frozen.reward:g}. Adaptive — learning continues: "
+                f"{adaptive.intended_action} → {adaptive.executed_action} · reward "
+                f"{adaptive.reward:g}."
+            )
+            self.technical_text.setText(
+                self._study_technical(item)
+                + "\nFrozen: "
+                + self._frame_technical(frozen)
+                + "\nAdaptive: "
+                + self._frame_technical(adaptive)
             )
             return
 
         self.live_title.setText("Phase A — Nominal learning")
         self.grid.set_frame(frame)
         self.frame_summary.setText(
-            f"{self._method_name(frame.method_id)} · interaction {frame.interaction_index} · "
-            "one nominal-learning GridWorld. Method switching follows durable backend progress."
+            f"{method} · interaction {frame.interaction_index} · "
+            f"{frame.intended_action} → {frame.executed_action} · reward "
+            f"{frame.reward:g}. One nominal-learning GridWorld is shown."
+        )
+        self.technical_text.setText(
+            self._study_technical(item)
+            + "\nCurrent presentation frame: "
+            + self._frame_technical(frame)
         )
 
     def _method_name(self, method_id: str) -> str:
@@ -281,7 +378,11 @@ class RunWorkspacePage(QWidget):
         try:
             self.supervisor.start_or_resume(study_id)
         except Exception as exc:
-            self.error_text.setText(f"DEVELOPMENT execution could not start: {type(exc).__name__}: {exc}")
+            self.error_text.setText(
+                "DEVELOPMENT execution could not start; durable state is unchanged. "
+                f"{type(exc).__name__}: {exc}. Review the DEVELOPMENT record and "
+                "backend blocker before retrying."
+            )
             self.error_text.show()
         self._render_status(self._selected_item())
 
@@ -293,7 +394,11 @@ class RunWorkspacePage(QWidget):
         try:
             self.supervisor.retry_and_resume(study_id)
         except Exception as exc:
-            self.error_text.setText(f"Infrastructure retry could not start: {type(exc).__name__}: {exc}")
+            self.error_text.setText(
+                "Infrastructure retry could not start; durable state is unchanged. "
+                f"{type(exc).__name__}: {exc}. Resolve the reported infrastructure "
+                "blocker before retrying."
+            )
             self.error_text.show()
         self._render_status(self._selected_item())
 
@@ -301,7 +406,8 @@ class RunWorkspacePage(QWidget):
         if exit_code != 0:
             detail = output[-1200:] if output else "No worker detail was returned."
             self.error_text.setText(
-                f"DEVELOPMENT worker stopped with exit code {exit_code}. Durable state is preserved. {detail}"
+                f"DEVELOPMENT worker stopped with exit code {exit_code}. Durable "
+                f"state is preserved. Review the worker detail before retrying: {detail}"
             )
             self.error_text.show()
         self.refresh()
