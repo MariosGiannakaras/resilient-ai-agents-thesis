@@ -9,14 +9,15 @@
 
 - `T-100` target-machine validation and `T-200` research framing are complete.
 - Protocol-v1.0 / FINAL-* / R0 evidence remain immutable history; superseded `T-522` must not execute.
-- Scientific/pre-final implementation through `T-533` is complete. `T-534` experiment-first PySide6 rebuild, `T-535` intended-user hardening, and `T-536` final visual polish/richer in-app result visualization are **COMPLETE**.
-- `T-537` is **IN_PROGRESS** on issue #116 / `chore/t-537-final-repository-hygiene`. It is a final active-tree hygiene pass only: remove superseded non-scientific residue while keeping historical scientific protocols/configs, evidence/manifests, decisions and reproducibility-critical code intact.
-- T-537 removes obsolete branch-bound T-528 workflows, the retired local bibliography-downloader compatibility shim/test, an orphan visual-reference pointer, superseded committed T-528 screenshot copies, and safe redundant scaffold placeholders. Historical T-528/T-511 visual acceptance remains recoverable through Git history and exact-head Actions artifacts.
-- Generated UI review renders are now treated as CI/local QA artifacts rather than committed repository evidence. The active PySide6 acceptance workflow remains available with task-agnostic naming.
+- Scientific/pre-final implementation through `T-533` is complete. `T-534` experiment-first PySide6 rebuild, `T-535` intended-user hardening, `T-536` final visual polish/richer in-app result visualization, and `T-537` final active-tree hygiene are **COMPLETE**.
+- `T-537` implementation PR #117 was squash-merged into `main` as `8fd32fbf68d7374ff1de5c70db21e9f95b129c1c`. Exact head `2d779b85c6be81b29920df4fd61406dce50c9094` passed Repository checks #892 and PySide6 UI acceptance #191; merged-state verification confirmed the accepted cleanup.
+- T-537 removed obsolete branch-bound T-528 workflows, the retired local bibliography-downloader compatibility shim/test, an orphan visual-reference pointer, superseded committed T-528 screenshot copies, and safe redundant scaffold placeholders. Historical T-528/T-511 visual acceptance remains recoverable through Git history and exact-head Actions artifacts.
+- Generated UI review renders are CI/local QA artifacts rather than committed repository evidence. The active PySide6 acceptance workflow remains available with task-agnostic naming.
+- No scientific protocol/config/result/freeze-manifest/decision/reproducibility-critical code was removed by T-537. Historical/finalized scientific evidence remains byte-stable.
 - The accepted application remains **Experiment / Run / Results / Evidence**, with `Locked Thesis experiment`, five immutable Thesis methods and simultaneous matched Frozen/Adaptive presentation.
 - `docs/research/T-613_THESIS_FIGURE_INVENTORY.md` remains the downstream T-613 output contract: a rich reproducible main-thesis + appendix + defense figure/table package generated from validated stored final outputs, not quantitative UI screenshots.
-- A final **read-only merged-main preflight** was completed after the T-536 merge. It confirmed `final_reserve_access=false`, `execution_authorization=requires-explicit-t610-gate`, no committed `protocol-v2.1-final` Study bundle, deny-by-default final execution, and the canonical 603-job plan with `final_execution_authorized=false`.
-- `T-610` remains **BLOCKED**. T-537 must complete first; afterward it remains blocked solely by the separate explicit final-scientific-experiment authorization gate.
+- A final **read-only merged-main preflight** was completed after the T-536 merge. It confirmed `final_reserve_access=false`, `execution_authorization=requires-explicit-t610-gate`, no committed `protocol-v2.1-final` Study bundle, deny-by-default final execution, and the canonical 603-job plan with `final_execution_authorized=false`. T-537 changed no execution/scientific code, so those gate semantics remain unchanged.
+- `T-610` remains **BLOCKED solely by the separate explicit final-scientific-experiment authorization gate**. All declared pre-final implementation/application/hygiene dependencies are complete.
 - Master tracker #87 remains **7/8**; milestone 8 awaits the final v2.1 evidence chain.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
 
@@ -47,17 +48,16 @@ The accepted PySide6 application is experiment-first. T-535 guarantees created-r
 - PR #113 / T-536 merged as `d16f16cef06406d8af974ef3bab5be9608d65666` after Repository checks #886, UI acceptance #190 and deterministic visual review.
 - Post-T536 canonical reconciliation merged as `4ffb7bc700b3d485324c659e94823c9d2e272cba`.
 - README refresh PR #115 merged as `31877a09ec2eda7852856c6c1cf7ae059bbf72ae` after Repository checks #890.
-- T-537 issue #116 / `chore/t-537-final-repository-hygiene` is the active cleanup package.
+- PR #117 / T-537 merged as `8fd32fbf68d7374ff1de5c70db21e9f95b129c1c` after exact-head Repository checks #892 and PySide6 UI acceptance #191; merged-state verification completed.
 - Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/`; `bibliography-integration-v3` is immutable historical terminology, not a parallel system.
 
 ## Still intentionally unfrozen
 
 - Final-reserve execution authorization remains withheld.
-- T-537 is the only active pre-T610 maintenance package.
-- T-610 remains blocked by T-537 completion plus separate explicit authorization; T-611/T-612/T-613 remain downstream blocked.
+- T-610 remains blocked solely by the separate explicit authorization gate; T-611/T-612/T-613 remain downstream blocked.
 - WP7 remains blocked by final evidence plus later explicit pre-WP7 approval.
 - Standalone Windows packaging remains deferred to T-803 / issue #94.
 
 ## Exact next action
 
-Complete T-537 through live-reference audit, Repository checks, current PySide6 UI acceptance, canonical reconciliation, squash merge and merged-main verification. Then stop at the separate `T-610` scientific authorization gate. Do not access or execute the final reserve, inspect final outcomes, or begin WP7/Results/Discussion without the required separate explicit authorization.
+Stop at the separate `T-610` scientific authorization gate. Do not access or execute the final reserve, inspect final outcomes, or begin WP7/Results/Discussion unless the user separately and explicitly authorizes the final scientific experiment. All declared pre-final implementation/application/hygiene work is complete.
