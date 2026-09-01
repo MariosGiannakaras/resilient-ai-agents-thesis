@@ -25,13 +25,17 @@ Repository/Git/GitHub/evidence state beats stale memory or stale prose. Do not i
 
 Issue #104 owns the detailed implementation checklist: desktop reuse/redesign boundaries, protocol-v2.1 migration, Experiment/Run/Results/Evidence behavior, Frozen/Adaptive live presentation, RQ1/RQ2/RQ3 results semantics, Evidence UX, scientific thin-client invariants, accessibility/polish, DEVELOPMENT fixtures, targeted tests, screenshots, launcher validation, documentation reconciliation, PR/CI and Definition of Complete.
 
+Implement in the **largest safe coherent batches** that remain reviewable and reversible. Group related UI code, fixtures, tests and documentation changes together instead of stopping after each checkbox, tiny file change or cosmetic adjustment. Avoid unnecessary commit/PR/CI churn.
+
+Use targeted deterministic local checks after each meaningful batch. Run repository-wide/full CI at coherent checkpoints where it adds real signal: before merge, after changes that can affect broad contracts, or after a previous failure has been corrected. Do not rerun the full suite merely for reassurance. When a CI failure is narrow and the platform permits it, diagnose and rerun only the affected job/workflow first, then require one final exact-head canonical repository CI pass before merge.
+
 Use DEVELOPMENT/synthetic fixtures for UI implementation/testing. Final-reserve execution, final outcomes and thesis Results/Discussion remain outside this package.
 
 Perform routine Git, PR creation, CI, objective diff review, corrections and documentation reconciliation as work to do, not reasons to stop. Repository CI is the canonical full-suite pre-merge check.
 
-Do not submit an `APPROVE` review on your own PR. When issue #104 acceptance is objectively satisfied and exact-head CI is green, perform the permitted own-PR squash merge and verify the merged `main` before marking T-534 complete.
+After every completed coherent implementation batch, reconcile the relevant checkboxes in issue #104 and report progress as **`T-534 checklist: X/Y complete`**, where X and Y are the actual checked/total Markdown task-list items in issue #104 at that moment. Recalculate if the checklist changes; never estimate progress. Keep this separate from the master **`Project: X/Y`** milestone figure, which may be reported only from a real canonical finite denominator in `TASKS.md`. In-progress/failed work never counts as complete.
 
-Report `Project: X/Y` only from a real canonical finite denominator in `TASKS.md`. In-progress/failed work never counts as complete.
+Do not submit an `APPROVE` review on your own PR. When issue #104 acceptance is objectively satisfied and exact-head CI is green, perform the permitted own-PR squash merge and verify the merged `main` before marking T-534 complete.
 
 ## Stop conditions
 

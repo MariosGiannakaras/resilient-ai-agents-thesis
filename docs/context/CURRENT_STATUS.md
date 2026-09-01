@@ -11,6 +11,7 @@
 - `T-524`, `T-525`, `T-526`, `T-526A`, `T-527`, historical application baseline `T-528`, `T-529`, historical `T-530`, `T-531`, `T-532`, historical intended-user acceptance `T-511`, and `T-533` are COMPLETE.
 - `T-534` is the active dependency-valid application task: a clean protocol-v2.1 PySide6 rebuild from fresh current `main`.
 - **GitHub issue #104 is the operational implementation/acceptance checklist for T-534.** It is deliberately detailed so a short instruction such as “start the UI” does not require inventing product behavior. It is a tracking/execution view, not a competing authority; canonical repository decisions/configs/docs win if any wording diverges.
+- **T-534 execution cadence:** implement the largest safe coherent batches, use targeted deterministic checks during development, avoid CI for every small edit/checklist item, and require full repository CI at meaningful checkpoints plus one final exact-head pre-merge pass. After each completed coherent batch, reconcile issue #104 and report the objective Markdown-task progress as `T-534 checklist: X/Y complete`; do not estimate it or conflate it with the separate master-project milestone count.
 - DEC-061 is the current T-534 product/UX amendment: it preserves DEC-059's PySide6/runtime boundary but replaces the old Study/Runs/Results/Artifacts product model with **Experiment / Run / Results / Evidence**.
 - `T-610` remains a separate **BLOCKED** scientific task. Its dependencies and methodology are unchanged; `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory.
 - Master tracker #87 remains **7/8** complete. Milestone 8 awaits the final v2.1 evidence chain.
@@ -70,6 +71,6 @@ Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `researc
 
 ## Exact next action
 
-Execute `T-534` from one fresh implementation branch created from the latest current `main`. After the mandatory three-file session-start core, read **GitHub issue #104 in full** and use its unchecked items as the operational implementation/validation/acceptance checklist, with DEC-059/060/061, protocol-v2.1, RQ evidence traceability and the UI information architecture as canonical authority.
+Execute `T-534` from one fresh implementation branch created from the latest current `main`. After the mandatory three-file session-start core, read **GitHub issue #104 in full** and use its unchecked items as the operational implementation/validation/acceptance checklist, with DEC-059/060/061, protocol-v2.1, RQ evidence traceability and the UI information architecture as canonical authority. Batch related implementation and validation work rather than triggering full CI after each small change; report the recalculated issue-checklist `X/Y` after each completed coherent batch.
 
 Scientifically, stop at the separate `T-610` authorization gate: do not access final roots/layouts/seeds, execute the protocol-v2.1 final matrix, inspect final outcomes, or begin Results/Discussion without explicit authorization.
