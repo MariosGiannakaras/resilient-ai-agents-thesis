@@ -59,6 +59,20 @@ class StudyWorkspaceTests(unittest.TestCase):
         self.assertEqual(self.page.models.selected_method_ids(), ())
         self.assertFalse(self.page.models.continue_button.isEnabled())
 
+    def test_exploratory_primary_action_fits_laptop_viewport(self) -> None:
+        # The application shell leaves 1066x704 for page content at 1366x768.
+        self.page.resize(1066, 704)
+        self.page.show_exploratory()
+        self.app.processEvents()
+
+        models = self.page.models
+        viewport = models.scroll.viewport()
+        button_bottom = models.continue_button.mapTo(
+            viewport,
+            models.continue_button.rect().bottomRight(),
+        ).y()
+        self.assertLessEqual(button_bottom, viewport.rect().bottom() - 12)
+
     def test_review_is_backend_resolved_and_creation_is_separate_from_execution(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             page = StudyWorkspacePage(
