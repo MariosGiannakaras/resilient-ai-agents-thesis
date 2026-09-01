@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "decision_id": "DEC-060",
+  "amends_decision_id": "DEC-058",
+  "protocol_id": "protocol-v2.1",
+  "study_id": "protocol-v2.1-final",
+  "scientific_status": "final-frozen-pre-execution-scientific-authority",
+  "purpose": "Self-contained protocol-v2.1 authority adding pre-outcome recovery-speed and direct-comparison evidence while preserving all DEC-058 experimental choices",
+  "final_reserve_access": false,
+  "execution_authorization": "requires-explicit-t610-gate",
+  "required_host": {
+    "platform": "Windows",
+    "python": "3.12",
+    "device": "cpu"
+  },
+  "task": {
+    "environment_id": "project-gridworld-v1",
+    "selected_level_id": "gw-l1",
+    "gamma": 0.95,
+    "reward_spec": {
+      "step": -0.1,
+      "collision": -0.25,
+      "goal": 1.0
+    },
+    "observation_semantics": "x-y-position-only",
+    "action_semantics": ["up", "right", "down", "left"],
+    "administrative_truncation": true,
+    "bootstrap_on_truncation": true,
+    "information_policy": {
+      "expose_executed_action": false,
+      "expose_disturbance_flags": false,
+      "expose_change_indicator": false,
+      "expose_regime_id": false,
+      "expose_true_state": false
+    }
+  },
+  "final_layouts": [
+    {
+      "layout_id": "gw-l1-final-a",
+      "generation_seed": 57001,
+      "width": 7,
+      "height": 7,
+      "start": [0, 0],
+      "goal": [6, 6],
+      "obstacles": [[0, 5], [1, 2], [1, 4], [3, 5], [4, 0], [5, 4], [6, 0], [6, 3], [6, 4]],
+      "shortest_path_length": 12,
+      "max_steps": 48,
+      "spec_sha256": "c1f7924d05d62fc12f91e7a42316d8e0f6a96328a7deba145316483a0c8c9422"
+    },
+    {
+      "layout_id": "gw-l1-final-b",
+      "generation_seed": 57002,
+      "width": 7,
+      "height": 7,
+      "start": [0, 0],
+      "goal": [6, 6],
+      "obstacles": [[0, 5], [2, 3], [2, 4], [2, 5], [3, 0], [3, 2], [3, 5], [3, 6], [4, 6]],
+      "shortest_path_length": 12,
+      "max_steps": 48,
+      "spec_sha256": "5128e490be3b811350b4ed1ab4b39dc503ba4687855c0a6c71fdf79d40c1fa1a"
+    }
+  ],
+  "final_roots": [
+    {"root_id":"t527-final-r01","initialization_seed":71001,"exploration_seed":72001,"scenario_seed":73001,"environment_seed":74001,"action_disturbance_seed":75001,"observation_disturbance_seed":76001},
+    {"root_id":"t527-final-r02","initialization_seed":71002,"exploration_seed":72002,"scenario_seed":73002,"environment_seed":74002,"action_disturbance_seed":75002,"observation_disturbance_seed":76002},
+    {"root_id":"t527-final-r03","initialization_seed":71003,"exploration_seed":72003,"scenario_seed":73003,"environment_seed":74003,"action_disturbance_seed":75003,"observation_disturbance_seed":76003},
+    {"root_id":"t527-final-r04","initialization_seed":71004,"exploration_seed":72004,"scenario_seed":73004,"environment_seed":74004,"action_disturbance_seed":75004,"observation_disturbance_seed":76004},
+    {"root_id":"t527-final-r05","initialization_seed":71005,"exploration_seed":72005,"scenario_seed":73005,"environment_seed":74005,"action_disturbance_seed":75005,"observation_disturbance_seed":76005},
+    {"root_id":"t527-final-r06","initialization_seed":71006,"exploration_seed":72006,"scenario_seed":73006,"environment_seed":74006,"action_disturbance_seed":75006,"observation_disturbance_seed":76006},
+    {"root_id":"t527-final-r07","initialization_seed":71007,"exploration_seed":72007,"scenario_seed":73007,"environment_seed":74007,"action_disturbance_seed":75007,"observation_disturbance_seed":76007},
+    {"root_id":"t527-final-r08","initialization_seed":71008,"exploration_seed":72008,"scenario_seed":73008,"environment_seed":74008,"action_disturbance_seed":75008,"observation_disturbance_seed":76008},
+    {"root_id":"t527-final-r09","initialization_seed":71009,"exploration_seed":72009,"scenario_seed":73009,"environment_seed":74009,"action_disturbance_seed":75009,"observation_disturbance_seed":76009},
+    {"root_id":"t527-final-r10","initialization_seed":71010,"exploration_seed":72010,"scenario_seed":73010,"environment_seed":74010,"action_disturbance_seed":75010,"observation_disturbance_seed":76010},
+    {"root_id":"t527-final-r11","initialization_seed":71011,"exploration_seed":72011,"scenario_seed":73011,"environment_seed":74011,"action_disturbance_seed":75011,"observation_disturbance_seed":76011},
+    {"root_id":"t527-final-r12","initialization_seed":71012,"exploration_seed":72012,"scenario_seed":73012,"environment_seed":74012,"action_disturbance_seed":75012,"observation_disturbance_seed":76012}
+  ],
+  "retained_methods": ["q_learning", "sarsa", "dqn", "ppo", "dyna_q_plus"],
+  "selected_configs": {
+    "q_learning": {
+      "bootstrap_on_truncation": true,
+      "config_id": "q-c06",
+      "discount_factor": 0.95,
+      "exploration_epsilon": 0.1,
+      "implementation_id": "project-protocol-v2-state-adapter",
+      "initial_q_value": 0.0,
+      "learning_rate": 0.4
+    },
+    "sarsa": {
+      "bootstrap_on_truncation": true,
+      "config_id": "sarsa-c06",
+      "discount_factor": 0.95,
+      "exploration_epsilon": 0.1,
+      "implementation_id": "project-protocol-v2-state-adapter",
+      "initial_q_value": 0.0,
+      "learning_rate": 0.4
+    },
+    "dqn": {
+      "batch_size": 32,
+      "bootstrap_on_truncation": true,
+      "buffer_size": 16384,
+      "config_id": "dqn-c05",
+      "discount_factor": 0.95,
+      "exploration_final_eps": 0.05,
+      "exploration_fraction": 0.5,
+      "exploration_initial_eps": 1.0,
+      "gradient_steps": 1,
+      "implementation_id": "stable-baselines3-scientific-state-adapter",
+      "learning_rate": 0.003,
+      "learning_starts": 128,
+      "net_arch": [64, 64],
+      "target_update_interval": 128,
+      "train_freq": 1
+    },
+    "ppo": {
+      "batch_size": 64,
+      "bootstrap_on_truncation": true,
+      "clip_range": 0.2,
+      "config_id": "ppo-c06",
+      "discount_factor": 0.95,
+      "ent_coef": 0.0,
+      "gae_lambda": 0.95,
+      "implementation_id": "stable-baselines3-scientific-state-adapter",
+      "learning_rate": 0.001,
+      "max_grad_norm": 0.5,
+      "n_epochs": 10,
+      "n_steps": 128,
+      "net_arch": {"pi": [64, 64], "vf": [64, 64]},
+      "vf_coef": 0.5
+    },
+    "dyna_q_plus": {
+      "bootstrap_on_truncation": true,
+      "config_id": "dyna-c03",
+      "discount_factor": 0.95,
+      "exploration_epsilon": 0.1,
+      "implementation_id": "project-protocol-v2-state-adapter",
+      "initial_q_value": 0.0,
+      "kappa": 0.0005,
+      "learning_rate": 0.2,
+      "planning_steps": 10
+    }
+  },
+  "phase_a": {
+    "training_interaction_budget": 8192,
+    "probe_interaction_indices": [0, 512, 1024, 2048, 4096, 8192],
+    "episodes_per_probe": 12,
+    "deployment_start_settlement": "DEC-054"
+  },
+  "phase_b": {
+    "conditions": [
+      {
+        "condition_id": "action-remap-swap-right-down",
+        "family": "action-remap",
+        "specification": {
+          "mapping_id": "swap-right-down",
+          "mapping": {"up": "up", "right": "down", "down": "right", "left": "left"}
+        }
+      },
+      {
+        "condition_id": "action-remap-cycle-clockwise",
+        "family": "action-remap",
+        "specification": {
+          "mapping_id": "cycle-clockwise",
+          "mapping": {"up": "right", "right": "down", "down": "left", "left": "up"}
+        }
+      },
+      {
+        "condition_id": "action-failure-0.15",
+        "family": "action-failure",
+        "specification": {"probability": 0.15}
+      },
+      {
+        "condition_id": "observation-corruption-0.05",
+        "family": "observation-corruption",
+        "specification": {
+          "probability": 0.05,
+          "support": "uniform-valid-non-obstacle-excluding-true-state"
+        }
+      }
+    ],
+    "horizon": 256,
+    "common_nominal_no_learning_prefix_interactions": 1,
+    "learning_state_reset_on_episode_boundary": false,
+    "disturbance_retriggered_or_cleared_on_reset": false,
+    "episode_reset_policy_id": "dec-055-persistent-multi-episode-deployment-v1",
+    "subsequent_episode_seed_count": 256,
+    "temporal_evidence_id": "dec-060-fixed-reward-windows-v1"
+  },
+  "research_questions": {
+    "RQ1": "Compare nominal performance and learning efficiency of the five retained methods under the common actual-environment-interaction budget and information contract.",
+    "RQ2": "Quantify disturbance-associated Frozen and Adaptive loss and the matched adaptation benefit (FN-FD)-(AN-AD).",
+    "RQ3": "Quantify adaptive recovery trajectory, stable recovery time and non-recovery against matched Adaptive-Nominal behavior after persistent unannounced change."
+  },
+  "recovery_contract": {
+    "metric": "mean-reward-per-actual-environment-interaction",
+    "direction": "higher-is-better",
+    "window_size": 32,
+    "observation_horizon": 256,
+    "window_endpoints": [32, 64, 96, 128, 160, 192, 224, 256],
+    "matched_reference": "AN-vs-AD",
+    "layout_aggregation": "equal-weight-within-root-before-inference",
+    "primary_condition_family": "action-remap",
+    "primary_tolerance": 0.1,
+    "sensitivity_tolerances": [0.05, 0.2],
+    "stability_windows": 2,
+    "recovery_time_definition": "end-of-first-window-in-first-stable-in-tolerance-run",
+    "confirmation_time_definition": "end-of-final-required-window-in-stable-run",
+    "non_recovery": "right-censored-at-256-with-null-recovery-time",
+    "restricted_delay_estimand": "recovery-time-if-recovered-else-256-for-restricted-horizon-comparison-only"
+  },
+  "statistical_contract": {
+    "independent_unit": "root",
+    "layouts_equal_weighted_within_root": true,
+    "root_count": 12,
+    "layouts_per_root": 2,
+    "conditions_per_layout": 4,
+    "methods": 5,
+    "expected_phase_a_units": 120,
+    "expected_matched_sets": 480,
+    "expected_phase_b_branches": 1920,
+    "primary_estimands": [
+      "phase-a-final-nominal-performance",
+      "phase-b-matched-adaptation-benefit",
+      "rq3-stable-recovery-status-and-time-action-remap"
+    ],
+    "secondary_estimands": [
+      "phase-a-time-average-performance",
+      "phase-b-frozen-loss",
+      "phase-b-adaptive-loss"
+    ],
+    "interval": {
+      "kind": "student-t",
+      "confidence": 0.95,
+      "critical_value_by_independent_root_count": {
+        "2": 12.706,
+        "3": 4.303,
+        "4": 3.182,
+        "5": 2.776,
+        "6": 2.571,
+        "7": 2.447,
+        "8": 2.365,
+        "9": 2.306,
+        "10": 2.262,
+        "11": 2.228,
+        "12": 2.201
+      },
+      "pointwise_not_simultaneous": true
+    },
+    "pairing": "method-a-minus-method-b-on-common-independent-roots-after-layout-aggregation",
+    "p_values": false,
+    "multiplicity_correction": false,
+    "composite_resilience_score": false,
+    "failure_retention": true,
+    "root_replacement": false,
+    "expected_phase_a_training_interactions": 983040,
+    "expected_phase_b_prefix_interactions": 480,
+    "expected_phase_b_post_boundary_interactions": 491520
+  },
+  "computational_evidence": {
+    "primary_fairness_axis": "actual-environment-interactions",
+    "secondary_descriptive": [
+      "wall-seconds",
+      "process-cpu-seconds",
+      "method-native-update-opportunities",
+      "optimizer-updates-where-interpretable",
+      "dyna-planning-updates-where-interpretable"
+    ]
+  },
+  "direct_sb3_representation_boundary": "DEC-057",
+  "historical_authority": "configs/protocols/protocol-v2.0-final.json",
+  "amendment_authority": "configs/protocols/protocol-v2.1-amendment.json"
+}
