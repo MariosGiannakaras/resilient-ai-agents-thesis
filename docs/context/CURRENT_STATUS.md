@@ -13,7 +13,7 @@
 - `configs/protocols/protocol-v2.1-final.json` is the self-contained current scientific authority. It preserves the five methods, selected hyperparameters, Phase-A budget/probes, 12 final roots, 2 held-out final layouts, four Phase-B conditions and 256-interaction horizon from DEC-058.
 - `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory. **T-610 has not been authorized or executed. No protocol-v2 final-reserve outcome was generated, inspected or used by T-533.**
 - Master tracker #87 remains **7/8** complete; milestone 8 depends on the final v2 evidence chain.
-- PR #92 remains the active integration PR on `feat/pre-wp7-protocol-v1.1-ui-rebuild`: OPEN, DRAFT, UNMERGED and currently mergeable. T-533 implementation head `cd56c68b4a9e84c702d0702e733ddedd200c02a3` passed Repository checks, Protocol-v2 pilot checks and T-528 PySide6 UI screenshot checks.
+- PR #92 remains the integration PR on `feat/pre-wp7-protocol-v1.1-ui-rebuild`. T-533 closure head `72c293d0678111880ec6d260fe9c05a1970475ed` passed Repository checks #795, Protocol-v2 pilot checks #310 and T-528 PySide6 UI screenshot checks #136; subsequent tracker-only reconciliation does not change scientific code or protocol authority.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
 
 ## Completed T-533 / DEC-060 amendment
