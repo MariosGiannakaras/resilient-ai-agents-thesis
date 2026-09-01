@@ -74,6 +74,10 @@ results/runs/**/*.tmp
 results/runs/**/*.partial
 results/runs/**/.lock
 
+# Generated UI review renders are CI/local QA artifacts, not repository evidence.
+/ui-screenshots/
+/ci-ui-screenshots/
+
 # Legacy bibliography acquisition/conversion transient files.
 bibliography/**/*.partial
 bibliography/**/*.quarantine
