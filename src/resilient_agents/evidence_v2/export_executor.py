@@ -32,6 +32,58 @@ def _relative(path: Path, root: Path) -> str:
     return path.resolve().relative_to(root.resolve()).as_posix()
 
 
+_V1_EXPORTS: Mapping[str, tuple[str, ArtifactRole]] = {
+    "phase-a-method-summary.csv": (
+        "thesis-table-phase-a-method-summary",
+        ArtifactRole.THESIS_TABLE,
+    ),
+    "phase-b-method-condition-summary.csv": (
+        "thesis-table-phase-b-method-condition-summary",
+        ArtifactRole.THESIS_TABLE,
+    ),
+    "phase-a-root-records.csv": (
+        "analysis-table-phase-a-root-records",
+        ArtifactRole.ANALYSIS_TABLE,
+    ),
+    "phase-b-root-records.csv": (
+        "analysis-table-phase-b-root-records",
+        ArtifactRole.ANALYSIS_TABLE,
+    ),
+    "result-index.json": ("result-index", ArtifactRole.PROVENANCE),
+}
+
+_V2_ADDITIONAL_EXPORTS: Mapping[str, tuple[str, ArtifactRole]] = {
+    "phase-a-method-contrasts.csv": (
+        "thesis-table-phase-a-method-contrasts",
+        ArtifactRole.THESIS_TABLE,
+    ),
+    "phase-b-method-contrasts.csv": (
+        "thesis-table-phase-b-method-contrasts",
+        ArtifactRole.THESIS_TABLE,
+    ),
+    "recovery-root-records.csv": (
+        "analysis-table-recovery-root-records",
+        ArtifactRole.ANALYSIS_TABLE,
+    ),
+    "recovery-trajectory-records.csv": (
+        "analysis-table-recovery-trajectories",
+        ArtifactRole.ANALYSIS_TABLE,
+    ),
+    "recovery-method-condition-summary.csv": (
+        "thesis-table-recovery-method-condition-summary",
+        ArtifactRole.THESIS_TABLE,
+    ),
+    "recovery-method-contrasts.csv": (
+        "thesis-table-recovery-method-contrasts",
+        ArtifactRole.THESIS_TABLE,
+    ),
+    "recovery-sensitivity-root-records.csv": (
+        "analysis-table-recovery-sensitivity",
+        ArtifactRole.ANALYSIS_TABLE,
+    ),
+}
+
+
 class StudyExportExecutor:
     """Export stable evidence tables/indexes from one validated analysis package."""
 
@@ -79,28 +131,14 @@ class StudyExportExecutor:
             source_analysis_artifact_id=analysis_artifact.artifact_id,
             source_analysis_sha256=analysis_artifact.sha256,
         )
-        by_filename = {
-            item["filename"]: item for item in exported["files"]
-        }
-        expected = {
-            "phase-a-method-summary.csv": (
-                "thesis-table-phase-a-method-summary",
-                ArtifactRole.THESIS_TABLE,
-            ),
-            "phase-b-method-condition-summary.csv": (
-                "thesis-table-phase-b-method-condition-summary",
-                ArtifactRole.THESIS_TABLE,
-            ),
-            "phase-a-root-records.csv": (
-                "analysis-table-phase-a-root-records",
-                ArtifactRole.ANALYSIS_TABLE,
-            ),
-            "phase-b-root-records.csv": (
-                "analysis-table-phase-b-root-records",
-                ArtifactRole.ANALYSIS_TABLE,
-            ),
-            "result-index.json": ("result-index", ArtifactRole.PROVENANCE),
-        }
+        by_filename = {item["filename"]: item for item in exported["files"]}
+        package_id = exported["manifest"]["package"]
+        if package_id == "protocol-v2-evidence-handoff-v1":
+            expected = dict(_V1_EXPORTS)
+        elif package_id == "protocol-v2-evidence-handoff-v2":
+            expected = {**_V1_EXPORTS, **_V2_ADDITIONAL_EXPORTS}
+        else:
+            raise RuntimeError("export engine returned an unsupported handoff package")
         if set(by_filename) != set(expected):
             raise RuntimeError("export engine returned an unexpected handoff file set")
 
@@ -162,6 +200,11 @@ class StudyExportExecutor:
                 ),
                 "phase_b_summary_rows": int(
                     by_filename["phase-b-method-condition-summary.csv"]["row_count"]
+                ),
+                "recovery_summary_rows": int(
+                    by_filename.get("recovery-method-condition-summary.csv", {}).get(
+                        "row_count", 0
+                    )
                 ),
             },
         )
