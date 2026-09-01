@@ -1,6 +1,6 @@
 # Current Project Status
 
-**Date:** 2026-08-31
+**Date:** 2026-09-01
 **Status:** Authoritative compact current-state summary
 
 `docs/context/TASKS.md` is the canonical ledger. Use **progressive** task-specific reading of DEC-048/049/050/051/052/053/054/055/056/057/058/059 and `docs/research/` / `docs/architecture/` only as needed.
@@ -14,9 +14,9 @@
 - DEC-058 accepts the final protocol-v2.0 scientific freeze. `configs/protocols/protocol-v2.0-final.json` retains `final_reserve_access=false`; issue #95 is 10/10 and CLOSED. No final-reserve scientific outcome was generated, and T-610+ remains unauthorized/unexecuted.
 - **`T-528 — Final Application / Frontend Rebuild` is COMPLETE under DEC-059.** The final application is Python-native PySide6 / Qt 6 Widgets over the framework-neutral Study backend; NiceGUI remains historical prototype only.
 - T-528 implements the recipe-first Thesis Study review path, clearly separated DEVELOPMENT/Exploratory Study flow, durable Study creation, non-blocking worker/supervisor execution, truthful Runs progress, matched Frozen/Adaptive live GridWorld presentation, stored-evidence Results (Compare Learning / Test Resilience), registered-artifact provenance, accessibility/help/empty/error/locked states and deterministic CI screenshot review artifacts.
-- T-528's bounded DEVELOPMENT application smoke completed the complete create -> execute -> validate -> analyze -> evidence-handoff lifecycle without final identities. The T-511 review hardening head (`bfaf515318258040a0dbab92a8dbf7ff13adfb99`) had Repository checks, Protocol-v2 checks and PySide6 UI screenshot checks all green.
-- The curated `ui-screenshots/pyside6/` review set is current from the inspected T-511 review artifact; `ui-screenshots/historical-nicegui/` is historical-only. CI remains the authoritative full screenshot bundle, including complete 1366x768 / 1440x900 renders and historical side-by-side references.
-- **`T-511 — Intended-user application workflow/self-explanatory UX acceptance` is READY and is the next application gate.** It requires explicit user acceptance; automated checks cannot close it.
+- T-528's bounded DEVELOPMENT application smoke completed the complete create -> execute -> validate -> analyze -> evidence-handoff lifecycle without final identities. The final T-511 acceptance-preparation implementation head (`4a7c8666a224586a49f489d7c894e7a42b366ec9`) had Repository checks, Protocol-v2 checks and PySide6 UI screenshot checks all green.
+- The curated `ui-screenshots/pyside6/` review set is current from the inspected T-511 acceptance-preparation artifact; `ui-screenshots/historical-nicegui/` is historical-only. CI remains the authoritative full screenshot bundle, including complete 1366x768 / 1440x900 / 1480x920 renders and historical side-by-side references.
+- **`T-511 — Intended-user application workflow/self-explanatory UX acceptance is READY FOR HUMAN ACCEPTANCE.`** It requires explicit user acceptance; automated checks cannot close it.
 - Master tracker #87 is now **6/8** objectively complete: milestones 1, 2, 3, 4, 5 and 7. Milestone 6 awaits T-511 human acceptance; milestone 8 additionally depends on the final v2 evidence chain.
 - PR #92 remains OPEN, DRAFT and UNMERGED.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution.
