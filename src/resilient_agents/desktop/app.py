@@ -10,6 +10,7 @@ from PySide6.QtWidgets import QApplication
 from . import APP_NAME
 from .main_window import MainWindow
 from .theme import application_stylesheet
+from .visual_polish import visual_polish_stylesheet
 
 _PROTOCOL_FILE = Path("configs/protocols/protocol-v2.1-final.json")
 
@@ -43,7 +44,7 @@ def create_application(argv: list[str] | None = None) -> QApplication:
     app.setApplicationName(APP_NAME)
     app.setOrganizationName("THESIS")
     app.setStyle("Fusion")
-    app.setStyleSheet(application_stylesheet())
+    app.setStyleSheet(application_stylesheet() + "\n" + visual_polish_stylesheet())
     return app
 
 
