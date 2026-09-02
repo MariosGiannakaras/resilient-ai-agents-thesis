@@ -49,6 +49,7 @@ _FINAL_AUTHORITY = Path("configs/protocols/protocol-v2.1-final.json")
 _FINAL_STUDY_ID = "protocol-v2.1-final"
 _REPLACEMENT_EXECUTION_ID = "protocol-v2.1-final--t610-recovery-01"
 _RECOVERY_DECISION_ID = "DEC-062"
+_REPLACEMENT_SOURCE_COMMIT = "86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730"
 _FAILED_SOURCE_COMMIT = "7442dcb65674dcb3bc9ce0c71996418289d79061"
 _FAILED_MANIFEST_SHA256 = "0c6c18ae9892ed48766543c5747d0cf7f1d78c700246ace28e2f26825d7d5865"
 _FAILED_LIFECYCLE_SHA256 = "10cae9facbe34fdd9a0447fb9e1acfb12689584c7fb0ae3beefb85b767e366dc"
@@ -651,6 +652,84 @@ def run_protocol_v21_preflight(repo_root: Path) -> dict[str, Any]:
         "replacement_bundle_present": False,
         "final_execution_authorized": False,
         "ready_for_recovery_execution_authorization": True,
+    }
+
+
+def validate_protocol_v21_t610_completion(repo_root: Path) -> dict[str, Any]:
+    """Validate operational T-610 completion without interpreting outcomes."""
+
+    repo_root = Path(repo_root).resolve()
+    recipe = load_protocol_v21_final_recipe(repo_root)
+    failed_attempt = _validate_preserved_failed_attempt(repo_root, recipe=recipe)
+    store = StudyStore.load(
+        repo_root=repo_root,
+        writable_root=repo_root,
+        study_id=_REPLACEMENT_EXECUTION_ID,
+    )
+    expected_progress = {
+        "cancelled": 0,
+        "completed": 603,
+        "infrastructure_failed": 0,
+        "pending": 0,
+        "resolved": 603,
+        "running": 0,
+        "scientific_failed": 0,
+        "skipped": 0,
+        "total": 603,
+    }
+    if store.recipe.sha256() != recipe.sha256():
+        raise RuntimeError("T-610 replacement recipe identity changed")
+    if store.manifest.get("plan_sha256") != _FAILED_PLAN_SHA256:
+        raise RuntimeError("T-610 replacement plan identity changed")
+    if store.lifecycle.progress() != expected_progress:
+        raise RuntimeError("T-610 replacement lifecycle is not complete")
+    if store.manifest.get("status") != "completed" or not (
+        store.study_dir / "FINALIZED"
+    ).is_file():
+        raise RuntimeError("T-610 replacement is not durably finalized")
+    source = store.manifest.get("source")
+    if not isinstance(source, Mapping) or (
+        source.get("git_commit") != _REPLACEMENT_SOURCE_COMMIT
+        or source.get("tracked_changes_present") is not False
+        or source.get("untracked_nonoutput_present") is not False
+    ):
+        raise RuntimeError("T-610 replacement source provenance changed")
+    identity = store.manifest.get("execution_identity")
+    if not isinstance(identity, Mapping) or (
+        identity.get("execution_instance_id") != _REPLACEMENT_EXECUTION_ID
+        or identity.get("scientific_recipe_id") != _FINAL_STUDY_ID
+        or identity.get("predecessor_execution_instance_id") != _FINAL_STUDY_ID
+        or identity.get("recovery_decision_id") != _RECOVERY_DECISION_ID
+        or identity.get("source_git_commit") != _REPLACEMENT_SOURCE_COMMIT
+    ):
+        raise RuntimeError("T-610 replacement execution lineage changed")
+
+    artifacts = store.artifacts()
+    run_artifacts = tuple(
+        artifact for artifact in artifacts if artifact.role is ArtifactRole.RUN_BUNDLE
+    )
+    if len(artifacts) != 3255 or len(run_artifacts) != 600:
+        raise RuntimeError("T-610 replacement artifact inventory changed")
+    for artifact in run_artifacts:
+        run_id = artifact.metadata.get("run_id")
+        if not isinstance(run_id, str) or not run_id.startswith(
+            _REPLACEMENT_EXECUTION_ID + "--"
+        ):
+            raise RuntimeError("T-610 replacement run identity is invalid")
+        validate_finalized_run(repo_root=repo_root, run_id=run_id)
+
+    return {
+        "study_id": _REPLACEMENT_EXECUTION_ID,
+        "scientific_recipe_id": _FINAL_STUDY_ID,
+        "source_git_commit": _REPLACEMENT_SOURCE_COMMIT,
+        "recipe_sha256": recipe.sha256(),
+        "plan_sha256": _FAILED_PLAN_SHA256,
+        "progress": expected_progress,
+        "artifact_count": len(artifacts),
+        "run_bundle_count": len(run_artifacts),
+        "finalized": True,
+        "failed_attempt": failed_attempt,
+        "outcomes_interpreted": False,
     }
 
 
