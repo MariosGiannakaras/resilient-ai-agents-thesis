@@ -2,6 +2,15 @@
 
 Record only material changes to the project source of truth. Detailed commit-by-commit history remains in Git; accepted decisions remain indexed in `docs/decisions/DECISION_LOG.md`.
 
+## 2026-09-02 — T-611 replacement evidence validated and frozen
+
+- Revalidated the exact DEC-062 replacement identity, 603-job plan, 600 scientific run bundles, 120 checkpoints and 3,255 registered artifacts without interpreting outcomes.
+- Strengthened the existing protocol-v2 validator for exact plan-to-record method/root/layout/condition identity, checkpoint lineage, schema-v2 FN/FD/AN/AD temporal records and duplicate scientific-identity rejection.
+- Reconfirmed all preserved predecessor registry hashes and its 216-job failed/incomplete state; it remains explicitly excluded from T-611 and all downstream evidence.
+- Updated the protocol-v2 CI smoke entrypoint to validate finalized T-610 completion after the replacement Study exists while preserving the original deny-by-default preflight before execution.
+- Atomically froze `results/final-evidence/protocol-v2.1-final/` with validator commit `b925b0ad603bf165e8632c74f2027c53f040b34b`, manifest SHA-256 `20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858` and 600-record inventory SHA-256 `0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045`.
+- T-612 is next and READY. T-613/WP7 remain blocked; no outcome interpretation, post-hoc metric, figure/table or Results/Discussion work occurred.
+
 ## 2026-09-02 — T-610 replacement execution completed
 
 - Ran the full recovery preflight on clean merged source commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`: the failed attempt validated unchanged, the frozen recipe and 603-job plan reproduced, the replacement namespace was empty and the default backend guard remained sealed.

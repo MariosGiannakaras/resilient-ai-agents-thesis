@@ -4,6 +4,11 @@ from .analysis import ANALYSIS_PACKAGE_SCHEMA_VERSION, StudyAnalysisEngine
 from .executors import StudyAnalysisExecutor, StudyValidationExecutor
 from .export_executor import StudyExportExecutor
 from .exports import EXPORT_PACKAGE_SCHEMA_VERSION, StudyExportEngine
+from .freeze import (
+    FREEZE_PACKAGE_SCHEMA_VERSION,
+    validate_and_freeze_protocol_v21_final,
+    validate_protocol_v21_final_freeze,
+)
 from .recovery import (
     MethodContrast,
     RecoveryDefinition,
@@ -31,6 +36,7 @@ from .validation import (
 __all__ = [
     "ANALYSIS_PACKAGE_SCHEMA_VERSION",
     "EXPORT_PACKAGE_SCHEMA_VERSION",
+    "FREEZE_PACKAGE_SCHEMA_VERSION",
     "EvidenceValidationFinding",
     "MatchedAdaptationEffect",
     "MeanInterval",
@@ -53,4 +59,6 @@ __all__ = [
     "pairwise_method_contrasts",
     "student_t_mean_interval",
     "trapezoidal_time_average",
+    "validate_and_freeze_protocol_v21_final",
+    "validate_protocol_v21_final_freeze",
 ]

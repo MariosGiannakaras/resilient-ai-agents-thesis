@@ -37,7 +37,7 @@ Historical F0/C0/D0, R0 and protocol-v1.1 choices remain auditable history only.
 - No best-seed selection, outcome-driven root replacement, final-reserve tuning, opaque composite resilience score or post-hoc favorable statistical relabeling.
 - Final figures/tables come only from validated stored frozen evidence.
 - Agent-visible information and evaluator ground truth remain strictly separated.
-- **T-610 final execution and the narrow DEC-062 recovery are explicitly authorized.** `final_reserve_access=false` and the backend token guard remain unchanged. The first 216-job attempt is immutable failed/incomplete history; only a complete fresh replacement from one corrected merged commit may become accepted final evidence. T-611 and outcome interpretation remain unauthorized.
+- **T-610 final execution, the narrow DEC-062 recovery and T-611 validation/freeze were explicitly authorized and are complete.** `final_reserve_access=false` and the backend token guard remain unchanged. The first 216-job attempt is immutable failed/incomplete history; only the validated/frozen fresh replacement from the corrected merged commit is accepted final evidence. T-612 outcome analysis was not authorized by the T-611 execution.
 
 ## Application architecture
 

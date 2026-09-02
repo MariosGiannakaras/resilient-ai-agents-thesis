@@ -1,0 +1,129 @@
+{
+  "accepted_execution_instance_id": "protocol-v2.1-final--t610-recovery-01",
+  "artifact_count": 3255,
+  "artifact_evidence_class_counts": {
+    "confirmatory": 3240,
+    "derived": 15
+  },
+  "artifact_role_counts": {
+    "analysis-data": 2521,
+    "analysis-table": 5,
+    "evidence-package": 1,
+    "provenance": 1,
+    "run-bundle": 600,
+    "scientific-checkpoint": 120,
+    "thesis-table": 6,
+    "validation-report": 1
+  },
+  "evidence_handoff_package": {
+    "artifact_id": "evidence-handoff-package",
+    "file_count": 12,
+    "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/evidence-handoff-manifest.json",
+    "sha256": "fe7ee35369a28ae9706ed14535c276fa9c1ccb75843c9016ef567bc6f1a8287a"
+  },
+  "excluded_execution": {
+    "artifact_count": 936,
+    "eligible_for_replacement_evidence": false,
+    "eligible_for_t611_or_later": false,
+    "exclusion_reason": "DEC-062 immutable failed/incomplete predecessor; permanently ineligible for T-611 and downstream evidence",
+    "plan_sha256": "073779d18f45caeab2ab725e7dce6b54b70394102d45de81e1974c7efaece0f4",
+    "progress": {
+      "cancelled": 0,
+      "completed": 216,
+      "infrastructure_failed": 1,
+      "pending": 386,
+      "resolved": 216,
+      "running": 0,
+      "scientific_failed": 0,
+      "skipped": 0,
+      "total": 603
+    },
+    "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+    "run_bundle_count": 216,
+    "source_git_commit": "7442dcb65674dcb3bc9ce0c71996418289d79061",
+    "study_id": "protocol-v2.1-final"
+  },
+  "execution_source_git_commit": "86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730",
+  "freeze_time_utc": "2026-09-02T15:55:19Z",
+  "plan_sha256": "073779d18f45caeab2ab725e7dce6b54b70394102d45de81e1974c7efaece0f4",
+  "progress": {
+    "cancelled": 0,
+    "completed": 603,
+    "infrastructure_failed": 0,
+    "pending": 0,
+    "resolved": 603,
+    "running": 0,
+    "scientific_failed": 0,
+    "skipped": 0,
+    "total": 603
+  },
+  "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+  "run_bundle_count": 600,
+  "run_manifest_inventory": {
+    "record_count": 600,
+    "relative_path": "results/final-evidence/protocol-v2.1-final/run-manifest-inventory.jsonl",
+    "sha256": "0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045"
+  },
+  "schema_version": 1,
+  "scientific_outcomes_interpreted": false,
+  "scientific_recipe_id": "protocol-v2.1-final",
+  "status": "frozen",
+  "study_file_integrity": {
+    "artifacts.jsonl": {
+      "sha256": "e95f94e77a3bb77580ec595cbef1eee3e63c302d362626c8d18eaf82e4d50766",
+      "size_bytes": 2887077
+    },
+    "events.jsonl": {
+      "sha256": "a638777a3f30d851f47fa723e2a9979e62c16c4a7b3bc90ddfd6e5d1ab0c1988",
+      "size_bytes": 844176
+    },
+    "lifecycle.json": {
+      "sha256": "f2459cba73408a2f14c2a699c2b449d6f8449e499157a28ce789c69d77bcfef7",
+      "size_bytes": 95495
+    },
+    "plan.json": {
+      "sha256": "0fa775fd61099256c861620ca9ec2fd666f98e0b13894d9bb4277d32e6687629",
+      "size_bytes": 3106895
+    },
+    "recipe.json": {
+      "sha256": "db44fe13679391c0571002fe613db39ddcf363ec8dde5328768fe023c17e9057",
+      "size_bytes": 17167
+    }
+  },
+  "study_finalization_marker_sha256": "419604e414f49bc49a5d0af6af0fbafe55a5f15a8ca49912d39d2dd29475b99a",
+  "study_manifest_sha256": "93f1612875c2700888885dfa04804654b34ca6889950bd09219a768a4c9e6abc",
+  "validation_report": {
+    "artifact_id": "validation-report",
+    "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/validation/report.json",
+    "sha256": "dbf2f2e451b0c9917fccb7b3fb1523f081f4bea0300ecc81d0976e495941ac72"
+  },
+  "validator": {
+    "git_commit": "b925b0ad603bf165e8632c74f2027c53f040b34b",
+    "source_files": [
+      {
+        "relative_path": "scripts/freeze_evidence.py",
+        "sha256": "2d93434a1b40fd334849e1316ec1a80b034f03b55df205e02ff38d63488763ea"
+      },
+      {
+        "relative_path": "src/resilient_agents/evidence_v2/freeze.py",
+        "sha256": "40f75ecf0c5a55486d94357131d2cf64da38759623334ccf6dd643d369954557"
+      },
+      {
+        "relative_path": "src/resilient_agents/evidence_v2/validation.py",
+        "sha256": "8e5f064897899d123d6de2eb09f2d81c62ad1e97ffb313d2a214c27a8c7bfeb7"
+      },
+      {
+        "relative_path": "src/resilient_agents/git_publish.py",
+        "sha256": "0e03666063f8b98e25507fc127dce3236bea5a445f713b40c10b199038b07315"
+      },
+      {
+        "relative_path": "src/resilient_agents/study/pre_t610.py",
+        "sha256": "8039e7451f173c1880051723ccfea0b9215fd0e3923def4eb6a09e50abdd2755"
+      },
+      {
+        "relative_path": "src/resilient_agents/study/store.py",
+        "sha256": "331283f8327335931efdae99fc8cfb4009e7698f42cc03b907298f692da9ccd2"
+      }
+    ]
+  }
+}

@@ -143,7 +143,7 @@ jobs:
             tests.test_evidence_v2_temporal_records \
             tests.test_evidence_v2_exports_v2 -q
 
-      - name: Run pre-final protocol-v2.1 readiness smoke
+      - name: Run phase-appropriate protocol-v2.1 conformance smoke
         env:
           CUDA_VISIBLE_DEVICES: ""
         run: |
