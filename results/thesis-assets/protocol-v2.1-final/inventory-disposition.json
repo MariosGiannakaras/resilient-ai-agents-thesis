@@ -1,0 +1,46 @@
+{
+  "supported_categories": [
+    2,
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "unsupported": [
+    {
+      "inventory_category": 1,
+      "reason": "The finalized T-612 package contains final-value and interaction-axis time-average summaries but no registered probe/checkpoint-series values or intervals. T-613 does not read unfrozen alternate inputs or reconstruct a post-hoc trajectory.",
+      "requested_asset": "RQ1 learning progression / probe curves by method",
+      "status": "unavailable"
+    },
+    {
+      "inventory_category": 6,
+      "reason": "No validated probe/checkpoint matrix is registered in the T-612 outputs. Endpoint values cannot be expanded into a checkpoint matrix without inventing data.",
+      "requested_asset": "RQ1 checkpoint/probe heatmap or compact matrix",
+      "status": "unavailable"
+    }
+  ]
+}
