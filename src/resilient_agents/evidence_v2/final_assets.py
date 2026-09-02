@@ -97,6 +97,8 @@ def _finish(fig: plt.Figure, base: Path) -> list[Path]:
     if not fig.get_constrained_layout():
         fig.tight_layout(rect=(0, 0, 1, 0.98))
     fig.savefig(base.with_suffix(".svg"), bbox_inches="tight", metadata=FIGURE_METADATA)
+    svg_path = base.with_suffix(".svg")
+    svg_path.write_bytes(svg_path.read_bytes().replace(b"\r\n", b"\n"))
     fig.savefig(base.with_suffix(".pdf"), bbox_inches="tight", metadata={"Creator": GENERATOR_VERSION, "Producer": GENERATOR_VERSION, "CreationDate": None, "ModDate": None})
     fig.savefig(base.with_suffix(".png"), bbox_inches="tight", dpi=300, metadata={"Software": GENERATOR_VERSION})
     plt.close(fig)
@@ -480,7 +482,7 @@ def _write_tables(repo_root:Path,out:Path,sources:dict[str,dict[str,Any]])->list
     sensitivity=_json(repo_root/DIAGNOSTICS_RELATIVE)["recovery_sensitivity_primary_action_remap"]
     csv_out=table_dir/"recovery-tolerance-sensitivity-summary.csv"
     with csv_out.open("w",encoding="utf-8",newline="") as handle:
-        writer=csv.DictWriter(handle,fieldnames=list(sensitivity[0])); writer.writeheader(); writer.writerows(sensitivity)
+        writer=csv.DictWriter(handle,fieldnames=list(sensitivity[0]),lineterminator="\n"); writer.writeheader(); writer.writerows(sensitivity)
     md_out=table_dir/"recovery-tolerance-sensitivity-summary.md"; _markdown_table(csv_out,md_out)
     entries.append({"asset_id":"TABLE-RQ3-TOLERANCE-SENSITIVITY","kind":"table","rq_scope":"RQ3","estimand_scope":"recovered-proportion-sensitivity","intended_use":["main-thesis","appendix","machine-readable"],"source_artifacts":[sources["sensitivity"]],"outputs":[{"relative_path":str(p.relative_to(out)).replace("\\","/"),"sha256":_sha(p),"size_bytes":p.stat().st_size,"format":p.suffix[1:]} for p in (csv_out,md_out)]})
     return entries
