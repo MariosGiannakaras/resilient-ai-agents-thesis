@@ -1,75 +1,49 @@
 # Current Project Status
 
-**Date:** 2026-09-03
+**Date:** 2026-09-03  
 **Status:** Authoritative compact current-state summary
 
-`docs/context/TASKS.md` is the canonical dependency/task ledger. Read task-specific decision/research documents progressively. Objective Git/GitHub/evidence state overrides stale resume prose after interruption.
+`docs/context/TASKS.md` is the canonical dependency/task ledger. Objective Git/GitHub/evidence state overrides stale prose after interruption.
 
 ## Current execution state
 
-- `T-100` target-machine validation and `T-200` research framing are complete.
-- Protocol-v1.0 / FINAL-* / R0 evidence remain immutable history; superseded `T-522` must not execute.
-- Scientific/pre-final implementation through `T-533` is complete. `T-534` experiment-first PySide6 rebuild, `T-535` intended-user hardening, `T-536` final visual polish/richer in-app result visualization, and `T-537` final active-tree hygiene are **COMPLETE**.
-- `T-537` implementation PR #117 was squash-merged into `main` as `8fd32fbf68d7374ff1de5c70db21e9f95b129c1c`. Exact head `2d779b85c6be81b29920df4fd61406dce50c9094` passed Repository checks #892 and PySide6 UI acceptance #191; merged-state verification confirmed the accepted cleanup.
-- T-537 removed obsolete branch-bound T-528 workflows, the retired local bibliography-downloader compatibility shim/test, an orphan visual-reference pointer, superseded committed T-528 screenshot copies, and safe redundant scaffold placeholders. Historical T-528/T-511 visual acceptance remains recoverable through Git history and exact-head Actions artifacts.
-- Generated UI review renders are CI/local QA artifacts rather than committed repository evidence. The active PySide6 acceptance workflow remains available with task-agnostic naming.
-- No scientific protocol/config/result/freeze-manifest/decision/reproducibility-critical code was removed by T-537. Historical/finalized scientific evidence remains byte-stable.
-- The accepted application remains **Experiment / Run / Results / Evidence**, with `Locked Thesis experiment`, five immutable Thesis methods and simultaneous matched Frozen/Adaptive presentation.
-- `T-613` is **COMPLETE**. `docs/research/T-613_THESIS_FIGURE_INVENTORY.md` was executed into a reproducible main-thesis + appendix + defense figure/table package generated from validated T-612 outputs, not quantitative UI screenshots.
-- A final **read-only merged-main preflight** was completed after the T-536 merge. It confirmed `final_reserve_access=false`, `execution_authorization=requires-explicit-t610-gate`, no committed `protocol-v2.1-final` Study bundle, deny-by-default final execution, and the canonical 603-job plan with `final_execution_authorized=false`. T-537 changed no execution/scientific code, so those gate semantics remain unchanged.
-- `T-610` is **COMPLETE**. The DEC-062 replacement `protocol-v2.1-final--t610-recovery-01` completed and finalized 603/603 jobs with zero infrastructure/scientific failures, no pending/running jobs and coherent Study/run integrity.
-- `T-611` is **COMPLETE**. The replacement passed fresh recipe/plan/lifecycle/artifact/run-index/source/lineage/temporal-schema validation and is frozen at `results/final-evidence/protocol-v2.1-final/`.
-- The T-611 freeze manifest SHA-256 is `20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858`; its 600-record run-manifest inventory SHA-256 is `0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045`; validator source commit is `b925b0ad603bf165e8632c74f2027c53f040b34b`.
-- `T-612` is **COMPLETE**. The canonical protocol-v2.1 engine regenerated RQ1/RQ2/RQ3 statistics and all deterministic exports twice from the T-611 frozen replacement; every output matched the mechanical Study artifact byte-for-byte. Analysis manifest SHA-256 `dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62` pins the tool bytes to durable merged-main source commit `7e56753d581999af38510be1745ec4b87a927f2f`.
-- `T-613` is **COMPLETE**. The canonical package at `results/thesis-assets/protocol-v2.1-final/` registers 31 figures, 12 table assets and 117 output variants under asset manifest SHA-256 `9457275306fb633cb58d9af2e402531ff7d56a0f1f0f5eadc176f4a05726abd8`; generator source commit is `90b2953b95f14dddf3920d192fc736718360284a`.
-- T-613 supports 28/30 inventory categories. RQ1 progression/probe curves (category 1) and a probe/checkpoint matrix (category 6) are explicitly unavailable because T-612 registered no probe-series values; endpoint summaries were not expanded or reconstructed post hoc.
-- Native Windows CPython 3.12 recovery preflight on clean commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730` re-derived the canonical 603-job plan, confirmed the unchanged recipe hash and backend denial, byte-validated the failed attempt and confirmed the replacement namespace was absent before creation.
-- The historical Study records source commit `7442dcb65674dcb3bc9ce0c71996418289d79061`. It remains `active` and unfinalized at 216 completed, 1 infrastructure-failed and 386 pending, with its four registry hashes unchanged after replacement finalization.
-- The failed attempt is `pb__sarsa__t527-final-r01__gw-l1-final-a__action-remap-swap-right-down`: the shared no-learning prefix requires a quiescent learner, but the materialized SARSA Phase-A checkpoint retained pending/deferred state. The frozen recipe declares DEC-054 deployment-start settlement; the generic Study Phase-A executor did not apply that accepted settlement before persisting the checkpoint.
-- The replacement records recipe SHA-256 `8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154`, plan SHA-256 `073779d18f45caeab2ab725e7dce6b54b70394102d45de81e1974c7efaece0f4`, clean source commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`, predecessor `protocol-v2.1-final` and recovery decision DEC-062. All 600 scientific run bundles validate.
-- Master tracker #87 is **8/8** and ready for closure after merged-main verification. This does not grant the separate pre-WP7 approval.
-- **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
+- The scientific/application programme through `T-613` is **COMPLETE**. Master tracker #87 reached **8/8** and was closed completed.
+- The accepted PySide6 application remains the experiment-first **Experiment / Run / Results / Evidence** system. The UI is presentation/control only and never recomputes frozen scientific estimands.
+- `T-610` is COMPLETE. The DEC-062 replacement execution `protocol-v2.1-final--t610-recovery-01` completed/finalized 603/603 jobs with 600 scientific run bundles and zero infrastructure/scientific failures. The first 216-job attempt remains immutable failed/incomplete historical evidence and is permanently excluded from accepted final outcomes.
+- `T-611` is COMPLETE. Accepted evidence is frozen at `results/final-evidence/protocol-v2.1-final/` under manifest SHA-256 `20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858` and 600-record inventory SHA-256 `0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045`.
+- `T-612` is COMPLETE. The canonical predeclared RQ1/RQ2/RQ3 analysis is finalized at `results/analysis/protocol-v2.1-final/` under analysis manifest SHA-256 `dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62`.
+- `T-613` is COMPLETE. The deterministic thesis/appendix/defense evidence package at `results/thesis-assets/protocol-v2.1-final/` contains 31 figures, 12 table assets and 117 registered output variants under asset manifest SHA-256 `9457275306fb633cb58d9af2e402531ff7d56a0f1f0f5eadc176f4a05726abd8`. Inventory categories 1 and 6 remain explicitly unavailable because T-612 registered no probe/checkpoint-series values; no post-hoc reconstruction is allowed.
+- **Pre-WP7 approval: APPROVED.** After T-613 completion, the user explicitly directed the project on 2026-09-03 to begin the required next work and to request the example theses when needed.
+- `T-700` is **COMPLETE**. Current public ICE/UNIWA thesis-writing/regulation/deposit guidance was rechecked and recorded in `docs/thesis/OFFICIAL_GUIDANCE_SNAPSHOT_2026-09-03.md`. No newer public ICE replacement was identified for the writing guide; no public ICE-specific defense duration/slide-count/PowerPoint-template/live-demo rule was found.
+- `T-701` is **COMPLETE**. Twenty-two supplied example files were reviewed as 21 unique completed theses because `example-theses 1.pdf` and `example-theses 10.pdf` are byte-identical. The canonical derived structure/style guide is `docs/thesis/THESIS_STRUCTURE_AND_STYLE_GUIDE.md`. Examples remain contextual structure/presentation evidence only, never scientific sources.
+- The final writing architecture is seven substantive chapters: **Introduction; Background and Related Work; Methodology and Experimental Design; Research-System Architecture and Implementation; Results; Discussion; Conclusions and Future Work**, followed by references and appendices. Results and Discussion are intentionally separate because the frozen analysis contains three distinct RQs/estimands, paired contrasts, uncertainty intervals, sensitivity analysis and right-censoring.
+- T-700/T-701 select **IEEE numeric citations** as the project WP7 default because ICE permits multiple consistent styles and the technically closest contextual examples predominantly use numeric references. This is not represented as an ICE mandate and is superseded by any later explicit supervisor/Department instruction.
+- The existing bibliography consumer snapshot remains the immutable upstream `ThesisBibliography` SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`. It is still valid as the previously accepted imported snapshot, but it does **not** by itself satisfy the required major-writing-gate freshness control in REQ-RES-012.
+- `T-702` is the **next READY task**. It must perform a new dated writing-gate literature freshness review in canonical `MariosGiannakaras/ThesisBibliography`, process any genuinely relevant additions through normal source governance, create a new immutable consumer identity even if the selected set does not change, sync it into this repository and validate citation-ready integrity.
+- `T-710` is **BLOCKED by T-702**. Full thesis drafting must not begin before the bibliography freshness/re-sync gate is closed.
 
 ## Scientific authority
 
-DEC-058 / protocol-v2.0 remain immutable historical freeze authority. DEC-060 plus `configs/protocols/protocol-v2.1-final.json` are the current pre-execution scientific authority.
+DEC-058/protocol-v2.0 remain immutable historical freeze authority. DEC-060 plus `configs/protocols/protocol-v2.1-final.json` define the accepted final protocol-v2.1 scientific design.
 
-Frozen protocol-v2.1 remains unchanged: Q-Learning, SARSA, DQN, PPO and Dyna-Q+; common actual-interaction fairness; Phase-A independent learning/exact checkpoints; matched FN/FD/AN/AD Phase B; 12 roots, 2 held-out layouts, four conditions and 256-interaction horizon; RQ2 adaptation benefit `(FN-FD)-(AN-AD)`; RQ3 passive 32-interaction windows, tolerance 0.10 with 0.05/0.20 sensitivity, two-window stability and `recovery_time=null` right-censoring; root as independent unit; declared root-paired direct method contrasts and Student-t intervals. T-612 interpreted only these predeclared analyses in `docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md`; the failed-attempt outcomes remain excluded.
+Frozen protocol-v2.1 remains unchanged: Q-Learning, SARSA, DQN, PPO and Dyna-Q+; common actual-environment-interaction fairness; Phase-A independent learning/exact checkpoints; matched FN/FD/AN/AD Phase B; 12 roots, 2 held-out layouts, four conditions and 256-interaction horizon; RQ2 adaptation benefit `(FN-FD)-(AN-AD)`; RQ3 passive 32-interaction windows, tolerance 0.10 primary with 0.05/0.20 sensitivity, two-window stable recovery and `recovery_time=null` right-censoring; root as independent unit; declared root-paired direct contrasts and Student-t intervals using actual root count. No formal p-value superiority family or composite method ranking was introduced.
 
-## Pre-final backend/application readiness
+T-612 scientific interpretation remains authoritative in `docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md`. T-700/T-701 change only writing/structure/presentation governance and do not reinterpret scientific outcomes.
 
-The validated backend chain remains:
+## WP7 writing authority
 
-`Study recipe/plan -> Phase A -> exact checkpoint -> FN/FD/AN/AD -> temporal evidence -> validation -> root reduction -> RQ1/RQ2/RQ3 analysis -> recovery/direct contrasts -> deterministic exports -> stored-evidence application read model`.
+The current writing hierarchy is:
 
-Deny-by-default final execution, read-only recovery preflight, DEVELOPMENT synthetic smoke, RQ evidence traceability and T-610 execution are complete. The authorization guard remains unchanged.
+1. current official Department/University guidance (`T-700` snapshot);
+2. actual supervisor instructions when supplied;
+3. `docs/thesis/THESIS_REQUIREMENTS.md`;
+4. `docs/thesis/THESIS_STRUCTURE_AND_STYLE_GUIDE.md` for derived structure/presentation;
+5. frozen T-611/T-612/T-613 evidence for scientific/result claims;
+6. citation-ready `ThesisBibliography` evidence for external scientific claims;
+7. contextual example theses only for structure/style patterns.
 
-The accepted PySide6 application is experiment-first. T-535 guarantees created-record selection, Run→Results/Evidence context propagation, `Experiment record` terminology, RQ-local direct comparisons, progressive provenance disclosure, truthful retry states and actionable Evidence next steps. T-536 adds larger GridWorld emphasis, current-method/five-method lifecycle orientation, larger RQ1/RQ2 charts, stored-evidence RQ3 trajectories, improved sparse-screen use and restrained hierarchy/readability polish. The UI never recalculates scientific estimands, thresholds, recovery classification or intervals.
-
-## Thesis/defense result assets
-
-`T-613` finalized 31 vector-first figures as SVG/PDF/300-DPI PNG triplets plus 12 CSV/Markdown table assets. The complete 121-file package reproduced twice byte-for-byte; canonical CSV copies, format integrity, source/output hashes, right-censoring/null semantics, T-611/T-612 provenance and representative visual renders all passed validation. Stable visual ordering and colorblind-safe colors are reinforced with markers, line styles and hatching. The package contains technical captions/placement metadata only, not thesis Results/Discussion prose or a defense narrative.
-
-## Repository integration / provenance
-
-- PR #107 / T-534 merged as `c372c581b88c63f3b07c96bd50bbc17b9b83f835` after Repository checks #864 and UI acceptance #174.
-- PR #110 / T-535 merged as `225df138c5c5be0c39c9e474ef7fdbce6b11245b` after Repository checks #872 and UI acceptance #179.
-- PR #113 / T-536 merged as `d16f16cef06406d8af974ef3bab5be9608d65666` after Repository checks #886, UI acceptance #190 and deterministic visual review.
-- Post-T536 canonical reconciliation merged as `4ffb7bc700b3d485324c659e94823c9d2e272cba`.
-- README refresh PR #115 merged as `31877a09ec2eda7852856c6c1cf7ae059bbf72ae` after Repository checks #890.
-- PR #117 / T-537 merged as `8fd32fbf68d7374ff1de5c70db21e9f95b129c1c` after exact-head Repository checks #892 and PySide6 UI acceptance #191; merged-state verification completed.
-- PR #122 / DEC-062 recovery implementation and failed-attempt preservation merged as `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`; exact-head and merged-main Repository/Protocol-v2 checks passed before replacement execution.
-- PR #123 is the finalized replacement evidence/checkpoint publication and T-610 completion reconciliation.
-- PR #124 is the T-611 validation and final-evidence freeze integration.
-- Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/`; `bibliography-integration-v3` is immutable historical terminology, not a parallel system.
-
-## Still intentionally unfrozen
-
-- T-610 authorization was consumed only through the accepted backend token; committed authority fields remain unchanged.
-- T-613 is complete. T-700/WP7 remains separately unauthorized and blocked by explicit user approval.
-- WP7 remains blocked by final evidence plus later explicit pre-WP7 approval.
-- Standalone Windows packaging remains deferred to T-803 / issue #94.
+The planned final editable thesis is Greek Microsoft Word (`.docx`) using real Heading styles, automatic TOC, caption fields, cross-references and automatic figure/table lists. The institutional deposit copy may additionally be PDF.
 
 ## Exact next action
 
-STOP at the completed T-613 boundary. `T-700` is the next roadmap task but remains BLOCKED by the explicit pre-WP7 user approval gate. WP7/Results/Discussion remains outside this execution and separately unauthorized.
+Execute `T-702` only. Refresh the literature at the major-writing gate in `MariosGiannakaras/ThesisBibliography`, freeze a new immutable consumer snapshot, synchronize/validate it here, then reconcile canonical state. **Do not start T-710 chapter drafting until T-702 is objectively complete.**
