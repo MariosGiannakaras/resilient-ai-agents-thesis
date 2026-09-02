@@ -15,7 +15,6 @@ from typing import Any
 from ..git_publish import validate_finalized_run
 from ..run_bundle import sha256_file
 from ..study import ArtifactRole, EvidenceClass, StudyPlanner, StudyStore
-from ..study.pre_t610 import validate_protocol_v21_t610_completion
 from ..study.protocol_v2_1_recipe import load_protocol_v21_final_recipe
 from .validation import StudyEvidenceValidator
 
@@ -384,6 +383,10 @@ def validate_and_freeze_protocol_v21_final(
         raise RuntimeError(
             "tracked working tree must be clean before final-evidence freeze"
         )
+
+    # Import lazily because pre_t610 imports evidence_v2 executors through this
+    # package; eager import here would create a package-initialization cycle.
+    from ..study.pre_t610 import validate_protocol_v21_t610_completion
 
     completion = validate_protocol_v21_t610_completion(repo_root)
     if (
