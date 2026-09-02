@@ -2,12 +2,19 @@
 
 Record only material changes to the project source of truth. Detailed commit-by-commit history remains in Git; accepted decisions remain indexed in `docs/decisions/DECISION_LOG.md`.
 
+## 2026-09-02 — T-610 execution stopped fail-closed
+
+- Created the single authorized frozen `protocol-v2.1-final` Study from clean merged source commit `7442dcb65674dcb3bc9ce0c71996418289d79061` after the native Windows preflight reproduced the 603-job plan.
+- Preserved the unfinalized Study after 216 completed jobs when the first SARSA Phase-B job durably failed because its Phase-A checkpoint retained pending/deferred learner state and could not satisfy the shared no-learning-prefix quiescence requirement.
+- Recorded the missing application of the already declared DEC-054 deployment-start settlement in the generic Study checkpoint materialization path. No protocol field, completed evidence, failed event or outcome was altered or interpreted.
+- Marked T-610 BLOCKED and kept T-611/T-612/T-613/WP7 blocked. No retry, code patch, source-mixed continuation, finalization or evidence disposition is authorized without an explicit formal scientific recovery/amendment decision.
+
 ## 2026-09-02 — T-610 final scientific execution authorized
 
 - Recorded the user's separate explicit authorization to execute only the unchanged frozen protocol-v2.1 final Study through the accepted backend token/path.
 - Kept `final_reserve_access=false`, `execution_authorization=requires-explicit-t610-gate`, the backend guard, and every frozen scientific choice unchanged.
 - Re-derived the 603-job plan and recipe SHA-256 on native Windows CPython 3.12, confirmed no existing final Study, and passed the DEVELOPMENT-only downstream smoke before execution.
-- Marked T-610 IN_PROGRESS while keeping T-611/T-612/T-613 and WP7 blocked; final outcomes remain outside interpretation during T-610.
+- Marked T-610 IN_PROGRESS while keeping T-611/T-612/T-613 and WP7 blocked; the later fail-closed entry above supersedes that transient execution state.
 
 ## 2026-08-26 — Bounded GridWorld prototype comparison
 

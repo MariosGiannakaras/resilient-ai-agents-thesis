@@ -6,6 +6,10 @@
 
 These requirements govern final scientific execution and evidence handling. Historical pilot/development protocols remain auditable but do not override the current final authority.
 
+## Current T-610 execution state
+
+The authorized `protocol-v2.1-final` Study is preserved fail-closed and unfinalized at 216/603 completed jobs after a deterministic SARSA checkpoint-boundary infrastructure failure. Partial outcomes must not be interpreted or used for outcome-driven changes. The existing Study, run bundles, index mutation and failure event must remain unchanged; no retry, patch, source-mixed continuation, finalization, evidence deletion or downstream T-611 work is permitted without an explicit formal scientific recovery/amendment decision that defines evidence disposition and a reproducible single-source path.
+
 ## Run classes and separation
 
 ### Development / exploratory
