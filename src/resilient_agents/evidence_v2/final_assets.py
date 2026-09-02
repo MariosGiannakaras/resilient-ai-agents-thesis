@@ -11,14 +11,22 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-import matplotlib
-
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from matplotlib.lines import Line2D
-from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
+
+try:
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.lines import Line2D
+    from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
+except ModuleNotFoundError:  # Optional, presentation-only T-613 renderer.
+    matplotlib = None
+    plt = None
+    Line2D = None
+    FancyArrowPatch = None
+    FancyBboxPatch = None
 
 from resilient_agents.evidence_v2 import validate_protocol_v21_final_freeze
 from resilient_agents.evidence_v2.final_analysis import verify_protocol_v21_t612
@@ -517,6 +525,11 @@ def _verify_authorities(repo_root:Path)->tuple[dict[str,Any],dict[str,Any]]:
 
 
 def generate_final_assets(repo_root:Path,output:Path|None,generator_commit:str)->dict[str,Any]:
+    if matplotlib is None:
+        raise RuntimeError(
+            "T-613 rendering requires an explicit Matplotlib environment; run with "
+            "`uv run --with 'matplotlib>=3.10,<4' python ...`"
+        )
     _verify_authorities(repo_root)
     out=(output if output else repo_root/PACKAGE_RELATIVE).resolve()
     if out.exists(): shutil.rmtree(out)

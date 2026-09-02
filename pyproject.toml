@@ -30,9 +30,6 @@ url = "https://download.pytorch.org/whl/cpu"
 explicit = true
 
 [dependency-groups]
-thesis-assets = [
-    "matplotlib>=3.10,<4",
-]
 gridworld-prototype = [
     "minigrid==3.1.0",
 ]
