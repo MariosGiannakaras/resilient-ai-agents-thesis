@@ -54,6 +54,7 @@ The accepted PySide6 application is experiment-first. T-535 guarantees created-r
 - README refresh PR #115 merged as `31877a09ec2eda7852856c6c1cf7ae059bbf72ae` after Repository checks #890.
 - PR #117 / T-537 merged as `8fd32fbf68d7374ff1de5c70db21e9f95b129c1c` after exact-head Repository checks #892 and PySide6 UI acceptance #191; merged-state verification completed.
 - PR #122 / DEC-062 recovery implementation and failed-attempt preservation merged as `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`; exact-head and merged-main Repository/Protocol-v2 checks passed before replacement execution.
+- PR #123 is the finalized replacement evidence/checkpoint publication and T-610 completion reconciliation.
 - Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/`; `bibliography-integration-v3` is immutable historical terminology, not a parallel system.
 
 ## Still intentionally unfrozen
@@ -65,4 +66,4 @@ The accepted PySide6 application is experiment-first. T-535 guarantees created-r
 
 ## Exact next action
 
-STOP at the T-610 boundary after publishing/reconciling the finalized replacement evidence checkpoint. `T-611` is next and READY, but this execution must not begin its validation/freeze work. T-612/T-613, outcome interpretation and WP7/Results/Discussion remain blocked.
+STOP at the completed and published T-610 boundary. `T-611` is next and READY, but this execution must not begin its validation/freeze work. T-612/T-613, outcome interpretation and WP7/Results/Discussion remain blocked.
