@@ -94,6 +94,8 @@ def _legend(ax: plt.Axes, *, ncol: int = 3) -> None:
 
 def _finish(fig: plt.Figure, base: Path) -> list[Path]:
     fig.align_labels()
+    if not fig.get_constrained_layout():
+        fig.tight_layout(rect=(0, 0, 1, 0.98))
     fig.savefig(base.with_suffix(".svg"), bbox_inches="tight", metadata=FIGURE_METADATA)
     fig.savefig(base.with_suffix(".pdf"), bbox_inches="tight", metadata={"Creator": GENERATOR_VERSION, "Producer": GENERATOR_VERSION, "CreationDate": None, "ModDate": None})
     fig.savefig(base.with_suffix(".png"), bbox_inches="tight", dpi=300, metadata={"Software": GENERATOR_VERSION})
@@ -164,7 +166,13 @@ def _fig_contrasts(data: dict[str, pd.DataFrame], base: Path, phase: str) -> lis
         frame = frame[frame.primary_recovery_axis.astype(str).str.lower().isin(["true", "1"])]
         groups = [(e, e.replace("recovery-", "").replace("-", " ").title()) for e in sorted(frame.estimand.unique())]
     conditions = [None] if phase == "rq1" else ([c for c in CONDITIONS] if phase == "rq2" else CONDITIONS[:2])
-    fig, axes = plt.subplots(len(groups), len(conditions), figsize=(4.0*len(conditions), 3.9*len(groups)), squeeze=False)
+    fig, axes = plt.subplots(
+        len(groups),
+        len(conditions),
+        figsize=(5.0 * len(conditions), 4.8 * len(groups)),
+        squeeze=False,
+        constrained_layout=True,
+    )
     for i, (estimand, title) in enumerate(groups):
         for j, condition in enumerate(conditions):
             ax = axes[i, j]
@@ -178,7 +186,8 @@ def _fig_contrasts(data: dict[str, pd.DataFrame], base: Path, phase: str) -> lis
                 labels.append(f"{METHOD_LABELS[row.method_a]} − {METHOD_LABELS[row.method_b]}")
             ax.axvline(0,color="#333333",lw=.8)
             ax.set_yticks(range(len(labels)), labels)
-            ax.set_xlabel("Root-paired A − B estimate (95% t interval)")
+            if i == len(groups) - 1:
+                ax.set_xlabel("Root-paired A − B estimate (95% t interval)")
             ax.set_title(title + ("\n"+CONDITION_LABELS[condition] if condition else ""))
     fig.suptitle(phase.upper()+" declared direct method contrasts", y=1.005)
     return _finish(fig, base)
@@ -413,7 +422,7 @@ def _figure_specs() -> list[FigureSpec]:
         FigureSpec("FIG-RQ3-025-TIMELINE",25,"RQ3","recovery-time;confirmation-time;censoring",["appendix"],["rec_roots"],"Stored recovery and confirmation times; right-censored roots are marked at the horizon without fake recovery times.",_fig_timeline),
         FigureSpec("FIG-METHOD-026-EXPERIMENT-FLOW",26,"methodology","protocol-flow",["main-thesis","defense"],["analysis_manifest"],"Protocol flow; exact checkpoints precede matched FN/FD/AN/AD branches.",lambda d,p:_diagram(p,"Protocol-v2.1 experiment flow",["Phase A\nnominal learning","Exact checkpoint","Matched FN / FD / AN / AD","Validation","Root-level analysis","Registered exports"])),
         FigureSpec("FIG-METHOD-027-RQ-MAP",27,"methodology","rq-evidence-map",["main-thesis","defense"],["analysis_manifest"],"Map from each research question to its frozen estimands and registered outputs.",lambda d,p:_diagram(p,"Research questions to evidence",["RQ1\nfinal + time average","RQ2\nFrozen loss + Adaptive loss + benefit","RQ3\nstatus + restricted delay + conditional time","Root-paired contrasts","Figures + tables"])),
-        FigureSpec("FIG-METHOD-028-LINEAGE",28,"methodology","evidence-lineage",["main-thesis","appendix","defense"],["freeze_manifest","analysis_manifest"],"Accepted-evidence lineage; the failed 216-job attempt is excluded.",lambda d,p:_diagram(p,"Accepted evidence lineage",["Frozen recipe","603/603 replacement jobs","T-611 validation + freeze","T-612 analysis package","T-613 assets"])),
+        FigureSpec("FIG-METHOD-028-LINEAGE",28,"methodology","evidence-lineage",["main-thesis","appendix","defense"],["freeze_manifest","analysis_manifest"],"Accepted-evidence lineage; the failed 216-job attempt is excluded.",lambda d,p:_diagram(p,"Accepted evidence lineage",["Frozen\nrecipe","603/603\nreplacement jobs","T-611\nvalidation + freeze","T-612\nanalysis package","T-613\nassets"])),
         FigureSpec("FIG-DEF-029-ALL-RQ",29,"cross-RQ","distinct-panel-descriptive-summary",["defense"],["pa_summary","pb_summary","rec_summary"],"Defense-only overview with distinct panels and no composite score or universal ranking.",_fig_all_rq),
         FigureSpec("FIG-DEF-030-RQ1-FINAL",30,"RQ1","phase-a-final-value",["defense"],["pa_summary"],"Large-label defense variant of the RQ1 final-performance figure.",lambda d,p:_fig_rq1_summary(d,p,"final",True)),
         FigureSpec("FIG-DEF-030-RQ2-ADAPTATION",30,"RQ2","adaptation-benefit",["defense"],["pb_summary"],"Large-label defense variant of the RQ2 adaptation-benefit figure.",lambda d,p:_fig_adaptation(d,p,defense=True)),
