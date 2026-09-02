@@ -360,10 +360,10 @@ def _fig_timeline(data:dict[str,pd.DataFrame],base:Path)->list[Path]:
 
 def _diagram(base:Path,title:str,boxes:list[str],arrows:bool=True)->list[Path]:
     _configure(9); fig,ax=plt.subplots(figsize=(11,3.2)); ax.axis("off")
-    n=len(boxes); width=.82/n
+    n=len(boxes); width=.14
     for i,text in enumerate(boxes):
-        x=.06+i*(.9/n); patch=FancyBboxPatch((x,.38),width,.25,boxstyle="round,pad=0.025",fc="#e9f2f7",ec="#0072B2",lw=1.2,transform=ax.transAxes); ax.add_patch(patch); ax.text(x+width/2,.505,text,ha="center",va="center",transform=ax.transAxes,wrap=True)
-        if arrows and i<n-1: ax.add_patch(FancyArrowPatch((x+width,.505),(x+.9/n,.505),arrowstyle="->",mutation_scale=13,color="#555",transform=ax.transAxes))
+        x=.04+i*(.92/n); patch=FancyBboxPatch((x,.38),width,.25,boxstyle="round,pad=0.025",fc="#e9f2f7",ec="#0072B2",lw=1.2,transform=ax.transAxes); ax.add_patch(patch); ax.text(x+width/2,.505,text,ha="center",va="center",transform=ax.transAxes,wrap=True)
+        if arrows and i<n-1: ax.add_patch(FancyArrowPatch((x+width+.005,.505),(x+.92/n-.005,.505),arrowstyle="->",mutation_scale=13,color="#555",transform=ax.transAxes))
     ax.set_title(title,pad=15)
     return _finish(fig,base)
 
