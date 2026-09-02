@@ -38,4 +38,4 @@ Historical v1.0/v1.1/pilot evidence remains auditable history; resolving current
 
 ## Current authority
 
-Concrete status/dependencies are in `TASKS.md`; compact current state is in `CURRENT_STATUS.md`. The final scientific experiment, DEC-062 recovery and T-611 validation/freeze are complete, not open design questions. T-612 is next and dependency-valid; later work remains blocked by task dependencies/approval gates.
+Concrete status/dependencies are in `TASKS.md`; compact current state is in `CURRENT_STATUS.md`. The final scientific experiment, DEC-062 recovery, T-611 validation/freeze and T-612 analysis are complete, not open design questions. T-613 is next and dependency-valid; WP7 remains blocked by its explicit approval gate.

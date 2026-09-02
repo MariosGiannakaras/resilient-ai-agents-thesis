@@ -1,0 +1,295 @@
+{
+  "analysis_recipe": "protocol-v2-root-level-v2.1",
+  "complete_root_layout_blocks": true,
+  "coverage": {
+    "right_censored_primary_records": 37,
+    "rq1_direct_contrasts": 20,
+    "rq1_method_summaries": 5,
+    "rq1_root_records": 60,
+    "rq2_direct_contrasts": 120,
+    "rq2_method_condition_summaries": 20,
+    "rq2_root_records": 240,
+    "rq3_direct_contrasts": 80,
+    "rq3_method_condition_summaries": 20,
+    "rq3_root_records": 240,
+    "rq3_sensitivity_root_records": 480,
+    "rq3_trajectory_records": 1920
+  },
+  "historical_failed_attempt_used": false,
+  "interval_rule": "two-sided-95-percent-Student-t-by-actual-root-count",
+  "recovery_sensitivity_primary_action_remap": [
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "dqn",
+      "recovered_proportion": 0.0,
+      "recovered_root_count": 0,
+      "right_censored_root_count": 12,
+      "root_count": 12,
+      "tolerance": 0.05
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "dqn",
+      "recovered_proportion": 0.16666666666666666,
+      "recovered_root_count": 2,
+      "right_censored_root_count": 10,
+      "root_count": 12,
+      "tolerance": 0.1
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "dqn",
+      "recovered_proportion": 1.0,
+      "recovered_root_count": 12,
+      "right_censored_root_count": 0,
+      "root_count": 12,
+      "tolerance": 0.2
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "dqn",
+      "recovered_proportion": 0.16666666666666666,
+      "recovered_root_count": 2,
+      "right_censored_root_count": 10,
+      "root_count": 12,
+      "tolerance": 0.05
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "dqn",
+      "recovered_proportion": 0.6666666666666666,
+      "recovered_root_count": 8,
+      "right_censored_root_count": 4,
+      "root_count": 12,
+      "tolerance": 0.1
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "dqn",
+      "recovered_proportion": 1.0,
+      "recovered_root_count": 12,
+      "right_censored_root_count": 0,
+      "root_count": 12,
+      "tolerance": 0.2
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "dyna_q_plus",
+      "recovered_proportion": 0.0,
+      "recovered_root_count": 0,
+      "right_censored_root_count": 12,
+      "root_count": 12,
+      "tolerance": 0.05
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "dyna_q_plus",
+      "recovered_proportion": 1.0,
+      "recovered_root_count": 12,
+      "right_censored_root_count": 0,
+      "root_count": 12,
+      "tolerance": 0.1
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "dyna_q_plus",
+      "recovered_proportion": 1.0,
+      "recovered_root_count": 12,
+      "right_censored_root_count": 0,
+      "root_count": 12,
+      "tolerance": 0.2
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "dyna_q_plus",
+      "recovered_proportion": 0.0,
+      "recovered_root_count": 0,
+      "right_censored_root_count": 12,
+      "root_count": 12,
+      "tolerance": 0.05
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "dyna_q_plus",
+      "recovered_proportion": 0.6666666666666666,
+      "recovered_root_count": 8,
+      "right_censored_root_count": 4,
+      "root_count": 12,
+      "tolerance": 0.1
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "dyna_q_plus",
+      "recovered_proportion": 1.0,
+      "recovered_root_count": 12,
+      "right_censored_root_count": 0,
+      "root_count": 12,
+      "tolerance": 0.2
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "ppo",
+      "recovered_proportion": 0.0,
+      "recovered_root_count": 0,
+      "right_censored_root_count": 12,
+      "root_count": 12,
+      "tolerance": 0.05
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "ppo",
+      "recovered_proportion": 0.08333333333333333,
+      "recovered_root_count": 1,
+      "right_censored_root_count": 11,
+      "root_count": 12,
+      "tolerance": 0.1
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "ppo",
+      "recovered_proportion": 0.5,
+      "recovered_root_count": 6,
+      "right_censored_root_count": 6,
+      "root_count": 12,
+      "tolerance": 0.2
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "ppo",
+      "recovered_proportion": 0.16666666666666666,
+      "recovered_root_count": 2,
+      "right_censored_root_count": 10,
+      "root_count": 12,
+      "tolerance": 0.05
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "ppo",
+      "recovered_proportion": 0.3333333333333333,
+      "recovered_root_count": 4,
+      "right_censored_root_count": 8,
+      "root_count": 12,
+      "tolerance": 0.1
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "ppo",
+      "recovered_proportion": 0.5833333333333334,
+      "recovered_root_count": 7,
+      "right_censored_root_count": 5,
+      "root_count": 12,
+      "tolerance": 0.2
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "q_learning",
+      "recovered_proportion": 0.9166666666666666,
+      "recovered_root_count": 11,
+      "right_censored_root_count": 1,
+      "root_count": 12,
+      "tolerance": 0.05
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "q_learning",
+      "recovered_proportion": 1.0,
+      "recovered_root_count": 12,
+      "right_censored_root_count": 0,
+      "root_count": 12,
+      "tolerance": 0.1
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "q_learning",
+      "recovered_proportion": 1.0,
+      "recovered_root_count": 12,
+      "right_censored_root_count": 0,
+      "root_count": 12,
+      "tolerance": 0.2
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "q_learning",
+      "recovered_proportion": 0.8333333333333334,
+      "recovered_root_count": 10,
+      "right_censored_root_count": 2,
+      "root_count": 12,
+      "tolerance": 0.05
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "q_learning",
+      "recovered_proportion": 1.0,
+      "recovered_root_count": 12,
+      "right_censored_root_count": 0,
+      "root_count": 12,
+      "tolerance": 0.1
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "q_learning",
+      "recovered_proportion": 1.0,
+      "recovered_root_count": 12,
+      "right_censored_root_count": 0,
+      "root_count": 12,
+      "tolerance": 0.2
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "sarsa",
+      "recovered_proportion": 0.6666666666666666,
+      "recovered_root_count": 8,
+      "right_censored_root_count": 4,
+      "root_count": 12,
+      "tolerance": 0.05
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "sarsa",
+      "recovered_proportion": 1.0,
+      "recovered_root_count": 12,
+      "right_censored_root_count": 0,
+      "root_count": 12,
+      "tolerance": 0.1
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "sarsa",
+      "recovered_proportion": 1.0,
+      "recovered_root_count": 12,
+      "right_censored_root_count": 0,
+      "root_count": 12,
+      "tolerance": 0.2
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "sarsa",
+      "recovered_proportion": 0.4166666666666667,
+      "recovered_root_count": 5,
+      "right_censored_root_count": 7,
+      "root_count": 12,
+      "tolerance": 0.05
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "sarsa",
+      "recovered_proportion": 1.0,
+      "recovered_root_count": 12,
+      "right_censored_root_count": 0,
+      "root_count": 12,
+      "tolerance": 0.1
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "sarsa",
+      "recovered_proportion": 1.0,
+      "recovered_root_count": 12,
+      "right_censored_root_count": 0,
+      "root_count": 12,
+      "tolerance": 0.2
+    }
+  ],
+  "right_censoring_valid": true,
+  "schema_version": 1,
+  "task_id": "T-612"
+}

@@ -90,7 +90,7 @@ Project-level completion conditions only. Concrete task IDs/status/dependencies/
 - [x] The first 216-job attempt remains immutable, unfinalized and excluded; the replacement started from zero on one corrected source commit with explicit lineage and the unchanged recipe/plan.
 - [x] Required final scientific units completed or were transparently accounted for without replacement/cherry-picking.
 - [x] Finalized raw results/checkpoints are immutable/checksummed and accepted final evidence is frozen.
-- [ ] Predeclared root-level RQ1/RQ2/RQ3 analysis and sensitivity diagnostics reproduce from frozen evidence.
+- [x] Predeclared root-level RQ1/RQ2/RQ3 analysis and sensitivity diagnostics reproduce from frozen evidence.
 - [ ] Every final quantitative figure/table has machine-readable provenance to frozen analysis/result IDs.
 - [ ] Thesis/defense evidence handoff maps RQs, protocol/methods, source IDs, run/checkpoint/result IDs, figures/tables/captions and planned claims.
 

@@ -18,12 +18,12 @@ The **frozen protocol-v2.1 final scientific experiment** completed under the for
 | Final read-only preflight | **Complete**; T-537 changed no scientific/execution code |
 | Final protocol-v2.1 reserve | **Sealed** — `final_reserve_access=false` |
 | Final execution authorization | **Granted for T-610 only** through the separate backend token |
-| Current task | **T-611 COMPLETE; T-612 is next and not started** |
-| Final v2.1 evidence | **Validated and frozen; outcomes not interpreted** |
+| Current task | **T-612 COMPLETE; T-613 is next and READY** |
+| Final v2.1 evidence | **Validated, frozen and analyzed under the predeclared contract** |
 | Thesis writing | **Not authorized yet**; separate pre-WP7 approval is required after accepted final evidence |
 | Standalone Windows packaging | Deferred to **T-803** after the thesis deliverable |
 
-The first Study from `7442dcb65674dcb3bc9ce0c71996418289d79061` remains an unmodified, unfinalized 216-job failed attempt ineligible for downstream evidence. The fresh replacement `protocol-v2.1-final--t610-recovery-01` completed and finalized 603/603 jobs from clean commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`, with unchanged recipe/plan hashes and zero recorded failures. T-611 validated and froze only that replacement under manifest SHA-256 `20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858`; interpretation remains deferred to T-612.
+The first Study from `7442dcb65674dcb3bc9ce0c71996418289d79061` remains an unmodified, unfinalized 216-job failed attempt ineligible for downstream evidence. The fresh replacement `protocol-v2.1-final--t610-recovery-01` completed and finalized 603/603 jobs from clean commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`, with unchanged recipe/plan hashes and zero recorded failures. T-611 validated and froze only that replacement under manifest SHA-256 `20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858`; T-612 finalized the reproduced predeclared analysis under manifest SHA-256 `ebef79e926a160f580b32b6df757043840e2cb0340032ce93066ee1fa8e717ae`.
 
 > `docs/context/TASKS.md` is the canonical task/dependency ledger and `docs/context/CURRENT_STATUS.md` is the authoritative compact state. The task table in this README is a human-readable snapshot only; the canonical files win if the project state changes.
 
@@ -51,7 +51,7 @@ Protocol-v2.1 retains:
 - RQ3 passive 32-interaction windows, primary tolerance `0.10`, sensitivity `0.05/0.20`, two-window stable recovery and explicit right-censoring with `recovery_time=null`;
 - root as the independent statistical unit, equal layout reduction, root-paired direct method contrasts and predeclared Student-t intervals selected by actual root count.
 
-The native Windows read-only final preflight confirmed the unchanged **603-job** frozen Study plan and deny-by-default backend boundary. After the preserved failed attempt, the DEC-062 replacement completed from zero and T-611 validated/froze its complete evidence; no final outcome has been interpreted.
+The native Windows read-only final preflight confirmed the unchanged **603-job** frozen Study plan and deny-by-default backend boundary. After the preserved failed attempt, the DEC-062 replacement completed from zero, T-611 validated/froze its complete evidence, and T-612 reproduced and interpreted only the predeclared analysis.
 
 ## Current architecture
 
@@ -160,14 +160,14 @@ The remaining path is sequential and evidence-gated:
 
 1. **T-610 — Complete.** The DEC-062 replacement finalized the unchanged 603-job plan from one clean source commit; the first attempt remains excluded history.
 2. **T-611 — Complete.** The accepted replacement passed completeness, integrity, provenance, lineage and scientific-identity validation and is durably frozen.
-3. **Stop at the T-611 boundary.** No outcome interpretation or downstream task is part of this execution.
-4. **T-612 — Next and READY.** Run the predeclared RQ1/RQ2/RQ3 statistical analysis and sensitivity diagnostics from the frozen evidence.
-5. **T-613 — Produce the final figure/table/export package.** Generate the rich reproducible thesis + appendix + defense assets defined in `docs/research/T-613_THESIS_FIGURE_INVENTORY.md`.
+3. **T-612 — Complete.** The predeclared RQ1/RQ2/RQ3 statistical analysis, direct comparisons and recovery sensitivity diagnostics reproduced from the frozen evidence.
+4. **Stop at the T-612 boundary.** No T-613 figure/table production or WP7 work was part of this execution.
+5. **T-613 — Next and READY.** Generate the rich reproducible thesis + appendix + defense assets defined in `docs/research/T-613_THESIS_FIGURE_INVENTORY.md`.
 6. **Explicit pre-WP7 user approval.** Even accepted final evidence does not automatically authorize thesis writing.
 7. **WP7 — Thesis and defense.** Recheck current university rules, review example theses, draft the Greek thesis, create the review-ready Word document, apply corrections, freeze the thesis, and prepare/rehearse the defense deck.
 8. **WP8 — Final audit/delivery.** Bibliography/citation audit, reproducibility/privacy/licensing/delivery audit, final academic readiness and eventually the standalone Windows application package.
 
-DEC-062 recovery and T-611 validation/freeze are complete. The original partial Study remains intact and cannot be resumed, copied, finalized or mixed into accepted evidence. Only the frozen replacement package is eligible for T-612.
+DEC-062 recovery, T-611 validation/freeze and T-612 analysis are complete. The original partial Study remains intact and cannot be resumed, copied, finalized or mixed into accepted evidence. Only the finalized T-612 package is eligible as quantitative input to T-613.
 
 ## Thesis/defense result assets
 
@@ -250,8 +250,8 @@ Status legend: **Complete** = accepted task finished; **Superseded** = historica
 | WP6 | T-604 | ✅ Complete · historical | v1.0 evidence package |
 | WP6 | T-610 | ✅ Complete | DEC-062 replacement finalized 603/603 from clean source |
 | WP6 | T-611 | ✅ Complete | Validated/frozen protocol-v2.1 final evidence |
-| WP6 | T-612 | 🟢 Ready, not started | Predeclared v2.1 RQ1/RQ2/RQ3 statistical analysis |
-| WP6 | T-613 | 🔒 Blocked by T-612 | Final v2.1 figures/tables/exports + thesis/defense evidence package |
+| WP6 | T-612 | ✅ Complete | Predeclared v2.1 RQ1/RQ2/RQ3 statistical analysis |
+| WP6 | T-613 | 🟢 Ready, not started | Final v2.1 figures/tables/exports + thesis/defense evidence package |
 | WP7 | T-700 | 🔒 Blocked | Recheck current Department/University submission/formatting/defense rules; also requires explicit pre-WP7 approval |
 | WP7 | T-701 | ⏸ Deferred | Review completed example theses and derive structure/style guide |
 | WP7 | T-710 | ⏸ Deferred | Draft complete Greek thesis from accepted evidence |

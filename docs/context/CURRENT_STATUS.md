@@ -20,18 +20,19 @@
 - `T-610` is **COMPLETE**. The DEC-062 replacement `protocol-v2.1-final--t610-recovery-01` completed and finalized 603/603 jobs with zero infrastructure/scientific failures, no pending/running jobs and coherent Study/run integrity.
 - `T-611` is **COMPLETE**. The replacement passed fresh recipe/plan/lifecycle/artifact/run-index/source/lineage/temporal-schema validation and is frozen at `results/final-evidence/protocol-v2.1-final/`.
 - The T-611 freeze manifest SHA-256 is `20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858`; its 600-record run-manifest inventory SHA-256 is `0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045`; validator source commit is `b925b0ad603bf165e8632c74f2027c53f040b34b`.
+- `T-612` is **COMPLETE**. The canonical protocol-v2.1 engine regenerated RQ1/RQ2/RQ3 statistics and all deterministic exports twice from the T-611 frozen replacement; every output matched the mechanical Study artifact byte-for-byte. The finalized analysis manifest SHA-256 is `ebef79e926a160f580b32b6df757043840e2cb0340032ce93066ee1fa8e717ae`, with analysis source commit `a0eb8ca36172e8858f9f8a52a6c91de216d6afd1`.
 - Native Windows CPython 3.12 recovery preflight on clean commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730` re-derived the canonical 603-job plan, confirmed the unchanged recipe hash and backend denial, byte-validated the failed attempt and confirmed the replacement namespace was absent before creation.
 - The historical Study records source commit `7442dcb65674dcb3bc9ce0c71996418289d79061`. It remains `active` and unfinalized at 216 completed, 1 infrastructure-failed and 386 pending, with its four registry hashes unchanged after replacement finalization.
 - The failed attempt is `pb__sarsa__t527-final-r01__gw-l1-final-a__action-remap-swap-right-down`: the shared no-learning prefix requires a quiescent learner, but the materialized SARSA Phase-A checkpoint retained pending/deferred state. The frozen recipe declares DEC-054 deployment-start settlement; the generic Study Phase-A executor did not apply that accepted settlement before persisting the checkpoint.
 - The replacement records recipe SHA-256 `8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154`, plan SHA-256 `073779d18f45caeab2ab725e7dce6b54b70394102d45de81e1974c7efaece0f4`, clean source commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`, predecessor `protocol-v2.1-final` and recovery decision DEC-062. All 600 scientific run bundles validate.
-- Master tracker #87 remains **7/8**; milestone 8 awaits T-612/T-613 and the rest of the final v2.1 evidence chain.
+- Master tracker #87 remains **7/8**; milestone 8 awaits T-613 and the rest of the final v2.1 evidence chain.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
 
 ## Scientific authority
 
 DEC-058 / protocol-v2.0 remain immutable historical freeze authority. DEC-060 plus `configs/protocols/protocol-v2.1-final.json` are the current pre-execution scientific authority.
 
-Frozen protocol-v2.1 remains unchanged: Q-Learning, SARSA, DQN, PPO and Dyna-Q+; common actual-interaction fairness; Phase-A independent learning/exact checkpoints; matched FN/FD/AN/AD Phase B; 12 roots, 2 held-out layouts, four conditions and 256-interaction horizon; RQ2 adaptation benefit `(FN-FD)-(AN-AD)`; RQ3 passive 32-interaction windows, tolerance 0.10 with 0.05/0.20 sensitivity, two-window stability and `recovery_time=null` right-censoring; root as independent unit; declared root-paired direct method contrasts and Student-t intervals. The failed-attempt outcomes remain excluded. Replacement evidence is validated and frozen but has not been interpreted; T-612 owns the predeclared scientific analysis.
+Frozen protocol-v2.1 remains unchanged: Q-Learning, SARSA, DQN, PPO and Dyna-Q+; common actual-interaction fairness; Phase-A independent learning/exact checkpoints; matched FN/FD/AN/AD Phase B; 12 roots, 2 held-out layouts, four conditions and 256-interaction horizon; RQ2 adaptation benefit `(FN-FD)-(AN-AD)`; RQ3 passive 32-interaction windows, tolerance 0.10 with 0.05/0.20 sensitivity, two-window stability and `recovery_time=null` right-censoring; root as independent unit; declared root-paired direct method contrasts and Student-t intervals. T-612 interpreted only these predeclared analyses in `docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md`; the failed-attempt outcomes remain excluded.
 
 ## Pre-final backend/application readiness
 
@@ -45,7 +46,7 @@ The accepted PySide6 application is experiment-first. T-535 guarantees created-r
 
 ## Thesis/defense result assets
 
-`T-613` remains BLOCKED behind T-612. Its inventory specifies 30 figure/asset categories plus tables across RQ1 learning, RQ2 resilience/adaptation, RQ3 recovery, methodology/evidence lineage and defense variants. Outputs are deterministic vector-first SVG/PDF plus high-resolution PNG and machine-readable tables with source artifact IDs/hashes and generator provenance. Non-recovery remains right-censored.
+`T-613` is now READY and is the next task, but was not started by T-612. Its inventory specifies 30 figure/asset categories plus tables across RQ1 learning, RQ2 resilience/adaptation, RQ3 recovery, methodology/evidence lineage and defense variants. Outputs are deterministic vector-first SVG/PDF plus high-resolution PNG and machine-readable tables with source artifact IDs/hashes and generator provenance. Non-recovery remains right-censored.
 
 ## Repository integration / provenance
 
@@ -63,10 +64,10 @@ The accepted PySide6 application is experiment-first. T-535 guarantees created-r
 ## Still intentionally unfrozen
 
 - T-610 authorization was consumed only through the accepted backend token; committed authority fields remain unchanged.
-- T-611 is complete. T-612 is dependency-valid and READY but must not start in this execution; T-613 remains blocked and WP7 remains separately unauthorized.
+- T-612 is complete. T-613 is dependency-valid and READY but was not started in this execution; WP7 remains separately unauthorized.
 - WP7 remains blocked by final evidence plus later explicit pre-WP7 approval.
 - Standalone Windows packaging remains deferred to T-803 / issue #94.
 
 ## Exact next action
 
-STOP at the completed T-611 boundary. `T-612` is next and READY, but this execution must not begin its analysis work. T-613, outcome interpretation and WP7/Results/Discussion remain outside this execution.
+STOP at the completed T-612 boundary. `T-613` is next and READY, but this execution did not begin figure/table asset production. WP7/Results/Discussion remains outside this execution and separately unauthorized.
