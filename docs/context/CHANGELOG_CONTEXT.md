@@ -6,7 +6,7 @@ Record only material changes to the project source of truth. Detailed commit-by-
 
 - Revalidated the exact T-611 freeze, accepted replacement lineage and permanent exclusion of the historical 216-job attempt before scientific interpretation.
 - Regenerated the canonical protocol-v2.1 RQ1/RQ2/RQ3 analysis and 12 machine-readable data exports twice; every file matched the mechanical T-610 artifact byte-for-byte.
-- Finalized `results/analysis/protocol-v2.1-final/` at manifest SHA-256 `ebef79e926a160f580b32b6df757043840e2cb0340032ce93066ee1fa8e717ae`, with complete root/layout denominators, 220 direct method contrasts, actual-root-count Student-t intervals, preserved right-censoring and 0.05/0.10/0.20 recovery sensitivity diagnostics.
+- Finalized `results/analysis/protocol-v2.1-final/` at manifest SHA-256 `dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62`, with complete root/layout denominators, 220 direct method contrasts, actual-root-count Student-t intervals, preserved right-censoring and 0.05/0.10/0.20 recovery sensitivity diagnostics.
 - Recorded bounded scientific interpretation in `docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md`. T-613 is next and READY; no T-613 assets, WP7 writing, Results/Discussion prose or defense material were produced.
 
 ## 2026-09-02 — T-611 replacement evidence validated and frozen

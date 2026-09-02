@@ -2,7 +2,7 @@
   "accepted_execution_instance_id": "protocol-v2.1-final--t610-recovery-01",
   "all_regenerations_byte_identical": true,
   "analysis_recipe": "protocol-v2-root-level-v2.1",
-  "analysis_source_git_commit": "a0eb8ca36172e8858f9f8a52a6c91de216d6afd1",
+  "analysis_source_git_commit": "7e56753d581999af38510be1745ec4b87a927f2f",
   "analysis_tool_source_files": [
     {
       "relative_path": "scripts/analyze_protocol_v21_final.py",
