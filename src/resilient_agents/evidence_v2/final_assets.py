@@ -220,7 +220,16 @@ def _fig_losses(data: dict[str,pd.DataFrame],base:Path,dumbbell:bool=False)->lis
             ax.errorbar(frozen,y-.12,xerr=[frozen-sub.frozen_loss_ci_lower.astype(float),sub.frozen_loss_ci_upper.astype(float)-frozen],fmt="o",color="#666",capsize=2,label="Frozen" if condition==CONDITIONS[0] else None)
             ax.errorbar(adaptive,y+.12,xerr=[adaptive-sub.adaptive_loss_ci_lower.astype(float),sub.adaptive_loss_ci_upper.astype(float)-adaptive],fmt="s",color="#0072B2",capsize=2,label="Adaptive" if condition==CONDITIONS[0] else None)
         ax.set_yticks(y,[METHOD_LABELS[m] for m in METHODS]); ax.set_xlabel("Disturbance-associated loss (lower is better)"); ax.set_title(CONDITION_LABELS[condition])
-    axes[0].legend(frameon=False)
+    if dumbbell:
+        axes[0].legend(
+            handles=[
+                Line2D([0], [0], color="#555", marker="o", markerfacecolor="white", linestyle="none", label="Frozen"),
+                Line2D([0], [0], color="#0072B2", marker="o", linestyle="none", label="Adaptive"),
+            ],
+            frameon=False,
+        )
+    else:
+        axes[0].legend(frameon=False)
     fig.suptitle("RQ2 Frozen and Adaptive losses" + (" (summary dumbbells)" if dumbbell else ""),y=1.005)
     return _finish(fig,base)
 
@@ -449,9 +458,14 @@ def _markdown_table(csv_path:Path,md_path:Path)->None:
 
 def _write_tables(repo_root:Path,out:Path,sources:dict[str,dict[str,Any]])->list[dict[str,Any]]:
     table_dir=out/"tables"; table_dir.mkdir(parents=True,exist_ok=True); entries=[]
+    analysis_manifest = _json(repo_root / ANALYSIS_MANIFEST_RELATIVE)
+    canonical_by_name = {
+        Path(record["relative_path"]).name: record
+        for record in analysis_manifest["canonical_analysis_artifacts"]
+    }
     for source in sorted((repo_root/STUDY_EXPORT_RELATIVE).glob("*.csv")):
         csv_out=table_dir/source.name; shutil.copyfile(source,csv_out); md_out=table_dir/(source.stem+".md"); _markdown_table(csv_out,md_out)
-        artifact=next(x for x in sources.values() if x.get("relative_path","").endswith(source.name))
+        artifact = canonical_by_name[source.name]
         entries.append({"asset_id":"TABLE-"+source.stem.upper().replace("-","_"),"kind":"table","rq_scope":"RQ1/RQ2/RQ3" if "root" in source.name else "registered-analysis","estimand_scope":"canonical-T612-export","intended_use":["appendix","machine-readable"],"source_artifacts":[artifact],"outputs":[]})
         entries[-1]["outputs"]=[{"relative_path":str(p.relative_to(out)).replace("\\","/"),"sha256":_sha(p),"size_bytes":p.stat().st_size,"format":p.suffix[1:]} for p in (csv_out,md_out)]
     sensitivity=_json(repo_root/DIAGNOSTICS_RELATIVE)["recovery_sensitivity_primary_action_remap"]
