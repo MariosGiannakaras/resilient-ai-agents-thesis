@@ -64,6 +64,7 @@
       "rq_scope": "RQ1",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-a-method-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "45aa5db4eb879a385da3e4a7eabfe509ceed475146f1593e891ba0cc859aaa4c",
@@ -135,6 +136,7 @@
       "rq_scope": "RQ1",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-a-method-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "45aa5db4eb879a385da3e4a7eabfe509ceed475146f1593e891ba0cc859aaa4c",
@@ -206,6 +208,7 @@
       "rq_scope": "RQ1",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-phase-a-root-records",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-root-records.csv",
           "repeated_regeneration_identical": true,
           "sha256": "e11ec69ba83055f315419fbba69e988e721c19e9cebad6575dc8bb30f064529c",
@@ -277,6 +280,7 @@
       "rq_scope": "RQ1",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-phase-a-root-records",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-root-records.csv",
           "repeated_regeneration_identical": true,
           "sha256": "e11ec69ba83055f315419fbba69e988e721c19e9cebad6575dc8bb30f064529c",
@@ -348,6 +352,7 @@
       "rq_scope": "RQ1",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-a-method-contrasts",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-contrasts.csv",
           "repeated_regeneration_identical": true,
           "sha256": "364109b193db209a35dd32338e4b7a21919c588e49b3b9f22898fce8d5d5ad4f",
@@ -419,6 +424,7 @@
       "rq_scope": "RQ2",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
@@ -490,6 +496,7 @@
       "rq_scope": "RQ2",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
@@ -562,6 +569,7 @@
       "rq_scope": "RQ2",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
@@ -633,6 +641,7 @@
       "rq_scope": "RQ2",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
@@ -704,6 +713,7 @@
       "rq_scope": "RQ2",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-phase-b-root-records",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-root-records.csv",
           "repeated_regeneration_identical": true,
           "sha256": "1ad37b2862c94592f93c5a0749da5bf0ff4ff85e8afbea4e5f032021713f965d",
@@ -775,6 +785,7 @@
       "rq_scope": "RQ2",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
@@ -846,6 +857,7 @@
       "rq_scope": "RQ2",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-b-method-contrasts",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-contrasts.csv",
           "repeated_regeneration_identical": true,
           "sha256": "10ce2d0f39c6e01702db8737749017197b066c9cb25ffff0f1d1ddecb33ffd71",
@@ -917,6 +929,7 @@
       "rq_scope": "RQ2",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-phase-b-root-records",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-root-records.csv",
           "repeated_regeneration_identical": true,
           "sha256": "1ad37b2862c94592f93c5a0749da5bf0ff4ff85e8afbea4e5f032021713f965d",
@@ -988,6 +1001,7 @@
       "rq_scope": "RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-recovery-trajectories",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-trajectory-records.csv",
           "repeated_regeneration_identical": true,
           "sha256": "3ef27d23f327e2f3140f202850badf2de34fa21e4a601be3f59d5ab7d56d972c",
@@ -1059,6 +1073,7 @@
       "rq_scope": "RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
@@ -1130,6 +1145,7 @@
       "rq_scope": "RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
@@ -1201,6 +1217,7 @@
       "rq_scope": "RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
@@ -1272,6 +1289,7 @@
       "rq_scope": "RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
@@ -1343,6 +1361,7 @@
       "rq_scope": "RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-recovery-trajectories",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-trajectory-records.csv",
           "repeated_regeneration_identical": true,
           "sha256": "3ef27d23f327e2f3140f202850badf2de34fa21e4a601be3f59d5ab7d56d972c",
@@ -1414,6 +1433,7 @@
       "rq_scope": "RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
@@ -1486,6 +1506,15 @@
       "rq_scope": "RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-recovery-sensitivity",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-sensitivity-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "5ed47e4268c7e86b0c49d86978305b6ebf0b998f4b674688f39a96de8de3e331",
+          "size_bytes": 45860,
+          "t610_mechanical_artifact_identical": true
+        },
+        {
+          "artifact_id": "t612-analysis-diagnostics",
           "relative_path": "results/analysis/protocol-v2.1-final/diagnostics.json",
           "sha256": "f782f192964f69d24bf3d1dcfd6d6e3da11eae0bd974dab5844366fb1365380d"
         }
@@ -1554,6 +1583,7 @@
       "rq_scope": "RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-recovery-method-contrasts",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-contrasts.csv",
           "repeated_regeneration_identical": true,
           "sha256": "4860abf3de651a84e31dae19c07293ce957d17943ae4a1e285dd6fff9ae2d003",
@@ -1625,6 +1655,7 @@
       "rq_scope": "RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-recovery-root-records",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-root-records.csv",
           "repeated_regeneration_identical": true,
           "sha256": "6971a5326496c8ced0d3e74b87b5cd1f2df66a08118ae3130cd69803bd92aabc",
@@ -1697,6 +1728,7 @@
       "rq_scope": "methodology",
       "source_artifacts": [
         {
+          "artifact_id": "t612-analysis-manifest",
           "relative_path": "results/analysis/protocol-v2.1-final/analysis-manifest.json",
           "sha256": "dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62"
         }
@@ -1766,6 +1798,7 @@
       "rq_scope": "methodology",
       "source_artifacts": [
         {
+          "artifact_id": "t612-analysis-manifest",
           "relative_path": "results/analysis/protocol-v2.1-final/analysis-manifest.json",
           "sha256": "dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62"
         }
@@ -1836,10 +1869,12 @@
       "rq_scope": "methodology",
       "source_artifacts": [
         {
+          "artifact_id": "t611-freeze-manifest",
           "relative_path": "results/final-evidence/protocol-v2.1-final/freeze-manifest.json",
           "sha256": "20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858"
         },
         {
+          "artifact_id": "t612-analysis-manifest",
           "relative_path": "results/analysis/protocol-v2.1-final/analysis-manifest.json",
           "sha256": "dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62"
         }
@@ -1908,6 +1943,7 @@
       "rq_scope": "cross-RQ",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-a-method-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "45aa5db4eb879a385da3e4a7eabfe509ceed475146f1593e891ba0cc859aaa4c",
@@ -1915,6 +1951,7 @@
           "t610_mechanical_artifact_identical": true
         },
         {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
@@ -1922,6 +1959,7 @@
           "t610_mechanical_artifact_identical": true
         },
         {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
@@ -1993,6 +2031,7 @@
       "rq_scope": "RQ1",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-a-method-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "45aa5db4eb879a385da3e4a7eabfe509ceed475146f1593e891ba0cc859aaa4c",
@@ -2064,6 +2103,7 @@
       "rq_scope": "RQ2",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
@@ -2135,6 +2175,7 @@
       "rq_scope": "RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
@@ -2206,6 +2247,15 @@
       "rq_scope": "RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-recovery-sensitivity",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-sensitivity-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "5ed47e4268c7e86b0c49d86978305b6ebf0b998f4b674688f39a96de8de3e331",
+          "size_bytes": 45860,
+          "t610_mechanical_artifact_identical": true
+        },
+        {
+          "artifact_id": "t612-analysis-diagnostics",
           "relative_path": "results/analysis/protocol-v2.1-final/diagnostics.json",
           "sha256": "f782f192964f69d24bf3d1dcfd6d6e3da11eae0bd974dab5844366fb1365380d"
         }
@@ -2236,6 +2286,7 @@
       "rq_scope": "registered-analysis",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-a-method-contrasts",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-contrasts.csv",
           "repeated_regeneration_identical": true,
           "sha256": "364109b193db209a35dd32338e4b7a21919c588e49b3b9f22898fce8d5d5ad4f",
@@ -2269,6 +2320,7 @@
       "rq_scope": "registered-analysis",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-a-method-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "45aa5db4eb879a385da3e4a7eabfe509ceed475146f1593e891ba0cc859aaa4c",
@@ -2302,6 +2354,7 @@
       "rq_scope": "RQ1/RQ2/RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-phase-a-root-records",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-root-records.csv",
           "repeated_regeneration_identical": true,
           "sha256": "e11ec69ba83055f315419fbba69e988e721c19e9cebad6575dc8bb30f064529c",
@@ -2335,6 +2388,7 @@
       "rq_scope": "registered-analysis",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
@@ -2368,6 +2422,7 @@
       "rq_scope": "registered-analysis",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-phase-b-method-contrasts",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-contrasts.csv",
           "repeated_regeneration_identical": true,
           "sha256": "10ce2d0f39c6e01702db8737749017197b066c9cb25ffff0f1d1ddecb33ffd71",
@@ -2401,6 +2456,7 @@
       "rq_scope": "RQ1/RQ2/RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-phase-b-root-records",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-root-records.csv",
           "repeated_regeneration_identical": true,
           "sha256": "1ad37b2862c94592f93c5a0749da5bf0ff4ff85e8afbea4e5f032021713f965d",
@@ -2434,6 +2490,7 @@
       "rq_scope": "registered-analysis",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
           "repeated_regeneration_identical": true,
           "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
@@ -2467,6 +2524,7 @@
       "rq_scope": "registered-analysis",
       "source_artifacts": [
         {
+          "artifact_id": "thesis-table-recovery-method-contrasts",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-contrasts.csv",
           "repeated_regeneration_identical": true,
           "sha256": "4860abf3de651a84e31dae19c07293ce957d17943ae4a1e285dd6fff9ae2d003",
@@ -2500,6 +2558,7 @@
       "rq_scope": "RQ1/RQ2/RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-recovery-root-records",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-root-records.csv",
           "repeated_regeneration_identical": true,
           "sha256": "6971a5326496c8ced0d3e74b87b5cd1f2df66a08118ae3130cd69803bd92aabc",
@@ -2533,6 +2592,7 @@
       "rq_scope": "RQ1/RQ2/RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-recovery-sensitivity",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-sensitivity-root-records.csv",
           "repeated_regeneration_identical": true,
           "sha256": "5ed47e4268c7e86b0c49d86978305b6ebf0b998f4b674688f39a96de8de3e331",
@@ -2566,6 +2626,7 @@
       "rq_scope": "registered-analysis",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-recovery-trajectories",
           "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-trajectory-records.csv",
           "repeated_regeneration_identical": true,
           "sha256": "3ef27d23f327e2f3140f202850badf2de34fa21e4a601be3f59d5ab7d56d972c",
@@ -2600,6 +2661,15 @@
       "rq_scope": "RQ3",
       "source_artifacts": [
         {
+          "artifact_id": "analysis-table-recovery-sensitivity",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-sensitivity-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "5ed47e4268c7e86b0c49d86978305b6ebf0b998f4b674688f39a96de8de3e331",
+          "size_bytes": 45860,
+          "t610_mechanical_artifact_identical": true
+        },
+        {
+          "artifact_id": "t612-analysis-diagnostics",
           "relative_path": "results/analysis/protocol-v2.1-final/diagnostics.json",
           "sha256": "f782f192964f69d24bf3d1dcfd6d6e3da11eae0bd974dab5844366fb1365380d"
         }
@@ -2625,7 +2695,7 @@
     "svg_hashsalt": "protocol-v2.1-final-t613"
   },
   "generator": {
-    "git_commit": "386ba4d25656bc931504bcd59109b56f0252bd4e",
+    "git_commit": "2232910fad20df4a82ec5f1f8e5f540f863aaf25",
     "matplotlib_version": "3.11.1",
     "source_files": [
       {
@@ -2634,7 +2704,7 @@
       },
       {
         "relative_path": "src/resilient_agents/evidence_v2/final_assets.py",
-        "sha256": "640b13512dd37db95e4f7e4927094c1df672eee1b8383ef00f93388eb1a8bea8"
+        "sha256": "24c8ec6d502fc2ac2d606d70b5395f16d3a3d9d233d2c11393a46b8c2fcf0b37"
       }
     ],
     "version": "t613-assets-v1"
