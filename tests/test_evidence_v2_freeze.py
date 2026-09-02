@@ -7,8 +7,11 @@ from pathlib import Path
 
 from resilient_agents.evidence_v2 import StudyEvidenceValidator
 from resilient_agents.evidence_v2.freeze import (
+    FREEZE_PACKAGE_SCHEMA_VERSION,
+    _sha256_bytes,
     _validate_freeze_time,
     _write_package_atomic,
+    validate_protocol_v21_final_freeze,
 )
 from resilient_agents.study import StudyStore
 from resilient_agents.study.pre_t610 import (
@@ -87,6 +90,23 @@ class EvidenceV2FreezeTests(unittest.TestCase):
                     manifest_bytes=manifest,
                     inventory_bytes=inventory,
                 )
+
+    def test_freeze_verifier_rejects_marker_manifest_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output_dir = root / "results/final-evidence/protocol-v2.1-final"
+            output_dir.mkdir(parents=True)
+            manifest = b"{}\n"
+            (output_dir / "freeze-manifest.json").write_bytes(manifest)
+            (output_dir / "run-manifest-inventory.jsonl").write_bytes(b"")
+            (output_dir / "FINALIZED").write_text(
+                f"schema_version={FREEZE_PACKAGE_SCHEMA_VERSION}\n"
+                "status=frozen\n"
+                f"manifest_sha256={_sha256_bytes(b'wrong')}\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(RuntimeError, "marker does not match"):
+                validate_protocol_v21_final_freeze(root)
 
 
 if __name__ == "__main__":

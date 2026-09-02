@@ -7,6 +7,7 @@ from .exports import EXPORT_PACKAGE_SCHEMA_VERSION, StudyExportEngine
 from .freeze import (
     FREEZE_PACKAGE_SCHEMA_VERSION,
     validate_and_freeze_protocol_v21_final,
+    validate_protocol_v21_final_freeze,
 )
 from .recovery import (
     MethodContrast,
@@ -59,4 +60,5 @@ __all__ = [
     "student_t_mean_interval",
     "trapezoidal_time_average",
     "validate_and_freeze_protocol_v21_final",
+    "validate_protocol_v21_final_freeze",
 ]

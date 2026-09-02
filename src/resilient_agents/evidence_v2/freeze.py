@@ -241,6 +241,133 @@ def _write_package_atomic(
     return manifest_sha256
 
 
+def validate_protocol_v21_final_freeze(repo_root: Path) -> dict[str, Any]:
+    """Verify the durable freeze envelope without recomputing scientific outcomes."""
+
+    repo_root = Path(repo_root).resolve()
+    output_dir = repo_root / FREEZE_RELATIVE_DIR
+    manifest_path = output_dir / "freeze-manifest.json"
+    inventory_path = output_dir / "run-manifest-inventory.jsonl"
+    marker_path = output_dir / "FINALIZED"
+    if not all(path.is_file() for path in (manifest_path, inventory_path, marker_path)):
+        raise RuntimeError("final-evidence freeze package is incomplete")
+
+    manifest_sha256 = sha256_file(manifest_path)
+    marker_fields: dict[str, str] = {}
+    for line in marker_path.read_text(encoding="utf-8").splitlines():
+        key, separator, value = line.partition("=")
+        if not separator or not key or key in marker_fields:
+            raise RuntimeError("final-evidence freeze marker is malformed")
+        marker_fields[key] = value
+    if marker_fields != {
+        "schema_version": str(FREEZE_PACKAGE_SCHEMA_VERSION),
+        "status": "frozen",
+        "manifest_sha256": manifest_sha256,
+    }:
+        raise RuntimeError("final-evidence freeze marker does not match manifest")
+
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if not isinstance(manifest, Mapping):
+        raise TypeError("final-evidence freeze manifest must be an object")
+    expected_identity = {
+        "schema_version": FREEZE_PACKAGE_SCHEMA_VERSION,
+        "status": "frozen",
+        "scientific_recipe_id": FINAL_STUDY_ID,
+        "accepted_execution_instance_id": ACCEPTED_EXECUTION_ID,
+        "execution_source_git_commit": EXPECTED_EXECUTION_SOURCE_COMMIT,
+        "recipe_sha256": EXPECTED_RECIPE_SHA256,
+        "plan_sha256": EXPECTED_PLAN_SHA256,
+        "artifact_count": 3255,
+        "run_bundle_count": 600,
+        "scientific_outcomes_interpreted": False,
+    }
+    if any(manifest.get(key) != value for key, value in expected_identity.items()):
+        raise RuntimeError("final-evidence freeze manifest identity is invalid")
+    if (
+        manifest.get("progress") != EXPECTED_PROGRESS
+        or manifest.get("artifact_role_counts") != EXPECTED_ROLE_COUNTS
+        or manifest.get("artifact_evidence_class_counts")
+        != EXPECTED_EVIDENCE_CLASS_COUNTS
+    ):
+        raise RuntimeError("final-evidence freeze manifest counts are invalid")
+
+    inventory_metadata = manifest.get("run_manifest_inventory")
+    if not isinstance(inventory_metadata, Mapping):
+        raise TypeError("run manifest inventory metadata must be an object")
+    if (
+        inventory_metadata.get("relative_path")
+        != (FREEZE_RELATIVE_DIR / inventory_path.name).as_posix()
+        or inventory_metadata.get("record_count") != 600
+        or inventory_metadata.get("sha256") != sha256_file(inventory_path)
+    ):
+        raise RuntimeError("run manifest inventory integrity is invalid")
+    run_ids: set[str] = set()
+    for number, line in enumerate(
+        inventory_path.read_text(encoding="utf-8").splitlines(), start=1
+    ):
+        try:
+            entry = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise RuntimeError(
+                f"run manifest inventory line {number} is invalid JSON"
+            ) from exc
+        if not isinstance(entry, Mapping) or set(entry) != {
+            "artifact_id",
+            "manifest_sha256",
+            "run_id",
+            "source_git_commit",
+        }:
+            raise RuntimeError(f"run manifest inventory line {number} is invalid")
+        run_id = entry["run_id"]
+        if (
+            not isinstance(run_id, str)
+            or not run_id.startswith(ACCEPTED_EXECUTION_ID + "--")
+            or run_id in run_ids
+            or entry["source_git_commit"] != EXPECTED_EXECUTION_SOURCE_COMMIT
+        ):
+            raise RuntimeError(
+                f"run manifest inventory line {number} is mixed/duplicate"
+            )
+        run_ids.add(run_id)
+    if len(run_ids) != 600:
+        raise RuntimeError(
+            "run manifest inventory must contain exactly 600 unique runs"
+        )
+
+    study_dir = repo_root / "results" / "studies" / ACCEPTED_EXECUTION_ID
+    if manifest.get("study_manifest_sha256") != sha256_file(
+        study_dir / "manifest.json"
+    ) or manifest.get("study_finalization_marker_sha256") != sha256_file(
+        study_dir / "FINALIZED"
+    ):
+        raise RuntimeError("frozen Study envelope integrity is invalid")
+    for key in ("validation_report", "evidence_handoff_package"):
+        reference = manifest.get(key)
+        if not isinstance(reference, Mapping):
+            raise TypeError(f"{key} reference must be an object")
+        path = repo_root / str(reference.get("relative_path"))
+        if reference.get("sha256") != sha256_file(path):
+            raise RuntimeError(f"frozen {key} integrity is invalid")
+
+    validator = manifest.get("validator")
+    if not isinstance(validator, Mapping) or not isinstance(
+        validator.get("source_files"), list
+    ):
+        raise TypeError("freeze validator provenance is invalid")
+    for record in validator["source_files"]:
+        if not isinstance(record, Mapping):
+            raise TypeError("freeze validator source record must be an object")
+        path = repo_root / str(record.get("relative_path"))
+        if record.get("sha256") != sha256_file(path):
+            raise RuntimeError("freeze validator source file hash mismatch")
+    return {
+        "valid": True,
+        "freeze_manifest_sha256": manifest_sha256,
+        "run_manifest_inventory_sha256": inventory_metadata["sha256"],
+        "run_bundle_count": len(run_ids),
+    }
+
+
 def validate_and_freeze_protocol_v21_final(
     repo_root: Path,
     *,
