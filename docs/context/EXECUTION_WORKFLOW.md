@@ -135,13 +135,12 @@ Final stochastic scientific evidence remains on the protocol-approved thesis-mac
 
 ## Remaining scientific evidence flow
 
-The protocol/backend/pre-final readiness, T-610 execution and T-611 validation/freeze work are complete. Scientifically the remaining sequence is:
+The protocol/backend/pre-final readiness, T-610 execution, T-611 validation/freeze and T-612 predeclared analysis work are complete. Scientifically the remaining sequence is:
 
-1. execute the predeclared root-level analysis/sensitivity diagnostics from the T-611 frozen evidence;
-2. generate final figures/tables/data and evidence handoff;
-3. obtain explicit user approval before Results/Discussion/WP7 writing.
+1. generate final figures/tables/data and evidence handoff from the finalized T-612 package;
+2. obtain explicit user approval before Results/Discussion/WP7 writing.
 
-Repository cleanup and UI rebuilding are allowed before step 1 and do not authorize it.
+Completion of T-612 does not itself authorize T-613 or WP7.
 
 ## Downstream handoff
 
