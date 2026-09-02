@@ -1,0 +1,2751 @@
+{
+  "accepted_execution_instance_id": "protocol-v2.1-final--t610-recovery-01",
+  "assets": [
+    {
+      "asset_id": "FIG-RQ1-002-FINAL",
+      "caption": "Final nominal return by method with pointwise 95% Student-t intervals over 12 roots.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "phase-a-final-value",
+      "intended_use": [
+        "main-thesis"
+      ],
+      "inventory_category": 2,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq1-002-final.svg",
+          "sha256": "757d794df514e2a06135ebc177358eaecf510da6bd5f7f3a18f29997fa649202",
+          "size_bytes": 37873
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq1-002-final.pdf",
+          "sha256": "5a53ced462b54d792abfa1d84514e7261d371fabb8ed4ac7080f3b29695d51b3",
+          "size_bytes": 17188
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq1-002-final.png",
+          "sha256": "77cd496577f3debbb2c4439a9eb2fd3b3753d5d6e342251b52b846cf5bdc0145",
+          "size_bytes": 50759
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ1",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-a-method-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "45aa5db4eb879a385da3e4a7eabfe509ceed475146f1593e891ba0cc859aaa4c",
+          "size_bytes": 1139,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ1-003-TIME-AVERAGE",
+      "caption": "Interaction-axis time-average return, kept separate from final performance.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "phase-a-time-average",
+      "intended_use": [
+        "main-thesis"
+      ],
+      "inventory_category": 3,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq1-003-time-average.svg",
+          "sha256": "6a34b920e135f604af0bba2d58847f071c6182ac4f8bbaaa3ffccadb6b020386",
+          "size_bytes": 40365
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq1-003-time-average.pdf",
+          "sha256": "7cd927536fb454571957f12adeb04cab80ba2fa7e8f6b256527519526c6b3e85",
+          "size_bytes": 17417
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq1-003-time-average.png",
+          "sha256": "78648abca87f88a1cce6120bd298f7220e0157d13cf67aadde37e6845e916971",
+          "size_bytes": 55568
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ1",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-a-method-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "45aa5db4eb879a385da3e4a7eabfe509ceed475146f1593e891ba0cc859aaa4c",
+          "size_bytes": 1139,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ1-004-FINAL-ROOTS",
+      "caption": "Root-level final nominal-return distribution after equal-layout reduction.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "phase-a-final-value",
+      "intended_use": [
+        "appendix"
+      ],
+      "inventory_category": 4,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq1-004-final-roots.svg",
+          "sha256": "d06e8ead5185d344b90cd78f6bc74d15e4e50d6f2e134c7e004724d5555f5490",
+          "size_bytes": 46187
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq1-004-final-roots.pdf",
+          "sha256": "7e8540e42036ed3cfcabaeae2eb9dc0d0b9b39a51d1521379de67fd0aa302f24",
+          "size_bytes": 18372
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq1-004-final-roots.png",
+          "sha256": "adabb3f7648d29550134ea946d3d337748c163ca1a0479a1bd5e670bed891c26",
+          "size_bytes": 71660
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ1",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-phase-a-root-records",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "e11ec69ba83055f315419fbba69e988e721c19e9cebad6575dc8bb30f064529c",
+          "size_bytes": 4915,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ1-005-TIME-ROOTS",
+      "caption": "Root-level time-average return distribution after equal-layout reduction.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "phase-a-time-average",
+      "intended_use": [
+        "appendix"
+      ],
+      "inventory_category": 5,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq1-005-time-roots.svg",
+          "sha256": "86a134cd5844856bbed005cb510e157734dc6c3cf42b5f44ec86804b6253aa9a",
+          "size_bytes": 45410
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq1-005-time-roots.pdf",
+          "sha256": "26a62036dbd6782da120417d920cdf2ca087f4ec2c4d24606ef687c8fb634929",
+          "size_bytes": 18598
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq1-005-time-roots.png",
+          "sha256": "7fb5353a13a8c3b0afe86fa678c144ba0247eb67788b5c2d184d8127911471cf",
+          "size_bytes": 87969
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ1",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-phase-a-root-records",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "e11ec69ba83055f315419fbba69e988e721c19e9cebad6575dc8bb30f064529c",
+          "size_bytes": 4915,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ1-007-CONTRASTS",
+      "caption": "Declared root-paired A-minus-B contrasts; intervals are descriptive pointwise t intervals.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "declared-root-paired-contrasts",
+      "intended_use": [
+        "appendix"
+      ],
+      "inventory_category": 7,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq1-007-contrasts.svg",
+          "sha256": "8ba6dc1eb95491aba80077ce1acf8f6ff1c52bcd8d5b5845ffe6e3543f7ab904",
+          "size_bytes": 84574
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq1-007-contrasts.pdf",
+          "sha256": "dc01838c1dacb3628e13063050c7f22525360a0a70d5e34f32c5491f3e0e56b9",
+          "size_bytes": 22789
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq1-007-contrasts.png",
+          "sha256": "d90f3b2d4e799249d83f025acd2d41532adfd85fe28bd00f33aa14bf641c2eb0",
+          "size_bytes": 151001
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ1",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-a-method-contrasts",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-contrasts.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "364109b193db209a35dd32338e4b7a21919c588e49b3b9f22898fce8d5d5ad4f",
+          "size_bytes": 11671,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ2-008-ADAPTATION",
+      "caption": "Adaptation benefit by method and frozen condition; positive values mean lower Adaptive than Frozen loss.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "adaptation-benefit",
+      "intended_use": [
+        "main-thesis"
+      ],
+      "inventory_category": 8,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq2-008-adaptation.svg",
+          "sha256": "4d479c4a24634a1092fec01dec44c3e92a6c1a59e6326b27f98a33b1152434f1",
+          "size_bytes": 56036
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq2-008-adaptation.pdf",
+          "sha256": "797261bc1d711a1e4a3bc6f62a21c8d67adf816b6160fd78fbb0056d1d4235f8",
+          "size_bytes": 20955
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq2-008-adaptation.png",
+          "sha256": "99036e08042231879dcffbfc48c6a988c83427b36f223715439cdd8c098c0950",
+          "size_bytes": 109188
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ2",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
+          "size_bytes": 6138,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ2-009-LOSSES",
+      "caption": "Frozen and Adaptive disturbance-associated loss remain distinct quantities.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "frozen-loss;adaptive-loss",
+      "intended_use": [
+        "main-thesis"
+      ],
+      "inventory_category": 9,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq2-009-losses.svg",
+          "sha256": "a44d44e75e7171f2e0668c680b2226fa42339abaa29c3befcfa16061f86e2fa6",
+          "size_bytes": 100045
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq2-009-losses.pdf",
+          "sha256": "252026d58e5784c1419199ec1bc51dcc16330f5be1617c7c47804dbac09ee374",
+          "size_bytes": 21971
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq2-009-losses.png",
+          "sha256": "2057907e56d4ebe8b21e4182547c9c32e4b84c3795c1eaeb3d70d49ff25e08ec",
+          "size_bytes": 133524
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ2",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
+          "size_bytes": 6138,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ2-010-CONDITIONS",
+      "caption": "Condition-small-multiple view of adaptation benefit on consistent scales.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "adaptation-benefit",
+      "intended_use": [
+        "main-thesis",
+        "appendix"
+      ],
+      "inventory_category": 10,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq2-010-conditions.svg",
+          "sha256": "4733cf081323edf164e84e3826c63a38912250d9baa9798ea137dd520992c186",
+          "size_bytes": 82669
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq2-010-conditions.pdf",
+          "sha256": "3f49164ecfc22304a738e63aef0031e714d8a026fb89ba44a99b19af72fd80c1",
+          "size_bytes": 20255
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq2-010-conditions.png",
+          "sha256": "e022a1fe86297a25b598b607fffd70e4c2fe61068e567b9cf0da41fe5a28985a",
+          "size_bytes": 127298
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ2",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
+          "size_bytes": 6138,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ2-011-DUMBBELLS",
+      "caption": "Summary Frozen-to-Adaptive dumbbells by method and condition.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "frozen-loss;adaptive-loss",
+      "intended_use": [
+        "appendix"
+      ],
+      "inventory_category": 11,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq2-011-dumbbells.svg",
+          "sha256": "231046e1c2a0a131dc91960894a6be33236134ad635090324eb54ad9526d4e24",
+          "size_bytes": 92474
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq2-011-dumbbells.pdf",
+          "sha256": "4402dd59f2b5515a8b21c3c89a697df3bf92dfd9e96fc120549c2c469ff64a7b",
+          "size_bytes": 20675
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq2-011-dumbbells.png",
+          "sha256": "7787bd593c2932b143e75fc6e9187e937377dd750029baca2af956d45d90ce2e",
+          "size_bytes": 139313
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ2",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
+          "size_bytes": 6138,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ2-012-BENEFIT-ROOTS",
+      "caption": "Root-level adaptation-benefit distributions by method and condition.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "adaptation-benefit",
+      "intended_use": [
+        "appendix"
+      ],
+      "inventory_category": 12,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq2-012-benefit-roots.svg",
+          "sha256": "bbf1921a2c55f7f85c781d82e75350becccea0c97ef1f66cee12cf946570da1a",
+          "size_bytes": 129126
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq2-012-benefit-roots.pdf",
+          "sha256": "8fbe045d662ff2a154190ced4c77c52dd6c0236beba6208d28b91b41df4cf4f8",
+          "size_bytes": 29276
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq2-012-benefit-roots.png",
+          "sha256": "ae97b3d1e6cca278a80f9592314bc8b5d428732cddaf7dbc1c79d3f0316f094c",
+          "size_bytes": 233365
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ2",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-phase-b-root-records",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "1ad37b2862c94592f93c5a0749da5bf0ff4ff85e8afbea4e5f032021713f965d",
+          "size_bytes": 28891,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ2-013-HEATMAP",
+      "caption": "Numeric heatmap of stored mean adaptation benefit; higher is better.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "adaptation-benefit",
+      "intended_use": [
+        "appendix"
+      ],
+      "inventory_category": 13,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq2-013-heatmap.svg",
+          "sha256": "e33a5866b9c44022462f7835cbb039090422cf8189cd3fa247138ec252e3e718",
+          "size_bytes": 64972
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq2-013-heatmap.pdf",
+          "sha256": "ede3a2fa3630bed1097a00630b8977d21ece823c25b4742618dc9370f84b1ef6",
+          "size_bytes": 24678
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq2-013-heatmap.png",
+          "sha256": "243ef03fae7fe43573573ffd1da0eb23f1c44862297b7b8335d29ea1deb75e72",
+          "size_bytes": 124501
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ2",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
+          "size_bytes": 6138,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ2-014-CONTRASTS",
+      "caption": "All declared RQ2 root-paired A-minus-B contrasts by condition and estimand.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "declared-root-paired-contrasts",
+      "intended_use": [
+        "appendix"
+      ],
+      "inventory_category": 14,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq2-014-contrasts.svg",
+          "sha256": "a336af5cc660bfb64d1281d41fcca07039f92dbc4542b3a8df95f01bcd78a175",
+          "size_bytes": 421985
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq2-014-contrasts.pdf",
+          "sha256": "e0b43d616e759a141e6e39b4c009211b27116509cad0b0d6f436537828e67374",
+          "size_bytes": 50510
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq2-014-contrasts.png",
+          "sha256": "aa0ec2b9e029f82ad9ebf5d4779c0918ffc439dd5ad1196dc3b2e2cc3fa0200a",
+          "size_bytes": 789784
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ2",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-b-method-contrasts",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-contrasts.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "10ce2d0f39c6e01702db8737749017197b066c9cb25ffff0f1d1ddecb33ffd71",
+          "size_bytes": 84399,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ2-015-PAIRED-ROOTS",
+      "caption": "Root-level Frozen-to-Adaptive paired diagnostics; connecting lines do not imply an additional estimand.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "frozen-loss;adaptive-loss",
+      "intended_use": [
+        "appendix"
+      ],
+      "inventory_category": 15,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq2-015-paired-roots.svg",
+          "sha256": "36d3456e9a2e2f4a3a86f9cf57c655784a0481963a901549e0674628d65b34d7",
+          "size_bytes": 190652
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq2-015-paired-roots.pdf",
+          "sha256": "ff92466f259c7c3e1e4f3d48facc372b0d71591fcf2bfac6bf8420e5199eb11c",
+          "size_bytes": 42724
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq2-015-paired-roots.png",
+          "sha256": "11f958728096f9556f0eb50fa52a7a51d61933b82f17804dd92e9e9d0994e89d",
+          "size_bytes": 542643
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ2",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-phase-b-root-records",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "1ad37b2862c94592f93c5a0749da5bf0ff4ff85e8afbea4e5f032021713f965d",
+          "size_bytes": 28891,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ3-016-TRAJECTORIES",
+      "caption": "Stored per-root directed-gap trajectories for the primary action-remap family; dashed line is tolerance 0.10.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "directed-gap-trajectory",
+      "intended_use": [
+        "main-thesis"
+      ],
+      "inventory_category": 16,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq3-016-trajectories.svg",
+          "sha256": "ff6d5400d2320a63f9586f19d773af768a0ca48b443b9d3927530a012e9152ec",
+          "size_bytes": 100431
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq3-016-trajectories.pdf",
+          "sha256": "0f23246fa08f4b3243709ee31c9572f1067f8a68dac289149297515767c9e779",
+          "size_bytes": 24007
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq3-016-trajectories.png",
+          "sha256": "29a10295fc6cdf17c2b3024008eeb0554f91235d1b4aaaafeee659889e70357e",
+          "size_bytes": 1688620
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-recovery-trajectories",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-trajectory-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "3ef27d23f327e2f3140f202850badf2de34fa21e4a601be3f59d5ab7d56d972c",
+          "size_bytes": 272288,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ3-017-RECOVERED",
+      "caption": "Recovered roots at primary tolerance 0.10; unrecovered roots remain right-censored.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "recovered-proportion",
+      "intended_use": [
+        "main-thesis"
+      ],
+      "inventory_category": 17,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq3-017-recovered.svg",
+          "sha256": "85ab0521b41aba3332f3d0e687ed3db57e418b54fff99a64744883f9a9396dbf",
+          "size_bytes": 118981
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq3-017-recovered.pdf",
+          "sha256": "9db6c3aa635073ec76654aa31c8cf33c6f0aa9ad9de3b06da4bba0eda4b584e4",
+          "size_bytes": 30088
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq3-017-recovered.png",
+          "sha256": "63de275aee919009010d008984382567b5bd14aafa520754a1f74ffb89c32656",
+          "size_bytes": 150199
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
+          "size_bytes": 4122,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ3-018-RESTRICTED",
+      "caption": "Censoring-aware restricted recovery delay through the 256-interaction horizon.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "restricted-recovery-delay",
+      "intended_use": [
+        "main-thesis"
+      ],
+      "inventory_category": 18,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq3-018-restricted.svg",
+          "sha256": "d980e6f3d67f5d1e3963b5f2cc7b73f86d335e7a4dd01f5092a708dfc9551b7a",
+          "size_bytes": 64854
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq3-018-restricted.pdf",
+          "sha256": "9c5097e4f6c239327b16aa0eeb7d335902a4ab373b5b7bac7af029a5a4509496",
+          "size_bytes": 18227
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq3-018-restricted.png",
+          "sha256": "77e8f3c7b0f07de628a21be90d8d4cd00e1a52f425ff6b07e98b11610c98b63f",
+          "size_bytes": 113096
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
+          "size_bytes": 4122,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ3-019-CONDITIONAL",
+      "caption": "Observed recovery time only among recovered roots; displayed n excludes right-censored roots.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "conditional-recovery-time",
+      "intended_use": [
+        "main-thesis"
+      ],
+      "inventory_category": 19,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq3-019-conditional.svg",
+          "sha256": "81ed7657b50f2611ef3df802aa8889913c4818380be3ace7f60816aee6b7077c",
+          "size_bytes": 64690
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq3-019-conditional.pdf",
+          "sha256": "40ba0164207addc587f46faea8f46b3f56dc900078b5f97d759d73a83396989a",
+          "size_bytes": 19429
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq3-019-conditional.png",
+          "sha256": "1749ff939f64d67d3ce65ccf644dc936df24b2ce8fe1f4d362c35d06d252068b",
+          "size_bytes": 116204
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
+          "size_bytes": 4122,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ3-020-CONDITIONS",
+      "caption": "Recovery proportion across all frozen conditions; action-remaps are the primary recovery axis.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "recovered-proportion",
+      "intended_use": [
+        "appendix"
+      ],
+      "inventory_category": 20,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq3-020-conditions.svg",
+          "sha256": "1174cf3febf03734be97bb5f8f3ba49fd36e1c28f00e952b75c6d7fbfa0eedee",
+          "size_bytes": 150382
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq3-020-conditions.pdf",
+          "sha256": "ce7698fe6c5a7b906b2fe7a1f29063819db5939b7540ec587b8b6a3c7a106ebb",
+          "size_bytes": 32177
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq3-020-conditions.png",
+          "sha256": "29a08c75b51e6765d0a058453660de04a4bffa59b9e0067f568f62a1bfe1d13a",
+          "size_bytes": 288844
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
+          "size_bytes": 4122,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ3-021-ROOT-TRAJECTORIES",
+      "caption": "Detailed stored root trajectories by method and primary condition; no trajectory averaging.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "directed-gap-trajectory",
+      "intended_use": [
+        "appendix"
+      ],
+      "inventory_category": 21,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq3-021-root-trajectories.svg",
+          "sha256": "4e6e4a41a484b8be2ea83b9eb4cb3e73525fe80c6ef3747fe38dfc610da246f3",
+          "size_bytes": 178159
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq3-021-root-trajectories.pdf",
+          "sha256": "9a81ba43cea10d43b83c6647717a466d176987c059af3ea63b2dff1bd293e967",
+          "size_bytes": 27138
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq3-021-root-trajectories.png",
+          "sha256": "2b6af620c46e18b1b8c1753a119cc6b0fa1ee8a33aba6032989fda821a66cb93",
+          "size_bytes": 1453772
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-recovery-trajectories",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-trajectory-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "3ef27d23f327e2f3140f202850badf2de34fa21e4a601be3f59d5ab7d56d972c",
+          "size_bytes": 272288,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ3-022-CENSORING",
+      "caption": "Recovered versus right-censored root composition at tolerance 0.10.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "recovery-status",
+      "intended_use": [
+        "appendix"
+      ],
+      "inventory_category": 22,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq3-022-censoring.svg",
+          "sha256": "61e1e3a3b0e6efbc90537af584ae9c0f782331f6c3480ab5407f3a44f5391255",
+          "size_bytes": 49219
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq3-022-censoring.pdf",
+          "sha256": "468793dc09868c778fb21b951541a87097460d355188c8fa1f6c30989297f7ce",
+          "size_bytes": 17179
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq3-022-censoring.png",
+          "sha256": "e2d14d47ec53b45c7fe88408038c7ff2a9f6ebbf87977049f4d28dc46272c743",
+          "size_bytes": 124254
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
+          "size_bytes": 4122,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ3-023-SENSITIVITY",
+      "caption": "Predeclared 0.05/0.10/0.20 tolerance sensitivity; 0.10 remains primary.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "recovered-proportion-sensitivity",
+      "intended_use": [
+        "main-thesis",
+        "appendix"
+      ],
+      "inventory_category": 23,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq3-023-sensitivity.svg",
+          "sha256": "fb48d5fdf9492d41a1a9f86c0680637a67df64bcb2e9f69220cde69aeaaea997",
+          "size_bytes": 57426
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq3-023-sensitivity.pdf",
+          "sha256": "d626977b95e25112ca063cbf55dae19a3b53178ae2e38e2bf1c487ffdb05fcb4",
+          "size_bytes": 19883
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq3-023-sensitivity.png",
+          "sha256": "6e8f4fff44494a1c27645a07bb42caf789b5d3eff62c9a12c97e0360d892bbd6",
+          "size_bytes": 214471
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-recovery-sensitivity",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-sensitivity-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "5ed47e4268c7e86b0c49d86978305b6ebf0b998f4b674688f39a96de8de3e331",
+          "size_bytes": 45860,
+          "t610_mechanical_artifact_identical": true
+        },
+        {
+          "artifact_id": "t612-analysis-diagnostics",
+          "relative_path": "results/analysis/protocol-v2.1-final/diagnostics.json",
+          "sha256": "f782f192964f69d24bf3d1dcfd6d6e3da11eae0bd974dab5844366fb1365380d"
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ3-024-CONTRASTS",
+      "caption": "Declared recovery-status and restricted-delay A-minus-B contrasts on the primary axis.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "declared-root-paired-contrasts",
+      "intended_use": [
+        "appendix"
+      ],
+      "inventory_category": 24,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq3-024-contrasts.svg",
+          "sha256": "67d96272bed2acd5534eaefa70245c9903c29899569d2071d69f0cbf1926cd5e",
+          "size_bytes": 162709
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq3-024-contrasts.pdf",
+          "sha256": "fd7b71a32ed11236ed76eeae48e21acefc28a0477146b4b9bc843675db6b4130",
+          "size_bytes": 28942
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq3-024-contrasts.png",
+          "sha256": "eb976c6ea19fdfd6387a7ed602290c6b97c29b886c5cc60920b624b4fc553d06",
+          "size_bytes": 307135
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-recovery-method-contrasts",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-contrasts.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "4860abf3de651a84e31dae19c07293ce957d17943ae4a1e285dd6fff9ae2d003",
+          "size_bytes": 42439,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-RQ3-025-TIMELINE",
+      "caption": "Stored recovery and confirmation times; right-censored roots are marked at the horizon without fake recovery times.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "recovery-time;confirmation-time;censoring",
+      "intended_use": [
+        "appendix"
+      ],
+      "inventory_category": 25,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-rq3-025-timeline.svg",
+          "sha256": "2d8d58886339ef48db192bb76060b8c4e7e679a380245f181ee64738cb692224",
+          "size_bytes": 206180
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-rq3-025-timeline.pdf",
+          "sha256": "482c53b480e0ca4bdb85e0e4792dab95dd21483f0bedc0831cfffa1bb09818d8",
+          "size_bytes": 37538
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-rq3-025-timeline.png",
+          "sha256": "1af2ec89732782ead47acbdabce8aa4d32910f58552bbc7e17c706a5c19efb42",
+          "size_bytes": 274051
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-recovery-root-records",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "6971a5326496c8ced0d3e74b87b5cd1f2df66a08118ae3130cd69803bd92aabc",
+          "size_bytes": 27479,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-METHOD-026-EXPERIMENT-FLOW",
+      "caption": "Protocol flow; exact checkpoints precede matched FN/FD/AN/AD branches.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "protocol-flow",
+      "intended_use": [
+        "main-thesis",
+        "defense"
+      ],
+      "inventory_category": 26,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-method-026-experiment-flow.svg",
+          "sha256": "ed498cbdbd97f106719dcbec3963eddd77de739484e11f05e4260705a513d827",
+          "size_bytes": 28139
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-method-026-experiment-flow.pdf",
+          "sha256": "1c2176919bdefa7cc505ad74455b40e807a78bb8a478bd7d12cee0c14171cec8",
+          "size_bytes": 14470
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-method-026-experiment-flow.png",
+          "sha256": "080cb1bf59db09eeb6eb2f8dfcdbd379fbe34cd39703763230f4384dda5bcd61",
+          "size_bytes": 69049
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "methodology",
+      "source_artifacts": [
+        {
+          "artifact_id": "t612-analysis-manifest",
+          "relative_path": "results/analysis/protocol-v2.1-final/analysis-manifest.json",
+          "sha256": "dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62"
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-METHOD-027-RQ-MAP",
+      "caption": "Map from each research question to its frozen estimands and registered outputs.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "rq-evidence-map",
+      "intended_use": [
+        "main-thesis",
+        "defense"
+      ],
+      "inventory_category": 27,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-method-027-rq-map.svg",
+          "sha256": "6e49aefb46146c84badbff0463c8589a4b787dae28da4c9ec0a506cfbe02ca18",
+          "size_bytes": 30874
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-method-027-rq-map.pdf",
+          "sha256": "490224a65b8b43a70cd6f042480f9ba99d92945970fbc5325b53ef7be248e0c9",
+          "size_bytes": 14361
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-method-027-rq-map.png",
+          "sha256": "056c9b167558e05fbe0eaa0cd2dad440899b3d397557b890f58bfd0023601ebf",
+          "size_bytes": 76293
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "methodology",
+      "source_artifacts": [
+        {
+          "artifact_id": "t612-analysis-manifest",
+          "relative_path": "results/analysis/protocol-v2.1-final/analysis-manifest.json",
+          "sha256": "dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62"
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-METHOD-028-LINEAGE",
+      "caption": "Accepted-evidence lineage; the failed 216-job attempt is excluded.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "evidence-lineage",
+      "intended_use": [
+        "main-thesis",
+        "appendix",
+        "defense"
+      ],
+      "inventory_category": 28,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-method-028-lineage.svg",
+          "sha256": "412247de8bf869569acdfc336b6d01a0e7c39c0421a9a93745dc54a3af456bae",
+          "size_bytes": 26058
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-method-028-lineage.pdf",
+          "sha256": "57eec179a84e4bb878dfeba2a4d16c0bb4b813d15cfe4e7a917b194da134e84c",
+          "size_bytes": 13159
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-method-028-lineage.png",
+          "sha256": "9ab03f1ccf0804bdaf65a843e80bbdf7da3380da7e98991bf94b8c2e3a871ac0",
+          "size_bytes": 65194
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "methodology",
+      "source_artifacts": [
+        {
+          "artifact_id": "t611-freeze-manifest",
+          "relative_path": "results/final-evidence/protocol-v2.1-final/freeze-manifest.json",
+          "sha256": "20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858"
+        },
+        {
+          "artifact_id": "t612-analysis-manifest",
+          "relative_path": "results/analysis/protocol-v2.1-final/analysis-manifest.json",
+          "sha256": "dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62"
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-DEF-029-ALL-RQ",
+      "caption": "Defense-only overview with distinct panels and no composite score or universal ranking.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "distinct-panel-descriptive-summary",
+      "intended_use": [
+        "defense"
+      ],
+      "inventory_category": 29,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-def-029-all-rq.svg",
+          "sha256": "2467d3892700193dfaa501755eb385e6d2fe455c43d57088ce5c30d80a30b1c7",
+          "size_bytes": 80490
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-def-029-all-rq.pdf",
+          "sha256": "b4076c129246751e0155544308975fae1988441b227990e64989971cc7c5cb59",
+          "size_bytes": 22773
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-def-029-all-rq.png",
+          "sha256": "2aa954955244f03ef8fac17b98fa2cf0fce337533fd0fcd43dce5e5ae670bac0",
+          "size_bytes": 205848
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "cross-RQ",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-a-method-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "45aa5db4eb879a385da3e4a7eabfe509ceed475146f1593e891ba0cc859aaa4c",
+          "size_bytes": 1139,
+          "t610_mechanical_artifact_identical": true
+        },
+        {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
+          "size_bytes": 6138,
+          "t610_mechanical_artifact_identical": true
+        },
+        {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
+          "size_bytes": 4122,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-DEF-030-RQ1-FINAL",
+      "caption": "Large-label defense variant of the RQ1 final-performance figure.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "phase-a-final-value",
+      "intended_use": [
+        "defense"
+      ],
+      "inventory_category": 30,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-def-030-rq1-final.svg",
+          "sha256": "2f334c159c65768955b4053e3aa340e280d32105e115c72fc14c2d5a4c706499",
+          "size_bytes": 37897
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-def-030-rq1-final.pdf",
+          "sha256": "54652d7da4c70bf0d840fdef481f9da4bf64b63a2ce410c04179a57969dc13c6",
+          "size_bytes": 17239
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-def-030-rq1-final.png",
+          "sha256": "c3d9aef25688626e807f8d4e0c1b24f35f891d9fca477dd5a3ec70910bb49fd7",
+          "size_bytes": 73218
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ1",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-a-method-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "45aa5db4eb879a385da3e4a7eabfe509ceed475146f1593e891ba0cc859aaa4c",
+          "size_bytes": 1139,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-DEF-030-RQ2-ADAPTATION",
+      "caption": "Large-label defense variant of the RQ2 adaptation-benefit figure.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "adaptation-benefit",
+      "intended_use": [
+        "defense"
+      ],
+      "inventory_category": 30,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-def-030-rq2-adaptation.svg",
+          "sha256": "49c30031d320349edd59d631f656744e6bde0c1cd0e2987b7197af63de8c7a61",
+          "size_bytes": 56058
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-def-030-rq2-adaptation.pdf",
+          "sha256": "0e4f8abd33a7af252abef4bcd963e010282269818e10df4813248d7cdf7a43ca",
+          "size_bytes": 20964
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-def-030-rq2-adaptation.png",
+          "sha256": "3effec1d7b117db2b954d82231bd6ae9f294e3a00942227a0acd0719c55b341c",
+          "size_bytes": 162144
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ2",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
+          "size_bytes": 6138,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-DEF-030-RQ3-RECOVERED",
+      "caption": "Large-label defense variant of the RQ3 recovered-proportion figure.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "recovered-proportion",
+      "intended_use": [
+        "defense"
+      ],
+      "inventory_category": 30,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-def-030-rq3-recovered.svg",
+          "sha256": "9b69917bc1c9b1fea70b472d8066fb83a379a2f6f2f8715d5e636f05fd4998ac",
+          "size_bytes": 118983
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-def-030-rq3-recovered.pdf",
+          "sha256": "9de7794ea3c32bc11ae110cd497cdd1402fc92c2ff5b4a119e5e2733996f15ce",
+          "size_bytes": 30020
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-def-030-rq3-recovered.png",
+          "sha256": "4107da5f3a5a47f078518f1cd1f985590a43551c8883eb2da5b57565b6a4ad14",
+          "size_bytes": 203210
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
+          "size_bytes": 4122,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "FIG-DEF-030-RQ3-SENSITIVITY",
+      "caption": "Large-label defense variant of the predeclared tolerance-sensitivity figure.",
+      "condition_scope": "frozen-protocol-scope",
+      "estimand_scope": "recovered-proportion-sensitivity",
+      "intended_use": [
+        "defense"
+      ],
+      "inventory_category": 30,
+      "kind": "figure",
+      "outputs": [
+        {
+          "format": "svg",
+          "relative_path": "figures/fig-def-030-rq3-sensitivity.svg",
+          "sha256": "c6348029237b30d15580441a2743812e495b305f7ed81c356d286b22ed2cb773",
+          "size_bytes": 57419
+        },
+        {
+          "format": "pdf",
+          "relative_path": "figures/fig-def-030-rq3-sensitivity.pdf",
+          "sha256": "5831bf35b07dfe1992ec679d1c1e3d247a30337c1b6be422920fa7e8ab1ec7c8",
+          "size_bytes": 19810
+        },
+        {
+          "format": "png",
+          "relative_path": "figures/fig-def-030-rq3-sensitivity.png",
+          "sha256": "8ea6dbd33fb6c80e8c2a527f2a16cdead03ba702c5a2d12f4e3afa0df1c7ffa9",
+          "size_bytes": 287179
+        }
+      ],
+      "presentation_parameters": {
+        "colorblind_safe_palette": {
+          "dqn": "#CC79A7",
+          "dyna_q_plus": "#009E73",
+          "ppo": "#D55E00",
+          "q_learning": "#0072B2",
+          "sarsa": "#E69F00"
+        },
+        "condition_order": [
+          "action-remap-cycle-clockwise",
+          "action-remap-swap-right-down",
+          "action-failure-0.15",
+          "observation-corruption-0.05"
+        ],
+        "method_order": [
+          "q_learning",
+          "sarsa",
+          "dyna_q_plus",
+          "dqn",
+          "ppo"
+        ],
+        "raster_dpi": 300,
+        "redundant_markers": {
+          "dqn": "D",
+          "dyna_q_plus": "^",
+          "ppo": "P",
+          "q_learning": "o",
+          "sarsa": "s"
+        }
+      },
+      "rq_scope": "RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-recovery-sensitivity",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-sensitivity-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "5ed47e4268c7e86b0c49d86978305b6ebf0b998f4b674688f39a96de8de3e331",
+          "size_bytes": 45860,
+          "t610_mechanical_artifact_identical": true
+        },
+        {
+          "artifact_id": "t612-analysis-diagnostics",
+          "relative_path": "results/analysis/protocol-v2.1-final/diagnostics.json",
+          "sha256": "f782f192964f69d24bf3d1dcfd6d6e3da11eae0bd974dab5844366fb1365380d"
+        }
+      ]
+    },
+    {
+      "asset_id": "TABLE-PHASE_A_METHOD_CONTRASTS",
+      "estimand_scope": "canonical-T612-export",
+      "intended_use": [
+        "appendix",
+        "machine-readable"
+      ],
+      "kind": "table",
+      "outputs": [
+        {
+          "format": "csv",
+          "relative_path": "tables/phase-a-method-contrasts.csv",
+          "sha256": "364109b193db209a35dd32338e4b7a21919c588e49b3b9f22898fce8d5d5ad4f",
+          "size_bytes": 11671
+        },
+        {
+          "format": "md",
+          "relative_path": "tables/phase-a-method-contrasts.md",
+          "sha256": "c8951c4b080a5d0bd1a60a14082e6a96194ec4a898eb5d1eb179d5c8ffee4387",
+          "size_bytes": 11744
+        }
+      ],
+      "rq_scope": "registered-analysis",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-a-method-contrasts",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-contrasts.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "364109b193db209a35dd32338e4b7a21919c588e49b3b9f22898fce8d5d5ad4f",
+          "size_bytes": 11671,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "TABLE-PHASE_A_METHOD_SUMMARY",
+      "estimand_scope": "canonical-T612-export",
+      "intended_use": [
+        "appendix",
+        "machine-readable"
+      ],
+      "kind": "table",
+      "outputs": [
+        {
+          "format": "csv",
+          "relative_path": "tables/phase-a-method-summary.csv",
+          "sha256": "45aa5db4eb879a385da3e4a7eabfe509ceed475146f1593e891ba0cc859aaa4c",
+          "size_bytes": 1139
+        },
+        {
+          "format": "md",
+          "relative_path": "tables/phase-a-method-summary.md",
+          "sha256": "574fb05b518a9689550d2d346425380824908cb75a5fad544cab73f96bf08ecc",
+          "size_bytes": 1363
+        }
+      ],
+      "rq_scope": "registered-analysis",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-a-method-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-method-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "45aa5db4eb879a385da3e4a7eabfe509ceed475146f1593e891ba0cc859aaa4c",
+          "size_bytes": 1139,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "TABLE-PHASE_A_ROOT_RECORDS",
+      "estimand_scope": "canonical-T612-export",
+      "intended_use": [
+        "appendix",
+        "machine-readable"
+      ],
+      "kind": "table",
+      "outputs": [
+        {
+          "format": "csv",
+          "relative_path": "tables/phase-a-root-records.csv",
+          "sha256": "e11ec69ba83055f315419fbba69e988e721c19e9cebad6575dc8bb30f064529c",
+          "size_bytes": 4915
+        },
+        {
+          "format": "md",
+          "relative_path": "tables/phase-a-root-records.md",
+          "sha256": "9acd731831e17af888ebdf3c80a277033152dada4476e5a3ca013098823dac01",
+          "size_bytes": 6097
+        }
+      ],
+      "rq_scope": "RQ1/RQ2/RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-phase-a-root-records",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-a-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "e11ec69ba83055f315419fbba69e988e721c19e9cebad6575dc8bb30f064529c",
+          "size_bytes": 4915,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "TABLE-PHASE_B_METHOD_CONDITION_SUMMARY",
+      "estimand_scope": "canonical-T612-export",
+      "intended_use": [
+        "appendix",
+        "machine-readable"
+      ],
+      "kind": "table",
+      "outputs": [
+        {
+          "format": "csv",
+          "relative_path": "tables/phase-b-method-condition-summary.csv",
+          "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
+          "size_bytes": 6138
+        },
+        {
+          "format": "md",
+          "relative_path": "tables/phase-b-method-condition-summary.md",
+          "sha256": "5040de3bcd9d637f53a5e4460627f64439ae3aaffa3a5be8a03579c972a43732",
+          "size_bytes": 7064
+        }
+      ],
+      "rq_scope": "registered-analysis",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-b-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796",
+          "size_bytes": 6138,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "TABLE-PHASE_B_METHOD_CONTRASTS",
+      "estimand_scope": "canonical-T612-export",
+      "intended_use": [
+        "appendix",
+        "machine-readable"
+      ],
+      "kind": "table",
+      "outputs": [
+        {
+          "format": "csv",
+          "relative_path": "tables/phase-b-method-contrasts.csv",
+          "sha256": "10ce2d0f39c6e01702db8737749017197b066c9cb25ffff0f1d1ddecb33ffd71",
+          "size_bytes": 84399
+        },
+        {
+          "format": "md",
+          "relative_path": "tables/phase-b-method-contrasts.md",
+          "sha256": "94b5e975fbe5083b18a1e509758caed4464c372686fa9a941b2d4c8915004c91",
+          "size_bytes": 84450
+        }
+      ],
+      "rq_scope": "registered-analysis",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-phase-b-method-contrasts",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-method-contrasts.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "10ce2d0f39c6e01702db8737749017197b066c9cb25ffff0f1d1ddecb33ffd71",
+          "size_bytes": 84399,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "TABLE-PHASE_B_ROOT_RECORDS",
+      "estimand_scope": "canonical-T612-export",
+      "intended_use": [
+        "appendix",
+        "machine-readable"
+      ],
+      "kind": "table",
+      "outputs": [
+        {
+          "format": "csv",
+          "relative_path": "tables/phase-b-root-records.csv",
+          "sha256": "1ad37b2862c94592f93c5a0749da5bf0ff4ff85e8afbea4e5f032021713f965d",
+          "size_bytes": 28891
+        },
+        {
+          "format": "md",
+          "relative_path": "tables/phase-b-root-records.md",
+          "sha256": "45470ea1cf58f6e633a6eeaba6ddc12b13f430e5b6a29e5137fe878522e2dc0f",
+          "size_bytes": 34587
+        }
+      ],
+      "rq_scope": "RQ1/RQ2/RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-phase-b-root-records",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/phase-b-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "1ad37b2862c94592f93c5a0749da5bf0ff4ff85e8afbea4e5f032021713f965d",
+          "size_bytes": 28891,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "TABLE-RECOVERY_METHOD_CONDITION_SUMMARY",
+      "estimand_scope": "canonical-T612-export",
+      "intended_use": [
+        "appendix",
+        "machine-readable"
+      ],
+      "kind": "table",
+      "outputs": [
+        {
+          "format": "csv",
+          "relative_path": "tables/recovery-method-condition-summary.csv",
+          "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
+          "size_bytes": 4122
+        },
+        {
+          "format": "md",
+          "relative_path": "tables/recovery-method-condition-summary.md",
+          "sha256": "6cc4c774435ad1fc4fceffbc17defc860b5d777ded856e3516786e8de1bbd900",
+          "size_bytes": 4965
+        }
+      ],
+      "rq_scope": "registered-analysis",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-recovery-method-condition-summary",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-condition-summary.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f",
+          "size_bytes": 4122,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "TABLE-RECOVERY_METHOD_CONTRASTS",
+      "estimand_scope": "canonical-T612-export",
+      "intended_use": [
+        "appendix",
+        "machine-readable"
+      ],
+      "kind": "table",
+      "outputs": [
+        {
+          "format": "csv",
+          "relative_path": "tables/recovery-method-contrasts.csv",
+          "sha256": "4860abf3de651a84e31dae19c07293ce957d17943ae4a1e285dd6fff9ae2d003",
+          "size_bytes": 42439
+        },
+        {
+          "format": "md",
+          "relative_path": "tables/recovery-method-contrasts.md",
+          "sha256": "6f411e9e7b04daf4583e425883c1cfc3b0ffe1b31dcdfdb0101c1e07af4ad4e8",
+          "size_bytes": 42517
+        }
+      ],
+      "rq_scope": "registered-analysis",
+      "source_artifacts": [
+        {
+          "artifact_id": "thesis-table-recovery-method-contrasts",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-method-contrasts.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "4860abf3de651a84e31dae19c07293ce957d17943ae4a1e285dd6fff9ae2d003",
+          "size_bytes": 42439,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "TABLE-RECOVERY_ROOT_RECORDS",
+      "estimand_scope": "canonical-T612-export",
+      "intended_use": [
+        "appendix",
+        "machine-readable"
+      ],
+      "kind": "table",
+      "outputs": [
+        {
+          "format": "csv",
+          "relative_path": "tables/recovery-root-records.csv",
+          "sha256": "6971a5326496c8ced0d3e74b87b5cd1f2df66a08118ae3130cd69803bd92aabc",
+          "size_bytes": 27479
+        },
+        {
+          "format": "md",
+          "relative_path": "tables/recovery-root-records.md",
+          "sha256": "897fb6413172531feeb80675dd88972cba7e8874470b2c69aaef447473252367",
+          "size_bytes": 35283
+        }
+      ],
+      "rq_scope": "RQ1/RQ2/RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-recovery-root-records",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "6971a5326496c8ced0d3e74b87b5cd1f2df66a08118ae3130cd69803bd92aabc",
+          "size_bytes": 27479,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "TABLE-RECOVERY_SENSITIVITY_ROOT_RECORDS",
+      "estimand_scope": "canonical-T612-export",
+      "intended_use": [
+        "appendix",
+        "machine-readable"
+      ],
+      "kind": "table",
+      "outputs": [
+        {
+          "format": "csv",
+          "relative_path": "tables/recovery-sensitivity-root-records.csv",
+          "sha256": "5ed47e4268c7e86b0c49d86978305b6ebf0b998f4b674688f39a96de8de3e331",
+          "size_bytes": 45860
+        },
+        {
+          "format": "md",
+          "relative_path": "tables/recovery-sensitivity-root-records.md",
+          "sha256": "9e3b6e6960f238cbe120bcca883ed5ebcc9c556ee44194d06dc8ae7e712f2f13",
+          "size_bytes": 56504
+        }
+      ],
+      "rq_scope": "RQ1/RQ2/RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-recovery-sensitivity",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-sensitivity-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "5ed47e4268c7e86b0c49d86978305b6ebf0b998f4b674688f39a96de8de3e331",
+          "size_bytes": 45860,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "TABLE-RECOVERY_TRAJECTORY_RECORDS",
+      "estimand_scope": "canonical-T612-export",
+      "intended_use": [
+        "appendix",
+        "machine-readable"
+      ],
+      "kind": "table",
+      "outputs": [
+        {
+          "format": "csv",
+          "relative_path": "tables/recovery-trajectory-records.csv",
+          "sha256": "3ef27d23f327e2f3140f202850badf2de34fa21e4a601be3f59d5ab7d56d972c",
+          "size_bytes": 272288
+        },
+        {
+          "format": "md",
+          "relative_path": "tables/recovery-trajectory-records.md",
+          "sha256": "447a7e099d98258d37979225c41fdc7b504e4931da2b61f34259597d389ab1ec",
+          "size_bytes": 287722
+        }
+      ],
+      "rq_scope": "registered-analysis",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-recovery-trajectories",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-trajectory-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "3ef27d23f327e2f3140f202850badf2de34fa21e4a601be3f59d5ab7d56d972c",
+          "size_bytes": 272288,
+          "t610_mechanical_artifact_identical": true
+        }
+      ]
+    },
+    {
+      "asset_id": "TABLE-RQ3-TOLERANCE-SENSITIVITY",
+      "estimand_scope": "recovered-proportion-sensitivity",
+      "intended_use": [
+        "main-thesis",
+        "appendix",
+        "machine-readable"
+      ],
+      "kind": "table",
+      "outputs": [
+        {
+          "format": "csv",
+          "relative_path": "tables/recovery-tolerance-sensitivity-summary.csv",
+          "sha256": "4e6c06dc5a0a57b9398938374f75b2114bd95faf90f7e56ce1c476d8f287e54e",
+          "size_bytes": 1871
+        },
+        {
+          "format": "md",
+          "relative_path": "tables/recovery-tolerance-sensitivity-summary.md",
+          "sha256": "5ae0bb445f3319d227f1dd1be0f4ecd74955c9625c04fad82e98277a407e458e",
+          "size_bytes": 2407
+        }
+      ],
+      "rq_scope": "RQ3",
+      "source_artifacts": [
+        {
+          "artifact_id": "analysis-table-recovery-sensitivity",
+          "relative_path": "results/studies/protocol-v2.1-final--t610-recovery-01/derived/export/recovery-sensitivity-root-records.csv",
+          "repeated_regeneration_identical": true,
+          "sha256": "5ed47e4268c7e86b0c49d86978305b6ebf0b998f4b674688f39a96de8de3e331",
+          "size_bytes": 45860,
+          "t610_mechanical_artifact_identical": true
+        },
+        {
+          "artifact_id": "t612-analysis-diagnostics",
+          "relative_path": "results/analysis/protocol-v2.1-final/diagnostics.json",
+          "sha256": "f782f192964f69d24bf3d1dcfd6d6e3da11eae0bd974dab5844366fb1365380d"
+        }
+      ]
+    }
+  ],
+  "deterministic_parameters": {
+    "condition_order": [
+      "action-remap-cycle-clockwise",
+      "action-remap-swap-right-down",
+      "action-failure-0.15",
+      "observation-corruption-0.05"
+    ],
+    "fixed_random_seed_for_display_jitter": 613,
+    "method_order": [
+      "q_learning",
+      "sarsa",
+      "dyna_q_plus",
+      "dqn",
+      "ppo"
+    ],
+    "raster_dpi": 300,
+    "svg_hashsalt": "protocol-v2.1-final-t613"
+  },
+  "generator": {
+    "git_commit": "90b2953b95f14dddf3920d192fc736718360284a",
+    "matplotlib_version": "3.11.1",
+    "source_files": [
+      {
+        "relative_path": "scripts/generate_protocol_v21_final_assets.py",
+        "sha256": "0d05e1f0ebf9a65c406cdd4086aa26d5e8b34391287ca07d288395fbcc4f78d7"
+      },
+      {
+        "relative_path": "src/resilient_agents/evidence_v2/final_assets.py",
+        "sha256": "c52868e681693ec2a3742c7090b10e38c441e1786fbb86711e49841f5d7cb0b9"
+      }
+    ],
+    "version": "t613-assets-v1"
+  },
+  "inventory": {
+    "categories_total": 30,
+    "supported_categories": 28,
+    "unsupported_categories": [
+      1,
+      6
+    ],
+    "unsupported_dispositions": [
+      {
+        "inventory_category": 1,
+        "reason": "The finalized T-612 package contains final-value and interaction-axis time-average summaries but no registered probe/checkpoint-series values or intervals. T-613 does not read unfrozen alternate inputs or reconstruct a post-hoc trajectory.",
+        "requested_asset": "RQ1 learning progression / probe curves by method",
+        "status": "unavailable"
+      },
+      {
+        "inventory_category": 6,
+        "reason": "No validated probe/checkpoint matrix is registered in the T-612 outputs. Endpoint values cannot be expanded into a checkpoint matrix without inventing data.",
+        "requested_asset": "RQ1 checkpoint/probe heatmap or compact matrix",
+        "status": "unavailable"
+      }
+    ]
+  },
+  "package_id": "protocol-v2.1-final-t613-assets-v1",
+  "schema_version": 1,
+  "scientific_boundary": {
+    "application_screenshots_are_quantitative_sources": false,
+    "historical_failed_attempt_used": false,
+    "new_estimands_computed": false,
+    "non_recovery_as_horizon_prohibited": true,
+    "presentation_only": true,
+    "right_censoring_preserved": true,
+    "t700_or_wp7_work_performed": false
+  },
+  "scientific_recipe_id": "protocol-v2.1-final",
+  "status": "finalized",
+  "t611_freeze_manifest_sha256": "20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858",
+  "t611_run_manifest_inventory_sha256": "0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045",
+  "t612_analysis_manifest_sha256": "dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62",
+  "task_id": "T-613"
+}

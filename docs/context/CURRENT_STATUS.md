@@ -1,6 +1,6 @@
 # Current Project Status
 
-**Date:** 2026-09-02  
+**Date:** 2026-09-03
 **Status:** Authoritative compact current-state summary
 
 `docs/context/TASKS.md` is the canonical dependency/task ledger. Read task-specific decision/research documents progressively. Objective Git/GitHub/evidence state overrides stale resume prose after interruption.
@@ -15,17 +15,19 @@
 - Generated UI review renders are CI/local QA artifacts rather than committed repository evidence. The active PySide6 acceptance workflow remains available with task-agnostic naming.
 - No scientific protocol/config/result/freeze-manifest/decision/reproducibility-critical code was removed by T-537. Historical/finalized scientific evidence remains byte-stable.
 - The accepted application remains **Experiment / Run / Results / Evidence**, with `Locked Thesis experiment`, five immutable Thesis methods and simultaneous matched Frozen/Adaptive presentation.
-- `docs/research/T-613_THESIS_FIGURE_INVENTORY.md` remains the downstream T-613 output contract: a rich reproducible main-thesis + appendix + defense figure/table package generated from validated stored final outputs, not quantitative UI screenshots.
+- `T-613` is **COMPLETE**. `docs/research/T-613_THESIS_FIGURE_INVENTORY.md` was executed into a reproducible main-thesis + appendix + defense figure/table package generated from validated T-612 outputs, not quantitative UI screenshots.
 - A final **read-only merged-main preflight** was completed after the T-536 merge. It confirmed `final_reserve_access=false`, `execution_authorization=requires-explicit-t610-gate`, no committed `protocol-v2.1-final` Study bundle, deny-by-default final execution, and the canonical 603-job plan with `final_execution_authorized=false`. T-537 changed no execution/scientific code, so those gate semantics remain unchanged.
 - `T-610` is **COMPLETE**. The DEC-062 replacement `protocol-v2.1-final--t610-recovery-01` completed and finalized 603/603 jobs with zero infrastructure/scientific failures, no pending/running jobs and coherent Study/run integrity.
 - `T-611` is **COMPLETE**. The replacement passed fresh recipe/plan/lifecycle/artifact/run-index/source/lineage/temporal-schema validation and is frozen at `results/final-evidence/protocol-v2.1-final/`.
 - The T-611 freeze manifest SHA-256 is `20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858`; its 600-record run-manifest inventory SHA-256 is `0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045`; validator source commit is `b925b0ad603bf165e8632c74f2027c53f040b34b`.
 - `T-612` is **COMPLETE**. The canonical protocol-v2.1 engine regenerated RQ1/RQ2/RQ3 statistics and all deterministic exports twice from the T-611 frozen replacement; every output matched the mechanical Study artifact byte-for-byte. Analysis manifest SHA-256 `dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62` pins the tool bytes to durable merged-main source commit `7e56753d581999af38510be1745ec4b87a927f2f`.
+- `T-613` is **COMPLETE**. The canonical package at `results/thesis-assets/protocol-v2.1-final/` registers 31 figures, 12 table assets and 117 output variants under asset manifest SHA-256 `9457275306fb633cb58d9af2e402531ff7d56a0f1f0f5eadc176f4a05726abd8`; generator source commit is `90b2953b95f14dddf3920d192fc736718360284a`.
+- T-613 supports 28/30 inventory categories. RQ1 progression/probe curves (category 1) and a probe/checkpoint matrix (category 6) are explicitly unavailable because T-612 registered no probe-series values; endpoint summaries were not expanded or reconstructed post hoc.
 - Native Windows CPython 3.12 recovery preflight on clean commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730` re-derived the canonical 603-job plan, confirmed the unchanged recipe hash and backend denial, byte-validated the failed attempt and confirmed the replacement namespace was absent before creation.
 - The historical Study records source commit `7442dcb65674dcb3bc9ce0c71996418289d79061`. It remains `active` and unfinalized at 216 completed, 1 infrastructure-failed and 386 pending, with its four registry hashes unchanged after replacement finalization.
 - The failed attempt is `pb__sarsa__t527-final-r01__gw-l1-final-a__action-remap-swap-right-down`: the shared no-learning prefix requires a quiescent learner, but the materialized SARSA Phase-A checkpoint retained pending/deferred state. The frozen recipe declares DEC-054 deployment-start settlement; the generic Study Phase-A executor did not apply that accepted settlement before persisting the checkpoint.
 - The replacement records recipe SHA-256 `8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154`, plan SHA-256 `073779d18f45caeab2ab725e7dce6b54b70394102d45de81e1974c7efaece0f4`, clean source commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`, predecessor `protocol-v2.1-final` and recovery decision DEC-062. All 600 scientific run bundles validate.
-- Master tracker #87 remains **7/8**; milestone 8 awaits T-613 and the rest of the final v2.1 evidence chain.
+- Master tracker #87 is **8/8** and ready for closure after merged-main verification. This does not grant the separate pre-WP7 approval.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
 
 ## Scientific authority
@@ -46,7 +48,7 @@ The accepted PySide6 application is experiment-first. T-535 guarantees created-r
 
 ## Thesis/defense result assets
 
-`T-613` is now READY and is the next task, but was not started by T-612. Its inventory specifies 30 figure/asset categories plus tables across RQ1 learning, RQ2 resilience/adaptation, RQ3 recovery, methodology/evidence lineage and defense variants. Outputs are deterministic vector-first SVG/PDF plus high-resolution PNG and machine-readable tables with source artifact IDs/hashes and generator provenance. Non-recovery remains right-censored.
+`T-613` finalized 31 vector-first figures as SVG/PDF/300-DPI PNG triplets plus 12 CSV/Markdown table assets. The complete 121-file package reproduced twice byte-for-byte; canonical CSV copies, format integrity, source/output hashes, right-censoring/null semantics, T-611/T-612 provenance and representative visual renders all passed validation. Stable visual ordering and colorblind-safe colors are reinforced with markers, line styles and hatching. The package contains technical captions/placement metadata only, not thesis Results/Discussion prose or a defense narrative.
 
 ## Repository integration / provenance
 
@@ -64,10 +66,10 @@ The accepted PySide6 application is experiment-first. T-535 guarantees created-r
 ## Still intentionally unfrozen
 
 - T-610 authorization was consumed only through the accepted backend token; committed authority fields remain unchanged.
-- T-612 is complete. T-613 is dependency-valid and READY but was not started in this execution; WP7 remains separately unauthorized.
+- T-613 is complete. T-700/WP7 remains separately unauthorized and blocked by explicit user approval.
 - WP7 remains blocked by final evidence plus later explicit pre-WP7 approval.
 - Standalone Windows packaging remains deferred to T-803 / issue #94.
 
 ## Exact next action
 
-STOP at the completed T-612 boundary. `T-613` is next and READY, but this execution did not begin figure/table asset production. WP7/Results/Discussion remains outside this execution and separately unauthorized.
+STOP at the completed T-613 boundary. `T-700` is the next roadmap task but remains BLOCKED by the explicit pre-WP7 user approval gate. WP7/Results/Discussion remains outside this execution and separately unauthorized.

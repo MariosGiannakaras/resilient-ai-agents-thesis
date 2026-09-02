@@ -90,7 +90,7 @@ Current reusable infrastructure includes:
 - schema-v2 validation, equal-layout root reduction, recovery/direct method contrasts and deterministic v2 evidence exports;
 - read-only pre-final readiness checks and a synthetic DEVELOPMENT-only end-to-end scientific-pipeline smoke.
 
-The first final-reserve attempt stopped fail-closed at 216/603 jobs and remains preserved unfinalized and excluded. The DEC-062 replacement completed and finalized 603/603 jobs from one clean corrected commit; T-611 validated and froze only that replacement. T-612 then reproduced and interpreted only the predeclared analysis; T-613 is the next scientific asset gate.
+The first final-reserve attempt stopped fail-closed at 216/603 jobs and remains preserved unfinalized and excluded. The DEC-062 replacement completed and finalized 603/603 jobs from one clean corrected commit; T-611 validated and froze only that replacement. T-612 reproduced and interpreted only the predeclared analysis, and T-613 deterministically finalized the registered thesis/appendix/defense evidence assets from T-612 alone.
 
 ## Application architecture and current restart
 
@@ -140,8 +140,8 @@ Canonical concrete state is in `TASKS.md` and `CURRENT_STATUS.md`.
 2. DEC-061 now fixes the experiment-first T-534 product/UX contract without changing science.
 3. T-534 UI implementation is allowed without opening the final reserve.
 4. T-610 final execution and DEC-062 replacement are complete through the unchanged backend guard.
-5. T-611 validation/freeze and T-612 analysis are complete; T-613 evidence packaging is next and READY.
-6. Explicit user approval is still required before thesis Results/Discussion/WP7 writing.
+5. T-611 validation/freeze, T-612 analysis and T-613 evidence packaging are complete.
+6. Explicit user approval is still required before T-700 or any thesis Results/Discussion/WP7 writing.
 7. Final Windows standalone packaging remains deferred until after the thesis.
 
 No green CI, UI screenshot, synthetic smoke, repository cleanup or completed implementation task by itself authorizes the final scientific experiment or thesis Results/Discussion writing.
