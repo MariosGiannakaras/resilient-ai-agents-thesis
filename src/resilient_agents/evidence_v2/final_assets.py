@@ -98,7 +98,10 @@ def _finish(fig: plt.Figure, base: Path) -> list[Path]:
         fig.tight_layout(rect=(0, 0, 1, 0.98))
     fig.savefig(base.with_suffix(".svg"), bbox_inches="tight", metadata=FIGURE_METADATA)
     svg_path = base.with_suffix(".svg")
-    svg_path.write_bytes(svg_path.read_bytes().replace(b"\r\n", b"\n"))
+    svg_bytes = svg_path.read_bytes().replace(b"\r\n", b"\n")
+    svg_path.write_bytes(
+        b"\n".join(line.rstrip(b" \t") for line in svg_bytes.split(b"\n"))
+    )
     fig.savefig(base.with_suffix(".pdf"), bbox_inches="tight", metadata={"Creator": GENERATOR_VERSION, "Producer": GENERATOR_VERSION, "CreationDate": None, "ModDate": None})
     fig.savefig(base.with_suffix(".png"), bbox_inches="tight", dpi=300, metadata={"Software": GENERATOR_VERSION})
     plt.close(fig)
@@ -252,7 +255,7 @@ def _fig_pb_roots(data:dict[str,pd.DataFrame],base:Path,mode:str)->list[Path]:
         sub=frame[frame.condition_id==condition]
         if mode=="benefit":
             vals=[sub[sub.method_id==m].adaptation_benefit.astype(float).to_numpy() for m in METHODS]
-            ax.boxplot(vals,positions=np.arange(5),showfliers=False); 
+            ax.boxplot(vals,positions=np.arange(5),showfliers=False)
             for x,(m,v) in enumerate(zip(METHODS,vals)): ax.scatter(np.full(len(v),x),v,s=10,color=COLORS[m],marker=MARKERS[m],alpha=.65)
             ax.axhline(0,color="#333",lw=.8); ax.set_ylabel("Adaptation benefit")
         else:
