@@ -15,8 +15,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq1-002-final.svg",
-          "sha256": "f15d7dea36413aa3b5edb7e6180a49a98e0fa6efaed3c35e4d91cdaa5f919729",
-          "size_bytes": 40084
+          "sha256": "78356bb84b9dff9a7bf6d06cc62b3b26d6373aa100bfe0754cae3c98719b73ff",
+          "size_bytes": 38676
         },
         {
           "format": "pdf",
@@ -86,8 +86,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq1-003-time-average.svg",
-          "sha256": "f2117de08d898904ac5c7fb3eb919606495ec4540027e03d4bb2728559bbe578",
-          "size_bytes": 42632
+          "sha256": "5a3b1c454c2f6d4c363da15a68a1068a53730a3972e4f0c556145202f65f96e6",
+          "size_bytes": 41174
         },
         {
           "format": "pdf",
@@ -157,8 +157,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq1-004-final-roots.svg",
-          "sha256": "b3f3de0aed63e1dead7cf5e2e83ee323b7fc04f2c2f1e5a76c60d0357a2d1f55",
-          "size_bytes": 48427
+          "sha256": "31a61522d98128568693077ff2db4b4139cb8173187f7774978dc20fd521c080",
+          "size_bytes": 46985
         },
         {
           "format": "pdf",
@@ -228,8 +228,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq1-005-time-roots.svg",
-          "sha256": "4ad1c830d29b5bc3fad1a04066d37b22a11a00f68fee42f530951beb62820bfd",
-          "size_bytes": 47594
+          "sha256": "1c38b30735e2412e442f84af02b87b47543690132b35474633bcb72028679bf1",
+          "size_bytes": 46190
         },
         {
           "format": "pdf",
@@ -299,8 +299,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq1-007-contrasts.svg",
-          "sha256": "3fb7aa84365b728e85299192a70112770edae2ca2369c92cd31968ad5446b294",
-          "size_bytes": 87929
+          "sha256": "397eb69df2cf4a8aeb9eed7f38534d2967d726d6eadd116a2681a3fb6049c323",
+          "size_bytes": 85495
         },
         {
           "format": "pdf",
@@ -370,8 +370,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq2-008-adaptation.svg",
-          "sha256": "f27ad5e15c80124a1259f6419707acb9bef0e780808f3a16638955a0582ec2d2",
-          "size_bytes": 58693
+          "sha256": "807ad2e864b6adf8be9073a1638b7548d03fcd5a1404bb842cddc08934acc3f7",
+          "size_bytes": 56943
         },
         {
           "format": "pdf",
@@ -441,8 +441,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq2-009-losses.svg",
-          "sha256": "a7eac12fea25a2a36d75848de7b131efde5feeb2f3a056ab4df490abde00d75a",
-          "size_bytes": 103663
+          "sha256": "be3f9682a4b3bb0c5183157ce66e394722982ccea0ed28db799053226974b158",
+          "size_bytes": 101019
         },
         {
           "format": "pdf",
@@ -513,8 +513,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq2-010-conditions.svg",
-          "sha256": "6c0b52e2a7190fbc8c3ef5cf32650da9535e2b280ec052969792a09e8ef8afaa",
-          "size_bytes": 86211
+          "sha256": "24c33f580916baa576262bdbe67efacff213d4e1c971390b4f7ff2eef752ea0e",
+          "size_bytes": 83627
         },
         {
           "format": "pdf",
@@ -584,8 +584,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq2-011-dumbbells.svg",
-          "sha256": "551b0e19f5cde12720676d55dcc1e0091943575b28241498c809c58afd649d68",
-          "size_bytes": 96126
+          "sha256": "72378406135077047797b5f1213ad358a8454e3c845f6bb7ea115d85845516a3",
+          "size_bytes": 93460
         },
         {
           "format": "pdf",
@@ -655,8 +655,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq2-012-benefit-roots.svg",
-          "sha256": "85d3fef0f8b754b52b6c8b1a0951e825948a3e0ac431be8a7ca57329a1ce1e25",
-          "size_bytes": 133549
+          "sha256": "0aed15f84f80cfa890e41fef49840e49d9f9c969df3ac367ef58a40ed5136cab",
+          "size_bytes": 130386
         },
         {
           "format": "pdf",
@@ -726,8 +726,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq2-013-heatmap.svg",
-          "sha256": "3ce819ef64a5dd459ab1175c38981bca50869e5cde03aec5ff6e893868083ea6",
-          "size_bytes": 67562
+          "sha256": "10e594619dc269933b17e885f7a66dd88ca9a8f3e48f2bb92156dcadb55300b8",
+          "size_bytes": 65852
         },
         {
           "format": "pdf",
@@ -797,8 +797,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq2-014-contrasts.svg",
-          "sha256": "b8ac70715a1c997cff231557c41de3cb6061895da12f662f005cef66af880053",
-          "size_bytes": 433531
+          "sha256": "2242a200fc6cdcab9d73665f5baed0a36ac8c27bf7965b446a00acf972d876ed",
+          "size_bytes": 423651
         },
         {
           "format": "pdf",
@@ -868,8 +868,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq2-015-paired-roots.svg",
-          "sha256": "a79b00f1b719c01de01a16875b77539f93637b375842adbb85181603f4b6f57a",
-          "size_bytes": 196545
+          "sha256": "fef90f6525ba152943a5f4ba476b31b8d992d2f588af7f2237fd08db8b547339",
+          "size_bytes": 192213
         },
         {
           "format": "pdf",
@@ -939,8 +939,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq3-016-trajectories.svg",
-          "sha256": "dbe65927fb8935b416547f12acae204cdd22135ea67a69f4339d3754371f99c0",
-          "size_bytes": 105311
+          "sha256": "9402d74bf331cf848a366fb7d7516692fa642f6f204fb3bb0b72a29f7a4293b5",
+          "size_bytes": 102249
         },
         {
           "format": "pdf",
@@ -1010,8 +1010,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq3-017-recovered.svg",
-          "sha256": "946e68b22458ed764d8049768b40e2112c7091c8a2249122109404e131811423",
-          "size_bytes": 124794
+          "sha256": "7554dd17fd1e254ca719cab4f9ce26a99cd7b584f37f451b47350b806c9bfbf2",
+          "size_bytes": 121367
         },
         {
           "format": "pdf",
@@ -1081,8 +1081,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq3-018-restricted.svg",
-          "sha256": "359676f0892027c6ec2822d2973e41671b65de50baed570cf44f15510591b17b",
-          "size_bytes": 67742
+          "sha256": "41f32047af94c6f5d288acb5c87b8ec93710209fd8dea0f8d5f0af8f38e9c2ec",
+          "size_bytes": 65729
         },
         {
           "format": "pdf",
@@ -1152,8 +1152,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq3-019-conditional.svg",
-          "sha256": "a1823fc077d65498213cc6a110039efad7f9e12fcab7d79599dbd324e8ba9413",
-          "size_bytes": 67614
+          "sha256": "be80312cfc8ff737e00b69c1556c321071140289584d5e99a91748dd1fba4edd",
+          "size_bytes": 65572
         },
         {
           "format": "pdf",
@@ -1223,8 +1223,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq3-020-conditions.svg",
-          "sha256": "ded71e5ecbe486043363df2489bae1fdaf5bede0d3b8cd3976aa1098366dd917",
-          "size_bytes": 157138
+          "sha256": "40a6bdc660e6c8dd8fe1231829c3151331797e76758cd86fc283c45abc353522",
+          "size_bytes": 152929
         },
         {
           "format": "pdf",
@@ -1294,8 +1294,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq3-021-root-trajectories.svg",
-          "sha256": "61534693e412d832550c86f309f360a73a45d4f58aa4a1911e42c0cdd6f48856",
-          "size_bytes": 185112
+          "sha256": "4ad60d7e92d8834e54f6cff743ce47c5b85afc78cd0a5a56f9c410c3858ef4ad",
+          "size_bytes": 180205
         },
         {
           "format": "pdf",
@@ -1365,8 +1365,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq3-022-censoring.svg",
-          "sha256": "d1e7230bfd668c05ca4548f31ccf67ba7fb1f62ac617363b853414e518961621",
-          "size_bytes": 51853
+          "sha256": "1d60785963afb2b83247a923a11bb1ff5ffaa28ef7b4a842afee1fcc3ce80025",
+          "size_bytes": 50115
         },
         {
           "format": "pdf",
@@ -1437,8 +1437,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq3-023-sensitivity.svg",
-          "sha256": "e89b311338892a482d10bc0767adbda0eb0e8750bfc90c3fda1f2aa25dba4f0a",
-          "size_bytes": 60049
+          "sha256": "75a7bed93b18525573998fb3cd22cc1167ccbf14ec68cfcddda19ca5f5e69776",
+          "size_bytes": 58291
         },
         {
           "format": "pdf",
@@ -1505,8 +1505,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq3-024-contrasts.svg",
-          "sha256": "401b8b923328a9836328cd63882315e4249e910f0615f1d03585409952e832e8",
-          "size_bytes": 167915
+          "sha256": "415f6532d827f80a9a8a5af8928efec4ab2c116291985a9f9838498fd834b66f",
+          "size_bytes": 163811
         },
         {
           "format": "pdf",
@@ -1576,8 +1576,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-rq3-025-timeline.svg",
-          "sha256": "b406b41fa97f1cd638f8967a385746ebc2503056161cd72c6c4574bb2fa4f154",
-          "size_bytes": 213516
+          "sha256": "dc3a40d0118cc49008d36972be6800bcea2cf732bfbebbe41fb82a1e75de3371",
+          "size_bytes": 207673
         },
         {
           "format": "pdf",
@@ -1648,8 +1648,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-method-026-experiment-flow.svg",
-          "sha256": "39b5e2fc2b592c7be3885530cab0f3845ca981cd9339824d2de886cef322f741",
-          "size_bytes": 29790
+          "sha256": "214a8d11c8a4bd621253cd415a211e45ceab448828c61b481b01e6b693bb3d29",
+          "size_bytes": 28789
         },
         {
           "format": "pdf",
@@ -1717,8 +1717,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-method-027-rq-map.svg",
-          "sha256": "a17d06ac94796c70fc619e32f89234b0c5b7971c9949c7564f395923791ab7bb",
-          "size_bytes": 32559
+          "sha256": "318182586a20e09e8239ae37ac400ee5bafbd4725f55e067bee4be6c5d50386c",
+          "size_bytes": 31528
         },
         {
           "format": "pdf",
@@ -1787,8 +1787,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-method-028-lineage.svg",
-          "sha256": "27fcf8e0d77d16aa8546896f1f1b7508e0765e28ab05410404d1f8071b67d656",
-          "size_bytes": 27638
+          "sha256": "00a3b0e806f78bfe74526b495d31e7250f6c302206e9ea302135a48119b2a561",
+          "size_bytes": 26685
         },
         {
           "format": "pdf",
@@ -1859,8 +1859,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-def-029-all-rq.svg",
-          "sha256": "4a7262ac0060733deb20352b7160ca54f2f284a43129584168c70eb456ebade6",
-          "size_bytes": 83846
+          "sha256": "135280f0281eafc465b4f3cd5fb35c4cc88940149fc22498bff3ef98a98f5e06",
+          "size_bytes": 81480
         },
         {
           "format": "pdf",
@@ -1944,8 +1944,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-def-030-rq1-final.svg",
-          "sha256": "776a5ff4f74ad7399176b992b9e1d1347ef461eea70611c7cb6597a22fbd577f",
-          "size_bytes": 40108
+          "sha256": "214e0a251a62dded268fad07bb254146578aeef8314237e54eec357049e9deb9",
+          "size_bytes": 38700
         },
         {
           "format": "pdf",
@@ -2015,8 +2015,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-def-030-rq2-adaptation.svg",
-          "sha256": "8f78be0bb7f9d5ff65d2eda6feb2f967caa50266a1e7f8b33cab0a77654c47bc",
-          "size_bytes": 58715
+          "sha256": "205e1d39e55d5039248f32d3a218edb223508d400ac4afb522e9b45c75d1b71c",
+          "size_bytes": 56965
         },
         {
           "format": "pdf",
@@ -2086,8 +2086,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-def-030-rq3-recovered.svg",
-          "sha256": "583db386c078ab43a1c78523d8373f65edb6aafb5bf8eaee7d11de8a21fe98f3",
-          "size_bytes": 124796
+          "sha256": "13c3de75a84e31f06b0906582d16cb532b0433631842d1843bd61bf7a0d4bc2d",
+          "size_bytes": 121369
         },
         {
           "format": "pdf",
@@ -2157,8 +2157,8 @@
         {
           "format": "svg",
           "relative_path": "figures/fig-def-030-rq3-sensitivity.svg",
-          "sha256": "ac4d1dd29a080429a83b3d8d603550213ef2adbb1f7e6efce8f8dd43afe6a326",
-          "size_bytes": 60042
+          "sha256": "00b71865f3b12d25d8a7908d1031f4ff3b921fd6494f104f9f39eee1ba077276",
+          "size_bytes": 58284
         },
         {
           "format": "pdf",
@@ -2587,8 +2587,8 @@
         {
           "format": "csv",
           "relative_path": "tables/recovery-tolerance-sensitivity-summary.csv",
-          "sha256": "e42f76867bc1d49acfe9d427d80a68e303aeb2144f09ed96ba591e82b67e44d2",
-          "size_bytes": 1902
+          "sha256": "4e6c06dc5a0a57b9398938374f75b2114bd95faf90f7e56ce1c476d8f287e54e",
+          "size_bytes": 1871
         },
         {
           "format": "md",
@@ -2625,7 +2625,7 @@
     "svg_hashsalt": "protocol-v2.1-final-t613"
   },
   "generator": {
-    "git_commit": "1ef002dd149bbddeb5fc92675a436632f919c1ec",
+    "git_commit": "836e0e9c64bb3f5476bc0d8b1b39024d87bff1a8",
     "matplotlib_version": "3.11.1",
     "source_files": [
       {
@@ -2634,7 +2634,7 @@
       },
       {
         "relative_path": "src/resilient_agents/evidence_v2/final_assets.py",
-        "sha256": "79ca32c6f021ebbf95fac8521cae0df210622dba8ee2cd64720f1c03904da84e"
+        "sha256": "b4a54396c7e9cceec83e4e826985dfd83673fb81285cc7cc745ffddd6576b11d"
       }
     ],
     "version": "t613-assets-v1"
