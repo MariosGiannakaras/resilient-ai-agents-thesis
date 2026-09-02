@@ -208,9 +208,15 @@ GridWorld is the controlled experimental/visualization testbed, not the thesis s
 - [x] `T-603` — Historical v1.0 figures/tables/artifacts.
 - [x] `T-604` — Historical v1.0 evidence package.
 
-- [ ] IN_PROGRESS `T-610` — Execute frozen protocol-v2.1 final matrix through the accepted study-first execution path.
+- [ ] BLOCKED `T-610` — Execute frozen protocol-v2.1 final matrix through the accepted study-first execution path.
   - Depends on: `T-527`, `T-529`, `T-511`, `T-533`, `T-535`, `T-536`, `T-537` — satisfied.
-  - State: the required separate explicit scientific execution authorization was supplied by the user on 2026-09-02. The immutable protocol fields remain sealed; the accepted backend authorization token is used only by the T-610 execution service. Native Windows preflight re-derived the unchanged 603-job plan and confirmed no existing final Study before this checkpoint.
+  - Authorization gate: satisfied. The user supplied the separate explicit scientific execution authorization on 2026-09-02; immutable protocol fields and the accepted backend guard remain unchanged.
+  - Durable Study: `protocol-v2.1-final`, recipe SHA-256 `8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154`, plan SHA-256 `073779d18f45caeab2ab725e7dce6b54b70394102d45de81e1974c7efaece0f4`, source commit `7442dcb65674dcb3bc9ce0c71996418289d79061` on native Windows CPython 3.12.13.
+  - Preserved progress: 216/603 jobs completed (all 120 Phase-A jobs and all 96 Q-Learning Phase-B matched sets); 1 infrastructure failure; 386 pending; 0 running/scientific-failed/skipped/cancelled. The Study is `active`, unfinalized and has not entered validation, analysis or export.
+  - Exact blocker: first SARSA Phase-B job `pb__sarsa__t527-final-r01__gw-l1-final-a__action-remap-swap-right-down` failed on attempt 1 with `ValueError: shared no-learning prefix requires a quiescent project learner; pending/deferred Phase-A state must be resolved by the frozen protocol`.
+  - Cause boundary: the frozen recipe declares DEC-054 deployment-start settlement, but the generic Study Phase-A materialization path persists the raw final checkpoint without applying the already accepted deterministic boundary settlement. The resulting SARSA checkpoint may retain a deferred update and cannot satisfy the Phase-B shared-prefix precondition. The preflight integration coverage exercised Q-Learning and did not expose this SARSA transition.
+  - Fail-closed rule: preserve the partial Study, run bundles, index mutation and failure event exactly as recorded. Do not retry unchanged, delete/overwrite/rerun completed jobs, patch or monkeypatch the active execution, mix source commits, finalize the Study, inspect outcomes for interpretation, or begin T-611/T-612/T-613/WP7.
+  - Exact next action: require an explicit formal scientific recovery/amendment decision that defines a reproducible single-source recovery path and disposition of the existing partial final evidence before any code change or resumed execution.
 - [ ] BLOCKED `T-611` — Validate/freeze v2.1 final evidence.
   - Depends on: `T-610`.
 - [ ] BLOCKED `T-612` — Predeclared v2.1 nominal-learning/resilience/recovery statistical analysis and sensitivity diagnostics.
