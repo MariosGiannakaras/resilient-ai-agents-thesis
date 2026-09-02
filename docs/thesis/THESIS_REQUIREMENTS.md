@@ -3,15 +3,17 @@
 ## Confirmed format and language
 
 - Main thesis language: Greek.
-- Final deliverable: Microsoft Word (`.docx`).
+- Final editable thesis deliverable: Microsoft Word (`.docx`); the institutional deposit workflow may additionally require the accepted manuscript as a single PDF.
 - Official Greek and English titles must match the approved application until formally changed.
 - Current Department guidance and supervisor instructions prevail over historical examples.
 - Final conclusions must be based on real frozen results.
-- Detailed future tool/ownership/manual-asset workflow is `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md`; it is planning only until the explicit WP7 approval gate passes.
+- T-700 current public-guidance verification is recorded in `docs/thesis/OFFICIAL_GUIDANCE_SNAPSHOT_2026-09-03.md`.
+- T-701 contextual structure/style synthesis is recorded in `docs/thesis/THESIS_STRUCTURE_AND_STYLE_GUIDE.md`.
+- Detailed tool/ownership/manual-asset workflow is `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md`.
 
 ## Verified Department-guideline snapshot
 
-The official Department writing-guidelines PDF reviewed during bootstrap specifies, unless superseded:
+The official Department writing-guidelines PDF was re-verified at T-700 on 2026-09-03. No newer public ICE document was found that supersedes it for the requirements below.
 
 ### Required front/main/end structure
 
@@ -35,7 +37,7 @@ The official Department writing-guidelines PDF reviewed during bootstrap specifi
 - The reviewed guidance gives an indicative range of approximately 70–140 pages and 20,000–40,000 words, excluding bibliography and appendices.
 - Greek and English summaries are indicated at approximately 250–300 words, commonly with about five keywords each.
 
-These remain guidance, not a substitute for current supervisor/template confirmation at T-700.
+These are guidance, not quotas. The thesis must not be padded merely to hit an indicative page or word count.
 
 ### Methodology and technical content
 
@@ -60,26 +62,39 @@ The thesis must document:
 - 14 pt headings and 12 pt subheadings, preferably bold.
 - Numbered heading styles suitable for automatic TOC.
 - New chapters start on a new page.
-- Tables use readable fonts, not below 10 pt according to the reviewed guidance.
+- Paragraph spacing is controlled through paragraph/style properties rather than manual blank lines.
+- Tables use readable fonts, not below approximately 10 pt according to the reviewed guidance.
 - Figures/tables need numbering, captions and source attribution when not original.
 - Equations use equation tools and numbering where appropriate.
-- Technical terms should be introduced consistently, with Greek/English form on first use.
-- One citation style must be applied consistently; the reviewed guideline lists APA 6, Chicago 16, IEEE 2006 or Harvard Anglia 2008.
+- Technical terms should be introduced consistently, with Greek/English form on first use where useful.
+- One citation style must be applied consistently.
 
-The final citation style remains open and must be resolved from current supervisor/Department/template guidance at T-700 rather than guessed now.
+### Citation-style decision
+
+The Department guide lists multiple acceptable citation systems rather than imposing a unique one. T-700/T-701 therefore select **IEEE numeric citation style** as the WP7 drafting/final-reference default because it is permitted by the Department guidance, aligns with the engineering/AI subject and is the dominant convention in the technically closest contextual ICE examples.
+
+This is a project writing decision, not a claim that ICE mandates IEEE. A later explicit supervisor or Department instruction supersedes it and triggers a controlled citation/reference conversion and audit.
+
+## Current official-guidance boundaries
+
+- The public ICE guidance recheck found no current Department-specific rule fixing defense duration, slide count, PowerPoint template or mandatory live-demo requirements.
+- Such requirements remain `not publicly specified` until a real ICE/supervisor instruction is obtained; rules from unrelated UNIWA departments are not imported.
+- The current public programme/regulation continues to place the individual Diploma Thesis in the five-year programme at 30 ECTS and subjects the final work to plagiarism/author-declaration/examination requirements.
+- Final institutional self-archiving/deposit requirements are rechecked again at final-delivery readiness.
 
 ## Writing and evidence requirements
 
-- Final thesis drafting begins only after the explicit pre-WP7 approval gate.
-- Results/conclusions cannot be written as final before frozen accepted evidence exists.
+- WP7 was explicitly approved by the user after T-613 completion; canonical task state records the exact gate transition.
+- Full citation-dependent thesis drafting begins only after the required major-writing-gate bibliography freshness review and controlled new immutable bibliography sync.
+- Results/conclusions cannot be written as final before frozen accepted evidence exists; that condition is satisfied by T-611/T-612/T-613.
 - Every quantitative thesis claim maps to frozen result/figure/table IDs.
 - Every external factual claim needing support cites verified citation-ready evidence.
 - No invented authors, titles, DOI, venues, quotations, page numbers, run values or statistical results.
 - Negative, null and unexpected findings are reported rather than hidden.
 - Limitations, threats to validity and protocol deviations are explicit.
 - Terminology remains consistent between Greek thesis, English abstract, code, protocol and application.
-- Historical v1.0/R0 evidence is labelled historical where discussed; it is not silently mixed into final-v1.1 primary evidence.
-- Final F0/C0/D0 names, frozen settings, conditions, repetitions and statistical roles come from the accepted final protocol/evidence package.
+- Historical protocol/evidence generations are labelled historical where discussed and are not silently mixed into accepted protocol-v2.1 final evidence.
+- Final methods, settings, conditions, roots and statistical roles come from the accepted protocol-v2.1/frozen evidence package.
 
 ## Microsoft Word implementation requirements
 
@@ -131,7 +146,7 @@ Automation must not generate unsupported scientific interpretation.
 - Captions, numbering and cross-references.
 - Lists of figures/tables.
 - Greek/English summaries and keywords.
-- Citation-reference consistency.
+- Citation-reference consistency and IEEE formatting unless a later higher-authority instruction changes the style.
 - Figure/table legibility and source/evidence attribution.
 - Application screenshot/media provenance and static fallbacks.
 - Equation formatting.
