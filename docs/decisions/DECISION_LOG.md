@@ -236,7 +236,7 @@ File: `DEC-062_T610_FAILED_ATTEMPT_RECOVERY.md`.
 
 Only genuinely downstream evidence- or user-gated choices remain:
 
-- T-611 validation/freeze of the completed DEC-062 replacement evidence;
+- T-612 predeclared analysis of the T-611 frozen replacement evidence;
 - T-613 final figure/table selection and evidence-to-thesis/defense asset map after validated final evidence exists;
 - explicit pre-WP7 user approval before thesis writing;
 - current official Word/citation/submission/defense rules at T-700;

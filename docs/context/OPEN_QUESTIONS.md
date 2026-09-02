@@ -17,7 +17,9 @@ The following are already decided or completed:
 - application framework: PySide6 / Qt 6 Widgets under DEC-059;
 - framework-neutral Study backend and stored-evidence read-model boundary;
 - novice-first/self-explanatory UI requirements;
+- accepted protocol-v2.1 PySide6 visual composition through T-536;
 - final-reserve execution remains separately authorization-gated, and T-610 plus DEC-062 recovery are now authorized without weakening that gate;
+- T-611 replacement-evidence validation/freeze and predecessor exclusion;
 - standalone Windows packaging is intentionally deferred until after the thesis.
 
 Historical v1.0/v1.1/pilot evidence remains auditable history; resolving current questions never relabels old evidence.
@@ -30,11 +32,10 @@ Historical v1.0/v1.1/pilot evidence remains auditable history; resolving current
 | OQ-ACA-002 | What is the eventual submission/presentation schedule? | No verified date has been provided. | Delivery planning. | No. | User/Department; never invent dates. |
 | OQ-ACA-003 | Is there a current official Word template/submission package? | Not required for current implementation and may change. | Thesis composition/final QA. | No. | Recheck official sources near writing/submission. |
 | OQ-ACA-004 | What are the exact current defense duration/language/file/template/live-demo/submission rules? | They have not been verified for final delivery and may change. | Defense freeze. | No. | Recheck official guidance near defense; do not invent slide count/duration. |
-| OQ-UI-001 | What exact visual composition survives the clean protocol-v2.1 UI rebuild? | Architecture and UX constraints are frozen, but page composition can be improved during implementation. | Current UI rebuild. | No scientific block. | Start from fresh `main`; preserve backend/read-model contracts, replace presentation code where useful, and validate with representative DEVELOPMENT/synthetic states. |
 | OQ-PKG-001 | What exact post-thesis standalone Windows packaging recipe is finally delivered? | Packaging is intentionally deferred and should target the finally accepted rebuilt UI. | Post-thesis delivery. | No. | Resolve in issue #94 after thesis/UI freeze; validate on the actual Windows machine. |
 | OQ-AI-001 | Is any optional AI feature useful inside the application? | No demonstrated need. | Late UI only, if ever. | No. | Do not integrate unless a concrete measurable benefit appears. |
 | OQ-PRIV-001 | Are any additional privacy/licensing/copyright changes required before deliberate wider distribution? | Repository is public, but final distribution packaging has its own audit. | Final delivery. | No. | Run final secret/privacy/license/copyright audit before release packaging. |
 
 ## Current authority
 
-Concrete status/dependencies are in `TASKS.md`; compact current state is in `CURRENT_STATUS.md`. The final scientific experiment and DEC-062 recovery are complete, not open design questions. T-611 is next and dependency-valid; later work remains blocked by task dependencies/approval gates.
+Concrete status/dependencies are in `TASKS.md`; compact current state is in `CURRENT_STATUS.md`. The final scientific experiment, DEC-062 recovery and T-611 validation/freeze are complete, not open design questions. T-612 is next and dependency-valid; later work remains blocked by task dependencies/approval gates.
