@@ -1,4 +1,5 @@
 """Structural/integrity validation for protocol-v2 study evidence."""
+
 from __future__ import annotations
 
 import json
@@ -7,7 +8,11 @@ from typing import Any, Mapping
 
 from ..protocol_v2 import ProtocolV2Branch
 from ..study import ArtifactRole, JobState, StudyArtifact, StudyStore
-from .records import PHASE_B_TEMPORAL_SCHEMA_VERSION, PhaseBAnalysisRecord
+from .records import (
+    PHASE_B_TEMPORAL_SCHEMA_VERSION,
+    PhaseAAnalysisRecord,
+    PhaseBAnalysisRecord,
+)
 
 
 @dataclass(frozen=True)
@@ -177,10 +182,21 @@ class StudyEvidenceValidator:
                     )
                 )
 
+        if str(store.recipe.protocol_version).startswith("protocol-v2.1"):
+            self._validate_unique_scientific_identities(
+                store=store,
+                artifacts=artifacts,
+                findings=findings,
+            )
+
         checkpoints = [
-            item for item in artifacts if item.role is ArtifactRole.SCIENTIFIC_CHECKPOINT
+            item
+            for item in artifacts
+            if item.role is ArtifactRole.SCIENTIFIC_CHECKPOINT
         ]
-        run_bundles = [item for item in artifacts if item.role is ArtifactRole.RUN_BUNDLE]
+        run_bundles = [
+            item for item in artifacts if item.role is ArtifactRole.RUN_BUNDLE
+        ]
         failure_records = [
             item for item in artifacts if item.role is ArtifactRole.FAILURE_RECORD
         ]
@@ -231,7 +247,9 @@ class StudyEvidenceValidator:
 
         if job_type == "phase-a-training":
             checkpoints = [
-                item for item in produced if item.role is ArtifactRole.SCIENTIFIC_CHECKPOINT
+                item
+                for item in produced
+                if item.role is ArtifactRole.SCIENTIFIC_CHECKPOINT
             ]
             if len(checkpoints) != 1:
                 findings.append(
@@ -244,6 +262,23 @@ class StudyEvidenceValidator:
                         ),
                         job_id=job.job_id,
                     )
+                )
+            if str(store.recipe.protocol_version).startswith("protocol-v2.1"):
+                self._validate_phase_a_identity(
+                    store=store,
+                    job=job,
+                    produced=produced,
+                    findings=findings,
+                )
+            return
+
+        if job_type == "phase-a-reference":
+            if str(store.recipe.protocol_version).startswith("protocol-v2.1"):
+                self._validate_phase_a_identity(
+                    store=store,
+                    job=job,
+                    produced=produced,
+                    findings=findings,
                 )
             return
 
@@ -303,6 +338,7 @@ class StudyEvidenceValidator:
                 store=store,
                 job=job,
                 produced=produced,
+                checkpoint_artifact_id=checkpoint_id,
                 findings=findings,
             )
 
@@ -312,6 +348,7 @@ class StudyEvidenceValidator:
         store: StudyStore,
         job: Any,
         produced: list[StudyArtifact],
+        checkpoint_artifact_id: str,
         findings: list[EvidenceValidationFinding],
     ) -> None:
         execution = job.payload.get("execution")
@@ -385,6 +422,33 @@ class StudyEvidenceValidator:
                 )
                 continue
             observed_branches.add(record.branch)
+            expected_identity = self._expected_job_identity(job)
+            observed_identity = {
+                "study_id": record.study_id,
+                "job_id": record.job_id,
+                "method_id": record.method_id,
+                "root_id": record.root_id,
+                "layout_id": record.layout_id,
+                "condition_id": record.condition_id,
+                "checkpoint_artifact_id": record.checkpoint_artifact_id,
+            }
+            expected_identity.update(
+                {
+                    "study_id": store.execution_id,
+                    "job_id": job.job_id,
+                    "checkpoint_artifact_id": checkpoint_artifact_id,
+                }
+            )
+            if observed_identity != expected_identity:
+                findings.append(
+                    EvidenceValidationFinding(
+                        code="PHASE_B_SCIENTIFIC_IDENTITY_MISMATCH",
+                        severity="error",
+                        message="Protocol-v2.1 Phase-B record identity does not match its frozen plan/checkpoint lineage.",
+                        job_id=job.job_id,
+                        artifact_id=artifact.artifact_id,
+                    )
+                )
             if record.schema_version != PHASE_B_TEMPORAL_SCHEMA_VERSION:
                 findings.append(
                     EvidenceValidationFinding(
@@ -396,7 +460,9 @@ class StudyEvidenceValidator:
                     )
                 )
                 continue
-            endpoints = tuple(window.end_interaction for window in record.reward_windows)
+            endpoints = tuple(
+                window.end_interaction for window in record.reward_windows
+            )
             if endpoints != expected_endpoints or any(
                 window.interaction_count != 32 for window in record.reward_windows
             ):
@@ -420,3 +486,132 @@ class StudyEvidenceValidator:
                     job_id=job.job_id,
                 )
             )
+
+    def _validate_phase_a_identity(
+        self,
+        *,
+        store: StudyStore,
+        job: Any,
+        produced: list[StudyArtifact],
+        findings: list[EvidenceValidationFinding],
+    ) -> None:
+        records = [
+            artifact
+            for artifact in produced
+            if artifact.role is ArtifactRole.ANALYSIS_DATA
+            and artifact.metadata.get("record_type") == "phase-a"
+        ]
+        if len(records) != 1:
+            findings.append(
+                EvidenceValidationFinding(
+                    code="PHASE_A_RECORD_COUNT_INVALID",
+                    severity="error",
+                    message="Protocol-v2.1 Phase-A job must retain exactly one analysis record.",
+                    job_id=job.job_id,
+                )
+            )
+            return
+        artifact = records[0]
+        path = store.writable_root / artifact.relative_path
+        try:
+            raw = json.loads(path.read_text(encoding="utf-8"))
+            record = PhaseAAnalysisRecord.from_dict(raw)
+        except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as exc:
+            findings.append(
+                EvidenceValidationFinding(
+                    code="PHASE_A_RECORD_INVALID",
+                    severity="error",
+                    message=f"Protocol-v2.1 Phase-A record is unreadable or invalid: {exc}",
+                    job_id=job.job_id,
+                    artifact_id=artifact.artifact_id,
+                )
+            )
+            return
+        expected = self._expected_job_identity(job)
+        observed = {
+            "method_id": record.method_id,
+            "root_id": record.root_id,
+            "layout_id": record.layout_id,
+        }
+        if (
+            record.study_id != store.execution_id
+            or record.job_id != job.job_id
+            or observed != expected
+        ):
+            findings.append(
+                EvidenceValidationFinding(
+                    code="PHASE_A_SCIENTIFIC_IDENTITY_MISMATCH",
+                    severity="error",
+                    message="Protocol-v2.1 Phase-A record identity does not match its frozen plan.",
+                    job_id=job.job_id,
+                    artifact_id=artifact.artifact_id,
+                )
+            )
+
+    @staticmethod
+    def _expected_job_identity(job: Any) -> dict[str, str]:
+        payload = job.payload
+        method = payload.get("method")
+        root = payload.get("root")
+        layout = payload.get("layout")
+        if not all(isinstance(item, Mapping) for item in (method, root, layout)):
+            return {}
+        identity = {
+            "method_id": str(method.get("method_id")),
+            "root_id": str(root.get("root_id")),
+            "layout_id": str(layout.get("layout_id")),
+        }
+        condition = payload.get("condition")
+        if isinstance(condition, Mapping):
+            identity["condition_id"] = str(condition.get("condition_id"))
+        return identity
+
+    def _validate_unique_scientific_identities(
+        self,
+        *,
+        store: StudyStore,
+        artifacts: list[StudyArtifact],
+        findings: list[EvidenceValidationFinding],
+    ) -> None:
+        observed: dict[tuple[str, ...], str] = {}
+        for artifact in artifacts:
+            if artifact.role is not ArtifactRole.ANALYSIS_DATA:
+                continue
+            record_type = artifact.metadata.get("record_type")
+            if record_type not in {"phase-a", "phase-b"}:
+                continue
+            path = store.writable_root / artifact.relative_path
+            try:
+                raw = json.loads(path.read_text(encoding="utf-8"))
+                if record_type == "phase-a":
+                    record = PhaseAAnalysisRecord.from_dict(raw)
+                    identity = (
+                        "phase-a",
+                        record.method_id,
+                        record.root_id,
+                        record.layout_id,
+                    )
+                else:
+                    record = PhaseBAnalysisRecord.from_dict(raw)
+                    identity = (
+                        "phase-b",
+                        record.method_id,
+                        record.root_id,
+                        record.layout_id,
+                        record.condition_id,
+                        record.branch.value,
+                    )
+            except (OSError, UnicodeError, json.JSONDecodeError, ValueError):
+                continue
+            previous = observed.get(identity)
+            if previous is not None:
+                findings.append(
+                    EvidenceValidationFinding(
+                        code="DUPLICATE_SCIENTIFIC_IDENTITY",
+                        severity="error",
+                        message=f"Scientific identity duplicates artifact {previous}.",
+                        artifact_id=artifact.artifact_id,
+                    )
+                )
+            else:
+                observed[identity] = artifact.artifact_id
