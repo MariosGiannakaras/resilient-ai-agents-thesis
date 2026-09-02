@@ -422,7 +422,7 @@ def _figure_specs() -> list[FigureSpec]:
         FigureSpec("FIG-RQ3-020-CONDITIONS",20,"RQ3","recovered-proportion",["appendix"],["rec_summary"],"Recovery proportion across all frozen conditions; action-remaps are the primary recovery axis.",lambda d,p:_fig_recovery_summary(d,p,"proportion",True)),
         FigureSpec("FIG-RQ3-021-ROOT-TRAJECTORIES",21,"RQ3","directed-gap-trajectory",["appendix"],["trajectories"],"Detailed stored root trajectories by method and primary condition; no trajectory averaging.",lambda d,p:_fig_trajectories(d,p,False)),
         FigureSpec("FIG-RQ3-022-CENSORING",22,"RQ3","recovery-status",["appendix"],["rec_summary"],"Recovered versus right-censored root composition at tolerance 0.10.",_fig_composition),
-        FigureSpec("FIG-RQ3-023-SENSITIVITY",23,"RQ3","recovered-proportion-sensitivity",["main-thesis","appendix"],["sensitivity"],"Predeclared 0.05/0.10/0.20 tolerance sensitivity; 0.10 remains primary.",_fig_sensitivity),
+        FigureSpec("FIG-RQ3-023-SENSITIVITY",23,"RQ3","recovered-proportion-sensitivity",["main-thesis","appendix"],["sensitivity","diagnostics"],"Predeclared 0.05/0.10/0.20 tolerance sensitivity; 0.10 remains primary.",_fig_sensitivity),
         FigureSpec("FIG-RQ3-024-CONTRASTS",24,"RQ3","declared-root-paired-contrasts",["appendix"],["recovery_contrasts"],"Declared recovery-status and restricted-delay A-minus-B contrasts on the primary axis.",lambda d,p:_fig_contrasts(d,p,"rq3")),
         FigureSpec("FIG-RQ3-025-TIMELINE",25,"RQ3","recovery-time;confirmation-time;censoring",["appendix"],["rec_roots"],"Stored recovery and confirmation times; right-censored roots are marked at the horizon without fake recovery times.",_fig_timeline),
         FigureSpec("FIG-METHOD-026-EXPERIMENT-FLOW",26,"methodology","protocol-flow",["main-thesis","defense"],["analysis_manifest"],"Protocol flow; exact checkpoints precede matched FN/FD/AN/AD branches.",lambda d,p:_diagram(p,"Protocol-v2.1 experiment flow",["Phase A\nnominal learning","Exact checkpoint","Matched FN / FD / AN / AD","Validation","Root-level analysis","Registered exports"])),
@@ -432,20 +432,27 @@ def _figure_specs() -> list[FigureSpec]:
         FigureSpec("FIG-DEF-030-RQ1-FINAL",30,"RQ1","phase-a-final-value",["defense"],["pa_summary"],"Large-label defense variant of the RQ1 final-performance figure.",lambda d,p:_fig_rq1_summary(d,p,"final",True)),
         FigureSpec("FIG-DEF-030-RQ2-ADAPTATION",30,"RQ2","adaptation-benefit",["defense"],["pb_summary"],"Large-label defense variant of the RQ2 adaptation-benefit figure.",lambda d,p:_fig_adaptation(d,p,defense=True)),
         FigureSpec("FIG-DEF-030-RQ3-RECOVERED",30,"RQ3","recovered-proportion",["defense"],["rec_summary"],"Large-label defense variant of the RQ3 recovered-proportion figure.",lambda d,p:_fig_recovery_summary(d,p,"proportion",defense=True)),
-        FigureSpec("FIG-DEF-030-RQ3-SENSITIVITY",30,"RQ3","recovered-proportion-sensitivity",["defense"],["sensitivity"],"Large-label defense variant of the predeclared tolerance-sensitivity figure.",lambda d,p:_fig_sensitivity(d,p,True)),
+        FigureSpec("FIG-DEF-030-RQ3-SENSITIVITY",30,"RQ3","recovered-proportion-sensitivity",["defense"],["sensitivity","diagnostics"],"Large-label defense variant of the predeclared tolerance-sensitivity figure.",lambda d,p:_fig_sensitivity(d,p,True)),
     ]
 
 
 def _source_map(repo_root:Path)->dict[str,dict[str,Any]]:
     manifest=_json(repo_root/ANALYSIS_MANIFEST_RELATIVE)
     by_name={Path(x["relative_path"]).name:x for x in manifest["canonical_analysis_artifacts"]}
+    handoff = _json(repo_root / STUDY_EXPORT_RELATIVE / "evidence-handoff-manifest.json")
+    registered_by_name = {record["filename"]: record for record in handoff["files"]}
+
+    def registered(filename: str) -> dict[str, Any]:
+        return {**by_name[filename], "artifact_id": registered_by_name[filename]["artifact_id"]}
+
     mapping={
-        "pa_summary":by_name["phase-a-method-summary.csv"], "pa_roots":by_name["phase-a-root-records.csv"], "pa_contrasts":by_name["phase-a-method-contrasts.csv"],
-        "pb_summary":by_name["phase-b-method-condition-summary.csv"], "pb_roots":by_name["phase-b-root-records.csv"], "pb_contrasts":by_name["phase-b-method-contrasts.csv"],
-        "rec_summary":by_name["recovery-method-condition-summary.csv"], "rec_roots":by_name["recovery-root-records.csv"], "recovery_contrasts":by_name["recovery-method-contrasts.csv"],
-        "trajectories":by_name["recovery-trajectory-records.csv"], "sensitivity":{"relative_path":str(DIAGNOSTICS_RELATIVE).replace("\\","/"),"sha256":_sha(repo_root/DIAGNOSTICS_RELATIVE)},
-        "analysis_manifest":{"relative_path":str(ANALYSIS_MANIFEST_RELATIVE).replace("\\","/"),"sha256":_sha(repo_root/ANALYSIS_MANIFEST_RELATIVE)},
-        "freeze_manifest":{"relative_path":str(FREEZE_MANIFEST_RELATIVE).replace("\\","/"),"sha256":_sha(repo_root/FREEZE_MANIFEST_RELATIVE)},
+        "pa_summary":registered("phase-a-method-summary.csv"), "pa_roots":registered("phase-a-root-records.csv"), "pa_contrasts":registered("phase-a-method-contrasts.csv"),
+        "pb_summary":registered("phase-b-method-condition-summary.csv"), "pb_roots":registered("phase-b-root-records.csv"), "pb_contrasts":registered("phase-b-method-contrasts.csv"),
+        "rec_summary":registered("recovery-method-condition-summary.csv"), "rec_roots":registered("recovery-root-records.csv"), "recovery_contrasts":registered("recovery-method-contrasts.csv"),
+        "trajectories":registered("recovery-trajectory-records.csv"), "sensitivity":registered("recovery-sensitivity-root-records.csv"),
+        "diagnostics":{"artifact_id":"t612-analysis-diagnostics","relative_path":str(DIAGNOSTICS_RELATIVE).replace("\\","/"),"sha256":_sha(repo_root/DIAGNOSTICS_RELATIVE)},
+        "analysis_manifest":{"artifact_id":"t612-analysis-manifest","relative_path":str(ANALYSIS_MANIFEST_RELATIVE).replace("\\","/"),"sha256":_sha(repo_root/ANALYSIS_MANIFEST_RELATIVE)},
+        "freeze_manifest":{"artifact_id":"t611-freeze-manifest","relative_path":str(FREEZE_MANIFEST_RELATIVE).replace("\\","/"),"sha256":_sha(repo_root/FREEZE_MANIFEST_RELATIVE)},
     }
     return mapping
 
@@ -477,9 +484,16 @@ def _write_tables(repo_root:Path,out:Path,sources:dict[str,dict[str,Any]])->list
         Path(record["relative_path"]).name: record
         for record in analysis_manifest["canonical_analysis_artifacts"]
     }
+    handoff = _json(repo_root / STUDY_EXPORT_RELATIVE / "evidence-handoff-manifest.json")
+    artifact_id_by_name = {
+        record["filename"]: record["artifact_id"] for record in handoff["files"]
+    }
     for source in sorted((repo_root/STUDY_EXPORT_RELATIVE).glob("*.csv")):
         csv_out=table_dir/source.name; shutil.copyfile(source,csv_out); md_out=table_dir/(source.stem+".md"); _markdown_table(csv_out,md_out)
-        artifact = canonical_by_name[source.name]
+        artifact = {
+            **canonical_by_name[source.name],
+            "artifact_id": artifact_id_by_name[source.name],
+        }
         entries.append({"asset_id":"TABLE-"+source.stem.upper().replace("-","_"),"kind":"table","rq_scope":"RQ1/RQ2/RQ3" if "root" in source.name else "registered-analysis","estimand_scope":"canonical-T612-export","intended_use":["appendix","machine-readable"],"source_artifacts":[artifact],"outputs":[]})
         entries[-1]["outputs"]=[{"relative_path":str(p.relative_to(out)).replace("\\","/"),"sha256":_sha(p),"size_bytes":p.stat().st_size,"format":p.suffix[1:]} for p in (csv_out,md_out)]
     sensitivity=_json(repo_root/DIAGNOSTICS_RELATIVE)["recovery_sensitivity_primary_action_remap"]
@@ -487,7 +501,7 @@ def _write_tables(repo_root:Path,out:Path,sources:dict[str,dict[str,Any]])->list
     with csv_out.open("w",encoding="utf-8",newline="") as handle:
         writer=csv.DictWriter(handle,fieldnames=list(sensitivity[0]),lineterminator="\n"); writer.writeheader(); writer.writerows(sensitivity)
     md_out=table_dir/"recovery-tolerance-sensitivity-summary.md"; _markdown_table(csv_out,md_out)
-    entries.append({"asset_id":"TABLE-RQ3-TOLERANCE-SENSITIVITY","kind":"table","rq_scope":"RQ3","estimand_scope":"recovered-proportion-sensitivity","intended_use":["main-thesis","appendix","machine-readable"],"source_artifacts":[sources["sensitivity"]],"outputs":[{"relative_path":str(p.relative_to(out)).replace("\\","/"),"sha256":_sha(p),"size_bytes":p.stat().st_size,"format":p.suffix[1:]} for p in (csv_out,md_out)]})
+    entries.append({"asset_id":"TABLE-RQ3-TOLERANCE-SENSITIVITY","kind":"table","rq_scope":"RQ3","estimand_scope":"recovered-proportion-sensitivity","intended_use":["main-thesis","appendix","machine-readable"],"source_artifacts":[sources["sensitivity"],sources["diagnostics"]],"outputs":[{"relative_path":str(p.relative_to(out)).replace("\\","/"),"sha256":_sha(p),"size_bytes":p.stat().st_size,"format":p.suffix[1:]} for p in (csv_out,md_out)]})
     return entries
 
 
@@ -548,6 +562,8 @@ def validate_final_assets(repo_root:Path,output:Path|None=None)->dict[str,Any]:
         if asset["asset_id"] in seen: raise ValueError(f"Duplicate asset id {asset['asset_id']}")
         seen.add(asset["asset_id"])
         for source in asset["source_artifacts"]:
+            if not source.get("artifact_id"):
+                raise ValueError(f"Source artifact ID is missing for {asset['asset_id']}")
             source_path=repo_root/source["relative_path"]
             if _sha(source_path)!=source["sha256"]: raise ValueError(f"Source changed: {source_path}")
         for item in asset["outputs"]:
