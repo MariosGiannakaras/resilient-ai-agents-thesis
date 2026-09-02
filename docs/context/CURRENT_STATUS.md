@@ -17,11 +17,11 @@
 - The accepted application remains **Experiment / Run / Results / Evidence**, with `Locked Thesis experiment`, five immutable Thesis methods and simultaneous matched Frozen/Adaptive presentation.
 - `docs/research/T-613_THESIS_FIGURE_INVENTORY.md` remains the downstream T-613 output contract: a rich reproducible main-thesis + appendix + defense figure/table package generated from validated stored final outputs, not quantitative UI screenshots.
 - A final **read-only merged-main preflight** was completed after the T-536 merge. It confirmed `final_reserve_access=false`, `execution_authorization=requires-explicit-t610-gate`, no committed `protocol-v2.1-final` Study bundle, deny-by-default final execution, and the canonical 603-job plan with `final_execution_authorized=false`. T-537 changed no execution/scientific code, so those gate semantics remain unchanged.
-- `T-610` is **IN_PROGRESS under DEC-062 recovery**. The first authorized execution completed 216/603 jobs before the first SARSA Phase-B job encountered a deterministic checkpoint-boundary implementation defect. That attempt is immutable failed/incomplete history and is ineligible for downstream evidence or conclusions.
-- Native Windows CPython 3.12 preflight on synchronized `main` re-derived the canonical 603-job plan, confirmed recipe SHA-256 `8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154`, proved default backend denial, and found no existing `protocol-v2.1-final` Study. The DEVELOPMENT synthetic downstream smoke finalized successfully without final identities.
-- The created Study records plan SHA-256 `073779d18f45caeab2ab725e7dce6b54b70394102d45de81e1974c7efaece0f4` and clean source commit `7442dcb65674dcb3bc9ce0c71996418289d79061`. Its durable state is `active` and unfinalized: 216 completed (120 Phase A plus 96 Q-Learning Phase B), 1 infrastructure-failed, 386 pending, and 0 running/scientific-failed/skipped/cancelled.
+- `T-610` is **COMPLETE**. The DEC-062 replacement `protocol-v2.1-final--t610-recovery-01` completed and finalized 603/603 jobs with zero infrastructure/scientific failures, no pending/running jobs and coherent Study/run integrity.
+- Native Windows CPython 3.12 recovery preflight on clean commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730` re-derived the canonical 603-job plan, confirmed the unchanged recipe hash and backend denial, byte-validated the failed attempt and confirmed the replacement namespace was absent before creation.
+- The historical Study records source commit `7442dcb65674dcb3bc9ce0c71996418289d79061`. It remains `active` and unfinalized at 216 completed, 1 infrastructure-failed and 386 pending, with its four registry hashes unchanged after replacement finalization.
 - The failed attempt is `pb__sarsa__t527-final-r01__gw-l1-final-a__action-remap-swap-right-down`: the shared no-learning prefix requires a quiescent learner, but the materialized SARSA Phase-A checkpoint retained pending/deferred state. The frozen recipe declares DEC-054 deployment-start settlement; the generic Study Phase-A executor did not apply that accepted settlement before persisting the checkpoint.
-- The user explicitly authorized DEC-062 on 2026-09-02. The correction reuses DEC-054 at the missing Study boundary, consumes zero additional environment interactions and changes no scientific invariant. A distinct replacement execution instance, `protocol-v2.1-final--t610-recovery-01`, will retain the same recipe and plan while recording predecessor/decision/corrected-source lineage.
+- The replacement records recipe SHA-256 `8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154`, plan SHA-256 `073779d18f45caeab2ab725e7dce6b54b70394102d45de81e1974c7efaece0f4`, clean source commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`, predecessor `protocol-v2.1-final` and recovery decision DEC-062. All 600 scientific run bundles validate.
 - Master tracker #87 remains **7/8**; milestone 8 awaits the final v2.1 evidence chain.
 - **Pre-WP7 approval: NOT APPROVED.** No `T-700+` execution or Results/Discussion writing.
 
@@ -29,7 +29,7 @@
 
 DEC-058 / protocol-v2.0 remain immutable historical freeze authority. DEC-060 plus `configs/protocols/protocol-v2.1-final.json` are the current pre-execution scientific authority.
 
-Frozen protocol-v2.1 remains unchanged: Q-Learning, SARSA, DQN, PPO and Dyna-Q+; common actual-interaction fairness; Phase-A independent learning/exact checkpoints; matched FN/FD/AN/AD Phase B; 12 roots, 2 held-out layouts, four conditions and 256-interaction horizon; RQ2 adaptation benefit `(FN-FD)-(AN-AD)`; RQ3 passive 32-interaction windows, tolerance 0.10 with 0.05/0.20 sensitivity, two-window stability and `recovery_time=null` right-censoring; root as independent unit; declared root-paired direct method contrasts and Student-t intervals. Partial outcomes exist only inside the preserved first attempt; they have not been interpreted or used to change the protocol and cannot enter accepted replacement evidence.
+Frozen protocol-v2.1 remains unchanged: Q-Learning, SARSA, DQN, PPO and Dyna-Q+; common actual-interaction fairness; Phase-A independent learning/exact checkpoints; matched FN/FD/AN/AD Phase B; 12 roots, 2 held-out layouts, four conditions and 256-interaction horizon; RQ2 adaptation benefit `(FN-FD)-(AN-AD)`; RQ3 passive 32-interaction windows, tolerance 0.10 with 0.05/0.20 sensitivity, two-window stability and `recovery_time=null` right-censoring; root as independent unit; declared root-paired direct method contrasts and Student-t intervals. The failed-attempt outcomes remain excluded. Replacement outputs are present but have not been interpreted; T-611 must validate/freeze them before scientific use.
 
 ## Pre-final backend/application readiness
 
@@ -37,7 +37,7 @@ The validated backend chain remains:
 
 `Study recipe/plan -> Phase A -> exact checkpoint -> FN/FD/AN/AD -> temporal evidence -> validation -> root reduction -> RQ1/RQ2/RQ3 analysis -> recovery/direct contrasts -> deterministic exports -> stored-evidence application read model`.
 
-Deny-by-default final execution, read-only preflight, DEVELOPMENT synthetic smoke and RQ evidence traceability are complete. None authorize T-610.
+Deny-by-default final execution, read-only recovery preflight, DEVELOPMENT synthetic smoke, RQ evidence traceability and T-610 execution are complete. The authorization guard remains unchanged.
 
 The accepted PySide6 application is experiment-first. T-535 guarantees created-record selection, Run→Results/Evidence context propagation, `Experiment record` terminology, RQ-local direct comparisons, progressive provenance disclosure, truthful retry states and actionable Evidence next steps. T-536 adds larger GridWorld emphasis, current-method/five-method lifecycle orientation, larger RQ1/RQ2 charts, stored-evidence RQ3 trajectories, improved sparse-screen use and restrained hierarchy/readability polish. The UI never recalculates scientific estimands, thresholds, recovery classification or intervals.
 
@@ -53,15 +53,16 @@ The accepted PySide6 application is experiment-first. T-535 guarantees created-r
 - Post-T536 canonical reconciliation merged as `4ffb7bc700b3d485324c659e94823c9d2e272cba`.
 - README refresh PR #115 merged as `31877a09ec2eda7852856c6c1cf7ae059bbf72ae` after Repository checks #890.
 - PR #117 / T-537 merged as `8fd32fbf68d7374ff1de5c70db21e9f95b129c1c` after exact-head Repository checks #892 and PySide6 UI acceptance #191; merged-state verification completed.
+- PR #122 / DEC-062 recovery implementation and failed-attempt preservation merged as `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`; exact-head and merged-main Repository/Protocol-v2 checks passed before replacement execution.
 - Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/`; `bibliography-integration-v3` is immutable historical terminology, not a parallel system.
 
 ## Still intentionally unfrozen
 
-- Final-reserve execution and DEC-062 recovery authorization are granted for the clean replacement T-610 execution only through the accepted backend token. The committed `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` fields remain unchanged.
-- T-611/T-612/T-613 remain downstream blocked and WP7 remains separately unauthorized.
+- T-610 authorization was consumed only through the accepted backend token; committed authority fields remain unchanged.
+- T-611 is now dependency-valid but not started. T-612/T-613 remain blocked and WP7 remains separately unauthorized.
 - WP7 remains blocked by final evidence plus later explicit pre-WP7 approval.
 - Standalone Windows packaging remains deferred to T-803 / issue #94.
 
 ## Exact next action
 
-Merge the bounded DEC-062 correction and preserved historical attempt after focused validation, exact-head CI and diff review. Synchronize clean Windows `main`, run the complete read-only preflight, and fail closed unless the recipe and canonical 603-job plan are unchanged. Then create `protocol-v2.1-final--t610-recovery-01` from that one corrected commit and execute it from the beginning. T-611/T-612/T-613, outcome interpretation and WP7/Results/Discussion remain blocked.
+STOP at the T-610 boundary after publishing/reconciling the finalized replacement evidence checkpoint. `T-611` is next and READY, but this execution must not begin its validation/freeze work. T-612/T-613, outcome interpretation and WP7/Results/Discussion remain blocked.

@@ -4,7 +4,7 @@
 
 Give Codex only:
 
-> `/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely. Preserve the failed T-610 attempt, execute the authorized DEC-062 clean replacement recovery, and stop before T-611 or interpretation.`
+> `/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely. Preserve both T-610 histories, resume only the next dependency-valid task, and honor all downstream gates.`
 
 ## Startup / resume
 
@@ -14,8 +14,8 @@ Give Codex only:
    - `docs/context/TASKS.md`
    - `docs/context/CURRENT_STATUS.md`
 3. Confirm the committed protocol-v2.1 authority and backend guard are unchanged. Never edit the immutable gate fields or weaken/hard-code around the guard.
-4. Run the native Windows read-only preflight and fail closed unless the frozen invariants and canonical 603-job plan reproduce.
-5. Verify `results/studies/protocol-v2.1-final` and its 216 completed jobs remain the exact immutable failed/incomplete attempt defined by DEC-062. Never retry, resume, finalize, copy or mix it. Create only the distinct replacement instance after the correction is merged and the clean preflight passes.
+4. Verify `protocol-v2.1-final--t610-recovery-01` remains the finalized 603/603 replacement from clean source commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730` before any T-611 work.
+5. Verify `results/studies/protocol-v2.1-final` remains the exact immutable 216-job failed/incomplete attempt defined by DEC-062. Never retry, resume, finalize, copy or mix it.
 
 ## Execution discipline
 
@@ -23,7 +23,7 @@ The persistent invariant is **Complete the canonical project task registry auton
 
 Use native Windows CPython 3.12, the locked `uv` environment, CPU execution, the frozen recipe loader, `StudyService`, default executors, sequential scheduler, durable `StudyStore`, and `PROTOCOL_V21_FINAL_EXECUTION_AUTHORIZATION` exactly as implemented.
 
-Preserve scientific failures as outcomes. DEC-062 is the accepted recovery path: apply the existing DEC-054 settlement at the missing Study Phase-A boundary, merge through normal CI/review, run the clean preflight, and execute `protocol-v2.1-final--t610-recovery-01` from zero. Retry only recorded infrastructure failures in that replacement when the accepted lifecycle permits it. Never replace roots/seeds, alter protocol choices, delete partial evidence, or mix source commits.
+Preserve scientific failures as outcomes. DEC-062 recovery and T-610 execution are complete. T-611 is next and may validate/freeze only the replacement evidence; the predecessor is permanently ineligible. Never replace roots/seeds, alter protocol choices, delete failed evidence, or mix execution instances.
 
 Report only durable operational progress and infrastructure state during execution. Do not inspect or interpret method rankings, RQ outcomes, distributions, final conclusions, or post-hoc analyses.
 
@@ -33,4 +33,4 @@ Report `Project: X/Y` only from a canonical finite denominator. In-progress/fail
 
 ## Stop conditions
 
-Preserve the original unfinalized Study, 216 completed jobs, run-index records and exact failure event. T-610 completes only when the fresh DEC-062 replacement from one corrected merged commit accounts for all 603 planned jobs and is durably finalized with coherent lifecycle/provenance/checksum state. Then reconcile canonical status, make T-611 next and stop. Do not inspect outcomes for interpretation or begin T-611/T-612/T-613/WP7.
+T-610 is complete and this execution stopped at its boundary. Preserve the original failed attempt and finalized replacement. T-611 is the next dependency-valid task; T-612/T-613 remain blocked by dependencies and WP7 remains separately approval-gated.

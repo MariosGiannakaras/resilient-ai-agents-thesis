@@ -1,0 +1,284 @@
+{
+  "branch_point_environment_sha256": "8197ec114f3a00e7d195cf1689ce8cf72b7f6beaebd43c05b5325cc8d47f934e",
+  "branch_point_learner_sha256": "b3295836e4d5b697c560ae62a04259e34bb94f9f3c126f58d48b15d4b54fd009",
+  "branches": [
+    {
+      "branch": "FN",
+      "final_environment_state_sha256": "0858a0d6b05ba249aa1ec40229574b498f0b7ea0560e45c328e9fa5b3ce9e108",
+      "final_learner_state_sha256": "349f284a0b0dd333a52ead062e51a7c1d1f9ec98254e075d4974846519934fb2",
+      "interactions": 256,
+      "metrics": {
+        "adaptive": 0.0,
+        "episodes_completed": 18.0,
+        "episodes_started": 19.0,
+        "native_planning_updates_completed": 0.0,
+        "native_update_opportunities_completed": 0.0,
+        "return_sum": -6.399999999999961,
+        "terminated": 0.0,
+        "truncated": 0.0
+      },
+      "reward_windows": [
+        {
+          "end_interaction": 32,
+          "interaction_count": 32,
+          "mean_reward": -0.03593750000000002,
+          "start_interaction": 1
+        },
+        {
+          "end_interaction": 64,
+          "interaction_count": 32,
+          "mean_reward": -0.07031250000000003,
+          "start_interaction": 33
+        },
+        {
+          "end_interaction": 96,
+          "interaction_count": 32,
+          "mean_reward": -0.0015624999999999927,
+          "start_interaction": 65
+        },
+        {
+          "end_interaction": 128,
+          "interaction_count": 32,
+          "mean_reward": -0.031249999999999993,
+          "start_interaction": 97
+        },
+        {
+          "end_interaction": 160,
+          "interaction_count": 32,
+          "mean_reward": 0.003125000000000001,
+          "start_interaction": 129
+        },
+        {
+          "end_interaction": 192,
+          "interaction_count": 32,
+          "mean_reward": -0.031249999999999993,
+          "start_interaction": 161
+        },
+        {
+          "end_interaction": 224,
+          "interaction_count": 32,
+          "mean_reward": -0.0015624999999999988,
+          "start_interaction": 193
+        },
+        {
+          "end_interaction": 256,
+          "interaction_count": 32,
+          "mean_reward": -0.031249999999999997,
+          "start_interaction": 225
+        }
+      ]
+    },
+    {
+      "branch": "FD",
+      "final_environment_state_sha256": "98487003719720d8082a7ef69ed2011822fd81171ca459c624730d63d08a77b6",
+      "final_learner_state_sha256": "349f284a0b0dd333a52ead062e51a7c1d1f9ec98254e075d4974846519934fb2",
+      "interactions": 256,
+      "metrics": {
+        "adaptive": 0.0,
+        "episodes_completed": 5.0,
+        "episodes_started": 6.0,
+        "native_planning_updates_completed": 0.0,
+        "native_update_opportunities_completed": 0.0,
+        "return_sum": -28.75000000000016,
+        "terminated": 0.0,
+        "truncated": 0.0
+      },
+      "reward_windows": [
+        {
+          "end_interaction": 32,
+          "interaction_count": 32,
+          "mean_reward": -0.10468750000000004,
+          "start_interaction": 1
+        },
+        {
+          "end_interaction": 64,
+          "interaction_count": 32,
+          "mean_reward": -0.10000000000000005,
+          "start_interaction": 33
+        },
+        {
+          "end_interaction": 96,
+          "interaction_count": 32,
+          "mean_reward": -0.10000000000000005,
+          "start_interaction": 65
+        },
+        {
+          "end_interaction": 128,
+          "interaction_count": 32,
+          "mean_reward": -0.19374999999999987,
+          "start_interaction": 97
+        },
+        {
+          "end_interaction": 160,
+          "interaction_count": 32,
+          "mean_reward": -0.10000000000000005,
+          "start_interaction": 129
+        },
+        {
+          "end_interaction": 192,
+          "interaction_count": 32,
+          "mean_reward": -0.10000000000000005,
+          "start_interaction": 161
+        },
+        {
+          "end_interaction": 224,
+          "interaction_count": 32,
+          "mean_reward": -0.10000000000000005,
+          "start_interaction": 193
+        },
+        {
+          "end_interaction": 256,
+          "interaction_count": 32,
+          "mean_reward": -0.10000000000000005,
+          "start_interaction": 225
+        }
+      ]
+    },
+    {
+      "branch": "AN",
+      "final_environment_state_sha256": "588b7b0282cd415da89464d3717e7266f0e7fa7502c6b2683b9876688b8a1620",
+      "final_learner_state_sha256": "eb937487a98e408da22eebbcd00a13ab6f1546e7cea997b9f124c4b7b872afea",
+      "interactions": 256,
+      "metrics": {
+        "adaptive": 1.0,
+        "episodes_completed": 18.0,
+        "episodes_started": 19.0,
+        "native_planning_updates_completed": 0.0,
+        "native_update_opportunities_completed": 255.0,
+        "return_sum": -6.699999999999962,
+        "terminated": 0.0,
+        "truncated": 0.0
+      },
+      "reward_windows": [
+        {
+          "end_interaction": 32,
+          "interaction_count": 32,
+          "mean_reward": -0.03593750000000002,
+          "start_interaction": 1
+        },
+        {
+          "end_interaction": 64,
+          "interaction_count": 32,
+          "mean_reward": -0.07031250000000003,
+          "start_interaction": 33
+        },
+        {
+          "end_interaction": 96,
+          "interaction_count": 32,
+          "mean_reward": -0.0015624999999999927,
+          "start_interaction": 65
+        },
+        {
+          "end_interaction": 128,
+          "interaction_count": 32,
+          "mean_reward": -0.03593749999999999,
+          "start_interaction": 97
+        },
+        {
+          "end_interaction": 160,
+          "interaction_count": 32,
+          "mean_reward": -0.0015624999999999936,
+          "start_interaction": 129
+        },
+        {
+          "end_interaction": 192,
+          "interaction_count": 32,
+          "mean_reward": -0.03124999999999999,
+          "start_interaction": 161
+        },
+        {
+          "end_interaction": 224,
+          "interaction_count": 32,
+          "mean_reward": -0.0015624999999999918,
+          "start_interaction": 193
+        },
+        {
+          "end_interaction": 256,
+          "interaction_count": 32,
+          "mean_reward": -0.031249999999999993,
+          "start_interaction": 225
+        }
+      ]
+    },
+    {
+      "branch": "AD",
+      "final_environment_state_sha256": "cc2d697421abcfc6b4222351e0916e0b04bbba859a81d2ffea2db58bb08261c7",
+      "final_learner_state_sha256": "b8ea7b1211fb58f3bb1c7d525f194e8184b49844681fdf0f0db8ef577f5d70c9",
+      "interactions": 256,
+      "metrics": {
+        "adaptive": 1.0,
+        "episodes_completed": 10.0,
+        "episodes_started": 11.0,
+        "native_planning_updates_completed": 0.0,
+        "native_update_opportunities_completed": 255.0,
+        "return_sum": -23.850000000000094,
+        "terminated": 0.0,
+        "truncated": 0.0
+      },
+      "reward_windows": [
+        {
+          "end_interaction": 32,
+          "interaction_count": 32,
+          "mean_reward": -0.10468750000000004,
+          "start_interaction": 1
+        },
+        {
+          "end_interaction": 64,
+          "interaction_count": 32,
+          "mean_reward": -0.12812500000000004,
+          "start_interaction": 33
+        },
+        {
+          "end_interaction": 96,
+          "interaction_count": 32,
+          "mean_reward": -0.12187500000000002,
+          "start_interaction": 65
+        },
+        {
+          "end_interaction": 128,
+          "interaction_count": 32,
+          "mean_reward": -0.11875000000000004,
+          "start_interaction": 97
+        },
+        {
+          "end_interaction": 160,
+          "interaction_count": 32,
+          "mean_reward": -0.06562500000000004,
+          "start_interaction": 129
+        },
+        {
+          "end_interaction": 192,
+          "interaction_count": 32,
+          "mean_reward": -0.14062499999999992,
+          "start_interaction": 161
+        },
+        {
+          "end_interaction": 224,
+          "interaction_count": 32,
+          "mean_reward": -0.05937500000000004,
+          "start_interaction": 193
+        },
+        {
+          "end_interaction": 256,
+          "interaction_count": 32,
+          "mean_reward": -0.00625,
+          "start_interaction": 225
+        }
+      ]
+    }
+  ],
+  "condition_id": "action-remap-swap-right-down",
+  "episode_reset_policy_id": "dec-055-persistent-multi-episode-deployment-v1",
+  "job_id": "pb__sarsa__t527-final-r10__gw-l1-final-b__action-remap-swap-right-down",
+  "layout_id": "gw-l1-final-b",
+  "method_id": "sarsa",
+  "phase_a_checkpoint_artifact_id": "checkpoint__pa__sarsa__t527-final-r10__gw-l1-final-b",
+  "phase_a_checkpoint_sha256": "76506b93e2312f6e1b39d9549b50961bb45991c793f05525204112c4e5bbc2e9",
+  "prefix_interactions": 1,
+  "record_type": "phase-b-matched-set",
+  "root_id": "t527-final-r10",
+  "schema_version": 2,
+  "study_id": "protocol-v2.1-final--t610-recovery-01",
+  "temporal_evidence_id": "dec-060-fixed-reward-windows-v1",
+  "temporal_window_size": 32
+}

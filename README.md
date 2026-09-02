@@ -7,7 +7,7 @@ Version-controlled repository for the complete thesis lifecycle: research contex
 
 ## Project status
 
-The **frozen protocol-v2.1 final scientific experiment** is in formal T-610 recovery under DEC-062 after a preserved post-authorization failed attempt.
+The **frozen protocol-v2.1 final scientific experiment** completed under the formal DEC-062 replacement path, with the first failed attempt preserved separately.
 
 | Item | Current state |
 |---|---|
@@ -18,12 +18,12 @@ The **frozen protocol-v2.1 final scientific experiment** is in formal T-610 reco
 | Final read-only preflight | **Complete**; T-537 changed no scientific/execution code |
 | Final protocol-v2.1 reserve | **Sealed** — `final_reserve_access=false` |
 | Final execution authorization | **Granted for T-610 only** through the separate backend token |
-| Current task | **T-610 IN_PROGRESS (DEC-062 clean replacement recovery)** |
+| Current task | **T-610 COMPLETE; T-611 is next and not started** |
 | Final v2.1 outcomes | **Partially generated, unfinalized and not interpreted** |
 | Thesis writing | **Not authorized yet**; separate pre-WP7 approval is required after accepted final evidence |
 | Standalone Windows packaging | Deferred to **T-803** after the thesis deliverable |
 
-All declared dependencies and the separate T-610 authorization are complete. The first Study, created from `7442dcb65674dcb3bc9ce0c71996418289d79061`, stopped after 216 completed jobs when the first SARSA Phase-B job rejected a non-quiescent deferred Phase-A learner state. DEC-062 preserves that attempt unmodified and ineligible for downstream evidence, applies the already accepted DEC-054 settlement in the missing Study boundary, and authorizes a fresh non-mixed replacement execution from one corrected merged commit. T-611 and interpretation remain unauthorized.
+The first Study from `7442dcb65674dcb3bc9ce0c71996418289d79061` remains an unmodified, unfinalized 216-job failed attempt ineligible for downstream evidence. The fresh replacement `protocol-v2.1-final--t610-recovery-01` completed and finalized 603/603 jobs from clean commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`, with unchanged recipe/plan hashes and zero recorded failures. T-611 validation/freeze and all interpretation remain outside T-610 and have not started.
 
 > `docs/context/TASKS.md` is the canonical task/dependency ledger and `docs/context/CURRENT_STATUS.md` is the authoritative compact state. The task table in this README is a human-readable snapshot only; the canonical files win if the project state changes.
 
@@ -158,16 +158,16 @@ Standalone Windows packaging is intentionally deferred to T-803.
 
 The remaining path is sequential and evidence-gated:
 
-1. **T-610 — Complete the DEC-062 replacement final execution.** Preserve the first 216-job attempt as failed/incomplete history; merge and preflight the bounded correction, then execute the unchanged 603-job plan from zero under a distinct provenance instance.
-2. **Stop at the T-610 boundary.** T-611 remains blocked until objective execution completion and durable finalization.
-3. **T-611 — Validate and freeze final evidence.** Check completeness, integrity, provenance and scientific validity before accepting evidence for analysis.
+1. **T-610 — Complete.** The DEC-062 replacement finalized the unchanged 603-job plan from one clean source commit; the first attempt remains excluded history.
+2. **Stop at the T-610 boundary.** No outcome interpretation or downstream task is part of this execution.
+3. **T-611 — Next and READY, but not started.** Validate and freeze completeness, integrity, provenance and scientific validity before accepting evidence for analysis.
 4. **T-612 — Run the predeclared statistical analysis.** Produce RQ1/RQ2/RQ3 estimands, sensitivity diagnostics and direct method contrasts from the frozen evidence.
 5. **T-613 — Produce the final figure/table/export package.** Generate the rich reproducible thesis + appendix + defense assets defined in `docs/research/T-613_THESIS_FIGURE_INVENTORY.md`.
 6. **Explicit pre-WP7 user approval.** Even accepted final evidence does not automatically authorize thesis writing.
 7. **WP7 — Thesis and defense.** Recheck current university rules, review example theses, draft the Greek thesis, create the review-ready Word document, apply corrections, freeze the thesis, and prepare/rehearse the defense deck.
 8. **WP8 — Final audit/delivery.** Bibliography/citation audit, reproducibility/privacy/licensing/delivery audit, final academic readiness and eventually the standalone Windows application package.
 
-DEC-062 authorizes only the bounded implementation correction and clean replacement T-610 execution. The original partial Study remains intact and cannot be resumed, copied, finalized or mixed into accepted evidence.
+DEC-062 recovery is complete. The original partial Study remains intact and cannot be resumed, copied, finalized or mixed into accepted evidence. Replacement artifacts remain unaccepted until T-611.
 
 ## Thesis/defense result assets
 
@@ -248,8 +248,8 @@ Status legend: **Complete** = accepted task finished; **Superseded** = historica
 | WP6 | T-602 | ✅ Complete · historical | v1.0 statistical analysis |
 | WP6 | T-603 | ✅ Complete · historical | v1.0 figures/tables/artifacts |
 | WP6 | T-604 | ✅ Complete · historical | v1.0 evidence package |
-| WP6 | T-610 | 🟡 In progress | DEC-062 correction, clean preflight, then fresh 603-job replacement |
-| WP6 | T-611 | 🔒 Blocked by T-610 | Validate/freeze protocol-v2.1 final evidence |
+| WP6 | T-610 | ✅ Complete | DEC-062 replacement finalized 603/603 from clean source |
+| WP6 | T-611 | 🟢 Ready, not started | Validate/freeze protocol-v2.1 final evidence |
 | WP6 | T-612 | 🔒 Blocked by T-611 | Predeclared v2.1 RQ1/RQ2/RQ3 statistical analysis |
 | WP6 | T-613 | 🔒 Blocked by T-612 | Final v2.1 figures/tables/exports + thesis/defense evidence package |
 | WP7 | T-700 | 🔒 Blocked | Recheck current Department/University submission/formatting/defense rules; also requires explicit pre-WP7 approval |

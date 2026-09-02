@@ -1,0 +1,288 @@
+{
+  "branch_point_environment_sha256": "7e00e7a53020acf9bf51d1b11b70540619ed0c9086f4104e7dca4427e1b03394",
+  "branch_point_learner_sha256": "ad40e227c1e94213c1ae77845dad417c85b1a92cb74e960e579848fec8edb7f3",
+  "branches": [
+    {
+      "branch": "FN",
+      "final_environment_state_sha256": "6347b3f66f29f150e0dea2ab264b68e1505f8fc2c7dd6db767a2d7ef7053a217",
+      "final_learner_state_sha256": "242bae586e24f593503ac8c38d0675ba11a73612205cf9ac02ab600056a7032d",
+      "interactions": 256,
+      "metrics": {
+        "adaptive": 0.0,
+        "deterministic_inference": 0.0,
+        "episodes_completed": 21.0,
+        "episodes_started": 22.0,
+        "native_optimizer_updates_completed": 0.0,
+        "native_update_opportunities_completed": 0.0,
+        "return_sum": -2.500000000000014,
+        "terminated": 0.0,
+        "truncated": 0.0
+      },
+      "reward_windows": [
+        {
+          "end_interaction": 32,
+          "interaction_count": 32,
+          "mean_reward": -0.031249999999999993,
+          "start_interaction": 1
+        },
+        {
+          "end_interaction": 64,
+          "interaction_count": 32,
+          "mean_reward": 0.003125000000000008,
+          "start_interaction": 33
+        },
+        {
+          "end_interaction": 96,
+          "interaction_count": 32,
+          "mean_reward": 0.003125000000000002,
+          "start_interaction": 65
+        },
+        {
+          "end_interaction": 128,
+          "interaction_count": 32,
+          "mean_reward": -0.031249999999999993,
+          "start_interaction": 97
+        },
+        {
+          "end_interaction": 160,
+          "interaction_count": 32,
+          "mean_reward": 0.003125000000000008,
+          "start_interaction": 129
+        },
+        {
+          "end_interaction": 192,
+          "interaction_count": 32,
+          "mean_reward": 0.003125000000000002,
+          "start_interaction": 161
+        },
+        {
+          "end_interaction": 224,
+          "interaction_count": 32,
+          "mean_reward": -0.031249999999999993,
+          "start_interaction": 193
+        },
+        {
+          "end_interaction": 256,
+          "interaction_count": 32,
+          "mean_reward": 0.003125000000000008,
+          "start_interaction": 225
+        }
+      ]
+    },
+    {
+      "branch": "FD",
+      "final_environment_state_sha256": "9003d0f9ad44916d5580a8e671f5d3aeb47c51dc50c47aa24fe0920467b1f2f6",
+      "final_learner_state_sha256": "242bae586e24f593503ac8c38d0675ba11a73612205cf9ac02ab600056a7032d",
+      "interactions": 256,
+      "metrics": {
+        "adaptive": 0.0,
+        "deterministic_inference": 0.0,
+        "episodes_completed": 5.0,
+        "episodes_started": 6.0,
+        "native_optimizer_updates_completed": 0.0,
+        "native_update_opportunities_completed": 0.0,
+        "return_sum": -59.95000000000002,
+        "terminated": 0.0,
+        "truncated": 0.0
+      },
+      "reward_windows": [
+        {
+          "end_interaction": 32,
+          "interaction_count": 32,
+          "mean_reward": -0.21718749999999998,
+          "start_interaction": 1
+        },
+        {
+          "end_interaction": 64,
+          "interaction_count": 32,
+          "mean_reward": -0.23124999999999996,
+          "start_interaction": 33
+        },
+        {
+          "end_interaction": 96,
+          "interaction_count": 32,
+          "mean_reward": -0.2453125,
+          "start_interaction": 65
+        },
+        {
+          "end_interaction": 128,
+          "interaction_count": 32,
+          "mean_reward": -0.2359375,
+          "start_interaction": 97
+        },
+        {
+          "end_interaction": 160,
+          "interaction_count": 32,
+          "mean_reward": -0.23124999999999996,
+          "start_interaction": 129
+        },
+        {
+          "end_interaction": 192,
+          "interaction_count": 32,
+          "mean_reward": -0.2453125,
+          "start_interaction": 161
+        },
+        {
+          "end_interaction": 224,
+          "interaction_count": 32,
+          "mean_reward": -0.2359375,
+          "start_interaction": 193
+        },
+        {
+          "end_interaction": 256,
+          "interaction_count": 32,
+          "mean_reward": -0.23124999999999998,
+          "start_interaction": 225
+        }
+      ]
+    },
+    {
+      "branch": "AN",
+      "final_environment_state_sha256": "6347b3f66f29f150e0dea2ab264b68e1505f8fc2c7dd6db767a2d7ef7053a217",
+      "final_learner_state_sha256": "41eb72e487e8e854ffd757192f4657fc3bd251186c4259d409bd09a3079a5768",
+      "interactions": 256,
+      "metrics": {
+        "adaptive": 1.0,
+        "deterministic_inference": 0.0,
+        "episodes_completed": 21.0,
+        "episodes_started": 22.0,
+        "native_optimizer_updates_completed": 20.0,
+        "native_update_opportunities_completed": 2.0,
+        "return_sum": -2.500000000000014,
+        "terminated": 0.0,
+        "truncated": 0.0
+      },
+      "reward_windows": [
+        {
+          "end_interaction": 32,
+          "interaction_count": 32,
+          "mean_reward": -0.031249999999999993,
+          "start_interaction": 1
+        },
+        {
+          "end_interaction": 64,
+          "interaction_count": 32,
+          "mean_reward": 0.003125000000000008,
+          "start_interaction": 33
+        },
+        {
+          "end_interaction": 96,
+          "interaction_count": 32,
+          "mean_reward": 0.003125000000000002,
+          "start_interaction": 65
+        },
+        {
+          "end_interaction": 128,
+          "interaction_count": 32,
+          "mean_reward": -0.031249999999999993,
+          "start_interaction": 97
+        },
+        {
+          "end_interaction": 160,
+          "interaction_count": 32,
+          "mean_reward": 0.003125000000000008,
+          "start_interaction": 129
+        },
+        {
+          "end_interaction": 192,
+          "interaction_count": 32,
+          "mean_reward": 0.003125000000000002,
+          "start_interaction": 161
+        },
+        {
+          "end_interaction": 224,
+          "interaction_count": 32,
+          "mean_reward": -0.031249999999999993,
+          "start_interaction": 193
+        },
+        {
+          "end_interaction": 256,
+          "interaction_count": 32,
+          "mean_reward": 0.003125000000000008,
+          "start_interaction": 225
+        }
+      ]
+    },
+    {
+      "branch": "AD",
+      "final_environment_state_sha256": "9003d0f9ad44916d5580a8e671f5d3aeb47c51dc50c47aa24fe0920467b1f2f6",
+      "final_learner_state_sha256": "cf85fc89d0fd2458f68a596251861ce57a97b3a8d05be7fd73833ab210f11a5d",
+      "interactions": 256,
+      "metrics": {
+        "adaptive": 1.0,
+        "deterministic_inference": 0.0,
+        "episodes_completed": 5.0,
+        "episodes_started": 6.0,
+        "native_optimizer_updates_completed": 20.0,
+        "native_update_opportunities_completed": 2.0,
+        "return_sum": -59.95000000000002,
+        "terminated": 0.0,
+        "truncated": 0.0
+      },
+      "reward_windows": [
+        {
+          "end_interaction": 32,
+          "interaction_count": 32,
+          "mean_reward": -0.21718749999999998,
+          "start_interaction": 1
+        },
+        {
+          "end_interaction": 64,
+          "interaction_count": 32,
+          "mean_reward": -0.23124999999999996,
+          "start_interaction": 33
+        },
+        {
+          "end_interaction": 96,
+          "interaction_count": 32,
+          "mean_reward": -0.2453125,
+          "start_interaction": 65
+        },
+        {
+          "end_interaction": 128,
+          "interaction_count": 32,
+          "mean_reward": -0.2359375,
+          "start_interaction": 97
+        },
+        {
+          "end_interaction": 160,
+          "interaction_count": 32,
+          "mean_reward": -0.23124999999999996,
+          "start_interaction": 129
+        },
+        {
+          "end_interaction": 192,
+          "interaction_count": 32,
+          "mean_reward": -0.2453125,
+          "start_interaction": 161
+        },
+        {
+          "end_interaction": 224,
+          "interaction_count": 32,
+          "mean_reward": -0.2359375,
+          "start_interaction": 193
+        },
+        {
+          "end_interaction": 256,
+          "interaction_count": 32,
+          "mean_reward": -0.23124999999999998,
+          "start_interaction": 225
+        }
+      ]
+    }
+  ],
+  "condition_id": "action-remap-cycle-clockwise",
+  "episode_reset_policy_id": "dec-055-persistent-multi-episode-deployment-v1",
+  "job_id": "pb__ppo__t527-final-r10__gw-l1-final-a__action-remap-cycle-clockwise",
+  "layout_id": "gw-l1-final-a",
+  "method_id": "ppo",
+  "phase_a_checkpoint_artifact_id": "checkpoint__pa__ppo__t527-final-r10__gw-l1-final-a",
+  "phase_a_checkpoint_sha256": "86ba54ed038d7196ff41e3dab44eee100882e6c4e9bd6e49dee530b3cb1d78ae",
+  "prefix_interactions": 1,
+  "record_type": "phase-b-matched-set",
+  "root_id": "t527-final-r10",
+  "schema_version": 2,
+  "study_id": "protocol-v2.1-final--t610-recovery-01",
+  "temporal_evidence_id": "dec-060-fixed-reward-windows-v1",
+  "temporal_window_size": 32
+}

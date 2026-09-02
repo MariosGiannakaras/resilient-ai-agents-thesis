@@ -1,0 +1,597 @@
+{
+  "evidence_class": "confirmatory",
+  "frozen": true,
+  "protocol_version": "protocol-v2.1",
+  "recipe_id": "protocol-v2.1-final",
+  "schema_version": 1,
+  "scientific_status": "final-frozen-pre-execution-scientific-authority",
+  "study": {
+    "matrix_schema_version": 2,
+    "phase_a": {
+      "execution": {
+        "episodes_per_probe": 12,
+        "probe_interaction_indices": [
+          0,
+          512,
+          1024,
+          2048,
+          4096,
+          8192
+        ],
+        "task": {
+          "administrative_truncation": true,
+          "bootstrap_on_truncation": true,
+          "gamma": 0.95,
+          "reward_contract": {
+            "collision": -0.25,
+            "goal": 1.0,
+            "step": -0.1
+          }
+        },
+        "training_interaction_budget": 8192
+      },
+      "layouts": [
+        {
+          "family": "final-held-out",
+          "generation_seed": 57001,
+          "layout_id": "gw-l1-final-a",
+          "scenario": {
+            "action_disturbance_spec": {
+              "failure_probability": 0.0,
+              "type": "no-op-failure"
+            },
+            "change_events": [],
+            "dynamics_spec": {
+              "action_vectors": {
+                "down": [
+                  0,
+                  1
+                ],
+                "left": [
+                  -1,
+                  0
+                ],
+                "right": [
+                  1,
+                  0
+                ],
+                "up": [
+                  0,
+                  -1
+                ]
+              }
+            },
+            "environment_id": "project-gridworld-v1",
+            "information_policy": {
+              "expose_change_indicator": false,
+              "expose_disturbance_flags": false,
+              "expose_executed_action": false,
+              "expose_regime_id": false,
+              "expose_true_state": false
+            },
+            "initial_state_spec": {
+              "grid": {
+                "goal": [
+                  6,
+                  6
+                ],
+                "height": 7,
+                "obstacles": [
+                  [
+                    0,
+                    5
+                  ],
+                  [
+                    1,
+                    2
+                  ],
+                  [
+                    1,
+                    4
+                  ],
+                  [
+                    3,
+                    5
+                  ],
+                  [
+                    4,
+                    0
+                  ],
+                  [
+                    5,
+                    4
+                  ],
+                  [
+                    6,
+                    0
+                  ],
+                  [
+                    6,
+                    3
+                  ],
+                  [
+                    6,
+                    4
+                  ]
+                ],
+                "start": [
+                  0,
+                  0
+                ],
+                "width": 7
+              }
+            },
+            "max_steps": 48,
+            "observation_disturbance_spec": {
+              "mislocalization_probability": 0.0,
+              "type": "position-mislocalization"
+            },
+            "observation_spec": {
+              "coordinate_order": "x-y",
+              "reset_observation": "true-state",
+              "type": "position"
+            },
+            "reward_spec": {
+              "collision": -0.25,
+              "goal": 1.0,
+              "step": -0.1
+            },
+            "scenario_id": "gw-l1-final-a"
+          },
+          "spec_sha256": "c1f7924d05d62fc12f91e7a42316d8e0f6a96328a7deba145316483a0c8c9422"
+        },
+        {
+          "family": "final-held-out",
+          "generation_seed": 57002,
+          "layout_id": "gw-l1-final-b",
+          "scenario": {
+            "action_disturbance_spec": {
+              "failure_probability": 0.0,
+              "type": "no-op-failure"
+            },
+            "change_events": [],
+            "dynamics_spec": {
+              "action_vectors": {
+                "down": [
+                  0,
+                  1
+                ],
+                "left": [
+                  -1,
+                  0
+                ],
+                "right": [
+                  1,
+                  0
+                ],
+                "up": [
+                  0,
+                  -1
+                ]
+              }
+            },
+            "environment_id": "project-gridworld-v1",
+            "information_policy": {
+              "expose_change_indicator": false,
+              "expose_disturbance_flags": false,
+              "expose_executed_action": false,
+              "expose_regime_id": false,
+              "expose_true_state": false
+            },
+            "initial_state_spec": {
+              "grid": {
+                "goal": [
+                  6,
+                  6
+                ],
+                "height": 7,
+                "obstacles": [
+                  [
+                    0,
+                    5
+                  ],
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    2,
+                    4
+                  ],
+                  [
+                    2,
+                    5
+                  ],
+                  [
+                    3,
+                    0
+                  ],
+                  [
+                    3,
+                    2
+                  ],
+                  [
+                    3,
+                    5
+                  ],
+                  [
+                    3,
+                    6
+                  ],
+                  [
+                    4,
+                    6
+                  ]
+                ],
+                "start": [
+                  0,
+                  0
+                ],
+                "width": 7
+              }
+            },
+            "max_steps": 48,
+            "observation_disturbance_spec": {
+              "mislocalization_probability": 0.0,
+              "type": "position-mislocalization"
+            },
+            "observation_spec": {
+              "coordinate_order": "x-y",
+              "reset_observation": "true-state",
+              "type": "position"
+            },
+            "reward_spec": {
+              "collision": -0.25,
+              "goal": 1.0,
+              "step": -0.1
+            },
+            "scenario_id": "gw-l1-final-b"
+          },
+          "spec_sha256": "5128e490be3b811350b4ed1ab4b39dc503ba4687855c0a6c71fdf79d40c1fa1a"
+        }
+      ],
+      "methods": [
+        {
+          "configuration_id": "q-c06",
+          "implementation_id": "project-protocol-v2-state-adapter",
+          "method_id": "q_learning",
+          "parameters": {
+            "bootstrap_on_truncation": true,
+            "discount_factor": 0.95,
+            "exploration_epsilon": 0.1,
+            "initial_q_value": 0.0,
+            "learning_rate": 0.4
+          },
+          "phase_b_condition_ids": [
+            "action-remap-swap-right-down",
+            "action-remap-cycle-clockwise",
+            "action-failure-0.15",
+            "observation-corruption-0.05"
+          ],
+          "role": "core"
+        },
+        {
+          "configuration_id": "sarsa-c06",
+          "implementation_id": "project-protocol-v2-state-adapter",
+          "method_id": "sarsa",
+          "parameters": {
+            "bootstrap_on_truncation": true,
+            "discount_factor": 0.95,
+            "exploration_epsilon": 0.1,
+            "initial_q_value": 0.0,
+            "learning_rate": 0.4
+          },
+          "phase_b_condition_ids": [
+            "action-remap-swap-right-down",
+            "action-remap-cycle-clockwise",
+            "action-failure-0.15",
+            "observation-corruption-0.05"
+          ],
+          "role": "core"
+        },
+        {
+          "configuration_id": "dqn-c05",
+          "implementation_id": "stable-baselines3-scientific-state-adapter",
+          "method_id": "dqn",
+          "parameters": {
+            "batch_size": 32,
+            "bootstrap_on_truncation": true,
+            "buffer_size": 16384,
+            "discount_factor": 0.95,
+            "exploration_final_eps": 0.05,
+            "exploration_fraction": 0.5,
+            "exploration_initial_eps": 1.0,
+            "gradient_steps": 1,
+            "learning_rate": 0.003,
+            "learning_starts": 128,
+            "net_arch": [
+              64,
+              64
+            ],
+            "target_update_interval": 128,
+            "train_freq": 1
+          },
+          "phase_b_condition_ids": [
+            "action-remap-swap-right-down",
+            "action-remap-cycle-clockwise",
+            "action-failure-0.15",
+            "observation-corruption-0.05"
+          ],
+          "role": "core"
+        },
+        {
+          "configuration_id": "ppo-c06",
+          "implementation_id": "stable-baselines3-scientific-state-adapter",
+          "method_id": "ppo",
+          "parameters": {
+            "batch_size": 64,
+            "bootstrap_on_truncation": true,
+            "clip_range": 0.2,
+            "discount_factor": 0.95,
+            "ent_coef": 0.0,
+            "gae_lambda": 0.95,
+            "learning_rate": 0.001,
+            "max_grad_norm": 0.5,
+            "n_epochs": 10,
+            "n_steps": 128,
+            "net_arch": {
+              "pi": [
+                64,
+                64
+              ],
+              "vf": [
+                64,
+                64
+              ]
+            },
+            "vf_coef": 0.5
+          },
+          "phase_b_condition_ids": [
+            "action-remap-swap-right-down",
+            "action-remap-cycle-clockwise",
+            "action-failure-0.15",
+            "observation-corruption-0.05"
+          ],
+          "role": "core"
+        },
+        {
+          "configuration_id": "dyna-c03",
+          "implementation_id": "project-protocol-v2-state-adapter",
+          "method_id": "dyna_q_plus",
+          "parameters": {
+            "bootstrap_on_truncation": true,
+            "discount_factor": 0.95,
+            "exploration_epsilon": 0.1,
+            "initial_q_value": 0.0,
+            "kappa": 0.0005,
+            "learning_rate": 0.2,
+            "planning_steps": 10
+          },
+          "phase_b_condition_ids": [
+            "action-remap-swap-right-down",
+            "action-remap-cycle-clockwise",
+            "action-failure-0.15",
+            "observation-corruption-0.05"
+          ],
+          "role": "core"
+        }
+      ],
+      "references": [],
+      "roots": [
+        {
+          "action_disturbance_seed": 75001,
+          "environment_seed": 74001,
+          "exploration_seed": 72001,
+          "initialization_seed": 71001,
+          "observation_disturbance_seed": 76001,
+          "root_id": "t527-final-r01",
+          "scenario_seed": 73001
+        },
+        {
+          "action_disturbance_seed": 75002,
+          "environment_seed": 74002,
+          "exploration_seed": 72002,
+          "initialization_seed": 71002,
+          "observation_disturbance_seed": 76002,
+          "root_id": "t527-final-r02",
+          "scenario_seed": 73002
+        },
+        {
+          "action_disturbance_seed": 75003,
+          "environment_seed": 74003,
+          "exploration_seed": 72003,
+          "initialization_seed": 71003,
+          "observation_disturbance_seed": 76003,
+          "root_id": "t527-final-r03",
+          "scenario_seed": 73003
+        },
+        {
+          "action_disturbance_seed": 75004,
+          "environment_seed": 74004,
+          "exploration_seed": 72004,
+          "initialization_seed": 71004,
+          "observation_disturbance_seed": 76004,
+          "root_id": "t527-final-r04",
+          "scenario_seed": 73004
+        },
+        {
+          "action_disturbance_seed": 75005,
+          "environment_seed": 74005,
+          "exploration_seed": 72005,
+          "initialization_seed": 71005,
+          "observation_disturbance_seed": 76005,
+          "root_id": "t527-final-r05",
+          "scenario_seed": 73005
+        },
+        {
+          "action_disturbance_seed": 75006,
+          "environment_seed": 74006,
+          "exploration_seed": 72006,
+          "initialization_seed": 71006,
+          "observation_disturbance_seed": 76006,
+          "root_id": "t527-final-r06",
+          "scenario_seed": 73006
+        },
+        {
+          "action_disturbance_seed": 75007,
+          "environment_seed": 74007,
+          "exploration_seed": 72007,
+          "initialization_seed": 71007,
+          "observation_disturbance_seed": 76007,
+          "root_id": "t527-final-r07",
+          "scenario_seed": 73007
+        },
+        {
+          "action_disturbance_seed": 75008,
+          "environment_seed": 74008,
+          "exploration_seed": 72008,
+          "initialization_seed": 71008,
+          "observation_disturbance_seed": 76008,
+          "root_id": "t527-final-r08",
+          "scenario_seed": 73008
+        },
+        {
+          "action_disturbance_seed": 75009,
+          "environment_seed": 74009,
+          "exploration_seed": 72009,
+          "initialization_seed": 71009,
+          "observation_disturbance_seed": 76009,
+          "root_id": "t527-final-r09",
+          "scenario_seed": 73009
+        },
+        {
+          "action_disturbance_seed": 75010,
+          "environment_seed": 74010,
+          "exploration_seed": 72010,
+          "initialization_seed": 71010,
+          "observation_disturbance_seed": 76010,
+          "root_id": "t527-final-r10",
+          "scenario_seed": 73010
+        },
+        {
+          "action_disturbance_seed": 75011,
+          "environment_seed": 74011,
+          "exploration_seed": 72011,
+          "initialization_seed": 71011,
+          "observation_disturbance_seed": 76011,
+          "root_id": "t527-final-r11",
+          "scenario_seed": 73011
+        },
+        {
+          "action_disturbance_seed": 75012,
+          "environment_seed": 74012,
+          "exploration_seed": 72012,
+          "initialization_seed": 71012,
+          "observation_disturbance_seed": 76012,
+          "root_id": "t527-final-r12",
+          "scenario_seed": 73012
+        }
+      ]
+    },
+    "phase_b": {
+      "branches": [
+        "FN",
+        "FD",
+        "AN",
+        "AD"
+      ],
+      "conditions": [
+        {
+          "condition_id": "action-remap-swap-right-down",
+          "family": "action-remap",
+          "specification": {
+            "mapping": {
+              "down": "right",
+              "left": "left",
+              "right": "down",
+              "up": "up"
+            },
+            "mapping_id": "swap-right-down"
+          }
+        },
+        {
+          "condition_id": "action-remap-cycle-clockwise",
+          "family": "action-remap",
+          "specification": {
+            "mapping": {
+              "down": "left",
+              "left": "up",
+              "right": "down",
+              "up": "right"
+            },
+            "mapping_id": "cycle-clockwise"
+          }
+        },
+        {
+          "condition_id": "action-failure-0.15",
+          "family": "action-failure",
+          "specification": {
+            "probability": 0.15
+          }
+        },
+        {
+          "condition_id": "observation-corruption-0.05",
+          "family": "observation-corruption",
+          "specification": {
+            "probability": 0.05,
+            "support": "uniform-valid-non-obstacle-excluding-true-state"
+          }
+        }
+      ],
+      "execution": {
+        "episode_reset_policy_id": "dec-055-persistent-multi-episode-deployment-v1",
+        "interaction_budget_per_branch": 256,
+        "prefix_interactions": 1,
+        "subsequent_episode_seed_count": 256,
+        "temporal_evidence_id": "dec-060-fixed-reward-windows-v1",
+        "temporal_window_size": 32
+      }
+    },
+    "postprocessing": {
+      "analysis": {
+        "analysis_recipe": "protocol-v2-root-level-v2.1",
+        "interval": {
+          "confidence": 0.95,
+          "critical_value_by_n": {
+            "10": 2.262,
+            "11": 2.228,
+            "12": 2.201,
+            "2": 12.706,
+            "3": 4.303,
+            "4": 3.182,
+            "5": 2.776,
+            "6": 2.571,
+            "7": 2.447,
+            "8": 2.365,
+            "9": 2.306
+          },
+          "kind": "student-t"
+        },
+        "layout_aggregation": "equal-weight",
+        "phase_a_direction": "higher-is-better",
+        "phase_a_metric": "return_mean",
+        "phase_b_direction": "higher-is-better",
+        "phase_b_metric": "return_sum",
+        "recovery": {
+          "observation_horizon": 256,
+          "primary_condition_family": "action-remap",
+          "sensitivity_tolerances": [
+            0.05,
+            0.2
+          ],
+          "stability_windows": 2,
+          "tolerance": 0.1,
+          "window_size": 32
+        },
+        "require_complete_layout_blocks": true
+      },
+      "exports": {
+        "emit_csv": true,
+        "package": "protocol-v2-evidence-handoff-v2"
+      },
+      "validation": {
+        "validator": "protocol-v2.1-study-temporal"
+      }
+    }
+  }
+}

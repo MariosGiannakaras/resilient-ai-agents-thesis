@@ -1,0 +1,67 @@
+{
+  "created_at_utc": "2026-09-02T06:02:28+00:00",
+  "current_stage": null,
+  "evidence_class": "confirmatory",
+  "execution_identity": {
+    "execution_instance_id": "protocol-v2.1-final--t610-recovery-01",
+    "kind": "replacement",
+    "predecessor_execution_instance_id": "protocol-v2.1-final",
+    "recovery_decision_id": "DEC-062",
+    "schema_version": 1,
+    "scientific_recipe_id": "protocol-v2.1-final",
+    "scientific_recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+    "source_git_commit": "86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730"
+  },
+  "files": {
+    "artifacts.jsonl": {
+      "sha256": "e95f94e77a3bb77580ec595cbef1eee3e63c302d362626c8d18eaf82e4d50766",
+      "size_bytes": 2887077
+    },
+    "events.jsonl": {
+      "sha256": "a638777a3f30d851f47fa723e2a9979e62c16c4a7b3bc90ddfd6e5d1ab0c1988",
+      "size_bytes": 844176
+    },
+    "lifecycle.json": {
+      "sha256": "f2459cba73408a2f14c2a699c2b449d6f8449e499157a28ce789c69d77bcfef7",
+      "size_bytes": 95495
+    },
+    "plan.json": {
+      "sha256": "0fa775fd61099256c861620ca9ec2fd666f98e0b13894d9bb4277d32e6687629",
+      "size_bytes": 3106895
+    },
+    "recipe.json": {
+      "sha256": "db44fe13679391c0571002fe613db39ddcf363ec8dde5328768fe023c17e9057",
+      "size_bytes": 17167
+    }
+  },
+  "finalized_at_utc": "2026-09-02T07:23:37+00:00",
+  "plan_sha256": "073779d18f45caeab2ab725e7dce6b54b70394102d45de81e1974c7efaece0f4",
+  "progress": {
+    "cancelled": 0,
+    "completed": 603,
+    "infrastructure_failed": 0,
+    "pending": 0,
+    "resolved": 603,
+    "running": 0,
+    "scientific_failed": 0,
+    "skipped": 0,
+    "total": 603
+  },
+  "protocol_version": "protocol-v2.1",
+  "recipe_id": "protocol-v2.1-final",
+  "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+  "schema_version": 1,
+  "source": {
+    "git_commit": "86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python_implementation": "CPython",
+    "python_version": "3.12.13",
+    "tracked_changes_present": false,
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "untracked_nonoutput_present": false,
+    "untracked_nonoutput_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "status": "completed",
+  "study_id": "protocol-v2.1-final--t610-recovery-01",
+  "updated_at_utc": "2026-09-02T07:23:37+00:00"
+}

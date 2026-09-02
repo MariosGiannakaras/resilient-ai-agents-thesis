@@ -1,0 +1,14 @@
+{
+  "checkpoint_count": 120,
+  "completed_scientific_jobs": 600,
+  "failure_record_count": 0,
+  "findings": [],
+  "planned_scientific_jobs": 600,
+  "ready_for_analysis": true,
+  "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+  "run_bundle_count": 600,
+  "scientific_failures": 0,
+  "skipped_scientific_jobs": 0,
+  "study_id": "protocol-v2.1-final--t610-recovery-01",
+  "valid": true
+}

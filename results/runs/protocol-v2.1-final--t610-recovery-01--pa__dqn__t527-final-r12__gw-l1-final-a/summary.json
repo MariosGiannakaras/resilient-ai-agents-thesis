@@ -1,0 +1,14 @@
+{
+  "checkpoint_sha256": "9bbfa15d9c4fec6b96f7cf29c8f083d9a729afe6579b8ff55c4ddeca0ba72c32",
+  "job_id": "pa__dqn__t527-final-r12__gw-l1-final-a",
+  "layout_id": "gw-l1-final-a",
+  "method_id": "dqn",
+  "probe_count": 6,
+  "probe_environment_interactions": 2592,
+  "process_cpu_seconds": 181.21875,
+  "root_id": "t527-final-r12",
+  "status": "completed",
+  "study_id": "protocol-v2.1-final--t610-recovery-01",
+  "training_environment_interactions": 8192,
+  "wall_seconds": 40.58973650005646
+}

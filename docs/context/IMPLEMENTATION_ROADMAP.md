@@ -154,7 +154,7 @@ The scientific protocol is frozen. Separate T-610 execution and DEC-062 recovery
 
 Under the authorized DEC-062 recovery path:
 
-1. preserve the first 216-job attempt as immutable failed/incomplete history, merge the bounded DEC-054 Study-boundary correction, pass the clean preflight and execute the unchanged 603-job matrix from zero as a distinct replacement instance;
+1. **complete:** preserve the first 216-job attempt as immutable failed/incomplete history and finalize the unchanged 603-job matrix from zero as distinct replacement `protocol-v2.1-final--t610-recovery-01` on clean source commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`;
 2. validate/freeze complete final evidence and integrity;
 3. execute the predeclared root-level RQ1/RQ2/RQ3 analysis and sensitivity diagnostics;
 4. render final figures/tables/data and freeze evidence/result/claim identifiers;

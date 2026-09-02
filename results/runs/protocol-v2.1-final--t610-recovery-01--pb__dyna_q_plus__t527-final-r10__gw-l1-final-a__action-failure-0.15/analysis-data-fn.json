@@ -1,0 +1,75 @@
+{
+  "branch": "FN",
+  "checkpoint_artifact_id": "checkpoint__pa__dyna_q_plus__t527-final-r10__gw-l1-final-a",
+  "condition_id": "action-failure-0.15",
+  "job_id": "pb__dyna_q_plus__t527-final-r10__gw-l1-final-a__action-failure-0.15",
+  "layout_id": "gw-l1-final-a",
+  "method_id": "dyna_q_plus",
+  "metrics": {
+    "adaptive": 0.0,
+    "episodes_completed": 19.0,
+    "episodes_started": 20.0,
+    "native_planning_updates_completed": 0.0,
+    "native_update_opportunities_completed": 0.0,
+    "return_sum": -5.299999999999994,
+    "terminated": 0.0,
+    "truncated": 0.0
+  },
+  "record_type": "phase-b",
+  "resource_metrics": {
+    "environment_interactions": 256.0
+  },
+  "reward_windows": [
+    {
+      "end_interaction": 32,
+      "interaction_count": 32,
+      "mean_reward": -0.0359375,
+      "start_interaction": 1
+    },
+    {
+      "end_interaction": 64,
+      "interaction_count": 32,
+      "mean_reward": -0.031249999999999997,
+      "start_interaction": 33
+    },
+    {
+      "end_interaction": 96,
+      "interaction_count": 32,
+      "mean_reward": -0.001562499999999997,
+      "start_interaction": 65
+    },
+    {
+      "end_interaction": 128,
+      "interaction_count": 32,
+      "mean_reward": -0.035937500000000004,
+      "start_interaction": 97
+    },
+    {
+      "end_interaction": 160,
+      "interaction_count": 32,
+      "mean_reward": 0.003125000000000001,
+      "start_interaction": 129
+    },
+    {
+      "end_interaction": 192,
+      "interaction_count": 32,
+      "mean_reward": -0.031249999999999993,
+      "start_interaction": 161
+    },
+    {
+      "end_interaction": 224,
+      "interaction_count": 32,
+      "mean_reward": 0.003125000000000001,
+      "start_interaction": 193
+    },
+    {
+      "end_interaction": 256,
+      "interaction_count": 32,
+      "mean_reward": -0.0359375,
+      "start_interaction": 225
+    }
+  ],
+  "root_id": "t527-final-r10",
+  "schema_version": 2,
+  "study_id": "protocol-v2.1-final--t610-recovery-01"
+}

@@ -37,4 +37,4 @@ Historical v1.0/v1.1/pilot evidence remains auditable history; resolving current
 
 ## Current authority
 
-Concrete status/dependencies are in `TASKS.md`; compact current state is in `CURRENT_STATUS.md`. The final scientific experiment and DEC-062 recovery are not open design questions: the frozen replacement execution is in progress, while T-611 and later work remain blocked by task dependencies.
+Concrete status/dependencies are in `TASKS.md`; compact current state is in `CURRENT_STATUS.md`. The final scientific experiment and DEC-062 recovery are complete, not open design questions. T-611 is next and dependency-valid; later work remains blocked by task dependencies/approval gates.

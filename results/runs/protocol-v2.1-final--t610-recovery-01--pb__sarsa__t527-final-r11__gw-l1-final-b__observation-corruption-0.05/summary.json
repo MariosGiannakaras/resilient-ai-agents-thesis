@@ -1,0 +1,20 @@
+{
+  "branch_point_environment_sha256": "b69836414388933f9ba883d01887da2fe1622d54919942bb2b621d51bfde3642",
+  "branch_point_learner_sha256": "2e46dbc51b16bb866d3a283883f0838744f744749bf583697790c105efff2f06",
+  "condition_id": "observation-corruption-0.05",
+  "interaction_budget_per_branch": 256,
+  "job_id": "pb__sarsa__t527-final-r11__gw-l1-final-b__observation-corruption-0.05",
+  "layout_id": "gw-l1-final-b",
+  "method_id": "sarsa",
+  "phase_a_checkpoint_sha256": "3594b6ad0218a36165b057af479b3bc5457e0eceed3c3c0f7f451376bd8b82df",
+  "prefix_interactions": 1,
+  "process_cpu_seconds": 1.625,
+  "root_id": "t527-final-r11",
+  "status": "completed",
+  "study_id": "protocol-v2.1-final--t610-recovery-01",
+  "temporal_evidence_id": "dec-060-fixed-reward-windows-v1",
+  "temporal_reward_window_count_per_branch": 8,
+  "temporal_reward_window_size": 32,
+  "total_post_boundary_interactions": 1024,
+  "wall_seconds": 1.6363284999970347
+}

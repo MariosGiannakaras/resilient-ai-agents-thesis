@@ -1,0 +1,20 @@
+{
+  "branch_point_environment_sha256": "f5c1a59aff893d6df5900d25549dd553dfeb63e47047e7027bf3a0b095ddb184",
+  "branch_point_learner_sha256": "d7b2e051e74e42558294caaa4f258146f37b16c2fded9621b89ce098a7f71c89",
+  "condition_id": "action-remap-swap-right-down",
+  "interaction_budget_per_branch": 256,
+  "job_id": "pb__sarsa__t527-final-r07__gw-l1-final-b__action-remap-swap-right-down",
+  "layout_id": "gw-l1-final-b",
+  "method_id": "sarsa",
+  "phase_a_checkpoint_sha256": "b83265c76267676fe134b92708124f65377193db14064c18801968af4b52810f",
+  "prefix_interactions": 1,
+  "process_cpu_seconds": 1.328125,
+  "root_id": "t527-final-r07",
+  "status": "completed",
+  "study_id": "protocol-v2.1-final--t610-recovery-01",
+  "temporal_evidence_id": "dec-060-fixed-reward-windows-v1",
+  "temporal_reward_window_count_per_branch": 8,
+  "temporal_reward_window_size": 32,
+  "total_post_boundary_interactions": 1024,
+  "wall_seconds": 1.3390305999200791
+}

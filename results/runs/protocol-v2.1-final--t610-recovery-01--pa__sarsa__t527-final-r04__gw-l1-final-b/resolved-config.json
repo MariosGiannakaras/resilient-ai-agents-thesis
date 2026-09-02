@@ -1,0 +1,169 @@
+{
+  "entrypoint": "resilient_agents.study.protocol_v2_executors.phase-a.v1",
+  "job_id": "pa__sarsa__t527-final-r04__gw-l1-final-b",
+  "job_payload": {
+    "execution": {
+      "episodes_per_probe": 12,
+      "probe_interaction_indices": [
+        0,
+        512,
+        1024,
+        2048,
+        4096,
+        8192
+      ],
+      "task": {
+        "administrative_truncation": true,
+        "bootstrap_on_truncation": true,
+        "gamma": 0.95,
+        "reward_contract": {
+          "collision": -0.25,
+          "goal": 1.0,
+          "step": -0.1
+        }
+      },
+      "training_interaction_budget": 8192
+    },
+    "job_type": "phase-a-training",
+    "layout": {
+      "family": "final-held-out",
+      "generation_seed": 57002,
+      "layout_id": "gw-l1-final-b",
+      "scenario": {
+        "action_disturbance_spec": {
+          "failure_probability": 0.0,
+          "type": "no-op-failure"
+        },
+        "change_events": [],
+        "dynamics_spec": {
+          "action_vectors": {
+            "down": [
+              0,
+              1
+            ],
+            "left": [
+              -1,
+              0
+            ],
+            "right": [
+              1,
+              0
+            ],
+            "up": [
+              0,
+              -1
+            ]
+          }
+        },
+        "environment_id": "project-gridworld-v1",
+        "information_policy": {
+          "expose_change_indicator": false,
+          "expose_disturbance_flags": false,
+          "expose_executed_action": false,
+          "expose_regime_id": false,
+          "expose_true_state": false
+        },
+        "initial_state_spec": {
+          "grid": {
+            "goal": [
+              6,
+              6
+            ],
+            "height": 7,
+            "obstacles": [
+              [
+                0,
+                5
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                3,
+                0
+              ],
+              [
+                3,
+                2
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                3,
+                6
+              ],
+              [
+                4,
+                6
+              ]
+            ],
+            "start": [
+              0,
+              0
+            ],
+            "width": 7
+          }
+        },
+        "max_steps": 48,
+        "observation_disturbance_spec": {
+          "mislocalization_probability": 0.0,
+          "type": "position-mislocalization"
+        },
+        "observation_spec": {
+          "coordinate_order": "x-y",
+          "reset_observation": "true-state",
+          "type": "position"
+        },
+        "reward_spec": {
+          "collision": -0.25,
+          "goal": 1.0,
+          "step": -0.1
+        },
+        "scenario_id": "gw-l1-final-b"
+      },
+      "spec_sha256": "5128e490be3b811350b4ed1ab4b39dc503ba4687855c0a6c71fdf79d40c1fa1a"
+    },
+    "method": {
+      "configuration_id": "sarsa-c06",
+      "implementation_id": "project-protocol-v2-state-adapter",
+      "method_id": "sarsa",
+      "parameters": {
+        "bootstrap_on_truncation": true,
+        "discount_factor": 0.95,
+        "exploration_epsilon": 0.1,
+        "initial_q_value": 0.0,
+        "learning_rate": 0.4
+      },
+      "phase_b_condition_ids": [
+        "action-remap-swap-right-down",
+        "action-remap-cycle-clockwise",
+        "action-failure-0.15",
+        "observation-corruption-0.05"
+      ],
+      "role": "core"
+    },
+    "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+    "root": {
+      "action_disturbance_seed": 75004,
+      "environment_seed": 74004,
+      "exploration_seed": 72004,
+      "initialization_seed": 71004,
+      "observation_disturbance_seed": 76004,
+      "root_id": "t527-final-r04",
+      "scenario_seed": 73004
+    }
+  },
+  "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+  "study_id": "protocol-v2.1-final--t610-recovery-01"
+}
