@@ -2695,7 +2695,7 @@
     "svg_hashsalt": "protocol-v2.1-final-t613"
   },
   "generator": {
-    "git_commit": "2232910fad20df4a82ec5f1f8e5f540f863aaf25",
+    "git_commit": "90b2953b95f14dddf3920d192fc736718360284a",
     "matplotlib_version": "3.11.1",
     "source_files": [
       {
@@ -2704,7 +2704,7 @@
       },
       {
         "relative_path": "src/resilient_agents/evidence_v2/final_assets.py",
-        "sha256": "24c8ec6d502fc2ac2d606d70b5395f16d3a3d9d233d2c11393a46b8c2fcf0b37"
+        "sha256": "c52868e681693ec2a3742c7090b10e38c441e1786fbb86711e49841f5d7cb0b9"
       }
     ],
     "version": "t613-assets-v1"
