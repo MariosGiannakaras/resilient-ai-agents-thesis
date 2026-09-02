@@ -8,7 +8,8 @@
 ## Current execution state
 
 - The scientific/application programme through `T-613` is **COMPLETE**. Master tracker #87 reached **8/8** and was closed completed.
-- The accepted PySide6 application remains the experiment-first **Experiment / Run / Results / Evidence** system. The UI is presentation/control only and never recomputes frozen scientific estimands.
+- Historical baseline invariants remain complete: `T-100` target-machine validation and `T-200` source-traceable research framing are not reopened by WP7 writing work.
+- The accepted PySide6 application remains the experiment-first **Experiment / Run / Results / Evidence** system. The UI is presentation/control only and never recomputes frozen scientific estimands; its accepted novice-first interaction model continues to use progressive disclosure for technical/provenance detail.
 - `T-610` is COMPLETE. The DEC-062 replacement execution `protocol-v2.1-final--t610-recovery-01` completed/finalized 603/603 jobs with 600 scientific run bundles and zero infrastructure/scientific failures. The first 216-job attempt remains immutable failed/incomplete historical evidence and is permanently excluded from accepted final outcomes.
 - `T-611` is COMPLETE. Accepted evidence is frozen at `results/final-evidence/protocol-v2.1-final/` under manifest SHA-256 `20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858` and 600-record inventory SHA-256 `0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045`.
 - `T-612` is COMPLETE. The canonical predeclared RQ1/RQ2/RQ3 analysis is finalized at `results/analysis/protocol-v2.1-final/` under analysis manifest SHA-256 `dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62`.
@@ -18,7 +19,7 @@
 - `T-701` is **COMPLETE**. Twenty-two supplied example files were reviewed as 21 unique completed theses because `example-theses 1.pdf` and `example-theses 10.pdf` are byte-identical. The canonical derived structure/style guide is `docs/thesis/THESIS_STRUCTURE_AND_STYLE_GUIDE.md`. Examples remain contextual structure/presentation evidence only, never scientific sources.
 - The final writing architecture is seven substantive chapters: **Introduction; Background and Related Work; Methodology and Experimental Design; Research-System Architecture and Implementation; Results; Discussion; Conclusions and Future Work**, followed by references and appendices. Results and Discussion are intentionally separate because the frozen analysis contains three distinct RQs/estimands, paired contrasts, uncertainty intervals, sensitivity analysis and right-censoring.
 - T-700/T-701 select **IEEE numeric citations** as the project WP7 default because ICE permits multiple consistent styles and the technically closest contextual examples predominantly use numeric references. This is not represented as an ICE mandate and is superseded by any later explicit supervisor/Department instruction.
-- The existing bibliography consumer snapshot remains the immutable upstream `ThesisBibliography` SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`. It is still valid as the previously accepted imported snapshot, but it does **not** by itself satisfy the required major-writing-gate freshness control in REQ-RES-012.
+- The existing bibliography consumer snapshot remains the immutable upstream `ThesisBibliography` SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`. Historical label `bibliography-integration-v3` remains immutable terminology for the earlier integration state, not a competing bibliography system. The current snapshot is still valid as the previously accepted imported corpus, but it does **not** by itself satisfy the required major-writing-gate freshness control in REQ-RES-012.
 - `T-702` is the **next READY task**. It must perform a new dated writing-gate literature freshness review in canonical `MariosGiannakaras/ThesisBibliography`, process any genuinely relevant additions through normal source governance, create a new immutable consumer identity even if the selected set does not change, sync it into this repository and validate citation-ready integrity.
 - `T-710` is **BLOCKED by T-702**. Full thesis drafting must not begin before the bibliography freshness/re-sync gate is closed.
 
@@ -43,6 +44,14 @@ The current writing hierarchy is:
 7. contextual example theses only for structure/style patterns.
 
 The planned final editable thesis is Greek Microsoft Word (`.docx`) using real Heading styles, automatic TOC, caption fields, cross-references and automatic figure/table lists. The institutional deposit copy may additionally be PDF.
+
+## Still intentionally unfrozen
+
+- The T-702 writing-gate bibliography snapshot/consumer identity is not frozen until the dated freshness review, normal upstream source governance, re-sync and integrity validation complete.
+- Final Greek chapter prose, exact Word pagination/layout details, acknowledgements/dedication content and final summary/abstract wording remain unfrozen until their WP7 tasks execute.
+- Any future supervisor-specific instruction may supersede the current IEEE project default or presentation conventions and must be incorporated explicitly rather than inferred.
+- Defense duration, slide count, template and live-demo requirements remain unfrozen because T-700 found no current public ICE-specific rule; they must be rechecked before T-720/T-722 and updated if authoritative guidance or supervisor instructions appear.
+- T-803 standalone Windows packaging remains deferred until after the thesis deliverable and does not block current WP7 writing work.
 
 ## Exact next action
 
