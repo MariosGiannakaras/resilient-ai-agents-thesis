@@ -27,6 +27,7 @@ class ProtocolV21FinalRecipeTests(unittest.TestCase):
         self.assertEqual(new["retained_methods"], old["retained_methods"])
         self.assertEqual(new["selected_configs"], old["selected_configs"])
         self.assertEqual(new["phase_a"], old["phase_a"])
+        self.assertEqual(new["phase_a"]["deployment_start_settlement"], "DEC-054")
         for key in (
             "conditions",
             "horizon",

@@ -106,6 +106,79 @@ def _safe_identifier(value: str, *, field_name: str) -> str:
 
 
 @dataclass(frozen=True)
+class StudyExecutionIdentity:
+    """Storage/provenance identity for one execution of a scientific recipe."""
+
+    execution_instance_id: str
+    scientific_recipe_id: str
+    kind: str
+    predecessor_execution_instance_id: str | None = None
+    recovery_decision_id: str | None = None
+
+    def __post_init__(self) -> None:
+        _safe_identifier(
+            self.execution_instance_id, field_name="execution_instance_id"
+        )
+        _safe_identifier(self.scientific_recipe_id, field_name="scientific_recipe_id")
+        if self.kind == "initial":
+            if self.execution_instance_id != self.scientific_recipe_id:
+                raise ValueError(
+                    "initial execution_instance_id must equal scientific_recipe_id"
+                )
+            if (
+                self.predecessor_execution_instance_id is not None
+                or self.recovery_decision_id is not None
+            ):
+                raise ValueError("initial execution cannot carry recovery lineage")
+            return
+        if self.kind != "replacement":
+            raise ValueError("execution identity kind must be initial or replacement")
+        if self.execution_instance_id == self.scientific_recipe_id:
+            raise ValueError(
+                "replacement execution_instance_id must be distinct from recipe identity"
+            )
+        if self.predecessor_execution_instance_id is None:
+            raise ValueError("replacement execution requires a predecessor instance")
+        _safe_identifier(
+            self.predecessor_execution_instance_id,
+            field_name="predecessor_execution_instance_id",
+        )
+        if self.predecessor_execution_instance_id == self.execution_instance_id:
+            raise ValueError("replacement execution cannot be its own predecessor")
+        if (
+            not isinstance(self.recovery_decision_id, str)
+            or not self.recovery_decision_id.startswith("DEC-")
+            or not self.recovery_decision_id[4:].isdigit()
+        ):
+            raise ValueError("replacement execution requires a DEC-NNN recovery decision")
+
+    @classmethod
+    def initial(cls, scientific_recipe_id: str) -> "StudyExecutionIdentity":
+        return cls(
+            execution_instance_id=scientific_recipe_id,
+            scientific_recipe_id=scientific_recipe_id,
+            kind="initial",
+        )
+
+    @classmethod
+    def replacement(
+        cls,
+        *,
+        execution_instance_id: str,
+        scientific_recipe_id: str,
+        predecessor_execution_instance_id: str,
+        recovery_decision_id: str,
+    ) -> "StudyExecutionIdentity":
+        return cls(
+            execution_instance_id=execution_instance_id,
+            scientific_recipe_id=scientific_recipe_id,
+            kind="replacement",
+            predecessor_execution_instance_id=predecessor_execution_instance_id,
+            recovery_decision_id=recovery_decision_id,
+        )
+
+
+@dataclass(frozen=True)
 class StudyJobSpec:
     """One immutable unit in a materialized study plan.
 

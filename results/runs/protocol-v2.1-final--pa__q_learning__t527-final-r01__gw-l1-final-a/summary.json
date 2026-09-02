@@ -1,0 +1,14 @@
+{
+  "checkpoint_sha256": "2015576d28705d5b566a4e5bcdc95a203abed64afd5c8e98660603b0ce9ab707",
+  "job_id": "pa__q_learning__t527-final-r01__gw-l1-final-a",
+  "layout_id": "gw-l1-final-a",
+  "method_id": "q_learning",
+  "probe_count": 6,
+  "probe_environment_interactions": 1728,
+  "process_cpu_seconds": 0.640625,
+  "root_id": "t527-final-r01",
+  "status": "completed",
+  "study_id": "protocol-v2.1-final",
+  "training_environment_interactions": 8192,
+  "wall_seconds": 0.6795073999091983
+}

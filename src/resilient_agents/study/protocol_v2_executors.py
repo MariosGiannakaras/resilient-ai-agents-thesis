@@ -8,6 +8,7 @@ logic and no hidden final-study parameter defaults.
 from __future__ import annotations
 
 import time
+from dataclasses import replace
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -16,13 +17,15 @@ from ..contracts import ChangeEvent, InformationPolicy, ScenarioSpec
 from ..dyna_q_plus import DynaQPlusAgent, DynaQPlusConfig
 from ..environment import EnvironmentSeeds
 from ..evidence_v2.records import PhaseAAnalysisRecord, ProbeMeasurement
-from ..gridworld import ACTION_NAMES, GridWorldEnvironment
+from ..gridworld import ACTION_NAMES, GridWorldEnvironment, ResolvedGridWorldScenario
 from ..protocol_v2 import (
     ProtocolV2TaskSemantics,
     TabularQScientificStateAdapter,
     dyna_q_plus_state_adapter,
+    make_scientific_checkpoint,
     sarsa_state_adapter,
 )
+from ..protocol_v2_boundary_settlement import settle_phase_a_interaction_boundary
 from ..protocol_v2_executor import execute_phase_a
 from ..protocol_v2_runtime import (
     NoLearningProbePlan,
@@ -155,6 +158,16 @@ def _scenario_from_layout(layout: Mapping[str, Any]) -> ScenarioSpec:
         ),
         change_events=_change_events(scenario["change_events"]),
         information_policy=_information_policy(scenario["information_policy"]),
+    )
+
+
+def _valid_observations(scenario: ScenarioSpec) -> frozenset[tuple[int, int]]:
+    resolved = ResolvedGridWorldScenario.from_spec(scenario)
+    return frozenset(
+        (x, y)
+        for x in range(resolved.width)
+        for y in range(resolved.height)
+        if (x, y) not in resolved.obstacles
     )
 
 
@@ -553,6 +566,39 @@ class ProtocolV2PhaseAStudyExecutor:
                     "job_id": job.job_id,
                     "configuration_id": method.get("configuration_id"),
                 },
+            )
+            source_checkpoint = execution_result.result.final_checkpoint
+            settlement = settle_phase_a_interaction_boundary(
+                execution_result.final_adapter,
+                expected_source_learner_sha256=(
+                    execution_result.final_adapter.state_sha256()
+                ),
+                expected_interactions=budget,
+                valid_observations=_valid_observations(scenario),
+            )
+            deployment_checkpoint = make_scientific_checkpoint(
+                adapter=execution_result.final_adapter,
+                root_id=root.root_id,
+                layout_id=str(layout["layout_id"]),
+                phase=source_checkpoint.phase,
+                training_interaction_index=budget,
+                provenance={
+                    **dict(source_checkpoint.provenance),
+                    "boundary_settlement": settlement.to_mapping(),
+                    "boundary_settlement_source_checkpoint_sha256": (
+                        source_checkpoint.sha256
+                    ),
+                    "deployment_start_learner_sha256": (
+                        execution_result.final_adapter.state_sha256()
+                    ),
+                },
+            )
+            execution_result = replace(
+                execution_result,
+                result=replace(
+                    execution_result.result,
+                    final_checkpoint=deployment_checkpoint,
+                ),
             )
         finally:
             close = getattr(driver, "close", None)

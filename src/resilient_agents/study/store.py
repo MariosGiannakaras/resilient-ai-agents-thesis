@@ -13,6 +13,7 @@ from .model import (
     ArtifactRole,
     EvidenceClass,
     StudyArtifact,
+    StudyExecutionIdentity,
     StudyJobSpec,
     StudyPlan,
     StudyStage,
@@ -22,6 +23,7 @@ from .recipe import StudyRecipe
 STUDY_BUNDLE_SCHEMA_VERSION = 1
 STUDY_FINALIZATION_MARKER = "FINALIZED"
 _FINAL_STATUSES = {"completed", "completed-with-scientific-failures"}
+_EXECUTION_IDENTITY_SCHEMA_VERSION = 1
 
 
 def _utc_now() -> str:
@@ -214,6 +216,7 @@ class StudyStore:
         plan: StudyPlan,
         lifecycle: StudyLifecycle,
         manifest: dict[str, Any],
+        execution_identity: StudyExecutionIdentity,
     ) -> None:
         self.repo_root = repo_root
         self.writable_root = writable_root
@@ -222,6 +225,11 @@ class StudyStore:
         self.plan = plan
         self.lifecycle = lifecycle
         self.manifest = manifest
+        self.execution_identity = execution_identity
+
+    @property
+    def execution_id(self) -> str:
+        return self.execution_identity.execution_instance_id
 
     @classmethod
     def create(
@@ -231,21 +239,47 @@ class StudyStore:
         recipe: StudyRecipe,
         plan: StudyPlan,
         writable_root: Path | None = None,
+        execution_identity: StudyExecutionIdentity | None = None,
     ) -> "StudyStore":
         repo_root = Path(repo_root).resolve()
         writable_root = Path(writable_root).resolve() if writable_root else repo_root
         if plan.study_id != recipe.recipe_id:
             raise ValueError("study plan study_id must equal recipe_id")
-        study_dir = writable_root / "results" / "studies" / plan.study_id
+        identity = execution_identity or StudyExecutionIdentity.initial(recipe.recipe_id)
+        if not isinstance(identity, StudyExecutionIdentity):
+            raise ValueError("execution_identity must be StudyExecutionIdentity or None")
+        if identity.scientific_recipe_id != recipe.recipe_id:
+            raise ValueError("execution identity scientific recipe mismatch")
+        if identity.kind == "replacement":
+            predecessor_id = str(identity.predecessor_execution_instance_id)
+            predecessor_root = writable_root
+            if not (
+                predecessor_root / "results" / "studies" / predecessor_id
+            ).is_dir():
+                predecessor_root = repo_root
+            predecessor = cls.load(
+                repo_root=repo_root,
+                writable_root=predecessor_root,
+                study_id=predecessor_id,
+            )
+            if predecessor.recipe.sha256() != recipe.sha256():
+                raise ValueError("replacement predecessor scientific recipe mismatch")
+        study_dir = (
+            writable_root
+            / "results"
+            / "studies"
+            / identity.execution_instance_id
+        )
         if study_dir.exists():
             raise FileExistsError(f"study bundle already exists: {study_dir}")
         study_dir.mkdir(parents=True)
         lifecycle = StudyLifecycle(plan)
         now = _utc_now()
         plan_payload = _plan_to_dict(plan)
+        source = source_provenance(repo_root)
         manifest = {
             "schema_version": STUDY_BUNDLE_SCHEMA_VERSION,
-            "study_id": plan.study_id,
+            "study_id": identity.execution_instance_id,
             "status": "active",
             "created_at_utc": now,
             "updated_at_utc": now,
@@ -254,7 +288,19 @@ class StudyStore:
             "recipe_id": recipe.recipe_id,
             "recipe_sha256": recipe.sha256(),
             "plan_sha256": _sha256_json(plan_payload),
-            "source": source_provenance(repo_root),
+            "source": source,
+            "execution_identity": {
+                "schema_version": _EXECUTION_IDENTITY_SCHEMA_VERSION,
+                "execution_instance_id": identity.execution_instance_id,
+                "scientific_recipe_id": identity.scientific_recipe_id,
+                "scientific_recipe_sha256": recipe.sha256(),
+                "kind": identity.kind,
+                "predecessor_execution_instance_id": (
+                    identity.predecessor_execution_instance_id
+                ),
+                "recovery_decision_id": identity.recovery_decision_id,
+                "source_git_commit": source["git_commit"],
+            },
             "current_stage": lifecycle.current_stage.value
             if lifecycle.current_stage is not None
             else None,
@@ -273,8 +319,15 @@ class StudyStore:
             plan=plan,
             lifecycle=lifecycle,
             manifest=manifest,
+            execution_identity=identity,
         )
-        store._append_event("study-created", {"recipe_sha256": recipe.sha256()})
+        store._append_event(
+            "study-created",
+            {
+                "recipe_sha256": recipe.sha256(),
+                "execution_identity": dict(manifest["execution_identity"]),
+            },
+        )
         return store
 
     @classmethod
@@ -314,14 +367,63 @@ class StudyStore:
         if manifest.get("study_id") != study_id:
             raise RuntimeError("study manifest identity mismatch")
         recipe = StudyRecipe.from_dict(_read_json_object(study_dir / "recipe.json"))
-        if recipe.recipe_id != study_id or recipe.sha256() != manifest.get("recipe_sha256"):
+        if (
+            recipe.recipe_id != manifest.get("recipe_id")
+            or recipe.sha256() != manifest.get("recipe_sha256")
+        ):
             raise RuntimeError("study recipe identity/hash mismatch")
         plan_payload = _read_json_object(study_dir / "plan.json")
         plan = _plan_from_dict(plan_payload)
-        if plan.study_id != study_id or _sha256_json(plan_payload) != manifest.get(
-            "plan_sha256"
+        if (
+            plan.study_id != recipe.recipe_id
+            or _sha256_json(plan_payload) != manifest.get("plan_sha256")
         ):
             raise RuntimeError("study plan identity/hash mismatch")
+        identity_payload = manifest.get("execution_identity")
+        if identity_payload is None:
+            if study_id != recipe.recipe_id:
+                raise RuntimeError("legacy Study cannot have a distinct execution identity")
+            execution_identity = StudyExecutionIdentity.initial(recipe.recipe_id)
+        else:
+            expected_identity_keys = {
+                "schema_version",
+                "execution_instance_id",
+                "scientific_recipe_id",
+                "scientific_recipe_sha256",
+                "kind",
+                "predecessor_execution_instance_id",
+                "recovery_decision_id",
+                "source_git_commit",
+            }
+            if (
+                not isinstance(identity_payload, Mapping)
+                or set(identity_payload) != expected_identity_keys
+            ):
+                raise RuntimeError("study execution identity schema mismatch")
+            if identity_payload["schema_version"] != _EXECUTION_IDENTITY_SCHEMA_VERSION:
+                raise RuntimeError("unsupported study execution identity schema")
+            try:
+                execution_identity = StudyExecutionIdentity(
+                    execution_instance_id=identity_payload["execution_instance_id"],
+                    scientific_recipe_id=identity_payload["scientific_recipe_id"],
+                    kind=identity_payload["kind"],
+                    predecessor_execution_instance_id=identity_payload[
+                        "predecessor_execution_instance_id"
+                    ],
+                    recovery_decision_id=identity_payload["recovery_decision_id"],
+                )
+            except ValueError as exc:
+                raise RuntimeError("study execution identity is invalid") from exc
+            source = manifest.get("source")
+            if not isinstance(source, Mapping):
+                raise RuntimeError("study source provenance is invalid")
+            if (
+                execution_identity.execution_instance_id != study_id
+                or execution_identity.scientific_recipe_id != recipe.recipe_id
+                or identity_payload["scientific_recipe_sha256"] != recipe.sha256()
+                or identity_payload["source_git_commit"] != source.get("git_commit")
+            ):
+                raise RuntimeError("study execution identity lineage mismatch")
         lifecycle_payload = _read_json_object(study_dir / "lifecycle.json")
         if set(lifecycle_payload) != {"states", "attempts"}:
             raise RuntimeError("study lifecycle keys mismatch")
@@ -338,6 +440,7 @@ class StudyStore:
             plan=plan,
             lifecycle=lifecycle,
             manifest=manifest,
+            execution_identity=execution_identity,
         )
         store._validate_manifest_against_lifecycle(marker)
         store._validate_finalized_files()

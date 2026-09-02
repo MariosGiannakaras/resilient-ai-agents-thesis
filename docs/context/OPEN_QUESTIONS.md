@@ -17,7 +17,7 @@ The following are already decided or completed:
 - application framework: PySide6 / Qt 6 Widgets under DEC-059;
 - framework-neutral Study backend and stored-evidence read-model boundary;
 - novice-first/self-explanatory UI requirements;
-- final-reserve execution remains separately authorization-gated;
+- final-reserve execution remains separately authorization-gated, and T-610 plus DEC-062 recovery are now authorized without weakening that gate;
 - standalone Windows packaging is intentionally deferred until after the thesis.
 
 Historical v1.0/v1.1/pilot evidence remains auditable history; resolving current questions never relabels old evidence.
@@ -37,4 +37,4 @@ Historical v1.0/v1.1/pilot evidence remains auditable history; resolving current
 
 ## Current authority
 
-Concrete status/dependencies are in `TASKS.md`; compact current state is in `CURRENT_STATUS.md`. The final scientific experiment is not an open design question: its protocol is frozen, but execution remains blocked until the separate explicit authorization gate is given.
+Concrete status/dependencies are in `TASKS.md`; compact current state is in `CURRENT_STATUS.md`. The final scientific experiment and DEC-062 recovery are not open design questions: the frozen replacement execution is in progress, while T-611 and later work remain blocked by task dependencies.

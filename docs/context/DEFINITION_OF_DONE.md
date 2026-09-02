@@ -85,8 +85,9 @@ Project-level completion conditions only. Concrete task IDs/status/dependencies/
 
 ## Final protocol-v2.1 experimental/evidence phase
 
-- [ ] User explicitly authorizes the separate final scientific experiment; until then `final_reserve_access=false` remains sealed.
+- [x] User explicitly authorized the separate final scientific experiment and narrow DEC-062 clean replacement; `final_reserve_access=false` and the backend guard remain unchanged.
 - [ ] Frozen protocol-v2.1 final Study matrix executes only after that authorization on the accepted execution path.
+- [ ] The first 216-job attempt remains immutable, unfinalized and excluded; the accepted replacement starts from zero on one corrected source commit with explicit lineage and the unchanged recipe/plan.
 - [ ] Required final scientific units complete or are transparently accounted for without replacement/cherry-picking.
 - [ ] Finalized raw results/checkpoints are immutable/checksummed and accepted final evidence is frozen.
 - [ ] Predeclared root-level RQ1/RQ2/RQ3 analysis and sensitivity diagnostics reproduce from frozen evidence.

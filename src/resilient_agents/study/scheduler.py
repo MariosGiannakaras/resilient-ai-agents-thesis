@@ -86,7 +86,7 @@ class StudyScheduler:
         executor = self.executors.resolve(job)
         self.store.start_job(job_id)
         context = StudyJobContext(
-            study_id=self.store.plan.study_id,
+            study_id=self.store.execution_id,
             recipe=self.store.recipe,
             recipe_sha256=self.store.recipe.sha256(),
             repo_root=self.store.repo_root,

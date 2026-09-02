@@ -185,7 +185,7 @@ class StudyEvidenceValidator:
             item for item in artifacts if item.role is ArtifactRole.FAILURE_RECORD
         ]
         return StudyEvidenceValidationReport(
-            study_id=store.plan.study_id,
+            study_id=store.execution_id,
             recipe_sha256=store.recipe.sha256(),
             planned_scientific_jobs=len(scientific_jobs),
             completed_scientific_jobs=completed,

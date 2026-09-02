@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -8,6 +9,7 @@ from resilient_agents.study import (
     EvidenceClass,
     JobOutcomeKind,
     StudyExecutorRegistry,
+    StudyExecutionIdentity,
     StudyJobContext,
     StudyJobOutcome,
     StudyJobSpec,
@@ -149,6 +151,69 @@ class StudyServiceTests(unittest.TestCase):
             service.create(self._recipe())
             with self.assertRaisesRegex(RuntimeError, "lifecycle is unresolved"):
                 service.finalize("service-study")
+
+    def test_replacement_execution_keeps_recipe_plan_and_predecessor_immutable(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            service = StudyService(
+                repo_root=root,
+                writable_root=root,
+                executors=self._executors(),
+            )
+            recipe = self._recipe()
+            original = service.create(recipe)
+            original_manifest = (
+                root / "results/studies/service-study/manifest.json"
+            ).read_bytes()
+            original_plan = (
+                root / "results/studies/service-study/plan.json"
+            ).read_bytes()
+
+            replacement_id = "service-study--recovery-01"
+            identity = StudyExecutionIdentity.replacement(
+                execution_instance_id=replacement_id,
+                scientific_recipe_id=recipe.recipe_id,
+                predecessor_execution_instance_id=original.study_id,
+                recovery_decision_id="DEC-062",
+            )
+            replacement = service.create(recipe, execution_identity=identity)
+
+            self.assertEqual(replacement.study_id, replacement_id)
+            self.assertEqual(replacement.recipe_sha256, original.recipe_sha256)
+            replacement_dir = root / "results/studies" / replacement_id
+            self.assertEqual(
+                (replacement_dir / "plan.json").read_bytes(), original_plan
+            )
+            manifest = json.loads(
+                (replacement_dir / "manifest.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(
+                manifest["execution_identity"],
+                {
+                    "execution_instance_id": replacement_id,
+                    "kind": "replacement",
+                    "predecessor_execution_instance_id": "service-study",
+                    "recovery_decision_id": "DEC-062",
+                    "schema_version": 1,
+                    "scientific_recipe_id": "service-study",
+                    "scientific_recipe_sha256": recipe.sha256(),
+                    "source_git_commit": manifest["source"]["git_commit"],
+                },
+            )
+            self.assertEqual(
+                (root / "results/studies/service-study/manifest.json").read_bytes(),
+                original_manifest,
+            )
+            self.assertEqual(
+                service.status(replacement_id).ready_job_ids,
+                ("pa__q_learning__root-01__layout-a",),
+            )
+            self.assertEqual(len(service.run_ready(replacement_id)), 5)
+            self.assertTrue(service.finalize(replacement_id).finalized)
+            self.assertEqual(
+                (root / "results/studies/service-study/manifest.json").read_bytes(),
+                original_manifest,
+            )
 
 
 if __name__ == "__main__":

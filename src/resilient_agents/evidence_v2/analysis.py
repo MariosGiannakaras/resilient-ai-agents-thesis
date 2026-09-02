@@ -269,7 +269,7 @@ class StudyAnalysisEngine:
         return {
             "schema_version": package_schema,
             "analysis_recipe": recipe,
-            "study_id": store.plan.study_id,
+            "study_id": store.execution_id,
             "recipe_sha256": store.recipe.sha256(),
             "specification": spec,
             "phase_a": phase_a,

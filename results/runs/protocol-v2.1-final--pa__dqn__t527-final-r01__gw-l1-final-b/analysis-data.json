@@ -1,0 +1,71 @@
+{
+  "job_id": "pa__dqn__t527-final-r01__gw-l1-final-b",
+  "layout_id": "gw-l1-final-b",
+  "method_id": "dqn",
+  "probes": [
+    {
+      "interaction_index": 0,
+      "metrics": {
+        "episode_length_mean": 48.0,
+        "return_mean": -4.799999999999999,
+        "terminated_rate": 0.0,
+        "truncated_rate": 1.0
+      }
+    },
+    {
+      "interaction_index": 512,
+      "metrics": {
+        "episode_length_mean": 48.0,
+        "return_mean": -4.799999999999999,
+        "terminated_rate": 0.0,
+        "truncated_rate": 1.0
+      }
+    },
+    {
+      "interaction_index": 1024,
+      "metrics": {
+        "episode_length_mean": 12.0,
+        "return_mean": -0.09999999999999987,
+        "terminated_rate": 1.0,
+        "truncated_rate": 0.0
+      }
+    },
+    {
+      "interaction_index": 2048,
+      "metrics": {
+        "episode_length_mean": 12.0,
+        "return_mean": -0.09999999999999987,
+        "terminated_rate": 1.0,
+        "truncated_rate": 0.0
+      }
+    },
+    {
+      "interaction_index": 4096,
+      "metrics": {
+        "episode_length_mean": 12.0,
+        "return_mean": -0.09999999999999987,
+        "terminated_rate": 1.0,
+        "truncated_rate": 0.0
+      }
+    },
+    {
+      "interaction_index": 8192,
+      "metrics": {
+        "episode_length_mean": 12.0,
+        "return_mean": -0.09999999999999987,
+        "terminated_rate": 1.0,
+        "truncated_rate": 0.0
+      }
+    }
+  ],
+  "record_type": "phase-a",
+  "resource_metrics": {
+    "probe_environment_interactions": 1728.0,
+    "process_cpu_seconds": 188.828125,
+    "training_environment_interactions": 8192.0,
+    "wall_seconds": 38.92927170009352
+  },
+  "root_id": "t527-final-r01",
+  "schema_version": 1,
+  "study_id": "protocol-v2.1-final"
+}

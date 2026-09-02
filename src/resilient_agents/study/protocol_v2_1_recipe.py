@@ -124,6 +124,10 @@ def materialize_protocol_v21_recipe(authority: Mapping[str, Any]) -> StudyRecipe
     recovery = _mapping(payload.get("recovery_contract"), field="recovery_contract")
     statistics = _mapping(payload.get("statistical_contract"), field="statistical_contract")
     interval = _mapping(statistics.get("interval"), field="statistical_contract.interval")
+    if phase_a.get("deployment_start_settlement") != "DEC-054":
+        raise ValueError(
+            "protocol-v2.1 Phase-A deployment start must retain DEC-054 settlement"
+        )
 
     layouts_raw = _list(payload.get("final_layouts"), field="final_layouts")
     roots = _list(payload.get("final_roots"), field="final_roots")

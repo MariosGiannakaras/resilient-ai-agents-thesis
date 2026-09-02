@@ -90,7 +90,7 @@ Current reusable infrastructure includes:
 - schema-v2 validation, equal-layout root reduction, recovery/direct method contrasts and deterministic v2 evidence exports;
 - read-only pre-final readiness checks and a synthetic DEVELOPMENT-only end-to-end scientific-pipeline smoke.
 
-The final reserve has not been executed or inspected.
+The first final-reserve attempt stopped fail-closed at 216/603 jobs and is preserved unfinalized without outcome interpretation. DEC-062 authorizes a complete non-mixed replacement execution after the bounded implementation correction and clean preflight.
 
 ## Application architecture and current restart
 
@@ -139,8 +139,8 @@ Canonical concrete state is in `TASKS.md` and `CURRENT_STATUS.md`.
 1. Protocol-v2.1 scientific authority, recovery/comparison amendment and pre-final readiness hardening are complete.
 2. DEC-061 now fixes the experiment-first T-534 product/UX contract without changing science.
 3. T-534 UI implementation is allowed without opening the final reserve.
-4. Final scientific execution remains blocked by a separate explicit authorization gate.
-5. Validation/analysis/evidence packaging follow only after the authorized final execution.
+4. T-610 final execution and the DEC-062 clean replacement are authorized through the unchanged backend guard.
+5. Validation/analysis/evidence packaging follow only after objective replacement T-610 completion.
 6. Explicit user approval is still required before thesis Results/Discussion/WP7 writing.
 7. Final Windows standalone packaging remains deferred until after the thesis.
 

@@ -223,6 +223,11 @@ File: `DEC-060_PROTOCOL_V2_1_RECOVERY_AND_COMPARISON_AMENDMENT.md`.
 
 File: `DEC-061_T534_EXPERIMENT_FIRST_APPLICATION_UX.md`.
 
+## DEC-062 — T-610 failed-attempt recovery
+**CURRENT T-610 RECOVERY AUTHORITY.** Preserves the first 216-job execution as immutable failed/incomplete history ineligible for downstream evidence, applies the already accepted DEC-054 settlement at the missing Study Phase-A checkpoint boundary, and requires a complete fresh replacement execution from one corrected merged commit. The replacement has a distinct provenance/storage instance identity while retaining the exact frozen `protocol-v2.1-final` scientific recipe and plan. The final execution guard remains unchanged; T-611 and all interpretation remain unauthorized.
+
+File: `DEC-062_T610_FAILED_ATTEMPT_RECOVERY.md`.
+
 ## Downstream tool/workflow policy
 
 `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md` records later Codex/repository, ChatGPT, Microsoft Word, PowerPoint, optional Canva and user-captured `ASSET-*` responsibilities. Planning it does not unlock T-700+.
@@ -231,8 +236,7 @@ File: `DEC-061_T534_EXPERIMENT_FIRST_APPLICATION_UX.md`.
 
 Only genuinely downstream evidence- or user-gated choices remain:
 
-- completion and objective acceptance of T-534 under DEC-061;
-- separate explicit T-610 authorization before any final-reserve execution;
+- successful completion of the DEC-062 replacement T-610 execution;
 - T-613 final figure/table selection and evidence-to-thesis/defense asset map after validated final evidence exists;
 - explicit pre-WP7 user approval before thesis writing;
 - current official Word/citation/submission/defense rules at T-700;

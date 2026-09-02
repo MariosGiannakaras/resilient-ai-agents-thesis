@@ -21,10 +21,10 @@
 
 ## Final-reserve execution gate
 
-- `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory until a separate explicit final-scientific-experiment authorization is given.
+- `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory. The separate T-610 execution and DEC-062 replacement authorization are supplied only through the accepted backend token; they do not change these fields.
 - The generic Study backend denies confirmatory/final execution by default without the separate authorization token.
 - UI work, tests, screenshots, synthetic smoke runs, documentation changes and repository cleanup never constitute final-experiment authorization.
-- Do not inspect or execute final-reserve outcomes, begin the final matrix, or start Results/Discussion writing before the separate authorization gate.
+- Under DEC-062, never resume, finalize, copy or mix the preserved first attempt. The replacement must start from zero on one clean corrected commit. Do not interpret outcomes or begin T-611/Results/Discussion during T-610.
 
 ## Evidence and analysis
 

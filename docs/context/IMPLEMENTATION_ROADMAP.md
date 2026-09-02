@@ -150,11 +150,11 @@ Final standalone Windows packaging is **not** part of this phase; it remains def
 
 ## Final protocol-v2.1 evidence path
 
-The scientific protocol is frozen but execution remains separately gated.
+The scientific protocol is frozen. Separate T-610 execution and DEC-062 recovery authorization are satisfied; the backend guard remains mandatory.
 
-Only after explicit final-scientific-experiment authorization:
+Under the authorized DEC-062 recovery path:
 
-1. execute the frozen protocol-v2.1 final Study matrix on the accepted execution path;
+1. preserve the first 216-job attempt as immutable failed/incomplete history, merge the bounded DEC-054 Study-boundary correction, pass the clean preflight and execute the unchanged 603-job matrix from zero as a distinct replacement instance;
 2. validate/freeze complete final evidence and integrity;
 3. execute the predeclared root-level RQ1/RQ2/RQ3 analysis and sensitivity diagnostics;
 4. render final figures/tables/data and freeze evidence/result/claim identifiers;
