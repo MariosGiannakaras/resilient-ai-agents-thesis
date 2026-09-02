@@ -23,7 +23,7 @@ The **frozen protocol-v2.1 final scientific experiment** completed under the for
 | Thesis writing | **Not authorized yet**; separate pre-WP7 approval is required after accepted final evidence |
 | Standalone Windows packaging | Deferred to **T-803** after the thesis deliverable |
 
-The first Study from `7442dcb65674dcb3bc9ce0c71996418289d79061` remains an unmodified, unfinalized 216-job failed attempt ineligible for downstream evidence. The fresh replacement `protocol-v2.1-final--t610-recovery-01` completed and finalized 603/603 jobs from clean commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`, with unchanged recipe/plan hashes and zero recorded failures. T-611 validated and froze only that replacement under manifest SHA-256 `2d3f9e47b998b7e76b5a9fa984427d87e4bc5f038e4adbabbef9635e419cd2db`; interpretation remains deferred to T-612.
+The first Study from `7442dcb65674dcb3bc9ce0c71996418289d79061` remains an unmodified, unfinalized 216-job failed attempt ineligible for downstream evidence. The fresh replacement `protocol-v2.1-final--t610-recovery-01` completed and finalized 603/603 jobs from clean commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`, with unchanged recipe/plan hashes and zero recorded failures. T-611 validated and froze only that replacement under manifest SHA-256 `20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858`; interpretation remains deferred to T-612.
 
 > `docs/context/TASKS.md` is the canonical task/dependency ledger and `docs/context/CURRENT_STATUS.md` is the authoritative compact state. The task table in this README is a human-readable snapshot only; the canonical files win if the project state changes.
 

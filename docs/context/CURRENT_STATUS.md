@@ -19,7 +19,7 @@
 - A final **read-only merged-main preflight** was completed after the T-536 merge. It confirmed `final_reserve_access=false`, `execution_authorization=requires-explicit-t610-gate`, no committed `protocol-v2.1-final` Study bundle, deny-by-default final execution, and the canonical 603-job plan with `final_execution_authorized=false`. T-537 changed no execution/scientific code, so those gate semantics remain unchanged.
 - `T-610` is **COMPLETE**. The DEC-062 replacement `protocol-v2.1-final--t610-recovery-01` completed and finalized 603/603 jobs with zero infrastructure/scientific failures, no pending/running jobs and coherent Study/run integrity.
 - `T-611` is **COMPLETE**. The replacement passed fresh recipe/plan/lifecycle/artifact/run-index/source/lineage/temporal-schema validation and is frozen at `results/final-evidence/protocol-v2.1-final/`.
-- The T-611 freeze manifest SHA-256 is `2d3f9e47b998b7e76b5a9fa984427d87e4bc5f038e4adbabbef9635e419cd2db`; its 600-record run-manifest inventory SHA-256 is `0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045`; validator source commit is `db6f1de53fcb0a7e9b4509950a5032b229befb8f`.
+- The T-611 freeze manifest SHA-256 is `20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858`; its 600-record run-manifest inventory SHA-256 is `0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045`; validator source commit is `b925b0ad603bf165e8632c74f2027c53f040b34b`.
 - Native Windows CPython 3.12 recovery preflight on clean commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730` re-derived the canonical 603-job plan, confirmed the unchanged recipe hash and backend denial, byte-validated the failed attempt and confirmed the replacement namespace was absent before creation.
 - The historical Study records source commit `7442dcb65674dcb3bc9ce0c71996418289d79061`. It remains `active` and unfinalized at 216 completed, 1 infrastructure-failed and 386 pending, with its four registry hashes unchanged after replacement finalization.
 - The failed attempt is `pb__sarsa__t527-final-r01__gw-l1-final-a__action-remap-swap-right-down`: the shared no-learning prefix requires a quiescent learner, but the materialized SARSA Phase-A checkpoint retained pending/deferred state. The frozen recipe declares DEC-054 deployment-start settlement; the generic Study Phase-A executor did not apply that accepted settlement before persisting the checkpoint.
@@ -57,6 +57,7 @@ The accepted PySide6 application is experiment-first. T-535 guarantees created-r
 - PR #117 / T-537 merged as `8fd32fbf68d7374ff1de5c70db21e9f95b129c1c` after exact-head Repository checks #892 and PySide6 UI acceptance #191; merged-state verification completed.
 - PR #122 / DEC-062 recovery implementation and failed-attempt preservation merged as `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`; exact-head and merged-main Repository/Protocol-v2 checks passed before replacement execution.
 - PR #123 is the finalized replacement evidence/checkpoint publication and T-610 completion reconciliation.
+- PR #124 is the T-611 validation and final-evidence freeze integration.
 - Canonical bibliography remains `MariosGiannakaras/ThesisBibliography` / `research/bibliography/citation-ready/`; `bibliography-integration-v3` is immutable historical terminology, not a parallel system.
 
 ## Still intentionally unfrozen

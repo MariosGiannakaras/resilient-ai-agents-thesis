@@ -7,7 +7,7 @@ Record only material changes to the project source of truth. Detailed commit-by-
 - Revalidated the exact DEC-062 replacement identity, 603-job plan, 600 scientific run bundles, 120 checkpoints and 3,255 registered artifacts without interpreting outcomes.
 - Strengthened the existing protocol-v2 validator for exact plan-to-record method/root/layout/condition identity, checkpoint lineage, schema-v2 FN/FD/AN/AD temporal records and duplicate scientific-identity rejection.
 - Reconfirmed all preserved predecessor registry hashes and its 216-job failed/incomplete state; it remains explicitly excluded from T-611 and all downstream evidence.
-- Atomically froze `results/final-evidence/protocol-v2.1-final/` with validator commit `db6f1de53fcb0a7e9b4509950a5032b229befb8f`, manifest SHA-256 `2d3f9e47b998b7e76b5a9fa984427d87e4bc5f038e4adbabbef9635e419cd2db` and 600-record inventory SHA-256 `0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045`.
+- Atomically froze `results/final-evidence/protocol-v2.1-final/` with validator commit `b925b0ad603bf165e8632c74f2027c53f040b34b`, manifest SHA-256 `20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858` and 600-record inventory SHA-256 `0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045`.
 - T-612 is next and READY. T-613/WP7 remain blocked; no outcome interpretation, post-hoc metric, figure/table or Results/Discussion work occurred.
 
 ## 2026-09-02 — T-610 replacement execution completed
