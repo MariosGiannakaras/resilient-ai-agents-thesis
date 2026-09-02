@@ -1,0 +1,189 @@
+{
+  "entrypoint": "resilient_agents.study.protocol_v2_1_phase_b_executor.matched-set.v1",
+  "job_id": "pb__ppo__t527-final-r06__gw-l1-final-a__action-failure-0.15",
+  "job_payload": {
+    "branches": [
+      "FN",
+      "FD",
+      "AN",
+      "AD"
+    ],
+    "condition": {
+      "condition_id": "action-failure-0.15",
+      "family": "action-failure",
+      "specification": {
+        "probability": 0.15
+      }
+    },
+    "execution": {
+      "episode_reset_policy_id": "dec-055-persistent-multi-episode-deployment-v1",
+      "interaction_budget_per_branch": 256,
+      "prefix_interactions": 1,
+      "subsequent_episode_seed_count": 256,
+      "temporal_evidence_id": "dec-060-fixed-reward-windows-v1",
+      "temporal_window_size": 32
+    },
+    "job_type": "phase-b-matched-set",
+    "layout": {
+      "family": "final-held-out",
+      "generation_seed": 57001,
+      "layout_id": "gw-l1-final-a",
+      "scenario": {
+        "action_disturbance_spec": {
+          "failure_probability": 0.0,
+          "type": "no-op-failure"
+        },
+        "change_events": [],
+        "dynamics_spec": {
+          "action_vectors": {
+            "down": [
+              0,
+              1
+            ],
+            "left": [
+              -1,
+              0
+            ],
+            "right": [
+              1,
+              0
+            ],
+            "up": [
+              0,
+              -1
+            ]
+          }
+        },
+        "environment_id": "project-gridworld-v1",
+        "information_policy": {
+          "expose_change_indicator": false,
+          "expose_disturbance_flags": false,
+          "expose_executed_action": false,
+          "expose_regime_id": false,
+          "expose_true_state": false
+        },
+        "initial_state_spec": {
+          "grid": {
+            "goal": [
+              6,
+              6
+            ],
+            "height": 7,
+            "obstacles": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                5,
+                4
+              ],
+              [
+                6,
+                0
+              ],
+              [
+                6,
+                3
+              ],
+              [
+                6,
+                4
+              ]
+            ],
+            "start": [
+              0,
+              0
+            ],
+            "width": 7
+          }
+        },
+        "max_steps": 48,
+        "observation_disturbance_spec": {
+          "mislocalization_probability": 0.0,
+          "type": "position-mislocalization"
+        },
+        "observation_spec": {
+          "coordinate_order": "x-y",
+          "reset_observation": "true-state",
+          "type": "position"
+        },
+        "reward_spec": {
+          "collision": -0.25,
+          "goal": 1.0,
+          "step": -0.1
+        },
+        "scenario_id": "gw-l1-final-a"
+      },
+      "spec_sha256": "c1f7924d05d62fc12f91e7a42316d8e0f6a96328a7deba145316483a0c8c9422"
+    },
+    "method": {
+      "configuration_id": "ppo-c06",
+      "implementation_id": "stable-baselines3-scientific-state-adapter",
+      "method_id": "ppo",
+      "parameters": {
+        "batch_size": 64,
+        "bootstrap_on_truncation": true,
+        "clip_range": 0.2,
+        "discount_factor": 0.95,
+        "ent_coef": 0.0,
+        "gae_lambda": 0.95,
+        "learning_rate": 0.001,
+        "max_grad_norm": 0.5,
+        "n_epochs": 10,
+        "n_steps": 128,
+        "net_arch": {
+          "pi": [
+            64,
+            64
+          ],
+          "vf": [
+            64,
+            64
+          ]
+        },
+        "vf_coef": 0.5
+      },
+      "phase_b_condition_ids": [
+        "action-remap-swap-right-down",
+        "action-remap-cycle-clockwise",
+        "action-failure-0.15",
+        "observation-corruption-0.05"
+      ],
+      "role": "core"
+    },
+    "phase_a_job_id": "pa__ppo__t527-final-r06__gw-l1-final-a",
+    "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+    "root": {
+      "action_disturbance_seed": 75006,
+      "environment_seed": 74006,
+      "exploration_seed": 72006,
+      "initialization_seed": 71006,
+      "observation_disturbance_seed": 76006,
+      "root_id": "t527-final-r06",
+      "scenario_seed": 73006
+    }
+  },
+  "phase_a_checkpoint_relative_path": "results/runs/protocol-v2.1-final--t610-recovery-01--pa__ppo__t527-final-r06__gw-l1-final-a/scientific-checkpoint.json",
+  "phase_a_checkpoint_sha256": "223eb69021d3729d47e8a13e8af641857b4719c45873516f93821120e7f1d112",
+  "phase_a_job_id": "pa__ppo__t527-final-r06__gw-l1-final-a",
+  "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+  "study_id": "protocol-v2.1-final--t610-recovery-01",
+  "temporal_evidence_id": "dec-060-fixed-reward-windows-v1"
+}

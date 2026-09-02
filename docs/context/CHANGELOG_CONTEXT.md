@@ -2,6 +2,13 @@
 
 Record only material changes to the project source of truth. Detailed commit-by-commit history remains in Git; accepted decisions remain indexed in `docs/decisions/DECISION_LOG.md`.
 
+## 2026-09-02 — T-610 replacement execution completed
+
+- Ran the full recovery preflight on clean merged source commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`: the failed attempt validated unchanged, the frozen recipe and 603-job plan reproduced, the replacement namespace was empty and the default backend guard remained sealed.
+- Created `protocol-v2.1-final--t610-recovery-01` with explicit DEC-062/predecessor/source lineage and executed it from zero through the unchanged authorization mechanism.
+- Finalized 603/603 jobs with 0 infrastructure/scientific failures and validated the finalized Study integrity map plus all 600 scientific run bundles. Recipe SHA-256 `8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154` and plan SHA-256 `073779d18f45caeab2ab725e7dce6b54b70394102d45de81e1974c7efaece0f4` remained unchanged.
+- Reconfirmed the predecessor registry hashes byte-for-byte. No outcome values were interpreted. T-611 is next and not started; T-612/T-613/WP7 remain blocked.
+
 ## 2026-09-02 — DEC-062 T-610 clean replacement recovery authorized
 
 - Classified the 216-job `protocol-v2.1-final` attempt as immutable failed/incomplete historical evidence, ineligible for T-611/T-612/T-613, thesis results or conclusions; no completed job or checkpoint may enter replacement evidence.

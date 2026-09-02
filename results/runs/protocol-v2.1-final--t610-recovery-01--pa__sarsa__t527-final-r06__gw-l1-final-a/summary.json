@@ -1,0 +1,14 @@
+{
+  "checkpoint_sha256": "c4d88fe2fdcccad673ff78260a458e5ec23bbc3fdf7ff11f9f5b44302d0630da",
+  "job_id": "pa__sarsa__t527-final-r06__gw-l1-final-a",
+  "layout_id": "gw-l1-final-a",
+  "method_id": "sarsa",
+  "probe_count": 6,
+  "probe_environment_interactions": 2160,
+  "process_cpu_seconds": 0.640625,
+  "root_id": "t527-final-r06",
+  "status": "completed",
+  "study_id": "protocol-v2.1-final--t610-recovery-01",
+  "training_environment_interactions": 8192,
+  "wall_seconds": 0.6319261000026017
+}

@@ -1,0 +1,76 @@
+{
+  "branch": "AD",
+  "checkpoint_artifact_id": "checkpoint__pa__ppo__t527-final-r11__gw-l1-final-b",
+  "condition_id": "action-remap-cycle-clockwise",
+  "job_id": "pb__ppo__t527-final-r11__gw-l1-final-b__action-remap-cycle-clockwise",
+  "layout_id": "gw-l1-final-b",
+  "method_id": "ppo",
+  "metrics": {
+    "adaptive": 1.0,
+    "deterministic_inference": 0.0,
+    "episodes_completed": 5.0,
+    "episodes_started": 6.0,
+    "native_optimizer_updates_completed": 20.0,
+    "native_update_opportunities_completed": 2.0,
+    "return_sum": -63.7,
+    "terminated": 0.0,
+    "truncated": 0.0
+  },
+  "record_type": "phase-b",
+  "resource_metrics": {
+    "environment_interactions": 256.0
+  },
+  "reward_windows": [
+    {
+      "end_interaction": 32,
+      "interaction_count": 32,
+      "mean_reward": -0.25,
+      "start_interaction": 1
+    },
+    {
+      "end_interaction": 64,
+      "interaction_count": 32,
+      "mean_reward": -0.25,
+      "start_interaction": 33
+    },
+    {
+      "end_interaction": 96,
+      "interaction_count": 32,
+      "mean_reward": -0.2453125,
+      "start_interaction": 65
+    },
+    {
+      "end_interaction": 128,
+      "interaction_count": 32,
+      "mean_reward": -0.25,
+      "start_interaction": 97
+    },
+    {
+      "end_interaction": 160,
+      "interaction_count": 32,
+      "mean_reward": -0.25,
+      "start_interaction": 129
+    },
+    {
+      "end_interaction": 192,
+      "interaction_count": 32,
+      "mean_reward": -0.25,
+      "start_interaction": 161
+    },
+    {
+      "end_interaction": 224,
+      "interaction_count": 32,
+      "mean_reward": -0.2453125,
+      "start_interaction": 193
+    },
+    {
+      "end_interaction": 256,
+      "interaction_count": 32,
+      "mean_reward": -0.25,
+      "start_interaction": 225
+    }
+  ],
+  "root_id": "t527-final-r11",
+  "schema_version": 2,
+  "study_id": "protocol-v2.1-final--t610-recovery-01"
+}

@@ -8,7 +8,7 @@ These requirements govern final scientific execution and evidence handling. Hist
 
 ## Current T-610 execution state
 
-The first authorized `protocol-v2.1-final` Study is preserved fail-closed and unfinalized at 216/603 completed jobs after a deterministic SARSA checkpoint-boundary implementation failure. DEC-062 makes it immutable historical failed/incomplete evidence, ineligible for T-611 or any final claim. Its jobs and checkpoints cannot be resumed, copied or mixed. The authorized replacement retains the exact frozen scientific recipe/plan and starts from zero on one corrected merged commit under the distinct execution instance `protocol-v2.1-final--t610-recovery-01`.
+The first authorized `protocol-v2.1-final` Study remains fail-closed and unfinalized at 216/603 after a deterministic SARSA checkpoint-boundary implementation failure. DEC-062 makes it immutable historical failed/incomplete evidence, ineligible for T-611 or any final claim. The replacement `protocol-v2.1-final--t610-recovery-01` started from zero on clean source commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730` and finalized all 603/603 planned jobs with the exact same frozen recipe and plan hashes. Its outputs are not accepted final evidence until T-611.
 
 ## Run classes and separation
 

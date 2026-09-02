@@ -1,0 +1,2032 @@
+{
+  "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+  "results": [
+    {
+      "condition_id": null,
+      "estimand": "phase-a-final-value",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-final-value-dqn-vs-dyna_q_plus"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-final-value",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-final-value-dqn-vs-ppo"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-final-value",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-final-value-dqn-vs-q_learning"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-final-value",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-final-value-dqn-vs-sarsa"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-final-value",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-final-value-dyna_q_plus-vs-ppo"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-final-value",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-final-value-dyna_q_plus-vs-q_learning"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-final-value",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-final-value-dyna_q_plus-vs-sarsa"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-final-value",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-final-value-ppo-vs-q_learning"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-final-value",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-final-value-ppo-vs-sarsa"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-final-value",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-final-value-q_learning-vs-sarsa"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-time-average",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-time-average-dqn-vs-dyna_q_plus"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-time-average",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-time-average-dqn-vs-ppo"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-time-average",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-time-average-dqn-vs-q_learning"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-time-average",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-time-average-dqn-vs-sarsa"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-time-average",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-time-average-dyna_q_plus-vs-ppo"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-time-average",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-time-average-dyna_q_plus-vs-q_learning"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-time-average",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-time-average-dyna_q_plus-vs-sarsa"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-time-average",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-time-average-ppo-vs-q_learning"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-time-average",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-time-average-ppo-vs-sarsa"
+    },
+    {
+      "condition_id": null,
+      "estimand": "phase-a-time-average",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PA-CONTRAST-phase-a-time-average-q_learning-vs-sarsa"
+    },
+    {
+      "method_id": "dqn",
+      "phase": "phase-a",
+      "result_id": "RESULT-PA-dqn"
+    },
+    {
+      "method_id": "dyna_q_plus",
+      "phase": "phase-a",
+      "result_id": "RESULT-PA-dyna_q_plus"
+    },
+    {
+      "method_id": "ppo",
+      "phase": "phase-a",
+      "result_id": "RESULT-PA-ppo"
+    },
+    {
+      "method_id": "q_learning",
+      "phase": "phase-a",
+      "result_id": "RESULT-PA-q_learning"
+    },
+    {
+      "method_id": "sarsa",
+      "phase": "phase-a",
+      "result_id": "RESULT-PA-sarsa"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-dyna_q_plus-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-dyna_q_plus-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-dyna_q_plus-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-dyna_q_plus-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-ppo-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-ppo-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-ppo-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-ppo-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dqn-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dyna_q_plus-vs-ppo-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dyna_q_plus-vs-ppo-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dyna_q_plus-vs-ppo-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dyna_q_plus-vs-ppo-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dyna_q_plus-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dyna_q_plus-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dyna_q_plus-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dyna_q_plus-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dyna_q_plus-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dyna_q_plus-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dyna_q_plus-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-dyna_q_plus-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-ppo-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-ppo-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-ppo-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-ppo-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-ppo-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-ppo-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-ppo-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-ppo-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-q_learning-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-q_learning-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-q_learning-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptation-benefit",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptation-benefit-q_learning-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-dyna_q_plus-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-dyna_q_plus-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-dyna_q_plus-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-dyna_q_plus-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-ppo-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-ppo-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-ppo-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-ppo-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dqn-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dyna_q_plus-vs-ppo-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dyna_q_plus-vs-ppo-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dyna_q_plus-vs-ppo-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dyna_q_plus-vs-ppo-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dyna_q_plus-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dyna_q_plus-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dyna_q_plus-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dyna_q_plus-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dyna_q_plus-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dyna_q_plus-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dyna_q_plus-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-dyna_q_plus-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-ppo-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-ppo-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-ppo-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-ppo-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-ppo-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-ppo-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-ppo-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-ppo-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-q_learning-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-q_learning-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-q_learning-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-adaptive-loss",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-adaptive-loss-q_learning-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-dyna_q_plus-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-dyna_q_plus-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-dyna_q_plus-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-dyna_q_plus-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-ppo-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-ppo-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-ppo-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-ppo-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dqn-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dyna_q_plus-vs-ppo-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dyna_q_plus-vs-ppo-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dyna_q_plus-vs-ppo-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dyna_q_plus-vs-ppo-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dyna_q_plus-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dyna_q_plus-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dyna_q_plus-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dyna_q_plus-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dyna_q_plus-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dyna_q_plus-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dyna_q_plus-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-dyna_q_plus-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-ppo-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-ppo-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-ppo-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-ppo-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-ppo-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-ppo-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-ppo-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-ppo-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-q_learning-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-q_learning-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-q_learning-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "phase-b-frozen-loss",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-PB-CONTRAST-phase-b-frozen-loss-q_learning-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "method_id": "dqn",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-dqn-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "dqn",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-dqn-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "dqn",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-dqn-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "method_id": "dqn",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-dqn-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "method_id": "dyna_q_plus",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-dyna_q_plus-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "dyna_q_plus",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-dyna_q_plus-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "dyna_q_plus",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-dyna_q_plus-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "method_id": "dyna_q_plus",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-dyna_q_plus-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "method_id": "ppo",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-ppo-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "ppo",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-ppo-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "ppo",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-ppo-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "method_id": "ppo",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-ppo-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "method_id": "q_learning",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "q_learning",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "q_learning",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "method_id": "q_learning",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "method_id": "sarsa",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "sarsa",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "sarsa",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "method_id": "sarsa",
+      "phase": "phase-b",
+      "result_id": "RESULT-PB-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-dyna_q_plus-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-dyna_q_plus-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-dyna_q_plus-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-dyna_q_plus-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-ppo-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-ppo-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-ppo-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-ppo-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dqn-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dyna_q_plus-vs-ppo-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dyna_q_plus-vs-ppo-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dyna_q_plus-vs-ppo-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dyna_q_plus-vs-ppo-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dyna_q_plus-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dyna_q_plus-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dyna_q_plus-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dyna_q_plus-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dyna_q_plus-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dyna_q_plus-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dyna_q_plus-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "recovery-status-indicator",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-dyna_q_plus-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "recovery-status-indicator",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-ppo-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "recovery-status-indicator",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-ppo-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "recovery-status-indicator",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-ppo-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "recovery-status-indicator",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-ppo-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "recovery-status-indicator",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-ppo-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "recovery-status-indicator",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-ppo-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "recovery-status-indicator",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-ppo-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "recovery-status-indicator",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-ppo-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "recovery-status-indicator",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-q_learning-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "recovery-status-indicator",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-q_learning-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "recovery-status-indicator",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-q_learning-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "recovery-status-indicator",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-recovery-status-indicator-q_learning-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-dyna_q_plus-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-dyna_q_plus-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-dyna_q_plus-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "dyna_q_plus",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-dyna_q_plus-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-ppo-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-ppo-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-ppo-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-ppo-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dqn",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dqn-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dyna_q_plus-vs-ppo-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dyna_q_plus-vs-ppo-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dyna_q_plus-vs-ppo-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dyna_q_plus",
+      "method_b": "ppo",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dyna_q_plus-vs-ppo-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dyna_q_plus-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dyna_q_plus-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dyna_q_plus-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dyna_q_plus",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dyna_q_plus-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dyna_q_plus-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dyna_q_plus-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dyna_q_plus-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "dyna_q_plus",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-dyna_q_plus-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-ppo-vs-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-ppo-vs-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-ppo-vs-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "ppo",
+      "method_b": "q_learning",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-ppo-vs-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-ppo-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-ppo-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-ppo-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "ppo",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-ppo-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-q_learning-vs-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-q_learning-vs-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-q_learning-vs-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "estimand": "restricted-recovery-delay-through-horizon",
+      "method_a": "q_learning",
+      "method_b": "sarsa",
+      "phase": "method-contrast",
+      "result_id": "RESULT-RQ3-CONTRAST-restricted-recovery-delay-through-horizon-q_learning-vs-sarsa-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "method_id": "dqn",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-dqn-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "dqn",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-dqn-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "dqn",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-dqn-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "method_id": "dqn",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-dqn-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "method_id": "dyna_q_plus",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-dyna_q_plus-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "dyna_q_plus",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-dyna_q_plus-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "dyna_q_plus",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-dyna_q_plus-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "method_id": "dyna_q_plus",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-dyna_q_plus-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "method_id": "ppo",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-ppo-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "ppo",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-ppo-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "ppo",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-ppo-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "method_id": "ppo",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-ppo-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "method_id": "q_learning",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-q_learning-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "q_learning",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-q_learning-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "q_learning",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-q_learning-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "method_id": "q_learning",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-q_learning-observation-corruption-0.05"
+    },
+    {
+      "condition_id": "action-failure-0.15",
+      "method_id": "sarsa",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-sarsa-action-failure-0.15"
+    },
+    {
+      "condition_id": "action-remap-cycle-clockwise",
+      "method_id": "sarsa",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-sarsa-action-remap-cycle-clockwise"
+    },
+    {
+      "condition_id": "action-remap-swap-right-down",
+      "method_id": "sarsa",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-sarsa-action-remap-swap-right-down"
+    },
+    {
+      "condition_id": "observation-corruption-0.05",
+      "method_id": "sarsa",
+      "phase": "recovery",
+      "result_id": "RESULT-RQ3-sarsa-observation-corruption-0.05"
+    }
+  ],
+  "schema_version": 2,
+  "study_id": "protocol-v2.1-final--t610-recovery-01"
+}

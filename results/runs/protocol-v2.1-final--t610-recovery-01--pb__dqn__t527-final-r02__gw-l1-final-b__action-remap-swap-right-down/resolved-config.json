@@ -1,0 +1,190 @@
+{
+  "entrypoint": "resilient_agents.study.protocol_v2_1_phase_b_executor.matched-set.v1",
+  "job_id": "pb__dqn__t527-final-r02__gw-l1-final-b__action-remap-swap-right-down",
+  "job_payload": {
+    "branches": [
+      "FN",
+      "FD",
+      "AN",
+      "AD"
+    ],
+    "condition": {
+      "condition_id": "action-remap-swap-right-down",
+      "family": "action-remap",
+      "specification": {
+        "mapping": {
+          "down": "right",
+          "left": "left",
+          "right": "down",
+          "up": "up"
+        },
+        "mapping_id": "swap-right-down"
+      }
+    },
+    "execution": {
+      "episode_reset_policy_id": "dec-055-persistent-multi-episode-deployment-v1",
+      "interaction_budget_per_branch": 256,
+      "prefix_interactions": 1,
+      "subsequent_episode_seed_count": 256,
+      "temporal_evidence_id": "dec-060-fixed-reward-windows-v1",
+      "temporal_window_size": 32
+    },
+    "job_type": "phase-b-matched-set",
+    "layout": {
+      "family": "final-held-out",
+      "generation_seed": 57002,
+      "layout_id": "gw-l1-final-b",
+      "scenario": {
+        "action_disturbance_spec": {
+          "failure_probability": 0.0,
+          "type": "no-op-failure"
+        },
+        "change_events": [],
+        "dynamics_spec": {
+          "action_vectors": {
+            "down": [
+              0,
+              1
+            ],
+            "left": [
+              -1,
+              0
+            ],
+            "right": [
+              1,
+              0
+            ],
+            "up": [
+              0,
+              -1
+            ]
+          }
+        },
+        "environment_id": "project-gridworld-v1",
+        "information_policy": {
+          "expose_change_indicator": false,
+          "expose_disturbance_flags": false,
+          "expose_executed_action": false,
+          "expose_regime_id": false,
+          "expose_true_state": false
+        },
+        "initial_state_spec": {
+          "grid": {
+            "goal": [
+              6,
+              6
+            ],
+            "height": 7,
+            "obstacles": [
+              [
+                0,
+                5
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                3,
+                0
+              ],
+              [
+                3,
+                2
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                3,
+                6
+              ],
+              [
+                4,
+                6
+              ]
+            ],
+            "start": [
+              0,
+              0
+            ],
+            "width": 7
+          }
+        },
+        "max_steps": 48,
+        "observation_disturbance_spec": {
+          "mislocalization_probability": 0.0,
+          "type": "position-mislocalization"
+        },
+        "observation_spec": {
+          "coordinate_order": "x-y",
+          "reset_observation": "true-state",
+          "type": "position"
+        },
+        "reward_spec": {
+          "collision": -0.25,
+          "goal": 1.0,
+          "step": -0.1
+        },
+        "scenario_id": "gw-l1-final-b"
+      },
+      "spec_sha256": "5128e490be3b811350b4ed1ab4b39dc503ba4687855c0a6c71fdf79d40c1fa1a"
+    },
+    "method": {
+      "configuration_id": "dqn-c05",
+      "implementation_id": "stable-baselines3-scientific-state-adapter",
+      "method_id": "dqn",
+      "parameters": {
+        "batch_size": 32,
+        "bootstrap_on_truncation": true,
+        "buffer_size": 16384,
+        "discount_factor": 0.95,
+        "exploration_final_eps": 0.05,
+        "exploration_fraction": 0.5,
+        "exploration_initial_eps": 1.0,
+        "gradient_steps": 1,
+        "learning_rate": 0.003,
+        "learning_starts": 128,
+        "net_arch": [
+          64,
+          64
+        ],
+        "target_update_interval": 128,
+        "train_freq": 1
+      },
+      "phase_b_condition_ids": [
+        "action-remap-swap-right-down",
+        "action-remap-cycle-clockwise",
+        "action-failure-0.15",
+        "observation-corruption-0.05"
+      ],
+      "role": "core"
+    },
+    "phase_a_job_id": "pa__dqn__t527-final-r02__gw-l1-final-b",
+    "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+    "root": {
+      "action_disturbance_seed": 75002,
+      "environment_seed": 74002,
+      "exploration_seed": 72002,
+      "initialization_seed": 71002,
+      "observation_disturbance_seed": 76002,
+      "root_id": "t527-final-r02",
+      "scenario_seed": 73002
+    }
+  },
+  "phase_a_checkpoint_relative_path": "results/runs/protocol-v2.1-final--t610-recovery-01--pa__dqn__t527-final-r02__gw-l1-final-b/scientific-checkpoint.json",
+  "phase_a_checkpoint_sha256": "b7696a1c21cb0332b129dbb02d7c91a34f09a39c78be158947100fc48b5578e6",
+  "phase_a_job_id": "pa__dqn__t527-final-r02__gw-l1-final-b",
+  "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+  "study_id": "protocol-v2.1-final--t610-recovery-01",
+  "temporal_evidence_id": "dec-060-fixed-reward-windows-v1"
+}

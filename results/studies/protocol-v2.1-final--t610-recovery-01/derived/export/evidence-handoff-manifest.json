@@ -1,0 +1,106 @@
+{
+  "analysis_recipe": "protocol-v2-root-level-v2.1",
+  "figure_rendering_status": "deferred-until-frozen-figure-recipe",
+  "files": [
+    {
+      "artifact_id": "analysis-table-phase-a-root-records",
+      "filename": "phase-a-root-records.csv",
+      "row_count": 60,
+      "sha256": "e11ec69ba83055f315419fbba69e988e721c19e9cebad6575dc8bb30f064529c"
+    },
+    {
+      "artifact_id": "analysis-table-phase-b-root-records",
+      "filename": "phase-b-root-records.csv",
+      "row_count": 240,
+      "sha256": "1ad37b2862c94592f93c5a0749da5bf0ff4ff85e8afbea4e5f032021713f965d"
+    },
+    {
+      "artifact_id": "analysis-table-recovery-root-records",
+      "filename": "recovery-root-records.csv",
+      "row_count": 240,
+      "sha256": "6971a5326496c8ced0d3e74b87b5cd1f2df66a08118ae3130cd69803bd92aabc"
+    },
+    {
+      "artifact_id": "analysis-table-recovery-sensitivity",
+      "filename": "recovery-sensitivity-root-records.csv",
+      "row_count": 480,
+      "sha256": "5ed47e4268c7e86b0c49d86978305b6ebf0b998f4b674688f39a96de8de3e331"
+    },
+    {
+      "artifact_id": "analysis-table-recovery-trajectories",
+      "filename": "recovery-trajectory-records.csv",
+      "row_count": 1920,
+      "sha256": "3ef27d23f327e2f3140f202850badf2de34fa21e4a601be3f59d5ab7d56d972c"
+    },
+    {
+      "artifact_id": "result-index",
+      "filename": "result-index.json",
+      "row_count": 265,
+      "sha256": "91f72ee2bbeafc02e6e0cc6f32777bd8e49d7c219fa47a8e9c92d77d1da8be6c"
+    },
+    {
+      "artifact_id": "thesis-table-phase-a-method-contrasts",
+      "filename": "phase-a-method-contrasts.csv",
+      "row_count": 20,
+      "sha256": "364109b193db209a35dd32338e4b7a21919c588e49b3b9f22898fce8d5d5ad4f"
+    },
+    {
+      "artifact_id": "thesis-table-phase-a-method-summary",
+      "filename": "phase-a-method-summary.csv",
+      "row_count": 5,
+      "sha256": "45aa5db4eb879a385da3e4a7eabfe509ceed475146f1593e891ba0cc859aaa4c"
+    },
+    {
+      "artifact_id": "thesis-table-phase-b-method-condition-summary",
+      "filename": "phase-b-method-condition-summary.csv",
+      "row_count": 20,
+      "sha256": "2ddcaaa7efcd68633f60ad606d03bdae9c712ef9b6793d272126b5e1bddd4796"
+    },
+    {
+      "artifact_id": "thesis-table-phase-b-method-contrasts",
+      "filename": "phase-b-method-contrasts.csv",
+      "row_count": 120,
+      "sha256": "10ce2d0f39c6e01702db8737749017197b066c9cb25ffff0f1d1ddecb33ffd71"
+    },
+    {
+      "artifact_id": "thesis-table-recovery-method-condition-summary",
+      "filename": "recovery-method-condition-summary.csv",
+      "row_count": 20,
+      "sha256": "cebb4738cab4ac9b710f42acd5607a0dbdb61d1d3ef31189a5f8239cf9fe789f"
+    },
+    {
+      "artifact_id": "thesis-table-recovery-method-contrasts",
+      "filename": "recovery-method-contrasts.csv",
+      "row_count": 80,
+      "sha256": "4860abf3de651a84e31dae19c07293ce957d17943ae4a1e285dd6fff9ae2d003"
+    }
+  ],
+  "interval_policy": {
+    "confidence": 0.95,
+    "critical_value_by_n": {
+      "10": 2.262,
+      "11": 2.228,
+      "12": 2.201,
+      "2": 12.706,
+      "3": 4.303,
+      "4": 3.182,
+      "5": 2.776,
+      "6": 2.571,
+      "7": 2.447,
+      "8": 2.365,
+      "9": 2.306
+    },
+    "critical_value_selected_by": "actual-independent-root-count",
+    "independent_unit": "root",
+    "kind": "student-t",
+    "p_value_superiority_family": false,
+    "pointwise_not_simultaneous": true
+  },
+  "package": "protocol-v2-evidence-handoff-v2",
+  "protocol_extension": "v2.1-recovery-comparisons",
+  "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+  "schema_version": 2,
+  "source_analysis_artifact_id": "analysis-package",
+  "source_analysis_sha256": "10b6b6c8a8df0cc9889fffa1767c918f4d0069c1ac0b1556d5b2b2422ee19f21",
+  "study_id": "protocol-v2.1-final--t610-recovery-01"
+}

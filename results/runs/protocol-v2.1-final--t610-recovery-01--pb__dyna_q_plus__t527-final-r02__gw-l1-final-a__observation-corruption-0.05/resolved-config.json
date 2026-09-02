@@ -1,0 +1,176 @@
+{
+  "entrypoint": "resilient_agents.study.protocol_v2_1_phase_b_executor.matched-set.v1",
+  "job_id": "pb__dyna_q_plus__t527-final-r02__gw-l1-final-a__observation-corruption-0.05",
+  "job_payload": {
+    "branches": [
+      "FN",
+      "FD",
+      "AN",
+      "AD"
+    ],
+    "condition": {
+      "condition_id": "observation-corruption-0.05",
+      "family": "observation-corruption",
+      "specification": {
+        "probability": 0.05,
+        "support": "uniform-valid-non-obstacle-excluding-true-state"
+      }
+    },
+    "execution": {
+      "episode_reset_policy_id": "dec-055-persistent-multi-episode-deployment-v1",
+      "interaction_budget_per_branch": 256,
+      "prefix_interactions": 1,
+      "subsequent_episode_seed_count": 256,
+      "temporal_evidence_id": "dec-060-fixed-reward-windows-v1",
+      "temporal_window_size": 32
+    },
+    "job_type": "phase-b-matched-set",
+    "layout": {
+      "family": "final-held-out",
+      "generation_seed": 57001,
+      "layout_id": "gw-l1-final-a",
+      "scenario": {
+        "action_disturbance_spec": {
+          "failure_probability": 0.0,
+          "type": "no-op-failure"
+        },
+        "change_events": [],
+        "dynamics_spec": {
+          "action_vectors": {
+            "down": [
+              0,
+              1
+            ],
+            "left": [
+              -1,
+              0
+            ],
+            "right": [
+              1,
+              0
+            ],
+            "up": [
+              0,
+              -1
+            ]
+          }
+        },
+        "environment_id": "project-gridworld-v1",
+        "information_policy": {
+          "expose_change_indicator": false,
+          "expose_disturbance_flags": false,
+          "expose_executed_action": false,
+          "expose_regime_id": false,
+          "expose_true_state": false
+        },
+        "initial_state_spec": {
+          "grid": {
+            "goal": [
+              6,
+              6
+            ],
+            "height": 7,
+            "obstacles": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                5,
+                4
+              ],
+              [
+                6,
+                0
+              ],
+              [
+                6,
+                3
+              ],
+              [
+                6,
+                4
+              ]
+            ],
+            "start": [
+              0,
+              0
+            ],
+            "width": 7
+          }
+        },
+        "max_steps": 48,
+        "observation_disturbance_spec": {
+          "mislocalization_probability": 0.0,
+          "type": "position-mislocalization"
+        },
+        "observation_spec": {
+          "coordinate_order": "x-y",
+          "reset_observation": "true-state",
+          "type": "position"
+        },
+        "reward_spec": {
+          "collision": -0.25,
+          "goal": 1.0,
+          "step": -0.1
+        },
+        "scenario_id": "gw-l1-final-a"
+      },
+      "spec_sha256": "c1f7924d05d62fc12f91e7a42316d8e0f6a96328a7deba145316483a0c8c9422"
+    },
+    "method": {
+      "configuration_id": "dyna-c03",
+      "implementation_id": "project-protocol-v2-state-adapter",
+      "method_id": "dyna_q_plus",
+      "parameters": {
+        "bootstrap_on_truncation": true,
+        "discount_factor": 0.95,
+        "exploration_epsilon": 0.1,
+        "initial_q_value": 0.0,
+        "kappa": 0.0005,
+        "learning_rate": 0.2,
+        "planning_steps": 10
+      },
+      "phase_b_condition_ids": [
+        "action-remap-swap-right-down",
+        "action-remap-cycle-clockwise",
+        "action-failure-0.15",
+        "observation-corruption-0.05"
+      ],
+      "role": "core"
+    },
+    "phase_a_job_id": "pa__dyna_q_plus__t527-final-r02__gw-l1-final-a",
+    "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+    "root": {
+      "action_disturbance_seed": 75002,
+      "environment_seed": 74002,
+      "exploration_seed": 72002,
+      "initialization_seed": 71002,
+      "observation_disturbance_seed": 76002,
+      "root_id": "t527-final-r02",
+      "scenario_seed": 73002
+    }
+  },
+  "phase_a_checkpoint_relative_path": "results/runs/protocol-v2.1-final--t610-recovery-01--pa__dyna_q_plus__t527-final-r02__gw-l1-final-a/scientific-checkpoint.json",
+  "phase_a_checkpoint_sha256": "53c4d244d94b88f53823741475af6c8c6e40c6bc5d3fdb1abd45e20b1c923783",
+  "phase_a_job_id": "pa__dyna_q_plus__t527-final-r02__gw-l1-final-a",
+  "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+  "study_id": "protocol-v2.1-final--t610-recovery-01",
+  "temporal_evidence_id": "dec-060-fixed-reward-windows-v1"
+}

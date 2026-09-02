@@ -1,0 +1,14 @@
+{
+  "checkpoint_sha256": "a05fbe062f26b8fd0a60abcb3642201b1abd3b181a8be704186d6921d6f4bbcf",
+  "job_id": "pa__ppo__t527-final-r03__gw-l1-final-b",
+  "layout_id": "gw-l1-final-b",
+  "method_id": "ppo",
+  "probe_count": 6,
+  "probe_environment_interactions": 1728,
+  "process_cpu_seconds": 100.03125,
+  "root_id": "t527-final-r03",
+  "status": "completed",
+  "study_id": "protocol-v2.1-final--t610-recovery-01",
+  "training_environment_interactions": 8192,
+  "wall_seconds": 24.049297500168905
+}

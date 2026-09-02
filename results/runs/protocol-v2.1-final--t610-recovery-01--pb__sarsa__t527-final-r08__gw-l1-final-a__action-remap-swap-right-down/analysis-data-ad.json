@@ -1,0 +1,75 @@
+{
+  "branch": "AD",
+  "checkpoint_artifact_id": "checkpoint__pa__sarsa__t527-final-r08__gw-l1-final-a",
+  "condition_id": "action-remap-swap-right-down",
+  "job_id": "pb__sarsa__t527-final-r08__gw-l1-final-a__action-remap-swap-right-down",
+  "layout_id": "gw-l1-final-a",
+  "method_id": "sarsa",
+  "metrics": {
+    "adaptive": 1.0,
+    "episodes_completed": 12.0,
+    "episodes_started": 13.0,
+    "native_planning_updates_completed": 0.0,
+    "native_update_opportunities_completed": 255.0,
+    "return_sum": -19.05000000000002,
+    "terminated": 0.0,
+    "truncated": 0.0
+  },
+  "record_type": "phase-b",
+  "resource_metrics": {
+    "environment_interactions": 256.0
+  },
+  "reward_windows": [
+    {
+      "end_interaction": 32,
+      "interaction_count": 32,
+      "mean_reward": -0.15156249999999993,
+      "start_interaction": 1
+    },
+    {
+      "end_interaction": 64,
+      "interaction_count": 32,
+      "mean_reward": -0.15156250000000002,
+      "start_interaction": 33
+    },
+    {
+      "end_interaction": 96,
+      "interaction_count": 32,
+      "mean_reward": -0.050000000000000044,
+      "start_interaction": 65
+    },
+    {
+      "end_interaction": 128,
+      "interaction_count": 32,
+      "mean_reward": -0.07500000000000002,
+      "start_interaction": 97
+    },
+    {
+      "end_interaction": 160,
+      "interaction_count": 32,
+      "mean_reward": 0.0031250000000000114,
+      "start_interaction": 129
+    },
+    {
+      "end_interaction": 192,
+      "interaction_count": 32,
+      "mean_reward": -0.04062500000000001,
+      "start_interaction": 161
+    },
+    {
+      "end_interaction": 224,
+      "interaction_count": 32,
+      "mean_reward": -0.06406250000000005,
+      "start_interaction": 193
+    },
+    {
+      "end_interaction": 256,
+      "interaction_count": 32,
+      "mean_reward": -0.06562500000000004,
+      "start_interaction": 225
+    }
+  ],
+  "root_id": "t527-final-r08",
+  "schema_version": 2,
+  "study_id": "protocol-v2.1-final--t610-recovery-01"
+}

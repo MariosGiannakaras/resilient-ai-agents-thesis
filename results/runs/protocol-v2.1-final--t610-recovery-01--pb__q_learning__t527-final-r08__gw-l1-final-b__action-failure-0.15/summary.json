@@ -1,0 +1,20 @@
+{
+  "branch_point_environment_sha256": "3cf069254e51867089d2a255dda1edab515912f0bba86c5e8a5e5f40cb64f9fd",
+  "branch_point_learner_sha256": "3d6bd37c4a7b410c1d32ab979d9fd9dc35ef8c48a3a402255c3069945af43fc5",
+  "condition_id": "action-failure-0.15",
+  "interaction_budget_per_branch": 256,
+  "job_id": "pb__q_learning__t527-final-r08__gw-l1-final-b__action-failure-0.15",
+  "layout_id": "gw-l1-final-b",
+  "method_id": "q_learning",
+  "phase_a_checkpoint_sha256": "b11538a3e8cfe9591126408dd1050e1bfc404cea01224ed7c4d3ab6bfdbb5550",
+  "prefix_interactions": 1,
+  "process_cpu_seconds": 1.03125,
+  "root_id": "t527-final-r08",
+  "status": "completed",
+  "study_id": "protocol-v2.1-final--t610-recovery-01",
+  "temporal_evidence_id": "dec-060-fixed-reward-windows-v1",
+  "temporal_reward_window_count_per_branch": 8,
+  "temporal_reward_window_size": 32,
+  "total_post_boundary_interactions": 1024,
+  "wall_seconds": 1.0325010002125055
+}
