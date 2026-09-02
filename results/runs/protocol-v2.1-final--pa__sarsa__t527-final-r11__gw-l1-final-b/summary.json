@@ -1,0 +1,14 @@
+{
+  "checkpoint_sha256": "471398eb8240fde40c89772eb391f53f09a54f98063620e99b0c5664dd27da4e",
+  "job_id": "pa__sarsa__t527-final-r11__gw-l1-final-b",
+  "layout_id": "gw-l1-final-b",
+  "method_id": "sarsa",
+  "probe_count": 6,
+  "probe_environment_interactions": 2160,
+  "process_cpu_seconds": 0.609375,
+  "root_id": "t527-final-r11",
+  "status": "completed",
+  "study_id": "protocol-v2.1-final",
+  "training_environment_interactions": 8192,
+  "wall_seconds": 0.6177555001340806
+}

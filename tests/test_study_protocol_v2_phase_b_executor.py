@@ -5,6 +5,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from resilient_agents.evidence_v2 import StudyEvidenceValidator, StudyExportExecutor
 from resilient_agents.evidence_v2.executors import (
@@ -14,7 +15,9 @@ from resilient_agents.evidence_v2.executors import (
 from resilient_agents.study import (
     ArtifactRole,
     EvidenceClass,
+    JobState,
     JobOutcomeKind,
+    StudyExecutorCrashed,
     StudyExecutorRegistry,
     StudyPlanner,
     StudyRecipe,
@@ -22,11 +25,12 @@ from resilient_agents.study import (
     StudyStore,
 )
 from resilient_agents.study.protocol_v2_executors import ProtocolV2PhaseAStudyExecutor
+from resilient_agents.study import protocol_v2_executors as phase_a_executors
 from resilient_agents.study.protocol_v2_phase_b_executor import ProtocolV2PhaseBStudyExecutor
 
 
 class StudyProtocolV2PhaseBExecutorTests(unittest.TestCase):
-    def _recipe(self) -> StudyRecipe:
+    def _recipe(self, *, method_id: str = "q_learning") -> StudyRecipe:
         scenario = {
             "scenario_id": "layout-a",
             "environment_id": "project-gridworld-v1",
@@ -97,8 +101,8 @@ class StudyProtocolV2PhaseBExecutorTests(unittest.TestCase):
                     },
                     "methods": [
                         {
-                            "method_id": "q_learning",
-                            "configuration_id": "q-test",
+                            "method_id": method_id,
+                            "configuration_id": f"{method_id}-test",
                             "implementation_id": "project-protocol-v2-state-adapter",
                             "role": "core",
                             "parameters": {
@@ -212,6 +216,21 @@ class StudyProtocolV2PhaseBExecutorTests(unittest.TestCase):
             self.assertTrue(
                 all(checkpoint_id in item.source_artifact_ids for item in artifacts)
             )
+            checkpoint_artifact = next(
+                item
+                for item in store.artifacts()
+                if item.artifact_id == checkpoint_id
+            )
+            checkpoint_payload = json.loads(
+                (root / checkpoint_artifact.relative_path).read_text(encoding="utf-8")
+            )
+            q_settlement = checkpoint_payload["provenance"]["boundary_settlement"]
+            self.assertTrue(q_settlement["no_op"])
+            self.assertEqual(q_settlement["environment_interactions_consumed"], 0)
+            self.assertEqual(
+                q_settlement["pre_learner_state_sha256"],
+                q_settlement["post_learner_state_sha256"],
+            )
 
             matched_artifact = next(
                 item
@@ -290,6 +309,105 @@ class StudyProtocolV2PhaseBExecutorTests(unittest.TestCase):
             self.assertEqual(rows[0]["method_id"], "q_learning")
             self.assertEqual(rows[0]["condition_id"], "remap-swap")
             self.assertIn("adaptation_benefit_mean", rows[0])
+
+    def test_real_sarsa_study_settles_phase_a_boundary_before_phase_b(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            recipe = self._recipe(method_id="sarsa")
+            plan = StudyPlanner(recipe).materialize()
+            store = StudyStore.create(
+                repo_root=root,
+                writable_root=root,
+                recipe=recipe,
+                plan=plan,
+            )
+            scheduler = StudyScheduler(
+                store=store,
+                executors=StudyExecutorRegistry(
+                    [
+                        ProtocolV2PhaseAStudyExecutor(),
+                        ProtocolV2PhaseBStudyExecutor(),
+                    ]
+                ),
+            )
+
+            phase_a_id = "pa__sarsa__root-01__layout-a"
+            phase_b_id = "pb__sarsa__root-01__layout-a__remap-swap"
+            phase_a = scheduler.run_job(phase_a_id)
+            self.assertIs(phase_a.outcome.kind, JobOutcomeKind.COMPLETED)
+            phase_b = scheduler.run_job(phase_b_id)
+            self.assertIs(phase_b.outcome.kind, JobOutcomeKind.COMPLETED)
+
+            checkpoint_artifact = next(
+                item
+                for item in store.artifacts()
+                if item.role is ArtifactRole.SCIENTIFIC_CHECKPOINT
+            )
+            checkpoint = json.loads(
+                (root / checkpoint_artifact.relative_path).read_text(encoding="utf-8")
+            )
+            settlement = checkpoint["provenance"]["boundary_settlement"]
+            self.assertEqual(
+                settlement["policy_id"],
+                "dec-054-phase-a-budget-boundary-settlement-v1",
+            )
+            self.assertEqual(settlement["environment_interactions_consumed"], 0)
+            self.assertFalse(settlement["no_op"])
+            self.assertNotEqual(
+                settlement["pre_learner_state_sha256"],
+                settlement["post_learner_state_sha256"],
+            )
+            self.assertEqual(
+                settlement["pre_counters"], settlement["post_counters"]
+            )
+            self.assertEqual(settlement["post_counters"]["observed_transition_count"], 4)
+            self.assertIsNone(checkpoint["state"]["pending_action"])
+            self.assertIsNone(checkpoint["state"]["deferred_update"])
+            self.assertEqual(phase_a.outcome.measurements["training_interactions"], 4)
+            self.assertIn(
+                "boundary_settlement_source_checkpoint_sha256",
+                checkpoint["provenance"],
+            )
+
+    def test_study_phase_a_fails_closed_on_unexpected_unfinished_state(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            recipe = self._recipe(method_id="sarsa")
+            store = StudyStore.create(
+                repo_root=root,
+                writable_root=root,
+                recipe=recipe,
+                plan=StudyPlanner(recipe).materialize(),
+            )
+            scheduler = StudyScheduler(
+                store=store,
+                executors=StudyExecutorRegistry([ProtocolV2PhaseAStudyExecutor()]),
+            )
+            real_execute_phase_a = phase_a_executors.execute_phase_a
+
+            def execute_with_invalid_pending_state(*args, **kwargs):
+                result = real_execute_phase_a(*args, **kwargs)
+                result.final_adapter.agent._pending_action = ('[0,0]', '"up"')
+                return result
+
+            with patch.object(
+                phase_a_executors,
+                "execute_phase_a",
+                side_effect=execute_with_invalid_pending_state,
+            ):
+                with self.assertRaisesRegex(StudyExecutorCrashed, "pending_action"):
+                    scheduler.run_job("pa__sarsa__root-01__layout-a")
+
+            self.assertIs(
+                store.lifecycle.state_for("pa__sarsa__root-01__layout-a"),
+                JobState.INFRASTRUCTURE_FAILED,
+            )
+            self.assertFalse(
+                any(
+                    artifact.role is ArtifactRole.SCIENTIFIC_CHECKPOINT
+                    for artifact in store.artifacts()
+                )
+            )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,35 @@
+{
+  "created_at_utc": "2026-09-01T23:15:05+00:00",
+  "current_stage": "phase-b",
+  "evidence_class": "confirmatory",
+  "finalized_at_utc": null,
+  "plan_sha256": "073779d18f45caeab2ab725e7dce6b54b70394102d45de81e1974c7efaece0f4",
+  "progress": {
+    "cancelled": 0,
+    "completed": 216,
+    "infrastructure_failed": 1,
+    "pending": 386,
+    "resolved": 216,
+    "running": 0,
+    "scientific_failed": 0,
+    "skipped": 0,
+    "total": 603
+  },
+  "protocol_version": "protocol-v2.1",
+  "recipe_id": "protocol-v2.1-final",
+  "recipe_sha256": "8f21075ad2bc7a7944dbac4ba2ee2f3255ec0157706b94f99174b6d9ef99b154",
+  "schema_version": 1,
+  "source": {
+    "git_commit": "7442dcb65674dcb3bc9ce0c71996418289d79061",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python_implementation": "CPython",
+    "python_version": "3.12.13",
+    "tracked_changes_present": false,
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "untracked_nonoutput_present": false,
+    "untracked_nonoutput_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "status": "active",
+  "study_id": "protocol-v2.1-final",
+  "updated_at_utc": "2026-09-01T23:55:18+00:00"
+}

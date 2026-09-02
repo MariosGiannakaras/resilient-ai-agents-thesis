@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from .model import ArtifactRole, EvidenceClass, StudyArtifact
+from .model import ArtifactRole, EvidenceClass, StudyArtifact, StudyExecutionIdentity
 from .planner import StudyPlanPreview, StudyPlanner
 from .recipe import StudyRecipe
 from .scheduler import ScheduledJobResult, StudyExecutorRegistry, StudyScheduler
@@ -114,13 +114,19 @@ class StudyService:
             preview=planner.preview(),
         )
 
-    def create(self, recipe: StudyRecipe) -> StudyStatus:
+    def create(
+        self,
+        recipe: StudyRecipe,
+        *,
+        execution_identity: StudyExecutionIdentity | None = None,
+    ) -> StudyStatus:
         planner = StudyPlanner(recipe)
         store = StudyStore.create(
             repo_root=self.repo_root,
             writable_root=self.writable_root,
             recipe=recipe,
             plan=planner.materialize(),
+            execution_identity=execution_identity,
         )
         return self._status(store)
 
@@ -210,7 +216,7 @@ class StudyService:
     def _status(store: StudyStore) -> StudyStatus:
         current_stage = store.lifecycle.current_stage
         return StudyStatus(
-            study_id=store.plan.study_id,
+            study_id=store.execution_id,
             protocol_version=store.recipe.protocol_version,
             evidence_class=store.recipe.evidence_class.value,
             frozen_recipe=store.recipe.frozen,

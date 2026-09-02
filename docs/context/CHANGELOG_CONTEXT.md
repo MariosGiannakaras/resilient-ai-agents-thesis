@@ -2,6 +2,13 @@
 
 Record only material changes to the project source of truth. Detailed commit-by-commit history remains in Git; accepted decisions remain indexed in `docs/decisions/DECISION_LOG.md`.
 
+## 2026-09-02 — DEC-062 T-610 clean replacement recovery authorized
+
+- Classified the 216-job `protocol-v2.1-final` attempt as immutable failed/incomplete historical evidence, ineligible for T-611/T-612/T-613, thesis results or conclusions; no completed job or checkpoint may enter replacement evidence.
+- Accepted the root cause as a deterministic Study implementation omission at the Phase-A to Phase-B checkpoint boundary. DEC-054 settlement semantics predated final outcomes and were physically validated, so applying them at the missing boundary is implementation correction rather than tuning.
+- Added distinct Study execution-instance lineage for `protocol-v2.1-final--t610-recovery-01` while preserving the scientific recipe and plan identity, immutable protocol fields and authorization guard.
+- Authorized the normal correction PR/CI/merge path, a clean read-only 603-job preflight and complete replacement execution from zero on one corrected merged commit. T-611 and interpretation remain blocked until T-610 succeeds.
+
 ## 2026-09-02 — T-610 execution stopped fail-closed
 
 - Created the single authorized frozen `protocol-v2.1-final` Study from clean merged source commit `7442dcb65674dcb3bc9ce0c71996418289d79061` after the native Windows preflight reproduced the 603-job plan.

@@ -82,6 +82,8 @@ Later stages do not execute while an earlier stage remains unresolved. Phase-B m
 
 The framework-neutral Study service denies confirmatory/final execution by default. The final protocol-v2.1 Study may run only after a separate explicit scientific authorization supplies the required execution token. UI code may not bypass or reimplement this guard.
 
+DEC-062 governs the current authorized recovery: the first attempt is immutable failed/incomplete history, and the same frozen recipe must restart from zero in a distinct execution instance created from one clean corrected merged commit. Execution-instance lineage prevents storage collision without changing scientific or statistical identity. The existing authorization token remains mandatory.
+
 ## Clean application restart
 
 DEC-059 selects PySide6 / Qt 6 Widgets as the application architecture. Historical Streamlit/React/NiceGUI implementations are superseded.

@@ -1,0 +1,42 @@
+{
+  "files": {
+    "analysis-data.json": {
+      "sha256": "365a5536d3724c4df34585132b07a700c26b009cdea49ca82e57045037a94d77",
+      "size_bytes": 1741
+    },
+    "resolved-config.json": {
+      "sha256": "4bf55b6ccb6611efb68bb2927c36df8a15554224b34b26365fa27aa2f7e79662",
+      "size_bytes": 4181
+    },
+    "scientific-checkpoint.json": {
+      "sha256": "c2be6cbb33350d48be8c2c48440cdbaa8fdc8511f2586d55a15ffd05ba978ea3",
+      "size_bytes": 37252
+    },
+    "summary.json": {
+      "sha256": "b1c92f8d928955f364623efb15a95af189136fa5abfd97aaa2d36e9747ab8ff2",
+      "size_bytes": 488
+    },
+    "system-capability.json": {
+      "sha256": "b9339d969a63e319c586f70116d7ade6526a5ed7b16ee3df6ac63527a17b6d4a",
+      "size_bytes": 1961
+    }
+  },
+  "finished_at_utc": "2026-09-01T23:17:15+00:00",
+  "protocol_version": "protocol-v2.1",
+  "retention_policy": "study-v2-scientific",
+  "run_id": "protocol-v2.1-final--pa__q_learning__t527-final-r07__gw-l1-final-a",
+  "schema_version": 1,
+  "source": {
+    "git_commit": "7442dcb65674dcb3bc9ce0c71996418289d79061",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python_implementation": "CPython",
+    "python_version": "3.12.13",
+    "tracked_changes_present": true,
+    "tracked_diff_sha256": "2079aa36eb809af7f58ee53eb45f34a9e4e95863658d1b5ff7fd8105c9f38203",
+    "untracked_nonoutput_present": false,
+    "untracked_nonoutput_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stage": "confirmatory",
+  "started_at_utc": "2026-09-01T23:17:13+00:00",
+  "status": "completed"
+}

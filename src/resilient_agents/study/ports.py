@@ -29,8 +29,10 @@ class StudyJobContext:
     attempt: int
 
     def __post_init__(self) -> None:
-        if self.study_id != self.recipe.recipe_id:
-            raise ValueError("context study_id must equal recipe_id")
+        if not isinstance(self.study_id, str) or not self.study_id.strip():
+            raise ValueError("context study_id must be non-empty")
+        if self.study_dir.name != self.study_id:
+            raise ValueError("context study_id must match the execution directory")
         if self.recipe_sha256 != self.recipe.sha256():
             raise ValueError("context recipe hash mismatch")
         if not isinstance(self.attempt, int) or isinstance(self.attempt, bool):

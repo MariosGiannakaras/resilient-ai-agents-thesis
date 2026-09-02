@@ -8,7 +8,7 @@ These requirements govern final scientific execution and evidence handling. Hist
 
 ## Current T-610 execution state
 
-The authorized `protocol-v2.1-final` Study is preserved fail-closed and unfinalized at 216/603 completed jobs after a deterministic SARSA checkpoint-boundary infrastructure failure. Partial outcomes must not be interpreted or used for outcome-driven changes. The existing Study, run bundles, index mutation and failure event must remain unchanged; no retry, patch, source-mixed continuation, finalization, evidence deletion or downstream T-611 work is permitted without an explicit formal scientific recovery/amendment decision that defines evidence disposition and a reproducible single-source path.
+The first authorized `protocol-v2.1-final` Study is preserved fail-closed and unfinalized at 216/603 completed jobs after a deterministic SARSA checkpoint-boundary implementation failure. DEC-062 makes it immutable historical failed/incomplete evidence, ineligible for T-611 or any final claim. Its jobs and checkpoints cannot be resumed, copied or mixed. The authorized replacement retains the exact frozen scientific recipe/plan and starts from zero on one corrected merged commit under the distinct execution instance `protocol-v2.1-final--t610-recovery-01`.
 
 ## Run classes and separation
 
@@ -188,4 +188,4 @@ Every final figure/table must identify or inherit traceable provenance for:
 
 ## Final-reserve gate
 
-T-533 may run synthetic/non-final mechanics validation only. It must not execute, inspect or tune against final-reserve outcomes. The required separate T-610 authorization was supplied on 2026-09-02 after T-533 and all declared pre-final dependencies completed. Final scientific execution must still stop immediately if the committed final-reserve firewall/gate is not satisfied; authorization is supplied only through the accepted backend token and does not change the frozen authority fields.
+T-533 may run synthetic/non-final mechanics validation only. It must not execute, inspect or tune against final-reserve outcomes. The required separate T-610 authorization and narrow DEC-062 recovery authorization were supplied on 2026-09-02. Final scientific execution must still stop immediately if the committed final-reserve firewall/gate is not satisfied; authorization is supplied only through the accepted backend token and does not change the frozen authority fields. DEC-062 corrects only the missing application of the already accepted zero-interaction DEC-054 deployment-start settlement.

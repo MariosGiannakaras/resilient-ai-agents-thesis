@@ -13,13 +13,25 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 class ProtocolV21PreT610ReadinessTests(unittest.TestCase):
-    def test_final_preflight_is_ready_but_not_authorized(self) -> None:
+    def test_recovery_preflight_preserves_failed_attempt_and_gate(self) -> None:
         report = run_protocol_v21_preflight(REPO_ROOT)
-        self.assertTrue(report["ready_for_separate_authorization_gate"])
+        self.assertTrue(report["ready_for_recovery_execution_authorization"])
         self.assertFalse(report["final_execution_authorized"])
         self.assertFalse(report["final_reserve_access"])
         self.assertTrue(report["backend_default_execution_blocked"])
-        self.assertFalse(report["committed_final_bundle_present"])
+        self.assertFalse(report["replacement_bundle_present"])
+        self.assertEqual(
+            report["replacement_execution_instance_id"],
+            "protocol-v2.1-final--t610-recovery-01",
+        )
+        self.assertEqual(report["recovery_decision_id"], "DEC-062")
+        self.assertEqual(report["preserved_failed_attempt"]["run_bundle_count"], 216)
+        self.assertFalse(
+            report["preserved_failed_attempt"]["eligible_for_replacement_evidence"]
+        )
+        self.assertFalse(
+            report["preserved_failed_attempt"]["eligible_for_t611_or_later"]
+        )
         self.assertEqual(report["plan_preview"]["total_jobs"], 603)
 
     def test_synthetic_pipeline_reaches_validated_v21_evidence_handoff(self) -> None:

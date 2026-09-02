@@ -1,0 +1,54 @@
+{
+  "files": {
+    "analysis-data-ad.json": {
+      "sha256": "f402142fcd236c62d9b420a4a7d3c5800eba5ebbdbb13149f2520b8213d415a2",
+      "size_bytes": 1926
+    },
+    "analysis-data-an.json": {
+      "sha256": "861a276f0bbeee02548c049fcfd90cdec10a085b63b05be6c038d2cfc8492b41",
+      "size_bytes": 1972
+    },
+    "analysis-data-fd.json": {
+      "sha256": "60d886c9e1868d3a640ec29400ff9e80e508005df0393b4b9df6256498c12409",
+      "size_bytes": 1942
+    },
+    "analysis-data-fn.json": {
+      "sha256": "083b8be5a9a47619e37e8163e7fd6c109c4b12f2f4806666dc4c63ca2604ca52",
+      "size_bytes": 1970
+    },
+    "matched-set.json": {
+      "sha256": "386e940c81dd511cc79cdd77a80af1fb2ee0a1a4f535aa734ed4a7500a194128",
+      "size_bytes": 8880
+    },
+    "resolved-config.json": {
+      "sha256": "79b1bf95310990a4056f176a6e38b1581f6b9de3a2db39e75e100d6aee1a4783",
+      "size_bytes": 4759
+    },
+    "summary.json": {
+      "sha256": "d4e30ebee004de8073a3153efd0f8e367a917cb8dc2ed5bdfc26a0bcc9403995",
+      "size_bytes": 914
+    },
+    "system-capability.json": {
+      "sha256": "46ee497ae5d439a13d7e09daf7018badca5ba39bb0c72195ce749baba32d8856",
+      "size_bytes": 1961
+    }
+  },
+  "finished_at_utc": "2026-09-01T23:52:18+00:00",
+  "protocol_version": "protocol-v2.1",
+  "retention_policy": "study-v2-scientific",
+  "run_id": "protocol-v2.1-final--pb__q_learning__t527-final-r05__gw-l1-final-b__action-failure-0.15",
+  "schema_version": 1,
+  "source": {
+    "git_commit": "7442dcb65674dcb3bc9ce0c71996418289d79061",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python_implementation": "CPython",
+    "python_version": "3.12.13",
+    "tracked_changes_present": true,
+    "tracked_diff_sha256": "9f4c822283aa4333a8298f149aa656b647d32384bcceb0cd8960a23b7b0187ce",
+    "untracked_nonoutput_present": false,
+    "untracked_nonoutput_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stage": "confirmatory",
+  "started_at_utc": "2026-09-01T23:52:16+00:00",
+  "status": "completed"
+}

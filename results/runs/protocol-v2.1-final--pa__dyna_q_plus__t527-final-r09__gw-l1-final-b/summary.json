@@ -1,0 +1,14 @@
+{
+  "checkpoint_sha256": "f8d6aed67302c1c421cf144b58c67d1d07c5b82b23df35a1019c138875db39dc",
+  "job_id": "pa__dyna_q_plus__t527-final-r09__gw-l1-final-b",
+  "layout_id": "gw-l1-final-b",
+  "method_id": "dyna_q_plus",
+  "probe_count": 6,
+  "probe_environment_interactions": 1296,
+  "process_cpu_seconds": 1.953125,
+  "root_id": "t527-final-r09",
+  "status": "completed",
+  "study_id": "protocol-v2.1-final",
+  "training_environment_interactions": 8192,
+  "wall_seconds": 1.97168769990094
+}

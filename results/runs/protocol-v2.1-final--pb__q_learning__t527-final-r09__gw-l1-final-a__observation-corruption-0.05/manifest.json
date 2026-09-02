@@ -1,0 +1,54 @@
+{
+  "files": {
+    "analysis-data-ad.json": {
+      "sha256": "2209bdd8fd1f8eced66b610f50dfe5bffad0d297dcd83bb14dbb86c102c21dd2",
+      "size_bytes": 1965
+    },
+    "analysis-data-an.json": {
+      "sha256": "c3c126c0e692e662e2c482ddaac68dfc259df2c9c667d024612ff949d76587e0",
+      "size_bytes": 1974
+    },
+    "analysis-data-fd.json": {
+      "sha256": "b1cff197844c642005f476b2a51a81f02189c033af92874e3c02279e21d18a0d",
+      "size_bytes": 1954
+    },
+    "analysis-data-fn.json": {
+      "sha256": "ef6f56ea24c3becad7b3cd2661f0879b8b530e080b608034f01096d7ce802f08",
+      "size_bytes": 1972
+    },
+    "matched-set.json": {
+      "sha256": "0741218ca9ff459de8dcf3b6f89f364caf7d55b2b83ee83d24c2d470ec0ca747",
+      "size_bytes": 8887
+    },
+    "resolved-config.json": {
+      "sha256": "bba740f324f4c298cd57ebad1f6e292b6bde8a7c06469abfbff4436c450c9c3e",
+      "size_bytes": 4853
+    },
+    "summary.json": {
+      "sha256": "2253dec2946036fc539b36b0c9f4dcb2db49e494a4830ab56d70b74deeea7e34",
+      "size_bytes": 931
+    },
+    "system-capability.json": {
+      "sha256": "c8ce34fb960efbb61ea006fdceb3d50a390336d69e78b238afbfb408bb98d75b",
+      "size_bytes": 1961
+    }
+  },
+  "finished_at_utc": "2026-09-01T23:53:48+00:00",
+  "protocol_version": "protocol-v2.1",
+  "retention_policy": "study-v2-scientific",
+  "run_id": "protocol-v2.1-final--pb__q_learning__t527-final-r09__gw-l1-final-a__observation-corruption-0.05",
+  "schema_version": 1,
+  "source": {
+    "git_commit": "7442dcb65674dcb3bc9ce0c71996418289d79061",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python_implementation": "CPython",
+    "python_version": "3.12.13",
+    "tracked_changes_present": true,
+    "tracked_diff_sha256": "eee8fdd9318da1ca7cacc58ee6ae4fb37d221ceddfc77d89d08b68a01b77fbcc",
+    "untracked_nonoutput_present": false,
+    "untracked_nonoutput_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stage": "confirmatory",
+  "started_at_utc": "2026-09-01T23:53:45+00:00",
+  "status": "completed"
+}
