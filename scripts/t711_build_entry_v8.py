@@ -23,7 +23,7 @@ from PIL import Image, ImageDraw, ImageFont
 import t711_build_entry_v7 as v7
 
 
-t711 = v7.t711
+t711 = v7.v6.t711
 
 REPAIRED_ASSET_ID = "FIG-METHOD-027-RQ-MAP"
 _previous_add_figure = t711._add_figure
