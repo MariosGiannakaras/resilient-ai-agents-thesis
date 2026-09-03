@@ -1,4 +1,4 @@
-name: T-711/T-711A thesis DOCX QA
+name: T-711/T-714 thesis DOCX QA
 
 on:
   pull_request:
@@ -123,7 +123,7 @@ jobs:
           assert not report.get("duplicate_inserted_figure_ids"), report
           assert not report.get("bad_reference_phrases"), report
           print(
-              f"T-711A v16 QA: citations={report['citation_count']} "
+              f"T-714 v16 QA: citations={report['citation_count']} "
               f"registered_assets={report['inserted_asset_count']} tables={report['table_count']} "
               f"captions_el={report['localized_figure_caption_count']} alt={report['image_alt_text_count']} "
               f"placeholders={report['placeholder_count']} sha={actual_sha}"
