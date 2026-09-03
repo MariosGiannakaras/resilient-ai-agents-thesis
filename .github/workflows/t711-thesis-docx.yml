@@ -13,6 +13,7 @@ on:
       - "scripts/t711_build_entry_v7.py"
       - "scripts/t711_build_entry_v8.py"
       - "scripts/t711_build_entry_v9.py"
+      - "scripts/t711_build_entry_v10.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -39,7 +40,7 @@ jobs:
 
       - name: Build review-ready thesis
         run: |
-          python scripts/t711_build_entry_v9.py \
+          python scripts/t711_build_entry_v10.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -60,6 +61,11 @@ jobs:
           assert report.get("reader_text_rescanned_after_save") is True, report
           assert report.get("removed_appendix_handoff_count") == 14, report
           assert not report.get("reader_visible_asset_id_residue"), report
+          assert report.get("results_synthesis_infographic") is True, report
+          assert report.get("results_synthesis_numbered_figure") is False, report
+          assert report.get("registered_figure_count_preserved") is True, report
+          assert report.get("inline_shape_count_after_synthesis") == 25, report
+          assert report.get("results_synthesis_source_sha256") == "08cec7f0c7dba6ced80bb01c749e1fb76f20e52b830ad3ff1c3f24581ed694a4", report
           assert not report["unresolved_src_ids"], report
           assert not report["contains_drafting_notes"], report
           assert not report.get("corrupt_math_tokens"), report
@@ -69,8 +75,8 @@ jobs:
           assert not report.get("bad_reference_phrases"), report
           print(
               f"T-711 structural QA: citations={report['citation_count']} "
-              f"assets={report['inserted_asset_count']} tables={report['table_count']} "
-              f"removed_handoff={report['removed_appendix_handoff_count']}"
+              f"registered_assets={report['inserted_asset_count']} tables={report['table_count']} "
+              f"synthesis={report['results_synthesis_infographic']}"
           )
           PY
 
