@@ -6,9 +6,9 @@
 
 Η ενισχυτική μάθηση (Reinforcement Learning, RL) μελετά προβλήματα στα οποία ένας πράκτορας αλληλεπιδρά διαδοχικά με ένα περιβάλλον, επιλέγει ενέργειες και λαμβάνει παρατηρήσεις και ανταμοιβές. Σε αντίθεση με supervised learning, η επιθυμητή συμπεριφορά δεν παρέχεται ως σύνολο σωστών labels για κάθε κατάσταση. Ο πράκτορας πρέπει να μάθει μια πολιτική που μεγιστοποιεί τη μελλοντική απόδοση μέσω της ίδιας της αλληλεπίδρασης [@SRC-701E163AC8].
 
-Η διαδοχικότητα είναι κρίσιμη: μια ενέργεια δεν αξιολογείται μόνο από την άμεση ανταμοιβή της, αλλά και από το πώς επηρεάζει τις μελλοντικές καταστάσεις και ευκαιρίες. Για αυτό η λήψη αποφάσεων σε RL συνδέεται με την έννοια της αναμενόμενης σωρευτικής επιστροφής και με το πρόβλημα της ισορροπίας ανάμεσα στην exploitation της ήδη αποκτημένης γνώσης και στην exploration για συλλογή νέας εμπειρίας [@SRC-701E163AC8].
+Η διαδοχικότητα είναι κρίσιμη: μια ενέργεια δεν αξιολογείται μόνο από την άμεση ανταμοιβή της, αλλά και από το πώς επηρεάζει τις μελλοντικές καταστάσεις και ευκαιρίες. Για αυτό η λήψη αποφάσεων σε RL συνδέεται με την αναμενόμενη σωρευτική επιστροφή και με την ισορροπία μεταξύ exploitation της ήδη αποκτημένης γνώσης και exploration για συλλογή νέας εμπειρίας [@SRC-701E163AC8].
 
-Η παρούσα εργασία εστιάζει σε ένα επιπλέον πρόβλημα: τι συμβαίνει όταν η σχέση μεταξύ καταστάσεων, ενεργειών, παρατηρήσεων και ανταμοιβών δεν παραμένει σταθερή μετά την αρχική μάθηση. Σε ένα stationary setting, η εμπειρία του παρελθόντος μπορεί να παραμένει έγκυρη. Σε non-stationary setting, ορισμένες εκτιμήσεις ή μοντέλα μπορεί να γίνουν stale και ο πράκτορας πρέπει είτε να παραμείνει λειτουργικός χωρίς αλλαγή είτε να προσαρμοστεί στη νέα συνθήκη.
+Η παρούσα εργασία εστιάζει σε ένα επιπλέον πρόβλημα: τι συμβαίνει όταν η σχέση μεταξύ καταστάσεων, ενεργειών, παρατηρήσεων και ανταμοιβών δεν παραμένει σταθερή μετά την αρχική μάθηση. Σε stationary setting η εμπειρία του παρελθόντος μπορεί να παραμένει έγκυρη. Σε non-stationary setting, ορισμένες εκτιμήσεις, πολιτικές ή learned models μπορεί να γίνουν stale και ο πράκτορας πρέπει είτε να διατηρήσει επαρκή απόδοση χωρίς αλλαγή είτε να προσαρμοστεί στη νέα συνθήκη.
 
 ## 2.2 Markov Decision Processes και Reinforcement Learning
 
@@ -18,7 +18,7 @@
 
 Στα temporal-difference methods, οι value estimates ενημερώνονται από bootstrapped targets που συνδυάζουν την άμεση ανταμοιβή με εκτίμηση μελλοντικής αξίας. Η δυνατότητα online ενημέρωσης χωρίς πλήρες μοντέλο του περιβάλλοντος καθιστά τις TD μεθόδους φυσικές baselines για μελέτη adaptation.
 
-Η κλασική θεωρία συνήθως προϋποθέτει stationary MDP dynamics ή άλλες συνθήκες που δεν ταυτίζονται με persistent αλλαγή κατά τη deployment φάση. Επομένως, η επιτυχής συμπεριφορά ενός αλγορίθμου σε stationary learning δεν συνεπάγεται αυτομάτως αποτελεσματική tracking συμπεριφορά μετά από environmental change.
+Η κλασική θεωρία συνήθως προϋποθέτει stationary dynamics ή άλλες συνθήκες που δεν ταυτίζονται με persistent αλλαγή κατά τη deployment φάση. Επομένως, η επιτυχής συμπεριφορά ενός αλγορίθμου σε stationary learning δεν συνεπάγεται αυτομάτως αποτελεσματική tracking συμπεριφορά μετά από environmental change.
 
 ## 2.3 Q-Learning και SARSA
 
@@ -44,7 +44,7 @@ Q(s_t,a_t) \leftarrow Q(s_t,a_t) + \alpha\left[r_{t+1}+\gamma Q(s_{t+1},a_{t+1})
 
 ## 2.4 Deep Q-Network
 
-Η Deep Q-Network (DQN) επεκτείνει την value-based λογική σε νευρωνική προσέγγιση της action-value function και έγινε βασικό σημείο αναφοράς του deep RL [@SRC-32A0866AF8]. Η DQN χρησιμοποιεί experience replay ώστε οι μεταβάσεις να αποθηκεύονται και να επαναχρησιμοποιούνται για updates, και target network ώστε οι bootstrapped targets να μεταβάλλονται πιο ελεγχόμενα.
+Η Deep Q-Network (DQN) επεκτείνει τη value-based λογική σε νευρωνική προσέγγιση της action-value function και αποτελεί βασικό σημείο αναφοράς του deep RL [@SRC-32A0866AF8]. Η DQN χρησιμοποιεί experience replay ώστε οι μεταβάσεις να αποθηκεύονται και να επαναχρησιμοποιούνται για updates, και target network ώστε οι bootstrapped targets να μεταβάλλονται πιο ελεγχόμενα.
 
 Το replay δεν είναι ουδέτερη λεπτομέρεια αποθήκευσης. Το μέγεθος του buffer, η συχνότητα sampling και ο λόγος πραγματικής εμπειρίας προς replay updates μπορούν να επηρεάσουν ουσιαστικά τη συμπεριφορά μάθησης [@SRC-CBA29E303A]. Αυτό έχει ιδιαίτερη σημασία σε non-stationary settings, επειδή ένα replay buffer μπορεί να περιλαμβάνει τόσο πρόσφατη post-change εμπειρία όσο και stale pre-change transitions.
 
@@ -56,17 +56,17 @@ Q(s_t,a_t) \leftarrow Q(s_t,a_t) + \alpha\left[r_{t+1}+\gamma Q(s_{t+1},a_{t+1})
 
 Σε αντίθεση με value-based tabular methods, η PPO μαθαίνει απευθείας parametrized policy και value function. Η observed performance εξαρτάται όχι μόνο από το high-level clipped objective αλλά και από implementation details όπως rollout length, minibatch size, αριθμό epochs, advantage estimation, optimizer settings και network architecture [@SRC-5D0E7E5BD7].
 
-Αυτό είναι σημαντικό για την ερμηνεία της παρούσας σύγκρισης. Η PPO δεν αντιμετωπίζεται ως «robust» επειδή περιορίζει το μέγεθος policy updates. Το clipping αφορά optimization stability και δεν αποτελεί εγγύηση απέναντι σε αλλαγή transition/action semantics. Η actual resilience μετράται από το ίδιο protocol που εφαρμόζεται στις υπόλοιπες μεθόδους.
+Αυτό είναι σημαντικό για την ερμηνεία της παρούσας σύγκρισης. Η PPO δεν αντιμετωπίζεται ως «robust» επειδή περιορίζει το μέγεθος policy updates. Το clipping αφορά optimization stability και δεν αποτελεί εγγύηση απέναντι σε αλλαγή transition/action semantics. Η actual resilience μετράται από το ίδιο frozen protocol που εφαρμόζεται στις υπόλοιπες μεθόδους.
 
-## 2.6 Dyna-Q και Dyna-Q+
+## 2.6 Dyna και Dyna-Q+
 
-Η Dyna αρχιτεκτονική συνδυάζει άμεση μάθηση από πραγματική εμπειρία με μάθηση μοντέλου και πρόσθετα planning updates πάνω σε model-generated experience [@SRC-F6BD3A6B18; @SRC-701E163AC8]. Η ιδέα είναι ότι μια πραγματική μετάβαση μπορεί να ενημερώσει τόσο την policy/value estimate όσο και ένα empirical model, το οποίο στη συνέχεια επιτρέπει επιπλέον backups χωρίς νέες πραγματικές αλληλεπιδράσεις.
+Η Dyna αρχιτεκτονική συνδυάζει άμεση μάθηση από πραγματική εμπειρία με μάθηση μοντέλου και πρόσθετα planning updates πάνω σε model-generated experience [@SRC-701E163AC8]. Μια πραγματική μετάβαση μπορεί να ενημερώσει τόσο τις action-value estimates όσο και ένα empirical model, το οποίο στη συνέχεια επιτρέπει επιπλέον backups χωρίς νέες πραγματικές αλληλεπιδράσεις.
 
 Σε changing environment, η model-based προσέγγιση δημιουργεί και μια ειδική ευπάθεια: αν η δυναμική αλλάξει, μέρος του learned model μπορεί να παραμείνει stale μέχρι να ξαναπαρατηρηθούν τα επηρεασμένα state-action pairs. Planning πάνω σε stale model μπορεί προσωρινά να ενισχύσει παλιές εκτιμήσεις [@SRC-701E163AC8].
 
-Η Dyna-Q+ εισάγει directed re-exploration με recency-based bonus για state-action pairs που δεν έχουν δοκιμαστεί πρόσφατα. Η λογική είναι ότι οι συνέπειες μιας παλιάς action μπορεί να έχουν αλλάξει, επομένως η συστηματική επανεξέταση παλιών ενεργειών βοηθά στην ανακάλυψη αλλαγής [@SRC-701E163AC8]. Το exploration bonus έχει όμως κόστος: η δοκιμή παλιών ή αβέβαιων ενεργειών μπορεί να μειώσει προσωρινά την άμεση ανταμοιβή.
+Η Dyna-Q+ εισάγει directed re-exploration με recency-based bonus για state-action pairs που δεν έχουν δοκιμαστεί πρόσφατα. Η λογική είναι ότι οι συνέπειες μιας παλιάς action μπορεί να έχουν αλλάξει, επομένως η συστηματική επανεξέταση παλιών ενεργειών μπορεί να βοηθήσει στην ανακάλυψη αλλαγής [@SRC-701E163AC8]. Το exploration bonus έχει όμως κόστος: η δοκιμή παλιών ή αβέβαιων ενεργειών μπορεί να μειώσει προσωρινά την άμεση ανταμοιβή.
 
-Η παρούσα μελέτη διατηρεί μόνο τη Dyna-Q+ στην τελική πεντάδα ως διακριτό planning/re-exploration comparator. Η ύπαρξη μοντέλου δεν θεωρείται θεωρητική εγγύηση adaptation superiority.
+Η παρούσα μελέτη διατηρεί τη Dyna-Q+ στην τελική πεντάδα ως planning/re-exploration comparator. Η ύπαρξη learned model δεν αντιμετωπίζεται ως θεωρητική εγγύηση adaptation superiority.
 
 ## 2.7 Non-stationarity και δυναμικές μεταβολές
 
@@ -108,7 +108,7 @@ Q(s_t,a_t) \leftarrow Q(s_t,a_t) + \alpha\left[r_{t+1}+\gamma Q(s_{t+1},a_{t+1})
 
 Στη model-based πλευρά, η εργασία *Partial Models for Building Adaptive Model-Based Reinforcement Learning Agents* δείχνει ότι ένα μονολιθικό learned model και ένα ενιαίο replay/history mechanism μπορούν να δυσκολέψουν local adaptation όταν τμήμα του environment distribution αλλάξει [@SRC-D38364B32C]. Οι συγγραφείς αναδεικνύουν ένα interference-versus-forgetting trade-off: μεγάλο history μπορεί να κρατά stale transitions, ενώ πολύ περιορισμένο history μπορεί να ξεχνά παλιά αλλά ακόμη έγκυρη γνώση. Η partial-model παρέμβασή τους βελτιώνει adaptation σε συγκεκριμένα deep Dyna-Q/PlaNet/Dreamer setups, αλλά δεν μπορεί να μεταφερθεί απευθείας στην tabular Dyna-Q+ της παρούσας εργασίας.
 
-Οι δύο πρόσφατες εργασίες χρησιμοποιούνται συνεπώς για να τοποθετήσουν τα αποτελέσματα μέσα σε ευρύτερη continual-adaptation συζήτηση, όχι για να δημιουργήσουν εκ των υστέρων explanation της observed συμπεριφοράς.
+Οι δύο πρόσφατες εργασίες χρησιμοποιούνται συνεπώς για να τοποθετήσουν τα αποτελέσματα μέσα σε ευρύτερη continual-adaptation συζήτηση, όχι για να δημιουργήσουν εκ των υστέρων causal explanation της observed συμπεριφοράς.
 
 ## 2.11 Empirical RL design και δίκαιη σύγκριση
 
@@ -120,9 +120,9 @@ Q(s_t,a_t) \leftarrow Q(s_t,a_t) + \alpha\left[r_{t+1}+\gamma Q(s_{t+1},a_{t+1})
 
 ## 2.12 Σχετικές εμπειρικές προσεγγίσεις και θέση της μελέτης
 
-Η υπάρχουσα βιβλιογραφία καλύπτει πολλές διαφορετικές όψεις του προβλήματος: standard TD control, deep value learning, policy optimization, model-based planning, continual RL, plasticity/forgetting, replay management και local adaptation. Ωστόσο, οι μελέτες συνήθως διαφέρουν σε περιβάλλοντα, information assumptions, budgets και στόχους.
+Η υπάρχουσα βιβλιογραφία καλύπτει πολλές διαφορετικές όψεις του προβλήματος: standard TD control, deep value learning, policy optimization, model-based planning, continual RL, plasticity/forgetting, replay management και local adaptation. Ωστόσο, οι μελέτες διαφέρουν σε environments, information assumptions, budgets και στόχους, οπότε οι αποτελεσματικές συγκρίσεις απαιτούν ρητή αναφορά των transfer boundaries.
 
-Η παρούσα εργασία δεν επιχειρεί να αναπαράγει ένα μεγάλο continual-RL benchmark ούτε να καλύψει όλες τις algorithm families. Αντίθετα, επιλέγει πέντε μηχανιστικά διαφορετικές και υλοποιήσιμες methods ώστε να εξεταστούν κάτω από **ένα κοινό, αυστηρά ελεγχόμενο protocol**:
+Η παρούσα εργασία δεν επιχειρεί να αναπαράγει ένα μεγάλο continual-RL benchmark ούτε να καλύψει όλες τις algorithm families. Επιλέγει πέντε μηχανιστικά διαφορετικές και υλοποιήσιμες methods ώστε να εξεταστούν κάτω από **ένα κοινό, αυστηρά ελεγχόμενο protocol**:
 
 - off-policy tabular TD control,
 - on-policy tabular TD control,
@@ -130,12 +130,12 @@ Q(s_t,a_t) \leftarrow Q(s_t,a_t) + \alpha\left[r_{t+1}+\gamma Q(s_{t+1},a_{t+1})
 - on-policy policy-gradient optimization,
 - learned-model planning με directed re-exploration.
 
-Η προσέγγιση αυτή επιτρέπει να διαχωριστούν τρία ερωτήματα που συχνά συμπλέκονται: πόσο γρήγορα μαθαίνει ένας agent nominally, αν continued learning μειώνει aggregate disturbance loss και αν η policy επανέρχεται σταθερά κοντά στην matched nominal adaptive trajectory.
+Η προσέγγιση αυτή επιτρέπει να διαχωριστούν τρία ερωτήματα που συχνά συμπλέκονται: πόσο αποτελεσματικά μαθαίνει ένας agent nominally, αν continued learning μειώνει aggregate disturbance loss και αν η policy επανέρχεται σταθερά κοντά στην matched nominal adaptive trajectory.
 
 ## 2.13 Ερευνητικό κενό και θέση της παρούσας εργασίας
 
-Το ερευνητικό κενό που αντιμετωπίζει η εργασία δεν είναι η απουσία αλγορίθμων για non-stationary RL. Αντίθετα, η βιβλιογραφία διαθέτει πολλές specialized λύσεις. Το κενό που εξετάζεται είναι πιο συγκεκριμένο: **πώς συμπεριφέρονται διαφορετικοί standard RL mechanisms όταν αξιολογούνται υπό κοινό information contract, κοινό actual-interaction budget και matched hidden-change deployment, με χωριστή μέτρηση adaptation benefit και recovery;**
+Το ερευνητικό κενό που αντιμετωπίζει η εργασία δεν είναι η απουσία αλγορίθμων για non-stationary RL. Η βιβλιογραφία διαθέτει πολλές specialized λύσεις. Το ερώτημα της παρούσας μελέτης είναι πιο συγκεκριμένο: **πώς συμπεριφέρονται διαφορετικοί standard RL mechanisms όταν αξιολογούνται υπό κοινό information contract, κοινό actual-interaction budget και matched hidden-change deployment, με χωριστή μέτρηση adaptation benefit και recovery;**
 
-Η εργασία τοποθετείται ανάμεσα σε δύο άκρα. Από τη μία, οι stationary benchmark comparisons δεν εξετάζουν ρητά τη post-change behavior. Από την άλλη, specialized continual-RL systems συχνά εισάγουν additional context, detectors, memory rules ή architectural priors. Η παρούσα μελέτη κρατά τους πέντε methods κοντά στη standard operation τους και μεταβάλλει ελεγχόμενα το environment contract μετά από exact common checkpoint.
+Η εργασία τοποθετείται ανάμεσα σε δύο άκρα. Από τη μία, stationary benchmark comparisons δεν εξετάζουν ρητά τη post-change behavior. Από την άλλη, specialized continual-RL systems συχνά εισάγουν additional context, detectors, memory rules ή architectural priors. Η παρούσα μελέτη κρατά τους πέντε methods κοντά στη standard operation τους και μεταβάλλει ελεγχόμενα το environment contract μετά από exact scientific checkpoint.
 
 Με αυτόν τον τρόπο, τα τελικά αποτελέσματα μπορούν να διαβαστούν ως controlled baseline για resilience/adaptation mechanisms και όχι ως ανταγωνισμός όλων των σύγχρονων continual-RL τεχνικών. Η θέση αυτή καθορίζει και την ερμηνεία των επόμενων κεφαλαίων: η εργασία αξιολογεί συγκεκριμένα mechanisms υπό συγκεκριμένο contract και διατηρεί ρητά τα όρια μεταφοράς σε broader settings.
