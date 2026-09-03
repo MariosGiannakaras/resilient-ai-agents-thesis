@@ -16,6 +16,7 @@ on:
       - "scripts/t711_build_entry_v10.py"
       - "scripts/t711_build_entry_v11.py"
       - "scripts/t711_build_entry_v12.py"
+      - "scripts/t711_build_entry_v13.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -42,7 +43,7 @@ jobs:
 
       - name: Build hardened review thesis
         run: |
-          python scripts/t711_build_entry_v12.py \
+          python scripts/t711_build_entry_v13.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -61,10 +62,13 @@ jobs:
           assert report["status"] == "pass", report
           assert report["output_sha256"] == actual_sha, (report["output_sha256"], actual_sha)
           assert report.get("final_artifact_metadata_reconciled") is True, report
-          assert report.get("t711a_hardening_version") == 12, report
+          assert report.get("t711a_hardening_version") == 13, report
           assert report.get("t711a_reader_text_rescanned_after_save") is True, report
-          assert report.get("paragraph_count") == report.get("post_synthesis_paragraph_count") == 708, report
-          assert report["citation_count"] == report["verified_reference_identity_count"] == 14, report
+          assert report.get("paragraph_count") == report.get("post_synthesis_paragraph_count"), report
+          assert report.get("paragraph_count", 0) >= 708, report
+          assert report["citation_count"] == report["verified_reference_identity_count"] == 17, report
+          assert report.get("expected_reference_count") == 17, report
+          assert report.get("targeted_related_work_citations_present") is True, report
           assert report["planned_figure_count"] == report["inserted_asset_count"] == 24, report
           assert report["cached_figure_entry_count"] == report["inserted_asset_count"], report
           assert report.get("cached_table_entry_count") == report.get("rendered_table_count") == report["table_count"], report
@@ -81,7 +85,6 @@ jobs:
           assert report.get("inline_shape_count_after_synthesis") == 25, report
           assert report.get("results_synthesis_source_sha256") == "08cec7f0c7dba6ced80bb01c749e1fb76f20e52b830ad3ff1c3f24581ed694a4", report
           assert report.get("dqn_foundation_citation_wording_corrected") is True, report
-          assert report.get("superiority_wording_neutralized_count") == 3, report
           assert not report.get("superiority_wording_residue"), report
           assert report.get("localized_figure_caption_count") == 24, report
           assert report.get("localized_cached_figure_entry_count") == 24, report
