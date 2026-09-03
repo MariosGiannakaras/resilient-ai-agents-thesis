@@ -2,6 +2,14 @@
 
 Record only material changes to the project source of truth. Detailed commit-by-commit history remains in Git; accepted decisions remain indexed in `docs/decisions/DECISION_LOG.md`.
 
+## 2026-09-03 — T-702 major-writing-gate bibliography refresh completed
+
+- Completed the dated final-writing literature freshness review in canonical `MariosGiannakaras/ThesisBibliography` without reopening frozen protocol-v2.1 science or accepted final evidence/results/assets.
+- Promoted two non-redundant 2025 peer-reviewed supporting sources through normal source/analysis/evidence/selection governance: `SRC-6F4F8BE003` and `SRC-D38364B32C`; the review explicitly found no basis for protocol amendment, re-analysis, new methods/roots, changed estimands or changed recovery thresholds.
+- Froze immutable consumer checkout `ada0d1aec7511098fd12610ae9e5abe7aea875cd`, with complete-corpus source commit `c999dbe272baa081d3666254655aeeec17549c1f` and citation-ready source commit `84d62ec3eb18e1d3565625bc02c289131282ea27`.
+- Synchronized the generated corpus into `research/bibliography/` through the controlled read-only consumer workflow and thesis PR #130. Integrated validation passed at 599 canonical sources, 123 citation-ready sources, 19 research materials, 281 indexed originals and 1,634 integrity-covered corpus files; trust-aware thesis-reference validation reports 40 references, 38 citation-ready and 2 research-material.
+- Reconciled WP7 state so `T-702` is COMPLETE and `T-710` complete Greek thesis drafting is the next dependency-valid READY task.
+
 ## 2026-09-02 — T-612 predeclared final analysis completed
 
 - Revalidated the exact T-611 freeze, accepted replacement lineage and permanent exclusion of the historical 216-job attempt before scientific interpretation.
