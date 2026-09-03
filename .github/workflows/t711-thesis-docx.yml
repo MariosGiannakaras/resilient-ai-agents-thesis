@@ -11,6 +11,7 @@ on:
       - "scripts/t711_build_entry_v5.py"
       - "scripts/t711_build_entry_v6.py"
       - "scripts/t711_build_entry_v7.py"
+      - "scripts/t711_build_entry_v8.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -37,7 +38,7 @@ jobs:
 
       - name: Build review-ready thesis
         run: |
-          python scripts/t711_build_entry_v7.py \
+          python scripts/t711_build_entry_v8.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -52,6 +53,9 @@ jobs:
           assert report["planned_figure_count"] == report["inserted_asset_count"] == 24, report
           assert report["cached_figure_entry_count"] == report["inserted_asset_count"], report
           assert report.get("cached_table_entry_count") == report.get("rendered_table_count") == report["table_count"], report
+          assert report.get("presentation_repaired_assets") == ["FIG-METHOD-027-RQ-MAP"], report
+          assert report.get("registered_asset_bytes_modified") is False, report
+          assert report.get("scientific_values_modified") is False, report
           assert not report["unresolved_src_ids"], report
           assert not report["contains_drafting_notes"], report
           assert not report.get("corrupt_math_tokens"), report
