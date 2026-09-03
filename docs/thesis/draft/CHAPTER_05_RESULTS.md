@@ -1,0 +1,193 @@
+# Κεφάλαιο 5 — Πειραματικά Αποτελέσματα
+
+## 5.1 Όρια της παρουσίασης των αποτελεσμάτων
+
+Το παρόν κεφάλαιο παρουσιάζει αποκλειστικά τα αποτελέσματα της προδηλωμένης ανάλυσης του protocol-v2.1 πάνω στο evidence set που επικυρώθηκε και πάγωσε στο T-611. Η τελική ανάλυση χρησιμοποιεί ως ανεξάρτητη μονάδα τη root, συνδυάζει τις δύο held-out layouts με ίσο βάρος μέσα σε κάθε root και συνοδεύει τις scalar summaries με pointwise 95% Student-t intervals χρησιμοποιώντας το πραγματικό πλήθος ανεξάρτητων roots.
+
+Όλες οι προγραμματισμένες μονάδες ήταν διαθέσιμες για τα RQ1, RQ2 και RQ3. Η accepted replacement execution ολοκλήρωσε 603/603 jobs και παρήγαγε 600 επιστημονικά run bundles. Η αρχική αποτυχημένη προσπάθεια των 216 jobs δεν αποτέλεσε input στην τελική ανάλυση. Η canonical ανάλυση και οι 12 machine-readable exports αναπαράχθηκαν δύο φορές byte-for-byte από το frozen evidence.
+
+Οι άμεσες συγκρίσεις μεταξύ μεθόδων αναφέρονται ως root-paired διαφορές A−B μετά την equal-layout reduction. Τα intervals είναι pointwise estimation intervals και δεν συνιστούν simultaneous inference. Δεν έχει οριστεί οικογένεια p-values ούτε σύνθετος δείκτης συνολικής κατάταξης. Συνεπώς, το κεφάλαιο αποφεύγει τη γλώσσα «καθολικού νικητή» ή «στατιστικά σημαντικής υπεροχής» πέρα από όσα υποστηρίζει το προδηλωμένο analysis contract.
+
+## 5.2 RQ1 — Ονομαστική μάθηση
+
+Το πρώτο ερευνητικό ερώτημα εξετάζει αφενός το τελικό επίπεδο ονομαστικής επίδοσης και αφετέρου την αποτελεσματικότητα μάθησης κατά μήκος του κοινού interaction budget.
+
+### 5.2.1 Τελική ονομαστική επίδοση
+
+Στο τελικό probe των 8.192 interactions, οι Q-Learning, SARSA και Dyna-Q+ κατέληξαν στην ίδια root-mean επίδοση, -0,100. Και για τις τρεις μεθόδους δεν παρατηρήθηκε μεταξύ-root διακύμανση στο τελικό probe: n=12 και 95% CI [-0,100, -0,100].
+
+Η DQN και η PPO είχαν χαμηλότερη μέση τελική επίδοση, -1,862. Για τη DQN το 95% CI ήταν [-2,988, -0,737] με root SD 1,771. Για την PPO το interval ήταν [-3,156, -0,569] με root SD 2,035. Επομένως, οι δύο deep-RL μέθοδοι εμφάνισαν όχι μόνο χαμηλότερη μέση τελική επίδοση μέσα στο παγωμένο budget, αλλά και μεγαλύτερη διακύμανση μεταξύ roots.
+
+Οι paired τελικές συγκρίσεις μεταξύ Q-Learning, SARSA και Dyna-Q+ ήταν ακριβώς μηδενικές. Κάθε μία από τις τρεις υπερείχε της DQN κατά 1,762 return units όταν η διαφορά εκφράζεται ως method-minus-DQN, με paired interval [0,637, 2,888]. Η αντίστοιχη διαφορά έναντι PPO ήταν επίσης 1,762, με interval [0,469, 3,056]. Η DQN έναντι PPO είχε μέση paired διαφορά 0,000 και ευρύ interval [-2,112, 2,112].
+
+Το αποτέλεσμα αυτό δείχνει ότι η τελική τιμή από μόνη της δεν αρκεί για να διαχωρίσει τις τρεις tabular/planning μεθόδους. Για αυτό εξετάζεται ξεχωριστά το interaction-axis time-average.
+
+**Προτεινόμενη T-711 τοποθέτηση:** `FIG-RQ1-002-FINAL` και ο αντίστοιχος five-method final-value πίνακας.
+
+### 5.2.2 Αποτελεσματικότητα μάθησης κατά μήκος του budget
+
+Το time-average estimand διαφοροποίησε σαφέστερα τις μεθόδους. Η Dyna-Q+ είχε την υψηλότερη μέση τιμή, -0,485, με 95% CI [-0,512, -0,458] και SD 0,042. Η SARSA ακολούθησε με -1,611, CI [-1,792, -1,430] και SD 0,285, ενώ η Q-Learning είχε -1,628, CI [-1,831, -1,425] και SD 0,320.
+
+Η DQN και η PPO είχαν χαμηλότερες time-average τιμές. Η DQN παρουσίασε -2,862 με interval [-3,811, -1,914] και SD 1,493. Η PPO παρουσίασε -2,904 με interval [-3,965, -1,844] και SD 1,669. Και εδώ οι deep-RL μέθοδοι είχαν μεγαλύτερη heterogeneity μεταξύ roots.
+
+Στις root-paired συγκρίσεις time-average, η Dyna-Q+ υπερείχε της Q-Learning κατά 1,143 [0,936, 1,350], της SARSA κατά 1,126 [0,949, 1,303], της DQN κατά 2,377 [1,441, 3,314] και της PPO κατά 2,419 [1,352, 3,486]. Η διαφορά Q-Learning έναντι SARSA ήταν -0,017 [-0,294, 0,260], ενώ η DQN έναντι PPO ήταν 0,042 [-1,763, 1,847].
+
+Συνεπώς, οι Q-Learning, SARSA και Dyna-Q+ κατέληξαν στο ίδιο τελικό ονομαστικό επίπεδο, αλλά η Dyna-Q+ έφτασε σε υψηλές αποδόσεις νωρίτερα μέσα στο διαθέσιμο interaction budget. Η Q-Learning και η SARSA παρουσίασαν παρόμοια learning efficiency. Η DQN και η PPO δεν έφτασαν με την ίδια συνέπεια στο τελικό επίπεδο των τριών tabular/planning μεθόδων εντός του συγκεκριμένου budget.
+
+**Προτεινόμενη T-711 τοποθέτηση:** `FIG-RQ1-003-TIME-AVERAGE` και, σε appendix ή supporting section, `FIG-RQ1-004-FINAL-ROOTS`, `FIG-RQ1-005-TIME-ROOTS` και `FIG-RQ1-007-CONTRASTS`.
+
+## 5.3 RQ2 — Ανθεκτικότητα και όφελος προσαρμογής
+
+Το RQ2 εξετάζει αν η συνέχιση της μάθησης μειώνει τη disturbance-associated απώλεια σε σχέση με frozen deployment. Θετική τιμή adaptation benefit σημαίνει ότι το Adaptive καθεστώς μείωσε την απώλεια. Αρνητική τιμή σημαίνει ότι, στο συγκεκριμένο estimand, η online προσαρμογή συνδέθηκε με μεγαλύτερη σχετική απώλεια.
+
+### 5.3.1 Συνολική εικόνα ανά condition
+
+Οι μέσες τιμές adaptation benefit και τα pointwise 95% intervals είναι:
+
+| Condition | DQN | Dyna-Q+ | PPO | Q-Learning | SARSA |
+|---|---:|---:|---:|---:|---:|
+| Action-remap cycle | 6,623 [3,798, 9,448] | 26,102 [25,344, 26,860] | 0,060 [-1,552, 1,673] | 32,269 [28,910, 35,628] | 31,127 [28,796, 33,458] |
+| Action-remap swap | 1,723 [-3,524, 6,969] | 9,712 [6,500, 12,925] | -0,515 [-1,864, 0,835] | 22,665 [18,078, 27,251] | 13,785 [9,904, 17,667] |
+| Action failure 0,15 | -0,194 [-0,770, 0,382] | 0,117 [-0,227, 0,460] | -1,108 [-2,914, 0,697] | -0,175 [-0,451, 0,101] | -0,485 [-1,209, 0,238] |
+| Observation corruption 0,05 | 0,323 [-0,719, 1,365] | -0,387 [-0,816, 0,041] | -0,498 [-1,276, 0,280] | -2,698 [-3,880, -1,516] | -3,165 [-4,917, -1,412] |
+
+Κάθε cell βασίζεται σε n=12 roots. Οι μεγαλύτερες θετικές τιμές εμφανίζονται στις persistent action-remap conditions, ιδιαίτερα για Q-Learning, SARSA και Dyna-Q+. Οι δύο ηπιότερες stochastic conditions έχουν σαφώς μικρότερες απόλυτες τιμές.
+
+Η canonical ανάλυση διατηρεί ξεχωριστά Frozen loss και Adaptive loss. Στα δύο action remaps, οι Frozen losses ήταν μεγάλες για όλες τις μεθόδους, με means από 28,585 έως 52,921. Με ενεργή online μάθηση, οι Adaptive losses μειώθηκαν έντονα για Q-Learning, SARSA και Dyna-Q+, παρέμειναν υψηλές για PPO και μειώθηκαν πιο περιορισμένα και με μεγαλύτερη μεταβλητότητα για DQN.
+
+**Προτεινόμενη T-711 τοποθέτηση:** `FIG-RQ2-008-ADAPTATION` ως κύριο σχήμα και `FIG-RQ2-009-LOSSES` για τη διάκριση Frozen/Adaptive loss από το adaptation benefit.
+
+### 5.3.2 Persistent action-remap cycle
+
+Στο cycle remap, η Q-Learning είχε mean adaptation benefit 32,269 [28,910, 35,628], η SARSA 31,127 [28,796, 33,458] και η Dyna-Q+ 26,102 [25,344, 26,860]. Η DQN είχε 6,623 [3,798, 9,448], ενώ η PPO 0,060 [-1,552, 1,673].
+
+Η paired διαφορά Q-Learning−SARSA ήταν 1,142 [-3,584, 5,867], άρα οι δύο μέθοδοι είχαν παρόμοιο aggregate adaptation benefit σε αυτή την condition. Και οι δύο εμφάνισαν μεγαλύτερο benefit από τη Dyna-Q+. Η Dyna-Q+ με τη σειρά της εμφάνισε μεγαλύτερο benefit από DQN και PPO.
+
+Το αποτέλεσμα δείχνει ισχυρή μείωση της disturbance-associated απώλειας μέσω συνεχιζόμενης μάθησης για τις τρεις tabular/planning μεθόδους. Η DQN επωφελήθηκε σε μικρότερο βαθμό, ενώ η PPO δεν παρουσίασε ουσιαστικό aggregate benefit με το interval να περιλαμβάνει το μηδέν.
+
+### 5.3.3 Persistent action-remap swap
+
+Στο swap remap, η Q-Learning είχε adaptation benefit 22,665 [18,078, 27,251], η SARSA 13,785 [9,904, 17,667] και η Dyna-Q+ 9,712 [6,500, 12,925]. Η DQN είχε 1,723 [-3,524, 6,969] και η PPO -0,515 [-1,864, 0,835].
+
+Η Q-Learning υπερείχε της SARSA κατά 8,879 [3,432, 14,327]. Η SARSA υπερείχε της PPO κατά 14,300 [10,146, 18,454]. Η διαφορά Dyna-Q+−SARSA ήταν -4,073 [-9,528, 1,382] και παρέμεινε αβέβαιη. Η DQN−PPO ήταν 2,237 [-3,639, 8,114], επίσης με interval που περιλαμβάνει το μηδέν.
+
+Το swap remap διαφοροποίησε περισσότερο τις tabular μεθόδους από το cycle. Η Q-Learning είχε τη μεγαλύτερη aggregate μείωση της disturbance-associated απώλειας, ενώ η SARSA και η Dyna-Q+ διατήρησαν θετικό benefit. Η DQN είχε μικρό και αβέβαιο mean benefit και η PPO mean ελαφρώς αρνητικό με interval γύρω από το μηδέν.
+
+### 5.3.4 Action failure 15%
+
+Στην condition action failure 0,15, οι μέσες τιμές adaptation benefit ήταν κοντά στο μηδέν: DQN -0,194, Dyna-Q+ 0,117, PPO -1,108, Q-Learning -0,175 και SARSA -0,485. Όλα τα pointwise intervals περιλάμβαναν το μηδέν.
+
+Καμία direct adaptation-benefit σύγκριση για αυτή την condition δεν είχε interval εξ ολοκλήρου στη μία πλευρά του μηδενός. Επομένως, στο συγκεκριμένο testbed και με αυτή την πιθανότητα αποτυχίας ενέργειας, δεν προκύπτει καθαρό aggregate πλεονέκτημα της συνεχιζόμενης μάθησης έναντι frozen deployment.
+
+Το αποτέλεσμα αυτό είναι σημαντικό επειδή δείχνει ότι η online προσαρμογή δεν είναι εγγενώς ωφέλιμη σε κάθε είδος uncertainty. Η επίδρασή της εξαρτάται από τον μηχανισμό που δημιουργεί τη διαφορά μεταξύ nominal και disturbed behavior.
+
+### 5.3.5 Observation corruption 5%
+
+Στην observation corruption condition, η DQN είχε mean adaptation benefit 0,323 [-0,719, 1,365], η Dyna-Q+ -0,387 [-0,816, 0,041] και η PPO -0,498 [-1,276, 0,280]. Η Q-Learning είχε -2,698 [-3,880, -1,516] και η SARSA -3,165 [-4,917, -1,412].
+
+Για Q-Learning και SARSA, η online μάθηση συνδέθηκε με μεγαλύτερη disturbance-associated απώλεια σε αυτό το estimand. Αρκετές paired συγκρίσεις τους έναντι DQN, Dyna-Q+ και PPO ήταν επίσης πιο αρνητικές. Η Q-Learning−SARSA διαφορά ήταν 0,467 [-1,492, 2,425], επομένως δεν υπήρχε σαφής διαχωρισμός μεταξύ των δύο tabular TD methods ως προς το adaptation benefit στην observation corruption.
+
+Το αποτέλεσμα υπογραμμίζει ότι η δυνατότητα μιας μεθόδου να συνεχίζει να μαθαίνει μπορεί να επιτρέψει προσαρμογή σε persistent dynamics change αλλά μπορεί επίσης να οδηγήσει σε επιδείνωση όταν το εισερχόμενο σήμα παρατήρησης είναι περιστασιακά λανθασμένο.
+
+### 5.3.6 Σύνοψη RQ2
+
+Το RQ2 δεν υποστηρίζει ενιαία θετική επίδραση της online adaptation σε όλες τις conditions. Το κύριο μοτίβο είναι condition-dependent:
+
+- μεγάλη και συνεπής θετική επίδραση για Q-Learning και SARSA στα persistent action remaps,
+- θετική αλλά μικρότερη επίδραση για Dyna-Q+ στα remaps,
+- μικρότερη/αβέβαιη επίδραση για DQN,
+- σχεδόν μηδενική aggregate επίδραση της PPO στα remaps,
+- χωρίς καθαρό aggregate benefit στην action-failure condition,
+- αρνητικό adaptation benefit για Q-Learning και SARSA στην observation corruption.
+
+**Προτεινόμενη T-711 supporting/appendix τοποθέτηση:** `FIG-RQ2-010-CONDITIONS`, `FIG-RQ2-012-BENEFIT-ROOTS`, `FIG-RQ2-013-HEATMAP`, `FIG-RQ2-014-CONTRASTS` και `FIG-RQ2-015-PAIRED-ROOTS`.
+
+## 5.4 RQ3 — Ανάκαμψη μετά από persistent action remapping
+
+Το RQ3 χρησιμοποιεί την primary tolerance 0,10 και απαιτεί δύο συνεχόμενα in-tolerance 32-interaction windows. Οι roots που δεν ικανοποιούν το κριτήριο μέχρι τα 256 interactions παραμένουν right-censored με `recovery_time=null`.
+
+### 5.4.1 Cycle remap
+
+Στο cycle remap, οι recovered proportions ήταν:
+
+- DQN: 2/12 = 0,167,
+- Dyna-Q+: 12/12 = 1,000,
+- PPO: 1/12 = 0,083,
+- Q-Learning: 12/12 = 1,000,
+- SARSA: 12/12 = 1,000.
+
+Για τη Dyna-Q+, ο conditional recovery time ήταν 176,0 interactions [155,7, 196,3], n=12. Για την Q-Learning ήταν 98,7 [72,0, 125,3], n=12 και για τη SARSA 136,0 [111,3, 160,7], n=12.
+
+Η DQN είχε conditional recovery time 80,0 interactions, αλλά μόνο n=2 recovered roots και πολύ ευρύ interval [-529,9, 689,9]. Η PPO είχε μία recovered root με recovery time 128,0 και, ορθά, δεν υπολογίστηκε interval για n=1. Οι αριθμοί αυτοί δεν σημαίνουν ότι DQN ή PPO ανακάμπτουν γρηγορότερα συνολικά: η conditional summary αποκλείει τις censored roots.
+
+Ο restricted delay through 256 ήταν 226,7 [181,2, 272,1] για DQN, 176,0 [155,7, 196,3] για Dyna-Q+, 245,3 [221,9, 268,8] για PPO, 98,7 [72,0, 125,3] για Q-Learning και 136,0 [111,3, 160,7] για SARSA.
+
+Στις paired restricted-delay συγκρίσεις, η Q-Learning είχε 37,3 λιγότερα interactions από τη SARSA [-64,5, -10,1], 77,3 λιγότερα από Dyna-Q+ [-106,7, -48,0], 128,0 λιγότερα από DQN [-168,7, -87,3] και 146,7 λιγότερα από PPO [-185,9, -107,5]. Η SARSA ήταν 40,0 interactions χαμηλότερα από Dyna-Q+ [-64,7, -15,3].
+
+Συνεπώς, στο cycle remap οι Q-Learning και SARSA συνδύασαν πλήρη recovery incidence με χαμηλότερο restricted delay, ενώ η Dyna-Q+ ανακτήθηκε σε όλες τις roots αλλά αργότερα. DQN και PPO παρουσίασαν συχνή μη ανάκαμψη εντός του horizon.
+
+### 5.4.2 Swap remap
+
+Στο swap remap, οι recovered proportions ήταν:
+
+- DQN: 8/12 = 0,667,
+- Dyna-Q+: 8/12 = 0,667,
+- PPO: 4/12 = 0,333,
+- Q-Learning: 12/12 = 1,000,
+- SARSA: 12/12 = 1,000.
+
+Ο conditional recovery time ήταν 68,0 [11,8, 124,2], n=8 για DQN, 72,0 [8,4, 135,6], n=8 για Dyna-Q+, 56,0 [-20,4, 132,4], n=4 για PPO, 106,7 [63,0, 150,3], n=12 για Q-Learning και 98,7 [76,6, 120,7], n=12 για SARSA.
+
+Και εδώ η conditional summary πρέπει να ερμηνευθεί μαζί με το recovery proportion. Το φαινομενικά χαμηλότερο conditional mean της PPO προκύπτει από τις τέσσερις roots που ανακτήθηκαν και δεν περιλαμβάνει τις οκτώ censored roots.
+
+Ο restricted delay ήταν 130,7 [62,7, 198,6] για DQN, 133,3 [64,1, 202,6] για Dyna-Q+, 189,3 [124,8, 253,9] για PPO, 106,7 [63,0, 150,3] για Q-Learning και 98,7 [76,6, 120,7] για SARSA.
+
+Οι περισσότερες paired restricted-delay συγκρίσεις είχαν ευρεία intervals που περιλάμβαναν το μηδέν. Η σαφέστερη διαφορά ήταν SARSA έναντι PPO: η SARSA είχε κατά 90,7 interactions χαμηλότερο restricted delay [-161,5, -19,8]. Η Q-Learning έναντι SARSA ήταν 8,0 [-32,8, 48,8].
+
+Στο swap remap, συνεπώς, Q-Learning και SARSA είχαν την πιο συνεπή recovery incidence, αλλά ο restricted delay τους δεν διαχωρίστηκε καθαρά. DQN και Dyna-Q+ ανακτήθηκαν στις δύο τρίτες των roots, ενώ η PPO μόνο στο ένα τρίτο.
+
+**Προτεινόμενη T-711 κύρια τοποθέτηση για RQ3:** `FIG-RQ3-016-TRAJECTORIES`, `FIG-RQ3-017-RECOVERED` και `FIG-RQ3-018-RESTRICTED`. Το `FIG-RQ3-019-CONDITIONAL` πρέπει να συνοδεύεται πάντοτε από σαφή αναφορά του recovered n.
+
+### 5.4.3 Ευαισθησία στην ανοχή ανάκαμψης
+
+Η recovered incidence εξετάστηκε επίσης στα προκαθορισμένα thresholds 0,05 και 0,20. Ο αριθμός recovered roots στα thresholds 0,05 / 0,10 / 0,20 ήταν:
+
+| Μέθοδος | Cycle | Swap |
+|---|---:|---:|
+| DQN | 0 / 2 / 12 | 2 / 8 / 12 |
+| Dyna-Q+ | 0 / 12 / 12 | 0 / 8 / 12 |
+| PPO | 0 / 1 / 6 | 2 / 4 / 7 |
+| Q-Learning | 11 / 12 / 12 | 10 / 12 / 12 |
+| SARSA | 8 / 12 / 12 | 5 / 12 / 12 |
+
+Η γενική εικόνα παραμένει ότι Q-Learning και SARSA ανακτούν πιο σταθερά, ιδιαίτερα στο αυστηρό threshold. Η ακριβής recovery incidence όμως είναι threshold-sensitive για DQN, Dyna-Q+ και PPO. Η Dyna-Q+, για παράδειγμα, έχει 0/12 recovered roots στο cycle όταν η ανοχή είναι 0,05, αλλά 12/12 στο primary 0,10. Η ευαισθησία αυτή αποτελεί ιδιότητα του operational definition και όχι λόγο αλλαγής της κύριας ανοχής μετά την παρατήρηση των αποτελεσμάτων.
+
+**Προτεινόμενη T-711 τοποθέτηση:** `FIG-RQ3-023-SENSITIVITY`; appendix support από `FIG-RQ3-021-ROOT-TRAJECTORIES`, `FIG-RQ3-022-CENSORING`, `FIG-RQ3-024-CONTRASTS` και `FIG-RQ3-025-TIMELINE`.
+
+### 5.4.4 Σύνοψη RQ3
+
+Στο primary tolerance 0,10, οι Q-Learning και SARSA ανακτήθηκαν και στις 12 roots και για τα δύο persistent action remaps. Η Q-Learning είχε χαμηλότερο restricted delay από τη SARSA στο cycle remap, ενώ στο swap οι δύο μέθοδοι δεν διαχωρίστηκαν καθαρά.
+
+Η Dyna-Q+ ανακτήθηκε σε όλες τις cycle roots αλλά με υψηλότερο delay από τις δύο tabular temporal-difference methods. Στο swap είχε 8/12 recovered roots. Η DQN είχε 2/12 recoveries στο cycle και 8/12 στο swap. Η PPO είχε τις χαμηλότερες recovery incidences, 1/12 και 4/12 αντίστοιχα.
+
+Το RQ3 επομένως αναδεικνύει πληροφορία που δεν είναι ορατή μόνο από το aggregate adaptation benefit του RQ2. Μια μέθοδος μπορεί να εμφανίζει θετικό συνολικό adaptation benefit αλλά να ανακτά αργά ή να αποτυγχάνει να ικανοποιήσει το stable recovery criterion σε σημαντικό ποσοστό roots.
+
+## 5.5 Συγκριτική σύνθεση των τριών ερευνητικών ερωτημάτων
+
+Τα τρία ερευνητικά ερωτήματα περιγράφουν διαφορετικές διαστάσεις συμπεριφοράς.
+
+Στο RQ1, Q-Learning, SARSA και Dyna-Q+ κατέληξαν στην ίδια τελική ονομαστική επίδοση, αλλά η Dyna-Q+ είχε σημαντικά υψηλότερη time-average επίδοση κατά μήκος του training budget. Η DQN και η PPO είχαν χαμηλότερη τελική και time-average επίδοση και μεγαλύτερη μεταξύ-root διακύμανση στο συγκεκριμένο controlled task και budget.
+
+Στο RQ2, η online adaptation ήταν ιδιαίτερα ωφέλιμη για Q-Learning και SARSA στα persistent action remaps και επίσης ωφέλιμη για Dyna-Q+, αλλά δεν ήταν καθολικά προστατευτική. Στην action failure condition δεν υπήρχε καθαρό aggregate benefit, ενώ στην observation corruption η Q-Learning και η SARSA είχαν αρνητικό adaptation benefit.
+
+Στο RQ3, Q-Learning και SARSA είχαν την πιο συνεπή stable recovery στα δύο action remaps. Η Dyna-Q+ είχε πλήρη recovery incidence στο cycle αλλά όχι στο swap, και η DQN/PPO είχαν συχνότερη right-censoring. Η recovery incidence και το timing ήταν ευαίσθητα στον προκαθορισμένο tolerance ορισμό, ιδιαίτερα για τις μεθόδους με ενδιάμεση συμπεριφορά.
+
+Η σύνθεση αυτή δεν δημιουργεί ενιαία κατάταξη. Η Dyna-Q+ είναι η ισχυρότερη ως προς time-average nominal learning, ενώ Q-Learning και SARSA έχουν την πιο συνεπή recovery incidence στις persistent remap conditions. Η ίδια η online adaptation μπορεί να είναι ωφέλιμη, ουδέτερη ή επιβλαβής ανάλογα με τον disturbance mechanism. Αυτές οι διαφοροποιήσεις αποτελούν το αντικείμενο της ερμηνείας στο επόμενο κεφάλαιο.
+
+## 5.6 Περιορισμός των συμπερασμάτων του κεφαλαίου
+
+Τα αποτελέσματα αφορούν ένα ελεγχόμενο GridWorld task, δύο held-out layouts, 12 ανεξάρτητες roots, ένα συγκεκριμένο interaction budget και τις πέντε παγωμένες implementations/configurations. Δεν τεκμηριώνουν καθολική υπεροχή οικογένειας αλγορίθμων σε άλλα περιβάλλοντα ή budgets.
+
+Τα layouts, episodes και recovery windows δεν αποτελούν ανεξάρτητα replicates. Η inference γίνεται στις roots. Τα intervals δεν είναι simultaneous και δεν συνοδεύονται από post-hoc significance language. Οι conditional recovery-time summaries μπορεί να έχουν μικρά denominators και πρέπει να διαβάζονται μαζί με recovery proportion και restricted delay.
+
+Τέλος, τα αποτελέσματα περιγράφουν controlled comparative associations υπό παγωμένο randomized design και matched branches. Η εξήγηση πιθανών μηχανισμών, η σχέση με τη βιβλιογραφία και τα όρια γενίκευσης εξετάζονται χωριστά στο Κεφάλαιο 6, χωρίς να εισάγονται νέα αποτελέσματα.
