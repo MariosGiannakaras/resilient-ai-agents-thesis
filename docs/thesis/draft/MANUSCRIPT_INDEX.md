@@ -50,9 +50,7 @@ The following IDs were checked against the imported citation-ready manifest from
 - `SRC-8D4F62D85D` — deep-RL empirical/reproducibility sensitivity.
 - `SRC-69D02D7E25` — time-limit termination/truncation semantics.
 
-### Explicitly excluded from formal citation
-
-`SRC-F6BD3A6B18` is verified in the full corpus but is **not present in the citation-ready manifest**. An early T-710 draft used it for Dyna background; the citation was removed during manuscript validation. Dyna claims now rely on citation-ready `SRC-701E163AC8`. This exclusion must remain unless that source is formally promoted upstream and a later immutable bibliography sync is accepted.
+An early T-710 draft briefly referenced a verified full-corpus Dyna source that had not been promoted to the citation-ready layer. That reference was removed during validation. Formal Dyna claims in the manuscript now rely only on citation-ready `SRC-701E163AC8`. Any future use of a corpus-only source requires normal upstream promotion and a later accepted immutable bibliography sync.
 
 ## T-613 quantitative asset placement register
 
