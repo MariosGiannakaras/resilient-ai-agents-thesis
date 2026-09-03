@@ -7,6 +7,7 @@ on:
       - "scripts/t711_build_entry.py"
       - "scripts/t711_build_entry_v2.py"
       - "scripts/t711_build_entry_v3.py"
+      - "scripts/t711_build_entry_v4.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -33,7 +34,7 @@ jobs:
 
       - name: Build review-ready thesis
         run: |
-          python scripts/t711_build_entry_v3.py \
+          python scripts/t711_build_entry_v4.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -50,6 +51,7 @@ jobs:
           assert not report["contains_drafting_notes"], report
           assert not report.get("corrupt_math_tokens"), report
           assert report.get("cached_figure_entry_count") == report["inserted_asset_count"], report
+          assert report.get("cached_table_entry_count") == report.get("rendered_table_count") == report["table_count"], report
           print(
               f"T-711 structural QA: citations={report['citation_count']} "
               f"assets={report['inserted_asset_count']} tables={report['table_count']} "
