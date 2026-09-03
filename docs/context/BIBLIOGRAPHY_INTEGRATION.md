@@ -39,7 +39,7 @@ Checkout commit equality with either package source commit is not required. Gene
 
 ## Synchronization
 
-`.github/workflows/sync-bibliography.yml` accepts only an explicit immutable tag or full SHA. The initial complete-corpus migration used immutable `bibliography-integration-v2`; the current synchronized baseline is immutable `bibliography-integration-v3`, resolving to checkout commit `71995373ae0da64149583cae8d7a2c17e5ab1a0a`. Older immutable refs remain historical snapshots and are never moved.
+`.github/workflows/sync-bibliography.yml` accepts only an explicit immutable tag or full SHA. Historical `bibliography-integration-v2` and `bibliography-integration-v3` remain immutable prior integration identities. The current major-writing-gate synchronized baseline is full upstream SHA `ada0d1aec7511098fd12610ae9e5abe7aea875cd`, accepted through T-702 and thesis PR #130. Older immutable refs remain historical snapshots and are never moved.
 
 The workflow:
 
@@ -53,7 +53,7 @@ The workflow:
 8. installs only `research/bibliography/`, runs consumer validation/tests, and opens a generated-only PR;
 9. never merges directly to `main` and never writes upstream.
 
-Current v3 acceptance facts are 585 canonical sources, 113 citation-ready sources, 19 research materials, 281 indexed original PDFs, 1,568 integrity-covered corpus files, and upstream schema version 1. These values describe this immutable baseline only; synchronization logic reads and validates metadata dynamically for every later immutable ref. The original v2 acceptance facts remain historical and are preserved in their decision/history records rather than treated as current state.
+Current T-702 acceptance facts are 599 canonical sources, 123 citation-ready sources, 19 research materials, 281 indexed original PDFs, 1,634 integrity-covered corpus files, and upstream schema version 1. The accepted checkout is `ada0d1aec7511098fd12610ae9e5abe7aea875cd`; the complete-corpus source commit is `c999dbe272baa081d3666254655aeeec17549c1f`; the citation-ready source commit is `84d62ec3eb18e1d3565625bc02c289131282ea27`. Trust-aware consumer validation reports 40 thesis references: 38 citation-ready and 2 research-material. These values describe this immutable baseline only; synchronization logic reads and validates metadata dynamically for every later immutable ref. Earlier v2/v3 acceptance facts remain historical and are preserved in their decision/history records rather than treated as current state.
 
 ## Search and validation
 
@@ -61,7 +61,7 @@ Current v3 acceptance facts are 585 canonical sources, 113 citation-ready source
 
 `scripts/validate_bibliography_usage.py` applies context-sensitive rules: final thesis/frozen scientific documents permit only citation-ready `SRC-*`; internal research documents may reference any canonical `SRC-*` and registered `MAT-*`, but unknown IDs always fail.
 
-Freshness searches and any source/material promotion occur only in `ThesisBibliography`, followed by a new immutable synchronization.
+Freshness searches and any source/material promotion occur only in `ThesisBibliography`, followed by a new immutable synchronization. T-702 completed the required 2026-09-03 major-writing-gate refresh; later freshness checks remain governed by downstream tasks such as T-800 rather than ad-hoc local citation changes.
 
 ## Byte-preserved converted full text
 
