@@ -3,11 +3,12 @@
 
 The underlying T-711 hardening adapter remains authoritative for composition and
 visual-QA fixes. This wrapper broadens only bibliographic-identity parsing across
-the two verified citation-ready analysis templates present in the synchronized
-corpus:
+verified citation-ready analysis templates present in the synchronized corpus:
 
 1. English ``## Bibliographic identity`` followed by a verified prose identity.
-2. Greek ``## Βιβλιογραφική ταυτότητα`` with verified structured metadata bullets.
+2. Greek ``## Βιβλιογραφική ταυτότητα`` with verified structured metadata bullets,
+   including source-specific verified labels such as ``Έτος canonical έκδοσης`` and
+   ``Canonical landing page``.
 
 No catalog display title is used as a fallback. Missing verified title/authors/year
 continues to fail closed.
@@ -49,6 +50,13 @@ def _english_identity(md: str, source_id: str) -> str | None:
     return identity if identity.endswith(".") else identity + "."
 
 
+def _first_field(fields: dict[str, str], predicate) -> str:
+    for key, value in fields.items():
+        if predicate(key) and value.strip():
+            return value.strip()
+    return ""
+
+
 def _greek_identity(md: str, source_id: str) -> str | None:
     marker = "## Βιβλιογραφική ταυτότητα"
     if marker not in md:
@@ -59,6 +67,7 @@ def _greek_identity(md: str, source_id: str) -> str | None:
     if not headings:
         raise ValueError(f"verified title missing for {source_id}")
     title = _strip_md(headings[-1])
+    title = re.sub(r"^(?:Ανάλυση|Scientific analysis|Evidence)\s+[—-]\s+", "", title, flags=re.IGNORECASE).strip()
 
     tail = md.split(marker, 1)[1]
     fields: dict[str, str] = {}
@@ -70,15 +79,17 @@ def _greek_identity(md: str, source_id: str) -> str | None:
         if match:
             fields[match.group(1).strip().lower()] = _strip_md(match.group(2))
 
-    authors = fields.get("συγγραφείς") or fields.get("συγγραφέας") or fields.get("authors") or fields.get("author")
-    year = fields.get("έτος") or fields.get("year")
-    locator = (
-        fields.get("doi / arxiv / url")
-        or fields.get("doi/url")
-        or fields.get("doi")
-        or fields.get("url")
-        or ""
-    ).strip()
+    authors = _first_field(fields, lambda key: key.startswith("συγγραφ") or key in {"authors", "author"})
+    year = _first_field(fields, lambda key: key.startswith("έτος") or key == "year")
+    locator = _first_field(
+        fields,
+        lambda key: (
+            "canonical landing page" in key
+            or key in {"url", "doi/url"}
+            or "doi / arxiv / url" in key
+            or key == "doi"
+        ),
+    )
 
     if not title or not authors or not year:
         raise ValueError(
