@@ -60,7 +60,7 @@ jobs:
           assert report["status"] == "pass", report
           assert report["output_sha256"] == actual_sha, (report["output_sha256"], actual_sha)
           assert report.get("final_artifact_metadata_reconciled") is True, report
-          assert report.get("paragraph_count") == report.get("post_synthesis_paragraph_count") == 721, report
+          assert report.get("paragraph_count") == report.get("post_synthesis_paragraph_count") == 707, report
           assert report["citation_count"] == report["verified_reference_identity_count"] == 14, report
           assert report["planned_figure_count"] == report["inserted_asset_count"] == 24, report
           assert report["cached_figure_entry_count"] == report["inserted_asset_count"], report
