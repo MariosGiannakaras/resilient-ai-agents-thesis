@@ -12,6 +12,7 @@ on:
       - "scripts/t711_build_entry_v6.py"
       - "scripts/t711_build_entry_v7.py"
       - "scripts/t711_build_entry_v8.py"
+      - "scripts/t711_build_entry_v9.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -38,7 +39,7 @@ jobs:
 
       - name: Build review-ready thesis
         run: |
-          python scripts/t711_build_entry_v8.py \
+          python scripts/t711_build_entry_v9.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -56,18 +57,20 @@ jobs:
           assert report.get("presentation_repaired_assets") == ["FIG-METHOD-027-RQ-MAP"], report
           assert report.get("registered_asset_bytes_modified") is False, report
           assert report.get("scientific_values_modified") is False, report
+          assert report.get("reader_text_rescanned_after_save") is True, report
+          assert report.get("removed_appendix_handoff_count") == 14, report
+          assert not report.get("reader_visible_asset_id_residue"), report
           assert not report["unresolved_src_ids"], report
           assert not report["contains_drafting_notes"], report
           assert not report.get("corrupt_math_tokens"), report
           assert not report.get("missing_planned_figure_ids"), report
           assert not report.get("unexpected_inserted_figure_ids"), report
           assert not report.get("duplicate_inserted_figure_ids"), report
-          assert not report.get("visible_asset_id_residue"), report
           assert not report.get("bad_reference_phrases"), report
           print(
               f"T-711 structural QA: citations={report['citation_count']} "
               f"assets={report['inserted_asset_count']} tables={report['table_count']} "
-              f"paragraphs={report['paragraph_count']}"
+              f"removed_handoff={report['removed_appendix_handoff_count']}"
           )
           PY
 
