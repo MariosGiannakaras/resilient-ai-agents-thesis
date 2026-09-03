@@ -22,10 +22,11 @@ Version-controlled repository for the complete thesis lifecycle: research contex
 | Current academic-guidance pass | **T-700 COMPLETE** |
 | Example-thesis structure/style review | **T-701 COMPLETE** |
 | Writing-gate bibliography refresh/re-sync | **T-702 COMPLETE** |
-| Current task | **T-710 READY** — complete Greek thesis drafting |
+| Evidence-grounded Greek manuscript | **T-710 COMPLETE** — merged through PR #132 |
+| Current task | **T-711 READY** — review-ready editable Word thesis |
 | Standalone Windows packaging | Deferred to **T-803** after the thesis deliverable |
 
-The first protocol-v2.1 Study from `7442dcb65674dcb3bc9ce0c71996418289d79061` remains an immutable, unfinalized 216-job failed attempt. It is permanently excluded from accepted downstream evidence.
+The first protocol-v2.1 Study from `7442dcb65674dcb3bc9ce0c71996418289d79061` remains an immutable, unfinalized 216-job failed attempt and is permanently excluded from accepted downstream evidence.
 
 The DEC-062 replacement `protocol-v2.1-final--t610-recovery-01` completed the unchanged **603/603** plan from clean source commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`, producing **600 accepted scientific run bundles** with zero recorded infrastructure/scientific failures.
 
@@ -36,8 +37,9 @@ Accepted downstream identities:
 - T-612 analysis manifest SHA-256: `dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62`
 - T-613 asset manifest SHA-256: `9457275306fb633cb58d9af2e402531ff7d56a0f1f0f5eadc176f4a05726abd8`
 - T-702 immutable bibliography checkout: `ada0d1aec7511098fd12610ae9e5abe7aea875cd`
+- T-710 merged manuscript commit: `b8019ece98b9f6a89350b8aa52c205b20225f013`
 
-T-613 finalized **31 figures, 12 table assets and 117 registered output variants**. The complete 121-file package reproduced twice byte-for-byte. Twenty-eight of thirty planned inventory categories are supported; categories 1 and 6 remain explicitly unavailable because the accepted T-612 package contains no registered probe/checkpoint-series values, and no post-hoc reconstruction is allowed.
+T-613 finalized **31 figures, 12 table assets and 117 registered output variants**. The complete 121-file package reproduced twice byte-for-byte. Inventory categories 1 and 6 remain explicitly unavailable because the accepted T-612 package contains no registered probe/checkpoint-series values; no post-hoc reconstruction is allowed.
 
 ## Project principle
 
@@ -60,17 +62,11 @@ Protocol-v2.1 retains:
 - root as the independent statistical unit, equal layout reduction, root-paired direct method contrasts and Student-t intervals using actual root count;
 - no formal p-value superiority family and no composite global ranking.
 
-The accepted T-612 interpretation is recorded in `docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md`. Later writing may explain those results but must not redefine or recompute them.
+The accepted T-612 interpretation is recorded in `docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md`. Writing and Word composition may explain/present those results but must not redefine or recompute them.
 
 ## Architecture
 
-The active scientific/backend implementation lives under:
-
-```text
-src/resilient_agents/
-```
-
-The research lifecycle is study-first:
+The active scientific/backend implementation lives under `src/resilient_agents/` and follows a study-first lifecycle:
 
 ```text
 immutable Study recipe
@@ -90,9 +86,7 @@ immutable Study recipe
 
 ## Accepted desktop application
 
-The accepted frontend is native **PySide6 / Qt 6 Widgets** under `src/resilient_agents/desktop/`. It consumes the Study backend directly and does not reimplement protocol or statistical logic.
-
-The final information architecture is:
+The accepted frontend is native **PySide6 / Qt 6 Widgets** under `src/resilient_agents/desktop/`, consuming the Study backend directly. The final information architecture is:
 
 > **Experiment → Run → Results → Evidence**
 
@@ -104,35 +98,17 @@ Key boundaries:
 - Results display validated stored RQ1/RQ2/RQ3 evidence;
 - right-censored recovery stays `recovery_time=null`;
 - Evidence surfaces registered lineage/provenance rather than arbitrary filesystem browsing;
-- application screenshots may illustrate workflow, but **never replace T-613 quantitative figures/tables for scientific claims**.
+- application screenshots may illustrate workflow, but never replace T-613 quantitative figures/tables for scientific claims.
 
-The source application remains launchable from the validated Windows checkout. Standalone packaging is intentionally deferred to T-803.
+Standalone packaging remains intentionally deferred to T-803.
 
 ## WP7 writing state
 
-The user explicitly approved entry into WP7 after T-613 completion.
+### T-700 / T-701 / T-702 — complete
 
-### T-700 — complete
+Current public Department/University guidance was rechecked on 2026-09-03 and recorded in `docs/thesis/OFFICIAL_GUIDANCE_SNAPSHOT_2026-09-03.md`. The user-supplied example-thesis corpus was reviewed for structure/presentation only and synthesized in `docs/thesis/THESIS_STRUCTURE_AND_STYLE_GUIDE.md`. The major-writing-gate bibliography refresh then produced the immutable consumer checkout `ada0d1aec7511098fd12610ae9e5abe7aea875cd`.
 
-Current public Department/University guidance was rechecked on 2026-09-03 and recorded in:
-
-`docs/thesis/OFFICIAL_GUIDANCE_SNAPSHOT_2026-09-03.md`
-
-The current working Word contract remains A4, Times New Roman 11 pt main text, 1.5 line spacing, numbered Heading styles, 14 pt chapter headings, 12 pt subheadings, automatic TOC, figure/table captions and controlled front/final matter.
-
-No current public ICE-specific rule was found that fixes defense duration, slide count, PowerPoint template or mandatory live demo. Those items are intentionally rechecked near T-720/T-722 rather than inferred from another department.
-
-IEEE numeric citations are the WP7 project default because the Department permits multiple consistent styles and the technically closest contextual examples predominantly use numeric references. This is **not represented as an ICE mandate**; any later explicit supervisor/Department instruction supersedes it.
-
-### T-701 — complete
-
-The user supplied 22 example-thesis files. Integrity review identified **21 unique completed theses**, because `example-theses 1.pdf` and `example-theses 10.pdf` are byte-identical.
-
-The examples were reviewed comparatively for structure/presentation only. They were not added to the bibliography and are not scientific sources.
-
-The canonical derived guide is:
-
-`docs/thesis/THESIS_STRUCTURE_AND_STYLE_GUIDE.md`
+The synchronized bibliography validates at **599 canonical sources, 123 citation-ready sources, 19 research materials, 281 indexed originals and 1,634 integrity-covered corpus files**. Historical `bibliography-integration-v3` provenance remains prior-snapshot history only.
 
 The final research-first manuscript architecture is:
 
@@ -144,36 +120,37 @@ The final research-first manuscript architecture is:
 6. **Συζήτηση**
 7. **Συμπεράσματα και Μελλοντική Εργασία**
 
-Results and Discussion are intentionally separate. This project has three distinct RQs/estimands, paired contrasts, uncertainty intervals, sensitivity analysis and right-censoring; merging interpretation into a generic “Evaluation/Conclusions” chapter would weaken the scientific argument.
+Results and Discussion remain intentionally separate.
 
-### T-702 — complete
+### T-710 — complete
 
-The major-writing-gate literature freshness review was completed on 2026-09-03 in canonical `MariosGiannakaras/ThesisBibliography`. Two recent peer-reviewed supporting sources were promoted through normal source/analysis/evidence/selection governance, with explicit boundaries preventing overinterpretation or protocol retrofitting.
+The evidence-driven drafting sequence was executed in the planned order (Methodology → Architecture → Results → Discussion → Conclusions → Background/Related Work → Introduction → summaries). The merged manuscript package under `docs/thesis/draft/` contains:
 
-The accepted immutable consumer checkout is:
+- Greek summary and keywords;
+- English abstract and keywords;
+- Chapters 1–7;
+- chapter-level evidence map;
+- glossary/acronym register;
+- appendix draft;
+- manuscript/citation/T-613 asset handoff register.
 
-`ada0d1aec7511098fd12610ae9e5abe7aea875cd`
+Formal external references remain stable citation-ready `SRC-*` placeholders at the Markdown manuscript layer. During PR #132 validation, one corpus-only Dyna reference residue was detected and removed; the corrected exact head passed Repository checks #929, including **427 tests** and installed-bibliography validation, before squash merge as `b8019ece98b9f6a89350b8aa52c205b20225f013`.
 
-The controlled consumer workflow synchronized that snapshot into `research/bibliography/` and validated it at **599 canonical sources, 123 citation-ready sources, 19 research materials, 281 indexed originals and 1,634 integrity-covered corpus files**. Trust-aware consumer validation currently reports **40 thesis references: 38 citation-ready and 2 research-material**.
+No new estimand, threshold, statistical test, p-value family, ranking or post-hoc re-analysis was introduced by T-710.
 
-T-702 changed no protocol-v2.1 design, accepted T-611 evidence, T-612 estimands/results or T-613 quantitative assets. The prior `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5` snapshot and historical `bibliography-integration-v3` label remain immutable provenance history only.
+### T-711 — READY
 
-**T-710 is now dependency-valid and READY.**
+T-711 now owns review-ready Word composition. It must:
 
-## T-710 drafting sequence
+- compose the merged T-710 manuscript into editable `.docx`;
+- convert validated `SRC-*` placeholders deterministically to IEEE numeric citations and build the reference list from canonical bibliography metadata;
+- insert the registered T-613 quantitative figures/tables in the planned main-text/appendix positions;
+- use real Word Heading styles, automatic TOC, caption fields/cross-references, automatic figure/table lists, equation tooling where needed, glossary/front matter and controlled page/section breaks;
+- preserve all T-612 values, denominators, intervals, right-censoring and scientific claim boundaries;
+- leave optional/supervisor-specific text unset if no authoritative wording was supplied;
+- perform structural and visual QA of the resulting editable document.
 
-The final document order is not the drafting order. The evidence-driven sequence is:
-
-1. Chapter 3 — Methodology and Experimental Design
-2. Chapter 4 — Architecture and Implementation
-3. Chapter 5 — Results
-4. Chapter 6 — Discussion / validity / limitations
-5. Chapter 7 — Conclusions
-6. Chapter 2 — Background and Related Work
-7. Chapter 1 — Introduction
-8. Greek summary / English abstract near review-ready freeze
-
-This reduces rewriting and prevents early prose from dictating the final scientific story.
+The working Word contract remains A4, Times New Roman 11 pt main text, 1.5 line spacing, numbered Heading styles, 14 pt chapter headings and 12 pt subheadings. IEEE numeric citations remain the project default because ICE permits multiple consistent systems; this is not represented as an ICE mandate and may be superseded by later explicit supervisor/Department direction.
 
 ## Bibliography boundary
 
@@ -208,7 +185,7 @@ docs/context/                          Current status/tasks/workflow
 docs/research/                         Methodology, RQ evidence and scientific reports
 docs/experiments/                      Experiment/provenance rules
 docs/architecture/                     Backend/frontend architecture
-docs/thesis/                           Thesis/defense requirements and workflows
+docs/thesis/                           Thesis/defense requirements, manuscript and workflows
 docs/decisions/                        Decisions and ADRs
 ```
 
@@ -220,7 +197,7 @@ Always start with:
 2. `docs/context/TASKS.md`
 3. `docs/context/CURRENT_STATUS.md`
 
-Important supporting authorities now include:
+Important supporting authorities include:
 
 - `configs/protocols/protocol-v2.1-final.json`
 - `docs/decisions/DEC-060_PROTOCOL_V2_1_RECOVERY_AND_DIRECT_COMPARISONS.md`
@@ -234,6 +211,7 @@ Important supporting authorities now include:
 - `docs/thesis/OFFICIAL_GUIDANCE_SNAPSHOT_2026-09-03.md`
 - `docs/thesis/THESIS_STRUCTURE_AND_STYLE_GUIDE.md`
 - `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md`
+- `docs/thesis/draft/MANUSCRIPT_INDEX.md`
 
 ## Evidence and integrity principles
 
@@ -244,9 +222,9 @@ Important supporting authorities now include:
 - Phase-B evidence traces to exact Phase-A checkpoint lineage.
 - Non-recovery remains explicit; the horizon is never substituted as fake observed recovery time.
 - Final figures/tables/results come from frozen accepted evidence, not UI transcription.
-- T-612 estimands/statistics are not redesigned during writing.
-- WP7 approval and the T-702 writing-gate bibliography refresh are satisfied; T-710 may proceed under the frozen evidence and synchronized bibliography boundaries.
+- T-612 estimands/statistics are not redesigned during writing or Word composition.
+- T-710 manuscript drafting is complete and validated; T-711 may compose the review-ready document under the same evidence and bibliography boundaries.
 
 ## End-to-end lifecycle
 
-> methodology/bibliography → feasibility/pilots → protocol freeze → validated Study backend/application → final protocol-v2.1 execution → evidence validation/freeze → predeclared RQ1/RQ2/RQ3 analysis → reproducible thesis/appendix/defense assets → **WP7 approval (satisfied)** → official-guidance/example review → **writing-gate bibliography freshness/re-sync (T-702 complete)** → **Greek thesis drafting (T-710 READY)** → review → defense presentation → final audit/delivery
+> methodology/bibliography → feasibility/pilots → protocol freeze → validated Study backend/application → final protocol-v2.1 execution → evidence validation/freeze → predeclared RQ1/RQ2/RQ3 analysis → reproducible thesis/appendix/defense assets → **WP7 approval** → official-guidance/example review → **writing-gate bibliography freshness/re-sync (T-702 complete)** → **Greek manuscript drafting (T-710 complete)** → **review-ready Word composition (T-711 READY)** → supervisor/reviewer corrections → final thesis freeze → defense presentation → final audit/delivery
