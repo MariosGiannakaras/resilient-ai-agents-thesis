@@ -18,6 +18,7 @@ on:
       - "scripts/t711_build_entry_v12.py"
       - "scripts/t711_build_entry_v13.py"
       - "scripts/t711_build_entry_v14.py"
+      - "scripts/t711_build_entry_v15.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -44,7 +45,7 @@ jobs:
 
       - name: Build hardened review thesis
         run: |
-          python scripts/t711_build_entry_v14.py \
+          python scripts/t711_build_entry_v15.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -63,7 +64,10 @@ jobs:
           assert report["status"] == "pass", report
           assert report["output_sha256"] == actual_sha, (report["output_sha256"], actual_sha)
           assert report.get("final_artifact_metadata_reconciled") is True, report
-          assert report.get("t711a_hardening_version") == 14, report
+          assert report.get("t711a_hardening_version") == 15, report
+          assert report.get("canonical_results_source_synchronized") is True, report
+          assert report.get("canonical_results_source_sha256") == "ba0dea0f8d46e3369dc22a3b18ca806b7ccbbe909e1592a3f21c193a703f2699", report
+          assert report.get("results_synthesis_source_sha256") == report.get("canonical_results_source_sha256"), report
           assert report.get("t711a_reader_text_rescanned_after_save") is True, report
           assert report.get("paragraph_count") == report.get("post_synthesis_paragraph_count"), report
           assert report.get("paragraph_count", 0) >= 700, report
@@ -94,7 +98,6 @@ jobs:
           assert report.get("results_synthesis_numbered_figure") is False, report
           assert report.get("registered_figure_count_preserved") is True, report
           assert report.get("inline_shape_count_after_synthesis") == 25, report
-          assert report.get("results_synthesis_source_sha256") == "08cec7f0c7dba6ced80bb01c749e1fb76f20e52b830ad3ff1c3f24581ed694a4", report
           assert report.get("dqn_foundation_citation_wording_corrected") is True, report
           assert not report.get("superiority_wording_residue"), report
           assert report.get("localized_figure_caption_count") == 24, report
@@ -116,7 +119,7 @@ jobs:
           assert not report.get("duplicate_inserted_figure_ids"), report
           assert not report.get("bad_reference_phrases"), report
           print(
-              f"T-711A v14 QA: citations={report['citation_count']} "
+              f"T-711A v15 QA: citations={report['citation_count']} "
               f"registered_assets={report['inserted_asset_count']} tables={report['table_count']} "
               f"numbered_tables={report['numbered_table_caption_count']} "
               f"captions_el={report['localized_figure_caption_count']} alt={report['image_alt_text_count']} "
