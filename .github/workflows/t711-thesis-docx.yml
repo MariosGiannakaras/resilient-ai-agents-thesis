@@ -1,0 +1,83 @@
+name: T-711 review-ready thesis DOCX
+
+on:
+  pull_request:
+    paths:
+      - "scripts/build_review_ready_thesis_docx.py"
+      - "scripts/t711_build_entry.py"
+      - "scripts/t711_build_entry_v2.py"
+      - "scripts/t711_build_entry_v3.py"
+      - "scripts/t711_build_entry_v4.py"
+      - "scripts/t711_build_entry_v5.py"
+      - "scripts/t711_build_entry_v6.py"
+      - "scripts/t711_build_entry_v7.py"
+      - "scripts/t711_build_entry_v8.py"
+      - "scripts/t711_build_entry_v9.py"
+      - "docs/thesis/draft/**"
+      - "research/bibliography/citation-ready/**"
+      - "results/thesis-assets/protocol-v2.1-final/**"
+      - ".github/workflows/t711-thesis-docx.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-docx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned document dependencies
+        run: python -m pip install --disable-pip-version-check python-docx==1.2.0 Pillow==11.3.0
+
+      - name: Build review-ready thesis
+        run: |
+          python scripts/t711_build_entry_v9.py \
+            --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
+            --qa-output artifacts/t711/qa-report.json
+
+      - name: Inspect structural QA
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("artifacts/t711/qa-report.json").read_text(encoding="utf-8"))
+          assert report["status"] == "pass", report
+          assert report["citation_count"] == report["verified_reference_identity_count"] == 14, report
+          assert report["planned_figure_count"] == report["inserted_asset_count"] == 24, report
+          assert report["cached_figure_entry_count"] == report["inserted_asset_count"], report
+          assert report.get("cached_table_entry_count") == report.get("rendered_table_count") == report["table_count"], report
+          assert report.get("presentation_repaired_assets") == ["FIG-METHOD-027-RQ-MAP"], report
+          assert report.get("registered_asset_bytes_modified") is False, report
+          assert report.get("scientific_values_modified") is False, report
+          assert report.get("reader_text_rescanned_after_save") is True, report
+          assert report.get("removed_appendix_handoff_count") == 14, report
+          assert not report.get("reader_visible_asset_id_residue"), report
+          assert not report["unresolved_src_ids"], report
+          assert not report["contains_drafting_notes"], report
+          assert not report.get("corrupt_math_tokens"), report
+          assert not report.get("missing_planned_figure_ids"), report
+          assert not report.get("unexpected_inserted_figure_ids"), report
+          assert not report.get("duplicate_inserted_figure_ids"), report
+          assert not report.get("bad_reference_phrases"), report
+          print(
+              f"T-711 structural QA: citations={report['citation_count']} "
+              f"assets={report['inserted_asset_count']} tables={report['table_count']} "
+              f"removed_handoff={report['removed_appendix_handoff_count']}"
+          )
+          PY
+
+      - name: Upload review artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: t711-review-ready-thesis
+          path: artifacts/t711/
+          if-no-files-found: error
+          retention-days: 30
