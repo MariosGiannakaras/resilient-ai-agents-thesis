@@ -14,6 +14,7 @@ on:
       - "scripts/t711_build_entry_v8.py"
       - "scripts/t711_build_entry_v9.py"
       - "scripts/t711_build_entry_v10.py"
+      - "scripts/t711_build_entry_v11.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -40,17 +41,26 @@ jobs:
 
       - name: Build review-ready thesis
         run: |
-          python scripts/t711_build_entry_v10.py \
+          python scripts/t711_build_entry_v11.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
       - name: Inspect structural QA
         run: |
           python - <<'PY'
+          import hashlib
           import json
           from pathlib import Path
-          report = json.loads(Path("artifacts/t711/qa-report.json").read_text(encoding="utf-8"))
+
+          qa_path = Path("artifacts/t711/qa-report.json")
+          docx_path = Path("artifacts/t711/resilient-ai-agents-thesis-review-ready.docx")
+          report = json.loads(qa_path.read_text(encoding="utf-8"))
+          actual_sha = hashlib.sha256(docx_path.read_bytes()).hexdigest()
+
           assert report["status"] == "pass", report
+          assert report["output_sha256"] == actual_sha, (report["output_sha256"], actual_sha)
+          assert report.get("final_artifact_metadata_reconciled") is True, report
+          assert report.get("paragraph_count") == report.get("post_synthesis_paragraph_count") == 721, report
           assert report["citation_count"] == report["verified_reference_identity_count"] == 14, report
           assert report["planned_figure_count"] == report["inserted_asset_count"] == 24, report
           assert report["cached_figure_entry_count"] == report["inserted_asset_count"], report
@@ -76,7 +86,7 @@ jobs:
           print(
               f"T-711 structural QA: citations={report['citation_count']} "
               f"registered_assets={report['inserted_asset_count']} tables={report['table_count']} "
-              f"synthesis={report['results_synthesis_infographic']}"
+              f"synthesis={report['results_synthesis_infographic']} sha={actual_sha}"
           )
           PY
 
