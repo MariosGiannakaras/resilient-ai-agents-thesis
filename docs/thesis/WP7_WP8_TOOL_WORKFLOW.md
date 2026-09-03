@@ -1,8 +1,8 @@
 # WP7 / WP8 Thesis, Defense, and Delivery Tool Workflow
 
-**Status:** Active post-evidence workflow. The explicit pre-WP7 user approval gate was satisfied on 2026-09-03. T-700, T-701 and T-702 are complete. `docs/context/TASKS.md` remains the only task-status/dependency ledger.
+**Status:** Active post-evidence workflow. The explicit pre-WP7 user approval gate was satisfied on 2026-09-03. T-700, T-701, T-702 and T-710 are complete. `docs/context/TASKS.md` remains the only task-status/dependency ledger.
 
-**Current next task:** T-710 complete Greek thesis drafting is READY after the accepted immutable writing-gate bibliography re-sync.
+**Current next task:** T-711 review-ready Microsoft Word thesis composition is READY from the merged evidence-grounded T-710 manuscript.
 
 ## Purpose
 
@@ -27,13 +27,14 @@ The following prerequisites are objectively satisfied:
 - explicit pre-WP7 user approval granted on 2026-09-03;
 - current public academic-guidance recheck completed by T-700;
 - contextual example-thesis review and structure/style guide completed by T-701;
-- dated major-writing-gate bibliography freshness review, immutable consumer snapshot and integrated citation-ready validation completed by T-702.
+- dated major-writing-gate bibliography freshness review, immutable consumer snapshot and integrated citation-ready validation completed by T-702;
+- complete evidence-grounded Greek manuscript, summaries, evidence map, glossary, appendices and handoff register completed by T-710 and merged through PR #132.
 
-No remaining prerequisite blocks T-710.
+No remaining prerequisite blocks T-711.
 
 ## Source and authority hierarchy for WP7
 
-When drafting or reviewing a claim, use the narrowest appropriate authority:
+When drafting, composing or reviewing a claim, use the narrowest appropriate authority:
 
 1. **T-611/T-612/T-613 accepted evidence** — final experimental/result claims;
 2. **synchronized citation-ready `ThesisBibliography` evidence** — external scientific/factual claims;
@@ -41,15 +42,14 @@ When drafting or reviewing a claim, use the narrowest appropriate authority:
 4. **T-700 official academic guidance** — required structure/format/submission rules;
 5. **actual supervisor instructions** — when supplied;
 6. **T-701 structure/style guide** — contextual architecture/presentation decisions;
-7. **individual example theses** — context only, never scientific authority.
+7. **merged T-710 manuscript/handoff** — accepted prose/composition input, subordinate to the authorities above;
+8. **individual example theses** — context only, never scientific authority.
 
 Chat memory is never sufficient authority for a technical, bibliographic or numerical claim.
 
 ## T-700 — COMPLETE: current academic requirements
 
-Output:
-
-`docs/thesis/OFFICIAL_GUIDANCE_SNAPSHOT_2026-09-03.md`
+Output: `docs/thesis/OFFICIAL_GUIDANCE_SNAPSHOT_2026-09-03.md`.
 
 T-700 re-verified current public ICE/UNIWA thesis-writing/regulation/deposit guidance. The current public ICE writing guide remains the principal structural/format reference found. No public ICE-specific mandatory defense duration, slide count, PowerPoint template or live-demo rule was found; these remain future T-720/T-722 recheck items.
 
@@ -57,185 +57,123 @@ T-700/T-701 select IEEE numeric referencing as the project WP7 default because I
 
 ## T-701 — COMPLETE: contextual example-thesis review
 
-Output:
+Output: `docs/thesis/THESIS_STRUCTURE_AND_STYLE_GUIDE.md`.
 
-`docs/thesis/THESIS_STRUCTURE_AND_STYLE_GUIDE.md`
+The user supplied 22 files representing 21 unique completed theses because two PDF files are byte-identical. The review covered front matter, chapter hierarchy, methodology/implementation/experiment separation, evidence presentation, code/screenshots, references, appendices, limitations, academic register and Word/layout conventions. The examples are never used for scientific subject-matter claims.
 
-The user supplied 22 files representing 21 unique completed theses because two PDF files are byte-identical. The review covered front matter, chapter hierarchy, methodology/implementation/experiment separation, evidence presentation, code/screenshots, references, appendices, limitations, academic register and Word/layout conventions.
-
-The examples are never used for scientific subject-matter claims.
-
-The final manuscript architecture is seven substantive chapters:
-
-1. Introduction;
-2. Background and Related Work;
-3. Methodology and Experimental Design;
-4. Research-System Architecture and Implementation;
-5. Results;
-6. Discussion;
-7. Conclusions and Future Work.
-
-Results and Discussion remain separate by design.
+The final manuscript architecture is seven substantive chapters: Introduction; Background and Related Work; Methodology and Experimental Design; Research-System Architecture and Implementation; Results; Discussion; Conclusions and Future Work. Results and Discussion remain separate by design.
 
 ## T-702 — COMPLETE: major-writing-gate bibliography freshness and re-sync
 
-### Canonical outcome
-
 The dated writing-gate review was completed on 2026-09-03 in canonical `MariosGiannakaras/ThesisBibliography`. It screened recent work against the actual final RQs/methods/non-stationarity/recovery/adaptation needs rather than expanding scope for recency alone.
 
-Two non-redundant 2025 peer-reviewed supporting sources were promoted through the normal upstream intake → scientific analysis → evidence → selection/citation-ready lifecycle:
+Two non-redundant 2025 peer-reviewed supporting sources were promoted through the normal upstream lifecycle: `SRC-6F4F8BE003` and `SRC-D38364B32C`.
 
-- `SRC-6F4F8BE003` — ICLR 2025, online RL in non-stationary context-driven environments;
-- `SRC-D38364B32C` — CoLLAs/PMLR 2025, adaptive partial models for model-based RL.
+The accepted immutable consumer checkout is `ada0d1aec7511098fd12610ae9e5abe7aea875cd`. It was synchronized through PR #130. Integrated validation records 599 canonical sources, 123 citation-ready sources, 19 research materials, 281 indexed originals and 1,634 integrity-covered corpus files.
 
-The accepted immutable consumer checkout is `ada0d1aec7511098fd12610ae9e5abe7aea875cd`. It was synchronized through the controlled read-only thesis consumer workflow and PR #130. Integrated validation records 599 canonical sources, 123 citation-ready sources, 19 research materials, 281 indexed originals and 1,634 integrity-covered corpus files; trust-aware thesis-reference validation reports 40 references, of which 38 are citation-ready and 2 are research-material.
+The review found no evidence requiring protocol amendment, re-analysis, new roots/methods, changed estimands or changed recovery thresholds. Newer literature may inform context/limitations but cannot rewrite experimental history.
 
-### Scientific firewall outcome
+## T-710 — COMPLETE: Draft the complete Greek thesis
 
-The review found no evidence requiring protocol amendment, re-analysis, new experimental roots/methods, changed estimands or changed recovery thresholds. T-702 therefore changed only the writing-evidence layer. It did **not**:
+T-710 executed only after T-702 was objectively complete, synchronized and validated.
 
-- retune methods;
-- change roots/layouts/conditions/budgets;
-- redefine RQs/estimands;
-- change T-612 values or accepted interpretations;
-- regenerate T-613 quantitative results under another analysis;
-- retrospectively change the frozen protocol.
+### Evidence-first preparation
 
-Newer literature may inform Chapter 6 context/limitations, but cannot rewrite experimental history.
+Chapter-level evidence maps were built before prose. Major subsections were tied to purpose, repository fact authority, citation-ready sources, registered result/table/figure IDs, terminology/equations, out-of-scope claims and appendix material.
 
-## T-710 — READY: Draft the complete Greek thesis
+### Completed drafting sequence
 
-T-710 may begin because T-702 is objectively complete, synchronized and validated.
-
-### Required preparation before prose generation
-
-Build/validate chapter-level evidence maps first. For every major subsection, identify:
-
-- purpose/question answered;
-- repository source of project facts;
-- citation-ready external sources required;
-- final result/table/figure IDs where applicable;
-- key terminology/equations;
-- claims that are explicitly out of scope;
-- appendix material that supports but should not interrupt the main narrative.
-
-This prevents unsupported “smooth prose”.
-
-### Tool split
-
-#### Codex / repository automation
-
-Own or verify:
-
-- chapter evidence maps;
-- claim-to-source/result/figure/table registers;
-- protocol/method/settings summaries from accepted authority;
-- exact run/config/evidence IDs;
-- deterministic figure/table assets and their hashes;
-- candidate glossary/acronym register;
-- bibliography/citation consistency inputs;
-- technical corrections discovered during writing through explicit revalidation paths.
-
-Codex should not independently invent polished Greek scientific interpretation where evidence is ambiguous.
-
-#### ChatGPT
-
-Preferred for:
-
-- full Greek academic drafting from verified evidence maps;
-- argument structure and cross-chapter coherence;
-- accurate translation/explanation of technical concepts;
-- literature synthesis rather than paper-by-paper listing;
-- Results narration that does not exceed T-612;
-- Discussion, limitations and future-work synthesis grounded in accepted evidence and refreshed literature;
-- academic-register editing, terminology control and repetition reduction;
-- exact figure/table/screenshot placement guidance;
-- claim-level support review.
-
-#### Microsoft Word
-
-Authoritative final composition/inspection surface:
-
-- real Heading styles;
-- automatic TOC;
-- caption fields;
-- cross-references;
-- automatic lists of figures/tables;
-- equation tooling;
-- section/page breaks and pagination;
-- final field update and visual inspection.
-
-### Evidence-driven drafting sequence
-
-Draft in this order, not final-document order:
+The evidence-driven sequence was executed as planned:
 
 1. Chapter 3 — Methodology and Experimental Design;
 2. Chapter 4 — Architecture and Implementation;
 3. Chapter 5 — Results;
 4. Chapter 6 — Discussion, threats and limitations;
 5. Chapter 7 — Conclusions and Future Work;
-6. Chapter 2 — Background and Related Work using refreshed citation-ready evidence;
-7. Chapter 1 — Introduction after the result/contribution story is stable;
-8. Greek summary / English abstract near review-ready freeze.
+6. Chapter 2 — Background and Related Work;
+7. Chapter 1 — Introduction;
+8. Greek summary / English abstract.
 
-### Results/Discussion firewall
+### Merged manuscript package
 
-**Results** state what the accepted analysis shows: estimates, uncertainty, denominators, censoring and predeclared sensitivity.
+The authoritative Markdown manuscript input is `docs/thesis/draft/` and includes:
 
-**Discussion** explains meaning, relation to literature, plausible mechanism-level interpretation, limitations and generalization boundaries.
+- `FRONT_MATTER_SUMMARIES.md`;
+- Chapters 1–7;
+- `T710_EVIDENCE_MAP.md`;
+- `GLOSSARY_ACRONYMS.md`;
+- `APPENDIX_DRAFT.md`;
+- `MANUSCRIPT_INDEX.md`.
 
-Do not use Discussion to create a new statistical result.
+Formal external citations use stable citation-ready `SRC-*` placeholders for deterministic IEEE conversion at T-711. During PR #132, installed-bibliography validation caught a corpus-only Dyna reference residue in the formal handoff register; it was removed. Corrected exact head `e62ea790f16ab87622c1a9cc1102d5bdb1aceaa5` passed Repository checks #929, including 427 tests and installed-bibliography validation, and PR #132 was squash-merged as `b8019ece98b9f6a89350b8aa52c205b20225f013`.
 
-## T-711 — Produce review-ready Microsoft Word thesis
+### Results/Discussion firewall preserved
+
+Results state only accepted estimates, uncertainty, denominators, censoring and predeclared sensitivity. Discussion handles meaning, literature context, plausible mechanism-level interpretation, limitations and generalization boundaries. No new statistical result, estimand, threshold, p-value family, ranking or post-hoc analysis was introduced.
+
+## T-711 — READY: Produce review-ready Microsoft Word thesis
+
+T-711 composes, rather than scientifically rewrites, the merged T-710 manuscript.
+
+### Input authority
+
+Use:
+
+- merged T-710 manuscript/handoff at `docs/thesis/draft/`;
+- citation-ready bibliography metadata under `research/bibliography/citation-ready/`;
+- finalized T-613 assets under `results/thesis-assets/protocol-v2.1-final/`;
+- T-700/T-701 Word/structure rules;
+- T-611/T-612/T-613 whenever a composition choice touches a scientific claim.
 
 ### Word features
 
 Use:
 
-- numbered Heading styles;
+- A4 page and the current official-guidance-derived typography/spacing contract;
+- real numbered Heading styles;
 - automatic Table of Contents;
-- Word caption fields for figures/tables/equations;
+- Word caption fields for figures/tables/equations where practical;
 - automatic figure/table lists;
 - Word cross-references rather than manually typed numbering/page references;
-- controlled document styles for body, headings, captions, bibliography and appendices;
-- final update of fields before each review export.
+- controlled styles for body, headings, captions, bibliography and appendices;
+- deterministic conversion of validated `SRC-*` placeholders to IEEE numeric citations;
+- formatted reference list built from canonical bibliography metadata;
+- registered T-613 figure/table insertion without manually retyping result values;
+- glossary/front matter and controlled section/page breaks;
+- final field update before each review export where the tooling supports it.
+
+### Scientific firewall
+
+T-711 must not:
+
+- change any T-612 estimate, interval, denominator or interpretation boundary;
+- replace right-censored `recovery_time=null` with horizon 256 as an observed recovery time;
+- derive new statistical values from raw evidence;
+- substitute screenshots for T-613 quantitative evidence;
+- add a source outside the citation-ready layer without upstream bibliography governance;
+- invent supervisor details, acknowledgements, dedication or official declaration wording that has not actually been supplied.
 
 ### Review-ready outputs
 
-- thesis `.docx`;
-- PDF/render preview for visual QA where useful;
-- claim/citation/result traceability report;
-- figure/table register;
+- review-ready thesis `.docx`;
+- PDF/render preview for visual QA where feasible;
+- citation/reference traceability result;
+- figure/table placement register;
 - manual application-asset placement register;
-- unresolved reviewer/supervisor questions list, if any.
+- unresolved authoritative-input list, if any.
+
+The `.docx` should be structurally inspectable automatically and visually reviewed to the extent available in this environment. Final Microsoft Word inspection after field updates remains required before T-713 freeze.
 
 ## Manual application screenshot / GIF / video workflow
 
-The user captures real application media only when requested through a precise `ASSET-*` instruction.
+The user captures real application media only when requested through a precise `ASSET-*` instruction. Each requested capture records stable asset ID, type, exact surface/state, visible/hide requirements, purpose, thesis placement, Word treatment, defense use, static fallback and evidence link.
 
-Every requested capture records:
+Static-thesis rules:
 
-| Field | Required content |
-|---|---|
-| Asset ID | Stable `ASSET-APP-*` identifier |
-| Capture type | Screenshot / GIF / short video |
-| Exact app surface | Experiment / Run / Results / Evidence |
-| Exact state | protocol, record/run/config, method, condition and live/final context where relevant |
-| What must be visible | specific controls/GridWorld/chart/tooltip/status |
-| What to hide/crop | unrelated/private/noisy UI |
-| Purpose | exact implementation/workflow explanation supported |
-| Thesis placement | chapter/section and surrounding text |
-| Word treatment | target size/alignment/caption/provenance note |
-| Defense use | slide/role if reused |
-| Static fallback | mandatory when animation adds value |
-| Evidence link | source run/config/artifact/protocol IDs when applicable |
-
-### Static-thesis rule
-
-- The thesis argument must remain understandable in static print/PDF.
-- Animated material is supplemental.
-- Quantitative result claims use T-613 figures/tables, not screenshots.
-- A screenshot of the Results UI does not become scientific evidence merely because the UI displays stored results.
+- the thesis argument must remain understandable in static print/PDF;
+- animated material is supplemental;
+- quantitative result claims use T-613 figures/tables, not screenshots;
+- a screenshot of Results does not become scientific evidence merely because the UI displays stored results.
 
 ## T-712 — Supervisor/reviewer correction cycle
 
@@ -264,97 +202,27 @@ Before freeze:
 
 ## T-720 — Defense narrative and evidence map
 
-The defense is derived from the accepted final thesis and frozen evidence, not written independently.
-
-Outputs:
-
-- examiner-facing narrative;
-- slide outline with one primary message per slide;
-- slide-to-thesis/result/source evidence map;
-- asset list distinguishing generated figures from application media;
-- planned live-demo path and static fallback where useful;
-- likely examiner questions and evidence-grounded answer notes.
-
-Recheck current ICE-specific duration/content/file/demo rules before fixing the deck length.
+The defense is derived from the accepted final thesis and frozen evidence, not written independently. Outputs include examiner-facing narrative, slide outline, slide-to-evidence map, asset list, live-demo/static-fallback plan and likely examiner questions. Recheck current ICE-specific duration/content/file/demo rules before fixing deck length.
 
 ## T-721 — Final PowerPoint and speaker material
 
-### ChatGPT
-
-Preferred for:
-
-- slide narrative/order;
-- concise Greek slide copy;
-- speaker notes;
-- separate full spoken Greek script synchronized slide-by-slide;
-- transitions and pacing;
-- visual-content recommendations and exact user-capture instructions.
-
-### PowerPoint
-
-Authoritative final deck inspection/rehearsal surface:
-
-- layout/font/media compatibility;
-- speaker notes/Presenter View;
-- transitions/animations/media;
-- actual presentation-machine testing where practical;
-- any officially required export.
-
-### Canva — optional only
-
-Use only if it provides a concrete visual-polish benefit. Never rebuild scientific figures manually or retype result values. Revalidate any Canva → PPTX round trip in PowerPoint. Skip Canva if it adds no value.
+ChatGPT is preferred for slide narrative/order, concise Greek slide copy, speaker notes, full spoken script, transitions/pacing and exact capture guidance. PowerPoint is the final deck inspection/rehearsal surface. Canva is optional visual polish only and must never be used to rebuild scientific figures or retype results.
 
 ## T-722 — Presentation validation and rehearsal
 
-Validate:
-
-- current official duration/content/file rules;
-- every numerical claim against frozen evidence;
-- external claims against final thesis/citation-ready evidence;
-- terminology/settings against final thesis/application;
-- slide order and notes/script synchronization;
-- PowerPoint rendering on target setup;
-- chart/table readability;
-- media behavior;
-- rehearsal duration with safety margin;
-- any live demo plus tested static fallback.
-
-A live demo is never the only way to communicate an essential result.
+Validate current official rules, every numerical/external claim, terminology/settings, slide/notes synchronization, rendering, chart/table readability, media behavior, rehearsal duration and live-demo/static-fallback behavior. A live demo is never the only way to communicate an essential result.
 
 ## T-800 — Final bibliography / official-guidance audit
 
-Recheck:
-
-- bibliography freshness/citation-ready status;
-- every final thesis/presentation citation;
-- current official thesis/submission/defense requirements;
-- administrative metadata/files.
+Recheck bibliography freshness/citation-ready status, every final thesis/presentation citation, current official thesis/submission/defense requirements and administrative metadata/files.
 
 ## T-801 — Final consistency / reproducibility / privacy audit
 
-Audit as one package:
-
-- protocol/final run identities;
-- evidence/checksums/provenance;
-- analysis/figure/table regeneration;
-- thesis-result and slide-result numerical consistency;
-- citations/source attribution;
-- repository documentation/current-status consistency;
-- application media provenance;
-- privacy/secrets/personal data;
-- licences/copyright/redistribution boundaries.
+Audit protocol/final-run identities, evidence/checksums/provenance, analysis/asset regeneration, thesis/slide numerical consistency, citations/source attribution, documentation/current-status consistency, media provenance, privacy/secrets/personal data and licensing/copyright boundaries.
 
 ## T-802 — Final delivery readiness
 
-Confirm the accepted package contains the then-required versions of:
-
-- final thesis `.docx` and officially required PDF/export;
-- final PowerPoint `.pptx`;
-- embedded notes and separate spoken Greek script;
-- required reproducibility evidence/artifacts;
-- any official forms/files;
-- documented demo/static fallback;
-- standalone application package if/when T-803 is required by the chosen delivery scope.
+Confirm the accepted package contains the then-required versions of final thesis `.docx`/PDF, final `.pptx`, notes/script, reproducibility evidence/artifacts, official forms/files, demo/static fallback and standalone application package if/when T-803 is required.
 
 ## Direct user tools
 
