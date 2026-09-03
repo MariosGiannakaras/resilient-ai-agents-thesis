@@ -9,6 +9,7 @@ on:
       - "scripts/t711_build_entry_v3.py"
       - "scripts/t711_build_entry_v4.py"
       - "scripts/t711_build_entry_v5.py"
+      - "scripts/t711_build_entry_v6.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -35,7 +36,7 @@ jobs:
 
       - name: Build review-ready thesis
         run: |
-          python scripts/t711_build_entry_v5.py \
+          python scripts/t711_build_entry_v6.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
