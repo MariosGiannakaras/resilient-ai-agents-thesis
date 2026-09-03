@@ -21,8 +21,8 @@ Version-controlled repository for the complete thesis lifecycle: research contex
 | Pre-WP7 user approval | **APPROVED** on 2026-09-03 |
 | Current academic-guidance pass | **T-700 COMPLETE** |
 | Example-thesis structure/style review | **T-701 COMPLETE** |
-| Current task | **T-702 READY** — major-writing-gate bibliography freshness review and immutable re-sync |
-| Full Greek thesis drafting | **T-710 BLOCKED by T-702** |
+| Writing-gate bibliography refresh/re-sync | **T-702 COMPLETE** |
+| Current task | **T-710 READY** — complete Greek thesis drafting |
 | Standalone Windows packaging | Deferred to **T-803** after the thesis deliverable |
 
 The first protocol-v2.1 Study from `7442dcb65674dcb3bc9ce0c71996418289d79061` remains an immutable, unfinalized 216-job failed attempt. It is permanently excluded from accepted downstream evidence.
@@ -35,6 +35,7 @@ Accepted downstream identities:
 - T-611 600-record inventory SHA-256: `0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045`
 - T-612 analysis manifest SHA-256: `dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62`
 - T-613 asset manifest SHA-256: `9457275306fb633cb58d9af2e402531ff7d56a0f1f0f5eadc176f4a05726abd8`
+- T-702 immutable bibliography checkout: `ada0d1aec7511098fd12610ae9e5abe7aea875cd`
 
 T-613 finalized **31 figures, 12 table assets and 117 registered output variants**. The complete 121-file package reproduced twice byte-for-byte. Twenty-eight of thirty planned inventory categories are supported; categories 1 and 6 remain explicitly unavailable because the accepted T-612 package contains no registered probe/checkpoint-series values, and no post-hoc reconstruction is allowed.
 
@@ -145,25 +146,21 @@ The final research-first manuscript architecture is:
 
 Results and Discussion are intentionally separate. This project has three distinct RQs/estimands, paired contrasts, uncertainty intervals, sensitivity analysis and right-censoring; merging interpretation into a generic “Evaluation/Conclusions” chapter would weaken the scientific argument.
 
-### T-702 — next and READY
+### T-702 — complete
 
-The currently consumed bibliography snapshot is still pinned to upstream `MariosGiannakaras/ThesisBibliography` SHA:
+The major-writing-gate literature freshness review was completed on 2026-09-03 in canonical `MariosGiannakaras/ThesisBibliography`. Two recent peer-reviewed supporting sources were promoted through normal source/analysis/evidence/selection governance, with explicit boundaries preventing overinterpretation or protocol retrofitting.
 
-`f10afcc41e3e1bd877d884cf7a5ae6b5284046f5`
+The accepted immutable consumer checkout is:
 
-It remains a valid immutable prior snapshot, but REQ-RES-012 requires a **new dated literature freshness review at the major writing gate**.
+`ada0d1aec7511098fd12610ae9e5abe7aea875cd`
 
-T-702 therefore must:
+The controlled consumer workflow synchronized that snapshot into `research/bibliography/` and validated it at **599 canonical sources, 123 citation-ready sources, 19 research materials, 281 indexed originals and 1,634 integrity-covered corpus files**. Trust-aware consumer validation currently reports **40 thesis references: 38 citation-ready and 2 research-material**.
 
-1. execute the writing-gate freshness review in canonical `MariosGiannakaras/ThesisBibliography`;
-2. process any genuinely relevant new sources through its normal intake/analysis/evidence/selection lifecycle;
-3. create a new immutable consumer identity even if the citation-ready selected set is unchanged;
-4. synchronize that accepted snapshot into `research/bibliography/` through the controlled consumer workflow;
-5. verify citation-ready integrity/provenance.
+T-702 changed no protocol-v2.1 design, accepted T-611 evidence, T-612 estimands/results or T-613 quantitative assets. The prior `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5` snapshot and historical `bibliography-integration-v3` label remain immutable provenance history only.
 
-**T-710 remains blocked until T-702 is complete.**
+**T-710 is now dependency-valid and READY.**
 
-## Planned drafting sequence after T-702
+## T-710 drafting sequence
 
 The final document order is not the drafting order. The evidence-driven sequence is:
 
@@ -233,6 +230,7 @@ Important supporting authorities now include:
 - `results/final-evidence/protocol-v2.1-final/`
 - `results/analysis/protocol-v2.1-final/`
 - `results/thesis-assets/protocol-v2.1-final/`
+- `research/bibliography/notes/writing-freshness-review-2026-09-03.md`
 - `docs/thesis/OFFICIAL_GUIDANCE_SNAPSHOT_2026-09-03.md`
 - `docs/thesis/THESIS_STRUCTURE_AND_STYLE_GUIDE.md`
 - `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md`
@@ -247,8 +245,8 @@ Important supporting authorities now include:
 - Non-recovery remains explicit; the horizon is never substituted as fake observed recovery time.
 - Final figures/tables/results come from frozen accepted evidence, not UI transcription.
 - T-612 estimands/statistics are not redesigned during writing.
-- WP7 approval is satisfied, but declared downstream dependencies still apply; specifically, T-710 waits for T-702.
+- WP7 approval and the T-702 writing-gate bibliography refresh are satisfied; T-710 may proceed under the frozen evidence and synchronized bibliography boundaries.
 
 ## End-to-end lifecycle
 
-> methodology/bibliography → feasibility/pilots → protocol freeze → validated Study backend/application → final protocol-v2.1 execution → evidence validation/freeze → predeclared RQ1/RQ2/RQ3 analysis → reproducible thesis/appendix/defense assets → **WP7 approval (satisfied)** → official-guidance/example review → **writing-gate bibliography freshness/re-sync (T-702)** → Greek thesis/review → defense presentation → final audit/delivery
+> methodology/bibliography → feasibility/pilots → protocol freeze → validated Study backend/application → final protocol-v2.1 execution → evidence validation/freeze → predeclared RQ1/RQ2/RQ3 analysis → reproducible thesis/appendix/defense assets → **WP7 approval (satisfied)** → official-guidance/example review → **writing-gate bibliography freshness/re-sync (T-702 complete)** → **Greek thesis drafting (T-710 READY)** → review → defense presentation → final audit/delivery
