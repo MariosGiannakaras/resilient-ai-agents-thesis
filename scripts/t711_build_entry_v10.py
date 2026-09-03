@@ -146,32 +146,33 @@ def _render_results_synthesis(path: Path) -> None:
     draw.text((x0 + 25, y1 - 44), "μεγαλύτερο = καλύτερο", font=small_font, fill=(90, 90, 90))
 
     # RQ2: accepted adaptation-benefit means for the two persistent remap conditions.
+    # Display labels preserve the exact three-decimal values reported in Chapter 5.
     x0, y0, x1, y1 = panels[1]
     draw.text((x0 + 25, y0 + 20), "RQ2 · Όφελος προσαρμογής", font=panel_font, fill=(20, 20, 20))
     draw.text((x0 + 25, y0 + 73), "Persistent action remaps", font=small_font, fill=(70, 70, 70))
 
     cycle = [
-        ("Q-Learning", 32.269),
-        ("SARSA", 31.127),
-        ("Dyna-Q+", 26.102),
-        ("DQN", 6.623),
-        ("PPO", 0.060),
+        ("Q-Learning", 32.269, "+32,269"),
+        ("SARSA", 31.127, "+31,127"),
+        ("Dyna-Q+", 26.102, "+26,102"),
+        ("DQN", 6.623, "+6,623"),
+        ("PPO", 0.060, "+0,060"),
     ]
     swap = [
-        ("Q-Learning", 22.665),
-        ("SARSA", 13.785),
-        ("Dyna-Q+", 9.712),
-        ("DQN", 1.723),
-        ("PPO", -0.515),
+        ("Q-Learning", 22.665, "+22,665"),
+        ("SARSA", 13.785, "+13,785"),
+        ("Dyna-Q+", 9.712, "+9,712"),
+        ("DQN", 1.723, "+1,723"),
+        ("PPO", -0.515, "−0,515"),
     ]
 
-    def mini_group(y: int, label: str, data: list[tuple[str, float]]) -> int:
+    def mini_group(y: int, label: str, data: list[tuple[str, float, str]]) -> int:
         draw.text((x0 + 25, y), label, font=body_font, fill=(30, 30, 30))
         y += 35
         label_x, zero, end = x0 + 25, x0 + 180, x1 - 48
         draw.line((zero, y - 3, zero, y + 5 * 34 - 9), fill=(125, 125, 125), width=2)
         scale = (end - zero) / 35.0
-        for index, (method, numeric) in enumerate(data):
+        for index, (method, numeric, label_value) in enumerate(data):
             row_y = y + index * 34
             draw.text((label_x, row_y - 2), method, font=small_font, fill=METHOD_COLORS[method])
             value_x = zero + numeric * scale
@@ -179,7 +180,6 @@ def _render_results_synthesis(path: Path) -> None:
                 draw.rectangle((zero, row_y + 7, value_x, row_y + 20), fill=METHOD_COLORS[method])
             else:
                 draw.rectangle((value_x, row_y + 7, zero, row_y + 20), fill=METHOD_COLORS[method])
-            label_value = f"{numeric:+.2f}".replace("-", "−").replace(".", ",")
             label_box = draw.textbbox((0, 0), label_value, font=small_font)
             text_x = value_x + 6 if numeric >= 0 else value_x - (label_box[2] - label_box[0]) - 6
             draw.text((text_x, row_y - 3), label_value, font=small_font, fill=(35, 35, 35))
@@ -191,7 +191,7 @@ def _render_results_synthesis(path: Path) -> None:
 
     # RQ3: primary recovery incidence only; timing/censoring semantics remain explicit.
     x0, y0, x1, y1 = panels[2]
-    draw.text((x0 + 25, y0 + 20), "RQ3 · Ανάκαμψη @ τ=0,10", font=panel_font, fill=(20, 20, 20))
+    draw.text((x0 + 25, y0 + 20), "RQ3 · Ανάκαμψη (τ=0,10)", font=panel_font, fill=(20, 20, 20))
     draw.text((x0 + 25, y0 + 73), "Recovered roots / 12", font=small_font, fill=(70, 70, 70))
     draw.text((x0 + 270, y0 + 112), "cycle", font=small_font, fill=(70, 70, 70))
     draw.text((x0 + 405, y0 + 112), "swap", font=small_font, fill=(70, 70, 70))
