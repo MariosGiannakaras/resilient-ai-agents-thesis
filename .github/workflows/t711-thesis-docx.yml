@@ -8,6 +8,7 @@ on:
       - "scripts/t711_build_entry_v2.py"
       - "scripts/t711_build_entry_v3.py"
       - "scripts/t711_build_entry_v4.py"
+      - "scripts/t711_build_entry_v5.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -34,7 +35,7 @@ jobs:
 
       - name: Build review-ready thesis
         run: |
-          python scripts/t711_build_entry_v4.py \
+          python scripts/t711_build_entry_v5.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -45,13 +46,18 @@ jobs:
           from pathlib import Path
           report = json.loads(Path("artifacts/t711/qa-report.json").read_text(encoding="utf-8"))
           assert report["status"] == "pass", report
-          assert report["citation_count"] > 0, report
-          assert report["inserted_asset_count"] > 0, report
+          assert report["citation_count"] == report["verified_reference_identity_count"] == 14, report
+          assert report["planned_figure_count"] == report["inserted_asset_count"] == 24, report
+          assert report["cached_figure_entry_count"] == report["inserted_asset_count"], report
+          assert report.get("cached_table_entry_count") == report.get("rendered_table_count") == report["table_count"], report
           assert not report["unresolved_src_ids"], report
           assert not report["contains_drafting_notes"], report
           assert not report.get("corrupt_math_tokens"), report
-          assert report.get("cached_figure_entry_count") == report["inserted_asset_count"], report
-          assert report.get("cached_table_entry_count") == report.get("rendered_table_count") == report["table_count"], report
+          assert not report.get("missing_planned_figure_ids"), report
+          assert not report.get("unexpected_inserted_figure_ids"), report
+          assert not report.get("duplicate_inserted_figure_ids"), report
+          assert not report.get("visible_asset_id_residue"), report
+          assert not report.get("bad_reference_phrases"), report
           print(
               f"T-711 structural QA: citations={report['citation_count']} "
               f"assets={report['inserted_asset_count']} tables={report['table_count']} "
