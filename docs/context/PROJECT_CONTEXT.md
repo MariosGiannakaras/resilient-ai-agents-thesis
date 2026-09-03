@@ -20,7 +20,7 @@ GridWorld is the controlled experimental testbed and visualization environment, 
 
 `MariosGiannakaras/ThesisBibliography` owns discovery, originals, conversion/OCR, scientific analysis, evidence verification and citation-ready corpus generation. This repo consumes versioned generated output read-only.
 
-The current protocol-v2 consumer snapshot is pinned to upstream SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5` through thesis PR #96. `bibliography-integration-v3` remains immutable historical terminology; generated bibliography content is not hand-edited here.
+The current major-writing-gate consumer checkout is pinned to upstream SHA `ada0d1aec7511098fd12610ae9e5abe7aea875cd` through thesis PR #130. Integrated integrity records 599 canonical sources, 123 citation-ready sources, 19 research materials and 281 indexed originals. Historical SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5` and `bibliography-integration-v3` remain immutable prior-snapshot provenance terminology; generated bibliography content is never hand-edited here.
 
 ## Immutable historical science
 
@@ -92,11 +92,11 @@ Current reusable infrastructure includes:
 
 The first final-reserve attempt stopped fail-closed at 216/603 jobs and remains preserved unfinalized and excluded. The DEC-062 replacement completed and finalized 603/603 jobs from one clean corrected commit; T-611 validated and froze only that replacement. T-612 reproduced and interpreted only the predeclared analysis, and T-613 deterministically finalized the registered thesis/appendix/defense evidence assets from T-612 alone.
 
-## Application architecture and current restart
+## Accepted application architecture
 
-DEC-059 remains the **PySide6 / Qt 6 Widgets framework/runtime authority** over the framework-neutral Study backend. DEC-061 is the current T-534 product/UX amendment. Historical Streamlit/React/NiceGUI implementations are superseded and exist only as history/reference.
+DEC-059 remains the **PySide6 / Qt 6 Widgets framework/runtime authority** over the framework-neutral Study backend. DEC-061 fixes the accepted experiment-first product/UX model. Historical Streamlit/React/NiceGUI implementations are superseded and exist only as history/reference.
 
-The T-534 application is **experiment-first**. Its primary user-facing architecture is:
+The accepted application architecture is:
 
 > **Experiment / Run / Results / Evidence**
 
@@ -110,38 +110,24 @@ The user should understand the scientific experiment before StudyStore/jobs/arti
 - Results answer RQ1 Learning, RQ2 Resilience/Adaptation and RQ3 Recovery;
 - Evidence exposes validation/exports/readiness first and reproducibility internals on demand.
 
-The previously paused/historical UI implementation is not the basis for continued presentation work. T-534 starts from fresh current `main` and derives its design from current protocol-v2.1/scientific contracts and DEC-061 rather than pre-v2.1 assumptions.
+The UI preserves UI-neutral Study/results/evidence read models, execution supervision/policy, live-observer/event and provenance behavior. Scientific reduction, thresholds, recovery decisions, intervals, RNG, checkpoint identity and finalization never move into Qt state. Technical IDs, roots/layouts, states/observations, hashes and lineage use progressive disclosure rather than dominate primary screens.
 
-Existing `src/resilient_agents/desktop/` code must be classified before replacement:
-
-- preserve UI-neutral Study/results/evidence read models, execution supervision/policy, live-observer/event and provenance behavior that still encodes current backend contracts;
-- reuse truthful GridWorld drawing primitives where useful;
-- presentation widgets/windows/pages/styles/navigation/copy may be replaced from scratch as needed;
-- remove active protocol-v2.0/DEC-058-only/T-528 presentation assumptions;
-- never move scientific reduction, thresholds, recovery decisions, intervals, RNG, checkpoint identity or finalization into Qt state;
-- UI displays validated stored evidence and DEVELOPMENT/synthetic fixtures only during implementation/testing;
-- no UI action may bypass the separate final-scientific-experiment authorization gate.
-
-Run must prioritize the GridWorld: one large nominal panel in Phase A and two exact-matched large Frozen/Adaptive panels side-by-side in Phase B. Results are organized explicitly by RQ1/RQ2/RQ3. Technical IDs, roots/layouts, states/observations, hashes and lineage use progressive disclosure rather than dominate primary screens.
-
-Final standalone Windows packaging remains post-thesis/deferred and is not a blocker for the UI restart.
+Final standalone Windows packaging remains post-thesis/deferred and is not a blocker for WP7 drafting.
 
 ## Repository state and hygiene
 
 `main` is the only implementation base. Historical scientific/evidence history remains in Git and must not be rewritten. Remote merged/stale working branches may be removed after confirming they contain no unique required work; deliberate archive/provenance branches may remain.
 
-For the UI implementation, use one fresh branch from current `main` and one corresponding PR. Do not continue an old paused worktree or branch.
-
 ## Current lifecycle
 
 Canonical concrete state is in `TASKS.md` and `CURRENT_STATUS.md`.
 
-1. Protocol-v2.1 scientific authority, recovery/comparison amendment and pre-final readiness hardening are complete.
-2. DEC-061 now fixes the experiment-first T-534 product/UX contract without changing science.
-3. T-534 UI implementation is allowed without opening the final reserve.
-4. T-610 final execution and DEC-062 replacement are complete through the unchanged backend guard.
-5. T-611 validation/freeze, T-612 analysis and T-613 evidence packaging are complete.
-6. Explicit user approval is still required before T-700 or any thesis Results/Discussion/WP7 writing.
-7. Final Windows standalone packaging remains deferred until after the thesis.
+1. Protocol-v2.1 scientific authority, final execution/recovery, T-611 evidence freeze, T-612 statistical analysis and T-613 deterministic thesis/defense assets are complete.
+2. The accepted PySide6 experiment-first application is complete through T-534/T-535/T-536 and active-tree cleanup T-537.
+3. Explicit pre-WP7 user approval is satisfied.
+4. T-700 official-guidance recheck and T-701 example-thesis structure/style review are complete.
+5. T-702 major-writing-gate literature freshness review and immutable bibliography consumer re-sync are complete at checkout `ada0d1aec7511098fd12610ae9e5abe7aea875cd`; the refresh changed no frozen scientific design/evidence/results/assets.
+6. `T-710` complete Greek thesis drafting is the next dependency-valid task.
+7. Supervisor corrections/review-ready Word/final freeze, defense work, final audits and standalone Windows packaging remain downstream under their declared tasks.
 
-No green CI, UI screenshot, synthetic smoke, repository cleanup or completed implementation task by itself authorizes the final scientific experiment or thesis Results/Discussion writing.
+No green CI, UI screenshot, synthetic smoke, repository cleanup or writing convenience authorizes changing frozen scientific evidence or redefining accepted estimands/results. T-710 prose must map to the accepted T-611/T-612/T-613 artifacts and synchronized citation-ready bibliography.

@@ -1,8 +1,8 @@
 # WP7 / WP8 Thesis, Defense, and Delivery Tool Workflow
 
-**Status:** Active post-evidence workflow. The explicit pre-WP7 user approval gate was satisfied on 2026-09-03. T-700 and T-701 are complete. `docs/context/TASKS.md` remains the only task-status/dependency ledger.
+**Status:** Active post-evidence workflow. The explicit pre-WP7 user approval gate was satisfied on 2026-09-03. T-700, T-701 and T-702 are complete. `docs/context/TASKS.md` remains the only task-status/dependency ledger.
 
-**Current next gate:** T-702 bibliography freshness/re-sync must complete before T-710 full drafting.
+**Current next task:** T-710 complete Greek thesis drafting is READY after the accepted immutable writing-gate bibliography re-sync.
 
 ## Purpose
 
@@ -26,16 +26,17 @@ The following prerequisites are objectively satisfied:
 - deterministic thesis/appendix/defense quantitative asset package finalized by T-613;
 - explicit pre-WP7 user approval granted on 2026-09-03;
 - current public academic-guidance recheck completed by T-700;
-- contextual example-thesis review and structure/style guide completed by T-701.
+- contextual example-thesis review and structure/style guide completed by T-701;
+- dated major-writing-gate bibliography freshness review, immutable consumer snapshot and integrated citation-ready validation completed by T-702.
 
-The remaining gate before full thesis drafting is T-702.
+No remaining prerequisite blocks T-710.
 
 ## Source and authority hierarchy for WP7
 
 When drafting or reviewing a claim, use the narrowest appropriate authority:
 
 1. **T-611/T-612/T-613 accepted evidence** — final experimental/result claims;
-2. **citation-ready `ThesisBibliography` evidence** — external scientific/factual claims;
+2. **synchronized citation-ready `ThesisBibliography` evidence** — external scientific/factual claims;
 3. **accepted repository decisions/configs/code/test records** — exact project methodology/implementation claims;
 4. **T-700 official academic guidance** — required structure/format/submission rules;
 5. **actual supervisor instructions** — when supplied;
@@ -76,53 +77,35 @@ The final manuscript architecture is seven substantive chapters:
 
 Results and Discussion remain separate by design.
 
-## T-702 — READY: major-writing-gate bibliography freshness and re-sync
+## T-702 — COMPLETE: major-writing-gate bibliography freshness and re-sync
 
-### Why this task exists
+### Canonical outcome
 
-REQ-RES-012 requires a literature refresh before major writing gates. The existing immutable consumer snapshot was sufficient for the earlier protocol/research stage, but its August 2026 freshness review was targeted at protocol-freeze decisions and cannot serve as dated evidence that the final writing literature was rechecked.
+The dated writing-gate review was completed on 2026-09-03 in canonical `MariosGiannakaras/ThesisBibliography`. It screened recent work against the actual final RQs/methods/non-stationarity/recovery/adaptation needs rather than expanding scope for recency alone.
 
-### Canonical ownership
+Two non-redundant 2025 peer-reviewed supporting sources were promoted through the normal upstream intake → scientific analysis → evidence → selection/citation-ready lifecycle:
 
-The work occurs in:
+- `SRC-6F4F8BE003` — ICLR 2025, online RL in non-stationary context-driven environments;
+- `SRC-D38364B32C` — CoLLAs/PMLR 2025, adaptive partial models for model-based RL.
 
-`MariosGiannakaras/ThesisBibliography`
+The accepted immutable consumer checkout is `ada0d1aec7511098fd12610ae9e5abe7aea875cd`. It was synchronized through the controlled read-only thesis consumer workflow and PR #130. Integrated validation records 599 canonical sources, 123 citation-ready sources, 19 research materials, 281 indexed originals and 1,634 integrity-covered corpus files; trust-aware thesis-reference validation reports 40 references, of which 38 are citation-ready and 2 are research-material.
 
-Do not bypass that repository by adding ad-hoc primary sources or manually curated references directly to this thesis repository.
+### Scientific firewall outcome
 
-### T-702 work
-
-1. Recover actual current `ThesisBibliography` Git/GitHub state and read its own current authorities.
-2. Run a bounded current-literature search aligned to the **actual final thesis**, especially:
-   - resilient/adaptive reinforcement learning under nonstationarity/change;
-   - robustness/adaptation under action remapping, action failure and observation corruption where directly relevant;
-   - recovery/resilience measurement in sequential decision agents;
-   - Dyna/Dyna-Q+ and planning under environmental change;
-   - relevant comparative evidence involving tabular RL, DQN/PPO or model-based/planning methods;
-   - methodological evidence needed for the final Discussion/limitations.
-3. Deduplicate against the existing corpus by content/identity, not filename alone.
-4. Process genuinely useful additions through the existing upstream intake → conversion/OCR where needed → scientific analysis → evidence/excerpts → metadata verification → selection/citation-ready workflow.
-5. Record a dated writing-gate freshness report, including searches that found no decision-relevant new evidence.
-6. Produce a new immutable consumer snapshot identity even when no source changes the selected citation-ready set; the snapshot proves the writing gate itself was checked.
-7. Sync the accepted new snapshot into this repository through the existing controlled consumer mechanism.
-8. Verify integrity, provenance and citation-ready status.
-
-### Scientific firewall
-
-T-702 may improve/refresh literature coverage for writing. It may **not**:
+The review found no evidence requiring protocol amendment, re-analysis, new experimental roots/methods, changed estimands or changed recovery thresholds. T-702 therefore changed only the writing-evidence layer. It did **not**:
 
 - retune methods;
 - change roots/layouts/conditions/budgets;
 - redefine RQs/estimands;
-- change T-612 values or interpretations merely because a newer paper is interesting;
+- change T-612 values or accepted interpretations;
 - regenerate T-613 quantitative results under another analysis;
 - retrospectively change the frozen protocol.
 
-If newer literature materially challenges interpretation, it is discussed as context/limitation in Chapter 6, not used to rewrite experimental history.
+Newer literature may inform Chapter 6 context/limitations, but cannot rewrite experimental history.
 
-## T-710 — Draft the complete Greek thesis
+## T-710 — READY: Draft the complete Greek thesis
 
-T-710 begins only after T-702 is objectively complete and merged/synchronized.
+T-710 may begin because T-702 is objectively complete, synchronized and validated.
 
 ### Required preparation before prose generation
 
