@@ -1,0 +1,107 @@
+name: T-715 four-file thesis rewrite workbook
+
+on:
+  pull_request:
+    paths:
+      - "scripts/export_thesis_rewrite_workbook.py"
+      - "scripts/export_thesis_text_review_pack.py"
+      - "scripts/t711_build_entry_v26.py"
+      - "scripts/t715_reader_expansions.py"
+      - "research/bibliography/sources/**"
+      - "research/bibliography/citation-ready/**"
+      - ".github/workflows/t715-thesis-rewrite-workbook.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rewrite-workbook:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install document dependencies
+        run: python -m pip install --disable-pip-version-check python-docx==1.2.0 Pillow==11.3.0 uv
+
+      - name: Prepare deterministic UI-render environment
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends libegl1
+          uv sync --locked --group gridworld-prototype --no-progress
+          uv pip install --python .venv/bin/python --requirement requirements/application-ui.txt
+
+      - name: Render DEVELOPMENT-only application screenshots
+        env:
+          QT_QPA_PLATFORM: offscreen
+          PYTHONPATH: src
+        run: uv run --no-sync python scripts/render_ui_screenshots.py --output artifacts/t715-ui
+
+      - name: Build corrected v26 reader thesis
+        env:
+          T715_UI_SCREENSHOT_DIR: artifacts/t715-ui
+        run: |
+          python scripts/t711_build_entry_v26.py \
+            --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
+            --qa-output artifacts/t711/qa-report.json
+
+      - name: Export complete text ledger
+        run: |
+          python scripts/export_thesis_text_review_pack.py \
+            --docx artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
+            --qa artifacts/t711/qa-report.json \
+            --output artifacts/t715-text-review
+
+      - name: Export four-file rewrite workbook
+        run: |
+          python scripts/export_thesis_rewrite_workbook.py \
+            --ledger artifacts/t715-text-review/data/paragraph_ledger.csv \
+            --qa artifacts/t711/qa-report.json \
+            --output artifacts/t715-rewrite-workbook
+
+      - name: Validate workbook shape and source coverage
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("artifacts/t715-rewrite-workbook")
+          files = sorted(root.glob("*.md"))
+          assert [p.name for p in files] == [
+              "01_PIGES_KAI_KEIMENO_APO_PIGES.md",
+              "02_THEORIA_KAI_SYNTHESI_XORIS_AMESI_PIGI.md",
+              "03_METHODOLOGIA_GRIDWORLD_KAI_EFARMOGI.md",
+              "04_APOTELESMATA_SYZITISI_KAI_SYMPERASMATA.md",
+          ], files
+          qa = json.loads(Path("artifacts/t711/qa-report.json").read_text(encoding="utf-8"))
+          assert qa["status"] == "pass", qa
+          assert qa["citation_count"] == 17, qa
+          assert qa.get("t715_front_matter_reader_duplication_fixed") is True, qa
+          assert qa.get("t715_redundant_front_marker_count") == 0, qa
+          assert qa.get("t715_summary_heading_count") == 1, qa
+          assert qa.get("t715_abstract_heading_count") == 1, qa
+          assert qa.get("t715_rq3_appendix_forced_pagebreak_removed") is True, qa
+          source_file = root / "01_PIGES_KAI_KEIMENO_APO_PIGES.md"
+          source_text = source_file.read_text(encoding="utf-8")
+          for sid in qa["citation_map"]:
+              assert f"# [{qa['citation_map'][sid]}] {sid}" in source_text, sid
+              source_path = Path("research/bibliography/sources") / f"{sid}.md"
+              assert source_path.exists() and source_path.stat().st_size > 0, source_path
+          assert "### Η δική μου τελική έκδοση" in source_text
+          print("four-file thesis rewrite workbook: PASS")
+          PY
+
+      - name: Upload only the four workbook files
+        uses: actions/upload-artifact@v4
+        with:
+          name: t715-thesis-rewrite-workbook-4-files
+          path: artifacts/t715-rewrite-workbook/*.md
+          if-no-files-found: error
+          retention-days: 30
