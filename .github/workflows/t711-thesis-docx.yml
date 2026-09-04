@@ -1,4 +1,4 @@
-name: T-711/T-714 thesis DOCX QA
+name: T-711/T-714/T-715 thesis DOCX QA
 
 on:
   pull_request:
@@ -22,6 +22,7 @@ on:
       - "scripts/t711_build_entry_v16.py"
       - "scripts/t711_build_entry_v17.py"
       - "scripts/t711_build_entry_v18.py"
+      - "scripts/t711_build_entry_v19.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -46,9 +47,9 @@ jobs:
       - name: Install pinned document dependencies
         run: python -m pip install --disable-pip-version-check python-docx==1.2.0 Pillow==11.3.0
 
-      - name: Build hardened review thesis
+      - name: Build reader-scoped review thesis
         run: |
-          python scripts/t711_build_entry_v18.py \
+          python scripts/t711_build_entry_v19.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -68,6 +69,19 @@ jobs:
           assert report["output_sha256"] == actual_sha, (report["output_sha256"], actual_sha)
           assert report.get("final_artifact_metadata_reconciled") is True, report
           assert report.get("t711a_hardening_version") == 18, report
+          assert report.get("t715_reader_scope_simplification") is True, report
+          assert report.get("t715_detailed_scientific_source_preserved") is True, report
+          assert report.get("t715_main_registered_figure_count") == 9, report
+          assert report.get("t715_appendix_registered_figure_count") == 15, report
+          assert report.get("t715_total_registered_figure_count") == 24, report
+          assert not report.get("t715_main_forbidden_internal_detail"), report
+          assert report.get("t715_main_word_count_approx", 0) >= 8000, report
+          assert report.get("t715_main_word_count_approx", 0) <= 18000, report
+          assert report.get("t715_secondary_diagnostics_moved_to_appendix") == [
+              "FIG-RQ2-010-CONDITIONS",
+              "FIG-RQ3-019-CONDITIONAL",
+              "FIG-RQ3-023-SENSITIVITY",
+          ], report
           assert report.get("chapter4_flow_keep_together_applied") is True, report
           assert report.get("chapter4_flow_match_count") == 1, report
           assert report.get("canonical_results_source_synchronized") is True, report
@@ -81,7 +95,7 @@ jobs:
           assert not report.get("glossary_terms_without_keep_with_next"), report
           assert report.get("t711a_reader_text_rescanned_after_save") is True, report
           assert report.get("paragraph_count") == report.get("post_synthesis_paragraph_count"), report
-          assert report.get("paragraph_count", 0) >= 700, report
+          assert report.get("paragraph_count", 0) >= 450, report
           assert report["citation_count"] == report["verified_reference_identity_count"] == 17, report
           assert report.get("expected_reference_count") == 17, report
           assert report.get("targeted_related_work_citations_present") is True, report
@@ -130,18 +144,18 @@ jobs:
           assert not report.get("duplicate_inserted_figure_ids"), report
           assert not report.get("bad_reference_phrases"), report
           print(
-              f"T-714 v18 QA: citations={report['citation_count']} "
-              f"registered_assets={report['inserted_asset_count']} tables={report['table_count']} "
-              f"captions_el={report['localized_figure_caption_count']} alt={report['image_alt_text_count']} "
-              f"glossary_terms={report['glossary_term_count']} placeholders={report['placeholder_count']} "
-              f"sha={actual_sha}"
+              f"T-715 QA: main_words~{report['t715_main_word_count_approx']} "
+              f"main_figures={report['t715_main_registered_figure_count']} "
+              f"appendix_figures={report['t715_appendix_registered_figure_count']} "
+              f"citations={report['citation_count']} tables={report['table_count']} "
+              f"placeholders={report['placeholder_count']} sha={actual_sha}"
           )
           PY
 
       - name: Upload review artifact
         uses: actions/upload-artifact@v4
         with:
-          name: t711-review-ready-thesis
+          name: t715-reader-scoped-review-thesis
           path: artifacts/t711/
           if-no-files-found: error
           retention-days: 30
