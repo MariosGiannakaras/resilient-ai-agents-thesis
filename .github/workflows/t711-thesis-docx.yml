@@ -24,6 +24,7 @@ on:
       - "scripts/t711_build_entry_v18.py"
       - "scripts/t711_build_entry_v19.py"
       - "scripts/t711_build_entry_v20.py"
+      - "scripts/t711_build_entry_v21.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -50,7 +51,7 @@ jobs:
 
       - name: Build reader-scoped review thesis
         run: |
-          python scripts/t711_build_entry_v20.py \
+          python scripts/t711_build_entry_v21.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -72,14 +73,15 @@ jobs:
           assert report.get("t711a_hardening_version") == 18, report
           assert report.get("t715_reader_scope_simplification") is True, report
           assert report.get("t715_detailed_scientific_source_preserved") is True, report
-          assert report.get("t715_main_registered_figure_count") == 9, report
-          assert report.get("t715_appendix_registered_figure_count") == 15, report
+          assert report.get("t715_v13_length_guard_rebased") is True, report
+          assert report.get("t715_figure_numbering_preserved") is True, report
+          assert report.get("t715_main_registered_figure_count") == 10, report
+          assert report.get("t715_appendix_registered_figure_count") == 14, report
           assert report.get("t715_total_registered_figure_count") == 24, report
           assert not report.get("t715_main_forbidden_internal_detail"), report
           assert report.get("t715_main_word_count_approx", 0) >= 8000, report
           assert report.get("t715_main_word_count_approx", 0) <= 18000, report
           assert report.get("t715_secondary_diagnostics_moved_to_appendix") == [
-              "FIG-RQ2-010-CONDITIONS",
               "FIG-RQ3-019-CONDITIONAL",
               "FIG-RQ3-023-SENSITIVITY",
           ], report
