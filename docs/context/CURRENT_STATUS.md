@@ -1,6 +1,6 @@
 # Current Project Status
 
-**Date:** 2026-09-04  
+**Date:** 2026-09-05  
 **Status:** Authoritative compact current-state summary
 
 `docs/context/TASKS.md` is the canonical dependency/task ledger. Objective Git/GitHub/evidence state overrides stale prose after interruption.
@@ -22,6 +22,11 @@
 - `T-710` is **COMPLETE**. The evidence-grounded manuscript at `docs/thesis/draft/` contains Greek summary/keywords, English abstract/keywords, Chapters 1–7, evidence map, glossary/acronyms, appendix draft and manuscript/citation/asset handoff register. PR #132 corrected a corpus-only citation residue, passed Repository checks #929 including 427 tests and installed-bibliography validation, and was squash-merged as `b8019ece98b9f6a89350b8aa52c205b20225f013`.
 - `T-711` is **COMPLETE**. PR #134 produced and validated the review-ready editable Word thesis and was squash-merged as `8d67e578cd18253a46a8185bd00adfb2dc0f29e2`; PR #135 added the bounded composition-only “results at a glance” synthesis and stricter final-artifact QA, squash-merged as `40ea5fdddd9d463916915d5655ea14c0bb869146`. The accepted review artifact contains all 24 planned registered scientific figures plus one unnumbered synthesis graphic, 14 verified references and 3 Word tables, with 83/83 rendered pages covered by visual QA. Its accepted DOCX SHA-256 is `ee8bcc13191046391654063fba870ed8799bd7c91da77882ed17154b6eaa68b7`. No protocol-v2.1, T-611, T-612 or T-613 scientific value/estimand was changed.
 - `T-714` is **COMPLETE**. PR #136 completed the bounded pre-supervisor academic/compliance hardening and was squash-merged as `42afba20fd5a7e9d3912418d0847b42e566aaca0`. The hardened review artifact contains 17 verified references, all 24 registered scientific figures plus one unnumbered synthesis graphic, 25/25 alt texts and four Word tables of which three are numbered. Exact head `901b53e3fd7a8b84daee37dbbd485f1ff2173c55` passed Repository and DOCX QA; the final DOCX SHA-256 is `70c897dcda432c3bc3f5b66b3714d701fd895c9ed2e6ce8ff14b19bc46f9ba77`, with 84/84 rendered pages covered by visual QA. Exactly three official-person/declaration placeholders remain intentionally unresolved for review mode. Frozen protocol-v2.1 science, T-611/T-612 values and registered T-613 scientific media bytes were unchanged.
+- `T-715` is **IN_PROGRESS** on PR #138 (`thesis/t715-reader-scope-simplification`). The user explicitly authorized/resumed this bounded internal reader-scope and audit-reconciliation cycle on 2026-09-05. It is not supervisor feedback and does not reopen `T-712`.
+- The T-715 reader composition remains intentionally shorter than T-714 while preserving the complete frozen evidence package. It keeps 10 registered scientific figures in the main body and 14 in appendices, plus the existing synthesis graphic and two deterministic DEVELOPMENT-only PySide6 screenshots that are explanatory only.
+- The supplied audit and prior answer were reconciled against repository authorities before implementation. The corrected composition now uses the frozen facts for tuning (180 units; winners `q-c06`, `sarsa-c06`, `dqn-c05`, `ppo-c06`, `dyna-c03`), final sizing (12 roots; max half-width 0.1428), disturbance semantics, seed streams, RQ1/RQ2 definitions and RQ3 recovery (32-interaction windows, directed tolerance 0.10, two-window stability, right-censoring at 256).
+- `scripts/t715_audit_hardening.py` and `scripts/t711_build_entry_v27.py` add 26 bounded reader-facing clarification paragraphs after the v26 composition, with fail-closed anchors/sentinels and QA that requires embedded-media hashes and inline-shape counts to remain unchanged. `docs/thesis/T715_AUDIT_RECONCILIATION.md` records the authority boundary and rejected post-hoc additions.
+- The T-711/T-714/T-715 DOCX workflow and the four-file rewrite-workbook workflow now build the v27 audit-reconciled artifact. PR #138 must not be merged until the new head checks pass and the produced DOCX receives final rendered-page QA.
 - `T-538` is **DEFERRED** bounded post-final application polish, not a scientific or thesis-writing blocker. It will only address verified post-final presentation drift such as the final-study-completed state, any genuinely useful Run progress detail, bounded onboarding extension and thesis implementation screenshots if high-quality authentic captures are available.
 - `T-712` remains **DEFERRED** for actual supervisor/reviewer corrections only. Internal audits are not relabelled as supervisor feedback.
 - `T-713` remains **DEFERRED** until any real T-712 feedback cycle is resolved and the final Microsoft Word field/update/placeholder/person-metadata gates pass.
@@ -32,7 +37,7 @@ DEC-058/protocol-v2.0 remain immutable historical freeze authority. DEC-060 plus
 
 Frozen protocol-v2.1 remains unchanged: Q-Learning, SARSA, DQN, PPO and Dyna-Q+; common actual-environment-interaction fairness; Phase-A independent learning/exact checkpoints; matched FN/FD/AN/AD Phase B; 12 roots, 2 held-out layouts, four conditions and 256-interaction horizon; RQ2 adaptation benefit `(FN-FD)-(AN-AD)`; RQ3 passive 32-interaction windows, tolerance 0.10 primary with 0.05/0.20 sensitivity, two-window stable recovery and `recovery_time=null` right-censoring; root as independent unit; declared root-paired direct contrasts and Student-t intervals using actual root count. No formal p-value superiority family or composite method ranking was introduced.
 
-T-612 scientific interpretation remains authoritative in `docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md`. T-700/T-701/T-702/T-710/T-711 and T-714 alter writing/structure/evidence presentation only and do not reinterpret scientific outcomes.
+T-612 scientific interpretation remains authoritative in `docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md`. T-700/T-701/T-702/T-710/T-711/T-714/T-715 alter writing/structure/evidence presentation only and do not reinterpret scientific outcomes.
 
 ## WP7 writing authority
 
@@ -47,7 +52,7 @@ The current writing hierarchy is:
 7. synchronized citation-ready `ThesisBibliography` evidence for external scientific claims;
 8. contextual example theses only for structure/style patterns.
 
-T-714 completed reader-facing wording, citation, bibliography-formatting, accessibility, document-ordering and presentation hardening without recalculating, reinterpreting or selectively replacing accepted scientific evidence. Any later formal literature citation remains restricted to the synchronized verified citation-ready bibliography layer.
+T-714 completed reader-facing wording, citation, bibliography-formatting, accessibility, document-ordering and presentation hardening without recalculating, reinterpreting or selectively replacing accepted scientific evidence. T-715 is a later user-authorized reader-scope/audit-reconciliation layer and must remain composition-only. Any later formal literature citation remains restricted to the synchronized verified citation-ready bibliography layer.
 
 ## Still intentionally unfrozen / externally gated
 
@@ -59,4 +64,4 @@ T-714 completed reader-facing wording, citation, bibliography-formatting, access
 
 ## Exact next action
 
-Review the merged T-714 hardened Word thesis and provide actual supervisor/reviewer corrections when available. T-712 remains deferred until real feedback exists; once supplied, incorporate only those corrections and revalidate the document. Do not start T-713 while official student/declaration placeholders remain unresolved, and do not rerun or alter the final experiment.
+Finish T-715 on PR #138: obtain green checks for the audit-reconciled v27 head, download the CI-produced review DOCX/QA artifact, render and inspect the final pages, reconcile the PR description with the validated SHA/page count, and merge only if all gates remain green. Keep T-712 deferred for actual supervisor/reviewer feedback and do not start T-713 while official student/declaration placeholders remain unresolved or while final Microsoft Word field/update checks are pending.
