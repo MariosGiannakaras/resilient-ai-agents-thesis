@@ -6,7 +6,9 @@ on:
       - "scripts/export_thesis_rewrite_workbook.py"
       - "scripts/export_thesis_text_review_pack.py"
       - "scripts/t711_build_entry_v26.py"
+      - "scripts/t711_build_entry_v27.py"
       - "scripts/t715_reader_expansions.py"
+      - "scripts/t715_audit_hardening.py"
       - "research/bibliography/sources/**"
       - "research/bibliography/citation-ready/**"
       - ".github/workflows/t715-thesis-rewrite-workbook.yml"
@@ -44,11 +46,11 @@ jobs:
           PYTHONPATH: src
         run: uv run --no-sync python scripts/render_ui_screenshots.py --output artifacts/t715-ui
 
-      - name: Build corrected v26 reader thesis
+      - name: Build audit-reconciled v27 reader thesis
         env:
           T715_UI_SCREENSHOT_DIR: artifacts/t715-ui
         run: |
-          python scripts/t711_build_entry_v26.py \
+          python scripts/t711_build_entry_v27.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -88,6 +90,10 @@ jobs:
           assert qa.get("t715_summary_heading_count") == 1, qa
           assert qa.get("t715_abstract_heading_count") == 1, qa
           assert qa.get("t715_rq3_appendix_forced_pagebreak_removed") is True, qa
+          assert qa.get("t715_audit_hardening_applied") is True, qa
+          assert qa.get("t715_audit_hardening_inserted_paragraph_count") == 26, qa
+          assert qa.get("t715_recovery_stability_windows") == 2, qa
+          assert qa.get("t715_tuning_unit_count") == 180, qa
           source_file = root / "01_PIGES_KAI_KEIMENO_APO_PIGES.md"
           source_text = source_file.read_text(encoding="utf-8")
           for sid in qa["citation_map"]:
