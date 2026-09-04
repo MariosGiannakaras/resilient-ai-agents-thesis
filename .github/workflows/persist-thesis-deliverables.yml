@@ -1,0 +1,99 @@
+name: Persist thesis deliverables
+
+on:
+  push:
+    branches:
+      - archive/persistent-thesis-deliverables
+    paths:
+      - .github/workflows/persist-thesis-deliverables.yml
+      - thesis/archive/README.md
+      - thesis/final/README.md
+      - docs/context/DELIVERABLE_RETENTION_POLICY.md
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  persist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out archive branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Recover T-711 initial review-ready artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: t711-review-ready-thesis
+          path: .recovered/t711-run22
+          github-token: ${{ github.token }}
+          repository: MariosGiannakaras/resilient-ai-agents-thesis
+          run-id: 33746548415
+
+      - name: Recover T-711 synthesis artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: t711-review-ready-thesis
+          path: .recovered/t711-run27
+          github-token: ${{ github.token }}
+          repository: MariosGiannakaras/resilient-ai-agents-thesis
+          run-id: 33757702212
+
+      - name: Recover T-714 full review-ready artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: t711-review-ready-thesis
+          path: .recovered/t714-run66
+          github-token: ${{ github.token }}
+          repository: MariosGiannakaras/resilient-ai-agents-thesis
+          run-id: 33853513834
+
+      - name: Recover T-715 audit-reconciled artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: t715-reader-scoped-review-thesis
+          path: .recovered/t715-run98
+          github-token: ${{ github.token }}
+          repository: MariosGiannakaras/resilient-ai-agents-thesis
+          run-id: 33928822577
+
+      - name: Validate and stage permanent snapshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p thesis/archive
+
+          test "$(sha256sum .recovered/t711-run22/resilient-ai-agents-thesis-review-ready.docx | cut -d' ' -f1)" = "32c755d64600d3af9c19a66b9e8d85bfe6a9b61de3c74bba77f581ce1dd007b5"
+          test "$(sha256sum .recovered/t711-run22/qa-report.json | cut -d' ' -f1)" = "e5e35a38e7d41d2588baeb357d78b4992b72b4d97ce2721f95cb630c7dbeb407"
+          test "$(sha256sum .recovered/t711-run27/resilient-ai-agents-thesis-review-ready.docx | cut -d' ' -f1)" = "ee8bcc13191046391654063fba870ed8799bd7c91da77882ed17154b6eaa68b7"
+          test "$(sha256sum .recovered/t711-run27/qa-report.json | cut -d' ' -f1)" = "93e5299da5bfa14930de80546d3d3479be54812bb3af39abac5dca0912f0e135"
+          test "$(sha256sum .recovered/t714-run66/resilient-ai-agents-thesis-review-ready.docx | cut -d' ' -f1)" = "70c897dcda432c3bc3f5b66b3714d701fd895c9ed2e6ce8ff14b19bc46f9ba77"
+          test "$(sha256sum .recovered/t714-run66/qa-report.json | cut -d' ' -f1)" = "8b82d4f3456b024af0f5205cce753919d739944c8fe0a4a45502bb2488c0dd13"
+          test "$(sha256sum .recovered/t715-run98/t711/resilient-ai-agents-thesis-review-ready.docx | cut -d' ' -f1)" = "e06a466e667359486a86f30c561c42b74b4e209ea28bb8d94c2652c9d36616d1"
+          test "$(sha256sum .recovered/t715-run98/t711/qa-report.json | cut -d' ' -f1)" = "cbda3c0027e36c6cccc6fda50bffe4edf9620aee3d9e4dcb5482e270277cc434"
+
+          cp .recovered/t711-run22/resilient-ai-agents-thesis-review-ready.docx thesis/archive/T711_run22_review_ready.docx
+          cp .recovered/t711-run22/qa-report.json thesis/archive/T711_run22_qa-report.json
+          cp .recovered/t711-run27/resilient-ai-agents-thesis-review-ready.docx thesis/archive/T711_run27_results_synthesis.docx
+          cp .recovered/t711-run27/qa-report.json thesis/archive/T711_run27_qa-report.json
+          cp .recovered/t714-run66/resilient-ai-agents-thesis-review-ready.docx thesis/archive/T714_run66_full_review_ready.docx
+          cp .recovered/t714-run66/qa-report.json thesis/archive/T714_run66_qa-report.json
+          cp .recovered/t715-run98/t711/resilient-ai-agents-thesis-review-ready.docx thesis/archive/T715_run98_audit_reconciled_reader_scoped.docx
+          cp .recovered/t715-run98/t711/qa-report.json thesis/archive/T715_run98_qa-report.json
+
+      - name: Commit permanent snapshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add thesis/archive
+          if git diff --cached --quiet; then
+            echo "No archive changes to commit."
+            exit 0
+          fi
+          git commit -m "archive: persist recovered thesis milestone DOCX files"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
