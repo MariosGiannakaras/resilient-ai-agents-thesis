@@ -21,6 +21,7 @@ on:
       - "scripts/t711_build_entry_v15.py"
       - "scripts/t711_build_entry_v16.py"
       - "scripts/t711_build_entry_v17.py"
+      - "scripts/t711_build_entry_v18.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -47,7 +48,7 @@ jobs:
 
       - name: Build hardened review thesis
         run: |
-          python scripts/t711_build_entry_v17.py \
+          python scripts/t711_build_entry_v18.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -66,7 +67,9 @@ jobs:
           assert report["status"] == "pass", report
           assert report["output_sha256"] == actual_sha, (report["output_sha256"], actual_sha)
           assert report.get("final_artifact_metadata_reconciled") is True, report
-          assert report.get("t711a_hardening_version") == 17, report
+          assert report.get("t711a_hardening_version") == 18, report
+          assert report.get("chapter4_flow_keep_together_applied") is True, report
+          assert report.get("chapter4_flow_match_count") == 1, report
           assert report.get("canonical_results_source_synchronized") is True, report
           assert report.get("canonical_results_source_sha256") == "ba0dea0f8d46e3369dc22a3b18ca806b7ccbbe909e1592a3f21c193a703f2699", report
           assert report.get("results_synthesis_source_sha256") == report.get("canonical_results_source_sha256"), report
@@ -127,7 +130,7 @@ jobs:
           assert not report.get("duplicate_inserted_figure_ids"), report
           assert not report.get("bad_reference_phrases"), report
           print(
-              f"T-714 v17 QA: citations={report['citation_count']} "
+              f"T-714 v18 QA: citations={report['citation_count']} "
               f"registered_assets={report['inserted_asset_count']} tables={report['table_count']} "
               f"captions_el={report['localized_figure_caption_count']} alt={report['image_alt_text_count']} "
               f"glossary_terms={report['glossary_term_count']} placeholders={report['placeholder_count']} "
