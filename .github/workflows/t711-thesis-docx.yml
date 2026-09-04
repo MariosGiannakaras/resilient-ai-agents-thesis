@@ -1,4 +1,4 @@
-name: T-711/T-714 thesis DOCX QA
+name: T-711/T-714/T-715 thesis DOCX QA
 
 on:
   pull_request:
@@ -22,6 +22,21 @@ on:
       - "scripts/t711_build_entry_v16.py"
       - "scripts/t711_build_entry_v17.py"
       - "scripts/t711_build_entry_v18.py"
+      - "scripts/t711_build_entry_v19.py"
+      - "scripts/t711_build_entry_v20.py"
+      - "scripts/t711_build_entry_v21.py"
+      - "scripts/t711_build_entry_v22.py"
+      - "scripts/t711_build_entry_v23.py"
+      - "scripts/t711_build_entry_v24.py"
+      - "scripts/t711_build_entry_v25.py"
+      - "scripts/t711_build_entry_v26.py"
+      - "scripts/t711_build_entry_v27.py"
+      - "scripts/t715_reader_expansions.py"
+      - "scripts/t715_audit_hardening.py"
+      - "scripts/render_ui_screenshots.py"
+      - "src/resilient_agents/desktop/**"
+      - "requirements/application-ui.txt"
+      - "configs/protocols/protocol-v2.1-final.json"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -34,6 +49,7 @@ permissions:
 jobs:
   build-docx:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout exact source
         uses: actions/checkout@v4
@@ -44,11 +60,29 @@ jobs:
           python-version: "3.12"
 
       - name: Install pinned document dependencies
-        run: python -m pip install --disable-pip-version-check python-docx==1.2.0 Pillow==11.3.0
+        run: python -m pip install --disable-pip-version-check python-docx==1.2.0 Pillow==11.3.0 uv
 
-      - name: Build hardened review thesis
+      - name: Prepare deterministic UI-render environment
         run: |
-          python scripts/t711_build_entry_v18.py \
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends libegl1
+          uv sync --locked --group gridworld-prototype --no-progress
+          uv pip install --python .venv/bin/python --requirement requirements/application-ui.txt
+
+      - name: Render DEVELOPMENT-only application screenshots
+        env:
+          QT_QPA_PLATFORM: offscreen
+          PYTHONPATH: src
+        run: |
+          uv run --no-sync python scripts/render_ui_screenshots.py --output artifacts/t715-ui
+          test -f artifacts/t715-ui/03-run-phase-a-1440x900.png
+          test -f artifacts/t715-ui/04-run-phase-b-frozen-adaptive-1440x900.png
+
+      - name: Build audit-reconciled reader thesis
+        env:
+          T715_UI_SCREENSHOT_DIR: artifacts/t715-ui
+        run: |
+          python scripts/t711_build_entry_v27.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -68,6 +102,70 @@ jobs:
           assert report["output_sha256"] == actual_sha, (report["output_sha256"], actual_sha)
           assert report.get("final_artifact_metadata_reconciled") is True, report
           assert report.get("t711a_hardening_version") == 18, report
+          assert report.get("t715_reader_scope_simplification") is True, report
+          assert report.get("t715_detailed_scientific_source_preserved") is True, report
+          assert report.get("t715_v13_length_guard_rebased") is True, report
+          assert report.get("t715_v13_paragraph_floor") == 380, report
+          assert report.get("t715_v14_wording_guard_rebased") is True, report
+          assert report.get("t715_expected_neutral_wording_replacements") == 2, report
+          assert report.get("t715_figure_numbering_preserved") is True, report
+          assert report.get("t715_main_registered_figure_count") == 10, report
+          assert report.get("t715_appendix_registered_figure_count") == 14, report
+          assert report.get("t715_total_registered_figure_count") == 24, report
+          assert not report.get("t715_main_forbidden_internal_detail"), report
+          assert report.get("t715_main_word_count_approx", 0) >= 7500, report
+          assert report.get("t715_main_word_count_approx", 0) <= 18000, report
+          assert report.get("t715_secondary_diagnostics_moved_to_appendix") == [
+              "FIG-RQ3-019-CONDITIONAL",
+              "FIG-RQ3-023-SENSITIVITY",
+          ], report
+          assert report.get("t715_application_screenshots_added") is True, report
+          assert report.get("t715_application_screenshot_count") == 2, report
+          assert report.get("t715_application_screenshot_names") == [
+              "03-run-phase-a-1440x900.png",
+              "04-run-phase-b-frozen-adaptive-1440x900.png",
+          ], report
+          assert report.get("t715_application_capture_development_only") is True, report
+          assert report.get("t715_application_capture_scientific_jobs_executed") == 0, report
+          assert report.get("t715_application_capture_environment_steps_executed") == 0, report
+          assert report.get("t715_application_capture_final_reserve_accessed") is False, report
+          assert report.get("t715_application_screenshots_scientific_evidence") is False, report
+          assert report.get("t715_preexisting_docx_media_preserved") is True, report
+          assert report.get("t715_new_docx_media_count") == 2, report
+          assert report.get("t715_new_docx_media_hashes_match_screenshots") is True, report
+          assert report.get("t715_inline_shape_count_before_app_screenshots") == 25, report
+          assert report.get("t715_final_inline_shape_count") == 27, report
+          assert report.get("t715_final_image_alt_text_count") == 27, report
+
+          assert report.get("t715_audit_hardening_applied") is True, report
+          assert report.get("t715_audit_hardening_version") == 1, report
+          assert report.get("t715_audit_hardening_inserted_paragraph_count") == 26, report
+          assert report.get("t715_audit_hardening_inserted_heading_count") == 3, report
+          assert report.get("t715_audit_hardening_paragraph_delta") == 26, report
+          assert all(v == 1 for v in report.get("t715_audit_hardening_sentinel_counts", {}).values()), report
+          assert report.get("t715_audit_hardening_media_preserved") is True, report
+          assert report.get("t715_audit_hardening_inline_shapes_preserved") is True, report
+          assert report.get("t715_tuning_unit_count") == 180, report
+          assert report.get("t715_tuning_candidate_count_per_method") == 6, report
+          assert report.get("t715_tuning_root_count") == 3, report
+          assert report.get("t715_tuning_layout_count") == 2, report
+          assert report.get("t715_tuning_winners") == ["q-c06", "sarsa-c06", "dqn-c05", "ppo-c06", "dyna-c03"], report
+          assert report.get("t715_final_root_count") == 12, report
+          assert report.get("t715_root_count_candidates") == [12, 16, 20, 24], report
+          assert report.get("t715_root_count_max_half_width") == 0.1428, report
+          assert report.get("t715_recovery_window_size") == 32, report
+          assert report.get("t715_recovery_horizon") == 256, report
+          assert report.get("t715_recovery_tolerance") == 0.10, report
+          assert report.get("t715_recovery_stability_windows") == 2, report
+          assert report.get("t715_action_failure_probability") == 0.15, report
+          assert report.get("t715_action_failure_step_reward") == -0.1, report
+          assert report.get("t715_observation_corruption_probability") == 0.05, report
+          assert report.get("t715_observation_corruption_excludes_true_state") is True, report
+          assert report.get("t715_observation_corruption_excludes_goal") is False, report
+          assert report.get("t715_layout_generation_seeds") == [57001, 57002], report
+          assert report.get("t715_new_posthoc_binomial_test_added") is False, report
+          assert report.get("t715_new_experiment_or_reanalysis") is False, report
+
           assert report.get("chapter4_flow_keep_together_applied") is True, report
           assert report.get("chapter4_flow_match_count") == 1, report
           assert report.get("canonical_results_source_synchronized") is True, report
@@ -81,7 +179,7 @@ jobs:
           assert not report.get("glossary_terms_without_keep_with_next"), report
           assert report.get("t711a_reader_text_rescanned_after_save") is True, report
           assert report.get("paragraph_count") == report.get("post_synthesis_paragraph_count"), report
-          assert report.get("paragraph_count", 0) >= 700, report
+          assert report.get("paragraph_count", 0) >= 406, report
           assert report["citation_count"] == report["verified_reference_identity_count"] == 17, report
           assert report.get("expected_reference_count") == 17, report
           assert report.get("targeted_related_work_citations_present") is True, report
@@ -96,7 +194,7 @@ jobs:
           assert report.get("bibliography_normalized_count") == 17, report
           assert report.get("academic_order_valid") is True, report
           assert report.get("academic_heading_replacement_count", 0) >= 35, report
-          assert report.get("neutral_wording_replacement_count") == 3, report
+          assert report.get("neutral_wording_replacement_count") == 2, report
           assert not report.get("forbidden_superiority_wording"), report
           assert report.get("presentation_repaired_assets") == ["FIG-METHOD-027-RQ-MAP"], report
           assert report.get("registered_asset_bytes_modified") is False, report
@@ -130,18 +228,24 @@ jobs:
           assert not report.get("duplicate_inserted_figure_ids"), report
           assert not report.get("bad_reference_phrases"), report
           print(
-              f"T-714 v18 QA: citations={report['citation_count']} "
-              f"registered_assets={report['inserted_asset_count']} tables={report['table_count']} "
-              f"captions_el={report['localized_figure_caption_count']} alt={report['image_alt_text_count']} "
-              f"glossary_terms={report['glossary_term_count']} placeholders={report['placeholder_count']} "
-              f"sha={actual_sha}"
+              f"T-715 QA: main_words~{report['t715_main_word_count_approx']} "
+              f"main_figures={report['t715_main_registered_figure_count']} "
+              f"appendix_figures={report['t715_appendix_registered_figure_count']} "
+              f"app_screenshots={report['t715_application_screenshot_count']} "
+              f"audit_paragraphs={report['t715_audit_hardening_inserted_paragraph_count']} "
+              f"citations={report['citation_count']} tables={report['table_count']} "
+              f"placeholders={report['placeholder_count']} sha={actual_sha}"
           )
           PY
 
       - name: Upload review artifact
         uses: actions/upload-artifact@v4
         with:
-          name: t711-review-ready-thesis
-          path: artifacts/t711/
+          name: t715-reader-scoped-review-thesis
+          path: |
+            artifacts/t711/
+            artifacts/t715-ui/manifest.json
+            artifacts/t715-ui/03-run-phase-a-1440x900.png
+            artifacts/t715-ui/04-run-phase-b-frozen-adaptive-1440x900.png
           if-no-files-found: error
           retention-days: 30
