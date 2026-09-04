@@ -1,0 +1,31 @@
+name: Temporary T-714 post-merge reconciliation
+
+on:
+  push:
+    branches:
+      - thesis/t714-reconcile
+    paths:
+      - scripts/_temporary_t714_reconcile.py
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout reconciliation branch
+        uses: actions/checkout@v4
+        with:
+          ref: thesis/t714-reconcile
+          fetch-depth: 0
+      - name: Apply exact canonical reconciliation
+        run: python scripts/_temporary_t714_reconcile.py
+      - name: Commit reconciled canonical state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/context/TASKS.md docs/context/CURRENT_STATUS.md docs/context/PROJECT_CONTEXT.md
+          git diff --cached --quiet && { echo "Expected reconciliation changes missing"; exit 1; }
+          git commit -m "T-714: reconcile post-merge canonical state"
+          git push origin HEAD:thesis/t714-reconcile
