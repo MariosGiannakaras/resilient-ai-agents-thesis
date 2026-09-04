@@ -6,9 +6,6 @@ on:
       - archive/persistent-thesis-deliverables
     paths:
       - .github/workflows/persist-thesis-deliverables.yml
-      - thesis/archive/README.md
-      - thesis/final/README.md
-      - docs/context/DELIVERABLE_RETENTION_POLICY.md
   workflow_dispatch:
 
 permissions:
