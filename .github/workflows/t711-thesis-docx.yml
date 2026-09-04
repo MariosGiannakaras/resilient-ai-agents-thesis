@@ -29,7 +29,10 @@ on:
       - "scripts/t711_build_entry_v23.py"
       - "scripts/t711_build_entry_v24.py"
       - "scripts/t711_build_entry_v25.py"
+      - "scripts/t711_build_entry_v26.py"
+      - "scripts/t711_build_entry_v27.py"
       - "scripts/t715_reader_expansions.py"
+      - "scripts/t715_audit_hardening.py"
       - "scripts/render_ui_screenshots.py"
       - "src/resilient_agents/desktop/**"
       - "requirements/application-ui.txt"
@@ -75,11 +78,11 @@ jobs:
           test -f artifacts/t715-ui/03-run-phase-a-1440x900.png
           test -f artifacts/t715-ui/04-run-phase-b-frozen-adaptive-1440x900.png
 
-      - name: Build reader-scoped review thesis
+      - name: Build audit-reconciled reader thesis
         env:
           T715_UI_SCREENSHOT_DIR: artifacts/t715-ui
         run: |
-          python scripts/t711_build_entry_v25.py \
+          python scripts/t711_build_entry_v27.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -133,6 +136,36 @@ jobs:
           assert report.get("t715_inline_shape_count_before_app_screenshots") == 25, report
           assert report.get("t715_final_inline_shape_count") == 27, report
           assert report.get("t715_final_image_alt_text_count") == 27, report
+
+          assert report.get("t715_audit_hardening_applied") is True, report
+          assert report.get("t715_audit_hardening_version") == 1, report
+          assert report.get("t715_audit_hardening_inserted_paragraph_count") == 26, report
+          assert report.get("t715_audit_hardening_inserted_heading_count") == 3, report
+          assert report.get("t715_audit_hardening_paragraph_delta") == 26, report
+          assert all(v == 1 for v in report.get("t715_audit_hardening_sentinel_counts", {}).values()), report
+          assert report.get("t715_audit_hardening_media_preserved") is True, report
+          assert report.get("t715_audit_hardening_inline_shapes_preserved") is True, report
+          assert report.get("t715_tuning_unit_count") == 180, report
+          assert report.get("t715_tuning_candidate_count_per_method") == 6, report
+          assert report.get("t715_tuning_root_count") == 3, report
+          assert report.get("t715_tuning_layout_count") == 2, report
+          assert report.get("t715_tuning_winners") == ["q-c06", "sarsa-c06", "dqn-c05", "ppo-c06", "dyna-c03"], report
+          assert report.get("t715_final_root_count") == 12, report
+          assert report.get("t715_root_count_candidates") == [12, 16, 20, 24], report
+          assert report.get("t715_root_count_max_half_width") == 0.1428, report
+          assert report.get("t715_recovery_window_size") == 32, report
+          assert report.get("t715_recovery_horizon") == 256, report
+          assert report.get("t715_recovery_tolerance") == 0.10, report
+          assert report.get("t715_recovery_stability_windows") == 2, report
+          assert report.get("t715_action_failure_probability") == 0.15, report
+          assert report.get("t715_action_failure_step_reward") == -0.1, report
+          assert report.get("t715_observation_corruption_probability") == 0.05, report
+          assert report.get("t715_observation_corruption_excludes_true_state") is True, report
+          assert report.get("t715_observation_corruption_excludes_goal") is False, report
+          assert report.get("t715_layout_generation_seeds") == [57001, 57002], report
+          assert report.get("t715_new_posthoc_binomial_test_added") is False, report
+          assert report.get("t715_new_experiment_or_reanalysis") is False, report
+
           assert report.get("chapter4_flow_keep_together_applied") is True, report
           assert report.get("chapter4_flow_match_count") == 1, report
           assert report.get("canonical_results_source_synchronized") is True, report
@@ -146,7 +179,7 @@ jobs:
           assert not report.get("glossary_terms_without_keep_with_next"), report
           assert report.get("t711a_reader_text_rescanned_after_save") is True, report
           assert report.get("paragraph_count") == report.get("post_synthesis_paragraph_count"), report
-          assert report.get("paragraph_count", 0) >= 380, report
+          assert report.get("paragraph_count", 0) >= 406, report
           assert report["citation_count"] == report["verified_reference_identity_count"] == 17, report
           assert report.get("expected_reference_count") == 17, report
           assert report.get("targeted_related_work_citations_present") is True, report
@@ -199,6 +232,7 @@ jobs:
               f"main_figures={report['t715_main_registered_figure_count']} "
               f"appendix_figures={report['t715_appendix_registered_figure_count']} "
               f"app_screenshots={report['t715_application_screenshot_count']} "
+              f"audit_paragraphs={report['t715_audit_hardening_inserted_paragraph_count']} "
               f"citations={report['citation_count']} tables={report['table_count']} "
               f"placeholders={report['placeholder_count']} sha={actual_sha}"
           )
