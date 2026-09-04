@@ -23,6 +23,7 @@ on:
       - "scripts/t711_build_entry_v17.py"
       - "scripts/t711_build_entry_v18.py"
       - "scripts/t711_build_entry_v19.py"
+      - "scripts/t711_build_entry_v20.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -49,7 +50,7 @@ jobs:
 
       - name: Build reader-scoped review thesis
         run: |
-          python scripts/t711_build_entry_v19.py \
+          python scripts/t711_build_entry_v20.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
