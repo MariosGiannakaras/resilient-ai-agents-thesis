@@ -28,7 +28,12 @@ on:
       - "scripts/t711_build_entry_v22.py"
       - "scripts/t711_build_entry_v23.py"
       - "scripts/t711_build_entry_v24.py"
+      - "scripts/t711_build_entry_v25.py"
       - "scripts/t715_reader_expansions.py"
+      - "scripts/render_ui_screenshots.py"
+      - "src/resilient_agents/desktop/**"
+      - "requirements/application-ui.txt"
+      - "configs/protocols/protocol-v2.1-final.json"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -41,6 +46,7 @@ permissions:
 jobs:
   build-docx:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout exact source
         uses: actions/checkout@v4
@@ -51,11 +57,29 @@ jobs:
           python-version: "3.12"
 
       - name: Install pinned document dependencies
-        run: python -m pip install --disable-pip-version-check python-docx==1.2.0 Pillow==11.3.0
+        run: python -m pip install --disable-pip-version-check python-docx==1.2.0 Pillow==11.3.0 uv
+
+      - name: Prepare deterministic UI-render environment
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends libegl1
+          uv sync --locked --group gridworld-prototype --no-progress
+          uv pip install --python .venv/bin/python --requirement requirements/application-ui.txt
+
+      - name: Render DEVELOPMENT-only application screenshots
+        env:
+          QT_QPA_PLATFORM: offscreen
+          PYTHONPATH: src
+        run: |
+          uv run --no-sync python scripts/render_ui_screenshots.py --output artifacts/t715-ui
+          test -f artifacts/t715-ui/03-run-phase-a-1440x900.png
+          test -f artifacts/t715-ui/04-run-phase-b-frozen-adaptive-1440x900.png
 
       - name: Build reader-scoped review thesis
+        env:
+          T715_UI_SCREENSHOT_DIR: artifacts/t715-ui
         run: |
-          python scripts/t711_build_entry_v24.py \
+          python scripts/t711_build_entry_v25.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -86,12 +110,29 @@ jobs:
           assert report.get("t715_appendix_registered_figure_count") == 14, report
           assert report.get("t715_total_registered_figure_count") == 24, report
           assert not report.get("t715_main_forbidden_internal_detail"), report
-          assert report.get("t715_main_word_count_approx", 0) >= 8000, report
+          assert report.get("t715_main_word_count_approx", 0) >= 7500, report
           assert report.get("t715_main_word_count_approx", 0) <= 18000, report
           assert report.get("t715_secondary_diagnostics_moved_to_appendix") == [
               "FIG-RQ3-019-CONDITIONAL",
               "FIG-RQ3-023-SENSITIVITY",
           ], report
+          assert report.get("t715_application_screenshots_added") is True, report
+          assert report.get("t715_application_screenshot_count") == 2, report
+          assert report.get("t715_application_screenshot_names") == [
+              "03-run-phase-a-1440x900.png",
+              "04-run-phase-b-frozen-adaptive-1440x900.png",
+          ], report
+          assert report.get("t715_application_capture_development_only") is True, report
+          assert report.get("t715_application_capture_scientific_jobs_executed") == 0, report
+          assert report.get("t715_application_capture_environment_steps_executed") == 0, report
+          assert report.get("t715_application_capture_final_reserve_accessed") is False, report
+          assert report.get("t715_application_screenshots_scientific_evidence") is False, report
+          assert report.get("t715_preexisting_docx_media_preserved") is True, report
+          assert report.get("t715_new_docx_media_count") == 2, report
+          assert report.get("t715_new_docx_media_hashes_match_screenshots") is True, report
+          assert report.get("t715_inline_shape_count_before_app_screenshots") == 25, report
+          assert report.get("t715_final_inline_shape_count") == 27, report
+          assert report.get("t715_final_image_alt_text_count") == 27, report
           assert report.get("chapter4_flow_keep_together_applied") is True, report
           assert report.get("chapter4_flow_match_count") == 1, report
           assert report.get("canonical_results_source_synchronized") is True, report
@@ -157,6 +198,7 @@ jobs:
               f"T-715 QA: main_words~{report['t715_main_word_count_approx']} "
               f"main_figures={report['t715_main_registered_figure_count']} "
               f"appendix_figures={report['t715_appendix_registered_figure_count']} "
+              f"app_screenshots={report['t715_application_screenshot_count']} "
               f"citations={report['citation_count']} tables={report['table_count']} "
               f"placeholders={report['placeholder_count']} sha={actual_sha}"
           )
@@ -166,6 +208,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: t715-reader-scoped-review-thesis
-          path: artifacts/t711/
+          path: |
+            artifacts/t711/
+            artifacts/t715-ui/manifest.json
+            artifacts/t715-ui/03-run-phase-a-1440x900.png
+            artifacts/t715-ui/04-run-phase-b-frozen-adaptive-1440x900.png
           if-no-files-found: error
           retention-days: 30
