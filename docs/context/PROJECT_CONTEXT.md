@@ -109,7 +109,7 @@ Canonical concrete state is in `TASKS.md` and `CURRENT_STATUS.md`.
 4. T-700 official-guidance recheck and T-701 example-thesis structure/style review are complete.
 5. T-702 major-writing-gate literature freshness review and immutable bibliography consumer re-sync are complete at checkout `ada0d1aec7511098fd12610ae9e5abe7aea875cd`.
 6. T-710 evidence-grounded Greek manuscript drafting is complete and merged through PR #132.
-7. `T-711` review-ready Word composition is the next dependency-valid task.
-8. T-712 supervisor/reviewer corrections, T-713 final thesis freeze, defense work, final audits and standalone Windows packaging remain downstream.
+7. T-711 review-ready Word composition and T-714 pre-supervisor academic/compliance hardening are complete; T-714 merged through PR #136 as `42afba20fd5a7e9d3912418d0847b42e566aaca0`.
+8. T-712 remains input-bound on actual supervisor/reviewer corrections; T-713 final thesis freeze, defense work, final audits and standalone Windows packaging remain downstream.
 
-No green CI, UI screenshot, synthetic smoke, repository cleanup, writing convenience or Word-layout decision authorizes changing frozen scientific evidence or redefining accepted estimands/results. T-711 must compose from the accepted T-710 manuscript, T-611/T-612/T-613 artifacts and synchronized citation-ready bibliography without scientific reinterpretation.
+No green CI, UI screenshot, synthetic smoke, repository cleanup, writing convenience or Word-layout decision authorizes changing frozen scientific evidence or redefining accepted estimands/results. T-711/T-714 composition and hardening used the accepted T-710 manuscript, T-611/T-612/T-613 artifacts and synchronized citation-ready bibliography without scientific reinterpretation; any T-712 correction cycle must preserve the same boundary.
