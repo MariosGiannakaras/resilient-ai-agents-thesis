@@ -6,6 +6,9 @@ counters assumed would still exist. Preserve every substantive integrity, citati
 media, academic-order and placeholder gate, while rebasing only:
 - the old v13 paragraph-count proxy; and
 - the old v14 exact editorial replacement count.
+
+The compact draft is also enriched with plain-language applied-thesis explanation through
+`t715_reader_expansions`, without restoring protocol/repository-internal detail.
 """
 
 from __future__ import annotations
@@ -15,11 +18,17 @@ from pathlib import Path
 
 import t711_build_entry_v23 as v23
 import t711_build_entry_v15 as v15
+import t711_build_entry_v19 as v19
+import t715_reader_expansions
 
 
 v21 = v23.v21
 t711 = v23.t711
 _original_v14_build = v15._previous_build
+
+# Apply reader-facing depth and the source-fidelity correction before any manuscript
+# preprocessing occurs. v19's renderer reads these module globals dynamically.
+t715_reader_expansions.apply(v19)
 
 
 def _v13_reader_build(output: Path, qa_output: Path) -> None:
