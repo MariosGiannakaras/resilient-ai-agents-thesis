@@ -28,6 +28,7 @@ on:
       - "scripts/t711_build_entry_v22.py"
       - "scripts/t711_build_entry_v23.py"
       - "scripts/t711_build_entry_v24.py"
+      - "scripts/t715_reader_expansions.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -78,6 +79,8 @@ jobs:
           assert report.get("t715_detailed_scientific_source_preserved") is True, report
           assert report.get("t715_v13_length_guard_rebased") is True, report
           assert report.get("t715_v13_paragraph_floor") == 380, report
+          assert report.get("t715_v14_wording_guard_rebased") is True, report
+          assert report.get("t715_expected_neutral_wording_replacements") == 2, report
           assert report.get("t715_figure_numbering_preserved") is True, report
           assert report.get("t715_main_registered_figure_count") == 10, report
           assert report.get("t715_appendix_registered_figure_count") == 14, report
@@ -117,7 +120,7 @@ jobs:
           assert report.get("bibliography_normalized_count") == 17, report
           assert report.get("academic_order_valid") is True, report
           assert report.get("academic_heading_replacement_count", 0) >= 35, report
-          assert report.get("neutral_wording_replacement_count") == 3, report
+          assert report.get("neutral_wording_replacement_count") == 2, report
           assert not report.get("forbidden_superiority_wording"), report
           assert report.get("presentation_repaired_assets") == ["FIG-METHOD-027-RQ-MAP"], report
           assert report.get("registered_asset_bytes_modified") is False, report
