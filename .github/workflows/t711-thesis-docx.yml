@@ -20,6 +20,7 @@ on:
       - "scripts/t711_build_entry_v14.py"
       - "scripts/t711_build_entry_v15.py"
       - "scripts/t711_build_entry_v16.py"
+      - "scripts/t711_build_entry_v17.py"
       - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
@@ -46,7 +47,7 @@ jobs:
 
       - name: Build hardened review thesis
         run: |
-          python scripts/t711_build_entry_v16.py \
+          python scripts/t711_build_entry_v17.py \
             --output artifacts/t711/resilient-ai-agents-thesis-review-ready.docx \
             --qa-output artifacts/t711/qa-report.json
 
@@ -65,13 +66,16 @@ jobs:
           assert report["status"] == "pass", report
           assert report["output_sha256"] == actual_sha, (report["output_sha256"], actual_sha)
           assert report.get("final_artifact_metadata_reconciled") is True, report
-          assert report.get("t711a_hardening_version") == 16, report
+          assert report.get("t711a_hardening_version") == 17, report
           assert report.get("canonical_results_source_synchronized") is True, report
           assert report.get("canonical_results_source_sha256") == "ba0dea0f8d46e3369dc22a3b18ca806b7ccbbe909e1592a3f21c193a703f2699", report
           assert report.get("results_synthesis_source_sha256") == report.get("canonical_results_source_sha256"), report
           assert report.get("blank_page_pagination_repair") is True, report
           assert report.get("front_matter_explicit_breaks_removed") == sorted(["Γλωσσάριο και Ακρωνύμια", "Κατάλογος Πινάκων", "Κατάλογος Σχημάτων"]), report
           assert not report.get("unstable_front_matter_pagebreak_residue"), report
+          assert report.get("glossary_term_count") == 24, report
+          assert report.get("glossary_terms_keep_with_next") is True, report
+          assert not report.get("glossary_terms_without_keep_with_next"), report
           assert report.get("t711a_reader_text_rescanned_after_save") is True, report
           assert report.get("paragraph_count") == report.get("post_synthesis_paragraph_count"), report
           assert report.get("paragraph_count", 0) >= 700, report
@@ -123,10 +127,11 @@ jobs:
           assert not report.get("duplicate_inserted_figure_ids"), report
           assert not report.get("bad_reference_phrases"), report
           print(
-              f"T-714 v16 QA: citations={report['citation_count']} "
+              f"T-714 v17 QA: citations={report['citation_count']} "
               f"registered_assets={report['inserted_asset_count']} tables={report['table_count']} "
               f"captions_el={report['localized_figure_caption_count']} alt={report['image_alt_text_count']} "
-              f"placeholders={report['placeholder_count']} sha={actual_sha}"
+              f"glossary_terms={report['glossary_term_count']} placeholders={report['placeholder_count']} "
+              f"sha={actual_sha}"
           )
           PY
 
