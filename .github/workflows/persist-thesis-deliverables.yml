@@ -48,7 +48,16 @@ jobs:
           repository: MariosGiannakaras/resilient-ai-agents-thesis
           run-id: 33853513834
 
-      - name: Recover T-715 audit-reconciled artifact
+      - name: Recover pre-audit T-715 reader-scoped artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: t715-reader-scoped-review-thesis
+          path: .recovered/t715-run90
+          github-token: ${{ github.token }}
+          repository: MariosGiannakaras/resilient-ai-agents-thesis
+          run-id: 33871667506
+
+      - name: Recover audit-reconciled T-715 artifact
         uses: actions/download-artifact@v4
         with:
           name: t715-reader-scoped-review-thesis
@@ -69,6 +78,8 @@ jobs:
           test "$(sha256sum .recovered/t711-run27/qa-report.json | cut -d' ' -f1)" = "93e5299da5bfa14930de80546d3d3479be54812bb3af39abac5dca0912f0e135"
           test "$(sha256sum .recovered/t714-run66/resilient-ai-agents-thesis-review-ready.docx | cut -d' ' -f1)" = "70c897dcda432c3bc3f5b66b3714d701fd895c9ed2e6ce8ff14b19bc46f9ba77"
           test "$(sha256sum .recovered/t714-run66/qa-report.json | cut -d' ' -f1)" = "8b82d4f3456b024af0f5205cce753919d739944c8fe0a4a45502bb2488c0dd13"
+          test "$(sha256sum .recovered/t715-run90/t711/resilient-ai-agents-thesis-review-ready.docx | cut -d' ' -f1)" = "53bbdc7750e7e1f3bbc545fc6e442e540c4ae63204842fd54db280401b7b8a4d"
+          test "$(sha256sum .recovered/t715-run90/t711/qa-report.json | cut -d' ' -f1)" = "c178afcedbd0746620153e641ab10bb57720f39f4c3d3813e2b365a2bac49805"
           test "$(sha256sum .recovered/t715-run98/t711/resilient-ai-agents-thesis-review-ready.docx | cut -d' ' -f1)" = "e06a466e667359486a86f30c561c42b74b4e209ea28bb8d94c2652c9d36616d1"
           test "$(sha256sum .recovered/t715-run98/t711/qa-report.json | cut -d' ' -f1)" = "cbda3c0027e36c6cccc6fda50bffe4edf9620aee3d9e4dcb5482e270277cc434"
 
@@ -78,6 +89,8 @@ jobs:
           cp .recovered/t711-run27/qa-report.json thesis/archive/T711_run27_qa-report.json
           cp .recovered/t714-run66/resilient-ai-agents-thesis-review-ready.docx thesis/archive/T714_run66_full_review_ready.docx
           cp .recovered/t714-run66/qa-report.json thesis/archive/T714_run66_qa-report.json
+          cp .recovered/t715-run90/t711/resilient-ai-agents-thesis-review-ready.docx thesis/archive/T715_run90_pre_audit_reader_scoped.docx
+          cp .recovered/t715-run90/t711/qa-report.json thesis/archive/T715_run90_qa-report.json
           cp .recovered/t715-run98/t711/resilient-ai-agents-thesis-review-ready.docx thesis/archive/T715_run98_audit_reconciled_reader_scoped.docx
           cp .recovered/t715-run98/t711/qa-report.json thesis/archive/T715_run98_qa-report.json
 
