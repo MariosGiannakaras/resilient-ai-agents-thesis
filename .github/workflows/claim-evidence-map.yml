@@ -31,4 +31,16 @@ jobs:
         with:
           python-version: '3.12'
       - name: Validate claim-centred evidence registry
-        run: python scripts/validate_claim_evidence_map.py
+        shell: bash
+        run: |
+          set +e
+          python scripts/validate_claim_evidence_map.py > claim-evidence-validation.txt 2>&1
+          status=$?
+          cat claim-evidence-validation.txt
+          exit "$status"
+      - name: Upload validation diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: claim-evidence-validation
+          path: claim-evidence-validation.txt
