@@ -215,7 +215,7 @@
       "type": "protocol",
       "claim": "The final study uses 12 independent roots selected by a predeclared Student-t interval precision rule; layouts are repeated/blocking structure within root rather than independent replicates.",
       "formal_sources": ["SRC-0A4AFAC8E9", "SRC-4ED8B918E3"],
-      "project_authorities": ["docs/decisions/DEC-058_PROTOCOL_V2_FINAL_FREEZE.md"],
+      "project_authorities": ["docs/decisions/DEC-058_PROTOCOL_V2_FINAL_SCIENTIFIC_FREEZE.md"],
       "synthesis": "External work motivates honest repeated-run uncertainty; the 12-root sizing result and threshold are project evidence.",
       "limits": "Do not claim the literature prescribes n=12."
     },
@@ -296,7 +296,7 @@
       "type": "project",
       "claim": "Scientific checkpoints preserve method-specific continuation state and branch from exact Phase-A state; presentation/UI does not recompute estimands.",
       "formal_sources": ["SRC-CBA29E303A", "SRC-5D0E7E5BD7"],
-      "project_authorities": ["src/resilient_agents/study/", "src/resilient_agents/evidence_v2/", "docs/decisions/DEC-060_PROTOCOL_V2_1_RECOVERY_AND_DIRECT_COMPARISONS.md"],
+      "project_authorities": ["src/resilient_agents/study/", "src/resilient_agents/evidence_v2/", "docs/decisions/DEC-060_PROTOCOL_V2_1_RECOVERY_AND_COMPARISON_AMENDMENT.md"],
       "synthesis": "Algorithm literature motivates preserving replay/optimizer/implementation state; project code defines exact checkpoint contract.",
       "limits": "Do not claim the papers specify this repository's serialization format."
     },
