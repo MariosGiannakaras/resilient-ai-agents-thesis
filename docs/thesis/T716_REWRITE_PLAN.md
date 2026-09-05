@@ -16,7 +16,7 @@ The target is meaningful academic coverage, not word-count padding.
 3. **T-715 audit reconciliation** — mandatory corrections to tuning, disturbance semantics, metrics, roots/seeds, recovery and limitations.
 4. **T-611/T-612/T-613** — sole quantitative/result authority and registered scientific media source.
 5. **Synchronized ThesisBibliography** — formal external claims may cite only citation-ready sources, with non-ready material retained as context/promotion candidates.
-6. **`CLAIM_EVIDENCE_TREE.md` + `claim-evidence-map.json`** — mandatory claim-centred source synthesis before prose enters the final document.
+6. **`CLAIM_EVIDENCE_TREE.md` + `docs/thesis/claim-evidence-map.json` + `BIBLIOGRAPHY_SOURCE_SELECTION_POLICY.md`** — mandatory claim-centred source synthesis and source-ranking policy before prose enters the final document.
 7. **Official guidance + thesis style guide** — structure, formatting and administrative boundaries.
 
 ## Size and chapter balance
@@ -41,17 +41,21 @@ There is **no fixed reference quota** and no preselected final source count.
 
 For every substantive external statement:
 
-- assign/use a claim ID from `research/bibliography/claim-evidence-map.json`;
+- assign/use a claim ID from `docs/thesis/claim-evidence-map.json`;
 - inspect all relevant sources, not only the first citation-ready hit;
 - compare primary, supporting, survey and contradictory/limiting evidence;
 - prefer primary work for exact algorithm/equation/empirical claims;
+- rank source fitness and scientific authority before publication year;
+- when two or more sources are materially comparable in relevance, scientific quality, methodological strength and depth, prefer the more recent source by default;
+- permit an older source to outrank a newer one when it is clearly stronger as primary/foundational evidence, authoritative scholarly work, methodological evidence or exact claim match, and record the reason;
+- do not let a newer student thesis, informal tutorial/talk/transcript or weak derivative source displace a stronger scholarly primary source or authoritative book merely because of recency;
 - cite multiple independent sources where they materially strengthen or qualify the statement;
 - keep a single-source exception only when the claim is inherently source-specific or no independent support exists, with an explicit reason;
 - never treat citation-ready status as truth status;
 - never turn a literature principle into a claim that a paper prescribed the exact thesis protocol;
 - never use external literature to override project code/protocol/frozen result evidence.
 
-The final bibliography count is therefore the number of sources actually needed by validated claims, not a target such as 30, 32, 40 or 60.
+The final bibliography count is therefore the number of sources actually needed by validated claims, not a target such as 30, 32, 40 or 60. The full precedence rule is authoritative in `docs/thesis/BIBLIOGRAPHY_SOURCE_SELECTION_POLICY.md`.
 
 ## Source-promotion boundary
 
@@ -127,7 +131,8 @@ Literature explains why fairness/uncertainty/reporting distinctions matter; repo
 - `thesis/final/` remains reserved for an accepted T-713 submission candidate.
 - `docs/thesis/audits/` stores the full repository/bibliography/corpus audits.
 - `docs/thesis/CLAIM_EVIDENCE_TREE.md` is the human claim synthesis.
-- `research/bibliography/claim-evidence-map.json` is the machine registry.
+- `docs/thesis/claim-evidence-map.json` is the machine registry; it intentionally lives outside the immutable synchronized bibliography import.
+- `docs/thesis/BIBLIOGRAPHY_SOURCE_SELECTION_POLICY.md` controls quality/authority/recency precedence.
 - cleanup may remove only proven-unused placeholder scaffolds; evidence/history/docs are preserved.
 
 ## Acceptance gates
@@ -140,7 +145,8 @@ T-716 cannot be marked complete unless:
 4. every substantive literature claim is registered and passes claim-evidence validation;
 5. every formal source is citation-ready and every bibliography entry supports at least one concrete claim;
 6. materially relevant multi-source support/limitations are retained rather than arbitrarily reduced to one citation;
-7. no unresolved `SRC-*`, drafting note or invented official/person metadata remains;
-8. structural/scientific DOCX QA passes;
-9. final Word output is rendered and visually checked page-by-page for clipping, overlap, broken figures/tables, glyph issues and unintended blank pages;
-10. the exact DOCX and QA/report identity are committed under `thesis/archive/` before user handoff.
+7. source selection follows quality/relevance/authority first and recency among materially comparable sources, with older-over-newer exceptions justified when used;
+8. no unresolved `SRC-*`, drafting note or invented official/person metadata remains;
+9. structural/scientific DOCX QA passes;
+10. final Word output is rendered and visually checked page-by-page for clipping, overlap, broken figures/tables, glyph issues and unintended blank pages;
+11. the exact DOCX and QA/report identity are committed under `thesis/archive/` before user handoff.
