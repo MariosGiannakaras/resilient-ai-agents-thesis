@@ -1,0 +1,763 @@
+Σύγκριση και Αξιολόγηση Ανθεκτικών Πρακτόρων Τεχνητής Νοημοσύνης σε Περιβάλλοντα με Αβεβαιότητα
+Διπλωματική Εργασία
+Ονοματεπώνυμο φοιτητή: [να συμπληρωθεί από το επίσημο έντυπο]
+Comparison and Evaluation of Resilient AI Agents in Uncertain Environments
+Diploma Thesis
+Student: [to be completed from the official form]
+Δηλώσεις πνευματικών δικαιωμάτων και λογοκλοπής
+[Θέση για την ακριβή επίσημη δήλωση πριν από την τελική υποβολή]
+Περίληψη
+Η παρούσα διπλωματική εργασία μελετά συγκριτικά τη συμπεριφορά πρακτόρων ενισχυτικής μάθησης όταν ένα περιβάλλον μεταβάλλεται μετά την αρχική εκπαίδευσή τους. Στόχος είναι να διαχωριστούν τρεις διαφορετικές διαστάσεις: η ονομαστική ικανότητα μάθησης, το όφελος της συνεχιζόμενης προσαρμογής μετά από διαταραχή και η χρονική ανάκαμψη μετά από μόνιμη αλλαγή. Αξιολογούνται πέντε μέθοδοι — Q-Learning, SARSA, Deep Q-Network (DQN), Proximal Policy Optimization (PPO) και Dyna-Q+ — σε ελεγχόμενο GridWorld με κοινό budget πραγματικών αλληλεπιδράσεων, δύο held-out διατάξεις και δώδεκα ανεξάρτητες ρίζες.
+Το πειραματικό πρωτόκολλο χωρίζεται σε ονομαστική Phase A και matched Phase B. Από το ίδιο ακριβές checkpoint δημιουργούνται Frozen Nominal, Frozen Disturbed, Adaptive Nominal και Adaptive Disturbed κλάδοι, ώστε να υπολογίζεται το όφελος προσαρμογής χωρίς να συγχέεται με τη φυσική μεταβολή της συνεχιζόμενης μάθησης. Η ανάκαμψη αξιολογείται χωριστά σε παθητικά παράθυρα 32 αλληλεπιδράσεων, με προκαθορισμένη ανοχή, σταθερότητα δύο διαδοχικών παραθύρων και ρητή right-censoring όταν δεν παρατηρείται ανάκαμψη εντός του ορίζοντα.
+Τα αποτελέσματα δείχνουν ότι Q-Learning, SARSA και Dyna-Q+ φτάνουν στο ίδιο τελικό ονομαστικό επίπεδο, ενώ η Dyna-Q+ αξιοποιεί ταχύτερα το διαθέσιμο interaction budget. Στα persistent action remaps, η online μάθηση παρέχει μεγάλο όφελος κυρίως για Q-Learning και SARSA και θετικό όφελος για Dyna-Q+, αλλά η επίδρασή της δεν είναι καθολικά θετική στις υπόλοιπες μορφές αβεβαιότητας. Ως προς την ανάκαμψη, Q-Learning και SARSA εμφανίζουν τη μεγαλύτερη συνέπεια στα δύο persistent remaps. Συνολικά, η εργασία δείχνει ότι η ανθεκτικότητα δεν αποτυπώνεται από μία ενιαία κατάταξη, αλλά απαιτεί χωριστή αξιολόγηση μάθησης, απώλειας, προσαρμογής και ανάκαμψης.
+Λέξεις-κλειδιά: Ενισχυτική Μάθηση, Ανθεκτικοί Πράκτορες, Μη Στασιμότητα, Προσαρμογή, Ανάκαμψη
+Abstract
+This thesis presents a controlled comparison of reinforcement-learning agents when the environment changes after nominal training. The study separates three distinct dimensions of behavior: nominal learning capability, the benefit of continued adaptation after a disturbance, and temporal recovery after a persistent change. Five methods are evaluated — Q-Learning, SARSA, Deep Q-Network (DQN), Proximal Policy Optimization (PPO), and Dyna-Q+ — in a controlled GridWorld under a common real environment-interaction budget, two held-out layouts, and twelve independent roots.
+The experimental protocol consists of a nominal Phase A followed by a matched Phase B. Each exact Phase-A checkpoint is branched into Frozen Nominal, Frozen Disturbed, Adaptive Nominal, and Adaptive Disturbed conditions, allowing adaptation benefit to be estimated without conflating it with nominal drift caused by continued learning. Recovery is evaluated separately using passive 32-interaction windows, a predeclared tolerance, a two-window stability criterion, and explicit right-censoring when stable recovery is not observed within the fixed horizon.
+The results show that Q-Learning, SARSA, and Dyna-Q+ reach the same final nominal performance, while Dyna-Q+ uses the available interaction budget more efficiently over the learning trajectory. Under persistent action remapping, continued learning produces a large adaptation benefit for Q-Learning and SARSA and a positive benefit for Dyna-Q+, but adaptation is not uniformly beneficial across the other uncertainty conditions. In terms of recovery, Q-Learning and SARSA exhibit the most consistent stable recovery across both persistent remapping conditions. Overall, the findings show that resilience cannot be reduced to a single method ranking. It requires separate assessment of learning efficiency, disturbance-associated loss, adaptation benefit, recovery incidence, and recovery timing under an explicit information and change contract.
+Keywords: Reinforcement Learning, Resilient Agents, Non-Stationarity, Adaptation, Recovery
+Πίνακας Περιεχομένων
+Κεφάλαιο 1 — Εισαγωγή 1.1 Αντικείμενο και κίνητρο 1.2 Πρόβλημα και ερευνητικό πλαίσιο 1.3 Σκοπός και στόχοι 1.4 Ερευνητικά ερωτήματα RQ1 — Ονομαστική μάθηση RQ2 — Ανθεκτικότητα και προσαρμογή RQ3 — Ανάκαμψη 1.5 Συνεισφορά της εργασίας 1.6 Πεδίο, παραδοχές και οριοθέτηση 1.7 Δομή της διπλωματικής Κεφάλαιο 2 — Θεωρητικό Υπόβαθρο και Σχετική Βιβλιογραφία 2.1 Πράκτορες και διαδοχική λήψη αποφάσεων 2.2 Markov Decision Processes και Reinforcement Learning 2.3 Q-Learning και SARSA 2.4 Deep Q-Network 2.5 Proximal Policy Optimization 2.6 Dyna και Dyna-Q+ 2.7 Non-stationarity και δυναμικές μεταβολές 2.8 Action uncertainty, observation uncertainty και hidden change 2.9 Ανθεκτικότητα, προσαρμογή και ανάκαμψη 2.10 Continual adaptation, replay και model organization 2.11 Empirical RL design και δίκαιη σύγκριση 2.12 Σχετικές εμπειρικές προσεγγίσεις και θέση της μελέτης 2.13 Ερευνητικό κενό και θέση της παρούσας εργασίας Κεφάλαιο 3 — Μεθοδολογία και Πειραματικός Σχεδιασμός 3.1 Ερευνητική προσέγγιση και αρχές συγκρισιμότητας 3.2 GridWorld ως ελεγχόμενο πειραματικό testbed 3.3 Τελικές μέθοδοι και fairness boundaries 3.4 Phase A: ανεξάρτητη ονομαστική μάθηση και checkpoints 3.5 Phase B: matched FN/FD/AN/AD design 3.6 Μηχανισμοί αβεβαιότητας και disturbance conditions 3.7 RQ1: estimands ονομαστικής μάθησης 3.8 RQ2: resilience και adaptation-benefit estimand 3.9 RQ3: recovery, passive windows και right-censoring 3.10 Roots, layouts, budgets και πειραματικός πίνακας 3.11 Στατιστική ανάλυση και άμεσες συγκρίσεις 3.12 Reproducibility, provenance και scientific firewall Κεφάλαιο 4 — Αρχιτεκτονική και Υλοποίηση του Ερευνητικού Συστήματος 4.1 Στόχος της υλοποίησης 4.2 Δομή του κώδικα και επιστημονικός πυρήνας 4.3 Study ως μονάδα εκτέλεσης και provenance 4.4 Deterministic planning και stage barriers 4.5 Checkpoints και ακριβής συνέχεια της μάθησης 4.6 RNG isolation και reproducibility 4.7 Run bundles, manifests και ακεραιότητα 4.8 Evidence-v2 validation και analysis layer 4.9 Χειρισμός αποτυχίας και το T-610 recovery path 4.10 Desktop εφαρμογή PySide6 4.10.1 Experiment 4.10.2 Run 4.10.3 Results 4.10.4 Evidence 4.11 Live visualization και επιστημονική παθητικότητα 4.12 Execution supervision και restart safety 4.13 Final-reserve firewall και authorization 4.14 Παραγωγή αποτελεσμάτων και thesis assets 4.15 Έλεγχος ποιότητας και αναπαραγωγιμότητας της εφαρμογής 4.16 Συνολική αρχιτεκτονική ροή Κεφάλαιο 5 — Πειραματικά Αποτελέσματα 5.1 Όρια της παρουσίασης των αποτελεσμάτων 5.2 RQ1 — Ονομαστική μάθηση 5.2.1 Τελική ονομαστική επίδοση 5.2.2 Αποτελεσματικότητα μάθησης κατά μήκος του budget 5.3 RQ2 — Ανθεκτικότητα και όφελος προσαρμογής 5.3.1 Συνολική εικόνα ανά condition 5.3.2 Persistent action-remap cycle 5.3.3 Persistent action-remap swap 5.3.4 Action failure 15% 5.3.5 Observation corruption 5% 5.3.6 Σύνοψη RQ2 5.4 RQ3 — Ανάκαμψη μετά από persistent action remapping 5.4.1 Cycle remap 5.4.2 Swap remap 5.4.3 Ευαισθησία στην ανοχή ανάκαμψης 5.4.4 Σύνοψη RQ3 5.5 Συγκριτική σύνθεση των τριών ερευνητικών ερωτημάτων 5.6 Περιορισμός των συμπερασμάτων του κεφαλαίου Κεφάλαιο 6 — Συζήτηση 6.1 Σκοπός και ερμηνευτικό όριο 6.2 RQ1: τελική επίδοση και sample efficiency δεν είναι το ίδιο 6.3 RQ2: η προσαρμογή είναι condition-dependent 6.4 Dyna-Q+: γρήγορη ονομαστική μάθηση δεν συνεπάγεται ταχύτερη ανάκαμψη 6.5 RQ3: recovery incidence, timing και censoring 6.6 Ευαισθησία στον operational ορισμό της ανάκαμψης 6.7 Σχέση με continual RL και hidden change 6.8 Απειλές προς την εσωτερική εγκυρότητα 6.8.1 Fairness και tuning 6.8.2 Checkpoint equivalence 6.8.3 Information leakage 6.9 Construct validity 6.10 Statistical conclusion validity 6.11 External validity 6.12 Reproducibility validity 6.13 Απάντηση στα ερευνητικά ερωτήματα σε ερμηνευτικό επίπεδο 6.14 Κεντρικό συμπέρασμα της Συζήτησης Κεφάλαιο 7 — Συμπεράσματα και Μελλοντική Εργασία 7.1 Συνολική αποτίμηση 7.2 Απάντηση στο RQ1 — Ονομαστική μάθηση 7.3 Απάντηση στο RQ2 — Ανθεκτικότητα και προσαρμογή 7.4 Απάντηση στο RQ3 — Ανάκαμψη 7.5 Κύρια συνεισφορά της εργασίας 7.6 Τι δεν υποστηρίζει η εργασία 7.7 Μελλοντική εργασία 7.7.1 Διεύρυνση περιβαλλόντων και κλίμακας 7.7.2 Διαφορετικά budgets και learning timescales 7.7.3 Ρητή ανίχνευση αλλαγής και context inference 7.7.4 Specialized continual-learning mechanisms 7.7.5 Modular model-based adaptation 7.7.6 Διαχείριση replay υπό non-stationarity 7.7.7 Πλουσιότερη μελέτη recovery 7.7.8 Περισσότερες ανεξάρτητες roots και ιεραρχική ανάλυση 7.7.9 Safety και constraint-aware adaptation 7.8 Τελικό συμπέρασμα Γλωσσάριο και Ακρωνύμια Ακρωνύμια Βασικοί όροι Actual environment interaction Adaptation benefit Adaptive regime Censoring / Right-censoring Checkpoint Continual / continued learning Disturbance-associated loss Dyna-Q+ Equal-layout reduction Frozen regime GridWorld Hidden change Independent root Non-stationarity Pointwise interval Recovery Recovery incidence / recovered proportion Recovery time Restricted recovery delay Resilience / Ανθεκτικότητα Stable recovery Study StudyRecipe Time-average return Παραρτήματα Παράρτημα Α — Παγωμένο πειραματικό συμβόλαιο Α.1 Methods και βασικές frozen ρυθμίσεις Α.2 Final layouts και roots Α.3 Disturbance definitions Παράρτημα Β — Πλήρη RQ αποτελέσματα και diagnostics Β.1 RQ1 Β.2 RQ2 Β.3 RQ3 Παράρτημα Γ — Evidence, provenance και reproducibility Γ.1 Execution lineage Γ.2 Frozen identities Γ.3 Bibliography provenance Παράρτημα Δ — Ερευνητική εφαρμογή και presentation boundary Παράρτημα Ε — Αναπαραγωγή και λογισμικό περιβάλλον Βιβλιογραφία
+Κατάλογος Σχημάτων
+Σχήμα 1 — Protocol flow; exact checkpoints precede matched FN/FD/AN/AD branches. Σχήμα 2 — Map from each research question to its frozen estimands and registered outputs. Σχήμα 3 — Final nominal return by method with pointwise 95% Student-t intervals over 12 roots. Σχήμα 4 — Interaction-axis time-average return, kept separate from final performance. Σχήμα 5 — Adaptation benefit by method and frozen condition; positive values mean lower Adaptive than Frozen loss. Σχήμα 6 — Frozen and Adaptive disturbance-associated loss remain distinct quantities. Σχήμα 7 — Condition-small-multiple view of adaptation benefit on consistent scales. Σχήμα 8 — Stored per-root directed-gap trajectories for the primary action-remap family; dashed line is tolerance 0.10. Σχήμα 9 — Recovered roots at primary tolerance 0.10; unrecovered roots remain right-censored. Σχήμα 10 — Censoring-aware restricted recovery delay through the 256-interaction horizon. Σχήμα 11 — Observed recovery time only among recovered roots; displayed n excludes right-censored roots. Σχήμα 12 — Predeclared 0.05/0.10/0.20 tolerance sensitivity; 0.10 remains primary. Σχήμα 13 — Root-level final nominal-return distribution after equal-layout reduction. Σχήμα 14 — Root-level time-average return distribution after equal-layout reduction. Σχήμα 15 — Declared root-paired A-minus-B contrasts; intervals are descriptive pointwise t intervals. Σχήμα 16 — Root-level adaptation-benefit distributions by method and condition. Σχήμα 17 — Numeric heatmap of stored mean adaptation benefit; higher is better. Σχήμα 18 — All declared RQ2 root-paired A-minus-B contrasts by condition and estimand. Σχήμα 19 — Root-level Frozen-to-Adaptive paired diagnostics; connecting lines do not imply an additional estimand. Σχήμα 20 — Detailed stored root trajectories by method and primary condition; no trajectory averaging. Σχήμα 21 — Recovered versus right-censored root composition at tolerance 0.10. Σχήμα 22 — Declared recovery-status and restricted-delay A-minus-B contrasts on the primary axis. Σχήμα 23 — Stored recovery and confirmation times; right-censored roots are marked at the horizon without fake recovery times. Σχήμα 24 — Accepted-evidence lineage; the failed 216-job attempt is excluded.
+Κατάλογος Πινάκων
+Πίνακας 1 — Σύνοψη για την ενότητα «5.3.1 Συνολική εικόνα ανά condition» Πίνακας 2 — Σύνοψη για την ενότητα «5.4.3 Ευαισθησία στην ανοχή ανάκαμψης» Πίνακας 3 — Σύνοψη για την ενότητα «Ακρωνύμια»
+Κεφάλαιο 1 — Εισαγωγή
+1.1 Αντικείμενο και κίνητρο
+Οι πράκτορες ενισχυτικής μάθησης (Reinforcement Learning, RL) μαθαίνουν να λαμβάνουν διαδοχικές αποφάσεις μέσω αλληλεπίδρασης με ένα περιβάλλον. Η κλασική διατύπωση υποθέτει ότι οι σχέσεις μεταξύ καταστάσεων, ενεργειών, μεταβάσεων και ανταμοιβών είναι αρκετά σταθερές ώστε η εμπειρία που αποκτήθηκε στο παρελθόν να παραμένει χρήσιμη [1]. Σε πραγματικά ή μακρόβια συστήματα, όμως, αυτή η υπόθεση μπορεί να παραβιάζεται: η δυναμική του περιβάλλοντος μπορεί να αλλάζει, οι ενέργειες να έχουν διαφορετικές συνέπειες, οι παρατηρήσεις να αλλοιώνονται ή η διαθέσιμη εμπειρία να μην αντιπροσωπεύει πλέον το τρέχον καθεστώς.
+Η non-stationarity δημιουργεί ένα διαφορετικό πρόβλημα από την απλή ονομαστική μάθηση. Ένας agent που είχε μάθει ικανοποιητική policy πριν από μια μεταβολή πρέπει αφενός να αντέξει την άμεση πτώση επίδοσης και αφετέρου, όταν η μάθηση συνεχίζεται, να προσαρμόσει τη συμπεριφορά του χωρίς να στηρίζεται σε privileged γνώση ότι «συνέβη αλλαγή». Η continual-RL βιβλιογραφία επισημαίνει ότι η διατήρηση προηγούμενης γνώσης και η ικανότητα απόκτησης νέας γνώσης δημιουργούν stability–plasticity trade-offs, ενώ η συνεχιζόμενη εκπαίδευση δεν εγγυάται από μόνη της απεριόριστη δυνατότητα προσαρμογής [2], [3], [4].
+Παράλληλα, διαφορετικοί RL mechanisms διαχειρίζονται την εμπειρία με διαφορετικό τρόπο. Οι tabular TD methods ενημερώνουν άμεσα action values από τις νέες μεταβάσεις, η DQN επαναχρησιμοποιεί εμπειρία μέσω replay, η PPO βελτιστοποιεί on-policy batches και η Dyna-Q+ συνδυάζει πραγματική εμπειρία με learned-model planning και directed re-exploration. Οι διαφορές αυτές δημιουργούν εύλογη επιστημονική ερώτηση: υπό το ίδιο information contract και τον ίδιο πραγματικό interaction budget, πώς διαφοροποιούνται η ονομαστική μάθηση, το όφελος προσαρμογής και η ανάκαμψη όταν το περιβάλλον μεταβάλλεται;
+Η παρούσα διπλωματική προσεγγίζει το ερώτημα ως ελεγχόμενη συγκριτική μελέτη και όχι ως αναζήτηση ενός καθολικά «καλύτερου» αλγορίθμου. Η αξιόπιστη εμπειρική σύγκριση RL methods απαιτεί σαφή budgets, πολλαπλές ανεξάρτητες επαναλήψεις, ελεγχόμενη tuning opportunity και προσεκτική αναφορά uncertainty, επειδή διαφορετικά implementation details και random seeds μπορούν να επηρεάσουν ουσιαστικά το παρατηρούμενο αποτέλεσμα [5], [6].
+1.2 Πρόβλημα και ερευνητικό πλαίσιο
+Το βασικό πρόβλημα της εργασίας είναι η σύγκριση διαφορετικών μηχανισμών RL όταν μια policy, αφού πρώτα εκπαιδευτεί σε ονομαστικές συνθήκες, αναπτύσσεται σε περιβάλλον όπου μπορεί να εμφανιστεί μη αναγγελθείσα διαταραχή ή μόνιμη μεταβολή.
+Για να απομονωθεί αυτό το πρόβλημα από παράγοντες που δεν αποτελούν αντικείμενο της μελέτης, χρησιμοποιείται project-owned GridWorld ως ελεγχόμενο πειραματικό testbed. Το GridWorld δεν αποτελεί το θέμα της διπλωματικής. Χρησιμοποιείται επειδή επιτρέπει ακριβή ορισμό της κατάστασης, των ενεργειών, των disturbances, των πηγών τυχαιότητας και των matched deployment branches. Με αυτόν τον τρόπο η συμπεριφορά των methods μπορεί να εξεταστεί χωρίς η ερμηνεία να εξαρτάται από ανεξέλεγκτες ιδιότητες ενός σύνθετου πραγματικού συστήματος.
+Η μελέτη συγκρίνει πέντε τελικές μεθόδους:
+Q-Learning,
+SARSA,
+Deep Q-Network (DQN),
+Proximal Policy Optimization (PPO),
+Dyna-Q+.
+Οι μέθοδοι επιλέχθηκαν ώστε να καλύπτουν διαφορετικούς μηχανισμούς: off-policy και on-policy tabular TD control, deep value learning με replay, on-policy policy optimization και learned-model planning με directed re-exploration. Δεν αποτελούν εξαντλητική taxonomy του continual RL.
+Το πείραμα χωρίζεται σε δύο κύριες φάσεις. Στη Phase A, κάθε method/root/layout μαθαίνει ανεξάρτητα στο nominal environment μέχρι το παγωμένο interaction budget και παράγει exact scientific checkpoint. Στη Phase B, από το ίδιο checkpoint δημιουργούνται matched κλάδοι Frozen Nominal (FN), Frozen Disturbed (FD), Adaptive Nominal (AN) και Adaptive Disturbed (AD). Οι όροι Frozen και Adaptive δεν δηλώνουν διαφορετικούς αλγορίθμους: στο Frozen regime η μάθηση είναι απενεργοποιημένη, ενώ στο Adaptive regime η ίδια μέθοδος συνεχίζει να μαθαίνει.
+Η δομή αυτή επιτρέπει να διαχωριστεί η επίδραση του disturbance από τη φυσική μεταβολή που μπορεί να προκαλεί η συνέχιση της μάθησης ακόμη και στο nominal environment. Για αυτό η κύρια μέτρηση του RQ2 δεν είναι απλώς η διαφορά AD−FD, αλλά matched difference-of-losses μεταξύ Frozen και Adaptive regimes.
+1.3 Σκοπός και στόχοι
+Σκοπός της διπλωματικής είναι η σύγκριση και αξιολόγηση ανθεκτικών πρακτόρων τεχνητής νοημοσύνης σε περιβάλλοντα με αβεβαιότητα, με έμφαση στη συμπεριφορά RL methods όταν το περιβάλλον μεταβάλλεται μετά την αρχική μάθηση.
+Οι επιμέρους στόχοι είναι:
+1. να συγκριθεί η ονομαστική μάθηση των πέντε methods υπό κοινό budget πραγματικών αλληλεπιδράσεων,
+2. να διαχωριστεί η επίδοση frozen deployment από την επίδραση continued online learning μετά από disturbance,
+3. να ποσοτικοποιηθεί το adaptation benefit με matched FN/FD/AN/AD design,
+4. να μετρηθεί χωριστά η stable recovery μετά από persistent action remapping, με ρητή αντιμετώπιση της μη ανάκαμψης,
+5. να διατηρηθεί η root ως ανεξάρτητη στατιστική μονάδα και να αποφευχθεί η ψευδο-επανάληψη από episodes, layouts ή temporal windows,
+6. να διατηρηθεί πλήρης αλυσίδα reproducibility και provenance από το frozen protocol μέχρι τα τελικά figures/tables,
+7. να υλοποιηθεί desktop εφαρμογή που καθιστά το experiment και το evidence επιθεωρήσιμα χωρίς να μεταφέρει scientific computation στο UI.
+Οι στόχοι αυτοί είναι σκόπιμα στενότεροι από μια γενική αξιολόγηση «AI robustness». Η εργασία δεν επιχειρεί να καλύψει κάθε μορφή uncertainty ούτε κάθε algorithm family.
+1.4 Ερευνητικά ερωτήματα
+Το τελικό protocol-v2.1 ορίζει τρία ερευνητικά ερωτήματα.
+RQ1 — Ονομαστική μάθηση
+Πώς συγκρίνονται η ονομαστική επίδοση και η learning efficiency των πέντε methods υπό κοινό actual-environment-interaction budget και κοινό information contract;
+Η ερώτηση διαχωρίζει την τελική nominal performance από την time-average επίδοση κατά μήκος της Phase-A trajectory. Έτσι, μέθοδοι που καταλήγουν στο ίδιο επίπεδο μπορούν να διαχωριστούν ως προς το πόσο γρήγορα αξιοποίησαν το διαθέσιμο experience budget.
+RQ2 — Ανθεκτικότητα και προσαρμογή
+Πόση disturbance-associated απώλεια εμφανίζεται στα Frozen και Adaptive regimes και ποιο είναι το matched adaptation benefit της continued learning;
+Το κύριο estimand είναι:
+Badapt=(FN-FD)-(AN-AD).
+Θετική τιμή σημαίνει ότι η συνέχιση της μάθησης μείωσε τη disturbance-associated απώλεια σε σχέση με frozen deployment. Η ερώτηση δεν προϋποθέτει ότι η adaptation είναι πάντοτε ωφέλιμη.
+RQ3 — Ανάκαμψη
+Πώς εξελίσσεται η Adaptive-Disturbed trajectory σε σχέση με την matched Adaptive-Nominal trajectory μετά από persistent, μη αναγγελθείσα αλλαγή και αν/πότε επιτυγχάνεται stable recovery;
+Η κύρια οικογένεια αλλαγής είναι persistent action remapping. Η recovery αξιολογείται σε fixed 32-interaction windows, με primary tolerance 0,10, δύο συνεχόμενα qualifying windows και right-censoring όταν δεν παρατηρείται recovery μέχρι το frozen horizon των 256 interactions.
+1.5 Συνεισφορά της εργασίας
+Η συνεισφορά της εργασίας είναι κυρίως μεθοδολογική, πειραματική και συστημική.
+Πρώτον, εφαρμόζεται κοινό actual-environment-interaction fairness boundary σε πέντε ετερογενείς RL methods. Η σύγκριση δεν επιβάλλει ίσο πλήθος internal updates, επειδή replay, optimizer steps και planning steps έχουν διαφορετική σημασία μεταξύ methods.
+Δεύτερον, χρησιμοποιείται exact-checkpoint matched FN/FD/AN/AD design. Η σχεδίαση διαχωρίζει τη disturbance-associated απώλεια από τη μεταβολή που οφείλεται στην ίδια τη continued learning και επιτρέπει την προκαθορισμένη εκτίμηση adaptation benefit.
+Τρίτον, η recovery αντιμετωπίζεται ως ξεχωριστό temporal construct και όχι ως συνώνυμο του aggregate adaptation benefit. Η μη ανάκαμψη παραμένει ρητά right-censored, ενώ ο observed recovery time δεν αντικαθίσταται από το horizon όταν το event δεν έχει συμβεί.
+Τέταρτον, η τελική scientific pipeline είναι πλήρως versioned και provenance-aware: frozen protocol, deterministic Study plan, exact checkpoints, validated run bundles, frozen evidence, predeclared analysis και registered thesis assets συνδέονται με IDs και hashes.
+Πέμπτον, η PySide6 εφαρμογή υλοποιείται ως experiment-first thin client πάνω από το framework-neutral Study/evidence backend. Παρουσιάζει Run, Results και Evidence χωρίς να υπολογίζει εκ νέου estimands, thresholds ή intervals.
+Σε επίπεδο αποτελεσμάτων, η τελική μελέτη δείχνει ότι οι τρεις διαστάσεις δεν ευθυγραμμίζονται σε έναν ενιαίο «winner». Η Dyna-Q+ αξιοποίησε ταχύτερα το nominal interaction budget, ενώ Q-Learning και SARSA εμφάνισαν την πιο συνεπή stable recovery στα persistent remaps. Επιπλέον, η online adaptation ήταν έντονα condition-dependent: ωφέλιμη στα persistent action remaps για ορισμένες methods, αλλά όχι καθολικά προστατευτική σε όλες τις uncertainty conditions. Τα ακριβή αποτελέσματα, intervals και censoring counts παρουσιάζονται στο Κεφάλαιο 5 και ερμηνεύονται στο Κεφάλαιο 6.
+1.6 Πεδίο, παραδοχές και οριοθέτηση
+Η εργασία χρησιμοποιεί ένα μικρό, ελεγχόμενο discrete environment και δύο held-out τελικές layouts. Συνεπώς, δεν επιχειρεί να τεκμηριώσει εξωτερική εγκυρότητα προς robotics, continuous control ή large-scale autonomous-agent systems.
+Οι πέντε frozen methods/configurations είναι μηχανιστικά διαφορετικά comparators και όχι πλήρης κατάλογος continual-RL τεχνικών. Δεν αξιολογούνται explicit changepoint detectors, latent-context inference, meta-learning, specialized replay-reset strategies, continual-learning regularizers ή safe-RL constraint mechanisms. Σύγχρονες εργασίες σε context-aware continual RL και modular model-based adaptation δείχνουν ότι τέτοιες παρεμβάσεις μπορούν να αλλάξουν το adaptation problem, αλλά βασίζονται σε διαφορετικές πληροφοριακές ή αρχιτεκτονικές παραδοχές [7], [8].
+Η persistent action remapping, η action failure και η observation corruption αντιμετωπίζονται ως διαφορετικές disturbance families. Δεν συνδυάζονται σε ένα ενιαίο uncertainty score. Το RQ3 εστιάζει στα action remaps, ενώ οι υπόλοιπες conditions παρέχουν κυρίως supporting evidence για την condition-dependence του RQ2.
+Η στατιστική inference χρησιμοποιεί 12 roots ως ανεξάρτητες μονάδες. Layouts, episodes και recovery windows δεν αντιμετωπίζονται ως ανεξάρτητα samples. Τα reported intervals είναι pointwise 95% Student-t intervals και δεν συνοδεύονται από formal p-value superiority family ή multiplicity-adjusted simultaneous inference.
+Τέλος, η εργασία διαχωρίζει τη scientific evidence authority από την εφαρμογή και από το τελικό έγγραφο. Τα quantitative claims προέρχονται από το frozen T-611/T-612/T-613 evidence chain. Screenshots ή live visualization μπορούν να εξηγήσουν το workflow, αλλά δεν αποτελούν πηγή αριθμητικών αποτελεσμάτων.
+1.7 Δομή της διπλωματικής
+Η υπόλοιπη διπλωματική οργανώνεται σε έξι κεφάλαια.
+Το Κεφάλαιο 2 — Θεωρητικό Υπόβαθρο και Σχετική Βιβλιογραφία παρουσιάζει τις βασικές έννοιες MDP/RL, τις πέντε methods, το πρόβλημα non-stationarity και τη σχετική βιβλιογραφία για adaptation, replay, planning και continual learning. Καταλήγει στο συγκεκριμένο ερευνητικό κενό της παρούσας μελέτης.
+Το Κεφάλαιο 3 — Μεθοδολογία και Πειραματικός Σχεδιασμός περιγράφει το GridWorld testbed, τα frozen method configurations, τις Phase A/Phase B διαδικασίες, τις disturbance conditions, τα RQ estimands, τις roots/layouts και το statistical contract.
+Το Κεφάλαιο 4 — Αρχιτεκτονική και Υλοποίηση του Ερευνητικού Συστήματος παρουσιάζει το framework-neutral Study backend, τα deterministic plans, τα exact checkpoints, το evidence/analysis layer, την provenance αλυσίδα και την PySide6 εφαρμογή.
+Το Κεφάλαιο 5 — Πειραματικά Αποτελέσματα παρουσιάζει τα accepted RQ1/RQ2/RQ3 αποτελέσματα, τα intervals, τις paired contrasts, τη right-censoring και το predeclared sensitivity analysis χωρίς εισαγωγή νέων estimands.
+Το Κεφάλαιο 6 — Συζήτηση ερμηνεύει τα αποτελέσματα σε σχέση με τους διαφορετικούς learning/adaptation mechanisms και τη βιβλιογραφία, και εξετάζει threats to validity και όρια γενίκευσης.
+Τέλος, το Κεφάλαιο 7 — Συμπεράσματα και Μελλοντική Εργασία απαντά συνοπτικά στα ερευνητικά ερωτήματα, αποτιμά τη συνεισφορά της εργασίας και προτείνει ερευνητικές επεκτάσεις που απορρέουν από τα πραγματικά όρια της μελέτης.
+Κεφάλαιο 2 — Θεωρητικό Υπόβαθρο και Σχετική Βιβλιογραφία
+2.1 Πράκτορες και διαδοχική λήψη αποφάσεων
+Η ενισχυτική μάθηση (Reinforcement Learning, RL) μελετά προβλήματα στα οποία ένας πράκτορας αλληλεπιδρά διαδοχικά με ένα περιβάλλον, επιλέγει ενέργειες και λαμβάνει παρατηρήσεις και ανταμοιβές. Σε αντίθεση με supervised learning, η επιθυμητή συμπεριφορά δεν παρέχεται ως σύνολο σωστών labels για κάθε κατάσταση. Ο πράκτορας πρέπει να μάθει μια πολιτική που μεγιστοποιεί τη μελλοντική απόδοση μέσω της ίδιας της αλληλεπίδρασης [1].
+Η διαδοχικότητα είναι κρίσιμη: μια ενέργεια δεν αξιολογείται μόνο από την άμεση ανταμοιβή της, αλλά και από το πώς επηρεάζει τις μελλοντικές καταστάσεις και ευκαιρίες. Για αυτό η λήψη αποφάσεων σε RL συνδέεται με την αναμενόμενη σωρευτική επιστροφή και με την ισορροπία μεταξύ exploitation της ήδη αποκτημένης γνώσης και exploration για συλλογή νέας εμπειρίας [1].
+Η παρούσα εργασία εστιάζει σε ένα επιπλέον πρόβλημα: τι συμβαίνει όταν η σχέση μεταξύ καταστάσεων, ενεργειών, παρατηρήσεων και ανταμοιβών δεν παραμένει σταθερή μετά την αρχική μάθηση. Σε stationary setting η εμπειρία του παρελθόντος μπορεί να παραμένει έγκυρη. Σε non-stationary setting, ορισμένες εκτιμήσεις, πολιτικές ή learned models μπορεί να γίνουν stale και ο πράκτορας πρέπει είτε να διατηρήσει επαρκή απόδοση χωρίς αλλαγή είτε να προσαρμοστεί στη νέα συνθήκη.
+2.2 Markov Decision Processes και Reinforcement Learning
+Το κλασικό μαθηματικό πλαίσιο του RL είναι το Markov Decision Process (MDP). Ένα MDP περιγράφεται από σύνολο καταστάσεων S, σύνολο ενεργειών A, δυναμική μετάβασης, συνάρτηση ανταμοιβής και συντελεστή προεξόφλησης γ. Η Markov ιδιότητα εκφράζει ότι, δεδομένης της τρέχουσας κατάστασης και ενέργειας, η κατανομή της επόμενης κατάστασης δεν χρειάζεται ολόκληρο το ιστορικό για να οριστεί [1].
+Μια policy π(a| s) ορίζει πώς επιλέγεται ενέργεια σε μια κατάσταση. Η state-value function Vπ(s) περιγράφει την αναμενόμενη discounted return από μια κατάσταση ακολουθώντας την policy, ενώ η action-value function Qπ(s,a) περιγράφει την αντίστοιχη αναμενόμενη return όταν πρώτα επιλεγεί η ενέργεια a [1].
+Στα temporal-difference methods, οι value estimates ενημερώνονται από bootstrapped targets που συνδυάζουν την άμεση ανταμοιβή με εκτίμηση μελλοντικής αξίας. Η δυνατότητα online ενημέρωσης χωρίς πλήρες μοντέλο του περιβάλλοντος καθιστά τις TD μεθόδους φυσικές baselines για μελέτη adaptation.
+Η κλασική θεωρία συνήθως προϋποθέτει stationary dynamics ή άλλες συνθήκες που δεν ταυτίζονται με persistent αλλαγή κατά τη deployment φάση. Επομένως, η επιτυχής συμπεριφορά ενός αλγορίθμου σε stationary learning δεν συνεπάγεται αυτομάτως αποτελεσματική tracking συμπεριφορά μετά από environmental change.
+2.3 Q-Learning και SARSA
+Η Q-Learning και η SARSA είναι δύο κλασικές tabular TD-control μέθοδοι που διαφέρουν κυρίως στον one-step update target [1], [9].
+Στη Q-Learning, η ενημέρωση μπορεί να γραφτεί ως:
+Q(st,at) ← Q(st,at) + α[rt+1+γ maxa Q(st+1,a)-Q(st,at)].
+Ο target χρησιμοποιεί greedy μέγιστο στην επόμενη κατάσταση. Για αυτό η Q-Learning χαρακτηρίζεται off-policy: η behavior policy που παράγει εμπειρία μπορεί να είναι exploratory, ενώ ο update target αναφέρεται σε greedy action value.
+Στη SARSA, ο target χρησιμοποιεί την επόμενη ενέργεια που επιλέγεται από την τρέχουσα behavior policy:
+Q(st,at) ← Q(st,at) + α[rt+1+γ Q(st+1,at+1)-Q(st,at)].
+Η SARSA είναι επομένως on-policy. Υπό exploratory behavior, η διαφορά αυτή μπορεί να επηρεάσει τη συμπεριφορά που μαθαίνεται, επειδή η SARSA ενσωματώνει στον target τις συνέπειες των ενεργειών που πραγματικά επιλέγονται από την exploratory policy [1], [9].
+Στην παρούσα εργασία η Q-Learning και η SARSA επιλέγονται ως ερμηνεύσιμο off-policy/on-policy tabular contrast υπό ίδιο state/action representation και ίδιο information contract. Η επιλογή τους δεν προϋποθέτει ότι κάποια από τις δύο είναι θεωρητικά «πιο ανθεκτική». Η ανθεκτικότητα και η recovery παραμένουν εμπειρικά outcomes.
+2.4 Deep Q-Network
+Η Deep Q-Network (DQN) επεκτείνει τη value-based λογική σε νευρωνική προσέγγιση της action-value function και αποτελεί βασικό σημείο αναφοράς του deep RL [10]. Η DQN χρησιμοποιεί experience replay ώστε οι μεταβάσεις να αποθηκεύονται και να επαναχρησιμοποιούνται για updates, και target network ώστε οι bootstrapped targets να μεταβάλλονται πιο ελεγχόμενα.
+Το replay δεν είναι ουδέτερη λεπτομέρεια αποθήκευσης. Το μέγεθος του buffer, η συχνότητα sampling και ο λόγος πραγματικής εμπειρίας προς replay updates μπορούν να επηρεάσουν ουσιαστικά τη συμπεριφορά μάθησης [11]. Αυτό έχει ιδιαίτερη σημασία σε non-stationary settings, επειδή ένα replay buffer μπορεί να περιλαμβάνει τόσο πρόσφατη post-change εμπειρία όσο και stale pre-change transitions.
+Στην παρούσα εργασία δεν εφαρμόζεται ειδικό replay reset ή reweighting μετά τη μεταβολή. Η Adaptive DQN branch συνεχίζει τη φυσική training διαδικασία της frozen configuration. Η επιλογή αυτή επιτρέπει να μετρηθεί η συμπεριφορά του standard mechanism χωρίς να προστεθεί ξεχωριστή continual-learning intervention.
+2.5 Proximal Policy Optimization
+Η Proximal Policy Optimization (PPO) είναι on-policy policy-gradient μέθοδος. Η βασική της ιδέα είναι η βελτιστοποίηση clipped surrogate objective ώστε να περιορίζονται υπερβολικά μεγάλες policy updates μεταξύ διαδοχικών iterations [12].
+Σε αντίθεση με value-based tabular methods, η PPO μαθαίνει απευθείας parametrized policy και value function. Η observed performance εξαρτάται όχι μόνο από το high-level clipped objective αλλά και από implementation details όπως rollout length, minibatch size, αριθμό epochs, advantage estimation, optimizer settings και network architecture [13].
+Αυτό είναι σημαντικό για την ερμηνεία της παρούσας σύγκρισης. Η PPO δεν αντιμετωπίζεται ως «robust» επειδή περιορίζει το μέγεθος policy updates. Το clipping αφορά optimization stability και δεν αποτελεί εγγύηση απέναντι σε αλλαγή transition/action semantics. Η actual resilience μετράται από το ίδιο frozen protocol που εφαρμόζεται στις υπόλοιπες μεθόδους.
+2.6 Dyna και Dyna-Q+
+Η Dyna αρχιτεκτονική συνδυάζει άμεση μάθηση από πραγματική εμπειρία με μάθηση μοντέλου και πρόσθετα planning updates πάνω σε model-generated experience [1]. Μια πραγματική μετάβαση μπορεί να ενημερώσει τόσο τις action-value estimates όσο και ένα empirical model, το οποίο στη συνέχεια επιτρέπει επιπλέον backups χωρίς νέες πραγματικές αλληλεπιδράσεις.
+Σε changing environment, η model-based προσέγγιση δημιουργεί και μια ειδική ευπάθεια: αν η δυναμική αλλάξει, μέρος του learned model μπορεί να παραμείνει stale μέχρι να ξαναπαρατηρηθούν τα επηρεασμένα state-action pairs. Planning πάνω σε stale model μπορεί προσωρινά να ενισχύσει παλιές εκτιμήσεις [1].
+Η Dyna-Q+ εισάγει directed re-exploration με recency-based bonus για state-action pairs που δεν έχουν δοκιμαστεί πρόσφατα. Η λογική είναι ότι οι συνέπειες μιας παλιάς action μπορεί να έχουν αλλάξει, επομένως η συστηματική επανεξέταση παλιών ενεργειών μπορεί να βοηθήσει στην ανακάλυψη αλλαγής [1]. Το exploration bonus έχει όμως κόστος: η δοκιμή παλιών ή αβέβαιων ενεργειών μπορεί να μειώσει προσωρινά την άμεση ανταμοιβή.
+Η παρούσα μελέτη διατηρεί τη Dyna-Q+ στην τελική πεντάδα ως planning/re-exploration comparator. Η ύπαρξη learned model δεν αντιμετωπίζεται ως θεωρητική εγγύηση adaptation superiority.
+2.7 Non-stationarity και δυναμικές μεταβολές
+Σε non-stationary RL, η κατανομή καταστάσεων, rewards, transitions ή άλλων περιβαλλοντικών παραμέτρων μπορεί να μεταβάλλεται κατά τη διάρκεια training/deployment. Η αλλαγή μπορεί να είναι abrupt ή gradual, observed ή latent, προσωρινή ή persistent. Οι διαφορετικές μορφές non-stationarity δημιουργούν διαφορετικές απαιτήσεις adaptation και δεν είναι επιστημονικά σωστό να αντιμετωπίζονται ως μία ενιαία disturbance category [2].
+Η continual-RL βιβλιογραφία τονίζει την ανάγκη να διατηρείται ισορροπία ανάμεσα στη retention παλαιάς γνώσης και στην plasticity για νέα γνώση. Deep agents μπορούν να εμφανίσουν interference, primacy effects ή loss of plasticity κατά την παρατεταμένη μάθηση [3], [4]. Αυτά τα ευρήματα δεν προβλέπουν συγκεκριμένη αποτυχία των DQN/PPO στο παρόν GridWorld, αλλά αιτιολογούν γιατί η απλή συνέχιση gradient-based training δεν πρέπει να θεωρείται αυτόματα επαρκής adaptation strategy.
+Το πρόσφατο ICLR 2025 work για online RL σε non-stationary context-driven environments εξετάζει catastrophic forgetting και stability/plasticity σε continual deployment [7]. Η εργασία δίνει στην policy ρητό exogenous context και συνεπώς λειτουργεί σε διαφορετικό information regime από το παρόν hidden action-remap setting. Η διάκριση observed versus hidden context είναι κεντρική για τη σωστή μεταφορά συμπερασμάτων μεταξύ μελετών.
+2.8 Action uncertainty, observation uncertainty και hidden change
+Η παρούσα διπλωματική διαχωρίζει τρεις μορφές disturbance.
+Η persistent action remapping αλλάζει τη σημασιολογία της ενέργειας χωρίς να αλλάζει το ονομαστικό action set. Ο agent εξακολουθεί να επιλέγει, για παράδειγμα, right, αλλά το περιβάλλον μπορεί να εκτελεί τη συνέπεια που προηγουμένως αντιστοιχούσε στο down. Η αλλαγή δεν ανακοινώνεται με explicit change indicator.
+Η action failure εισάγει stochastic actuation uncertainty. Η intended action μπορεί να αποτύχει με προκαθορισμένη πιθανότητα. Σε αυτή την περίπτωση η underlying mapping δεν αντικαθίσταται από νέο μόνιμο regime με τον ίδιο τρόπο όπως στο action remap.
+Η observation corruption εισάγει information/perception uncertainty. Ο agent μπορεί να λάβει observation που δεν αντιστοιχεί στην evaluator true state. Η condition αυτή είναι conceptually διαφορετική από transition/action uncertainty, επειδή το learning update μπορεί να βασίζεται σε αλλοιωμένο input.
+Οι conditions δεν συνδυάζονται σε ενιαίο uncertainty score. Η ίδια η τελική εμπειρική ανάλυση δείχνει ότι η online adaptation έχει διαφορετική επίδραση στις τρεις families.
+2.9 Ανθεκτικότητα, προσαρμογή και ανάκαμψη
+Η έννοια της ανθεκτικότητας σε sequential decision systems μπορεί να αναλυθεί σε διαφορετικές συνιστώσες αντί να αντιμετωπιστεί ως ένας αδιαφανής αριθμός. Για την παρούσα εργασία είναι χρήσιμη η διάκριση ανάμεσα σε:
+resistance/degradation: πόσο μειώνεται η επίδοση όταν εμφανίζεται disturbance,
+adaptation benefit: κατά πόσο η συνέχιση της μάθησης μειώνει αυτή την απώλεια σε σχέση με frozen deployment,
+recovery: αν και πότε η adaptive disturbed trajectory επιστρέφει σε προκαθορισμένη γειτονιά της adaptive nominal reference.
+Η διάκριση αυτή είναι project-specific operationalization και δεν παρουσιάζεται ως universal standard. Το four-branch FN/FD/AN/AD design είναι επίσης πειραματική κατασκευή της παρούσας εργασίας, σχεδιασμένη ώστε να απομονώνει το όφελος adaptation από nominal drift και από τη βασική επίδραση της disturbance.
+Η recovery απαιτεί ξεχωριστή αντιμετώπιση επειδή περιλαμβάνει event-like timing και πιθανότητα μη ανάκαμψης. Αν ένας agent δεν ανακάμψει μέσα στο observation horizon, η τιμή αυτή πρέπει να παραμείνει right-censored και να μη μετατραπεί σε ψευδή observed time ίσο με το horizon.
+2.10 Continual adaptation, replay και model organization
+Η ordinary continued training δεν είναι η μόνη δυνατή προσέγγιση σε changing environments. Η ευρύτερη βιβλιογραφία περιλαμβάνει changepoint detection, context inference, memory/replay management, meta-learning, specialized continual-learning regularization και uncertainty-aware planning [2].
+Το ICLR 2025 context-driven work δείχνει ένα παράδειγμα όπου retained past experience χρησιμοποιείται για να περιοριστούν destructive policy changes σε παλιότερα contexts, αντί να χρησιμοποιείται απλώς ως stale on-policy training data [7]. Η σχεδίαση αυτή αντιμετωπίζει ρητά το stability/plasticity trade-off, αλλά απαιτεί observed context information που δεν υπάρχει στην παρούσα μελέτη.
+Στη model-based πλευρά, η εργασία Partial Models for Building Adaptive Model-Based Reinforcement Learning Agents δείχνει ότι ένα μονολιθικό learned model και ένα ενιαίο replay/history mechanism μπορούν να δυσκολέψουν local adaptation όταν τμήμα του environment distribution αλλάξει [8]. Οι συγγραφείς αναδεικνύουν ένα interference-versus-forgetting trade-off: μεγάλο history μπορεί να κρατά stale transitions, ενώ πολύ περιορισμένο history μπορεί να ξεχνά παλιά αλλά ακόμη έγκυρη γνώση. Η partial-model παρέμβασή τους βελτιώνει adaptation σε συγκεκριμένα deep Dyna-Q/PlaNet/Dreamer setups, αλλά δεν μπορεί να μεταφερθεί απευθείας στην tabular Dyna-Q+ της παρούσας εργασίας.
+Οι δύο πρόσφατες εργασίες χρησιμοποιούνται συνεπώς για να τοποθετήσουν τα αποτελέσματα μέσα σε ευρύτερη continual-adaptation συζήτηση, όχι για να δημιουργήσουν εκ των υστέρων causal explanation της observed συμπεριφοράς.
+2.11 Empirical RL design και δίκαιη σύγκριση
+Η αξιόπιστη σύγκριση RL methods είναι ιδιαίτερα ευαίσθητη σε random variation, hyperparameter choices, environment selection και reporting choices [5], [6]. Για αυτό μια σύγκριση πέντε ετερογενών methods δεν μπορεί να βασιστεί απλώς στο «ίδιο πλήθος επεισοδίων» ή σε ένα seed.
+Η βιβλιογραφία empirical RL design υποστηρίζει την ανάγκη για πολλαπλές ανεξάρτητες runs/roots, δίκαιη tuning opportunity, σαφές common experience budget και αναφορά uncertainty [5], [6]. Η παρούσα εργασία εφαρμόζει αυτές τις αρχές με actual-environment interactions ως κύριο budget, 12 independent roots και frozen tuning/configuration πριν από confirmatory outcomes.
+Ιδιαίτερη προσοχή απαιτούν και τα time limits. Ένα administrative episode cutoff δεν είναι κατ' ανάγκη terminal state του underlying continuing problem. Η βιβλιογραφία time-limit handling δείχνει ότι η λανθασμένη αντιμετώπιση truncation ως πραγματικού terminal μπορεί να αλλάξει τα learning targets [14]. Για αυτό το project διατηρεί explicit διάκριση terminated/truncated και bootstrapping semantics σύμφωνα με το frozen task contract.
+2.12 Σχετικές εμπειρικές προσεγγίσεις και θέση της μελέτης
+Η υπάρχουσα βιβλιογραφία καλύπτει πολλές διαφορετικές όψεις του προβλήματος: standard TD control, deep value learning, policy optimization, model-based planning, continual RL, plasticity/forgetting, replay management και local adaptation. Ωστόσο, οι μελέτες διαφέρουν σε environments, information assumptions, budgets και στόχους, οπότε οι αποτελεσματικές συγκρίσεις απαιτούν ρητή αναφορά των transfer boundaries.
+Η παρούσα εργασία δεν επιχειρεί να αναπαράγει ένα μεγάλο continual-RL benchmark ούτε να καλύψει όλες τις algorithm families. Επιλέγει πέντε μηχανιστικά διαφορετικές και υλοποιήσιμες methods ώστε να εξεταστούν κάτω από ένα κοινό, αυστηρά ελεγχόμενο protocol:
+off-policy tabular TD control,
+on-policy tabular TD control,
+deep value learning με replay,
+on-policy policy-gradient optimization,
+learned-model planning με directed re-exploration.
+Η προσέγγιση αυτή επιτρέπει να διαχωριστούν τρία ερωτήματα που συχνά συμπλέκονται: πόσο αποτελεσματικά μαθαίνει ένας agent nominally, αν continued learning μειώνει aggregate disturbance loss και αν η policy επανέρχεται σταθερά κοντά στην matched nominal adaptive trajectory.
+2.13 Ερευνητικό κενό και θέση της παρούσας εργασίας
+Το ερευνητικό κενό που αντιμετωπίζει η εργασία δεν είναι η απουσία αλγορίθμων για non-stationary RL. Η βιβλιογραφία διαθέτει πολλές specialized λύσεις. Το ερώτημα της παρούσας μελέτης είναι πιο συγκεκριμένο: πώς συμπεριφέρονται διαφορετικοί standard RL mechanisms όταν αξιολογούνται υπό κοινό information contract, κοινό actual-interaction budget και matched hidden-change deployment, με χωριστή μέτρηση adaptation benefit και recovery;
+Η εργασία τοποθετείται ανάμεσα σε δύο άκρα. Από τη μία, stationary benchmark comparisons δεν εξετάζουν ρητά τη post-change behavior. Από την άλλη, specialized continual-RL systems συχνά εισάγουν additional context, detectors, memory rules ή architectural priors. Η παρούσα μελέτη κρατά τους πέντε methods κοντά στη standard operation τους και μεταβάλλει ελεγχόμενα το environment contract μετά από exact scientific checkpoint.
+Με αυτόν τον τρόπο, τα τελικά αποτελέσματα μπορούν να διαβαστούν ως controlled baseline για resilience/adaptation mechanisms και όχι ως ανταγωνισμός όλων των σύγχρονων continual-RL τεχνικών. Η θέση αυτή καθορίζει και την ερμηνεία των επόμενων κεφαλαίων: η εργασία αξιολογεί συγκεκριμένα mechanisms υπό συγκεκριμένο contract και διατηρεί ρητά τα όρια μεταφοράς σε broader settings.
+Κεφάλαιο 3 — Μεθοδολογία και Πειραματικός Σχεδιασμός
+3.1 Ερευνητική προσέγγιση και αρχές συγκρισιμότητας
+Η παρούσα εργασία υιοθετεί ελεγχόμενη πειραματική προσέγγιση για τη σύγκριση πέντε μεθόδων ενισχυτικής μάθησης σε περιβάλλον που μεταβάλλεται μετά την αρχική εκπαίδευση. Ο στόχος δεν είναι η ανάδειξη ενός καθολικά «καλύτερου» αλγορίθμου, αλλά η αποτίμηση διαφορετικών συμπεριφορών μάθησης, προσαρμογής και ανάκαμψης υπό κοινό πειραματικό συμβόλαιο. Για τον λόγο αυτό, η συγκρισιμότητα ορίζεται κυρίως ως ισότητα ως προς τις πραγματικές αλληλεπιδράσεις με το περιβάλλον και όχι ως ισότητα υπερπαραμέτρων ή αριθμού εσωτερικών ενημερώσεων.
+Οι πέντε τελικές μέθοδοι είναι Q-Learning, SARSA, Deep Q-Network (DQN), Proximal Policy Optimization (PPO) και Dyna-Q+. Οι μέθοδοι διαφέρουν ουσιωδώς ως προς την αναπαράσταση, τη διαδικασία ενημέρωσης και το αν χρησιμοποιούν μοντέλο του περιβάλλοντος. Συνεπώς, η επιβολή ίδιου αριθμού gradient steps, planning updates ή άλλων method-native λειτουργιών θα δημιουργούσε τεχνητή ισότητα σε εσωτερικούς μηχανισμούς που δεν είναι συγκρίσιμοι. Αντίθετα, όλες οι μέθοδοι υπόκεινται στο ίδιο κύριο budget πραγματικών αλληλεπιδράσεων με το GridWorld, στις ίδιες σημασιολογικές συνθήκες, στην ίδια πολιτική διαθέσιμης πληροφορίας και στις ίδιες τελικές ρίζες και διατάξεις.
+Η ανάλυση οργανώνεται γύρω από τρία ερευνητικά ερωτήματα. Το RQ1 εξετάζει την ονομαστική μάθηση πριν από οποιαδήποτε μεταβολή του περιβάλλοντος. Το RQ2 ποσοτικοποιεί την απώλεια από τη διαταραχή και το όφελος της συνεχιζόμενης προσαρμογής. Το RQ3 εξετάζει την ταχύτητα και τη συνέπεια ανάκαμψης μετά από μόνιμη, μη αναγγελθείσα μεταβολή σημασιολογίας ενεργειών. Τα τρία ερωτήματα χρησιμοποιούν διαφορετικά estimands και δεν συμπτύσσονται σε έναν ενιαίο «δείκτη ανθεκτικότητας».
+Η τελική μεθοδολογία έχει παγώσει πριν από την επιθεώρηση των τελικών αποτελεσμάτων. Το protocol-v2.1 διατηρεί τις επιστημονικές επιλογές του protocol-v2.0 και προσθέτει, πριν από την τελική εκτέλεση, ρητό συμβόλαιο ανάκαμψης και άμεσων συγκρίσεων μεταξύ μεθόδων. Με αυτόν τον τρόπο, οι ορισμοί των μετρικών, τα thresholds, οι ρίζες, τα layouts και οι συγκρίσεις δεν επιλέχθηκαν εκ των υστέρων με βάση τα παρατηρούμενα αποτελέσματα.
+3.2 GridWorld ως ελεγχόμενο πειραματικό testbed
+Το GridWorld χρησιμοποιείται ως ελεγχόμενο testbed και όχι ως το αντικείμενο της διπλωματικής. Η ελεγχόμενη δομή του επιτρέπει την ακριβή επανάληψη ίδιων αρχικών συνθηκών, την ανεξάρτητη διαχείριση πηγών τυχαιότητας και την εφαρμογή μεταβολών με πλήρως καθορισμένη σημασιολογία. Έτσι, μπορεί να μελετηθεί η συμπεριφορά των πρακτόρων όταν το περιβάλλον μεταβάλλεται χωρίς να εισάγονται ταυτόχρονα ανεξέλεγκτοι παράγοντες από ένα πολύπλοκο πραγματικό σύστημα.
+Η τελική εργασία χρησιμοποιεί δύο held-out διατάξεις 7×7, τις gw-l1-final-a και gw-l1-final-b. Και στις δύο περιπτώσεις η αρχική θέση είναι το κελί (0,0), ο στόχος το (6,6) και το μήκος της συντομότερης διαδρομής είναι 12 βήματα. Κάθε διάταξη περιλαμβάνει εννέα εμπόδια και επιτρέπει έως 48 βήματα ανά επεισόδιο. Οι δύο διατάξεις έχουν διαφορετικές ακριβείς θέσεις εμποδίων και διαφορετικά generation seeds, αλλά διατηρούν κοινή κλίμακα και κοινό μήκος βέλτιστης διαδρομής.
+Η συνάρτηση ανταμοιβής είναι σταθερή σε όλο το πείραμα: κάθε απλό βήμα αποδίδει -0,1, μια σύγκρουση -0,25 και η επίτευξη του στόχου +1,0. Ο συντελεστής προεξόφλησης είναι 0,95. Η παρατήρηση του πράκτορα περιλαμβάνει μόνο τη θέση (x,y). Η τελική πολιτική πληροφορίας δεν αποκαλύπτει στον πράκτορα την πραγματικά εκτελεσθείσα ενέργεια μετά από disturbance, flags διαταραχής, ένδειξη αλλαγής, αναγνωριστικό καθεστώτος ή κρυφή ground-truth κατάσταση πέρα από την επιτρεπόμενη παρατήρηση. Η διάκριση ανάμεσα σε evaluator truth και agent-visible information είναι βασική προϋπόθεση της μελέτης, επειδή η ανθεκτικότητα δεν θα ήταν συγκρίσιμη αν ορισμένες μέθοδοι λάμβαναν εξωτερική ένδειξη ότι συνέβη μεταβολή.
+3.3 Τελικές μέθοδοι και fairness boundaries
+Οι tabular μέθοδοι Q-Learning και SARSA χρησιμοποιούν learning rate 0,4, discount factor 0,95 και ε-greedy εξερεύνηση με ε=0,1. Η Dyna-Q+ χρησιμοποιεί learning rate 0,2, ε=0,1, δέκα planning steps ανά πραγματική αλληλεπίδραση και παράμετρο exploration bonus κ=0,0005. Οι DQN και PPO υλοποιούνται μέσω Stable-Baselines3 με project-owned adapters που διατηρούν το επιστημονικό state που απαιτείται για ακριβές checkpoint/restore.
+Η DQN χρησιμοποιεί δίκτυο δύο κρυφών επιπέδων 64×64, learning rate 0,003, replay buffer 16.384 μεταβάσεων, batch size 32, ένα gradient step ανά training frequency, target update interval 128 και exploration schedule από 1,0 προς 0,05 στο πρώτο 50% του training budget. Η μάθηση ξεκινά μετά τις 128 αλληλεπιδράσεις. Η PPO χρησιμοποιεί ξεχωριστά policy/value δίκτυα 64×64, learning rate 0,001, rollout length 128, batch size 64, δέκα epochs ανά update, clip range 0,2, GAE λ=0,95 και max gradient norm 0,5.
+Οι διαφορές αυτές δεν αντιμετωπίζονται ως αθέμιτες, επειδή αποτελούν μέρος της φυσικής λειτουργίας κάθε μεθόδου. Το κοινό fairness boundary είναι ότι η εκπαίδευση και η προσαρμογή μετρώνται με πραγματικές αλληλεπιδράσεις με το ίδιο περιβάλλον. Ο χρόνος τοίχου, ο CPU time, τα optimizer updates και τα planning updates καταγράφονται ως δευτερεύοντα περιγραφικά στοιχεία, όχι ως κύριο επιστημονικό budget.
+Το exact continuation state είναι method-native. Για τις tabular μεθόδους περιλαμβάνει, όπου απαιτείται, πίνακες τιμών, κατάσταση εξερεύνησης και εκκρεμείς ενημερώσεις. Για τη DQN περιλαμβάνει replay buffer, target network, optimizer και exploration state. Για την PPO περιλαμβάνει optimizer, schedule, RNG και όρια ενημέρωσης. Για τη Dyna-Q+ περιλαμβάνει το learned model, recency state και planning-related state. Η ακριβής διατήρηση αυτών των στοιχείων είναι αναγκαία ώστε η Phase B να αποτελεί πραγματική συνέχεια της Phase A και όχι νέα εκπαίδευση από μη ισοδύναμη αρχική κατάσταση.
+3.4 Phase A: ανεξάρτητη ονομαστική μάθηση και checkpoints
+Η Phase A εξετάζει την ονομαστική μάθηση χωρίς disturbances. Για κάθε μέθοδο, ρίζα και layout εκτελείται ανεξάρτητη εκπαίδευση με budget 8.192 πραγματικών αλληλεπιδράσεων. Δεν υπάρχει κοινό pretrained state μεταξύ των μεθόδων: κάθε μονάδα ξεκινά από τη δική της αρχικοποίηση και εξελίσσεται σύμφωνα με τον αντίστοιχο αλγόριθμο.
+Η αξιολόγηση της πορείας μάθησης γίνεται μέσω standardized no-learning probes στα interaction indices 0, 512, 1.024, 2.048, 4.096 και 8.192. Σε κάθε probe χρησιμοποιούνται 12 επεισόδια. Κατά τα probes δεν επιτρέπεται εκπαίδευση, ώστε το μετρούμενο return να εκφράζει την πολιτική στο συγκεκριμένο σημείο του training budget και όχι τη συνδυασμένη επίδραση αξιολόγησης και επιπλέον μάθησης.
+Στο τέλος της Phase A αποθηκεύεται exact scientific checkpoint για κάθε συνδυασμό method/root/layout. Το checkpoint αυτό είναι η μοναδική επιτρεπόμενη αφετηρία της αντίστοιχης Phase B. Το deployment-start settlement που ορίστηκε πριν από την τελική εκτέλεση εξασφαλίζει ότι εκκρεμές method-native state βρίσκεται σε έγκυρη, quiescent κατάσταση πριν από τη δημιουργία των matched Phase-B κλάδων.
+Η Phase A περιλαμβάνει συνολικά 5 μεθόδους × 12 ρίζες × 2 layouts = 120 ανεξάρτητες μονάδες εκπαίδευσης. Οι δύο layouts δεν αντιμετωπίζονται ως ανεξάρτητα στατιστικά replicates. Στην τελική ανάλυση μειώνονται με ίσο βάρος μέσα σε κάθε root.
+3.5 Phase B: matched FN/FD/AN/AD design
+Η Phase B σχεδιάστηκε ώστε να διαχωρίζει την επίδραση της διαταραχής από την επίδραση της συνεχιζόμενης μάθησης. Από το ίδιο exact Phase-A checkpoint δημιουργούνται τέσσερις matched κλάδοι:
+FN — Frozen Nominal: ονομαστικό περιβάλλον, μάθηση απενεργοποιημένη,
+FD — Frozen Disturbed: διαταραγμένο περιβάλλον, μάθηση απενεργοποιημένη,
+AN — Adaptive Nominal: ονομαστικό περιβάλλον, μάθηση ενεργή,
+AD — Adaptive Disturbed: διαταραγμένο περιβάλλον, μάθηση ενεργή.
+Οι όροι Frozen και Adaptive δεν δηλώνουν διαφορετικούς αλγορίθμους. Είναι δύο καθεστώτα deployment του ίδιου ακριβώς method checkpoint. Η δομή των τεσσάρων κλάδων επιτρέπει να εξεταστεί πρώτα το disturbance-associated loss υπό σταθερή πολιτική και στη συνέχεια κατά πόσο η online μάθηση μειώνει ή αυξάνει αυτή την απώλεια.
+Κάθε Phase-B κλάδος έχει ορίζοντα 256 πραγματικών αλληλεπιδράσεων μετά το boundary. Το protocol περιλαμβάνει ένα κοινό nominal no-learning prefix μίας αλληλεπίδρασης πριν από το branch boundary, ώστε η δημιουργία κλάδων να γίνεται από κοινή έγκυρη κατάσταση. Η επαναφορά επεισοδίου δεν μηδενίζει το learning state ούτε επανενεργοποιεί/απενεργοποιεί τη διαταραχή. Οι persistent conditions παραμένουν ενεργές μέσα από διαδοχικά επεισόδια.
+3.6 Μηχανισμοί αβεβαιότητας και disturbance conditions
+Η τελική Phase B περιλαμβάνει τέσσερις προκαθορισμένες conditions.
+Η πρώτη είναι η action-remap-swap-right-down, όπου οι σημασιολογίες των ενεργειών right και down ανταλλάσσονται, ενώ up και left παραμένουν αμετάβλητες. Η δεύτερη είναι η action-remap-cycle-clockwise, όπου οι τέσσερις ενέργειες ανακυκλώνονται κυκλικά: up→right, right→down, down→left και left→up. Και οι δύο μεταβολές είναι μόνιμες και μη αναγγελθείσες στον πράκτορα. Ο πράκτορας συνεχίζει να επιλέγει από το ίδιο action set και δεν λαμβάνει change indicator.
+Η τρίτη condition είναι action-failure-0.15: κάθε επιλεγμένη ενέργεια υπόκειται σε πιθανότητα αποτυχίας 0,15. Η τέταρτη είναι observation-corruption-0.05: με πιθανότητα 0,05 η παρατήρηση αντικαθίσταται από έγκυρη μη-obstacle θέση διαφορετική από την πραγματική κατάσταση, με ομοιόμορφη επιλογή μέσα στο επιτρεπόμενο support.
+Οι δύο action-remap conditions αποτελούν τον κύριο άξονα του RQ3, επειδή συνιστούν persistent αλλαγή της σχέσης μεταξύ πρόθεσης και επίδρασης ενέργειας. Οι action-failure και observation-corruption conditions χρησιμοποιούνται κυρίως ως πρόσθετες διαγνωστικές συνθήκες για το RQ2 και για την αξιολόγηση της condition-dependence της προσαρμογής.
+3.7 RQ1: estimands ονομαστικής μάθησης
+Το RQ1 αξιολογεί δύο συμπληρωματικές όψεις της Phase A. Το κύριο estimand είναι η τελική ονομαστική επίδοση στο probe των 8.192 αλληλεπιδράσεων. Για κάθε root, οι δύο layouts συνδυάζονται με ίσο βάρος και στη συνέχεια υπολογίζεται η μέση τιμή και το αντίστοιχο interval μεταξύ των 12 roots.
+Το δευτερεύον estimand είναι η συνολική αποτελεσματικότητα μάθησης κατά μήκος του interaction budget. Υπολογίζεται από την αποθηκευμένη probe trajectory μέσω προκαθορισμένης time-average/trapezoidal σύνοψης. Η διάκριση αυτή είναι κρίσιμη: δύο μέθοδοι μπορούν να καταλήγουν στην ίδια τελική επίδοση αλλά να έχουν μάθει με διαφορετική ταχύτητα. Το RQ1 επομένως δεν εξισώνει την τελική σύγκλιση με τη sample efficiency.
+Οι άμεσες συγκρίσεις μεταξύ μεθόδων γίνονται ως A−B πάνω στις ίδιες 12 ρίζες μετά την equal-weight μείωση των layouts. Δεν χρησιμοποιούνται ανεξάρτητα-sample tests πάνω στα individual episodes ή probes.
+3.8 RQ2: resilience και adaptation-benefit estimand
+Για κάθε method/root/layout/condition, η Phase B παρέχει τέσσερα matched outcomes FN, FD, AN και AD. Η απώλεια από τη διαταραχή υπό frozen deployment ορίζεται ως:
+LF = FN - FD.
+Αντίστοιχα, η απώλεια υπό adaptive deployment ορίζεται ως:
+LA = AN - AD.
+Το κύριο estimand του RQ2, adaptation benefit, είναι η διαφορά αυτών των δύο απωλειών:
+Badapt = (FN-FD) - (AN-AD) = LF-LA.
+Θετική τιμή σημαίνει ότι η συνέχιση της μάθησης μείωσε τη disturbance-associated απώλεια σε σχέση με το frozen deployment. Τιμή κοντά στο μηδέν σημαίνει ότι δεν παρατηρείται ουσιαστική συνολική διαφορά σε αυτό το estimand, ενώ αρνητική τιμή σημαίνει ότι το adaptive καθεστώς εμφάνισε μεγαλύτερη σχετική απώλεια.
+Το adaptation benefit δεν είναι άμεση μέτρηση χρόνου ανάκαμψης. Αποτυπώνει συνολική διαφορά μεταξύ matched nominal και disturbed deployment σε ολόκληρο τον Phase-B ορίζοντα. Για αυτό το RQ3 αναλύει χωριστά τη χρονική διάσταση.
+3.9 RQ3: recovery, passive windows και right-censoring
+Το RQ3 συγκρίνει τις Adaptive-Nominal και Adaptive-Disturbed trajectories μετά από persistent action remapping. Ο Phase-B ορίζοντας των 256 interactions χωρίζεται σε οκτώ παθητικά, μη επικαλυπτόμενα παράθυρα 32 αλληλεπιδράσεων με endpoints 32, 64, 96, 128, 160, 192, 224 και 256. Τα παράθυρα είναι απολύτως συνδεδεμένα με τον interaction axis και δεν επαναστοιχίζονται στα episode boundaries.
+Για κάθε root, τα δύο layouts συνδυάζονται με ίσο βάρος σε κάθε window. Στη συνέχεια εξετάζεται το directed gap μεταξύ Adaptive-Nominal και Adaptive-Disturbed μέσης ανταμοιβής ανά interaction. Η κύρια ανοχή είναι 0,10. Ένα window θεωρείται εντός ανοχής όταν το gap ικανοποιεί το προκαθορισμένο κριτήριο. Stable recovery απαιτεί δύο διαδοχικά qualifying windows.
+Ο παρατηρούμενος recovery_time ορίζεται ως το τέλος του πρώτου window της πρώτης σταθερής ακολουθίας δύο qualifying windows. Αν μέχρι το τέλος των 256 interactions δεν εμφανιστεί τέτοια ακολουθία, η ρίζα χαρακτηρίζεται μη ανακτηθείσα και το recovery_time παραμένει null. Η τιμή 256 δεν χρησιμοποιείται ως ψευδής παρατηρούμενος χρόνος ανάκαμψης.
+Για censoring-aware σύγκριση υπάρχει ξεχωριστό estimand, το restricted delay through horizon. Σε αυτό το estimand χρησιμοποιείται ο πραγματικός recovery time όταν υπάρχει ανάκαμψη και ο ορίζοντας 256 όταν δεν υπάρχει, αποκλειστικά ως restricted-horizon συγκριτική ποσότητα. Δεν ταυτίζεται σημασιολογικά με observed recovery time.
+Η κύρια ανοχή 0,10 συνοδεύεται από προκαθορισμένο sensitivity analysis στα 0,05 και 0,20. Τα thresholds αυτά είχαν οριστεί πριν από την τελική ανάλυση και χρησιμοποιούνται για να εξεταστεί η ευαισθησία της recovery incidence στον ορισμό της γειτνίασης, όχι για να επιλεγεί εκ των υστέρων το threshold που δίνει ευνοϊκότερο αποτέλεσμα.
+3.10 Roots, layouts, budgets και πειραματικός πίνακας
+Η τελική ανάλυση χρησιμοποιεί 12 ανεξάρτητες roots. Κάθε root έχει ξεχωριστά seeds για initialization, exploration, scenario, environment, action disturbance και observation disturbance. Η ρητή διάκριση των RNG streams περιορίζει την ανεπιθύμητη σύζευξη τυχαιότητας μεταξύ διαφορετικών μηχανισμών του πειράματος και επιτρέπει ακριβέστερη αναπαραγωγή.
+Με πέντε μεθόδους, 12 roots και δύο layouts προκύπτουν 120 Phase-A training units. Για τη Phase B, κάθε Phase-A checkpoint συνδέεται με τέσσερις disturbance conditions και το αντίστοιχο matched FN/FD/AN/AD set. Το frozen statistical contract προβλέπει 480 matched sets και 1.920 Phase-B branches.
+Το συνολικό προγραμματισμένο Phase-A training budget είναι 983.040 πραγματικές αλληλεπιδράσεις. Το συνολικό post-boundary Phase-B budget είναι 491.520 αλληλεπιδράσεις, πέρα από τα 480 κοινά prefix interactions. Οι αριθμοί αυτοί περιγράφουν το πειραματικό μέγεθος και δεν χρησιμοποιούνται ως ανεξάρτητα στατιστικά δείγματα.
+3.11 Στατιστική ανάλυση και άμεσες συγκρίσεις
+Η ανεξάρτητη στατιστική μονάδα είναι η root. Οι δύο layouts αποτελούν επαναλαμβανόμενα blocks και μειώνονται με ίσο βάρος μέσα σε κάθε root πριν από την εξαγωγή μεταξύ-root uncertainty. Με τον τρόπο αυτό αποφεύγεται η ψευδο-επανάληψη που θα προέκυπτε αν layouts, episodes ή windows αντιμετωπίζονταν ως ανεξάρτητα δείγματα.
+Οι scalar summaries συνοδεύονται από δύο-όψεων pointwise 95% Student-t intervals. Η κρίσιμη τιμή επιλέγεται από το πραγματικό πλήθος ανεξάρτητων roots που συνεισφέρουν στο συγκεκριμένο estimand. Για τα πλήρη blocks του τελικού πειράματος το πλήθος είναι συνήθως n=12. Στα conditional recovery-time summaries, όμως, το n μπορεί να είναι μικρότερο, επειδή περιλαμβάνονται μόνο οι roots που πράγματι ανακτήθηκαν. Όταν υπάρχει μόνο μία recovered root, δεν κατασκευάζεται τεχνητό interval.
+Οι direct method contrasts είναι root-paired διαφορές A−B πάνω στις κοινές roots μετά τη layout reduction. Δεν έχει προδηλωθεί οικογένεια p-values, δεν εφαρμόζεται multiplicity correction και τα pointwise intervals δεν παρουσιάζονται ως simultaneous confidence bands. Η εργασία επομένως δεν χρησιμοποιεί τη γλώσσα «στατιστικά σημαντική υπεροχή» όταν αυτή δεν υποστηρίζεται από το προδηλωμένο analysis contract.
+3.12 Reproducibility, provenance και scientific firewall
+Η αναπαραγωγιμότητα δεν αντιμετωπίζεται ως ξεχωριστό βήμα μετά το πείραμα, αλλά ως μέρος του σχεδιασμού. Η τελική συνταγή, το deterministic job plan, τα checkpoints, τα run bundles, τα validation records, τα analysis exports και τα τελικά thesis assets συνδέονται μέσω IDs, SHA-256 hashes και manifest-based provenance.
+Το πρώτο τελικό execution attempt διακόπηκε fail-closed μετά από 216 ολοκληρωμένα jobs εξαιτίας implementation omission στο όριο Phase A→Phase B. Η προσπάθεια αυτή διατηρήθηκε αμετάβλητη ως ιστορικό, μη ολοκληρωμένο evidence και αποκλείστηκε πλήρως από την τελική ανάλυση. Η διορθωμένη εκτέλεση protocol-v2.1-final--t610-recovery-01 επανεκκίνησε από μηδενική κατάσταση με την ίδια επιστημονική recipe και plan identity και ολοκλήρωσε 603/603 jobs. Η διόρθωση αφορούσε εφαρμογή ήδη αποδεκτού pre-outcome deployment-start settlement και όχι αλλαγή μεθόδου, hyperparameter ή estimand.
+Το T-611 επικύρωσε και πάγωσε αποκλειστικά το replacement execution, το T-612 εκτέλεσε και ερμήνευσε μόνο την προδηλωμένη στατιστική ανάλυση και το T-613 παρήγαγε deterministically τα figures/tables από το accepted analysis package. Το desktop UI δεν αποτελεί επιστημονική πηγή. Δεν υπολογίζει thresholds, recovery classification, root/layout reductions ή intervals, αλλά προβάλλει ήδη αποθηκευμένα και επικυρωμένα αποτελέσματα.
+Με αυτή τη διαστρωμάτωση, ο επιστημονικός σχεδιασμός, η εκτέλεση, η ανάλυση και η παρουσίαση παραμένουν διακριτά. Το αποτέλεσμα είναι ένα πείραμα στο οποίο οι τελικές συγκρίσεις μπορούν να αναχθούν σε παγωμένη recipe, συγκεκριμένες ρίζες και layouts, ακριβή checkpoints και επαληθεύσιμα downstream artifacts, χωρίς να εξαρτώνται από χειροκίνητη μεταφορά τιμών ή από ad-hoc υπολογισμούς κατά τη συγγραφή.
+Σχήμα 1 — Protocol flow; exact checkpoints precede matched FN/FD/AN/AD branches.
+Σχήμα 2 — Map from each research question to its frozen estimands and registered outputs.
+Κεφάλαιο 4 — Αρχιτεκτονική και Υλοποίηση του Ερευνητικού Συστήματος
+4.1 Στόχος της υλοποίησης
+Η υλοποίηση της παρούσας εργασίας σχεδιάστηκε ώστε να υποστηρίζει ένα πλήρες ερευνητικό lifecycle: ορισμό πειραματικής συνταγής, deterministic σχεδιασμό εργασιών, εκπαίδευση και deployment, ακριβή checkpoints, matched branches, επικύρωση evidence, στατιστική ανάλυση, παραγωγή reproducible figures/tables και τελική επιθεώρηση μέσω desktop εφαρμογής. Η αρχιτεκτονική δεν αντιμετωπίζει το γραφικό περιβάλλον ως επιστημονικό κέντρο του συστήματος. Αντίθετα, η επιστημονική λογική βρίσκεται σε framework-neutral Python modules, ενώ η εφαρμογή PySide6 λειτουργεί ως thin presentation/control layer πάνω από αποθηκευμένη και επαληθευμένη κατάσταση.
+Η βασική σχεδιαστική αρχή είναι ο διαχωρισμός μεταξύ επιστημονικής αυθεντίας και παρουσίασης. Οι αποφάσεις για RNG, training state, checkpoints, branch construction, estimands, root/layout reductions, recovery classification, intervals, validation και finalization ανήκουν αποκλειστικά στο backend. Το UI μπορεί να ζητήσει μια επιτρεπόμενη ενέργεια ή να προβάλλει ήδη αποθηκευμένη πληροφορία, αλλά δεν επιτρέπεται να ανακατασκευάζει επιστημονικές τιμές από raw data ούτε να αλλάζει την πορεία του πειράματος μέσω presentation state.
+4.2 Δομή του κώδικα και επιστημονικός πυρήνας
+Ο ενεργός κώδικας βρίσκεται κάτω από το src/resilient_agents/. Η δομή χωρίζει τον ελεγχόμενο κόσμο, τις μεθόδους, τα πειραματικά contracts, το Study lifecycle, την evidence/analysis αλυσίδα και το desktop interface σε ανεξάρτητα επίπεδα με σαφή όρια ευθύνης.
+Ο πυρήνας υλοποιεί το project-owned Gymnasium GridWorld, τις tabular μεθόδους Q-Learning, SARSA και Dyna-Q+, καθώς και adapters για DQN/PPO μέσω Stable-Baselines3. Η κοινή διεπαφή δεν προσπαθεί να εξαλείψει τις method-native διαφορές. Αντίθετα, επιβάλλει όσα πρέπει να είναι κοινά για την επιστημονική σύγκριση — πραγματικές αλληλεπιδράσεις, observation/action semantics, checkpoint identity και evaluator boundary — και επιτρέπει σε κάθε μέθοδο να διατηρεί το state που απαιτεί η δική της δυναμική.
+Ιδιαίτερη σημασία έχει ο διαχωρισμός ground truth και agent-visible information. Το περιβάλλον και ο evaluator γνωρίζουν, για παράδειγμα, αν εφαρμόστηκε action remap ή observation corruption, όμως ο agent δεν λαμβάνει αυτές τις flags όταν το protocol το απαγορεύει. Η πληροφορία που είναι χρήσιμη για validation και visualization δεν μετατρέπεται αυτόματα σε πληροφορία διαθέσιμη στη policy.
+4.3 Study ως μονάδα εκτέλεσης και provenance
+Η τελική εκτέλεση οργανώνεται γύρω από την έννοια του Study. Το Study δεν είναι απλώς ένας φάκελος αποτελεσμάτων, αλλά versioned πειραματική οντότητα με immutable recipe, deterministic plan, durable lifecycle state και καταγεγραμμένο provenance.
+Η StudyRecipe κωδικοποιεί την επιστημονική πρόθεση: protocol identity, methods, roots, layouts, phases, conditions, budgets και authorization requirements. Από τη recipe ο planner παράγει deterministic job plan. Το plan περιγράφει την εξάρτηση των σταδίων και επιτρέπει στο σύστημα να γνωρίζει ποια jobs μπορούν να εκτελεστούν, ποια πρέπει να περιμένουν προηγούμενο stage και ποια αποτελούν validation/analysis/export handoff.
+Το package src/resilient_agents/study/ περιλαμβάνει, μεταξύ άλλων, μοντέλα lifecycle, planner, execution ports/default executors και εξειδικευμένη protocol-v2.1 Phase-B εκτέλεση. Η ύπαρξη explicit model/planner/lifecycle στρώματος επιτρέπει restart-safe λειτουργία: η πρόοδος δεν εξαρτάται από το αν ένα συγκεκριμένο UI process παραμένει ανοιχτό ούτε από transient in-memory state.
+Το StudyStore λειτουργεί ως durable αποθήκη της κατάστασης του Study. Jobs, status transitions, artifact registrations και lineage παραμένουν διαθέσιμα μετά από restart. Η filesystem evidence παραμένει η κύρια αυθεντία, ενώ indexes ή βοηθητικές βάσεις αντιμετωπίζονται ως rebuildable caches και όχι ως μοναδική πηγή αλήθειας.
+4.4 Deterministic planning και stage barriers
+Το scientific workflow είναι πολυσταδιακό και έχει πραγματικές εξαρτήσεις. Μια Phase-B branch δεν μπορεί να εκτελεστεί πριν υπάρξει το σωστό Phase-A checkpoint. Η ανάλυση δεν μπορεί να προηγηθεί της validation/freeze του accepted evidence. Για αυτό, το Study plan περιλαμβάνει stage barriers.
+Η τυπική ακολουθία είναι:
+1. materialization της παγωμένης recipe,
+2. παραγωγή deterministic job plan,
+3. Phase-A ανεξάρτητη ονομαστική μάθηση,
+4. δημιουργία exact checkpoints,
+5. matched Phase-B FN/FD/AN/AD branches,
+6. validation της evidence αλυσίδας,
+7. analysis/export jobs,
+8. downstream freeze και παραγωγή thesis assets.
+Τα barriers μειώνουν τον κίνδυνο να χρησιμοποιηθεί προσωρινό ή μη επικυρωμένο artifact σε επόμενο επιστημονικό στάδιο. Η λογική είναι fail-closed: όταν ένα required artifact ή state δεν είναι έγκυρο, το downstream stage δεν «προσπαθεί να συνεχίσει» με μερική υπόθεση.
+4.5 Checkpoints και ακριβής συνέχεια της μάθησης
+Η Phase B απαιτεί πραγματική συνέχεια από το τέλος της Phase A. Για τον λόγο αυτό, το checkpoint δεν περιορίζεται σε ένα μικρό σύνολο weights ή Q-values όταν αυτά δεν αρκούν για να αναπαράγουν τη method-native κατάσταση.
+Στις tabular μεθόδους διατηρείται η κατάλληλη κατάσταση τιμών και εξερεύνησης. Στη DQN η ακριβής συνέχεια απαιτεί, μεταξύ άλλων, policy/target network state, replay buffer, optimizer και exploration schedule. Στην PPO απαιτούνται optimizer/schedule/RNG και η κατάλληλη update-boundary κατάσταση. Στη Dyna-Q+ το learned model, η recency πληροφορία και το planning state αποτελούν μέρος της επιστημονικής συνέχειας.
+Το checkpoint lineage καταγράφεται ρητά. Έτσι, κάθε Phase-B branch μπορεί να αναχθεί στο συγκεκριμένο Phase-A checkpoint από το οποίο προήλθε. Η matched σύγκριση Frozen/Adaptive δεν βασίζεται σε δύο ανεξάρτητα trainings που απλώς έχουν ίδιο seed, αλλά σε branches από κοινό επιστημονικό state.
+4.6 RNG isolation και reproducibility
+Η αναπαραγωγιμότητα ενισχύεται με ξεχωριστά RNG streams. Κάθε τελική root διαθέτει διακριτά seeds για initialization, exploration, scenario, environment, action disturbance και observation disturbance. Η επιλογή αυτή αποτρέπει την ακούσια επαναχρησιμοποίηση μιας τυχαίας ακολουθίας για δύο λογικά διαφορετικές πηγές τυχαιότητας.
+Η deterministic συμπεριφορά δεν σημαίνει ότι το πείραμα είναι ντετερμινιστικό ως προς κάθε αποτέλεσμα. Σημαίνει ότι, για την ίδια recipe, το ίδιο root specification και το ίδιο source state, η ακολουθία τυχαιότητας μπορεί να αναπαραχθεί. Η διακύμανση μεταξύ roots αποτελεί μέρος του πειράματος και δεν «εξαλείφεται» από το σύστημα.
+Οι scientific failures επίσης δεν αντικαθίστανται από νέες ευνοϊκότερες roots. Η ταυτότητα root είναι προκαθορισμένη και διατηρείται. Αυτό είναι κρίσιμο για να μην εισαχθεί outcome-driven seed selection.
+4.7 Run bundles, manifests και ακεραιότητα
+Κάθε ολοκληρωμένη επιστημονική μονάδα αποθηκεύεται ως run bundle με machine-readable metadata, επιστημονική ταυτότητα και checksums. Η finalization ακολουθεί controlled διαδικασία: τα απαιτούμενα artifacts πρέπει να υπάρχουν, οι hashes να συμφωνούν και το bundle να βρίσκεται σε συνεπή lifecycle state πριν χαρακτηριστεί finalized.
+Τα manifests χρησιμοποιούνται για δύο λόγους. Πρώτον, επιτρέπουν να ελεγχθεί ότι ένα downstream analysis καταναλώνει ακριβώς το accepted evidence set. Δεύτερον, καθιστούν ανιχνεύσιμη οποιαδήποτε μεταγενέστερη αλλαγή αρχείου που θα αλλοίωνε την ακεραιότητα του πακέτου.
+Στην τελική αλυσίδα, το T-611 πάγωσε το accepted evidence υπό συγκεκριμένο manifest SHA-256, το T-612 παρήγαγε deterministic analysis package και το T-613 παρήγαγε registered figures/tables με δικό τους asset manifest. Η συγγραφή δεν διαβάζει αυθαίρετα raw files για να ξαναϋπολογίσει τιμές: χρησιμοποιεί την ήδη επικυρωμένη downstream αλυσίδα.
+4.8 Evidence-v2 validation και analysis layer
+Το src/resilient_agents/evidence_v2/ υλοποιεί τη protocol-v2.1 validation/analysis/export διαδρομή. Το validation ελέγχει όχι μόνο το σχήμα των αρχείων αλλά και την ταυτότητα του πειράματος: method/root/layout/condition consistency, checkpoint lineage, matched branch composition, temporal window records και unique scientific identities.
+Για το RQ3 απαιτείται schema-v2 temporal evidence, επειδή ο υπολογισμός της ανάκαμψης βασίζεται σε διαδοχικά fixed interaction windows και right-censoring. Ο validator απορρίπτει ασύμβατη ή ελλιπή temporal evidence αντί να παράγει recovery result από μερικό input.
+Το analysis layer εφαρμόζει την προκαθορισμένη equal-layout root reduction, τα pointwise Student-t intervals, τα root-paired contrasts και τις recovery summaries. Οι λειτουργίες αυτές δεν εκτελούνται στο UI. Η ίδια machine-readable analysis authority τροφοδοτεί τόσο τις τελικές T-613 εξαγωγές όσο και την read-only παρουσίαση αποτελεσμάτων.
+4.9 Χειρισμός αποτυχίας και το T-610 recovery path
+Η αρχιτεκτονική σχεδιάστηκε ώστε μια αποτυχία να μην καταστρέφει ή να ξαναγράφει την επιστημονική ιστορία. Αυτό φάνηκε στην πρώτη τελική προσπάθεια T-610. Η εκτέλεση σταμάτησε μετά από 216 jobs όταν η πρώτη SARSA Phase-B εργασία εντόπισε μη-quiescent learner state στο shared no-learning prefix.
+Το σύστημα δεν παρέκαμψε το precondition ούτε τροποποίησε το checkpoint κατά την εκτέλεση. Η αποτυχία καταγράφηκε και η αρχική Study παρέμεινε immutable, ενεργή/μη finalized ιστορική προσπάθεια. Η αιτία εντοπίστηκε σε implementation omission: το generic Phase-A materialization path δεν εφάρμοζε το ήδη αποδεκτό deployment-start settlement που είχε οριστεί πριν από τα τελικά αποτελέσματα.
+Η διόρθωση έγινε σε νέο source commit και η replacement Study απέκτησε ξεχωριστή execution identity protocol-v2.1-final--t610-recovery-01, ενώ η scientific recipe και το deterministic plan παρέμειναν αμετάβλητα. Δεν επαναχρησιμοποιήθηκε κανένα από τα 216 ολοκληρωμένα bundles της αποτυχημένης προσπάθειας. Η replacement execution ξεκίνησε από μηδενική κατάσταση και ολοκλήρωσε το πλήρες 603-job plan.
+Η περίπτωση αυτή αποτελεί πρακτικό παράδειγμα της διάκρισης μεταξύ implementation recovery και scientific amendment. Αν η διόρθωση απαιτούσε αλλαγή hyperparameter, estimand, method ή condition με γνώση των αποτελεσμάτων, θα χρειαζόταν διαφορετική επιστημονική διακυβέρνηση. Εδώ εφαρμόστηκε ένας ήδη παγωμένος κανόνας που έλειπε από συγκεκριμένο execution boundary.
+4.10 Desktop εφαρμογή PySide6
+Η τελική εφαρμογή υλοποιείται με PySide6 / Qt 6 Widgets. Η επιλογή αυτή διατηρεί ολόκληρη τη στοίβα σε Python και επιτρέπει άμεση σύνδεση με το framework-neutral backend χωρίς HTTP service ή δεύτερο scientific middle layer. Το UI παραμένει research interface και όχι ανεξάρτητη πηγή επιστημονικής λογικής.
+Η τελική πληροφοριακή αρχιτεκτονική είναι Experiment / Run / Results / Evidence. Η οργάνωση είναι experiment-first: ο χρήστης κατανοεί πρώτα τι συγκρίνεται και μετά βλέπει τα εσωτερικά execution/evidence mechanics.
+4.10.1 Experiment
+Η επιφάνεια Experiment παρουσιάζει την παγωμένη Thesis experiment ως read-only. Δείχνει τις πέντε fixed methods, τη Phase A, τη μετάβαση σε matched Phase B, τις disturbance families και τον ρόλο των Frozen/Adaptive regimes. Τεχνικά IDs, roots, layout hashes και checkpoint στοιχεία παραμένουν διαθέσιμα με progressive disclosure αντί να κυριαρχούν στην κύρια ροή.
+Για DEVELOPMENT/Exploratory studies επιτρέπεται ξεχωριστή backend-constrained ροή Configure → Review → Create. Αυτές οι studies επισημαίνονται ρητά ως μη confirmatory και δεν μπορούν να χρησιμοποιήσουν final-reserve identities ως thesis evidence.
+4.10.2 Run
+Η επιφάνεια Run προβάλλει την τρέχουσα phase και το GridWorld. Στη Phase A κυριαρχεί ένα μεγάλο nominal GridWorld για την τρέχουσα μέθοδο. Στη Phase B, όταν υπάρχουν ακριβώς matched presentation events, εμφανίζονται ταυτόχρονα δύο panels: Frozen — learning off και Adaptive — learning continues.
+Το UI δεν κατασκευάζει ψευδή αντιστοίχιση frames. Αν δεν υπάρχει exact matched pair για method/root/layout/condition/interaction, το δηλώνει αντί να συνδυάζει άσχετες μεταβάσεις. Τα live events είναι lossy και non-blocking: μπορούν να χαθούν frames χωρίς να επηρεάζεται το scientific execution.
+4.10.3 Results
+Η επιφάνεια Results οργανώνεται ρητά σε RQ1 Learning, RQ2 Resilience/Adaptation και RQ3 Recovery. Οι πίνακες και τα γραφήματα είναι projections ήδη stored/validated outputs. Το UI δεν εκτελεί root reductions, threshold selection ή statistical interval calculation.
+Στο RQ3, ειδικά, η εφαρμογή διαχωρίζει recovered proportion, observed recovery time conditional on recovery και restricted delay. Μη ανάκαμψη διατηρεί recovery_time=null. Με αυτόν τον τρόπο η παρουσίαση δεν μετατρέπει το fixed horizon σε ψευδή παρατηρούμενο χρόνο.
+4.10.4 Evidence
+Η επιφάνεια Evidence απαντά πρώτα σε λειτουργικά ερωτήματα: ποια evidence packages υπάρχουν, ποια είναι validated/finalized και ποια exports είναι διαθέσιμα. Artifact IDs, paths, hashes, source job IDs και lineage εμφανίζονται ως technical detail. Η εφαρμογή δεν λειτουργεί ως αυθαίρετος filesystem browser.
+4.11 Live visualization και επιστημονική παθητικότητα
+Η live απεικόνιση σχεδιάστηκε με ρητό one-way boundary. Ο execution engine μπορεί να εκπέμπει presentation events. Το UI μπορεί να τα εμφανίζει, να τα ομαδοποιεί για οπτική χρήση και να απορρίπτει παλαιότερα frames όταν δεν προλαβαίνει να τα αποδώσει. Δεν επιτρέπεται όμως επιστροφή πληροφορίας από τη visualization state προς την policy ή το scheduler.
+Η τρέχουσα intended action, η executed action, η reward, η delivered observation και η true evaluator state μπορούν να εμφανίζονται για inspection όταν επιτρέπεται, αλλά η ύπαρξή τους στην οθόνη δεν αλλάζει το agent-visible information contract. Η οπτικοποίηση είναι παρατηρητής, όχι συμμετέχων στο πείραμα.
+Αυτό το όριο είναι επίσης σημαντικό για την απόδοση. Η scientific execution δεν πρέπει να περιμένει το frame rate του GUI. Αν το UI καθυστερεί, η απεικόνιση μπορεί να χάσει events, ενώ τα επιστημονικά logs και artifacts εξακολουθούν να καταγράφονται πλήρως από το backend.
+4.12 Execution supervision και restart safety
+Η εφαρμογή δεν εκτελεί βαριά scientific jobs στο Qt UI thread. Η επίβλεψη γίνεται μέσω non-blocking process supervision, ώστε το interface να παραμένει responsive και να μην συγχέεται η κατάσταση ενός GUI process με την κατάσταση ενός Study.
+Η durable Study κατάσταση επιτρέπει resume/retry μόνο σύμφωνα με τις backend lifecycle rules. Ένα infrastructure failure δεν μετατρέπεται σε νέο scientific root ούτε δίνει δικαίωμα για αυθαίρετη επανεκκίνηση με άλλο seed. Αντίστοιχα, η απουσία του UI δεν σημαίνει ότι τα ήδη finalized artifacts χάνουν την αυθεντία τους.
+4.13 Final-reserve firewall και authorization
+Το protocol-v2.1 αποθηκεύτηκε με final_reserve_access=false και execution_authorization=requires-explicit-t610-gate. Η εφαρμογή δεν μπορούσε να παρακάμψει αυτή την κατάσταση ούτε να δημιουργήσει μόνη της authorization token.
+Η τελική εκτέλεση ενεργοποιήθηκε μόνο μετά από ξεχωριστή ρητή authorization. Το token εφαρμόστηκε στο backend execution path χωρίς να μεταβάλει τα immutable protocol fields. Η σχεδίαση αυτή διαχωρίζει τη δυνατότητα μιας εφαρμογής να εμφανίζει ένα κουμπί από την επιστημονική άδεια να χρησιμοποιηθεί το final reserve.
+4.14 Παραγωγή αποτελεσμάτων και thesis assets
+Μετά την ολοκλήρωση της accepted execution, το T-611 δημιούργησε frozen evidence package. Το T-612 αναπαρήγαγε την canonical analysis και τα machine-readable exports από αυτό το package. Το T-613 παρήγαγε 31 figures, 12 table assets και 117 registered output variants σε reproducible μορφές, με SVG/PDF/300-DPI PNG για figures και canonical CSV/Markdown όπου απαιτείται για tables.
+Η διαδρομή αυτή σημαίνει ότι τα figures της διπλωματικής δεν δημιουργούνται χειροκίνητα από screenshots ή με αντιγραφή αριθμών σε spreadsheet. Κάθε quantitative asset έχει source-artifact lineage και hash registration. Η μελλοντική τοποθέτηση στο Word έγγραφο είναι presentation εργασία· η αριθμητική του πηγή παραμένει το accepted analysis.
+4.15 Έλεγχος ποιότητας και αναπαραγωγιμότητας της εφαρμογής
+Η validation στρατηγική είναι risk-based. Χρησιμοποιούνται targeted tests για contracts, checkpoints, lifecycle, read models, UI boundary και critical scientific invariants, μαζί με canonical repository CI. Τα scientific experiment matrices δεν επαναλαμβάνονται ως unit-test matrices.
+Για την desktop εφαρμογή, deterministic screenshot validation χρησιμοποιήθηκε για representative states σε 1366×768 και 1440×900, συμπεριλαμβανομένων Experiment, Run Phase A/B, RQ1/RQ2/RQ3, recovered/right-censored cases, Evidence και onboarding/lock states. Οι screenshots ελέγχουν presentation regressions, όχι scientific correctness των αριθμών· η correctness των scientific outputs ελέγχεται από το backend validation.
+4.16 Συνολική αρχιτεκτονική ροή
+Η τελική αρχιτεκτονική μπορεί να συνοψιστεί ως εξής:
+Frozen protocol/configuration → immutable Study recipe → deterministic plan → Phase-A execution → exact checkpoint → matched Phase-B branches → validated evidence → frozen evidence package → predeclared analysis → deterministic thesis assets → read-only Results/Evidence presentation.
+Η ροή αυτή επιτρέπει να απαντηθούν διαφορετικά ερωτήματα με διαφορετικά επίπεδα αυθεντίας. Ο πειραματικός σχεδιασμός καθορίζεται από το protocol. Η εκτέλεση και τα checkpoints από το backend. Η αποδοχή των δεδομένων από τους validators. Οι αριθμητικές ερμηνείες από το T-612 analysis. Τα figures/tables από το T-613. Το UI και η τελική διπλωματική παρουσιάζουν αυτά τα artifacts χωρίς να τα επαναϋπολογίζουν.
+Η επιλογή αυτή αυξάνει το implementation overhead σε σχέση με ένα απλό script που εκπαιδεύει μοντέλα και τυπώνει μέσους όρους. Ωστόσο, είναι ουσιώδης για το συγκεκριμένο ερευνητικό ερώτημα, επειδή η αξιολόγηση ανθεκτικότητας βασίζεται σε matched states, persistent disturbances, right-censoring και αυστηρή provenance αλυσίδα. Η αρχιτεκτονική επομένως δεν αποτελεί απλώς software packaging της μελέτης· αποτελεί μηχανισμό προστασίας της επιστημονικής της ερμηνείας.
+Κεφάλαιο 5 — Πειραματικά Αποτελέσματα
+5.1 Όρια της παρουσίασης των αποτελεσμάτων
+Το παρόν κεφάλαιο παρουσιάζει αποκλειστικά τα αποτελέσματα της προδηλωμένης ανάλυσης του protocol-v2.1 πάνω στο evidence set που επικυρώθηκε και πάγωσε στο T-611. Η τελική ανάλυση χρησιμοποιεί ως ανεξάρτητη μονάδα τη root, συνδυάζει τις δύο held-out layouts με ίσο βάρος μέσα σε κάθε root και συνοδεύει τις scalar summaries με pointwise 95% Student-t intervals χρησιμοποιώντας το πραγματικό πλήθος ανεξάρτητων roots.
+Όλες οι προγραμματισμένες μονάδες ήταν διαθέσιμες για τα RQ1, RQ2 και RQ3. Η accepted replacement execution ολοκλήρωσε 603/603 jobs και παρήγαγε 600 επιστημονικά run bundles. Η αρχική αποτυχημένη προσπάθεια των 216 jobs δεν αποτέλεσε input στην τελική ανάλυση. Η canonical ανάλυση και οι 12 machine-readable exports αναπαράχθηκαν δύο φορές byte-for-byte από το frozen evidence.
+Οι άμεσες συγκρίσεις μεταξύ μεθόδων αναφέρονται ως root-paired διαφορές A−B μετά την equal-layout reduction. Τα intervals είναι pointwise estimation intervals και δεν συνιστούν simultaneous inference. Δεν έχει οριστεί οικογένεια p-values ούτε σύνθετος δείκτης συνολικής κατάταξης. Συνεπώς, το κεφάλαιο αποφεύγει τη γλώσσα «καθολικού νικητή» ή «στατιστικά σημαντικής υπεροχής» πέρα από όσα υποστηρίζει το προδηλωμένο analysis contract.
+5.2 RQ1 — Ονομαστική μάθηση
+Το πρώτο ερευνητικό ερώτημα εξετάζει αφενός το τελικό επίπεδο ονομαστικής επίδοσης και αφετέρου την αποτελεσματικότητα μάθησης κατά μήκος του κοινού interaction budget.
+5.2.1 Τελική ονομαστική επίδοση
+Στο τελικό probe των 8.192 interactions, οι Q-Learning, SARSA και Dyna-Q+ κατέληξαν στην ίδια root-mean επίδοση, -0,100. Και για τις τρεις μεθόδους δεν παρατηρήθηκε μεταξύ-root διακύμανση στο τελικό probe: n=12 και 95% CI [-0,100, -0,100].
+Η DQN και η PPO είχαν χαμηλότερη μέση τελική επίδοση, -1,862. Για τη DQN το 95% CI ήταν [-2,988, -0,737] με root SD 1,771. Για την PPO το interval ήταν [-3,156, -0,569] με root SD 2,035. Επομένως, οι δύο deep-RL μέθοδοι εμφάνισαν όχι μόνο χαμηλότερη μέση τελική επίδοση μέσα στο παγωμένο budget, αλλά και μεγαλύτερη διακύμανση μεταξύ roots.
+Οι paired τελικές συγκρίσεις μεταξύ Q-Learning, SARSA και Dyna-Q+ ήταν ακριβώς μηδενικές. Κάθε μία από τις τρεις υπερείχε της DQN κατά 1,762 return units όταν η διαφορά εκφράζεται ως method-minus-DQN, με paired interval [0,637, 2,888]. Η αντίστοιχη διαφορά έναντι PPO ήταν επίσης 1,762, με interval [0,469, 3,056]. Η DQN έναντι PPO είχε μέση paired διαφορά 0,000 και ευρύ interval [-2,112, 2,112].
+Το αποτέλεσμα αυτό δείχνει ότι η τελική τιμή από μόνη της δεν αρκεί για να διαχωρίσει τις τρεις tabular/planning μεθόδους. Για αυτό εξετάζεται ξεχωριστά το interaction-axis time-average.
+Σχήμα 3 — Final nominal return by method with pointwise 95% Student-t intervals over 12 roots.
+5.2.2 Αποτελεσματικότητα μάθησης κατά μήκος του budget
+Το time-average estimand διαφοροποίησε σαφέστερα τις μεθόδους. Η Dyna-Q+ είχε την υψηλότερη μέση τιμή, -0,485, με 95% CI [-0,512, -0,458] και SD 0,042. Η SARSA ακολούθησε με -1,611, CI [-1,792, -1,430] και SD 0,285, ενώ η Q-Learning είχε -1,628, CI [-1,831, -1,425] και SD 0,320.
+Η DQN και η PPO είχαν χαμηλότερες time-average τιμές. Η DQN παρουσίασε -2,862 με interval [-3,811, -1,914] και SD 1,493. Η PPO παρουσίασε -2,904 με interval [-3,965, -1,844] και SD 1,669. Και εδώ οι deep-RL μέθοδοι είχαν μεγαλύτερη heterogeneity μεταξύ roots.
+Στις root-paired συγκρίσεις time-average, η Dyna-Q+ υπερείχε της Q-Learning κατά 1,143 [0,936, 1,350], της SARSA κατά 1,126 [0,949, 1,303], της DQN κατά 2,377 [1,441, 3,314] και της PPO κατά 2,419 [1,352, 3,486]. Η διαφορά Q-Learning έναντι SARSA ήταν -0,017 [-0,294, 0,260], ενώ η DQN έναντι PPO ήταν 0,042 [-1,763, 1,847].
+Συνεπώς, οι Q-Learning, SARSA και Dyna-Q+ κατέληξαν στο ίδιο τελικό ονομαστικό επίπεδο, αλλά η Dyna-Q+ έφτασε σε υψηλές αποδόσεις νωρίτερα μέσα στο διαθέσιμο interaction budget. Η Q-Learning και η SARSA παρουσίασαν παρόμοια learning efficiency. Η DQN και η PPO δεν έφτασαν με την ίδια συνέπεια στο τελικό επίπεδο των τριών tabular/planning μεθόδων εντός του συγκεκριμένου budget.
+Σχήμα 4 — Interaction-axis time-average return, kept separate from final performance.
+5.3 RQ2 — Ανθεκτικότητα και όφελος προσαρμογής
+Το RQ2 εξετάζει αν η συνέχιση της μάθησης μειώνει τη disturbance-associated απώλεια σε σχέση με frozen deployment. Θετική τιμή adaptation benefit σημαίνει ότι το Adaptive καθεστώς μείωσε την απώλεια. Αρνητική τιμή σημαίνει ότι, στο συγκεκριμένο estimand, η online προσαρμογή συνδέθηκε με μεγαλύτερη σχετική απώλεια.
+5.3.1 Συνολική εικόνα ανά condition
+Οι μέσες τιμές adaptation benefit και τα pointwise 95% intervals είναι:
+Condition
+DQN
+Dyna-Q+
+PPO
+Q-Learning
+SARSA
+Action-remap cycle
+6,623 [3,798, 9,448]
+26,102 [25,344, 26,860]
+0,060 [-1,552, 1,673]
+32,269 [28,910, 35,628]
+31,127 [28,796, 33,458]
+Action-remap swap
+1,723 [-3,524, 6,969]
+9,712 [6,500, 12,925]
+-0,515 [-1,864, 0,835]
+22,665 [18,078, 27,251]
+13,785 [9,904, 17,667]
+Action failure 0,15
+-0,194 [-0,770, 0,382]
+0,117 [-0,227, 0,460]
+-1,108 [-2,914, 0,697]
+-0,175 [-0,451, 0,101]
+-0,485 [-1,209, 0,238]
+Observation corruption 0,05
+0,323 [-0,719, 1,365]
+-0,387 [-0,816, 0,041]
+-0,498 [-1,276, 0,280]
+-2,698 [-3,880, -1,516]
+-3,165 [-4,917, -1,412]
+Πίνακας 1 — Σύνοψη για την ενότητα «5.3.1 Συνολική εικόνα ανά condition».
+Κάθε cell βασίζεται σε n=12 roots. Οι μεγαλύτερες θετικές τιμές εμφανίζονται στις persistent action-remap conditions, ιδιαίτερα για Q-Learning, SARSA και Dyna-Q+. Οι δύο ηπιότερες stochastic conditions έχουν σαφώς μικρότερες απόλυτες τιμές.
+Η canonical ανάλυση διατηρεί ξεχωριστά Frozen loss και Adaptive loss. Στα δύο action remaps, οι Frozen losses ήταν μεγάλες για όλες τις μεθόδους, με means από 28,585 έως 52,921. Με ενεργή online μάθηση, οι Adaptive losses μειώθηκαν έντονα για Q-Learning, SARSA και Dyna-Q+, παρέμειναν υψηλές για PPO και μειώθηκαν πιο περιορισμένα και με μεγαλύτερη μεταβλητότητα για DQN.
+Σχήμα 5 — Adaptation benefit by method and frozen condition; positive values mean lower Adaptive than Frozen loss.
+Σχήμα 6 — Frozen and Adaptive disturbance-associated loss remain distinct quantities.
+5.3.2 Persistent action-remap cycle
+Στο cycle remap, η Q-Learning είχε mean adaptation benefit 32,269 [28,910, 35,628], η SARSA 31,127 [28,796, 33,458] και η Dyna-Q+ 26,102 [25,344, 26,860]. Η DQN είχε 6,623 [3,798, 9,448], ενώ η PPO 0,060 [-1,552, 1,673].
+Η paired διαφορά Q-Learning−SARSA ήταν 1,142 [-3,584, 5,867], άρα οι δύο μέθοδοι είχαν παρόμοιο aggregate adaptation benefit σε αυτή την condition. Και οι δύο εμφάνισαν μεγαλύτερο benefit από τη Dyna-Q+. Η Dyna-Q+ με τη σειρά της εμφάνισε μεγαλύτερο benefit από DQN και PPO.
+Το αποτέλεσμα δείχνει ισχυρή μείωση της disturbance-associated απώλειας μέσω συνεχιζόμενης μάθησης για τις τρεις tabular/planning μεθόδους. Η DQN επωφελήθηκε σε μικρότερο βαθμό, ενώ η PPO δεν παρουσίασε ουσιαστικό aggregate benefit με το interval να περιλαμβάνει το μηδέν.
+5.3.3 Persistent action-remap swap
+Στο swap remap, η Q-Learning είχε adaptation benefit 22,665 [18,078, 27,251], η SARSA 13,785 [9,904, 17,667] και η Dyna-Q+ 9,712 [6,500, 12,925]. Η DQN είχε 1,723 [-3,524, 6,969] και η PPO -0,515 [-1,864, 0,835].
+Η Q-Learning υπερείχε της SARSA κατά 8,879 [3,432, 14,327]. Η SARSA υπερείχε της PPO κατά 14,300 [10,146, 18,454]. Η διαφορά Dyna-Q+−SARSA ήταν -4,073 [-9,528, 1,382] και παρέμεινε αβέβαιη. Η DQN−PPO ήταν 2,237 [-3,639, 8,114], επίσης με interval που περιλαμβάνει το μηδέν.
+Το swap remap διαφοροποίησε περισσότερο τις tabular μεθόδους από το cycle. Η Q-Learning είχε τη μεγαλύτερη aggregate μείωση της disturbance-associated απώλειας, ενώ η SARSA και η Dyna-Q+ διατήρησαν θετικό benefit. Η DQN είχε μικρό και αβέβαιο mean benefit και η PPO mean ελαφρώς αρνητικό με interval γύρω από το μηδέν.
+5.3.4 Action failure 15%
+Στην condition action failure 0,15, οι μέσες τιμές adaptation benefit ήταν κοντά στο μηδέν: DQN -0,194, Dyna-Q+ 0,117, PPO -1,108, Q-Learning -0,175 και SARSA -0,485. Όλα τα pointwise intervals περιλάμβαναν το μηδέν.
+Καμία direct adaptation-benefit σύγκριση για αυτή την condition δεν είχε interval εξ ολοκλήρου στη μία πλευρά του μηδενός. Επομένως, στο συγκεκριμένο testbed και με αυτή την πιθανότητα αποτυχίας ενέργειας, δεν προκύπτει καθαρό aggregate πλεονέκτημα της συνεχιζόμενης μάθησης έναντι frozen deployment.
+Το αποτέλεσμα αυτό είναι σημαντικό επειδή δείχνει ότι η online προσαρμογή δεν είναι εγγενώς ωφέλιμη σε κάθε είδος uncertainty. Η επίδρασή της εξαρτάται από τον μηχανισμό που δημιουργεί τη διαφορά μεταξύ nominal και disturbed behavior.
+5.3.5 Observation corruption 5%
+Στην observation corruption condition, η DQN είχε mean adaptation benefit 0,323 [-0,719, 1,365], η Dyna-Q+ -0,387 [-0,816, 0,041] και η PPO -0,498 [-1,276, 0,280]. Η Q-Learning είχε -2,698 [-3,880, -1,516] και η SARSA -3,165 [-4,917, -1,412].
+Για Q-Learning και SARSA, η online μάθηση συνδέθηκε με μεγαλύτερη disturbance-associated απώλεια σε αυτό το estimand. Αρκετές paired συγκρίσεις τους έναντι DQN, Dyna-Q+ και PPO ήταν επίσης πιο αρνητικές. Η Q-Learning−SARSA διαφορά ήταν 0,467 [-1,492, 2,425], επομένως δεν υπήρχε σαφής διαχωρισμός μεταξύ των δύο tabular TD methods ως προς το adaptation benefit στην observation corruption.
+Το αποτέλεσμα υπογραμμίζει ότι η δυνατότητα μιας μεθόδου να συνεχίζει να μαθαίνει μπορεί να επιτρέψει προσαρμογή σε persistent dynamics change αλλά μπορεί επίσης να οδηγήσει σε επιδείνωση όταν το εισερχόμενο σήμα παρατήρησης είναι περιστασιακά λανθασμένο.
+5.3.6 Σύνοψη RQ2
+Το RQ2 δεν υποστηρίζει ενιαία θετική επίδραση της online adaptation σε όλες τις conditions. Το κύριο μοτίβο είναι condition-dependent:
+μεγάλη και συνεπής θετική επίδραση για Q-Learning και SARSA στα persistent action remaps,
+θετική αλλά μικρότερη επίδραση για Dyna-Q+ στα remaps,
+μικρότερη/αβέβαιη επίδραση για DQN,
+σχεδόν μηδενική aggregate επίδραση της PPO στα remaps,
+χωρίς καθαρό aggregate benefit στην action-failure condition,
+αρνητικό adaptation benefit για Q-Learning και SARSA στην observation corruption.
+Σχήμα 7 — Condition-small-multiple view of adaptation benefit on consistent scales.
+5.4 RQ3 — Ανάκαμψη μετά από persistent action remapping
+Το RQ3 χρησιμοποιεί την primary tolerance 0,10 και απαιτεί δύο συνεχόμενα in-tolerance 32-interaction windows. Οι roots που δεν ικανοποιούν το κριτήριο μέχρι τα 256 interactions παραμένουν right-censored με recovery_time=null.
+5.4.1 Cycle remap
+Στο cycle remap, οι recovered proportions ήταν:
+DQN: 2/12 = 0,167,
+Dyna-Q+: 12/12 = 1,000,
+PPO: 1/12 = 0,083,
+Q-Learning: 12/12 = 1,000,
+SARSA: 12/12 = 1,000.
+Για τη Dyna-Q+, ο conditional recovery time ήταν 176,0 interactions [155,7, 196,3], n=12. Για την Q-Learning ήταν 98,7 [72,0, 125,3], n=12 και για τη SARSA 136,0 [111,3, 160,7], n=12.
+Η DQN είχε conditional recovery time 80,0 interactions, αλλά μόνο n=2 recovered roots και πολύ ευρύ interval [-529,9, 689,9]. Η PPO είχε μία recovered root με recovery time 128,0 και, ορθά, δεν υπολογίστηκε interval για n=1. Οι αριθμοί αυτοί δεν σημαίνουν ότι DQN ή PPO ανακάμπτουν γρηγορότερα συνολικά: η conditional summary αποκλείει τις censored roots.
+Ο restricted delay through 256 ήταν 226,7 [181,2, 272,1] για DQN, 176,0 [155,7, 196,3] για Dyna-Q+, 245,3 [221,9, 268,8] για PPO, 98,7 [72,0, 125,3] για Q-Learning και 136,0 [111,3, 160,7] για SARSA.
+Στις paired restricted-delay συγκρίσεις, η Q-Learning είχε 37,3 λιγότερα interactions από τη SARSA [-64,5, -10,1], 77,3 λιγότερα από Dyna-Q+ [-106,7, -48,0], 128,0 λιγότερα από DQN [-168,7, -87,3] και 146,7 λιγότερα από PPO [-185,9, -107,5]. Η SARSA ήταν 40,0 interactions χαμηλότερα από Dyna-Q+ [-64,7, -15,3].
+Συνεπώς, στο cycle remap οι Q-Learning και SARSA συνδύασαν πλήρη recovery incidence με χαμηλότερο restricted delay, ενώ η Dyna-Q+ ανακτήθηκε σε όλες τις roots αλλά αργότερα. DQN και PPO παρουσίασαν συχνή μη ανάκαμψη εντός του horizon.
+5.4.2 Swap remap
+Στο swap remap, οι recovered proportions ήταν:
+DQN: 8/12 = 0,667,
+Dyna-Q+: 8/12 = 0,667,
+PPO: 4/12 = 0,333,
+Q-Learning: 12/12 = 1,000,
+SARSA: 12/12 = 1,000.
+Ο conditional recovery time ήταν 68,0 [11,8, 124,2], n=8 για DQN, 72,0 [8,4, 135,6], n=8 για Dyna-Q+, 56,0 [-20,4, 132,4], n=4 για PPO, 106,7 [63,0, 150,3], n=12 για Q-Learning και 98,7 [76,6, 120,7], n=12 για SARSA.
+Και εδώ η conditional summary πρέπει να ερμηνευθεί μαζί με το recovery proportion. Το φαινομενικά χαμηλότερο conditional mean της PPO προκύπτει από τις τέσσερις roots που ανακτήθηκαν και δεν περιλαμβάνει τις οκτώ censored roots.
+Ο restricted delay ήταν 130,7 [62,7, 198,6] για DQN, 133,3 [64,1, 202,6] για Dyna-Q+, 189,3 [124,8, 253,9] για PPO, 106,7 [63,0, 150,3] για Q-Learning και 98,7 [76,6, 120,7] για SARSA.
+Οι περισσότερες paired restricted-delay συγκρίσεις είχαν ευρεία intervals που περιλάμβαναν το μηδέν. Η σαφέστερη διαφορά ήταν SARSA έναντι PPO: η SARSA είχε κατά 90,7 interactions χαμηλότερο restricted delay [-161,5, -19,8]. Η Q-Learning έναντι SARSA ήταν 8,0 [-32,8, 48,8].
+Στο swap remap, συνεπώς, Q-Learning και SARSA είχαν την πιο συνεπή recovery incidence, αλλά ο restricted delay τους δεν διαχωρίστηκε καθαρά. DQN και Dyna-Q+ ανακτήθηκαν στις δύο τρίτες των roots, ενώ η PPO μόνο στο ένα τρίτο.
+Σχήμα 8 — Stored per-root directed-gap trajectories for the primary action-remap family; dashed line is tolerance 0.10.
+Σχήμα 9 — Recovered roots at primary tolerance 0.10; unrecovered roots remain right-censored.
+Σχήμα 10 — Censoring-aware restricted recovery delay through the 256-interaction horizon.
+Σχήμα 11 — Observed recovery time only among recovered roots; displayed n excludes right-censored roots.
+5.4.3 Ευαισθησία στην ανοχή ανάκαμψης
+Η recovered incidence εξετάστηκε επίσης στα προκαθορισμένα thresholds 0,05 και 0,20. Ο αριθμός recovered roots στα thresholds 0,05 / 0,10 / 0,20 ήταν:
+Μέθοδος
+Cycle
+Swap
+DQN
+0 / 2 / 12
+2 / 8 / 12
+Dyna-Q+
+0 / 12 / 12
+0 / 8 / 12
+PPO
+0 / 1 / 6
+2 / 4 / 7
+Q-Learning
+11 / 12 / 12
+10 / 12 / 12
+SARSA
+8 / 12 / 12
+5 / 12 / 12
+Πίνακας 2 — Σύνοψη για την ενότητα «5.4.3 Ευαισθησία στην ανοχή ανάκαμψης».
+Η γενική εικόνα παραμένει ότι Q-Learning και SARSA ανακτούν πιο σταθερά, ιδιαίτερα στο αυστηρό threshold. Η ακριβής recovery incidence όμως είναι threshold-sensitive για DQN, Dyna-Q+ και PPO. Η Dyna-Q+, για παράδειγμα, έχει 0/12 recovered roots στο cycle όταν η ανοχή είναι 0,05, αλλά 12/12 στο primary 0,10. Η ευαισθησία αυτή αποτελεί ιδιότητα του operational definition και όχι λόγο αλλαγής της κύριας ανοχής μετά την παρατήρηση των αποτελεσμάτων.
+Σχήμα 12 — Predeclared 0.05/0.10/0.20 tolerance sensitivity; 0.10 remains primary.
+5.4.4 Σύνοψη RQ3
+Στο primary tolerance 0,10, οι Q-Learning και SARSA ανακτήθηκαν και στις 12 roots και για τα δύο persistent action remaps. Η Q-Learning είχε χαμηλότερο restricted delay από τη SARSA στο cycle remap, ενώ στο swap οι δύο μέθοδοι δεν διαχωρίστηκαν καθαρά.
+Η Dyna-Q+ ανακτήθηκε σε όλες τις cycle roots αλλά με υψηλότερο delay από τις δύο tabular temporal-difference methods. Στο swap είχε 8/12 recovered roots. Η DQN είχε 2/12 recoveries στο cycle και 8/12 στο swap. Η PPO είχε τις χαμηλότερες recovery incidences, 1/12 και 4/12 αντίστοιχα.
+Το RQ3 επομένως αναδεικνύει πληροφορία που δεν είναι ορατή μόνο από το aggregate adaptation benefit του RQ2. Μια μέθοδος μπορεί να εμφανίζει θετικό συνολικό adaptation benefit αλλά να ανακτά αργά ή να αποτυγχάνει να ικανοποιήσει το stable recovery criterion σε σημαντικό ποσοστό roots.
+5.5 Συγκριτική σύνθεση των τριών ερευνητικών ερωτημάτων
+Τα τρία ερευνητικά ερωτήματα περιγράφουν διαφορετικές διαστάσεις συμπεριφοράς.
+Στο RQ1, Q-Learning, SARSA και Dyna-Q+ κατέληξαν στην ίδια τελική ονομαστική επίδοση, αλλά η Dyna-Q+ είχε σημαντικά υψηλότερη time-average επίδοση κατά μήκος του training budget. Η DQN και η PPO είχαν χαμηλότερη τελική και time-average επίδοση και μεγαλύτερη μεταξύ-root διακύμανση στο συγκεκριμένο controlled task και budget.
+Στο RQ2, η online adaptation ήταν ιδιαίτερα ωφέλιμη για Q-Learning και SARSA στα persistent action remaps και επίσης ωφέλιμη για Dyna-Q+, αλλά δεν ήταν καθολικά προστατευτική. Στην action failure condition δεν υπήρχε καθαρό aggregate benefit, ενώ στην observation corruption η Q-Learning και η SARSA είχαν αρνητικό adaptation benefit.
+Στο RQ3, Q-Learning και SARSA είχαν την πιο συνεπή stable recovery στα δύο action remaps. Η Dyna-Q+ είχε πλήρη recovery incidence στο cycle αλλά όχι στο swap, και η DQN/PPO είχαν συχνότερη right-censoring. Η recovery incidence και το timing ήταν ευαίσθητα στον προκαθορισμένο tolerance ορισμό, ιδιαίτερα για τις μεθόδους με ενδιάμεση συμπεριφορά.
+Η σύνθεση αυτή δεν δημιουργεί ενιαία κατάταξη. Η Dyna-Q+ είναι η ισχυρότερη ως προς time-average nominal learning, ενώ Q-Learning και SARSA έχουν την πιο συνεπή recovery incidence στις persistent remap conditions. Η ίδια η online adaptation μπορεί να είναι ωφέλιμη, ουδέτερη ή επιβλαβής ανάλογα με τον disturbance mechanism. Αυτές οι διαφοροποιήσεις αποτελούν το αντικείμενο της ερμηνείας στο επόμενο κεφάλαιο.
+5.6 Περιορισμός των συμπερασμάτων του κεφαλαίου
+Τα αποτελέσματα αφορούν ένα ελεγχόμενο GridWorld task, δύο held-out layouts, 12 ανεξάρτητες roots, ένα συγκεκριμένο interaction budget και τις πέντε παγωμένες implementations/configurations. Δεν τεκμηριώνουν καθολική υπεροχή οικογένειας αλγορίθμων σε άλλα περιβάλλοντα ή budgets.
+Τα layouts, episodes και recovery windows δεν αποτελούν ανεξάρτητα replicates. Η inference γίνεται στις roots. Τα intervals δεν είναι simultaneous και δεν συνοδεύονται από post-hoc significance language. Οι conditional recovery-time summaries μπορεί να έχουν μικρά denominators και πρέπει να διαβάζονται μαζί με recovery proportion και restricted delay.
+Τέλος, τα αποτελέσματα περιγράφουν controlled comparative associations υπό παγωμένο randomized design και matched branches. Η εξήγηση πιθανών μηχανισμών, η σχέση με τη βιβλιογραφία και τα όρια γενίκευσης εξετάζονται χωριστά στο Κεφάλαιο 6, χωρίς να εισάγονται νέα αποτελέσματα.
+Κεφάλαιο 6 — Συζήτηση
+6.1 Σκοπός και ερμηνευτικό όριο
+Το προηγούμενο κεφάλαιο παρουσίασε τι έδειξε η προδηλωμένη ανάλυση. Το παρόν κεφάλαιο εξετάζει τι σημαίνουν τα αποτελέσματα, πώς συνδέονται με το θεωρητικό και εμπειρικό πλαίσιο και ποια είναι τα όρια της γενίκευσής τους. Η διάκριση είναι ουσιώδης: η Συζήτηση δεν αποτελεί χώρο για νέα estimands, νέες στατιστικές δοκιμές ή εκ των υστέρων επιλογή thresholds.
+Οι ερμηνείες που ακολουθούν παραμένουν δεσμευμένες από τρεις αρχές. Πρώτον, τα αποτελέσματα αφορούν το συγκεκριμένο controlled GridWorld, το frozen interaction budget και τις συγκεκριμένες implementations/configurations. Δεύτερον, μηχανισμοί που προτείνονται από τη βιβλιογραφία — όπως stale replay, loss of plasticity ή model interference — χρησιμοποιούνται ως ερμηνευτικά πλαίσια και όχι ως αιτιώδεις εξηγήσεις που αποδείχθηκαν από το πείραμα. Τρίτον, η απόδοση μιας μεθόδου σε ένα ερευνητικό ερώτημα δεν μετατρέπεται σε καθολική κατάταξη για όλα τα ερωτήματα.
+6.2 RQ1: τελική επίδοση και sample efficiency δεν είναι το ίδιο
+Το πρώτο βασικό εύρημα είναι η σαφής διάκριση ανάμεσα στην τελική ονομαστική επίδοση και στην αποτελεσματικότητα μάθησης κατά μήκος του interaction budget. Οι Q-Learning, SARSA και Dyna-Q+ κατέληξαν στην ίδια τελική mean return (-0,100), αλλά η Dyna-Q+ είχε πολύ υψηλότερο time-average return (-0,485 έναντι περίπου -1,61 για τις δύο TD methods). Η διαφορά αυτή δείχνει ότι η ερώτηση «πού κατέληξε η policy;» είναι διαφορετική από την ερώτηση «πόσο αποτελεσματικά χρησιμοποίησε το διαθέσιμο experience budget;».
+Η παρατήρηση είναι συμβατή με τη βασική αρχή της Dyna ότι η πραγματική εμπειρία αξιοποιείται τόσο για άμεση value learning όσο και για model-based planning updates [1]. Στο συγκεκριμένο μικρό discrete task, τα δέκα planning steps της Dyna-Q+ ανά πραγματική αλληλεπίδραση παρέχουν μηχανισμό με τον οποίο η ίδια εξωτερική εμπειρία μπορεί να οδηγήσει σε περισσότερη εσωτερική ενημέρωση. Αυτό όμως δεν σημαίνει ότι η Dyna-Q+ είχε «περισσότερο» ή «λιγότερο» δίκαιο budget: το project όρισε εξαρχής ως κοινό fairness axis τις πραγματικές αλληλεπιδράσεις, όχι τον αριθμό εσωτερικών updates. Η επιλογή αυτή είναι συνεπής με τη βιβλιογραφία empirical RL design, η οποία επισημαίνει ότι episode counts, update counts και tuning opportunity μπορούν να δημιουργήσουν παραπλανητικές συγκρίσεις αν δεν οριστεί ρητά κοινό experience currency [5], [6].
+Η Q-Learning και η SARSA είχαν σχεδόν ταυτόσημη time-average συμπεριφορά, παρά τη θεωρητική τους διαφορά ως off-policy και on-policy TD control. Η Q-Learning χρησιμοποιεί greedy maximum στον one-step target, ενώ η SARSA χρησιμοποιεί την επόμενη ενέργεια της behavior policy [1], [9]. Στο συγκεκριμένο nominal GridWorld και με κοινό ε=0,1, η διαφορά αυτή δεν οδήγησε σε ουσιαστικό διαχωρισμό στο aggregate learning-efficiency estimand.
+Οι DQN και PPO είχαν χαμηλότερη τελική και time-average επίδοση και μεγαλύτερη μεταξύ-root διακύμανση. Αυτό δεν πρέπει να ερμηνευθεί ως γενική αδυναμία deep RL. Οι δύο μέθοδοι έχουν μεγαλύτερη παραμετρική και optimization πολυπλοκότητα από αυτή που απαιτεί το μικρό discrete GridWorld. Επιπλέον, η βιβλιογραφία έχει δείξει ότι η απόδοση deep-RL μεθόδων μπορεί να εξαρτάται σημαντικά από implementation details, hyperparameters και random variation [6], [13]. Η εργασία ελέγχει αυτά τα στοιχεία μέσω frozen configurations και πολλαπλών roots, αλλά δεν μπορεί να μετατρέψει το συγκεκριμένο interaction budget σε καθολικό τεστ δυνατοτήτων DQN ή PPO.
+6.3 RQ2: η προσαρμογή είναι condition-dependent
+Το δεύτερο βασικό εύρημα είναι ότι η online adaptation δεν λειτουργεί ως καθολικά προστατευτικός μηχανισμός. Στα persistent action remaps, η συνέχιση της μάθησης μείωσε έντονα τη disturbance-associated απώλεια για Q-Learning, SARSA και Dyna-Q+. Στην action-failure condition δεν παρατηρήθηκε καθαρό aggregate benefit. Στην observation corruption, οι Q-Learning και SARSA είχαν αρνητικό adaptation benefit.
+Η διαφοροποίηση αυτή είναι εύλογη όταν οι disturbance mechanisms αλλοιώνουν διαφορετικό τμήμα του agent-environment loop. Η persistent action remapping αλλάζει τη σχέση ανάμεσα στην επιλεγμένη ενέργεια και στην περιβαλλοντική της συνέπεια. Ένας TD learner που συνεχίζει να ενημερώνει τις action values μπορεί σταδιακά να αντικαταστήσει παλιές εκτιμήσεις με εμπειρία από το νέο mapping. Αντίθετα, η observation corruption εισάγει περιστασιακά λανθασμένο input στο learning process. Η online ενημέρωση πάνω σε αλλοιωμένες παρατηρήσεις μπορεί να μεταφέρει το σφάλμα στις value estimates αντί να «διορθώσει» μια σταθερή νέα δυναμική. Η πρόταση αυτή παραμένει mechanism-level ερμηνεία και όχι νέα causal μέτρηση του πειράματος.
+Η βιβλιογραφία για non-stationary και continual RL υποστηρίζει γενικά ότι αλλαγές στο environment distribution μπορούν να καταστήσουν παλιές value/policy/model εκτιμήσεις ανεπαρκείς και ότι η συνεχιζόμενη μάθηση δεν εγγυάται από μόνη της διατήρηση ικανότητας προσαρμογής [2], [3], [4]. Το ICLR 2025 work για online RL σε non-stationary context-driven environments τοποθετεί το catastrophic forgetting και το stability–plasticity trade-off στο κέντρο της continual deployment διαδικασίας [7]. Ωστόσο, η συγκεκριμένη εργασία παρέχει ρητό exogenous context στην policy, σε αντίθεση με το παρόν protocol όπου η action-remap αλλαγή δεν ανακοινώνεται. Η διαφορά αυτή είναι κρίσιμη: τα αποτελέσματα της παρούσας μελέτης αφορούν adaptation χωρίς explicit regime label και δεν πρέπει να εξισωθούν με context-conditioned control.
+Το γεγονός ότι η PPO είχε σχεδόν μηδενικό aggregate adaptation benefit στα remaps δεν σημαίνει ότι το clipping objective της «δεν είναι robust». Το PPO clipping σχεδιάστηκε για να περιορίζει υπερβολικά μεγάλες policy updates, όχι για να παρέχει εγγύηση έναντι αλλαγής environmental dynamics [12]. Η βιβλιογραφία δείχνει επίσης ότι implementation-level choices παίζουν σημαντικό ρόλο στην παρατηρούμενη συμπεριφορά PPO/TRPO-like methods [13].
+Αντίστοιχα, το μικρό ή αβέβαιο DQN benefit δεν μπορεί να αποδοθεί αιτιωδώς στο replay buffer μόνο από τα αποτελέσματα της παρούσας εργασίας. Είναι όμως θεμιτό να σημειωθεί ως βιβλιογραφικά τεκμηριωμένο threat ότι replay design και retained history επηρεάζουν τη μάθηση [11]. Σε non-stationary setting, pre-change replay μπορεί να λειτουργήσει ως stale evidence, ενώ η επιθετική απομάκρυνσή του μπορεί να οδηγήσει σε forgetting παλιών αλλά ακόμη έγκυρων transitions. Αυτό το interference-versus-forgetting trade-off αναδεικνύεται και στο πρόσφατο work για partial models [8]. Στην παρούσα μελέτη δεν έγινε replay reset, reweighting ή specialized continual intervention, επειδή αυτά θα αποτελούσαν διαφορετικό ερευνητικό ερώτημα.
+6.4 Dyna-Q+: γρήγορη ονομαστική μάθηση δεν συνεπάγεται ταχύτερη ανάκαμψη
+Η Dyna-Q+ παρουσιάζει ιδιαίτερο ενδιαφέρον επειδή συνδυάζει δύο φαινομενικά διαφορετικά αποτελέσματα. Στο RQ1 είχε την υψηλότερη time-average nominal performance. Στο RQ2 είχε μεγάλο θετικό adaptation benefit στα persistent remaps. Ωστόσο, στο RQ3 δεν ήταν η ταχύτερη μέθοδος ανάκαμψης: στο cycle remap ανακτήθηκε σε 12/12 roots, αλλά με restricted delay 176 interactions, έναντι 98,7 για Q-Learning και 136 για SARSA. Στο swap remap ανακτήθηκε σε 8/12 roots.
+Το αποτέλεσμα αποτρέπει μια απλοϊκή ερμηνεία σύμφωνα με την οποία «model-based planning ισοδυναμεί με γρηγορότερη adaptation». Η Dyna οικογένεια χρησιμοποιεί learned model για planning και η Dyna-Q+ προσθέτει recency-driven exploration ώστε να ενθαρρύνει την επανεξέταση ενεργειών που δεν έχουν δοκιμαστεί πρόσφατα [1]. Σε changing environment, όμως, ένα learned model μπορεί προσωρινά να περιέχει stale consequences μέχρι να ανανεωθούν τα επηρεασμένα state-action pairs. Τα planning updates μπορούν τότε να αξιοποιούν παλιά πληροφορία μαζί με τη νέα [1].
+Το πρόσφατο work των partial models παρέχει ένα σύγχρονο παράδειγμα όπου η οργάνωση ενός learned model και του replay/history επηρεάζει την local adaptation [8]. Οι συγγραφείς δείχνουν ότι modular/partial model updating μπορεί να βελτιώσει την adaptation σε συγκεκριμένα deep model-based agents και LoCA settings. Η σύνδεση με την παρούσα εργασία είναι εννοιολογική και όχι άμεση: το deep Dyna-Q/PlaNet/Dreamer setting του source δεν ταυτίζεται με το bounded tabular Dyna-Q+ protocol. Παρ' όλα αυτά, υποστηρίζει τη γενικότερη θέση ότι η κατοχή μοντέλου δεν εγγυάται από μόνη της ταχεία προσαρμογή· έχει σημασία τι πληροφορία παραμένει stale και πώς ενημερώνεται.
+Η παρούσα εργασία δεν έχει σχεδιαστεί ώστε να μετρήσει ξεχωριστά «χρόνο ανανέωσης του model» ή να αποδώσει αιτιότητα σε συγκεκριμένο planning mechanism. Επομένως, η σωστή ερμηνεία είναι περιορισμένη: η frozen Dyna-Q+ configuration έμαθε γρήγορα nominally και είχε θετικό aggregate adaptation benefit, αλλά η stable recovery trajectory της ήταν λιγότερο συνεπής ή πιο αργή από Q-Learning/SARSA στα tested remaps.
+6.5 RQ3: recovery incidence, timing και censoring
+Το RQ3 δείχνει γιατί ένα aggregate post-change metric δεν αρκεί. Η Q-Learning και η SARSA είχαν 12/12 recoveries και στα δύο remaps. Η Dyna-Q+ είχε πλήρη recovery incidence στο cycle αλλά 8/12 στο swap. Η DQN και η PPO είχαν ακόμη περισσότερη right-censoring.
+Η right-censoring αλλάζει τον τρόπο ερμηνείας του χρόνου. Για παράδειγμα, στο swap remap η PPO έχει conditional recovery-time mean 56 interactions, μικρότερο από την Q-Learning (106,7) και τη SARSA (98,7). Αν αγνοηθεί ότι η PPO ανακτήθηκε μόνο σε 4/12 roots, η τιμή αυτή μπορεί να οδηγήσει στο λανθασμένο συμπέρασμα ότι «η PPO ανακάμπτει γρηγορότερα». Στην πραγματικότητα, το conditional mean περιγράφει μόνο το subset των roots που ανακτήθηκαν. Για αυτό η εργασία παρουσιάζει ταυτόχρονα recovered proportion και restricted delay through horizon.
+Η διάκριση αυτή αποτελεί σημαντικό construct-validity σημείο. Το recovery status, ο observed recovery time και το restricted delay απαντούν διαφορετικές ερωτήσεις. Η αντικατάσταση του null recovery time με 256 θα έκρυβε τη μη ανάκαμψη και θα μπέρδευε ένα censoring horizon με πραγματικό event time.
+6.6 Ευαισθησία στον operational ορισμό της ανάκαμψης
+Το primary tolerance 0,10 ήταν παγωμένο πριν από τα τελικά αποτελέσματα, με 0,05 και 0,20 ως sensitivity thresholds. Η sensitivity analysis έδειξε ότι το broad pattern υπέρ Q-Learning/SARSA ως προς recovery consistency παραμένει, αλλά η ακριβής incidence είναι ιδιαίτερα ευαίσθητη για DQN, Dyna-Q+ και PPO.
+Η Dyna-Q+ στο cycle αποτελεί χαρακτηριστικό παράδειγμα: 0/12 roots ανακτώνται στο tolerance 0,05, ενώ 12/12 στο 0,10 και 12/12 στο 0,20. Άρα η δήλωση «ανακτήθηκε πλήρως» είναι σωστή μόνο όταν συνοδεύεται από τον operational ορισμό που χρησιμοποιείται. Το ίδιο ισχύει για κάθε recovery metric που βασίζεται σε neighborhood/tolerance criterion.
+Η ευαισθησία αυτή δεν ακυρώνει το RQ3. Αντίθετα, δείχνει γιατί το protocol περιλαμβάνει προκαθορισμένο sensitivity analysis. Ο στόχος δεν είναι να βρεθεί ένα μοναδικό «αληθινό» threshold, αλλά να φανεί αν η βασική ερμηνεία εξαρτάται δραματικά από μια λογική μεταβολή του operational definition.
+6.7 Σχέση με continual RL και hidden change
+Το thesis protocol μελετά ordinary method-native continued learning μετά από hidden persistent change. Δεν χρησιμοποιεί explicit changepoint detector, context label, specialized meta-learning ή continual-learning regularizer. Η επιλογή αυτή είναι σκόπιμη: το ερευνητικό ερώτημα είναι πώς συμπεριφέρονται οι συγκεκριμένοι standard mechanisms όταν η ίδια η εκτέλεσή τους συνεχίζεται μετά τη μεταβολή.
+Η σύγχρονη continual-RL βιβλιογραφία δείχνει ότι υπάρχουν πιο εξειδικευμένες παρεμβάσεις που αντιμετωπίζουν stability/plasticity, retention και context recurrence [7]. Η παρούσα μελέτη δεν τις ανταγωνίζεται άμεσα. Αντίθετα, τα αποτελέσματά της παρέχουν baseline evidence για το πόσο μακριά μπορούν να φτάσουν οι standard configurations χωρίς explicit change awareness.
+Η πληροφοριακή διαφορά έχει ιδιαίτερη σημασία. Στο ICLR 2025 context-driven setting, το current exogenous context παρέχεται στην policy [7]. Στο παρόν action-remap setting, ο πράκτορας δεν λαμβάνει ούτε context label ούτε change indicator. Επομένως, η adaptation πρέπει να προκύψει από τις παρατηρούμενες συνέπειες των ενεργειών και την ίδια τη learning dynamics.
+6.8 Απειλές προς την εσωτερική εγκυρότητα
+6.8.1 Fairness και tuning
+Οι RL comparisons είναι ευαίσθητες σε hyperparameter choices, implementation details και tuning opportunity [5], [6]. Το project περιόρισε τον κίνδυνο με προκαθορισμένη tuning διαδικασία σε non-final evidence, κοινό actual-interaction budget, frozen final configurations και 12 roots. Παρ' όλα αυτά, «fair» δεν σημαίνει ότι όλες οι μέθοδοι έχουν ίση πιθανότητα να εκφράσουν τη μέγιστη δυνατή απόδοσή τους σε κάθε task. Άλλο tuning budget ή architecture family θα μπορούσε να αλλάξει τα numerical outcomes.
+6.8.2 Checkpoint equivalence
+Η matched Phase B εξαρτάται από την ακριβή ισότητα του scientific state πριν από το branching. Η αρχική T-610 αποτυχία απέδειξε ότι boundary details μπορούν να είναι κρίσιμα. Η τελική replacement execution αντιμετώπισε το πρόβλημα fail-closed, από νέα καθαρή εκτέλεση, και το T-611 επικύρωσε checkpoint lineage. Ένα «checkpoint» που διατηρεί μόνο weights αλλά όχι method-native continuation state δεν θα ήταν επαρκές για αυτή τη μελέτη.
+6.8.3 Information leakage
+Η ύπαρξη disturbance flags, true state ή change indicators για evaluator/visualization δημιουργεί κίνδυνο ακούσιας διαρροής προς τον agent. Το project επιβάλλει explicit information boundary και διαχωρισμένα observation contracts. Η internal validity εξαρτάται από τη συνέπεια αυτού του boundary σε environment, adapters, checkpoints και live instrumentation.
+6.9 Construct validity
+Η «ανθεκτικότητα» είναι πολυδιάστατη. Η εργασία αποφεύγει να τη συμπτύξει σε ένα score και διαχωρίζει nominal learning, disturbance-associated loss, adaptation benefit, recovery incidence και recovery timing. Η επιλογή αυτή μειώνει τον κίνδυνο ένα composite metric να κρύψει αντίθετα patterns.
+Η online continuation επίσης δεν αποκαλείται specialized continual-learning method. Οι Adaptive branches είναι οι ίδιες μέθοδοι με learning ενεργό. Ομοίως, το PPO clipping δεν ταυτίζεται με environmental robustness και η Dyna-Q+ planning δομή δεν ταυτίζεται με εγγυημένη resilience.
+Οι τρεις uncertainty mechanisms δεν είναι ισοδύναμοι. Persistent action remapping αλλάζει action semantics, action failure εισάγει stochastic actuation uncertainty και observation corruption αλλοιώνει το input. Η condition-dependent συμπεριφορά του RQ2 επιβεβαιώνει εμπειρικά ότι η κοινή ετικέτα «uncertainty» δεν αρκεί για να προβλέψει την επίδραση της adaptation.
+6.10 Statistical conclusion validity
+Η inference χρησιμοποιεί roots ως ανεξάρτητες μονάδες. Layouts, episodes και windows είναι nested/repeated observations. Αυτό περιορίζει την ψευδο-επανάληψη αλλά αφήνει n=12 ως σχετικά μικρό independent sample για κάθε πλήρες block.
+Τα 95% Student-t intervals είναι pointwise και δεν συνοδεύονται από multiplicity correction ή formal p-value family. Για αυτό το κείμενο χρησιμοποιεί τα intervals ως uncertainty summaries και όχι ως βάση για εκτεταμένες significance claims.
+Στο RQ3, τα conditional recovery-time summaries μπορεί να έχουν ακόμη μικρότερο n. Στην ακραία περίπτωση PPO/cycle, n=1 και δεν υπάρχει interval. Η αναφορά αυτών των values είναι χρήσιμη περιγραφικά μόνο όταν συνοδεύεται από recovery incidence και censoring information.
+6.11 External validity
+Το μεγαλύτερο όριο γενίκευσης είναι το controlled testbed. Η εργασία χρησιμοποιεί μία οικογένεια μικρού GridWorld, δύο held-out layouts, discrete action space και συγκεκριμένα disturbance definitions. Τα αποτελέσματα δεν μπορούν να μεταφερθούν άμεσα σε robotics, continuous control, Atari-like domains ή large-scale autonomous agents.
+Οι DQN και PPO χρησιμοποιούν compact CPU-feasible architectures, όχι large-scale deep-RL tuning. Αντίστοιχα, η Dyna-Q+ είναι bounded tabular implementation. Η σύγκριση επομένως απαντά πώς συμπεριφέρονται αυτές οι frozen implementations υπό κοινό contract, όχι πώς θα συμπεριφέρονταν όλες οι πιθανές εκδοχές των algorithm families.
+Η σύγχρονη βιβλιογραφία partial models και context-aware continual RL περιλαμβάνει πλουσιότερες representations και structural assumptions [8], [7]. Αυτές οι διαφορές περιορίζουν τις direct cross-study comparisons αλλά ταυτόχρονα δείχνουν σαφείς κατευθύνσεις για επέκταση της παρούσας εργασίας.
+6.12 Reproducibility validity
+Η reproducibility απειλείται ιδιαίτερα στα deep-RL methods από implementation choices και incomplete checkpoints [13], [6]. Η παρούσα εργασία αντιμετωπίζει το πρόβλημα με locked Python environment, source commit provenance, exact scientific checkpoints, manifest/checksum validation, deterministic job planning και frozen downstream evidence.
+Η ύπαρξη reproducible assets δεν σημαίνει ότι κάθε run σε διαφορετικό hardware θα έχει ίδιο runtime. Για αυτό wall/process CPU time αντιμετωπίζεται ως secondary descriptive evidence, ενώ η primary fairness axis παραμένει ο αριθμός actual environment interactions.
+6.13 Απάντηση στα ερευνητικά ερωτήματα σε ερμηνευτικό επίπεδο
+RQ1: Στο συγκεκριμένο task και budget, οι Q-Learning, SARSA και Dyna-Q+ φτάνουν στην ίδια τελική ονομαστική επίδοση. Η Dyna-Q+ όμως αξιοποιεί αποτελεσματικότερα το interaction budget ως προς το time-average trajectory. Οι DQN/PPO είναι πιο αργές και πιο heterogeneous σε αυτή την κλίμακα.
+RQ2: Η συνέχιση της μάθησης είναι ιδιαίτερα ωφέλιμη μετά από persistent action remapping για Q-Learning/SARSA και θετική για Dyna-Q+, αλλά δεν αποτελεί καθολικά προστατευτικό mechanism. Η επίδραση είναι μικρή ή αβέβαιη στο action failure και μπορεί να γίνει αρνητική στην observation corruption.
+RQ3: Η Q-Learning και η SARSA έχουν την πιο συνεπή stable recovery στα δύο persistent remaps. Η Dyna-Q+ συνδυάζει ισχυρό nominal learning και θετικό adaptation benefit με πιο αργή ή λιγότερο συνεπή recovery. DQN και PPO έχουν μεγαλύτερη right-censoring εντός του frozen horizon. Η ακριβής recovery incidence εξαρτάται από το προκαθορισμένο tolerance, επομένως κάθε claim πρέπει να δηλώνει τον operational ορισμό.
+6.14 Κεντρικό συμπέρασμα της Συζήτησης
+Η βασική επιστημονική εικόνα δεν είναι ότι μία μέθοδος «κερδίζει», αλλά ότι διαφορετικοί μηχανισμοί παράγουν διαφορετικά trade-offs μεταξύ γρήγορης nominal learning, aggregate adaptation benefit και stable recovery. Η Dyna-Q+ είναι ισχυρή στη sample efficiency, η Q-Learning και η SARSA είναι ιδιαίτερα συνεπείς στην recovery υπό persistent remapping, ενώ οι deep methods δεν αξιοποιούν το μικρό fixed budget με την ίδια συνέπεια. Ταυτόχρονα, η observation corruption δείχνει ότι η ίδια η δυνατότητα online learning μπορεί να γίνει πηγή επιδείνωσης.
+Το αποτέλεσμα αυτό υποστηρίζει μια πιο ακριβή έννοια «ανθεκτικού πράκτορα»: όχι έναν πράκτορα που απλώς συνεχίζει να εκπαιδεύεται, αλλά ένα σύστημα του οποίου η συμπεριφορά πρέπει να αξιολογείται χωριστά ως προς resistance/loss, adaptation benefit, recovery incidence και recovery timing, υπό σαφώς ορισμένο information and change contract.
+Κεφάλαιο 7 — Συμπεράσματα και Μελλοντική Εργασία
+7.1 Συνολική αποτίμηση
+Η παρούσα διπλωματική μελέτησε συγκριτικά πέντε μεθόδους ενισχυτικής μάθησης — Q-Learning, SARSA, DQN, PPO και Dyna-Q+ — σε ελεγχόμενο GridWorld με κοινό interaction budget, κοινό information contract και matched post-change deployment. Η μελέτη διαχώρισε ρητά τρεις έννοιες που συχνά συγχέονται: την ονομαστική ικανότητα μάθησης πριν από μεταβολή, το aggregate όφελος της συνεχιζόμενης προσαρμογής μετά από disturbance και τη χρονική ανάκαμψη μετά από persistent αλλαγή.
+Η συνεισφορά της εργασίας δεν βρίσκεται σε έναν νέο αλγόριθμο. Βρίσκεται στον ελεγχόμενο συγκριτικό σχεδιασμό, στην ακριβή συνέχεια από Phase-A checkpoints προς matched FN/FD/AN/AD branches, στον διαχωρισμό Frozen και Adaptive deployment regimes, στην προκαθορισμένη αντιμετώπιση right-censoring για recovery και στη reproducible αλυσίδα από frozen protocol μέχρι machine-readable analysis και thesis assets.
+7.2 Απάντηση στο RQ1 — Ονομαστική μάθηση
+Το πρώτο ερευνητικό ερώτημα αφορούσε τη σχετική ονομαστική επίδοση και learning efficiency των πέντε μεθόδων κάτω από κοινό budget πραγματικών αλληλεπιδράσεων.
+Η Q-Learning, η SARSA και η Dyna-Q+ κατέληξαν στην ίδια τελική mean return, -0,100, στο probe των 8.192 interactions. Η Dyna-Q+ όμως είχε σαφώς υψηλότερη time-average επίδοση (-0,485) από SARSA (-1,611) και Q-Learning (-1,628), γεγονός που δείχνει ταχύτερη αξιοποίηση του διαθέσιμου interaction budget. Οι DQN και PPO είχαν χαμηλότερη τελική mean return (-1,862) και χαμηλότερες time-average τιμές, μαζί με μεγαλύτερη μεταξύ-root μεταβλητότητα.
+Η απάντηση στο RQ1 είναι επομένως διπλή. Ως προς το τελικό nominal level, οι τρεις tabular/planning μέθοδοι δεν διαχωρίστηκαν. Ως προς τη learning efficiency, η Dyna-Q+ είχε το ισχυρότερο αποτέλεσμα. Το εύρημα παραμένει περιορισμένο στο συγκεκριμένο controlled task, budget και frozen configuration set.
+7.3 Απάντηση στο RQ2 — Ανθεκτικότητα και προσαρμογή
+Το δεύτερο ερευνητικό ερώτημα εξέτασε αν η online συνέχιση της μάθησης μειώνει τη disturbance-associated απώλεια σε σχέση με frozen deployment.
+Στα δύο persistent action remaps, η Q-Learning και η SARSA εμφάνισαν μεγάλο και συνεπές θετικό adaptation benefit. Η Dyna-Q+ παρουσίασε επίσης θετικό benefit, αλλά μικρότερο σε βασικές συγκρίσεις. Η DQN είχε μικρότερο ή αβέβαιο benefit και η PPO περίπου μηδενικό aggregate benefit στα remaps.
+Η εικόνα άλλαξε στις stochastic uncertainty conditions. Στην action failure 15% δεν παρατηρήθηκε καθαρό aggregate πλεονέκτημα της online adaptation. Στην observation corruption 5%, η Q-Learning και η SARSA είχαν αρνητικό adaptation benefit, δηλαδή η συνέχιση της μάθησης συνδέθηκε με μεγαλύτερη σχετική disturbance-associated απώλεια στο συγκεκριμένο estimand.
+Η απάντηση στο RQ2 είναι ότι η προσαρμογή είναι condition-dependent. Η δυνατότητα ενός agent να συνεχίζει να ενημερώνεται δεν αποτελεί από μόνη της εγγύηση ανθεκτικότητας. Είναι ιδιαίτερα ωφέλιμη όταν πρέπει να μάθει μια νέα persistent σχέση μεταξύ ενεργειών και συνεπειών, αλλά μπορεί να μην προσφέρει όφελος ή ακόμη και να επιδεινώσει την επίδοση όταν το learning signal αλλοιώνεται από θόρυβο παρατήρησης.
+7.4 Απάντηση στο RQ3 — Ανάκαμψη
+Το τρίτο ερευνητικό ερώτημα αφορούσε τη stable recovery μετά από persistent action remapping, με primary tolerance 0,10, passive windows 32 interactions και απαίτηση δύο συνεχόμενων qualifying windows.
+Η Q-Learning και η SARSA ανακτήθηκαν και στις 12 roots και στα δύο action remaps. Στο cycle remap, η Q-Learning είχε χαμηλότερο restricted delay από τη SARSA, ενώ στο swap οι δύο μέθοδοι δεν διαχωρίστηκαν καθαρά. Η Dyna-Q+ ανακτήθηκε σε 12/12 roots στο cycle αλλά σε 8/12 στο swap. Η DQN είχε 2/12 και 8/12 recoveries αντίστοιχα, ενώ η PPO 1/12 και 4/12.
+Το RQ3 δείχνει ότι aggregate adaptation benefit και recovery speed δεν είναι ισοδύναμες έννοιες. Μια μέθοδος μπορεί να μειώνει αισθητά τη συνολική post-change απώλεια αλλά να χρειάζεται περισσότερο χρόνο για να πλησιάσει σταθερά την Adaptive-Nominal reference trajectory ή να μην ανακτά σε όλες τις roots μέσα στον fixed horizon.
+Η sensitivity analysis επιβεβαίωσε επίσης ότι η ακριβής recovery incidence εξαρτάται από την ανοχή. Η Q-Learning και η SARSA παρέμειναν οι πιο συνεπείς μέθοδοι, αλλά DQN, Dyna-Q+ και PPO παρουσίασαν μεγάλες μεταβολές μεταξύ tolerance 0,05, 0,10 και 0,20. Επομένως, η recovery πρέπει πάντοτε να αναφέρεται μαζί με τον operational ορισμό της.
+7.5 Κύρια συνεισφορά της εργασίας
+Η εργασία καταλήγει σε πέντε κύριες συνεισφορές.
+Πρώτον, υλοποιεί ένα ελεγχόμενο multi-method πειραματικό πλαίσιο όπου η συγκρισιμότητα βασίζεται σε κοινές πραγματικές αλληλεπιδράσεις με το περιβάλλον και όχι σε τεχνητή εξίσωση method-native updates.
+Δεύτερον, εισάγει και εφαρμόζει matched four-branch σχεδιασμό FN/FD/AN/AD από exact scientific checkpoints. Ο σχεδιασμός επιτρέπει να διαχωριστεί η disturbance-associated loss από την επίδραση της online learning και να υπολογιστεί ρητά το adaptation benefit.
+Τρίτον, αντιμετωπίζει την ανάκαμψη ως ξεχωριστό temporal construct. Η χρήση fixed interaction windows, stable two-window criterion, explicit right-censoring και restricted-horizon comparison αποτρέπει την αντικατάσταση μη παρατηρημένης ανάκαμψης με τεχνητό χρόνο ίσο με το horizon.
+Τέταρτον, διατηρεί πλήρη reproducibility/provenance αλυσίδα: frozen recipe, deterministic job plan, exact checkpoints, run-bundle manifests, frozen evidence, deterministic analysis και registered thesis assets. Η αποτυχημένη πρώτη T-610 εκτέλεση διατηρήθηκε ως ξεχωριστή ιστορική προσπάθεια και δεν αναμίχθηκε με το accepted evidence.
+Πέμπτον, η τελική desktop εφαρμογή προσφέρει experiment-first inspection του workflow και των αποτελεσμάτων χωρίς να μεταφέρει επιστημονικούς υπολογισμούς στο UI. Έτσι, η οπτικοποίηση και η χρηστικότητα δεν αλλοιώνουν τα estimands ή την evidence authority.
+7.6 Τι δεν υποστηρίζει η εργασία
+Η μελέτη δεν υποστηρίζει ότι υπάρχει καθολικά καλύτερος αλγόριθμος reinforcement learning για dynamic environments. Δεν υποστηρίζει ότι η Dyna-Q+ είναι γενικά ανώτερη επειδή είχε καλύτερη sample efficiency ούτε ότι Q-Learning/SARSA είναι γενικά πιο resilient επειδή είχαν πιο συνεπή recovery στο συγκεκριμένο testbed.
+Δεν υποστηρίζει επίσης ότι το PPO clipping αποτελεί environmental robustness mechanism ή ότι ένα learned model εγγυάται ταχεία adaptation. Οι παρατηρούμενες διαφορές αφορούν τις frozen configurations και το συγκεκριμένο πειραματικό contract.
+Η μελέτη δεν αξιολογεί explicit change detection, context inference, meta-learning, specialized continual-learning regularization, safe RL constraints ή large-scale world models. Αυτές οι τεχνικές αποτελούν διαφορετικές ερευνητικές παρεμβάσεις και δεν πρέπει να θεωρούνται «απούσες βελτιώσεις» που θα μπορούσαν να προστεθούν χωρίς αλλαγή του ερευνητικού ερωτήματος.
+7.7 Μελλοντική εργασία
+7.7.1 Διεύρυνση περιβαλλόντων και κλίμακας
+Η πιο άμεση επέκταση είναι η αξιολόγηση σε περισσότερες οικογένειες περιβαλλόντων. Μεγαλύτερα GridWorlds, stochastic transition structures, continuous-control tasks ή πραγματικότερα navigation/control προβλήματα θα επέτρεπαν να εξεταστεί αν τα observed trade-offs παραμένουν όταν αυξάνεται η dimensionality και η δυσκολία representation.
+Η διεύρυνση πρέπει να γίνει χωρίς να χαθεί το current scientific contract. Νέα environments θα πρέπει να διατηρούν σαφή agent-visible information boundary, reproducible disturbance definitions και ανεξάρτητη randomization unit.
+7.7.2 Διαφορετικά budgets και learning timescales
+Οι DQN και PPO δεν έφτασαν το τελικό nominal level των tabular methods εντός των 8.192 interactions. Μελλοντική μελέτη μπορεί να εξετάσει πολλαπλά προκαθορισμένα interaction budgets ώστε να διαχωριστεί η επίδραση της sample efficiency από την asymptotic capability.
+Η επέκταση αυτή δεν πρέπει να γίνει με post-hoc αύξηση budget μόνο για μεθόδους που είχαν χαμηλή απόδοση. Απαιτεί νέο fair experimental design και εκ νέου freeze πριν από confirmatory outcomes.
+7.7.3 Ρητή ανίχνευση αλλαγής και context inference
+Η παρούσα εργασία μελετά hidden change χωρίς explicit detector. Μελλοντική εργασία μπορεί να συγκρίνει την ordinary method-native adaptation με agents που ανιχνεύουν changepoints ή εκτιμούν latent context.
+Μια τέτοια σύγκριση θα μπορούσε να εξετάσει το κόστος detection latency, false alarms και context misclassification, καθώς και αν η ρητή αλλαγή καθεστώτος βελτιώνει recovery χωρίς να επιδεινώνει nominal performance.
+7.7.4 Specialized continual-learning mechanisms
+Η continual-RL βιβλιογραφία περιλαμβάνει μηχανισμούς για retention, stability/plasticity και recurring contexts. Μελλοντικό protocol θα μπορούσε να προσθέσει τέτοιες μεθόδους ως ξεχωριστή algorithm/intervention family, αντί να τις συγχέει με το simple «learning continues» του παρόντος Adaptive regime.
+Ιδιαίτερο ενδιαφέρον έχει η σύγκριση ordinary replay με memory mechanisms που διαχωρίζουν current-regime optimization από retention constraints, καθώς και η επίδραση explicit context availability.
+7.7.5 Modular model-based adaptation
+Τα αποτελέσματα της Dyna-Q+ δείχνουν ότι planning και directed exploration δεν αρκούν για να εγγυηθούν την ταχύτερη recovery σε κάθε change. Μελλοντική εργασία μπορεί να εξετάσει modular ή partial model architectures, selective model invalidation και local model updating.
+Η επέκταση αυτή θα πρέπει να διαχωρίζει καθαρά το model-organization intervention από το βασικό Dyna mechanism και να μην αποδίδει αποτελέσματα ενός deep partial-model system στην tabular Dyna-Q+ χωρίς άμεση πειραματική σύγκριση.
+7.7.6 Διαχείριση replay υπό non-stationarity
+Για DQN-like methods μπορεί να μελετηθεί ξεχωριστά η επίδραση replay retention, replay reweighting, context-aware sampling ή bounded forgetting μετά από change. Το βασικό trade-off είναι ότι πολύ stale memory μπορεί να εμποδίσει local adaptation, ενώ υπερβολική απόρριψη ιστορικής εμπειρίας μπορεί να προκαλέσει forgetting έγκυρης γνώσης.
+Κάθε τέτοια παρέμβαση πρέπει να οριστεί ως νέα μέθοδος ή deployment policy και όχι ως «τεχνική λεπτομέρεια checkpoint».
+7.7.7 Πλουσιότερη μελέτη recovery
+Η παρούσα μελέτη χρησιμοποιεί 32-interaction windows και fixed horizon 256. Μελλοντική εργασία μπορεί να εξετάσει διαφορετικές προκαθορισμένες temporal resolutions, longer horizons ή event-time models που χειρίζονται censoring πιο άμεσα.
+Απαιτείται προσοχή ώστε η μεγαλύτερη temporal ανάλυση να μην οδηγήσει σε post-hoc επιλογή window/tolerance που ευνοεί συγκεκριμένη μέθοδο. Η sensitivity analysis πρέπει να παραμένει προδηλωμένη.
+7.7.8 Περισσότερες ανεξάρτητες roots και ιεραρχική ανάλυση
+Το n=12 ήταν το frozen independent-root count της παρούσας μελέτης. Μελλοντικό μεγαλύτερο experiment θα μπορούσε να χρησιμοποιήσει περισσότερες roots ώστε να μειώσει την uncertainty των direct contrasts, ιδιαίτερα για methods με υψηλή variance.
+Με περισσότερα environments/layout families θα μπορούσε επίσης να εξεταστεί hierarchical analysis που διαχωρίζει variation μεταξύ seeds, layouts και environment families χωρίς να αντιμετωπίζει nested observations ως ψευδώς ανεξάρτητα samples.
+7.7.9 Safety και constraint-aware adaptation
+Η ανθεκτικότητα και η ασφάλεια δεν είναι ταυτόσημες έννοιες. Η παρούσα εργασία δεν περιλαμβάνει safety constraints. Ένα μελλοντικό ξεχωριστό research track μπορεί να εξετάσει αν ένας agent προσαρμόζεται μετά από change χωρίς να παραβιάζει constraints κατά τη μεταβατική περίοδο.
+Αυτό απαιτεί διαφορετικά estimands — όπως constraint violations, risk exposure ή safe recovery — και δεν πρέπει να προστεθεί εκ των υστέρων στο υπάρχον resilience score, το οποίο ούτως ή άλλως δεν είναι composite.
+7.8 Τελικό συμπέρασμα
+Η ελεγχόμενη σύγκριση δείχνει ότι η ανθεκτικότητα σε περιβάλλοντα που μεταβάλλονται δεν μπορεί να περιγραφεί μόνο από το αν ένας agent «συνεχίζει να μαθαίνει». Στο συγκεκριμένο testbed, η Dyna-Q+ αξιοποίησε αποτελεσματικότερα το nominal interaction budget, ενώ Q-Learning και SARSA παρουσίασαν την πιο συνεπή stable recovery μετά από persistent action remapping. Η online adaptation παρείχε μεγάλο όφελος σε ορισμένες μεταβολές αλλά όχι σε όλες, και στην observation corruption μπορούσε να συνδεθεί με χειρότερη aggregate συμπεριφορά.
+Το κεντρικό συμπέρασμα είναι επομένως ότι η αξιολόγηση resilient AI agents απαιτεί ταυτόχρονη αλλά διακριτή μέτρηση της αρχικής ικανότητας μάθησης, της απώλειας υπό change, του οφέλους προσαρμογής και της ίδιας της χρονικής ανάκαμψης. Η μεθοδολογία της εργασίας επιχειρεί να παρέχει ακριβώς αυτή τη διάκριση, διατηρώντας παράλληλα το πείραμα αναπαραγώγιμο, ελέγξιμο και επιστημονικά περιορισμένο στα δεδομένα που πραγματικά παρήχθησαν.
+Γλωσσάριο και Ακρωνύμια
+Ακρωνύμια
+Ακρωνύμιο
+Όρος
+Χρήση στην εργασία
+AD
+Adaptive Disturbed
+Adaptive Phase-B branch με ενεργό disturbance και learning on.
+AI
+Artificial Intelligence / Τεχνητή Νοημοσύνη
+Ευρύτερο πεδίο στο οποίο εντάσσεται η εργασία.
+AN
+Adaptive Nominal
+Matched nominal Adaptive Phase-B reference με learning on.
+CI
+Confidence Interval
+Στο manuscript χρησιμοποιείται για τα pointwise 95% Student-t intervals.
+DQN
+Deep Q-Network
+Deep value-based RL comparator με replay και target network.
+FD
+Frozen Disturbed
+Frozen Phase-B branch με disturbance και learning off.
+FN
+Frozen Nominal
+Matched nominal Frozen Phase-B reference με learning off.
+MDP
+Markov Decision Process
+Κλασικό μαθηματικό πλαίσιο διαδοχικής λήψης αποφάσεων.
+PPO
+Proximal Policy Optimization
+On-policy policy-gradient comparator.
+RL
+Reinforcement Learning / Ενισχυτική Μάθηση
+Κύριο επιστημονικό πεδίο της μελέτης.
+RNG
+Random Number Generator
+Χρησιμοποιείται σε διαχωρισμένα deterministic random streams.
+RQ
+Research Question / Ερευνητικό Ερώτημα
+RQ1 nominal learning, RQ2 adaptation benefit, RQ3 recovery.
+TD
+Temporal Difference
+Οικογένεια bootstrapped value-learning updates.
+Πίνακας 3 — Σύνοψη για την ενότητα «Ακρωνύμια».
+Βασικοί όροι
+Actual environment interaction
+Μία πραγματική αλληλεπίδραση agent–environment. Αποτελεί το κύριο κοινό fairness budget της μελέτης και διακρίνεται από optimizer, replay ή planning updates.
+Adaptation benefit
+Το κύριο RQ2 estimand:
+(FN-FD)-(AN-AD).
+Θετική τιμή σημαίνει ότι το Adaptive regime μείωσε τη disturbance-associated απώλεια σε σχέση με το Frozen regime.
+Adaptive regime
+Deployment του ίδιου method checkpoint με τη μάθηση ενεργή. Δεν είναι ξεχωριστός αλγόριθμος.
+Censoring / Right-censoring
+Κατάσταση όπου το recovery event δεν παρατηρείται μέχρι το τέλος του fixed Phase-B horizon. Στην περίπτωση αυτή recovery_time=null και δεν αντικαθίσταται από ψευδή observed time 256.
+Checkpoint
+Αποθηκευμένη επιστημονική κατάσταση που επιτρέπει ακριβή συνέχεια της method-native learning process. Περιλαμβάνει περισσότερα από weights/Q-values όταν ο αλγόριθμος απαιτεί replay, optimizer, RNG, recency/model ή update-boundary state.
+Continual / continued learning
+Στο thesis δηλώνει ότι η ίδια frozen method configuration συνεχίζει ordinary method-native online learning μετά το boundary. Δεν σημαίνει specialized continual-learning algorithm.
+Disturbance-associated loss
+Η διαφορά nominal−disturbed μέσα στο ίδιο deployment regime. Διατηρείται ξεχωριστά για Frozen και Adaptive branches.
+Dyna-Q+
+Tabular RL method που συνδυάζει direct learning, learned-model planning και recency-driven directed re-exploration.
+Equal-layout reduction
+Ίσος συνδυασμός των δύο held-out layouts μέσα σε κάθε root πριν από between-root statistical summaries. Τα layouts δεν αποτελούν ανεξάρτητα replicates.
+Frozen regime
+Deployment του ίδιου method checkpoint με τη μάθηση απενεργοποιημένη. Χρησιμοποιείται για matched resistance/loss comparison και δεν δηλώνει άλλο algorithm.
+GridWorld
+Project-owned ελεγχόμενο πειραματικό και visualization testbed. Δεν αποτελεί το αντικείμενο ή την claimed application domain της διπλωματικής.
+Hidden change
+Μεταβολή περιβάλλοντος που δεν παρέχεται στον agent ως explicit context/regime/change indicator. Στο κύριο RQ3 η persistent action remap είναι hidden change.
+Independent root
+Η ανεξάρτητη randomization/statistical unit της τελικής μελέτης. Episodes, layouts, probes και recovery windows είναι nested/repeated observations.
+Non-stationarity
+Μεταβολή σε dynamics, rewards, observations, action semantics ή άλλη περιβαλλοντική δομή κατά τη διάρκεια learning/deployment.
+Pointwise interval
+Interval που αφορά το συγκεκριμένο estimand/contrast. Τα reported 95% Student-t intervals δεν είναι simultaneous confidence bands και δεν συνοδεύονται από formal p-value family.
+Recovery
+Για το primary RQ3, stable προσέγγιση της Adaptive-Disturbed trajectory στην Adaptive-Nominal reference σύμφωνα με frozen tolerance και two-window stability rule.
+Recovery incidence / recovered proportion
+Το ποσοστό ή πλήθος independent roots που επιτυγχάνουν το frozen stable-recovery criterion μέσα στον Phase-B horizon.
+Recovery time
+Observed interaction endpoint του πρώτου qualifying window της πρώτης ακολουθίας δύο διαδοχικών in-tolerance windows. Υπάρχει μόνο για recovered roots.
+Restricted recovery delay
+Censoring-aware fixed-horizon comparison quantity. Χρησιμοποιεί observed recovery time όταν υπάρχει και τον horizon όταν υπάρχει censoring. Δεν ταυτίζεται με observed recovery time.
+Resilience / Ανθεκτικότητα
+Στην εργασία δεν αποτελεί ένα composite score. Αναλύεται μέσω διακριτών quantities: nominal learning, disturbance-associated loss, adaptation benefit, recovery incidence και recovery timing.
+Stable recovery
+Recovery που ικανοποιεί το in-tolerance criterion για δύο συνεχόμενα passive 32-interaction windows.
+Study
+Versioned execution entity με immutable recipe, deterministic plan, durable lifecycle state, registered artifacts και provenance.
+StudyRecipe
+Immutable machine-readable περιγραφή της πειραματικής πρόθεσης και των execution constraints από την οποία παράγεται deterministic job plan.
+Time-average return
+RQ1 trajectory summary πάνω στον interaction axis. Διατηρείται ξεχωριστά από την final nominal performance και αποτυπώνει learning efficiency μέσα στο fixed budget.
+Παραρτήματα
+Παράρτημα Α — Παγωμένο πειραματικό συμβόλαιο
+Το Παράρτημα Α συνοδεύει το Κεφάλαιο 3 με λεπτομέρειες που είναι απαραίτητες για reproducibility αλλά θα διέκοπταν τη ροή του κυρίως κειμένου.
+Α.1 Methods και βασικές frozen ρυθμίσεις
+Η τελική μελέτη χρησιμοποιεί Q-Learning, SARSA, DQN, PPO και Dyna-Q+. Η αυθεντία για όλες τις ακριβείς ρυθμίσεις είναι το configs/protocols/protocol-v2.1-final.json και όχι χειροκίνητος πίνακας που μπορεί να αποκλίνει.
+method identifier,
+learning rate,
+discount factor,
+exploration configuration όπου εφαρμόζεται,
+replay/target settings για DQN,
+rollout/minibatch/update settings για PPO,
+planning steps και κ για Dyna-Q+,
+Phase-A/Phase-B interaction budgets.
+Α.2 Final layouts και roots
+Οι δύο held-out final 7×7 layouts, το κοινό shortest-path length, το episode limit και τα 12 independent root IDs τεκμηριώνονται στο frozen protocol και στο Κεφάλαιο 3. Οι root seeds παραμένουν reproducibility metadata και δεν ερμηνεύονται ως method hyperparameters.
+Α.3 Disturbance definitions
+Οι τέσσερις frozen Phase-B conditions είναι:
+1. action-remap-swap-right-down,
+2. action-remap-cycle-clockwise,
+3. action-failure-0.15,
+4. observation-corruption-0.05.
+Οι ακριβείς mappings/probabilities/support rules πρέπει να προέρχονται από το frozen protocol/configuration.
+Παράρτημα Β — Πλήρη RQ αποτελέσματα και diagnostics
+Το κυρίως Κεφάλαιο 5 διατηρεί τις βασικές summaries και κύριες συγκρίσεις. Το Παράρτημα Β φιλοξενεί τα registered supporting diagnostics ώστε ο αναγνώστης να μπορεί να ελέγξει root-level heterogeneity και declared contrasts χωρίς να υπερφορτώνεται το κυρίως κείμενο.
+Β.1 RQ1
+Σχήμα 13 — Root-level final nominal-return distribution after equal-layout reduction.
+Σχήμα 14 — Root-level time-average return distribution after equal-layout reduction.
+Σχήμα 15 — Declared root-paired A-minus-B contrasts; intervals are descriptive pointwise t intervals.
+Β.2 RQ2
+Σχήμα 16 — Root-level adaptation-benefit distributions by method and condition.
+Σχήμα 17 — Numeric heatmap of stored mean adaptation benefit; higher is better.
+Σχήμα 18 — All declared RQ2 root-paired A-minus-B contrasts by condition and estimand.
+Σχήμα 19 — Root-level Frozen-to-Adaptive paired diagnostics; connecting lines do not imply an additional estimand.
+Β.3 RQ3
+Στα conditional recovery-time summaries εμφανίζεται το recovered n. Οι right-censored roots παραμένουν censored και δεν εμφανίζονται ως observed recovery time 256.
+Σχήμα 20 — Detailed stored root trajectories by method and primary condition; no trajectory averaging.
+Σχήμα 21 — Recovered versus right-censored root composition at tolerance 0.10.
+Σχήμα 22 — Declared recovery-status and restricted-delay A-minus-B contrasts on the primary axis.
+Σχήμα 23 — Stored recovery and confirmation times; right-censored roots are marked at the horizon without fake recovery times.
+Παράρτημα Γ — Evidence, provenance και reproducibility
+Το Παράρτημα Γ τεκμηριώνει τη διαδρομή από frozen protocol σε accepted scientific outputs.
+Γ.1 Execution lineage
+Η αλυσίδα εκτέλεσης διακρίνει τα ακόλουθα στοιχεία:
+η ιστορική αποτυχημένη αρχική T-610 Study, η οποία σταμάτησε στα 216/603 jobs και αποκλείστηκε πλήρως,
+η replacement execution protocol-v2.1-final--t610-recovery-01,
+η αμετάβλητη scientific recipe/plan identity,
+το accepted replacement source commit,
+η T-611 evidence freeze,
+η T-612 analysis package,
+η T-613 asset package.
+Σχήμα 24 — Accepted-evidence lineage; the failed 216-job attempt is excluded.
+Γ.2 Frozen identities
+Τα ακόλουθα canonical hashes αποτελούν reproducibility metadata των accepted outputs:
+T-611 freeze manifest SHA-256 20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858,
+T-611 600-record inventory SHA-256 0c2b352b88045951d32e58ee3479656dce00e35d55899bcdea65dc07604d8045,
+T-612 analysis manifest SHA-256 dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62,
+T-613 asset manifest SHA-256 9457275306fb633cb58d9af2e402531ff7d56a0f1f0f5eadc176f4a05726abd8.
+Οι hashes είναι provenance στοιχεία, όχι scientific results.
+Γ.3 Bibliography provenance
+Η τελική writing-gate βιβλιογραφία προέρχεται από immutable upstream checkout:
+ada0d1aec7511098fd12610ae9e5abe7aea875cd
+Το formal citation layer περιλαμβάνει 123 citation-ready sources. Η πλήρης research corpus περιλαμβάνει 599 canonical sources και 19 research materials, αλλά formal thesis citations επιτρέπονται μόνο από το citation-ready manifest.
+Παράρτημα Δ — Ερευνητική εφαρμογή και όριο παρουσίασης
+Δεν ενσωματώνονται screenshots της εφαρμογής στην παρούσα review-ready έκδοση, επειδή δεν έχει παραχθεί provenance-registered application capture. Η απουσία screenshot δεν επηρεάζει την επιστημονική τεκμηρίωση: όλα τα quantitative αποτελέσματα προέρχονται από registered T-613 figures/tables και όχι από το UI.
+Παράρτημα Ε — Αναπαραγωγή και λογισμικό περιβάλλον
+Το αναπαραγώγιμο λογισμικό περιβάλλον συνοψίζεται ως εξής:
+Python 3.12 + locked uv environment,
+project-owned package src/resilient_agents/,
+deterministic separated RNG streams,
+Study recipe/plan/store lifecycle,
+filesystem evidence as authority,
+manifest/checksum validation,
+read-only thesis bibliography consumer.
+Δεν απαιτείται εκτενές code listing. Μικρά code/config snippets επιτρέπονται μόνο αν εξηγούν contract που δεν αποδίδεται καθαρότερα με ψευδοκώδικα, πίνακα ή διάγραμμα.
+Βιβλιογραφία
+[1] Richard S. Sutton and Andrew G. Barto, Reinforcement Learning: An Introduction, second edition, The MIT Press, 2018. ISBN 9780262039246.
+[2] Christian Steinparz, Thomas Schmied, Fabian Paischer, Marius-Constantin Dinu, Vihang Patil, Angela Bitto-Nemling, Hamid Eghbal-zadeh, Sepp Hochreiter, “Reactive Exploration to Cope with Non-Stationarity in Lifelong Reinforcement Learning,” 2022. [Online]. Available: https://proceedings.mlr.press/v199/steinparz22a.html
+[3] Shibhansh Dohare, J. Fernando Hernandez-Garcia, Qingfeng Lan, Parash Rahman, A. Rupam Mahmood, Richard S. Sutton, “Loss of plasticity in deep continual learning,” 2024. [Online]. Available: 10.1038/s41586-024-07711-7
+[4] Evgenii Nikishin, Max Schwarzer, Pierluca D'Oro, Pierre-Luc Bacon, Aaron Courville, “The Primacy Bias in Deep Reinforcement Learning,” 2022.
+[5] Andrew Patterson, Samuel Neumann, Martha White, Adam White, “Empirical Design in Reinforcement Learning,” 2024.
+[6] Peter Henderson, Riashat Islam, Philip Bachman, Joelle Pineau, Doina Precup, David Meger, “Deep Reinforcement Learning That Matters,” 2018.
+[7] Pouya Hamadanian, Arash Nasr-Esfahany, Malte Schwarzkopf, Siddhartha Sen, Mohammad Alizadeh, “Online Reinforcement Learning in Non-Stationary Context-Driven Environments,” 2025. [Online]. Available: https://proceedings.iclr.cc/paper_files/paper/2025/hash/fb21dae9e8710a272c0a0ca848f71553-Abstract-Conference.html
+[8] Safa Alver, Ali Rahimi-Kalahroudi, Doina Precup, “Partial Models for Building Adaptive Model-Based Reinforcement Learning Agents,” 2025. [Online]. Available: https://proceedings.mlr.press/v274/alver25a.html
+[9] Richard S. Sutton and Andrew G. Barto, “Q-learning: Off-policy TD Control,” in Reinforcement Learning: An Introduction, 2nd ed., The MIT Press, 2018, pp. 131–135.
+[10] Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, Martin Riedmiller, “Playing Atari with Deep Reinforcement Learning,” 2013.
+[11] William Fedus, Prajit Ramachandran, Rishabh Agarwal, Yoshua Bengio, Hugo Larochelle, Mark Rowland, Will Dabney, “Revisiting Fundamentals of Experience Replay,” 2020.
+[12] John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov, “Proximal Policy Optimization Algorithms,” 2017.
+[13] Logan Engstrom, Andrew Ilyas, Shibani Santurkar, Dimitris Tsipras, Firdaus Janoos, Larry Rudolph, Aleksander Madry, “Implementation Matters in Deep Policy Gradients: A Case Study on PPO and TRPO,” 2020.
+[14] Fabio Pardo, Arash Tavakoli, Vitaly Levdik, Petar Kormushev, “Time Limits in Reinforcement Learning,” 2018.
