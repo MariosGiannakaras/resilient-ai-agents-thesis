@@ -7,20 +7,24 @@ on:
     paths:
       - scripts/t716_final_acceptance_audit.py
       - scripts/t716_final_reconcile_claim_registry.py
+      - scripts/t716_final_reconcile_status.py
       - .github/workflows/t716-final-acceptance.yml
   pull_request:
     paths:
       - scripts/t716_final_acceptance_audit.py
       - scripts/t716_final_reconcile_claim_registry.py
+      - scripts/t716_final_reconcile_status.py
       - docs/thesis/claim-evidence-map.json
       - docs/thesis/CLAIM_EVIDENCE_TREE.md
       - docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md
       - docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json
-      - .github/workflows/t716-final-acceptance.yml
+      - docs/thesis/T716_REWRITE_PLAN.md
       - docs/context/TASKS.md
       - docs/context/CURRENT_STATUS.md
+      - docs/context/POST_THESIS_LIFECYCLE.md
       - README.md
       - thesis/archive/README.md
+      - .github/workflows/t716-final-acceptance.yml
   workflow_dispatch:
 
 permissions:
@@ -74,18 +78,31 @@ jobs:
           print('T-716 final acceptance: PASS')
           PY
 
-      - name: Persist final acceptance report and registry reconciliation
+      - name: Reconcile final canonical status
+        run: python scripts/t716_final_reconcile_status.py
+
+      - name: Persist final acceptance and canonical status
         if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
         run: |
           cp artifacts/t716/T716_FINAL_ACCEPTANCE_AUDIT.md docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md
           cp artifacts/t716/T716_final_acceptance_audit.json docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json docs/thesis/claim-evidence-map.json docs/thesis/CLAIM_EVIDENCE_TREE.md
+          git add \
+            docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md \
+            docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json \
+            docs/thesis/claim-evidence-map.json \
+            docs/thesis/CLAIM_EVIDENCE_TREE.md \
+            docs/thesis/T716_REWRITE_PLAN.md \
+            docs/context/TASKS.md \
+            docs/context/CURRENT_STATUS.md \
+            docs/context/POST_THESIS_LIFECYCLE.md \
+            README.md \
+            thesis/archive/README.md
           if git diff --cached --quiet; then
-            echo 'Acceptance report and registry already current.'
+            echo 'Acceptance, registry and status already current.'
           else
-            git commit -m 'T-716: persist final acceptance audit and registry reconciliation'
+            git commit -m 'T-716: persist final acceptance and canonical completion state'
             git push
           fi
 
