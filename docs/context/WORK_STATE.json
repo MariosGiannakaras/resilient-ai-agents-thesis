@@ -1,39 +1,41 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T15:30:03Z",
+  "updated_at_utc": "2026-09-05T15:31:40Z",
   "authority": "repository-operational-resume-state",
-  "active_task": "T-010",
-  "task_status": "IN_PROGRESS",
-  "work_package": "Post-merge normalization of prompt-free self-resuming workflow",
-  "branch": "workflow/t010-post-merge-normalize",
+  "active_task": "T-712",
+  "task_status": "DEFERRED",
+  "work_package": "Supervisor/reviewer feedback incorporation gate",
+  "branch": "main-after-merge",
   "base_branch": "main",
   "pull_request": null,
-  "phase": "POST_MERGE_NORMALIZATION",
-  "last_completed_checkpoint": "PR #146 was squash-merged into main as bac999ce0bd32220ddf7e5112978a2035759970b after all final checks passed. T-010 implementation is merged; only canonical post-merge state normalization remains.",
-  "next_action": "Atomically reconcile TASKS.md, CURRENT_STATUS.md and WORK_STATE.json so T-010 is COMPLETE and the operational pointer is T-712 DEFERRED pending actual supervisor/reviewer feedback. Validate through a small PR and merge immediately when green.",
-  "blockers": [],
+  "phase": "EXTERNAL_GATE",
+  "last_completed_checkpoint": "T-010 prompt-free self-resuming repository workflow completed and squash-merged through PR #146 as bac999ce0bd32220ddf7e5112978a2035759970b. Post-merge normalization sets the repository to the next real academic gate without inventing external feedback.",
+  "next_action": "Wait for actual supervisor/reviewer feedback. When it arrives, record the feedback durably, move T-712 to IN_PROGRESS, incorporate the corrections and revalidate. Do not start T-713 finalization before T-712 and its remaining official-input gates are satisfied.",
+  "blockers": [
+    "Actual supervisor/reviewer feedback has not yet been received."
+  ],
   "completed_substeps": [
-    "T-010 implementation merged through PR #146 as bac999ce0bd32220ddf7e5112978a2035759970b",
-    "Prompt-free AGENTS/WORK_STATE/TASKS/CURRENT_STATUS workflow installed",
+    "T-716 final thesis acceptance completed with 11/11 gates PASS",
+    "T-010 prompt-free self-resuming workflow merged through PR #146",
     "Generic Project continuity CI installed",
-    "Dangerous one-shot migration/acceptance execution paths retired before merge"
+    "Legacy tracked execution prompt and dangerous one-shot migration paths retired",
+    "Repository state normalized to the real post-T-010 external gate"
   ],
   "pending_substeps": [
-    "Mark T-010 COMPLETE in TASKS.md",
-    "Set Resume state current task/exact next action to T-712 DEFERRED",
-    "Remove active T-010 continuity-work wording from CURRENT_STATUS.md",
-    "Set WORK_STATE.json to T-712 DEFERRED with exact external blocker",
-    "Pass continuity/documentation checks",
-    "Merge normalization PR and verify main"
+    "Receive actual supervisor/reviewer feedback",
+    "Record feedback durably and move T-712 to IN_PROGRESS",
+    "Incorporate corrections and revalidate",
+    "Proceed to T-713 only after T-712 and official finalization inputs are satisfied"
   ],
   "validation": {
-    "pr_146": "MERGED_bac999ce0bd32220ddf7e5112978a2035759970b",
-    "t010_implementation": "MERGED",
-    "post_merge_normalization": "IN_PROGRESS"
+    "t010": "COMPLETE_MERGED_bac999ce0bd32220ddf7e5112978a2035759970b",
+    "t716_final_acceptance": "PASS_11_OF_11",
+    "project_continuity": "REQUIRED_ON_NORMALIZATION_PR",
+    "documentation_consistency": "REQUIRED_ON_NORMALIZATION_PR"
   },
-  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume this normalization package before selecting another task unless it is already merged.",
+  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. T-712 is intentionally deferred; do not create substitute work for the missing external feedback.",
   "notes": [
-    "This branch exists only to normalize main without exposing inconsistent intermediate current-state commits.",
-    "T-712 must remain DEFERRED until actual supervisor/reviewer feedback exists; internal review must not be relabelled as external feedback."
+    "TASKS.md remains the canonical task/dependency ledger; this file is only the operational resume pointer.",
+    "If real supervisor/reviewer feedback is later available in connected evidence, recover it before asking the user to restate it."
   ]
 }
