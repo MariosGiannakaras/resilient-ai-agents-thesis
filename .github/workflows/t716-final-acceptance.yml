@@ -58,6 +58,7 @@ jobs:
               'r"^- \\*\\*Exact next action:\\*\\*.*$"': 'r"^- .*Exact next action.*$"',
               'flags=re.DOTALL | re.MULTILINE)': 'flags=re.MULTILINE)',
               'if "`T-010`" not in text:': 'if "- [ ] IN_PROGRESS `T-010`" not in text:',
+              'Conversation/model memory is advisory only. Repository/Git/GitHub/evidence wins when memory is stale or contradictory. Inspect the working tree, active branch, recent commits, open PR/CI state and any `IN_PROGRESS` work before selecting new work.': 'Session memory and conversation/model memory are advisory only. Repository/Git/GitHub/evidence wins when memory is stale or contradictory. Inspect `git status`, the active branch, recent commits, open PR/CI state and any `IN_PROGRESS` work before selecting new work.',
           }
           for old, new in replacements.items():
               if old in text:
