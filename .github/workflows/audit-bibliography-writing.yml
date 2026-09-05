@@ -6,6 +6,7 @@ on:
       - audit/full-repo-thesis-corpus
     paths:
       - scripts/audit_bibliography_for_thesis.py
+      - scripts/audit_full_bibliography_corpus.py
       - .github/workflows/audit-bibliography-writing.yml
   workflow_dispatch:
 
@@ -22,17 +23,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Audit bibliography writing coverage
+      - name: Audit citation-ready writing coverage
         run: python scripts/audit_bibliography_for_thesis.py
-      - name: Commit report
+      - name: Audit complete research corpus
+        run: python scripts/audit_full_bibliography_corpus.py
+      - name: Commit reports
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/thesis/audits/bibliography-writing-audit.md
+          git config user.email "41898282+MariosGiannakaras@users.noreply.github.com"
+          git add docs/thesis/audits/bibliography-writing-audit.md docs/thesis/audits/bibliography-full-corpus-audit.md
           if git diff --cached --quiet; then
             exit 0
           fi
-          git commit -m "audit: persist ThesisBibliography writing report"
+          git commit -m "audit: persist complete ThesisBibliography writing reports"
           git push origin "HEAD:${GITHUB_REF_NAME}"
