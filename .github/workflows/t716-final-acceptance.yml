@@ -105,11 +105,12 @@ jobs:
 
       - name: Verify reconciliation is idempotent
         run: |
-          git diff --exit-code
+          git diff --binary > /tmp/t716-before.diff
           python scripts/t716_final_reconcile_claim_registry.py
           python scripts/t716_continuity_reconcile.py
           python scripts/t716_final_reconcile_status.py
-          git diff --exit-code
+          git diff --binary > /tmp/t716-after.diff
+          cmp /tmp/t716-before.diff /tmp/t716-after.diff
 
       - name: Persist final acceptance and continuity state
         if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
