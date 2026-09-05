@@ -94,16 +94,59 @@ jobs:
           cp .recovered/t715-run98/t711/resilient-ai-agents-thesis-review-ready.docx thesis/archive/T715_run98_audit_reconciled_reader_scoped.docx
           cp .recovered/t715-run98/t711/qa-report.json thesis/archive/T715_run98_qa-report.json
 
-      - name: Commit permanent snapshots
+      - name: Reconcile canonical task and user-decision state
+        shell: python
+        run: |
+          from pathlib import Path
+
+          tasks_path = Path("docs/context/TASKS.md")
+          text = tasks_path.read_text(encoding="utf-8")
+          lines = text.splitlines()
+          current = [i for i, line in enumerate(lines) if line.startswith("- **Current task:**")]
+          next_action = [i for i, line in enumerate(lines) if line.startswith("- **Exact next action:**")]
+          assert len(current) == 1, current
+          assert len(next_action) == 1, next_action
+          lines[current[0]] = (
+              "- **Current task:** `T-716` is **READY** — restore and expand the full-content thesis. "
+              "T-715 remains COMPLETE as its bounded audit/reconciliation task, but its reader-scoped v27 DOCX is not the final thesis after the user's 2026-09-05 rejection of excessive compression. "
+              "Use the archived T-714 run #66 full-content baseline (approximately 20,925 whole-document words) plus all validated T-715 scientific corrections and current repository authorities. "
+              "`T-712` remains deferred until actual supervisor/reviewer feedback; `T-713` remains deferred until full-content acceptance and official finalization gates."
+          )
+          lines[next_action[0]] = (
+              "- **Exact next action:** execute `T-716`: produce a substantively complete full-length thesis from the T-714 baseline plus T-715 corrections, without filler or scientific changes; "
+              "run full DOCX/content/visual QA and commit the exact delivered DOCX plus QA identity to the repository before handoff."
+          )
+          text = "\n".join(lines) + "\n"
+          if "`T-716` — **Restore and expand the full-content thesis**" not in text:
+              marker = "- [ ] DEFERRED `T-712` — Incorporate supervisor/reviewer corrections and revalidate."
+              assert text.count(marker) == 1
+              block = """- [ ] READY `T-716` — **Restore and expand the full-content thesis** while preserving validated T-715 audit corrections.\n  - Depends on: `T-714`, `T-715` — satisfied.\n  - User direction: on 2026-09-05 the user explicitly rejected the excessive reader-scope compression and required complete deliverables rather than partial/shortened substitutes.\n  - Composition baseline: archived T-714 run #66 DOCX SHA-256 `70c897dcda432c3bc3f5b66b3714d701fd895c9ed2e6ce8ff14b19bc46f9ba77`, approximately 20,925 whole-document words. Restore and, where academically justified, expand substantive Background/Related Work, Methodology, Architecture/Implementation, Results interpretation and Discussion; do not pad with filler.\n  - Scientific correction overlay: retain all validated T-715 audit corrections and frozen T-611/T-612/T-613 evidence boundaries. The compressed T-715 run #98 DOCX is a historical audit-reconciled milestone, not the final composition baseline.\n  - Persistence gate: every user-facing DOCX/PDF/QA milestone must be committed under `thesis/archive/` or `thesis/final/` before handoff; `/mnt/data` and Actions artifacts are transient working copies only.\n  - Acceptance: complete substantive thesis coverage at or above the prior full-manuscript level where justified; current citations/evidence integrated; no invented official metadata; full structural/scientific/visual QA; exact repository-retained deliverable identity/hash.\n"""
+              text = text.replace(marker, block + marker)
+          tasks_path.write_text(text, encoding="utf-8")
+
+          decisions_path = Path("docs/context/USER_DECISIONS.md")
+          decisions = decisions_path.read_text(encoding="utf-8")
+          if "Meaningful user-facing deliverable files must never exist only in `/mnt/data`" not in decisions:
+              heading = "## Repository and continuity\n\n"
+              assert decisions.count(heading) == 1
+              bullets = (
+                  "- Meaningful user-facing deliverable files must never exist only in `/mnt/data` or an expiring Actions artifact; the repository is the persistent source of truth.\n"
+                  "- Preserve surfaced thesis milestones under `thesis/archive/` even when superseded/rejected; reserve `thesis/final/` for genuinely accepted final/submission candidates.\n"
+                  "- The compressed T-715 reader-scoped DOCX is not the final thesis. Restore the fuller T-714-level academic coverage and integrate the validated T-715 scientific corrections; do not trade scientific/academic completeness for simplification and do not add filler merely to raise word count.\n"
+              )
+              decisions = decisions.replace(heading, heading + bullets)
+              decisions_path.write_text(decisions, encoding="utf-8")
+
+      - name: Commit permanent snapshots and canonical reconciliation
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add thesis/archive
+          git add thesis/archive docs/context/TASKS.md docs/context/USER_DECISIONS.md
           if git diff --cached --quiet; then
-            echo "No archive changes to commit."
+            echo "No persistence changes to commit."
             exit 0
           fi
-          git commit -m "archive: persist recovered thesis milestone DOCX files"
+          git commit -m "archive: persist thesis milestones and reconcile writing state"
           git push origin "HEAD:${GITHUB_REF_NAME}"
