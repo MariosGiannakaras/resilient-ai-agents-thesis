@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keep the interrupted-session reconciliation compatible with durable bootstrap contracts."""
+"""Keep interrupted-session reconciliation compatible with durable bootstrap contracts."""
 from pathlib import Path
 
 SEMANTIC = "b01f853af794e596f0dfb491a3f5401365ca3f01fd7d410194e539f0b8a10cc1"
@@ -50,20 +50,36 @@ If T-712 has no actual supervisor/reviewer feedback, do not reopen T-716 or manu
 """
 
 
+def replace_or_accept(path: str, old: str, new: str) -> None:
+    p = Path(path)
+    text = p.read_text(encoding="utf-8")
+    if new in text:
+        return
+    if text.count(old) != 1:
+        raise RuntimeError(f"{path}: missing expected old/new continuity wording: {old[:120]!r}")
+    p.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+
 def main() -> None:
     prompt = Path("docs/context/CODEX_EXECUTION_PROMPT.md")
     if prompt.read_text(encoding="utf-8") != PROMPT.rstrip() + "\n":
         prompt.write_text(PROMPT.rstrip() + "\n", encoding="utf-8")
 
-    tasks = Path("docs/context/TASKS.md")
-    text = tasks.read_text(encoding="utf-8")
-    old = "- **Current academic state:** `T-716` is **COMPLETE**."
-    new = "- **Current task:** `T-712` is **DEFERRED** pending actual supervisor/reviewer feedback; `T-716` is **COMPLETE**."
-    if new not in text:
-        if old not in text:
-            raise RuntimeError("TASKS.md current-state prefix is neither expected old nor canonical new form")
-        text = text.replace(old, new, 1)
-        tasks.write_text(text, encoding="utf-8")
+    replace_or_accept(
+        "docs/context/TASKS.md",
+        "- **Current academic state:** `T-716` is **COMPLETE**.",
+        "- **Current task:** `T-712` is **DEFERRED** pending actual supervisor/reviewer feedback; `T-716` is **COMPLETE**.",
+    )
+    replace_or_accept(
+        "docs/context/TASKS.md",
+        "DEC-060 plus `configs/protocols/protocol-v2.1-final.json` define the current pre-execution amendment while preserving final roots/layouts, five methods, hyperparameters, conditions, budgets and 256-interaction Phase-B horizon.",
+        "DEC-060 plus `configs/protocols/protocol-v2.1-final.json` define the accepted protocol-v2.1 scientific authority; T-610/T-611/T-612 execution, freeze and analysis are complete while the final roots/layouts, five methods, hyperparameters, conditions, budgets and 256-interaction Phase-B horizon remain immutable.",
+    )
+    replace_or_accept(
+        "docs/context/CURRENT_STATUS.md",
+        "- The README now reflects T-716 as the current academic task and restores the full downstream lifecycle.",
+        "- The README now reflects T-716 as COMPLETE, T-712 as the current externally gated academic task, and the full downstream lifecycle.",
+    )
 
     print("T-716 continuity bootstrap-contract reconciliation complete")
 
