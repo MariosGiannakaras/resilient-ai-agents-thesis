@@ -6,12 +6,18 @@ on:
       - thesis/t716-full-content-stage3
     paths:
       - scripts/t716_stage3_reconstruct.py
+      - scripts/t716_stage3_reconcile_status.py
       - .github/workflows/t716-stage3-full-content.yml
   pull_request:
     paths:
       - scripts/t716_stage3_reconstruct.py
+      - scripts/t716_stage3_reconcile_status.py
       - thesis/archive/T716_stage3_full_content_review_ready.docx
       - thesis/archive/T716_stage3_qa-report.json
+      - thesis/archive/README.md
+      - docs/context/CURRENT_STATUS.md
+      - docs/context/TASKS.md
+      - README.md
       - .github/workflows/t716-stage3-full-content.yml
   workflow_dispatch:
 
@@ -102,18 +108,43 @@ jobs:
           print(f'T-716 stage 3: words={report["whole_document_word_count_local"]} refs=30 pages=92 semantic={semantic}')
           PY
 
-      - name: Stage permanent review milestone
+      - name: Verify retained archive and reconcile canonical status
         if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
         run: |
-          cp artifacts/t716/T716_stage3_full_content_review_ready.docx thesis/archive/T716_stage3_full_content_review_ready.docx
-          cp artifacts/t716/T716_stage3_qa-report.json thesis/archive/T716_stage3_qa-report.json
+          python - <<'PY'
+          import hashlib
+          import json
+          import zipfile
+          from pathlib import Path
+
+          archived = Path('thesis/archive/T716_stage3_full_content_review_ready.docx')
+          archived_qa = Path('thesis/archive/T716_stage3_qa-report.json')
+          expected_raw = '364b22543cef75dabcc03a003ad538f8873604e85a234a2d71bdbba1c1f7fe8c'
+          expected_semantic = 'b7e3cfb98dfc7a9d5b8fb6309b7a9be90c7c89eccd77ae14be20bbc7d8e31e8e'
+
+          assert archived.is_file() and archived_qa.is_file(), 'stage-3 archive must already exist from run #1'
+          raw = hashlib.sha256(archived.read_bytes()).hexdigest()
+          assert raw == expected_raw, (raw, expected_raw)
+
+          h = hashlib.sha256()
+          with zipfile.ZipFile(archived) as archive:
+              for name in sorted(archive.namelist()):
+                  h.update(name.encode('utf-8')); h.update(b'\0'); h.update(archive.read(name)); h.update(b'\0')
+          assert h.hexdigest() == expected_semantic, h.hexdigest()
+
+          qa = json.loads(archived_qa.read_text(encoding='utf-8'))
+          assert qa['output_sha256'] == expected_raw, qa
+          assert qa['package_content_sha256'] == expected_semantic, qa
+          assert qa['visual_qa_status'] == 'pass' and qa['visual_qa_page_count'] == 92, qa
+          PY
+          python scripts/t716_stage3_reconcile_status.py
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add thesis/archive/T716_stage3_full_content_review_ready.docx thesis/archive/T716_stage3_qa-report.json
+          git add README.md thesis/archive/README.md docs/context/CURRENT_STATUS.md docs/context/TASKS.md
           if git diff --cached --quiet; then
-            echo 'Archive already current.'
+            echo 'Canonical status already current.'
           else
-            git commit -m 'T-716: archive stage-3 full-content milestone'
+            git commit -m 'T-716: reconcile stage-3 status and bibliography authority'
             git push
           fi
 
