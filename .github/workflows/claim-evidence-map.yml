@@ -1,0 +1,34 @@
+name: Claim evidence map
+
+on:
+  push:
+    paths:
+      - 'research/bibliography/claim-evidence-map.json'
+      - 'scripts/validate_claim_evidence_map.py'
+      - 'research/bibliography/citation-ready/**'
+      - 'research/bibliography/catalog/sources.csv'
+      - 'docs/thesis/CLAIM_EVIDENCE_TREE.md'
+      - '.github/workflows/claim-evidence-map.yml'
+  pull_request:
+    paths:
+      - 'research/bibliography/claim-evidence-map.json'
+      - 'scripts/validate_claim_evidence_map.py'
+      - 'research/bibliography/citation-ready/**'
+      - 'research/bibliography/catalog/sources.csv'
+      - 'docs/thesis/CLAIM_EVIDENCE_TREE.md'
+      - '.github/workflows/claim-evidence-map.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate claim-centred evidence registry
+        run: python scripts/validate_claim_evidence_map.py
