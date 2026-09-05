@@ -1,44 +1,41 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T15:37:00Z",
+  "updated_at_utc": "2026-09-05T17:40:00Z",
   "authority": "repository-operational-resume-state",
-  "active_task": "T-712",
-  "task_status": "DEFERRED",
-  "work_package": "Supervisor/reviewer feedback incorporation gate",
-  "branch": "main-after-merge",
+  "active_task": "T-717",
+  "task_status": "IN_PROGRESS",
+  "work_package": "Final pre-freeze thesis content refinement after user-requested whole-manuscript audit",
+  "branch": "thesis/t717-final-content-refinement",
   "base_branch": "main",
   "pull_request": null,
-  "phase": "EXTERNAL_GATE",
-  "last_completed_checkpoint": "T-010 prompt-free self-resuming repository workflow completed through PR #146 as bac999ce0bd32220ddf7e5112978a2035759970b. Post-merge normalization was squash-merged through PR #147 as fbfc6208e439201a04f64d94dcf9a8c7458343d6; normalized main then passed Project continuity run 33975272196 and Repository checks run 33975272175.",
-  "next_action": "Wait for actual supervisor/reviewer feedback. When it arrives, record the feedback durably, move T-712 to IN_PROGRESS, incorporate the corrections and revalidate. Do not start T-713 finalization before T-712 and its remaining official-input gates are satisfied.",
-  "blockers": [
-    "Actual supervisor/reviewer feedback has not yet been received."
-  ],
+  "phase": "DOCX_CONTENT_AND_VISUAL_REFINEMENT",
+  "last_completed_checkpoint": "T-716 passed its prior 11/11 acceptance audit and T-010 continuity workflow is complete. A new user-requested whole-manuscript audit on 2026-09-05 identified a deliberately narrow pre-freeze refinement set; this is new internal author-directed work, not supervisor/reviewer feedback and therefore does not satisfy T-712.",
+  "next_action": "Apply the accepted T-717 refinement set to the current T-716 evidence-audited DOCX: replace the two redundant introductory diagrams with an exact GridWorld/disturbance composite and layered authority/data-flow figure; add a short AI-agent-to-RL-agent scope bridge; state fixed severity points are not a sweep; add one bounded Phase-B UI screenshot only if the deterministic validated asset can be recovered cleanly; add severity/frequency and single-change/recurrent-disruption limitations; add Robust-Gymnasium as the only new formal bibliography entry; render and visually inspect the complete DOCX before archival/PR.",
+  "blockers": [],
   "completed_substeps": [
-    "T-716 final thesis acceptance completed with 11/11 gates PASS",
-    "T-010 prompt-free self-resuming workflow merged through PR #146",
-    "Generic Project continuity CI installed",
-    "Legacy tracked execution prompt and dangerous one-shot migration paths retired",
-    "Repository state normalized to the real post-T-010 external gate through PR #147",
-    "Normalized main passed Project continuity and Repository checks"
+    "Whole-manuscript content/visual/bibliography audit completed against the latest T-716 DOCX",
+    "Rejected unnecessary additions: new result plots, code listings/pseudocode, aleatoric-epistemic subsection, duplicate change-detection theory, generic AI history, extra UI gallery",
+    "Accepted narrow change set and created branch thesis/t717-final-content-refinement"
   ],
   "pending_substeps": [
-    "Receive actual supervisor/reviewer feedback",
-    "Record feedback durably and move T-712 to IN_PROGRESS",
-    "Incorporate corrections and revalidate",
-    "Proceed to T-713 only after T-712 and official finalization inputs are satisfied"
+    "Create exact GridWorld/disturbance composite from frozen protocol data",
+    "Create layered scientific/execution/analysis/presentation architecture figure",
+    "Recover and assess deterministic Phase-B Frozen-vs-Adaptive UI screenshot",
+    "Apply bounded text edits and add Robust-Gymnasium bibliography entry",
+    "Reconcile figure list/captions/alt text and bibliography numbering",
+    "Render full DOCX and inspect every page",
+    "Run structural/scientific/accessibility QA",
+    "Archive reproducible T-717 candidate, update task/status authorities, open PR and merge only if all gates pass"
   ],
   "validation": {
-    "t010": "COMPLETE_MERGED_bac999ce0bd32220ddf7e5112978a2035759970b",
-    "t010_post_merge_normalization": "MERGED_fbfc6208e439201a04f64d94dcf9a8c7458343d6",
-    "t716_final_acceptance": "PASS_11_OF_11",
-    "project_continuity": "PASS_MAIN_RUN_33975272196",
-    "documentation_consistency": "PASS_PR_147_AND_MAIN_RUN_33975272175",
-    "repository_checks": "PASS_MAIN_RUN_33975272175"
+    "t716_prior_acceptance": "PASS_11_OF_11",
+    "t717_audit_decision": "NARROW_REFINEMENT_APPROVED_BY_USER_2026_09_05",
+    "scientific_results_modified": "NO",
+    "new_experiment_or_reanalysis": "NO"
   },
-  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. T-712 is intentionally deferred; do not create substitute work for the missing external feedback.",
+  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume T-717 before T-712/T-713. T-717 is an author-directed pre-freeze refinement and must not be relabelled as external supervisor/reviewer feedback.",
   "notes": [
-    "TASKS.md remains the canonical task/dependency ledger; this file is only the operational resume pointer.",
-    "If real supervisor/reviewer feedback is later available in connected evidence, recover it before asking the user to restate it."
+    "TASKS.md remains the canonical task/dependency ledger; this file is the operational resume pointer.",
+    "Frozen protocol/results remain immutable. Any visual must be generated from existing frozen project authorities or validated presentation assets, not from recomputed scientific outcomes."
   ]
 }
