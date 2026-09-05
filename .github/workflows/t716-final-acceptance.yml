@@ -57,6 +57,7 @@ jobs:
           replacements = {
               'r"^- \\*\\*Exact next action:\\*\\*.*$"': 'r"^- .*Exact next action.*$"',
               'flags=re.DOTALL | re.MULTILINE)': 'flags=re.MULTILINE)',
+              'if "`T-010`" not in text:': 'if "- [ ] IN_PROGRESS `T-010`" not in text:',
           }
           for old, new in replacements.items():
               if old in text:
