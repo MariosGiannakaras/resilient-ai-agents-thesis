@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T15:04:00Z",
+  "updated_at_utc": "2026-09-05T15:06:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-010",
   "task_status": "IN_PROGRESS",
@@ -9,8 +9,8 @@
   "base_branch": "main",
   "pull_request": 146,
   "phase": "CORRECTION",
-  "last_completed_checkpoint": "The generic continuity validator now passes. Documentation consistency is the next gate and currently fails only because the migrated TASKS bootstrap dropped the legacy-but-useful literal invariants 'session memory' and 'git status'.",
-  "next_action": "Keep the stronger prompt-free semantics while restoring explicit wording that session memory is advisory only and git status is an objective recovery input; rerun documentation/continuity/T-716 gates and persist the migration outputs.",
+  "last_completed_checkpoint": "Push CI run 33973670344 passed T-010 migration, T-716 11/11 acceptance, generic project continuity and documentation consistency. The only remaining failure is the second-run idempotence check: the migration still expects the pre-migration T-712 Current task line when T-010 is already canonical.",
+  "next_action": "Make the T-010 migration intrinsically idempotent and persist all previously runtime-hardened fixes into the migration source; then rerun the full gate and allow the workflow to commit the migrated repository state.",
   "blockers": [],
   "completed_substeps": [
     "Recovered unmerged T-716 final-acceptance branch state",
@@ -21,28 +21,28 @@
     "Added scripts/validate_project_continuity.py",
     "Replaced AGENTS.md with prompt-free deterministic recovery/checkpoint instructions",
     "Reworked the T-716 workflow to execute T-010 continuity installation before validation",
-    "Diagnosed and fixed the T-010 migration regex DOTALL defect",
-    "Retired the stale T-716 current-task validator from active CI",
-    "Fixed the T-010 migration checklist-entry existence test",
+    "Fixed migration line-matching and checklist-entry defects",
+    "Retired stale T-716 current-task validation",
     "Fixed generic continuity task-line matching",
     "Generic project continuity validation PASS",
-    "T-716 acceptance remains PASS throughout T-010 changes"
+    "Documentation consistency validation PASS",
+    "T-716 final acceptance remains 11/11 PASS"
   ],
   "pending_substeps": [
-    "Restore explicit session-memory advisory and git-status wording in migrated TASKS bootstrap",
+    "Make T-010 migration intrinsically idempotent and remove runtime hardening dependence",
     "Persist the successful T-010 migration outputs",
-    "Add project continuity CI workflow",
-    "Run generic continuity/documentation and repository PR checks",
-    "Objective diff/review-thread audit",
+    "Add generic project continuity CI workflow",
+    "Run final PR checks and objective diff/review-thread audit",
     "Squash-merge PR #146 if green",
     "Reconcile main to T-712 external-gate state after merge"
   ],
   "validation": {
-    "t716_final_acceptance": "PASS_RUN_33973581911",
-    "t010_migration": "PASS",
-    "continuity_validator": "PASS_RUN_33973581911",
-    "documentation_consistency": "FAIL_MISSING_LITERAL_SESSION_MEMORY_AND_GIT_STATUS",
-    "pr_ci": "FAILING_KNOWN_CORRECTABLE"
+    "t716_final_acceptance": "PASS_RUN_33973670344",
+    "t010_migration": "PASS_FIRST_RUN",
+    "continuity_validator": "PASS_RUN_33973670344",
+    "documentation_consistency": "PASS_RUN_33973670344",
+    "idempotence": "FAIL_SECOND_RUN_CURRENT_TASK_EXPECTATION",
+    "pr_ci": "FAILING_ONLY_IDEMPOTENCE"
   },
   "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume this work package before selecting another task unless it is objectively blocked or already merged.",
   "notes": [
