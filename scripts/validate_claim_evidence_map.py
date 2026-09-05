@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Validate the T-716 claim-centred evidence registry.
 
-This validator protects four boundaries:
+This validator protects five boundaries:
 1. formal source IDs must exist in the synchronized citation-ready corpus;
 2. context/informal IDs must exist in the synchronized canonical corpus;
 3. literature claims should have >=2 formal sources unless an explicit exception exists;
-4. protocol/project/result claims must include repository authorities.
+4. protocol/project/result claims must include repository authorities;
+5. the source-selection policy must explicitly preserve scientific quality over blind recency.
 
 It validates provenance/coverage structure; it does not judge scientific truth or replace
 human comparison of the cited analyses/evidence.
@@ -19,7 +20,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MAP = ROOT / "research/bibliography/claim-evidence-map.json"
+MAP = ROOT / "docs/thesis/claim-evidence-map.json"
+SOURCE_POLICY = ROOT / "docs/thesis/BIBLIOGRAPHY_SOURCE_SELECTION_POLICY.md"
 BIB = ROOT / "research/bibliography"
 READY = BIB / "citation-ready"
 READY_CATALOG = READY / "catalog/sources.csv"
@@ -43,6 +45,20 @@ def main() -> int:
     if not MAP.is_file():
         print(f"ERROR missing map: {MAP.relative_to(ROOT)}", file=sys.stderr)
         return 2
+    if not SOURCE_POLICY.is_file():
+        print(f"ERROR missing source-selection policy: {SOURCE_POLICY.relative_to(ROOT)}", file=sys.stderr)
+        return 2
+
+    policy_text = SOURCE_POLICY.read_text(encoding="utf-8")
+    policy_required = (
+        "Scientific fitness for the exact claim",
+        "Scientific authority and evidence strength",
+        "Primary/foundational value",
+        "Methodological depth and reliability",
+        "Recency among comparably strong sources",
+        "newer` does **not** automatically mean `better",
+        "Contradictory and limiting evidence remains visible",
+    )
 
     data = json.loads(MAP.read_text(encoding="utf-8"))
     claims = data.get("claims")
@@ -57,6 +73,10 @@ def main() -> int:
     used_formal: set[str] = set()
     used_context: set[str] = set()
     used_informal: set[str] = set()
+
+    for marker in policy_required:
+        if marker not in policy_text:
+            errors.append(f"source-selection policy missing required rule: {marker}")
 
     for claim in claims:
         cid = str(claim.get("id", ""))
@@ -107,11 +127,9 @@ def main() -> int:
             errors.append(f"{cid}: {ctype} claim has no repository authority")
         for rel in authorities:
             p = ROOT / rel
-            # Directory authorities are valid; paths must exist in checkout.
             if not p.exists():
                 errors.append(f"{cid}: missing project authority path: {rel}")
 
-    # Every formal source should support at least one concrete claim by construction.
     if not used_formal:
         errors.append("no formal source usage registered")
 
@@ -124,7 +142,8 @@ def main() -> int:
     print(
         "Claim-evidence validation PASS: "
         f"claims={len(claims)}, formal_sources={len(used_formal)}, "
-        f"context_sources={len(used_context)}, informal_sources={len(used_informal)}"
+        f"context_sources={len(used_context)}, informal_sources={len(used_informal)}, "
+        "source_selection_policy=quality-first-recency-aware"
     )
     return 0
 
