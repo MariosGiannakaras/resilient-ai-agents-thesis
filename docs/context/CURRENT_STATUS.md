@@ -16,7 +16,7 @@
 
 ## Repository / writing maintenance completed for T-716
 
-- The README now reflects T-716 as the current academic task and restores the full downstream lifecycle. `docs/context/POST_THESIS_LIFECYCLE.md` preserves the sequence **T-716 → actual T-712 feedback/corrections → T-713 final thesis freeze → T-720/T-721/T-722 defense work → T-800/T-801/T-802 final audits/delivery → T-803 standalone Windows package**.
+- The README now reflects T-716 as COMPLETE, T-712 as the current externally gated academic task, and the full downstream lifecycle. `docs/context/POST_THESIS_LIFECYCLE.md` preserves the sequence **T-716 → actual T-712 feedback/corrections → T-713 final thesis freeze → T-720/T-721/T-722 defense work → T-800/T-801/T-802 final audits/delivery → T-803 standalone Windows package**.
 - Conservative repository cleanup removed only proven-unused placeholder scaffolds: `data/raw`, `data/processed`, `data/external`, `artifacts/figures`, `artifacts/tables`, `artifacts/exports`. No docs, results, evidence, decisions, archived thesis artifacts, restored drafts or useful implementation history were deleted. See `docs/context/REPOSITORY_CLEANUP_2026-09-05.md`.
 - Full repository/bibliography audits are retained under `docs/thesis/audits/`. The earlier 599-source/599-analysis scan remains historical audit evidence; the final synchronized consumer corpus now contains 601 canonical sources, 129 citation-ready sources, 19 research materials and 281 indexed originals.
 - T-716 no longer uses a fixed bibliography-count target. Bibliography size is an output of validated claim coverage. Citation-ready status means **eligible for formal citation**, not “source of truth”.
