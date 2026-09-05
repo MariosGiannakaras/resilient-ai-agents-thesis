@@ -9,6 +9,7 @@ on:
       - scripts/t716_final_reconcile_claim_registry.py
       - scripts/t716_final_reconcile_status.py
       - scripts/t716_continuity_reconcile.py
+      - scripts/t716_continuity_contract_fix.py
       - .github/workflows/t716-final-acceptance.yml
   pull_request:
     paths:
@@ -16,6 +17,7 @@ on:
       - scripts/t716_final_reconcile_claim_registry.py
       - scripts/t716_final_reconcile_status.py
       - scripts/t716_continuity_reconcile.py
+      - scripts/t716_continuity_contract_fix.py
       - docs/thesis/claim-evidence-map.json
       - docs/thesis/CLAIM_EVIDENCE_TREE.md
       - docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md
@@ -68,6 +70,9 @@ jobs:
       - name: Reconcile interrupted-session continuity state
         run: python scripts/t716_continuity_reconcile.py
 
+      - name: Reconcile bootstrap validator contracts
+        run: python scripts/t716_continuity_contract_fix.py
+
       - name: Validate claim-evidence registry
         run: python scripts/validate_claim_evidence_map.py
 
@@ -108,6 +113,7 @@ jobs:
           git diff --binary > /tmp/t716-before.diff
           python scripts/t716_final_reconcile_claim_registry.py
           python scripts/t716_continuity_reconcile.py
+          python scripts/t716_continuity_contract_fix.py
           python scripts/t716_final_reconcile_status.py
           git diff --binary > /tmp/t716-after.diff
           cmp /tmp/t716-before.diff /tmp/t716-after.diff
