@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T15:09:00Z",
+  "updated_at_utc": "2026-09-05T15:20:57Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-010",
   "task_status": "IN_PROGRESS",
@@ -8,9 +8,9 @@
   "branch": "thesis/t716-final-acceptance",
   "base_branch": "main",
   "pull_request": 146,
-  "phase": "IMPLEMENTATION",
-  "last_completed_checkpoint": "Push CI run 33973833964 passed T-716 11/11 acceptance, claim-evidence validation, generic project continuity, documentation consistency and migration idempotence, then persisted the prompt-free self-resuming migration to branch head b7a7f04f6bf564b6b383d15b1ea1fbf9e7e4c57d. TASKS now contains T-010, and the legacy CODEX_EXECUTION_PROMPT.md is removed.",
-  "next_action": "Add a generic Project continuity GitHub Actions workflow that runs on every material PR and main push, then update the PR template to require WORK_STATE checkpoint reconciliation and run final PR checks/review.",
+  "phase": "FINAL_REVIEW",
+  "last_completed_checkpoint": "PR #146 head 1deefd934f71bd1f72d6f0ddd5aa336d71a98c78 passed Repository checks, Project continuity, T-716 final acceptance, T-716 stage-3 reconstruction and Claim evidence map. Generic Project continuity CI and the WORK_STATE-aware PR template are committed. No inline review threads or submitted reviews are open.",
+  "next_action": "Audit the actual PR diff for the recovery/governance-critical files, reconcile any defects found, then mark T-010 ready to merge and squash-merge PR #146 only if the resulting head remains green. Immediately normalize main WORK_STATE/TASKS/CURRENT_STATUS to the real post-T-010 external gate and verify main continuity CI.",
   "blockers": [],
   "completed_substeps": [
     "Recovered unmerged T-716 final-acceptance branch state",
@@ -25,27 +25,33 @@
     "Retired CODEX_EXECUTION_PROMPT.md and obsolete one-shot T-716 continuity scripts",
     "Updated documentation consistency validation for prompt-free bootstrap",
     "Made T-010 migration idempotent",
+    "Added generic Project continuity GitHub Actions workflow",
+    "Updated pull-request template to require WORK_STATE reconciliation",
     "Generic project continuity validation PASS",
     "Documentation consistency validation PASS",
     "T-716 final acceptance remains 11/11 PASS",
-    "Persisted the migration outputs to the remote branch"
+    "All PR #146 head checks PASS",
+    "No unresolved review threads or submitted reviews"
   ],
   "pending_substeps": [
-    "Add generic project continuity CI workflow",
-    "Reconcile pull-request template with WORK_STATE checkpoint requirement",
-    "Run final PR checks and objective diff/review-thread audit",
-    "Mark T-010 ready to merge after all required checks pass",
-    "Squash-merge PR #146 if green",
-    "Reconcile main to T-712 external-gate state after merge and verify main continuity CI"
+    "Objective diff audit of recovery/governance-critical files",
+    "Fix any audit defects and revalidate if necessary",
+    "Mark T-010 READY_TO_MERGE after final head checks",
+    "Squash-merge PR #146",
+    "Immediately normalize main to T-712 external-gate state",
+    "Verify main Project continuity/documentation CI"
   ],
   "validation": {
-    "t716_final_acceptance": "PASS_RUN_33973833964",
-    "t010_migration": "PASS_AND_PERSISTED",
-    "continuity_validator": "PASS_RUN_33973833964",
-    "documentation_consistency": "PASS_RUN_33973833964",
-    "idempotence": "PASS_RUN_33973833964",
+    "t716_final_acceptance": "PASS_HEAD_1deefd934f71bd1f72d6f0ddd5aa336d71a98c78",
+    "claim_evidence_map": "PASS_HEAD_1deefd934f71bd1f72d6f0ddd5aa336d71a98c78",
+    "t716_stage3_reconstruction": "PASS_HEAD_1deefd934f71bd1f72d6f0ddd5aa336d71a98c78",
+    "repository_checks": "PASS_HEAD_1deefd934f71bd1f72d6f0ddd5aa336d71a98c78",
+    "project_continuity": "PASS_HEAD_1deefd934f71bd1f72d6f0ddd5aa336d71a98c78",
+    "documentation_consistency": "PASS",
+    "idempotence": "PASS",
     "legacy_execution_prompt": "REMOVED",
-    "pr_ci": "PENDING_GENERIC_CONTINUITY_WORKFLOW"
+    "review_threads": "NONE",
+    "pr_ci": "GREEN_BEFORE_FINAL_REVIEW_CHECKPOINT"
   },
   "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume this work package before selecting another task unless it is objectively blocked or already merged.",
   "notes": [
