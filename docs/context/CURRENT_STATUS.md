@@ -5,11 +5,11 @@
 
 `docs/context/TASKS.md` is the canonical dependency/task ledger. Objective Git/GitHub/evidence state overrides stale prose after interruption.
 
-## Active repository continuity work
+## Repository continuity state
 
-- `T-010` is **IN_PROGRESS** on PR #146. Its purpose is to make repository continuation independent of chat/model memory: `AGENTS.md` is the no-prompt entrypoint, `docs/context/WORK_STATE.json` is the operational resume pointer, and every material change/checkpoint must update that pointer before work proceeds.
-- Recovery order is: working-tree work -> open PR -> unmerged pushed branch -> `WORK_STATE` -> `TASKS` `IN_PROGRESS` -> first dependency-valid `READY` task -> exact external gate.
-- T-716 remains COMPLETE and immutable as the accepted review-ready thesis milestone. T-010 changes workflow/governance only; it does not change the thesis DOCX, protocol, frozen evidence, analysis or scientific assets.
+- `T-010` is **COMPLETE** and was squash-merged through PR #146 as `bac999ce0bd32220ddf7e5112978a2035759970b`. `AGENTS.md` is the prompt-free entrypoint and `docs/context/WORK_STATE.json` is the operational resume pointer.
+- Recovery order remains: working-tree work -> open PR -> unmerged pushed branch -> `WORK_STATE` -> `TASKS` `IN_PROGRESS` -> first dependency-valid `READY` task -> exact external gate.
+- `T-716` remains COMPLETE and immutable as the accepted review-ready thesis milestone. The current academic gate is `T-712`, intentionally DEFERRED until actual supervisor/reviewer feedback exists.
 
 ## Current execution state
 
@@ -49,4 +49,4 @@ The immutable bibliography writing-gate consumer snapshot is `27674a566ab55e4491
 
 ## Exact next action
 
-Finish T-010 on PR #146, validate the prompt-free recovery/checkpoint workflow, and merge only when continuity/documentation/required PR CI is green. After merge, normalize `WORK_STATE.json` on `main` to T-712 DEFERRED unless real supervisor/reviewer feedback has arrived.
+Wait for actual supervisor/reviewer feedback for `T-712`. Do not relabel internal audits as external feedback. When real feedback arrives, record it in the repository, move T-712 to IN_PROGRESS, incorporate the corrections and revalidate before T-713 finalization.
