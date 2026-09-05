@@ -58,6 +58,20 @@ def exact_replace(text: str, old: str, new: str) -> str:
     return text.replace(old,new,1)
 
 
+def replace_in_section(text: str, start: str, end: str, old: str, new: str) -> str:
+    a=text.find(start)
+    if a < 0:
+        raise RuntimeError(f'missing section start {start!r}')
+    b=text.find(end,a+len(start))
+    if b < 0:
+        raise RuntimeError(f'missing section end {end!r}')
+    section=text[a:b]
+    if section.count(old) != 1:
+        raise RuntimeError(f'expected section text once, found {section.count(old)} in {start!r}: {old[:80]!r}')
+    section=section.replace(old,new,1)
+    return text[:a]+section+text[b:]
+
+
 def update_tree() -> None:
     text=TREE.read_text(encoding='utf-8')
     text=exact_replace(
@@ -80,18 +94,20 @@ def update_tree() -> None:
         "**Limit:** the thesis implements a declared persistent-remap/noise family, not a generic model of all non-stationarity. Liu 2025 uses a different shared-dynamics/task-switching regime and MPC/world-model method; it is not evidence about Dyna-Q+ or the thesis remap specifically.",
         "**Limit:** the thesis implements a declared persistent-remap/noise family, not a generic model of all non-stationarity. Hamadanian 2025 supplies current exogenous context to the policy, unlike the hidden thesis remap. Liu 2025 uses a different shared-dynamics/task-switching regime and MPC/world-model method; neither paper predicts Dyna-Q+ or thesis-remap performance."
     )
-    text=exact_replace(
-        text,
+    start='### 2.6 Plasticity and primacy as threats to continued deep learning — `LIT-009`'
+    end='### 2.7 Action uncertainty — `LIT-010`'
+    text=replace_in_section(
+        text,start,end,
         '**Formal:** `SRC-4C34DF3E17`, `SRC-46CF36BC1E`, `SRC-F909CABDEB`.  ',
         '**Formal:** `SRC-4C34DF3E17`, `SRC-46CF36BC1E`, `SRC-F909CABDEB`, `SRC-6F4F8BE003`.  '
     )
-    text=exact_replace(
-        text,
+    text=replace_in_section(
+        text,start,end,
         '**Synthesis:** continued learning can face interference/primacy/plasticity problems over long horizons.  ',
         '**Synthesis:** continued learning can face interference/primacy/plasticity problems over long horizons; Hamadanian 2025 adds recent primary evidence for catastrophic forgetting and stability–plasticity in an observed-context online non-stationary setting.  '
     )
-    text=exact_replace(
-        text,
+    text=replace_in_section(
+        text,start,end,
         "**Limit:** these sources do not predict that DQN/PPO must fail in the thesis's small GridWorld. Liu 2025 is intentionally not added here because its continual-RL retention framing does not directly establish primacy or plasticity degradation.",
         "**Limit:** these sources do not predict that DQN/PPO must fail in the thesis's small GridWorld. Hamadanian 2025 has a materially different observed-context information regime. Liu 2025 remains intentionally outside this claim because its retention framing does not directly establish primacy or plasticity degradation."
     )
