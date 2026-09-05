@@ -18,7 +18,7 @@ Each archived DOCX has its corresponding `*_qa-report.json` beside it. The exact
 
 ## Current composition authority
 
-The archived T-716 stage-4 evidence-audited milestone is now the current full-content review authority. It inherits the stage-3 restoration/expansion of the T-714 academic coverage, preserves all validated T-715 scientific corrections and frozen T-611/T-612/T-613 evidence, and completes the dedicated source-attribution/precedence pass without changing experiments, estimands, results or registered scientific media. T-716 itself remains in progress until the final acceptance audit closes.
+The archived T-716 stage-4 evidence-audited milestone is the accepted T-716 full-content review authority. It inherits the stage-3 restoration/expansion of T-714, preserves all validated T-715 corrections and frozen T-611/T-612/T-613 evidence, and completes the source-attribution/precedence pass without changing experiments, estimands, results or registered media. `docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md` records PASS on all 11 completion gates. T-716 is therefore COMPLETE; T-713 final-submission freezing remains downstream.
 
 The T-715 audit corrections remain authoritative for the corrected protocol/scientific wording. In particular, later composition must preserve the two-window RQ3 recovery rule, exact disturbance semantics, 180-unit tuning design and selected configurations, 12-root sizing basis, declared RQ1/RQ2 metric definitions, and the no-post-hoc-analysis boundary recorded in `docs/thesis/T715_AUDIT_RECONCILIATION.md`.
 

@@ -5,11 +5,11 @@
 
 This file exists so downstream academic/delivery work cannot disappear when the repository enters a writing-heavy phase. `TASKS.md` remains the canonical dependency ledger; this document explains the retained sequence and acceptance boundary for each downstream package.
 
-## T-716 — Full-content evidence-aware thesis
+## T-716 — Full-content evidence-aware thesis — COMPLETE
 
-Reconstruct and expand the thesis from the T-714 full-content baseline, useful reconciled material in restored historical drafts, all validated T-715 corrections, the frozen T-611/T-612/T-613 evidence chain and the multi-source claim/evidence map.
+Completed on 2026-09-05. Accepted review authority: `thesis/archive/T716_stage4_evidence_audited_review_ready.docx`, semantic SHA-256 `b01f853af794e596f0dfb491a3f5401365ca3f01fd7d410194e539f0b8a10cc1`. The final acceptance audit passes all 11 T-716 gates: substantive full-content coverage, frozen-science/media preservation, claim/citation governance, source precedence, structural/scientific QA, 92-page visual QA and permanent archive identity.
 
-Completion requires a substantive full thesis rather than reader-scope compression; unchanged frozen scientific values/media; claim-level source traceability; structural DOCX QA; page-by-page visual QA; and permanent archive of the exact delivered DOCX/QA identity before handoff.
+This completes review-ready scientific/content composition only. T-712 still requires actual supervisor/reviewer feedback; T-713 still owns official metadata/declaration text and final Word/submission-format freezing.
 
 ## T-712 — Actual supervisor/reviewer corrections
 
