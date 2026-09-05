@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T15:31:40Z",
+  "updated_at_utc": "2026-09-05T15:37:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-712",
   "task_status": "DEFERRED",
@@ -9,7 +9,7 @@
   "base_branch": "main",
   "pull_request": null,
   "phase": "EXTERNAL_GATE",
-  "last_completed_checkpoint": "T-010 prompt-free self-resuming repository workflow completed and squash-merged through PR #146 as bac999ce0bd32220ddf7e5112978a2035759970b. Post-merge normalization sets the repository to the next real academic gate without inventing external feedback.",
+  "last_completed_checkpoint": "T-010 prompt-free self-resuming repository workflow completed through PR #146 as bac999ce0bd32220ddf7e5112978a2035759970b. Post-merge normalization was squash-merged through PR #147 as fbfc6208e439201a04f64d94dcf9a8c7458343d6; normalized main then passed Project continuity run 33975272196 and Repository checks run 33975272175.",
   "next_action": "Wait for actual supervisor/reviewer feedback. When it arrives, record the feedback durably, move T-712 to IN_PROGRESS, incorporate the corrections and revalidate. Do not start T-713 finalization before T-712 and its remaining official-input gates are satisfied.",
   "blockers": [
     "Actual supervisor/reviewer feedback has not yet been received."
@@ -19,7 +19,8 @@
     "T-010 prompt-free self-resuming workflow merged through PR #146",
     "Generic Project continuity CI installed",
     "Legacy tracked execution prompt and dangerous one-shot migration paths retired",
-    "Repository state normalized to the real post-T-010 external gate"
+    "Repository state normalized to the real post-T-010 external gate through PR #147",
+    "Normalized main passed Project continuity and Repository checks"
   ],
   "pending_substeps": [
     "Receive actual supervisor/reviewer feedback",
@@ -29,9 +30,11 @@
   ],
   "validation": {
     "t010": "COMPLETE_MERGED_bac999ce0bd32220ddf7e5112978a2035759970b",
+    "t010_post_merge_normalization": "MERGED_fbfc6208e439201a04f64d94dcf9a8c7458343d6",
     "t716_final_acceptance": "PASS_11_OF_11",
-    "project_continuity": "REQUIRED_ON_NORMALIZATION_PR",
-    "documentation_consistency": "REQUIRED_ON_NORMALIZATION_PR"
+    "project_continuity": "PASS_MAIN_RUN_33975272196",
+    "documentation_consistency": "PASS_PR_147_AND_MAIN_RUN_33975272175",
+    "repository_checks": "PASS_MAIN_RUN_33975272175"
   },
   "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. T-712 is intentionally deferred; do not create substitute work for the missing external feedback.",
   "notes": [
