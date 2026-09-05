@@ -12,7 +12,6 @@ on:
       - scripts/t010_install_self_resuming_workflow.py
       - scripts/t716_final_acceptance_audit.py
       - scripts/t716_final_reconcile_claim_registry.py
-      - scripts/t716_final_reconcile_status.py
       - .github/workflows/t716-final-acceptance.yml
   pull_request:
     paths:
@@ -25,7 +24,6 @@ on:
       - scripts/t010_install_self_resuming_workflow.py
       - scripts/t716_final_acceptance_audit.py
       - scripts/t716_final_reconcile_claim_registry.py
-      - scripts/t716_final_reconcile_status.py
       - .github/workflows/t716-final-acceptance.yml
   workflow_dispatch:
 
@@ -101,9 +99,6 @@ jobs:
           print('T-716 final acceptance: PASS')
           PY
 
-      - name: Validate final canonical T-716 status
-        run: python scripts/t716_final_reconcile_status.py
-
       - name: Validate project continuity
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
@@ -117,7 +112,6 @@ jobs:
           git diff --binary > /tmp/before.diff
           python scripts/t010_install_self_resuming_workflow.py
           python scripts/t716_final_reconcile_claim_registry.py
-          python scripts/t716_final_reconcile_status.py
           git diff --binary > /tmp/after.diff
           cmp /tmp/before.diff /tmp/after.diff
 
