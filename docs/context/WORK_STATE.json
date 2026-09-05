@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T14:49:00Z",
+  "updated_at_utc": "2026-09-05T14:54:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-010",
   "task_status": "IN_PROGRESS",
@@ -8,9 +8,9 @@
   "branch": "thesis/t716-final-acceptance",
   "base_branch": "main",
   "pull_request": 146,
-  "phase": "IMPLEMENTATION",
-  "last_completed_checkpoint": "Created the durable WORK_STATE resume pointer plus generic project_checkpoint and validate_project_continuity tooling on PR #146.",
-  "next_action": "Wire T-010 into TASKS/AGENTS/governance/workflow, retire the tracked execution prompt dependency, then run continuity and documentation CI.",
+  "phase": "CORRECTION",
+  "last_completed_checkpoint": "AGENTS.md is now prompt-free/self-resuming; generic checkpoint and continuity validator tooling exist. PR CI run 33973092035 failed fail-closed in the T-010 migration because the TASKS exact-next-action matcher was too strict.",
+  "next_action": "Relax the T-010 migration matcher against the actual TASKS.md line, rerun the migration/continuity/documentation/T-716 gates, and persist the resulting prompt-free workflow state.",
   "blockers": [],
   "completed_substeps": [
     "Recovered unmerged T-716 final-acceptance branch state",
@@ -18,25 +18,27 @@
     "Opened PR #146 against main",
     "Added docs/context/WORK_STATE.json operational resume pointer",
     "Added scripts/project_checkpoint.py",
-    "Added scripts/validate_project_continuity.py"
+    "Added scripts/validate_project_continuity.py",
+    "Replaced AGENTS.md with prompt-free deterministic recovery/checkpoint instructions",
+    "Reworked the T-716 workflow to execute T-010 continuity installation before validation"
   ],
   "pending_substeps": [
-    "Add T-010 to the canonical task registry",
-    "Strengthen AGENTS.md with prompt-free deterministic recovery and checkpoint rules",
-    "Reconcile documentation governance and execution workflow",
-    "Add project continuity CI workflow and update existing T-716 workflow integration",
-    "Retire CODEX_EXECUTION_PROMPT.md as an active dependency",
+    "Correct T-010 migration matcher from CI failure 33973092035",
+    "Add T-010 to the canonical task registry through the migration",
+    "Reconcile documentation governance and execution workflow through the migration",
+    "Add project continuity CI workflow",
+    "Retire CODEX_EXECUTION_PROMPT.md and obsolete T-716 continuity scripts",
     "Update documentation consistency validator for prompt-free bootstrap",
     "Run PR CI and objective diff review",
     "Squash-merge PR #146 if green",
     "Reconcile main to idle/external-gate state after merge"
   ],
   "validation": {
-    "t716_final_acceptance": "PASS",
+    "t716_final_acceptance": "PASS_BEFORE_T010_CHANGES",
     "documentation_consistency": "PASS_BEFORE_T010_CHANGES",
-    "branch_ci": "PASS_BEFORE_T010_CHANGES",
     "continuity_validator": "ADDED_NOT_YET_RUN",
-    "pr_ci": "PENDING"
+    "pr_ci_run_33973092035": "FAIL_MIGRATION_MATCHER",
+    "pr_ci": "FAILING_KNOWN_CORRECTABLE"
   },
   "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume this work package before selecting another task unless it is objectively blocked or already merged.",
   "notes": [
