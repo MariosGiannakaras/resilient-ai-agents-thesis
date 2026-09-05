@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T20:48:00Z",
+  "updated_at_utc": "2026-09-05T20:52:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-717",
-  "task_status": "IN_PROGRESS",
+  "task_status": "READY_TO_MERGE",
   "work_package": "Final pre-freeze thesis content refinement after user-requested whole-manuscript audit",
   "branch": "thesis/t717-final-content-refinement",
   "base_branch": "main",
   "pull_request": 148,
-  "phase": "FINAL_PR_CLEANUP_AND_VALIDATION",
-  "last_completed_checkpoint": "Branch-only T-717 workflow run 33989758343 passed end-to-end and persisted the canonical T-717 authorities, governed LIT-018 claim, deterministic review-ready DOCX and QA report. The canonical CI DOCX raw SHA-256 is 57d6de352eef6147fa24179f87a3f8e9ee39f65a90ad8b85777cac8f541f57c5; a second build in the same canonical CI environment was byte-identical. Claim-evidence validation passed with 39 governed claims. Project continuity and documentation consistency also passed inside the T-717 workflow. Artifact 9976260707 was uploaded. Regular PR workflows on the bot persistence head reported action_required with zero jobs, which is a GitHub approval state rather than a validation failure.",
-  "next_action": "Remove the temporary branch-only reconciliation helper/workflow, make the document-build dependency contract explicit without changing the scientific environment lock, inspect the exact PR #148 diff/review/check state, fix objective failures only, and mark T-717 ready to merge only when the latest user-authored head has green required checks.",
+  "phase": "READY_TO_MERGE",
+  "last_completed_checkpoint": "T-717 permanent integration is clean and merge-ready pending the final latest-head CI rerun. The temporary branch-only reconciliation helper/workflow are absent. Document-build dependencies are explicitly isolated in requirements/thesis-doc-build.txt and do not alter the frozen scientific uv lock. PR #148 changes exactly ten expected files: three state authorities, two claim-governance files, the document-build dependency contract, the permanent deterministic builder plus snippet data, and the archived DOCX plus QA JSON. No configs, experiments, frozen results, T-612 analysis, T-613 quantitative assets or scientific source code are changed. PR comments and review threads are empty. On head 23ff3b42675ef3c1ff4fdc833a3783a369a60c5b, Repository checks run 33991448351, Project continuity 33991448386, Claim evidence map 33991448400 and T-716 stage-3 reconstruction 33991448362 all passed.",
+  "next_action": "Verify the same required gates pass on this merge-ready WORK_STATE checkpoint, mark PR #148 ready for review, squash-merge it, then immediately normalize main so T-717 is COMPLETE and T-712 DEFERRED is again the active external-feedback gate.",
   "blockers": [],
   "completed_substeps": [
     "Whole-manuscript content/visual/bibliography audit completed against accepted T-716",
@@ -28,15 +28,18 @@
     "T-717 branch-only workflow run 33989758343 passed reconciliation, deterministic build, claim evidence, continuity, documentation and QA gates",
     "Canonical T-717 DOCX and QA archive persisted by commit 69c36717bed012092b8c24d26b624c35eafd3f24",
     "Second canonical CI build verified byte-identical to the persisted DOCX",
-    "Exact CI artifact 9976260707 uploaded"
+    "Exact CI artifact 9976260707 uploaded",
+    "Temporary branch-only T-717 workflow and reconciliation helper removed before merge",
+    "Document-build dependencies isolated from the frozen scientific environment in requirements/thesis-doc-build.txt",
+    "Exact PR changed-file audit confirmed ten expected files and no scientific/result spillover",
+    "PR #148 has no comments or review threads",
+    "Repository checks, Project continuity, Claim evidence map and path-triggered T-716 stage-3 checks passed on user-authored head 23ff3b42675ef3c1ff4fdc833a3783a369a60c5b"
   ],
   "pending_substeps": [
-    "Remove branch-only transition helper and temporary T-717 workflow",
-    "Make thesis document-build dependencies explicit without altering the frozen scientific environment",
-    "Inspect exact PR #148 changed-file diff and review threads",
-    "Obtain green latest-head Repository checks, Project continuity, Claim evidence and any path-triggered thesis checks",
-    "Mark PR #148 ready and squash-merge when objectively green",
-    "Normalize main immediately back to T-712 DEFERRED and verify main continuity"
+    "Confirm final latest-head CI remains green after this merge-ready checkpoint",
+    "Mark PR #148 ready and squash-merge",
+    "Normalize main immediately back to T-712 DEFERRED",
+    "Verify prompt-free continuity and repository checks on normalized main"
   ],
   "validation": {
     "t716_prior_acceptance": "PASS_11_OF_11",
@@ -50,6 +53,12 @@
     "claim_evidence": "PASS_39_CLAIMS",
     "project_continuity_inside_t717_workflow": "PASS",
     "documentation_consistency_inside_t717_workflow": "PASS",
+    "latest_user_head_repository_checks": "PASS_33991448351",
+    "latest_user_head_project_continuity": "PASS_33991448386",
+    "latest_user_head_claim_evidence": "PASS_33991448400",
+    "latest_user_head_t716_stage3": "PASS_33991448362",
+    "pr_changed_files": "PASS_10_EXPECTED_NO_SCIENTIFIC_SPILLOVER",
+    "pr_review_threads": "PASS_ZERO",
     "word_fields": "PASS_27_SEQ_3_TOC_1_PAGE",
     "references": "PASS_32_OF_32_USED",
     "media_preservation": "PASS_23_OF_25_UNCHANGED_TWO_INTENTIONAL_REPLACEMENTS",
@@ -58,7 +67,7 @@
     "scientific_results_modified": "NO",
     "new_experiment_or_reanalysis": "NO"
   },
-  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume T-717 before T-712/T-713. T-717 is an author-directed pre-freeze refinement and must not be relabelled as external supervisor/reviewer feedback.",
+  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume T-717 before T-712/T-713 until PR #148 is merged and main is normalized. T-717 is an author-directed pre-freeze refinement and must not be relabelled as external supervisor/reviewer feedback.",
   "notes": [
     "TASKS.md remains the canonical task/dependency ledger; this file is the operational resume pointer.",
     "Frozen protocol/results remain immutable. The new figures explain existing frozen protocol/architecture facts and do not recompute scientific outcomes.",
