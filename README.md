@@ -157,7 +157,7 @@ Start with:
 Then consult, as relevant:
 
 - `configs/protocols/protocol-v2.1-final.json`
-- `docs/decisions/DEC-060_PROTOCOL_V2_1_RECOVERY_AND_DIRECT_COMPARISONS.md`
+- `docs/decisions/DEC-060_PROTOCOL_V2_1_RECOVERY_AND_COMPARISON_AMENDMENT.md`
 - `docs/decisions/DEC-062_T610_FAILED_ATTEMPT_RECOVERY.md`
 - `docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md`
 - `docs/research/T-613_THESIS_FIGURE_INVENTORY.md`
