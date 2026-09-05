@@ -86,16 +86,16 @@ No source in this tree is individually a “source of truth”. A formal source 
 
 ### 2.5 What “non-stationary” can mean — `LIT-008`
 
-**Formal:** `SRC-39696F490F`, `SRC-8025C139CE`, `SRC-660560956D`, `SRC-F909CABDEB`, `SRC-95C9DAEE68`, `SRC-70772C0629`, `SRC-0FD9BE81AC`.  
-**Ranking:** Khetarpal supplies the continual-RL framing; Padakandla supplies dynamically varying/non-stationary RL taxonomy; the existing structured-change sources delimit specific assumptions; Liu 2025 is a recent supporting primary example of model-based continual RL rather than a taxonomy replacement.  
-**Compare explicitly:** abrupt persistent changepoint; recurring/structured hidden regimes; continual task streams; re-exploration/forgetting assumptions; online world-model planning under task switches.  
-**Limit:** the thesis implements a declared persistent-remap/noise family, not a generic model of all non-stationarity. Liu 2025 uses a different shared-dynamics/task-switching regime and MPC/world-model method; it is not evidence about Dyna-Q+ or the thesis remap specifically.
+**Formal:** `SRC-39696F490F`, `SRC-8025C139CE`, `SRC-660560956D`, `SRC-F909CABDEB`, `SRC-95C9DAEE68`, `SRC-70772C0629`, `SRC-0FD9BE81AC`, `SRC-6F4F8BE003`.  
+**Ranking:** Khetarpal supplies the continual-RL framing; Padakandla supplies dynamically varying/non-stationary RL taxonomy; the existing structured-change sources delimit specific assumptions; Hamadanian 2025 supplies recent primary evidence for observed-context online non-stationarity and recurring-context retention; Liu 2025 is a recent supporting primary example of model-based continual RL rather than a taxonomy replacement.  
+**Compare explicitly:** abrupt persistent changepoint; recurring/structured hidden regimes; observed exogenous context; continual task streams; re-exploration/forgetting assumptions; online world-model planning under task switches.  
+**Limit:** the thesis implements a declared persistent-remap/noise family, not a generic model of all non-stationarity. Hamadanian 2025 supplies current exogenous context to the policy, unlike the hidden thesis remap. Liu 2025 uses a different shared-dynamics/task-switching regime and MPC/world-model method; neither paper predicts Dyna-Q+ or thesis-remap performance.
 
 ### 2.6 Plasticity and primacy as threats to continued deep learning — `LIT-009`
 
-**Formal:** `SRC-4C34DF3E17`, `SRC-46CF36BC1E`, `SRC-F909CABDEB`.  
-**Synthesis:** continued learning can face interference/primacy/plasticity problems over long horizons.  
-**Limit:** these sources do not predict that DQN/PPO must fail in the thesis's small GridWorld. Liu 2025 is intentionally not added here because its continual-RL retention framing does not directly establish primacy or plasticity degradation.
+**Formal:** `SRC-4C34DF3E17`, `SRC-46CF36BC1E`, `SRC-F909CABDEB`, `SRC-6F4F8BE003`.  
+**Synthesis:** continued learning can face interference/primacy/plasticity problems over long horizons; Hamadanian 2025 adds recent primary evidence for catastrophic forgetting and stability–plasticity in an observed-context online non-stationary setting.  
+**Limit:** these sources do not predict that DQN/PPO must fail in the thesis's small GridWorld. Hamadanian 2025 has a materially different observed-context information regime. Liu 2025 remains intentionally outside this claim because its retention framing does not directly establish primacy or plasticity degradation.
 
 ### 2.7 Action uncertainty — `LIT-010`
 

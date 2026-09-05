@@ -1,0 +1,313 @@
+{
+  "status": "pass",
+  "t716_complete": true,
+  "accepted_review_docx": "thesis/archive/T716_stage4_evidence_audited_review_ready.docx",
+  "package_content_sha256": "b01f853af794e596f0dfb491a3f5401365ca3f01fd7d410194e539f0b8a10cc1",
+  "stage4_raw_sha256": "08992272e90b0cae6b457a3f4ce66511cc7c337aeea0b6d3645d632f8d66a7f7",
+  "word_count": 25327,
+  "main_body_word_count": 23273,
+  "paragraph_count": 766,
+  "page_count": 92,
+  "reference_count": 31,
+  "used_reference_numbers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+  ],
+  "chapter_word_counts": {
+    "Κεφάλαιο 1 — Εισαγωγή": 1992,
+    "Κεφάλαιο 2 — Θεωρητικό Υπόβαθρο και Σχετική Βιβλιογραφία": 4312,
+    "Κεφάλαιο 3 — Μεθοδολογία και Πειραματικός Σχεδιασμός": 3206,
+    "Κεφάλαιο 4 — Αρχιτεκτονική και Υλοποίηση του Ερευνητικού Συστήματος": 2800,
+    "Κεφάλαιο 5 — Πειραματικά Αποτελέσματα": 2978,
+    "Κεφάλαιο 6 — Συζήτηση": 3450,
+    "Κεφάλαιο 7 — Συμπεράσματα και Μελλοντική Εργασία": 2041
+  },
+  "duplicate_substantive_paragraphs": 0,
+  "citation_ready_resolution": {
+    "1": {
+      "source_id": "SRC-701E163AC8",
+      "citation_ready": true,
+      "manifest_title": "http---incompleteideas.net-book-RLbook2020.pdf",
+      "reference_identity_fragment": "Reinforcement Learning: An Introduction",
+      "reference_identity_ok": true
+    },
+    "2": {
+      "source_id": "SRC-660560956D",
+      "citation_ready": true,
+      "manifest_title": "https---proceedings.mlr.press-v199-steinparz22a-steinparz22a.pdf",
+      "reference_identity_fragment": "Reactive Exploration to Cope with Non-Stationarity",
+      "reference_identity_ok": true
+    },
+    "3": {
+      "source_id": "SRC-4C34DF3E17",
+      "citation_ready": true,
+      "manifest_title": "Loss of plasticity in deep continual learning",
+      "reference_identity_fragment": "Loss of plasticity in deep continual learning",
+      "reference_identity_ok": true
+    },
+    "4": {
+      "source_id": "SRC-46CF36BC1E",
+      "citation_ready": true,
+      "manifest_title": "The Primacy Bias in Deep Reinforcement Learning",
+      "reference_identity_fragment": "Primacy Bias in Deep Reinforcement Learning",
+      "reference_identity_ok": true
+    },
+    "5": {
+      "source_id": "SRC-4ED8B918E3",
+      "citation_ready": true,
+      "manifest_title": "Empirical Design in Reinforcement Learning",
+      "reference_identity_fragment": "Empirical Design in Reinforcement Learning",
+      "reference_identity_ok": true
+    },
+    "6": {
+      "source_id": "SRC-8D4F62D85D",
+      "citation_ready": true,
+      "manifest_title": "Deep Reinforcement Learning that Matters",
+      "reference_identity_fragment": "Deep Reinforcement Learning that Matters",
+      "reference_identity_ok": true
+    },
+    "7": {
+      "source_id": "SRC-6F4F8BE003",
+      "citation_ready": true,
+      "manifest_title": "Online Reinforcement Learning in Non-Stationary Context-Driven Environments",
+      "reference_identity_fragment": "Online Reinforcement Learning in Non-Stationary Context-Driven Environments",
+      "reference_identity_ok": true
+    },
+    "8": {
+      "source_id": "SRC-D38364B32C",
+      "citation_ready": true,
+      "manifest_title": "Partial Models for Building Adaptive Model-Based Reinforcement Learning Agents",
+      "reference_identity_fragment": "Partial Models for Building Adaptive Model-Based Reinforcement Learning Agents",
+      "reference_identity_ok": true
+    },
+    "9": {
+      "source_id": "SRC-701E163AC8",
+      "citation_ready": true,
+      "manifest_title": "http---incompleteideas.net-book-RLbook2020.pdf",
+      "reference_identity_fragment": "Q-learning: Off-policy TD Control",
+      "reference_identity_ok": true
+    },
+    "10": {
+      "source_id": "SRC-32A0866AF8",
+      "citation_ready": true,
+      "manifest_title": "https---eclass.uoa.gr-modules-document-file.php-DI437-1312.5602.pdf",
+      "reference_identity_fragment": "Playing Atari with Deep Reinforcement Learning",
+      "reference_identity_ok": true
+    },
+    "11": {
+      "source_id": "SRC-CBA29E303A",
+      "citation_ready": true,
+      "manifest_title": "Revisiting Fundamentals of Experience Replay",
+      "reference_identity_fragment": "Revisiting Fundamentals of Experience Replay",
+      "reference_identity_ok": true
+    },
+    "12": {
+      "source_id": "SRC-CD5F67F3E6",
+      "citation_ready": true,
+      "manifest_title": "Proximal Policy Optimization Algorithms",
+      "reference_identity_fragment": "Proximal Policy Optimization Algorithms",
+      "reference_identity_ok": true
+    },
+    "13": {
+      "source_id": "SRC-5D0E7E5BD7",
+      "citation_ready": true,
+      "manifest_title": "Implementation Matters in Deep Policy Gradients: A Case Study on PPO and TRPO",
+      "reference_identity_fragment": "Implementation Matters in Deep Policy Gradients",
+      "reference_identity_ok": true
+    },
+    "14": {
+      "source_id": "SRC-F909CABDEB",
+      "citation_ready": true,
+      "manifest_title": "A Survey of Continual Reinforcement Learning",
+      "reference_identity_fragment": "A Survey of Continual Reinforcement Learning",
+      "reference_identity_ok": true
+    },
+    "15": {
+      "source_id": "SRC-95C9DAEE68",
+      "citation_ready": true,
+      "manifest_title": "Deep reinforcement learning in non-stationary environments",
+      "reference_identity_fragment": "Deep reinforcement learning in non-stationary environments",
+      "reference_identity_ok": true
+    },
+    "16": {
+      "source_id": "SRC-0A4AFAC8E9",
+      "citation_ready": true,
+      "manifest_title": "Deep Reinforcement Learning at the Edge of the Statistical Precipice",
+      "reference_identity_fragment": "Deep Reinforcement Learning at the Edge of the Statistical Precipice",
+      "reference_identity_ok": true
+    },
+    "17": {
+      "source_id": "SRC-69D02D7E25",
+      "citation_ready": true,
+      "manifest_title": "Time Limits in Reinforcement Learning",
+      "reference_identity_fragment": "Time Limits in Reinforcement Learning",
+      "reference_identity_ok": true
+    },
+    "18": {
+      "source_id": "SRC-AD8A2E9A85",
+      "citation_ready": true,
+      "manifest_title": "Q-learning",
+      "reference_identity_fragment": "Q-learning",
+      "reference_identity_ok": true
+    },
+    "19": {
+      "source_id": "SRC-F6BD3A6B18",
+      "citation_ready": true,
+      "manifest_title": "Integrated Modeling and Control Based on Reinforcement Learning and Dynamic Programming",
+      "reference_identity_fragment": "Integrated Modeling and Control Based on Reinforcement Learning and Dynamic Programming",
+      "reference_identity_ok": true
+    },
+    "20": {
+      "source_id": "SRC-39696F490F",
+      "citation_ready": true,
+      "manifest_title": "Towards Continual Reinforcement Learning: A Review and Perspectives",
+      "reference_identity_fragment": "Towards Continual Reinforcement Learning",
+      "reference_identity_ok": true
+    },
+    "21": {
+      "source_id": "SRC-8025C139CE",
+      "citation_ready": true,
+      "manifest_title": "A Survey of Reinforcement Learning Algorithms for Dynamically Varying Environments",
+      "reference_identity_fragment": "Dynamically Varying Environments",
+      "reference_identity_ok": true
+    },
+    "22": {
+      "source_id": "SRC-21EBE15D15",
+      "citation_ready": true,
+      "manifest_title": "A Survey of Zero-shot Generalisation in Deep Reinforcement Learning",
+      "reference_identity_fragment": "Zero-shot Generalisation in Deep Reinforcement Learning",
+      "reference_identity_ok": true
+    },
+    "23": {
+      "source_id": "SRC-0F8A6588DC",
+      "citation_ready": true,
+      "manifest_title": "NovGrid: A Flexible Grid World for Evaluating Agent Response to Novelty",
+      "reference_identity_fragment": "NovGrid",
+      "reference_identity_ok": true
+    },
+    "24": {
+      "source_id": "SRC-0A594EACC0",
+      "citation_ready": true,
+      "manifest_title": "Cooperative Resilience in Artificial Intelligence Multiagent Systems",
+      "reference_identity_fragment": "Cooperative Resilience in Artificial Intelligence Multiagent Systems",
+      "reference_identity_ok": true
+    },
+    "25": {
+      "source_id": "SRC-327CD7B903",
+      "citation_ready": true,
+      "manifest_title": "Quantitative Resilience Modeling for Autonomous Cyber Defense",
+      "reference_identity_fragment": "Quantitative Resilience Modeling for Autonomous Cyber Defense",
+      "reference_identity_ok": true
+    },
+    "26": {
+      "source_id": "SRC-81A15E6905",
+      "citation_ready": true,
+      "manifest_title": "Action Robust Reinforcement Learning and Applications in Continuous Control",
+      "reference_identity_fragment": "Action Robust Reinforcement Learning",
+      "reference_identity_ok": true
+    },
+    "27": {
+      "source_id": "SRC-01BBBA7EAB",
+      "citation_ready": true,
+      "manifest_title": "Robust Reinforcement Learning in POMDPs with Incomplete and Noisy Observations",
+      "reference_identity_fragment": "Robust Reinforcement Learning in POMDPs",
+      "reference_identity_ok": true
+    },
+    "28": {
+      "source_id": "SRC-09DD20BA85",
+      "citation_ready": true,
+      "manifest_title": "Bounded Robustness in Reinforcement Learning via Lexicographic Objectives",
+      "reference_identity_fragment": "Bounded Robustness in Reinforcement Learning",
+      "reference_identity_ok": true
+    },
+    "29": {
+      "source_id": "SRC-3A5E2C9E2C",
+      "citation_ready": true,
+      "manifest_title": "A Review of Safe Reinforcement Learning: Methods, Theory and Applications",
+      "reference_identity_fragment": "Review of Safe Reinforcement Learning",
+      "reference_identity_ok": true
+    },
+    "30": {
+      "source_id": "SRC-0FD9BE81AC",
+      "citation_ready": true,
+      "manifest_title": "Continual Reinforcement Learning by Planning with Online World Models",
+      "reference_identity_fragment": "Continual Reinforcement Learning by Planning with Online World Models",
+      "reference_identity_ok": true
+    },
+    "31": {
+      "source_id": "SRC-0406E13B97",
+      "citation_ready": true,
+      "manifest_title": "Safe Continual Reinforcement Learning Methods for Nonstationary Environments. Towards a Survey of the State of the Art",
+      "reference_identity_fragment": "Safe Continual Reinforcement Learning Methods for Nonstationary Environments",
+      "reference_identity_ok": true
+    }
+  },
+  "missing_citation_ready_source_ids": [],
+  "reference_identity_failures": [],
+  "registry_missing_source_ids": [],
+  "intentional_administrative_placeholders": [
+    "Student: [to be completed from the official form]",
+    "[Θέση για την ακριβή επίσημη δήλωση πριν από την τελική υποβολή]",
+    "Ονοματεπώνυμο φοιτητή: [να συμπληρωθεί από το επίσημο έντυπο]"
+  ],
+  "forbidden_draft_markers_found": {
+    "TODO": false,
+    "TBD": false,
+    "FIXME": false,
+    "DRAFT NOTE": false,
+    "SRC-": false
+  },
+  "comments_present": false,
+  "tracked_changes_present": false,
+  "t715_stage3_qa_guards_preserved": true,
+  "t715_reader_sentinels_present": true,
+  "acceptance_gates": {
+    "1_fuller_substantive_coverage": true,
+    "2_t715_corrections_present": true,
+    "3_frozen_science_and_media_preserved": true,
+    "4_claim_registry_valid_and_used_sources_registered": true,
+    "5_all_formal_references_citation_ready_and_used": true,
+    "6_multi_source_support_and_limits_retained": true,
+    "7_source_precedence_policy_applied": true,
+    "8_no_unresolved_drafting_or_invented_metadata": true,
+    "9_structural_scientific_docx_qa": true,
+    "10_visual_qa": true,
+    "11_exact_archive_identity_committed": true
+  },
+  "t713_external_administrative_blockers": [
+    "authoritative student/person metadata",
+    "authoritative declaration wording",
+    "actual supervisor/reviewer feedback (T-712) when available",
+    "final Microsoft Word field/update and submission-format freeze"
+  ],
+  "plan_acceptance_gate_count": 11
+}

@@ -23,7 +23,11 @@
       "chapter": "1,2",
       "type": "literature",
       "claim": "Reinforcement learning is sequential decision-making under reward feedback and is commonly formalized with MDP/value/policy concepts.",
-      "formal_sources": ["SRC-701E163AC8", "SRC-D52DF7B9A4", "SRC-AD8A2E9A85"],
+      "formal_sources": [
+        "SRC-701E163AC8",
+        "SRC-D52DF7B9A4",
+        "SRC-AD8A2E9A85"
+      ],
       "context_sources": [],
       "synthesis": "Use the textbook for broad MDP/value/policy framing, focused TD material for mechanism detail, and Watkins-Dayan as the primary Q-learning foundation rather than treating it as context-only.",
       "limits": "Do not transfer stationary convergence assumptions to the thesis non-stationary conditions without qualification."
@@ -33,7 +37,11 @@
       "chapter": "1,2,6",
       "type": "literature",
       "claim": "Robustness without updating, online adaptation and temporal resilience/recovery are related but non-equivalent evaluation constructs.",
-      "formal_sources": ["SRC-21EBE15D15", "SRC-0A594EACC0", "SRC-0F8A6588DC"],
+      "formal_sources": [
+        "SRC-21EBE15D15",
+        "SRC-0A594EACC0",
+        "SRC-0F8A6588DC"
+      ],
       "context_sources": [],
       "synthesis": "ZSG literature separates no-update testing from adaptation; resilience/novelty work separates disturbance depth, recovery process and final performance.",
       "limits": "External metric formulas are not imported as the thesis recovery definition."
@@ -43,7 +51,11 @@
       "chapter": "1,3,6",
       "type": "literature",
       "claim": "A controlled benchmark is defined by environment/task variation together with the interaction/evaluation protocol, not by the environment name alone.",
-      "formal_sources": ["SRC-4000D2B40A", "SRC-21EBE15D15", "SRC-4ED8B918E3"],
+      "formal_sources": [
+        "SRC-4000D2B40A",
+        "SRC-21EBE15D15",
+        "SRC-4ED8B918E3"
+      ],
       "context_sources": [],
       "synthesis": "Bsuite emphasizes environment+interaction+analysis; ZSG emphasizes environment+train/test protocol; empirical-design work emphasizes fair experimental opportunity.",
       "limits": "These sources do not prescribe this thesis's exact GridWorld, budgets or roots."
@@ -53,7 +65,11 @@
       "chapter": "2",
       "type": "literature",
       "claim": "Q-Learning and SARSA differ principally in off-policy greedy versus on-policy next-action TD targets under exploratory behavior.",
-      "formal_sources": ["SRC-AD8A2E9A85", "SRC-701E163AC8", "SRC-D52DF7B9A4"],
+      "formal_sources": [
+        "SRC-AD8A2E9A85",
+        "SRC-701E163AC8",
+        "SRC-D52DF7B9A4"
+      ],
       "context_sources": [],
       "synthesis": "Use Watkins-Dayan as the primary Q-learning source and the broader RL/TD sources to explain the off-policy greedy versus on-policy next-action target distinction without claiming one method is generally more resilient.",
       "limits": "Primary Q-learning convergence evidence is stationary/assumption-bound and does not predict post-remap recovery speed."
@@ -63,7 +79,12 @@
       "chapter": "2",
       "type": "literature",
       "claim": "DQN combines neural value approximation with replay and a target-network mechanism, and observed behavior depends materially on replay/implementation choices.",
-      "formal_sources": ["SRC-32A0866AF8", "SRC-CBA29E303A", "SRC-BE53B7970E", "SRC-8D4F62D85D"],
+      "formal_sources": [
+        "SRC-32A0866AF8",
+        "SRC-CBA29E303A",
+        "SRC-BE53B7970E",
+        "SRC-8D4F62D85D"
+      ],
       "context_sources": [],
       "synthesis": "Use DQN foundation for architecture, replay work for replay sensitivity, Double-Q work for overestimation context and reproducibility work for implementation sensitivity.",
       "limits": "Do not state that Double DQN was tested or that replay necessarily helps/hurts adaptation in this GridWorld."
@@ -73,7 +94,11 @@
       "chapter": "2,6",
       "type": "literature",
       "claim": "PPO uses a clipped surrogate policy-optimization objective, while implementation-level choices can materially change empirical performance.",
-      "formal_sources": ["SRC-CD5F67F3E6", "SRC-5D0E7E5BD7", "SRC-8D4F62D85D"],
+      "formal_sources": [
+        "SRC-CD5F67F3E6",
+        "SRC-5D0E7E5BD7",
+        "SRC-8D4F62D85D"
+      ],
       "context_sources": [],
       "synthesis": "Separate the algorithmic objective from implementation sensitivity.",
       "limits": "PPO clipping is not an environmental-robustness or resilience guarantee."
@@ -83,7 +108,11 @@
       "chapter": "2,6",
       "type": "literature",
       "claim": "Dyna integrates direct learning with planning from a learned model; changing environments create a stale-model/re-exploration problem that is mechanism-specific.",
-      "formal_sources": ["SRC-F6BD3A6B18", "SRC-701E163AC8", "SRC-D38364B32C"],
+      "formal_sources": [
+        "SRC-F6BD3A6B18",
+        "SRC-701E163AC8",
+        "SRC-D38364B32C"
+      ],
       "context_sources": [],
       "synthesis": "Use Sutton 1990 as the primary Dyna foundation, supported by broader RL/model-based material, to separate direct learning, learned-model planning and the mechanism-specific stale-model/re-exploration problem under change.",
       "limits": "Do not generalize the thesis Dyna-Q+ result into a claim that model-based RL is universally better or worse."
@@ -93,27 +122,44 @@
       "chapter": "2,6",
       "type": "literature",
       "claim": "Non-stationarity includes multiple change processes and assumptions; abrupt persistent change, recurrent/Markov switching and continual task streams should not be conflated.",
-      "formal_sources": ["SRC-39696F490F", "SRC-8025C139CE", "SRC-660560956D", "SRC-F909CABDEB", "SRC-95C9DAEE68", "SRC-70772C0629", "SRC-0FD9BE81AC"],
+      "formal_sources": [
+        "SRC-39696F490F",
+        "SRC-8025C139CE",
+        "SRC-660560956D",
+        "SRC-F909CABDEB",
+        "SRC-95C9DAEE68",
+        "SRC-70772C0629",
+        "SRC-0FD9BE81AC",
+        "SRC-6F4F8BE003"
+      ],
       "context_sources": [],
-      "synthesis": "Use Khetarpal for continual-RL framing, Padakandla for dynamically varying/non-stationary RL taxonomy, the existing structured/change-process sources to delimit the thesis setting, and Liu 2025 only as a recent primary example of model-based continual RL with online world models and planning.",
-      "limits": "Structured SNS-MDP convergence does not imply rapid adaptation to the thesis's persistent remap; Liu 2025 studies a different shared-dynamics/task-switching regime and MPC/world-model method, so it neither replaces the broader taxonomies nor serves as Dyna-Q+ evidence."
+      "synthesis": "Use Khetarpal for continual-RL framing, Padakandla for dynamically varying/non-stationary RL taxonomy, the existing structured/change-process sources to delimit the thesis setting, Hamadanian 2025 as recent primary evidence for observed-context online non-stationarity/recurring-context adaptation, and Liu 2025 only as a recent primary example of model-based continual RL with online world models and planning.",
+      "limits": "Structured SNS-MDP convergence does not imply rapid adaptation to the thesis's persistent remap; Hamadanian 2025 supplies the current exogenous context to the policy and therefore differs from the hidden thesis remap; Liu 2025 studies a different shared-dynamics/task-switching regime and MPC/world-model method, so neither source serves as direct Dyna-Q+ or thesis-remap performance evidence."
     },
     {
       "id": "LIT-009",
       "chapter": "2,6",
       "type": "literature",
       "claim": "Long-horizon deep continual learning can suffer primacy/interference/plasticity degradation, so continued optimization does not guarantee indefinitely preserved adaptability.",
-      "formal_sources": ["SRC-4C34DF3E17", "SRC-46CF36BC1E", "SRC-F909CABDEB"],
+      "formal_sources": [
+        "SRC-4C34DF3E17",
+        "SRC-46CF36BC1E",
+        "SRC-F909CABDEB",
+        "SRC-6F4F8BE003"
+      ],
       "context_sources": [],
-      "synthesis": "Use plasticity/primacy as threats-to-validity and mechanism context, not predictions of thesis outcomes.",
-      "limits": "Tasks and timescales differ from the small GridWorld; do not claim these papers explain a specific observed failure without direct evidence."
+      "synthesis": "Use plasticity/primacy work as threats-to-validity and mechanism context; use Hamadanian 2025 as recent primary evidence that catastrophic forgetting and stability–plasticity are deployment concerns in an observed-context non-stationary online-RL setting, without treating that setting as equivalent to the thesis.",
+      "limits": "Tasks, information assumptions and timescales differ from the small GridWorld; Hamadanian supplies observed context, and none of these papers establishes that a specific DQN/PPO outcome in the thesis was caused by primacy, forgetting or plasticity loss."
     },
     {
       "id": "LIT-010",
       "chapter": "2,3,6",
       "type": "literature",
       "claim": "Action uncertainty must distinguish discrete action replacement/failure from continuous action perturbation and from persistent remapping of action semantics.",
-      "formal_sources": ["SRC-81A15E6905", "SRC-21EBE15D15"],
+      "formal_sources": [
+        "SRC-81A15E6905",
+        "SRC-21EBE15D15"
+      ],
       "context_sources": [],
       "synthesis": "Action-robust RL supplies replacement/noise models; generalization taxonomy helps separate dynamics/action-context changes.",
       "limits": "The thesis action failure is a stochastic no-op, not the adversarial PR-MDP of the action-robust paper."
@@ -123,7 +169,12 @@
       "chapter": "2,3,6",
       "type": "literature",
       "claim": "Observation corruption, incomplete observation, partial observability and static OOD detection are related but distinct problems.",
-      "formal_sources": ["SRC-01BBBA7EAB", "SRC-09DD20BA85", "SRC-19C2E91926", "SRC-21EBE15D15"],
+      "formal_sources": [
+        "SRC-01BBBA7EAB",
+        "SRC-09DD20BA85",
+        "SRC-19C2E91926",
+        "SRC-21EBE15D15"
+      ],
       "context_sources": [],
       "synthesis": "Use POMDP/noisy-observation work for information loss, bounded-observation robustness for clean-vs-disturbed trade-offs, and OOD work only for detection-oriented distinctions.",
       "limits": "The thesis does not implement belief inference, an OOD detector or the cited robust policies."
@@ -133,7 +184,11 @@
       "chapter": "2,3,6",
       "type": "literature",
       "claim": "Zero-shot generalization/interpolation/extrapolation differs from online adaptation because strict zero-shot evaluation disallows test-time learning updates.",
-      "formal_sources": ["SRC-0882A9B2B0", "SRC-21EBE15D15", "SRC-0F8A6588DC"],
+      "formal_sources": [
+        "SRC-0882A9B2B0",
+        "SRC-21EBE15D15",
+        "SRC-0F8A6588DC"
+      ],
       "context_sources": [],
       "synthesis": "Use the pair of generalization sources for train/test boundaries and NovGrid for controlled online novelty response.",
       "limits": "Do not relabel the FN/FD/AN/AD adaptation study as a zero-shot-generalization benchmark."
@@ -143,7 +198,12 @@
       "chapter": "2,3,6",
       "type": "literature",
       "claim": "Resilience is usefully treated as a temporal process with disturbance/failure and recovery dimensions rather than a single terminal score.",
-      "formal_sources": ["SRC-0A594EACC0", "SRC-0F8A6588DC", "SRC-4000D2B40A", "SRC-327CD7B903"],
+      "formal_sources": [
+        "SRC-0A594EACC0",
+        "SRC-0F8A6588DC",
+        "SRC-4000D2B40A",
+        "SRC-327CD7B903"
+      ],
       "context_sources": [],
       "synthesis": "Combine process/reference-curve framing with controlled-novelty post-change metrics and diagnostic-benchmark philosophy; use Cadet 2025 as recent supporting evidence that temporal granularity and whole-horizon aggregation can conceal distinct degradation/recovery profiles.",
       "limits": "The external papers use their own resilience metrics; Cadet's cyber-defense metric, weights and horizon are not imported, and the thesis's frozen recovery rule remains project-specific."
@@ -153,7 +213,10 @@
       "chapter": "2,6,7",
       "type": "literature",
       "claim": "Safe RL adds explicit constraints/costs beyond task return; safe continual adaptation additionally raises safety during the adaptation transient.",
-      "formal_sources": ["SRC-3A5E2C9E2C", "SRC-0406E13B97"],
+      "formal_sources": [
+        "SRC-3A5E2C9E2C",
+        "SRC-0406E13B97"
+      ],
       "context_sources": [],
       "synthesis": "Use established SafeRL taxonomy for the constraint boundary and the recent safe-continual survey only as a scoped, non-definitive extension.",
       "limits": "This thesis does not establish safety guarantees and must not present resilience results as safe-RL results."
@@ -163,7 +226,12 @@
       "chapter": "3,6",
       "type": "literature",
       "claim": "Fair empirical RL comparison requires attention to stochastic variation, tuning opportunity, implementation choices and comparable experience budgets.",
-      "formal_sources": ["SRC-4ED8B918E3", "SRC-8D4F62D85D", "SRC-0A4AFAC8E9", "SRC-4000D2B40A"],
+      "formal_sources": [
+        "SRC-4ED8B918E3",
+        "SRC-8D4F62D85D",
+        "SRC-0A4AFAC8E9",
+        "SRC-4000D2B40A"
+      ],
       "context_sources": [],
       "synthesis": "Use Patterson/Henderson for design/reproducibility, Agarwal for statistical fragility and bsuite for diagnostic protocol structure.",
       "limits": "These sources motivate principles only; they do not prescribe the exact thesis tuning grid, root count or confidence-interval rule."
@@ -173,7 +241,10 @@
       "chapter": "3",
       "type": "literature",
       "claim": "Administrative time limits/truncation must be distinguished from true task termination when constructing learning targets and evaluation semantics.",
-      "formal_sources": ["SRC-69D02D7E25", "SRC-701E163AC8"],
+      "formal_sources": [
+        "SRC-69D02D7E25",
+        "SRC-701E163AC8"
+      ],
       "context_sources": [],
       "synthesis": "Use Pardo et al. for the time-limit boundary and the RL textbook for MDP/return context.",
       "limits": "The source does not determine the thesis horizon or budget."
@@ -183,9 +254,14 @@
       "chapter": "2,7",
       "type": "literature",
       "claim": "Known variation budgets and scheduled forgetting/restart are conceptually different from online change detection when change magnitude/timing is unknown.",
-      "formal_sources": ["SRC-0406E13B97", "SRC-660560956D"],
+      "formal_sources": [
+        "SRC-0406E13B97",
+        "SRC-660560956D"
+      ],
       "context_sources": [],
-      "informal_sources": ["SRC-49A9ACCA53"],
+      "informal_sources": [
+        "SRC-49A9ACCA53"
+      ],
       "synthesis": "The seminar is retained as a discovery map; formal prose must rely on citation-ready literature or a future upstream promotion of the underlying primary papers.",
       "limits": "Do not quote transcript-derived equations or guarantees as formal evidence."
     },
@@ -194,8 +270,14 @@
       "chapter": "3",
       "type": "protocol",
       "claim": "Phase-A and Phase-B training/evaluation use actual agent-environment interactions as the common experience currency rather than equal episode counts or optimizer updates.",
-      "formal_sources": ["SRC-4ED8B918E3", "SRC-8D4F62D85D"],
-      "project_authorities": ["configs/protocols/protocol-v2.1-final.json", "docs/decisions/DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md"],
+      "formal_sources": [
+        "SRC-4ED8B918E3",
+        "SRC-8D4F62D85D"
+      ],
+      "project_authorities": [
+        "configs/protocols/protocol-v2.1-final.json",
+        "docs/decisions/DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md"
+      ],
       "synthesis": "Literature motivates fairness; the exact implementation is a project decision.",
       "limits": "Do not attribute the exact budget to the literature."
     },
@@ -204,8 +286,14 @@
       "chapter": "3",
       "type": "protocol",
       "claim": "Tuning used six method-specific candidates per method, three tuning-only roots, two development layouts and 8192 interactions, producing 180 completed tuning units; seeds were not tuned.",
-      "formal_sources": ["SRC-4ED8B918E3", "SRC-8D4F62D85D"],
-      "project_authorities": ["docs/decisions/DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md", "configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json"],
+      "formal_sources": [
+        "SRC-4ED8B918E3",
+        "SRC-8D4F62D85D"
+      ],
+      "project_authorities": [
+        "docs/decisions/DEC-055_PROTOCOL_V2_FAIR_TUNING_AND_SIZING_AUTHORITY.md",
+        "configs/protocols/protocol-v2-t527-tuning-sizing-v0.1.json"
+      ],
       "synthesis": "Literature supports equal tuning opportunity and seed discipline; counts/search spaces come only from project authority.",
       "limits": "Do not present 180 or the chosen configs as literature-derived."
     },
@@ -214,8 +302,13 @@
       "chapter": "3",
       "type": "protocol",
       "claim": "The final study uses 12 independent roots selected by a predeclared Student-t interval precision rule; layouts are repeated/blocking structure within root rather than independent replicates.",
-      "formal_sources": ["SRC-0A4AFAC8E9", "SRC-4ED8B918E3"],
-      "project_authorities": ["docs/decisions/DEC-058_PROTOCOL_V2_FINAL_SCIENTIFIC_FREEZE.md"],
+      "formal_sources": [
+        "SRC-0A4AFAC8E9",
+        "SRC-4ED8B918E3"
+      ],
+      "project_authorities": [
+        "docs/decisions/DEC-058_PROTOCOL_V2_FINAL_SCIENTIFIC_FREEZE.md"
+      ],
       "synthesis": "External work motivates honest repeated-run uncertainty; the 12-root sizing result and threshold are project evidence.",
       "limits": "Do not claim the literature prescribes n=12."
     },
@@ -224,8 +317,14 @@
       "chapter": "3",
       "type": "protocol",
       "claim": "Phase B uses exact matched FN/FD/AN/AD branches from the same Phase-A scientific state to separate disturbance-associated loss from nominal continued-learning drift.",
-      "formal_sources": ["SRC-4ED8B918E3", "SRC-8D4F62D85D"],
-      "project_authorities": ["configs/protocols/protocol-v2.1-final.json", "src/resilient_agents/study/protocol_v2_phase_b_executor.py"],
+      "formal_sources": [
+        "SRC-4ED8B918E3",
+        "SRC-8D4F62D85D"
+      ],
+      "project_authorities": [
+        "configs/protocols/protocol-v2.1-final.json",
+        "src/resilient_agents/study/protocol_v2_phase_b_executor.py"
+      ],
       "synthesis": "Fair-comparison principles motivate matching; the four-branch estimand is the thesis's own predeclared design.",
       "limits": "No external source is cited as inventing these exact four branches."
     },
@@ -234,8 +333,16 @@
       "chapter": "3",
       "type": "protocol",
       "claim": "Persistent action remaps have exact project-defined mappings; action failure is an independent p=0.15 no-op; observation corruption is p=0.05 and changes delivered observation without changing the true transition/reward.",
-      "formal_sources": ["SRC-81A15E6905", "SRC-01BBBA7EAB", "SRC-09DD20BA85"],
-      "project_authorities": ["src/resilient_agents/study/protocol_v2_phase_b_executor.py", "src/resilient_agents/gridworld.py", "configs/protocols/protocol-v2.1-final.json"],
+      "formal_sources": [
+        "SRC-81A15E6905",
+        "SRC-01BBBA7EAB",
+        "SRC-09DD20BA85"
+      ],
+      "project_authorities": [
+        "src/resilient_agents/study/protocol_v2_phase_b_executor.py",
+        "src/resilient_agents/gridworld.py",
+        "configs/protocols/protocol-v2.1-final.json"
+      ],
       "synthesis": "Literature supplies uncertainty categories; repository code/protocol is the only authority for the tested semantics.",
       "limits": "Do not substitute adversarial action replacement or generic sensor noise definitions for the actual implementation."
     },
@@ -244,8 +351,14 @@
       "chapter": "3",
       "type": "protocol",
       "claim": "RQ1 uses final no-learning probe performance and a trapezoidal time-average over the actual interaction axis.",
-      "formal_sources": ["SRC-4ED8B918E3", "SRC-4000D2B40A"],
-      "project_authorities": ["src/resilient_agents/evidence_v2/statistics.py", "docs/research/RQ_EVIDENCE_TRACEABILITY.md"],
+      "formal_sources": [
+        "SRC-4ED8B918E3",
+        "SRC-4000D2B40A"
+      ],
+      "project_authorities": [
+        "src/resilient_agents/evidence_v2/statistics.py",
+        "docs/research/RQ_EVIDENCE_TRACEABILITY.md"
+      ],
       "synthesis": "External sources motivate learning-curve/experience-aware reporting; formula and probe semantics are project-defined.",
       "limits": "Do not replace with episode-average training return."
     },
@@ -254,8 +367,15 @@
       "chapter": "3,5",
       "type": "protocol",
       "claim": "RQ2 adaptation benefit is (FN-FD)-(AN-AD), with Frozen loss and Adaptive loss retained as distinct quantities.",
-      "formal_sources": ["SRC-4ED8B918E3", "SRC-4000D2B40A"],
-      "project_authorities": ["src/resilient_agents/evidence_v2/statistics.py", "docs/research/RQ_EVIDENCE_TRACEABILITY.md", "docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md"],
+      "formal_sources": [
+        "SRC-4ED8B918E3",
+        "SRC-4000D2B40A"
+      ],
+      "project_authorities": [
+        "src/resilient_agents/evidence_v2/statistics.py",
+        "docs/research/RQ_EVIDENCE_TRACEABILITY.md",
+        "docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md"
+      ],
       "synthesis": "External sources motivate matched, diagnostic comparison; the estimand is project-specific and frozen.",
       "limits": "Positive benefit does not mean AD exceeds nominal performance."
     },
@@ -264,8 +384,15 @@
       "chapter": "3,5,6",
       "type": "protocol",
       "claim": "RQ3 recovery uses eight fixed 32-interaction windows, directed nominal-minus-disturbed gap, tolerance 0.10, two consecutive qualifying windows and right-censoring at 256 if stable recovery is not observed.",
-      "formal_sources": ["SRC-0A594EACC0", "SRC-0F8A6588DC"],
-      "project_authorities": ["src/resilient_agents/evidence_v2/recovery.py", "docs/research/RQ_EVIDENCE_TRACEABILITY.md", "docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md"],
+      "formal_sources": [
+        "SRC-0A594EACC0",
+        "SRC-0F8A6588DC"
+      ],
+      "project_authorities": [
+        "src/resilient_agents/evidence_v2/recovery.py",
+        "docs/research/RQ_EVIDENCE_TRACEABILITY.md",
+        "docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md"
+      ],
       "synthesis": "External literature motivates temporal recovery analysis; exact window/tolerance/stability/censoring semantics are frozen project decisions.",
       "limits": "Do not change to absolute gap, three windows or horizon-as-observed-recovery."
     },
@@ -275,7 +402,12 @@
       "type": "project",
       "claim": "The accepted implementation is Study-first: immutable recipe, deterministic plan, exact checkpoints/branches, validated evidence, frozen analysis and presentation-only PySide6 views.",
       "formal_sources": [],
-      "project_authorities": ["src/resilient_agents/study/", "src/resilient_agents/evidence_v2/", "src/resilient_agents/desktop/", "docs/context/EXECUTION_WORKFLOW.md"],
+      "project_authorities": [
+        "src/resilient_agents/study/",
+        "src/resilient_agents/evidence_v2/",
+        "src/resilient_agents/desktop/",
+        "docs/context/EXECUTION_WORKFLOW.md"
+      ],
       "single_source_exception_reason": "This is a project-architecture claim; external literature is not its authority.",
       "synthesis": "Describe actual repository architecture and provenance boundaries.",
       "limits": "Historical Streamlit/React/NiceGUI paths are implementation history, not current architecture."
@@ -285,8 +417,13 @@
       "chapter": "4",
       "type": "project",
       "claim": "The agent is not given evaluator truth, disturbance flags or executed-action truth; delivered observations are the learning interface.",
-      "formal_sources": ["SRC-21EBE15D15"],
-      "project_authorities": ["src/resilient_agents/gridworld.py", "src/resilient_agents/study/protocol_v2_phase_b_executor.py"],
+      "formal_sources": [
+        "SRC-21EBE15D15"
+      ],
+      "project_authorities": [
+        "src/resilient_agents/gridworld.py",
+        "src/resilient_agents/study/protocol_v2_phase_b_executor.py"
+      ],
       "synthesis": "Literature motivates explicit context/information contracts; code defines what this agent actually sees.",
       "limits": "Do not infer hidden information from UI/evaluator telemetry."
     },
@@ -295,8 +432,15 @@
       "chapter": "4",
       "type": "project",
       "claim": "Scientific checkpoints preserve method-specific continuation state and branch from exact Phase-A state; presentation/UI does not recompute estimands.",
-      "formal_sources": ["SRC-CBA29E303A", "SRC-5D0E7E5BD7"],
-      "project_authorities": ["src/resilient_agents/study/", "src/resilient_agents/evidence_v2/", "docs/decisions/DEC-060_PROTOCOL_V2_1_RECOVERY_AND_COMPARISON_AMENDMENT.md"],
+      "formal_sources": [
+        "SRC-CBA29E303A",
+        "SRC-5D0E7E5BD7"
+      ],
+      "project_authorities": [
+        "src/resilient_agents/study/",
+        "src/resilient_agents/evidence_v2/",
+        "docs/decisions/DEC-060_PROTOCOL_V2_1_RECOVERY_AND_COMPARISON_AMENDMENT.md"
+      ],
       "synthesis": "Algorithm literature motivates preserving replay/optimizer/implementation state; project code defines exact checkpoint contract.",
       "limits": "Do not claim the papers specify this repository's serialization format."
     },
@@ -305,8 +449,15 @@
       "chapter": "5,6,7",
       "type": "result",
       "claim": "RQ1 final nominal performance and learning-efficiency/time-average performance must be reported separately; observed method ordering is limited to the accepted protocol-v2.1 evidence.",
-      "formal_sources": ["SRC-4ED8B918E3", "SRC-4000D2B40A"],
-      "project_authorities": ["docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md", "results/analysis/protocol-v2.1-final/", "results/thesis-assets/protocol-v2.1-final/"],
+      "formal_sources": [
+        "SRC-4ED8B918E3",
+        "SRC-4000D2B40A"
+      ],
+      "project_authorities": [
+        "docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md",
+        "results/analysis/protocol-v2.1-final/",
+        "results/thesis-assets/protocol-v2.1-final/"
+      ],
       "synthesis": "Use literature only for why separate metrics matter; exact values/orderings come exclusively from T-612/T-613.",
       "limits": "No universal algorithm ranking."
     },
@@ -315,8 +466,15 @@
       "chapter": "5,6,7",
       "type": "result",
       "claim": "RQ2 adaptation benefit is condition-dependent and must be interpreted together with Frozen/Adaptive losses rather than as a single general resilience score.",
-      "formal_sources": ["SRC-0F8A6588DC", "SRC-4000D2B40A", "SRC-0882A9B2B0"],
-      "project_authorities": ["docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md", "results/analysis/protocol-v2.1-final/"],
+      "formal_sources": [
+        "SRC-0F8A6588DC",
+        "SRC-4000D2B40A",
+        "SRC-0882A9B2B0"
+      ],
+      "project_authorities": [
+        "docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md",
+        "results/analysis/protocol-v2.1-final/"
+      ],
       "synthesis": "External work supports diagnostic separation and cautions against universal specialized-method superiority; project evidence supplies the actual condition effects.",
       "limits": "Do not pool different perturbation families into one opaque score."
     },
@@ -325,8 +483,15 @@
       "chapter": "5,6,7",
       "type": "result",
       "claim": "RQ3 recovery incidence, observed recovery time and right-censoring are separate pieces of evidence; non-recovery cannot be converted to an observed time of 256.",
-      "formal_sources": ["SRC-0A594EACC0", "SRC-0F8A6588DC"],
-      "project_authorities": ["docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md", "src/resilient_agents/evidence_v2/recovery.py", "results/analysis/protocol-v2.1-final/"],
+      "formal_sources": [
+        "SRC-0A594EACC0",
+        "SRC-0F8A6588DC"
+      ],
+      "project_authorities": [
+        "docs/research/T612_FINAL_STATISTICAL_ANALYSIS.md",
+        "src/resilient_agents/evidence_v2/recovery.py",
+        "results/analysis/protocol-v2.1-final/"
+      ],
       "synthesis": "External sources motivate time-resolved recovery; project evidence defines classifications/times.",
       "limits": "No post-hoc survival analysis or binomial significance family is introduced."
     },
@@ -335,7 +500,11 @@
       "chapter": "6",
       "type": "literature",
       "claim": "Faster nominal learning does not logically entail faster post-change recovery because the mechanisms and estimands differ.",
-      "formal_sources": ["SRC-0F8A6588DC", "SRC-0A594EACC0", "SRC-4000D2B40A"],
+      "formal_sources": [
+        "SRC-0F8A6588DC",
+        "SRC-0A594EACC0",
+        "SRC-4000D2B40A"
+      ],
       "context_sources": [],
       "synthesis": "Use separate metric/process literature to support the distinction, then interpret Dyna-Q+ only from project trajectories.",
       "limits": "Do not attribute the thesis-specific Dyna-Q+ pattern to a paper that did not run this experiment."
@@ -345,7 +514,11 @@
       "chapter": "6",
       "type": "literature",
       "claim": "A method can be robust to one perturbation family yet weak under another; specialized robust/adaptive methods do not imply universal superiority.",
-      "formal_sources": ["SRC-0882A9B2B0", "SRC-81A15E6905", "SRC-09DD20BA85"],
+      "formal_sources": [
+        "SRC-0882A9B2B0",
+        "SRC-81A15E6905",
+        "SRC-09DD20BA85"
+      ],
       "context_sources": [],
       "synthesis": "Generalization, action-robust and observation-robust work all expose domain/perturbation/trade-off dependence.",
       "limits": "Avoid cross-domain numerical comparison."
@@ -355,7 +528,11 @@
       "chapter": "6",
       "type": "literature",
       "claim": "Replay/history can interact with non-stationarity and adaptation, but the direction of the effect is empirical and method-specific.",
-      "formal_sources": ["SRC-CBA29E303A", "SRC-660560956D", "SRC-F909CABDEB"],
+      "formal_sources": [
+        "SRC-CBA29E303A",
+        "SRC-660560956D",
+        "SRC-F909CABDEB"
+      ],
       "context_sources": [],
       "synthesis": "Replay literature establishes sensitivity; non-stationary/continual work motivates stale-history concerns.",
       "limits": "Do not claim replay caused a thesis result without an explicit ablation."
@@ -365,7 +542,12 @@
       "chapter": "6",
       "type": "literature",
       "claim": "The thesis's external validity is bounded by its controlled GridWorld family, finite interaction budget, compact neural architectures and specific perturbation definitions.",
-      "formal_sources": ["SRC-4ED8B918E3", "SRC-8D4F62D85D", "SRC-21EBE15D15", "SRC-4000D2B40A"],
+      "formal_sources": [
+        "SRC-4ED8B918E3",
+        "SRC-8D4F62D85D",
+        "SRC-21EBE15D15",
+        "SRC-4000D2B40A"
+      ],
       "context_sources": [],
       "synthesis": "Multiple benchmark/design sources support explicit scoping rather than transfer claims.",
       "limits": "No claim of direct transfer to robotics, Atari or continuous control."
@@ -375,8 +557,14 @@
       "chapter": "7",
       "type": "literature",
       "claim": "Explicit changepoint detection, context inference and recency/restart mechanisms are legitimate future extensions distinct from ordinary continued learning.",
-      "formal_sources": ["SRC-660560956D", "SRC-0406E13B97", "SRC-19C2E91926"],
-      "informal_sources": ["SRC-49A9ACCA53"],
+      "formal_sources": [
+        "SRC-660560956D",
+        "SRC-0406E13B97",
+        "SRC-19C2E91926"
+      ],
+      "informal_sources": [
+        "SRC-49A9ACCA53"
+      ],
       "context_sources": [],
       "synthesis": "Use formal sources for re-exploration/detection/context boundaries; seminar only for discovery of additional primary work.",
       "limits": "Future-work options are not evidence already produced by this thesis."
@@ -386,7 +574,11 @@
       "chapter": "7",
       "type": "literature",
       "claim": "Broader controlled environments and explicit interpolation/extrapolation splits would test whether findings extend beyond the current GridWorld family.",
-      "formal_sources": ["SRC-0882A9B2B0", "SRC-21EBE15D15", "SRC-4000D2B40A"],
+      "formal_sources": [
+        "SRC-0882A9B2B0",
+        "SRC-21EBE15D15",
+        "SRC-4000D2B40A"
+      ],
       "context_sources": [],
       "synthesis": "Use generalization/benchmark sources to motivate stronger external-validity tests.",
       "limits": "Do not imply current results already generalize."
@@ -396,7 +588,10 @@
       "chapter": "7",
       "type": "literature",
       "claim": "Safety-constrained continual adaptation is a distinct future research direction requiring explicit cost/constraint evidence in addition to return/recovery.",
-      "formal_sources": ["SRC-3A5E2C9E2C", "SRC-0406E13B97"],
+      "formal_sources": [
+        "SRC-3A5E2C9E2C",
+        "SRC-0406E13B97"
+      ],
       "context_sources": [],
       "synthesis": "SafeRL and safe-continual literature motivate the extension.",
       "limits": "Do not relabel current task-return experiments as safety experiments."
