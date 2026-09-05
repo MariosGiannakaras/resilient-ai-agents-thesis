@@ -4,98 +4,126 @@
 
 Build a scientifically valid, reproducible, realistically completable thesis on resilient AI agents under uncertainty. Keep the research contribution primary; the local application is a polished execution, inspection, analysis, and presentation tool, not a production platform.
 
-This repository is the thesis project source of truth. `MariosGiannakaras/ThesisBibliography` is the separate canonical source of truth for bibliography discovery, originals, OCR/conversion, scientific source analysis, verification, selection, and exports; this repository consumes its generated export read-only.
+This repository is the project source of truth. Conversation/model memory is never authority. `MariosGiannakaras/ThesisBibliography` remains the separate canonical bibliography lifecycle repository; this repository consumes its generated export read-only.
 
-## Language
+## Prompt-free entrypoint
 
-- Repository-authored technical/operational material, code, configs, branches, commits, and PR text: English.
-- Preserve exact official Greek text when quoted.
-- Scientific evidence stays in its original source language.
-- Final thesis and expected defense copy/speaker material are Greek unless official guidance changes.
+The user must not need to provide a task prompt. When the user says **"continue implementation"**, "continue", "resume", or equivalent, recover the actual repository state and continue autonomously. Do not ask what to do unless objective repository/external evidence still leaves a genuinely blocking ambiguity.
 
-## Always-on authority map
+Repository/Git/GitHub evidence overrides stale or conflicting conversation/model memory.
 
-Start every Codex session with exactly:
+## Mandatory recovery sequence
 
-1. `AGENTS.md`
-2. `docs/context/TASKS.md`
-3. `docs/context/CURRENT_STATUS.md`
+Before any implementation decision:
 
-Then read only what the active task needs. Use repository search before opening broad documents or generated corpora.
+1. read `AGENTS.md`;
+2. read `docs/context/WORK_STATE.json` — the operational resume pointer;
+3. read `docs/context/TASKS.md` — the canonical task/dependency ledger;
+4. read `docs/context/CURRENT_STATUS.md` — compact accepted project state;
+5. inspect actual Git state: working tree, current branch, recent commits and unpushed/unmerged work;
+6. inspect GitHub state when available: open PRs, their heads, reviews/checks/CI and relevant issues;
+7. reconcile any disagreement before new work. Objective Git/GitHub/evidence state wins.
 
-- Concrete task/status/dependency/resume ledger: `docs/context/TASKS.md`
-- Current accepted state and exact next gate: `docs/context/CURRENT_STATUS.md`
-- Scope/product budget: `docs/context/SCOPE_REFINEMENT.md`
-- Responsibilities, Git/PR handoffs, and lifecycle: `docs/context/EXECUTION_WORKFLOW.md`
-- Documentation/source-of-truth rules: `docs/context/DOCUMENTATION_GOVERNANCE.md`
-- Research framing/model/GridWorld/metrics evidence: `docs/research/`
-- Protocol/run/provenance specifications: `docs/experiments/`
-- Dashboard/UX: `docs/architecture/UI_INFORMATION_ARCHITECTURE.md` and `app/README.md`
-- Thesis/defense: `docs/thesis/`
-- Accepted architectural decisions: `docs/decisions/DECISION_LOG.md` and referenced ADRs
+Read deeper documents only for the recovered/selected task. Prefer targeted search and direct dependencies over whole-repository rereads.
 
-Historical files and old conversations are context only and never override current authorities.
+## Deterministic task recovery
 
-## Task execution and recovery
+Resume unfinished work in this order:
 
-- `TASKS.md` is the only concrete checklist. Resume an `IN_PROGRESS` task before selecting new work unless it is genuinely blocked; otherwise select the first dependency-valid `READY` task.
-- Never begin `BLOCKED`/`DEFERRED` work merely because it appears earlier in the roadmap.
-- Work on one bounded task or one genuinely coherent adjacent task package at a time. Evidence-backed scientific/architecture/ADR decisions and routine PR/CI/objective-review/merge boundaries are normal autonomous work when the active task and accepted evidence resolve them. Stop only at an explicit user/supervisor/external-machine/protocol/external-approval gate or another genuinely non-resolvable blocker defined by the controlling task/specification.
-- Preserve recoverable branch checkpoints after substantial validated substeps when useful. Never discard prior uncommitted/checkpoint work without inspecting it.
-- Material discoveries that create required work get a stable task ID/dependency in `TASKS.md`; do not leave required work only in chat/comments.
-- Report concise progress at meaningful checkpoints. Use `X/Y` only from a real finite denominator in `TASKS.md`; in-progress/failed work never counts as complete.
-- Do not ask the user for information that can be reliably obtained from the repository, connected bibliography, actual machine, tests, or authoritative sources.
+1. non-empty working-tree changes that have not been safely checkpointed;
+2. an open implementation PR with unfinished/ready-to-merge work;
+3. a pushed unmerged branch containing unique required work;
+4. the task identified by `WORK_STATE.json` when still valid;
+5. any `IN_PROGRESS` task in `TASKS.md`;
+6. the first dependency-valid `READY` task;
+7. if only `BLOCKED`/`DEFERRED` work remains, stop at the exact external gate and record it durably.
+
+Never start a new package while recoverable unfinished work exists unless the existing package is objectively blocked and the task ledger explicitly allows independent work.
+
+## Mandatory durable checkpoint rule
+
+`docs/context/WORK_STATE.json` is the operational resume pointer. It is not a second task ledger.
+
+- Update it **before every material change** with the active task/work package, phase and exact next action.
+- Update it **after every material validated checkpoint** with what completed, validation outcome and exact next action.
+- Update it immediately when work becomes blocked, a PR is opened/updated, CI changes the next action, or a task becomes ready to merge/complete.
+- Before a long/risky operation, context switch, quota boundary, or session end, create a coherent Git checkpoint and push it when access permits so the state file and work are remotely recoverable.
+- Never leave substantial uncommitted/unpushed work with a stale `WORK_STATE.json`.
+- Use `python scripts/project_checkpoint.py ...` when convenient; direct edits are acceptable only if the same schema/semantics are preserved.
+
+For non-trivial work, create the branch and first coherent checkpoint early, then **open a draft PR** (or normal PR when already reviewable) as soon as there is a meaningful remote checkpoint. The open PR is part of the recovery surface, not an end-of-task afterthought.
+
+## Task/status authority
+
+- `TASKS.md` is the only detailed task/dependency checklist.
+- `CURRENT_STATUS.md` records compact accepted state and external gates.
+- `WORK_STATE.json` records only the active operational checkpoint/resume pointer.
+- Started unfinished work stays unchecked and `IN_PROGRESS` in `TASKS.md`.
+- Material discoveries that create required work get a stable task ID/dependency; do not leave required work only in chat, TODO comments, PR prose or memory.
+- In-progress/failed work never counts as complete. Use `X/Y` only from a real finite denominator.
+
+## Completion and merge protocol
+
+A task is complete only after its acceptance criteria and required validation pass.
+
+1. checkpoint the final implementation/result state;
+2. reconcile affected active docs/tasks/status/workflows/tests in the same PR;
+3. run the narrowest relevant checks, then required PR CI;
+4. review the actual diff and unresolved review threads;
+5. do not submit an `APPROVE` review on your own PR;
+6. if CI/review/policy permit, squash-merge autonomously;
+7. immediately reconcile `WORK_STATE.json` on `main` to the next valid task or exact external gate so a new session never sees the merged branch as active work.
+
+Routine Git, PR creation, CI inspection, objective correction and allowed own-PR merge are implementation work, not reasons to ask the user to continue.
 
 ## Scientific integrity
 
-- Never fabricate or silently alter sources, citations, evidence status, runs, metrics, progress, logs, data, figures, tables, results, conclusions, protocol state, or presentation claims.
-- Keep RQs, agents/models, uncertainty types, metrics, and experiment matrix small and scientifically distinct.
-- Scientific choices must follow verified evidence, actual machine capability, prototypes, and pilots; never choose seeds, repetitions, budgets, hyperparameters, severities, or thresholds as unexplained convenience defaults.
-- Keep development/tuning, pilot/exploratory, and final evaluation separated. Do not inspect final evidence and silently retune primary outcomes.
-- Agents never receive hidden regime/change/disturbance/ground-truth information unless the explicit protocol permits it fairly.
-- No single-run model comparison. Retain failed/cancelled/interrupted/invalid runs and later analysis exclusions with reasons.
+- Never fabricate or silently alter sources, citations, evidence status, runs, metrics, data, figures, results, conclusions, protocol state or progress.
+- Keep development/tuning/pilot/final evidence separated; never inspect final evidence and silently retune.
+- Frozen protocol, raw/finalized results and accepted final evidence are immutable except through an explicit documented amendment/revision path.
+- Agents never receive hidden evaluator/regime/change ground truth unless the protocol explicitly permits it.
+- Failed/cancelled/interrupted/invalid scientific units remain recorded. Never replace roots/seeds based on outcomes.
 - Non-recovery stays explicit; never substitute the horizon as fake recovery time.
-- Frozen protocol, raw/finalized results, and accepted final evidence are immutable except through an explicit documented amendment/revision path.
 
 ## Bibliography boundary
 
 - Do not download/edit primary bibliography sources here.
-- `research/bibliography/` is generated through the controlled immutable synchronization workflow.
-- `research/bibliography/citation-ready/` is the strict automatic formal-citation layer. Other corpus material may support internal research but needs upstream verification/promotion and a new immutable sync before formal citation where required.
-- Never invent source metadata, DOI values, evidence, or citation status.
+- `research/bibliography/` changes only through controlled immutable synchronization.
+- `research/bibliography/citation-ready/` is the strict automatic formal-citation layer.
+- Never invent metadata, DOI values, evidence or citation status.
 
-## Software and provenance invariants
+## Software/provenance invariants
 
-- `src/resilient_agents/` must work without the UI. UI uses the same validated core/configuration paths and never reimplements scientific logic.
-- Filesystem run bundles are the evidence source of truth; indexes/databases are rebuildable caches.
-- Validate required config/contracts/schema/provenance/lifecycle boundaries before expensive work. Invalid or ambiguous required state fails closed with explicit failure; optional probes may only return explicit `unavailable`/`unsupported` when genuinely non-fatal.
-- Do not swallow required failures into defaults, empty results, or apparent success. Prefer atomic/transactional finalization so partial artifacts cannot look finalized.
-- Runs preserve resolved config, seeds, software/hardware capability snapshot, and source Git commit. Automatic publication must preserve clean-source provenance and one whole-experiment publication boundary.
-- Avoid speculative platform engineering: no cloud/distributed workers, microservices, Kubernetes, multi-user auth, production observability, or custom frontend infrastructure without a demonstrated thesis requirement.
-- The accepted target-machine baseline is native Windows CPython 3.12 via the locked `uv` environment with CPU execution required as the supported baseline. The observed Radeon GPU is not a validated scientific-compute backend; do not add CUDA/ROCm/DirectML/GPU dependencies without a later bounded compatibility justification.
+- `src/resilient_agents/` must work without the UI; UI never reimplements scientific logic.
+- Filesystem run bundles are evidence source of truth; indexes/databases are rebuildable views.
+- Required config/schema/provenance/lifecycle ambiguity fails closed; optional probes may explicitly report unavailable/unsupported.
+- Preserve resolved config, seeds, capability snapshot and source commit for scientific runs.
+- Avoid speculative platform engineering unrelated to thesis requirements.
+- Accepted compute baseline remains native Windows CPython 3.12 via locked `uv`, CPU-supported baseline.
 
 ## Testing and CI
 
 Testing is risk-based and proportional.
 
-- During implementation run the smallest targeted validator/test set that protects the changed acceptance condition or material scientific/reliability regression.
-- Prefer a small number of strong known-answer, contract, invariant, or representative integration tests over near-duplicates.
-- Do not chase coverage percentages or add broad mutation/fuzz/property/combinatorial/snapshot/E2E matrices without a concrete task-specific risk.
-- CI fixtures are tiny/deterministic; pilot/final experiment matrices are never tests.
-- When GitHub Actions is available, PR CI is the canonical full-suite pre-merge check. Do not duplicate the full suite locally merely for reassurance.
-- On CI failure inspect the failed step/log and reproduce narrowly when useful; on success record the conclusion without rereading successful logs.
+- Use the smallest targeted checks protecting the changed acceptance/reliability/scientific boundary.
+- Prefer strong known-answer/contract/invariant/integration checks over broad duplicate suites.
+- Do not turn pilot/final experiment matrices into tests.
+- PR CI is the canonical full-suite pre-merge check when available.
+- On CI failure inspect the failed step/log and reproduce narrowly; on success record the conclusion without rereading successful logs.
+- `scripts/validate_project_continuity.py` must pass for material work.
 
-## Git and documentation
+## Documentation and routing
 
-- Use descriptive lowercase feature branches and coherent PRs; intermediate checkpoint commits are allowed, with one logical squash merge to `main` normally preferred.
-- Adjacent dependency-valid task IDs may share a PR only when they are one coherent unit with no explicit external/user approval gate between them. Avoid micro-PRs created solely from task numbering.
-- PRs state task IDs, scope/rationale, validation, scientific/protocol impact, and deferred/excluded work.
-- Review the actual diff before merge. Do not submit an `APPROVE` review on your own PR. If CI is green, scope/evidence/docs are sound, findings are resolved, and repository policy does not require a distinct human approval, squash-merge your validated PR with available permissions and continue to the next dependency-valid task. A routine own-PR merge is not a stop condition.
-- Material changes reconcile affected active source-of-truth docs and `TASKS.md` in the same PR according to `DOCUMENTATION_GOVERNANCE.md`.
-- Do not store secrets, credentials, caches, or unjustified binaries. Large thesis-produced evidence follows the configured LFS policy; bibliography PDFs/LFS stay upstream.
+Active routing:
 
-## Context discipline
+- operational resume: `docs/context/WORK_STATE.json`
+- task/dependencies: `docs/context/TASKS.md`
+- compact status: `docs/context/CURRENT_STATUS.md`
+- execution/recovery workflow: `docs/context/EXECUTION_WORKFLOW.md`
+- documentation governance: `docs/context/DOCUMENTATION_GOVERNANCE.md`
+- research/protocol: `docs/research/`, `docs/experiments/`
+- UI/application: `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`, `app/README.md`
+- thesis/defense: `docs/thesis/`
+- decisions: `docs/decisions/DECISION_LOG.md`
 
-- Prefer targeted search, file ranges, summaries, and bounded command output over broad dumps. Do not read the full generated bibliography or whole repository for a bounded task.
-- Do not create extra planning/status Markdown files when `TASKS.md` and the relevant active specification already cover the state.
-- Add a new instruction/document only when it captures non-inferable durable knowledge or fixes a demonstrated failure mode; otherwise rely on code, schemas, tests, and existing source-of-truth docs.
+Historical files and old conversations are context only. Known stale current-state prose must be reconciled rather than tolerated.
