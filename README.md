@@ -21,7 +21,7 @@ The scientific experiment/evidence chain is complete and frozen. The active acad
 | T-710 Greek manuscript | COMPLETE |
 | T-711/T-714 Word composition and full-content baseline | COMPLETE / archived |
 | T-715 reader-scope + audit hardening | COMPLETE as bounded task; superseded as final-thesis candidate |
-| **T-716 full-content evidence-aware thesis** | **READY / current academic task** |
+| **T-716 full-content evidence-aware thesis** | **IN_PROGRESS — stage-3 full-content milestone archived; final evidence/citation audit remains** |
 | T-712 supervisor/reviewer corrections | DEFERRED until real feedback exists |
 | T-713 final thesis freeze | DEFERRED until T-716 acceptance + T-712 + official finalization inputs |
 | Defense T-720/T-721/T-722 | DEFERRED downstream work |
