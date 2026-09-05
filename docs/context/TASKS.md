@@ -7,13 +7,14 @@
 
 ## Mandatory session rule
 
-Every Codex session MUST read:
+Every implementation/repository session MUST recover from:
 
 1. `AGENTS.md`
-2. `docs/context/TASKS.md`
-3. `docs/context/CURRENT_STATUS.md`
+2. `docs/context/WORK_STATE.json`
+3. `docs/context/TASKS.md`
+4. `docs/context/CURRENT_STATUS.md`
 
-Use available **session memory** together with repository/Git/GitHub/evidence, with repository evidence winning when stale. Inspect `git status`, the active branch, recent commits, current open PR/CI state and any `IN_PROGRESS` work before modification.
+Session memory and conversation/model memory are advisory only. Repository/Git/GitHub/evidence wins when memory is stale or contradictory. Inspect `git status`, the active branch, recent commits, open PR/CI state and any `IN_PROGRESS` work before selecting new work.
 
 Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED` gate/dependency unmet; `DEFERRED` intentionally later; `SUPERSEDED` retained history that must not execute. In-progress/failed work never counts as complete.
 
@@ -21,7 +22,7 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 
 - **Package:** protocol-v2.0 methodology/scientific freeze remains immutable through DEC-058; the framework-neutral Study backend is complete through DEC-051/T-529; historical PySide6 application work remains complete through DEC-059/T-528; DEC-060/T-533, pre-final readiness hardening, DEC-061/T-534, intended-user hardening T-535, final visual polish/richer result visualization T-536, and final pre-T610 active-tree hygiene T-537 are complete. DEC-042/047 and candidate v1.1 remain auditable predecessor design; historical NiceGUI remains prototype history only.
 - **Project:** **8/8** master milestones objectively complete (#87). The accepted application and complete T-610→T-613 final v2.1 evidence chain have passed their objective gates. The user explicitly approved entry into WP7 on 2026-09-03; T-700, T-701, T-702, T-710, T-711, T-714 and T-715 are complete. T-715 reader-scope/audit reconciliation was squash-merged through PR #138 as `35c5367f075a2f3af0bb6d40d9db08cfc484419c`.
-- **Current task:** `T-712` is **DEFERRED** pending actual supervisor/reviewer feedback; `T-716` is **COMPLETE**. The accepted review authority is `thesis/archive/T716_stage4_evidence_audited_review_ready.docx` (25,327 words; 31/31 governed references used; 25 preserved scientific media; 92 pages; semantic SHA-256 `b01f853af794e596f0dfb491a3f5401365ca3f01fd7d410194e539f0b8a10cc1`), with all 11 final acceptance gates passing in `docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md`. `T-712` remains DEFERRED until actual supervisor/reviewer feedback; `T-713` remains DEFERRED until T-712 plus official metadata/declaration and final Word/submission gates.
+- **Current task:** `T-010` is **IN_PROGRESS** on PR #146: install the prompt-free self-resuming repository workflow and durable operational checkpoint contract. T-716 remains COMPLETE. T-712 remains DEFERRED until actual supervisor/reviewer feedback; T-713 remains downstream of T-712 plus authoritative official metadata/declaration and final Word/submission gates.
 - **Separate scientific gate:** SATISFIED for T-610 only. The committed protocol continues to retain `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate`; authorization is supplied separately through the backend `PROTOCOL_V21_FINAL_EXECUTION_AUTHORIZATION` token without changing those immutable fields or weakening the guard.
 - **State:** DEC-055 tuning remains immutable valid-complete; DEC-055/056 sizing packages remain immutable valid-failed. DEC-057 sizing-v0.3 and the combined five-method sizing package are valid-complete. DEC-058 remains the historical frozen protocol-v2.0 authority. DEC-060 plus `configs/protocols/protocol-v2.1-final.json` define the accepted protocol-v2.1 scientific authority; T-610/T-611/T-612 execution, freeze and analysis are complete while the final roots/layouts, five methods, hyperparameters, conditions, budgets and 256-interaction Phase-B horizon remain immutable. `final_reserve_access=false` and `execution_authorization=requires-explicit-t610-gate` remain mandatory.
 - **T-533 implementation:** COMPLETE. The isolated protocol-v2.1 path includes passive fixed 32-interaction Phase-B reward windows, schema-v2 temporal evidence/validation, right-censored recovery/non-recovery analysis, direct root-paired method contrasts, actual-root-count Student-t interval selection, deterministic evidence exports with v2.1 provenance, protocol-aware executor routers, fail-closed self-contained recipe materialization, and PySide6 stored-evidence recovery/contrast presentation with no UI-side estimand computation.
@@ -34,7 +35,7 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 - **Historical science:** protocol-v1.0 / FINAL-* / R0 evidence immutable. Candidate v1.1 remains non-final history; old `T-522` must not execute. Historical `T-530`, `T-531` and `T-532` remain completed/superseded history and are not repurposed.
 - **Bibliography:** current immutable writing-gate consumer checkout is upstream SHA `27674a566ab55e4491b74243fe077a31ef81ae73`, synchronized through thesis PR #143 / merge commit `2b302173be855c914af34555a8470015085662d8` and validated at 601 canonical sources, 129 citation-ready sources, 19 research materials and 281 indexed originals. Earlier SHA `ada0d1aec7511098fd12610ae9e5abe7aea875cd`, historical SHA `f10afcc41e3e1bd877d884cf7a5ae6b5284046f5` and label `bibliography-integration-v3` remain immutable prior-snapshot provenance only.
 - **Pre-WP7 approval:** APPROVED by explicit user direction on 2026-09-03 after T-613 completion.
-- **Exact next action:** preserve the accepted T-716 review milestone. Start `T-712` only from actual supervisor/reviewer feedback; do not manufacture or relabel internal review as external feedback. T-713 remains downstream of T-712 plus official metadata/declaration and final Word/submission checks.
+- **Exact next action:** finish `T-010`: make `AGENTS.md` the no-prompt entrypoint, require `WORK_STATE.json` checkpoints, add continuity validation/CI, retire `CODEX_EXECUTION_PROMPT.md`, reconcile active workflow/governance docs, then merge PR #146 only after required checks pass.
 
 ## Quota/interruption resilience
 
@@ -57,6 +58,10 @@ Status: `[x]` complete; `READY` dependency-valid; `IN_PROGRESS` active; `BLOCKED
 - [x] `T-007` — End-to-end lifecycle/user/Codex/defense handoffs.
 - [x] `T-008` — Lean three-file session-start core and resumable execution.
 - [x] `T-009` — Project-scoped developer-documentation configuration.
+- [ ] IN_PROGRESS `T-010` — **Prompt-free self-resuming repository workflow and durable work-state checkpoints.**
+  - Depends on: `T-008`, `T-009` — satisfied.
+  - Scope: `AGENTS.md` becomes the automatic execution/recovery contract; `WORK_STATE.json` records the active operational checkpoint; every material action/checkpoint updates it; non-trivial work is pushed and surfaced in an early PR; Git/GitHub state is inspected before task selection.
+  - Acceptance: memory-independent recovery order is explicit; half-finished work resumes before new work; `scripts/project_checkpoint.py` and `scripts/validate_project_continuity.py` exist; material PRs update `WORK_STATE.json`; prompt dependency is removed; active docs/validators/CI are reconciled; PR #146 is green and merged; main is normalized to the next real task/external gate.
 
 ## WP1 — Target-machine baseline
 

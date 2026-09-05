@@ -2,50 +2,90 @@
 
 ## Operating model
 
-The user supplies goals, genuinely subjective academic choices, actual supervisor/Department feedback and private/official material when required. Repository automation owns routine Git/CI/task bookkeeping, reproducible technical evidence and objective validation. ChatGPT may perform Greek thesis/review/defense narrative work when the relevant task gate is open.
+The repository is the durable execution authority. The user may simply say **continue implementation**. The agent recovers state, resumes unfinished work, executes the next dependency-valid scope, performs routine Git/PR/CI work, and stops only at a genuine external or explicit authorization gate.
 
-Normal flow:
+Conversation/model memory is advisory only. Repository/Git/GitHub evidence overrides it.
 
-> recover actual repository/GitHub state -> select one dependency-valid bounded scope -> implement -> targeted checks -> PR CI/objective review -> corrections -> durable reconciliation -> merge -> next allowed scope
+## Prompt-free session bootstrap
 
-## Session continuation
+1. Load `AGENTS.md`.
+2. Read `docs/context/WORK_STATE.json`.
+3. Read `docs/context/TASKS.md`.
+4. Read `docs/context/CURRENT_STATUS.md`.
+5. Inspect working-tree status, current branch, recent commits and unpushed/unmerged work.
+6. Inspect open PRs, CI/check status and relevant issues when GitHub access exists.
+7. Reconcile discrepancies before new implementation.
 
-Every coding/repository session starts from `AGENTS.md`, `docs/context/TASKS.md` and `docs/context/CURRENT_STATUS.md`, after inspecting Git status/branch/recent commits/open PRs/CI. Repository evidence wins over stale chat memory. Never discard unique branch or uncommitted work without inspection.
+No separate task prompt is required or authoritative.
+
+## Recovery order
+
+Resume in this order:
+
+1. uncommitted working-tree changes;
+2. open implementation PRs with unfinished or ready-to-merge work;
+3. pushed unmerged branches with unique required work;
+4. valid `WORK_STATE.json` active package;
+5. `TASKS.md` `IN_PROGRESS` task;
+6. first dependency-valid `READY` task;
+7. exact `BLOCKED`/`DEFERRED` external gate.
+
+Do not start new work while recoverable unfinished work exists unless it is objectively blocked and the ledger explicitly permits an independent package.
+
+## Durable checkpoint protocol
+
+`WORK_STATE.json` is the operational resume pointer and must never become a competing task ledger.
+
+Before every material change, update:
+
+- active task/work package;
+- phase;
+- branch/PR identity when known;
+- last durable checkpoint;
+- exact next action;
+- blockers and pending substeps.
+
+After every material validated checkpoint, update:
+
+- completed substep/checkpoint;
+- relevant validation result;
+- exact next action;
+- any changed blocker/PR/CI state.
+
+Before long/risky operations, quota/context boundaries or session end, create a coherent Git checkpoint and push it when access permits. Substantial work must not exist only in a local working tree or conversation.
+
+Use `scripts/project_checkpoint.py` for structured updates when convenient.
+
+## Branch/PR lifecycle
+
+For non-trivial work:
+
+1. create/recover one coherent branch;
+2. record the work package in `WORK_STATE.json` and `TASKS.md` before substantial implementation;
+3. commit/push an early coherent checkpoint;
+4. open a draft PR as soon as useful remote recovery state exists; convert to normal review when reviewable;
+5. continue implementation with checkpoint updates rather than waiting until the end to expose the branch;
+6. run targeted checks, then canonical PR CI;
+7. review the actual diff/review threads; never self-`APPROVE`;
+8. squash-merge when checks/review/repository policy permit;
+9. immediately reconcile `WORK_STATE.json` on `main` to the next dependency-valid task or exact external gate.
+
+## Task/document governance
+
+`TASKS.md` is the canonical task/dependency ledger. Started work is `IN_PROGRESS`; completed work is checked; discovered required work receives a stable task ID. `CURRENT_STATUS.md` is compact accepted state. `WORK_STATE.json` is only the active checkpoint/resume pointer.
+
+Every material PR reviews and reconciles affected active docs, status, tasks, tests, workflows and decisions according to `DOCUMENTATION_GOVERNANCE.md`.
 
 ## Validation discipline
 
-Use the smallest deterministic checks that protect the changed boundary during implementation; GitHub PR CI is the canonical complete repository guard. Do not turn scientific matrices into CI tests or create arbitrary coverage/fuzzing projects. Required scientific/provenance/configuration state fails closed.
+Use the smallest relevant checks during implementation. GitHub PR CI is the canonical full-suite pre-merge guard. `scripts/validate_project_continuity.py` and `scripts/validate_documentation_consistency.py` are mandatory continuity/documentation guards for material work.
 
-## Scientific authority and completed evidence chain
+Scientific matrices are not CI test matrices. Required scientific/provenance/configuration state fails closed.
 
-Protocol-v2.1 under DEC-058/DEC-060 remains frozen. Q-Learning, SARSA, DQN, PPO and Dyna-Q+ use the accepted common actual-interaction fairness contract, method-native continuation and matched FN/FD/AN/AD Phase B. RQ3 uses passive 32-interaction windows, tolerance 0.10, two-window stability and explicit right-censoring.
+## Scientific/bibliography boundaries
 
-T-610 through T-613 are complete. Preserve the failed 216-job predecessor and accepted 603/603 DEC-062 replacement as distinct immutable histories; only T-611 frozen replacement evidence feeds T-612, and only registered T-612 outputs feed T-613. No downstream task may recompute or reinterpret frozen science outside its declared authority.
+Protocol-v2.1, frozen evidence, T-612 analysis, T-613 assets and accepted T-716 thesis lineage remain immutable except through their declared amendment/revision workflows. Bibliography lifecycle work remains upstream in `MariosGiannakaras/ThesisBibliography`; generated consumer files are never hand-edited.
 
-## Accepted application state
+## Current academic gate after T-010
 
-DEC-059/DEC-061 control the accepted PySide6 application. The clean experiment-first rebuild and subsequent hardening are complete through T-537. Primary surfaces are **Experiment / Run / Results / Evidence**. The UI presents validated stored evidence and cannot own scientific RNG, roots, checkpoint identity, reductions, recovery decisions, intervals, finalization or authorization.
-
-T-538 is optional/deferred bounded presentation polish. T-803 standalone Windows packaging is post-thesis and is not a current academic blocker.
-
-## Bibliography flow
-
-All source discovery/originals/OCR/conversion/scientific analysis and promotion belong to `MariosGiannakaras/ThesisBibliography`. This repository consumes immutable generated snapshots read-only. The current T-716 consumer authority is `27674a566ab55e4491b74243fe077a31ef81ae73`; formal citations resolve through `research/bibliography/citation-ready/`. Later freshness work is governed by T-800, not ad-hoc local edits.
-
-## Thesis state and next gate
-
-T-700/T-701/T-702/T-710/T-711/T-714/T-715/T-716 are complete. The accepted T-716 review authority is `thesis/archive/T716_stage4_evidence_audited_review_ready.docx`, semantic SHA-256 `b01f853af794e596f0dfb491a3f5401365ca3f01fd7d410194e539f0b8a10cc1`, with 11/11 final acceptance gates passing.
-
-The next academic task is **T-712 only when actual supervisor/reviewer feedback exists**. Until then, do not reopen T-716 or manufacture feedback. T-713 remains blocked by T-712 where applicable plus authoritative official metadata/declaration and final Microsoft Word/submission checks.
-
-After T-713, follow the canonical sequence T-720 -> T-721 -> T-722 and T-800/T-801/T-802; T-803 remains post-thesis.
-
-## Tool/ownership handoff
-
-- Repository/Codex: reproducible evidence, technical validation, source/citation/result consistency, Git/CI and traceable assets.
-- ChatGPT: Greek academic revision/narrative, defense storyline, slide copy and speaker material when their gates are open.
-- Microsoft Word: final editable thesis inspection/field updates/freeze.
-- PowerPoint: final defense presentation inspection/rehearsal.
-- User: real supervisor/private/official inputs, selected manual app media where requested and final subjective academic sign-off.
-
-Quantitative thesis/presentation assets derive from frozen repository evidence, never from manually retyped UI values.
+T-716 is COMPLETE. Unless actual supervisor/reviewer feedback has arrived, T-712 remains DEFERRED. T-713 remains downstream of actual feedback where applicable plus authoritative official metadata/declaration and final Word/submission checks. Do not manufacture work to bypass an external gate.

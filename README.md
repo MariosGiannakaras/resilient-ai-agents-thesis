@@ -7,6 +7,10 @@ Version-controlled repository for the complete thesis lifecycle: research framin
 
 > `docs/context/TASKS.md` is the canonical task/dependency ledger. `docs/context/CURRENT_STATUS.md` is the compact current state. This README is the human-readable entry point.
 
+## Agent continuation
+
+No task prompt is required. A coding/repository agent must recover from `AGENTS.md`, `docs/context/WORK_STATE.json`, `TASKS.md`, `CURRENT_STATUS.md`, actual Git state and open PR/CI state. Saying **continue implementation** is sufficient: unfinished work is resumed before new work, and every material checkpoint updates `WORK_STATE.json`.
+
 ## Current state
 
 The scientific experiment/evidence chain is complete and frozen. **T-716 is now COMPLETE as the review-ready full-content thesis task.** The accepted review milestone is the evidence-audited stage-4 DOCX (25,327 words, 31/31 governed citations, 92-page visual QA). T-712 remains externally gated on actual supervisor/reviewer feedback; T-713 remains the later final-submission freeze for official metadata, accepted feedback and final Word/submission checks.

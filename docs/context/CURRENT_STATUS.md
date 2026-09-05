@@ -5,6 +5,12 @@
 
 `docs/context/TASKS.md` is the canonical dependency/task ledger. Objective Git/GitHub/evidence state overrides stale prose after interruption.
 
+## Active repository continuity work
+
+- `T-010` is **IN_PROGRESS** on PR #146. Its purpose is to make repository continuation independent of chat/model memory: `AGENTS.md` is the no-prompt entrypoint, `docs/context/WORK_STATE.json` is the operational resume pointer, and every material change/checkpoint must update that pointer before work proceeds.
+- Recovery order is: working-tree work -> open PR -> unmerged pushed branch -> `WORK_STATE` -> `TASKS` `IN_PROGRESS` -> first dependency-valid `READY` task -> exact external gate.
+- T-716 remains COMPLETE and immutable as the accepted review-ready thesis milestone. T-010 changes workflow/governance only; it does not change the thesis DOCX, protocol, frozen evidence, analysis or scientific assets.
+
 ## Current execution state
 
 - Historical baseline invariants remain complete: `T-100` target-machine validation and `T-200` source-traceable research framing are not reopened by WP7 writing work. The accepted PySide6 application remains the experiment-first **Experiment / Run / Results / Evidence** system; the UI is presentation/control only and retains progressive disclosure for technical/provenance detail.
@@ -43,4 +49,4 @@ The immutable bibliography writing-gate consumer snapshot is `27674a566ab55e4491
 
 ## Exact next action
 
-Do not reopen T-716 without new evidence or feedback. The next academic action is `T-712` **only when actual supervisor/reviewer feedback exists**. Until then, preserve the accepted T-716 stage-4 review milestone and its acceptance identity; `T-713` remains blocked by real feedback plus authoritative official metadata/declaration and final Word/submission checks.
+Finish T-010 on PR #146, validate the prompt-free recovery/checkpoint workflow, and merge only when continuity/documentation/required PR CI is green. After merge, normalize `WORK_STATE.json` on `main` to T-712 DEFERRED unless real supervisor/reviewer feedback has arrived.

@@ -33,7 +33,9 @@ def replace_once(relative: str, old: str, new: str) -> None:
 def regex_once(relative: str, pattern: str, replacement: str) -> None:
     target = path(relative)
     text = target.read_text(encoding="utf-8")
-    updated, count = re.subn(pattern, replacement, text, count=1, flags=re.DOTALL | re.MULTILINE)
+    if replacement in text:
+        return
+    updated, count = re.subn(pattern, replacement, text, count=1, flags=re.MULTILINE)
     if count != 1:
         raise RuntimeError(f"{relative}: expected one regex match for {pattern!r}, found {count}")
     target.write_text(updated, encoding="utf-8")
@@ -43,7 +45,7 @@ def regex_once(relative: str, pattern: str, replacement: str) -> None:
 replace_once(
     "docs/context/TASKS.md",
     "Every Codex session MUST read:\n\n1. `AGENTS.md`\n2. `docs/context/TASKS.md`\n3. `docs/context/CURRENT_STATUS.md`\n\nUse available **session memory** together with repository/Git/GitHub/evidence, with repository evidence winning when stale. Inspect `git status`, the active branch, recent commits, current open PR/CI state and any `IN_PROGRESS` work before modification.",
-    "Every implementation/repository session MUST recover from:\n\n1. `AGENTS.md`\n2. `docs/context/WORK_STATE.json`\n3. `docs/context/TASKS.md`\n4. `docs/context/CURRENT_STATUS.md`\n\nConversation/model memory is advisory only. Repository/Git/GitHub/evidence wins when memory is stale or contradictory. Inspect the working tree, active branch, recent commits, open PR/CI state and any `IN_PROGRESS` work before selecting new work.",
+    "Every implementation/repository session MUST recover from:\n\n1. `AGENTS.md`\n2. `docs/context/WORK_STATE.json`\n3. `docs/context/TASKS.md`\n4. `docs/context/CURRENT_STATUS.md`\n\nSession memory and conversation/model memory are advisory only. Repository/Git/GitHub/evidence wins when memory is stale or contradictory. Inspect `git status`, the active branch, recent commits, open PR/CI state and any `IN_PROGRESS` work before selecting new work.",
 )
 regex_once(
     "docs/context/TASKS.md",
@@ -52,12 +54,12 @@ regex_once(
 )
 regex_once(
     "docs/context/TASKS.md",
-    r"^- \*\*Exact next action:\*\*.*$",
+    r"^- .*Exact next action.*$",
     "- **Exact next action:** finish `T-010`: make `AGENTS.md` the no-prompt entrypoint, require `WORK_STATE.json` checkpoints, add continuity validation/CI, retire `CODEX_EXECUTION_PROMPT.md`, reconcile active workflow/governance docs, then merge PR #146 only after required checks pass.",
 )
 tasks = path("docs/context/TASKS.md")
 text = tasks.read_text(encoding="utf-8")
-if "`T-010`" not in text:
+if "- [ ] IN_PROGRESS `T-010`" not in text:
     anchor = "- [x] `T-009` — Project-scoped developer-documentation configuration.\n"
     addition = anchor + (
         "- [ ] IN_PROGRESS `T-010` — **Prompt-free self-resuming repository workflow and durable work-state checkpoints.**\n"
