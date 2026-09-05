@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T19:30:00Z",
+  "updated_at_utc": "2026-09-05T20:48:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-717",
   "task_status": "IN_PROGRESS",
@@ -8,9 +8,9 @@
   "branch": "thesis/t717-final-content-refinement",
   "base_branch": "main",
   "pull_request": 148,
-  "phase": "REPRODUCIBLE_BUILD_AND_PR_INTEGRATION",
-  "last_completed_checkpoint": "T-717 content/visual refinement is complete locally and reproducible from the accepted T-716 archive. Full 94-page render QA passed; 92/94 reproducible pages are pixel-identical to the fully reviewed candidate, with only the two intended explanatory figure pages differing. Structural QA passes at 32/32 references, 25 media with 23/25 prior media byte-identical, 27 SEQ + 3 TOC + 1 PAGE fields, zero comments/tracked changes/SRC residue.",
-  "next_action": "Run the branch-only T-717 reconciliation/build workflow to persist canonical TASKS/CURRENT_STATUS/claim governance, generate and archive the deterministic T-717 DOCX + QA report from T-716, validate continuity/documentation/claim evidence, then remove the temporary transition helper/workflow and merge PR #148 only when all final checks are green.",
+  "phase": "FINAL_PR_CLEANUP_AND_VALIDATION",
+  "last_completed_checkpoint": "Branch-only T-717 workflow run 33989758343 passed end-to-end and persisted the canonical T-717 authorities, governed LIT-018 claim, deterministic review-ready DOCX and QA report. The canonical CI DOCX raw SHA-256 is 57d6de352eef6147fa24179f87a3f8e9ee39f65a90ad8b85777cac8f541f57c5; a second build in the same canonical CI environment was byte-identical. Claim-evidence validation passed with 39 governed claims. Project continuity and documentation consistency also passed inside the T-717 workflow. Artifact 9976260707 was uploaded. Regular PR workflows on the bot persistence head reported action_required with zero jobs, which is a GitHub approval state rather than a validation failure.",
+  "next_action": "Remove the temporary branch-only reconciliation helper/workflow, make the document-build dependency contract explicit without changing the scientific environment lock, inspect the exact PR #148 diff/review/check state, fix objective failures only, and mark T-717 ready to merge only when the latest user-authored head has green required checks.",
   "blockers": [],
   "completed_substeps": [
     "Whole-manuscript content/visual/bibliography audit completed against accepted T-716",
@@ -20,37 +20,49 @@
     "Historical Phase-B development fixture rejected as misleading screenshot material",
     "AI-agent-to-RL-agent scope bridge added",
     "Fixed-severity-not-sweep and single-change/recurrent-disruption limitations added",
-    "Robust-Gymnasium added as thesis reference [32] for the bounded perturbation-axis claim",
+    "Robust-Gymnasium added as thesis reference [32] and governed as LIT-018 for the bounded perturbation-axis claim",
     "Word-native Figure 1/Figure 2 SEQ captions and List-of-Figures TOC field restored",
     "94-page visual QA and structural/accessibility QA completed",
     "Deterministic builder reproduced 92/94 pages pixel-identically with differences restricted to the two new figure pages",
-    "Draft PR #148 opened early as the durable review surface"
+    "Draft PR #148 opened early as the durable review surface",
+    "T-717 branch-only workflow run 33989758343 passed reconciliation, deterministic build, claim evidence, continuity, documentation and QA gates",
+    "Canonical T-717 DOCX and QA archive persisted by commit 69c36717bed012092b8c24d26b624c35eafd3f24",
+    "Second canonical CI build verified byte-identical to the persisted DOCX",
+    "Exact CI artifact 9976260707 uploaded"
   ],
   "pending_substeps": [
-    "Persist T-717 task/status authorities and LIT-018 claim governance",
-    "Persist deterministic builder and generated review-ready DOCX/QA archive",
-    "Validate claim map, project continuity, documentation consistency and reproducible second build",
-    "Inspect exact PR #148 diff/review/check state",
-    "Remove branch-only transition helper/workflow and re-run final PR checks",
-    "Squash-merge T-717 and normalize main back to T-712 DEFERRED"
+    "Remove branch-only transition helper and temporary T-717 workflow",
+    "Make thesis document-build dependencies explicit without altering the frozen scientific environment",
+    "Inspect exact PR #148 changed-file diff and review threads",
+    "Obtain green latest-head Repository checks, Project continuity, Claim evidence and any path-triggered thesis checks",
+    "Mark PR #148 ready and squash-merge when objectively green",
+    "Normalize main immediately back to T-712 DEFERRED and verify main continuity"
   ],
   "validation": {
     "t716_prior_acceptance": "PASS_11_OF_11",
     "t717_audit_decision": "NARROW_REFINEMENT_APPROVED_BY_USER_2026_09_05",
     "t717_local_docx": "PASS_CONTENT_STRUCTURE_AND_94_PAGE_VISUAL_QA",
+    "t717_reproducible_build": "PASS_94_PAGES_92_PIXEL_IDENTICAL_TWO_INTENTIONAL_FIGURE_PAGES",
+    "t717_canonical_ci_run": "PASS_33989758343",
+    "t717_canonical_ci_raw_sha256": "57d6de352eef6147fa24179f87a3f8e9ee39f65a90ad8b85777cac8f541f57c5",
+    "t717_second_ci_build": "PASS_BYTE_IDENTICAL",
+    "t717_ci_artifact_id": 9976260707,
+    "claim_evidence": "PASS_39_CLAIMS",
+    "project_continuity_inside_t717_workflow": "PASS",
+    "documentation_consistency_inside_t717_workflow": "PASS",
     "word_fields": "PASS_27_SEQ_3_TOC_1_PAGE",
     "references": "PASS_32_OF_32_USED",
     "media_preservation": "PASS_23_OF_25_UNCHANGED_TWO_INTENTIONAL_REPLACEMENTS",
     "comments_tracked_changes": "PASS_ZERO",
     "accessibility": "PASS_0_HIGH_0_MEDIUM_0_LOW",
     "scientific_results_modified": "NO",
-    "new_experiment_or_reanalysis": "NO",
-    "t717_reproducible_build": "PASS_94_PAGES_92_PIXEL_IDENTICAL_TWO_INTENTIONAL_FIGURE_PAGES"
+    "new_experiment_or_reanalysis": "NO"
   },
   "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume T-717 before T-712/T-713. T-717 is an author-directed pre-freeze refinement and must not be relabelled as external supervisor/reviewer feedback.",
   "notes": [
     "TASKS.md remains the canonical task/dependency ledger; this file is the operational resume pointer.",
     "Frozen protocol/results remain immutable. The new figures explain existing frozen protocol/architecture facts and do not recompute scientific outcomes.",
-    "Do not add a UI screenshot unless a genuinely representative validated runtime state is available; the historical fixture is intentionally excluded."
+    "Do not add a UI screenshot unless a genuinely representative validated runtime state is available; the historical fixture is intentionally excluded.",
+    "The action_required PR checks on bot head 69c36717... contained zero jobs; they are not evidence of a test or scientific failure."
   ]
 }
