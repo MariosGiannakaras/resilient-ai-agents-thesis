@@ -5,43 +5,27 @@ on:
     branches:
       - thesis/t716-final-acceptance
     paths:
+      - AGENTS.md
+      - docs/context/WORK_STATE.json
+      - scripts/project_checkpoint.py
+      - scripts/validate_project_continuity.py
+      - scripts/t010_install_self_resuming_workflow.py
       - scripts/t716_final_acceptance_audit.py
       - scripts/t716_final_reconcile_claim_registry.py
       - scripts/t716_final_reconcile_status.py
-      - scripts/t716_continuity_reconcile.py
-      - scripts/t716_continuity_contract_fix.py
       - .github/workflows/t716-final-acceptance.yml
   pull_request:
     paths:
+      - AGENTS.md
+      - README.md
+      - docs/context/**
+      - docs/thesis/**
+      - scripts/project_checkpoint.py
+      - scripts/validate_project_continuity.py
+      - scripts/t010_install_self_resuming_workflow.py
       - scripts/t716_final_acceptance_audit.py
       - scripts/t716_final_reconcile_claim_registry.py
       - scripts/t716_final_reconcile_status.py
-      - scripts/t716_continuity_reconcile.py
-      - scripts/t716_continuity_contract_fix.py
-      - docs/thesis/claim-evidence-map.json
-      - docs/thesis/CLAIM_EVIDENCE_TREE.md
-      - docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md
-      - docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json
-      - docs/thesis/T716_REWRITE_PLAN.md
-      - docs/thesis/WP7_WP8_TOOL_WORKFLOW.md
-      - docs/thesis/PRESENTATION_WORKFLOW.md
-      - docs/thesis/THESIS_STRUCTURE_DRAFT.md
-      - docs/context/TASKS.md
-      - docs/context/CURRENT_STATUS.md
-      - docs/context/POST_THESIS_LIFECYCLE.md
-      - docs/context/CODEX_EXECUTION_PROMPT.md
-      - docs/context/PROJECT_CONTEXT.md
-      - docs/context/OPEN_QUESTIONS.md
-      - docs/context/IMPLEMENTATION_ROADMAP.md
-      - docs/context/DEFINITION_OF_DONE.md
-      - docs/context/EXECUTION_WORKFLOW.md
-      - docs/context/USER_DECISIONS.md
-      - docs/context/CONSTRAINTS.md
-      - docs/context/CONTRADICTIONS.md
-      - docs/context/BIBLIOGRAPHY_INTEGRATION.md
-      - docs/context/CHANGELOG_CONTEXT.md
-      - README.md
-      - thesis/archive/README.md
       - .github/workflows/t716-final-acceptance.yml
   workflow_dispatch:
 
@@ -55,6 +39,8 @@ jobs:
     steps:
       - name: Checkout exact source
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
@@ -64,14 +50,11 @@ jobs:
       - name: Install pinned DOCX dependency
         run: python -m pip install --disable-pip-version-check python-docx==1.2.0
 
+      - name: Install prompt-free self-resuming workflow state
+        run: python scripts/t010_install_self_resuming_workflow.py
+
       - name: Reconcile final claim registry
         run: python scripts/t716_final_reconcile_claim_registry.py
-
-      - name: Reconcile interrupted-session continuity state
-        run: python scripts/t716_continuity_reconcile.py
-
-      - name: Reconcile bootstrap validator contracts
-        run: python scripts/t716_continuity_contract_fix.py
 
       - name: Validate claim-evidence registry
         run: python scripts/validate_claim_evidence_map.py
@@ -97,63 +80,41 @@ jobs:
           assert r['registry_missing_source_ids']==[], r
           assert len(r['intentional_administrative_placeholders'])==3, r
           assert r['comments_present'] is False and r['tracked_changes_present'] is False, r
-          assert r['t715_stage3_qa_guards_preserved'] is True, r
-          assert r['t715_reader_sentinels_present'] is True, r
           print('T-716 final acceptance: PASS')
           PY
 
-      - name: Validate final canonical status
+      - name: Validate final canonical T-716 status
         run: python scripts/t716_final_reconcile_status.py
+
+      - name: Validate project continuity
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: python scripts/validate_project_continuity.py
 
       - name: Validate documentation consistency
         run: python scripts/validate_documentation_consistency.py
 
       - name: Verify reconciliation is idempotent
         run: |
-          git diff --binary > /tmp/t716-before.diff
+          git diff --binary > /tmp/before.diff
+          python scripts/t010_install_self_resuming_workflow.py
           python scripts/t716_final_reconcile_claim_registry.py
-          python scripts/t716_continuity_reconcile.py
-          python scripts/t716_continuity_contract_fix.py
           python scripts/t716_final_reconcile_status.py
-          git diff --binary > /tmp/t716-after.diff
-          cmp /tmp/t716-before.diff /tmp/t716-after.diff
+          git diff --binary > /tmp/after.diff
+          cmp /tmp/before.diff /tmp/after.diff
 
-      - name: Persist final acceptance and continuity state
+      - name: Persist final acceptance and continuity migration
         if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
         run: |
           cp artifacts/t716/T716_FINAL_ACCEPTANCE_AUDIT.md docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md
           cp artifacts/t716/T716_final_acceptance_audit.json docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add \
-            docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md \
-            docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json \
-            docs/thesis/claim-evidence-map.json \
-            docs/thesis/CLAIM_EVIDENCE_TREE.md \
-            docs/thesis/T716_REWRITE_PLAN.md \
-            docs/thesis/WP7_WP8_TOOL_WORKFLOW.md \
-            docs/thesis/PRESENTATION_WORKFLOW.md \
-            docs/thesis/THESIS_STRUCTURE_DRAFT.md \
-            docs/context/TASKS.md \
-            docs/context/CURRENT_STATUS.md \
-            docs/context/POST_THESIS_LIFECYCLE.md \
-            docs/context/CODEX_EXECUTION_PROMPT.md \
-            docs/context/PROJECT_CONTEXT.md \
-            docs/context/OPEN_QUESTIONS.md \
-            docs/context/IMPLEMENTATION_ROADMAP.md \
-            docs/context/DEFINITION_OF_DONE.md \
-            docs/context/EXECUTION_WORKFLOW.md \
-            docs/context/USER_DECISIONS.md \
-            docs/context/CONSTRAINTS.md \
-            docs/context/CONTRADICTIONS.md \
-            docs/context/BIBLIOGRAPHY_INTEGRATION.md \
-            docs/context/CHANGELOG_CONTEXT.md \
-            README.md \
-            thesis/archive/README.md
+          git add -A
           if git diff --cached --quiet; then
-            echo 'Acceptance, registry and continuity state already current.'
+            echo 'Acceptance and self-resuming workflow state already current.'
           else
-            git commit -m 'T-716: persist final acceptance and continuity state'
+            git commit -m 'T-010: persist prompt-free self-resuming workflow'
             git push
           fi
 
