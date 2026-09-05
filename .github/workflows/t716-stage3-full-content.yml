@@ -1,0 +1,159 @@
+name: T-716 stage-3 full-content reconstruction
+
+on:
+  push:
+    branches:
+      - thesis/t716-full-content-stage3
+    paths:
+      - scripts/t716_stage3_reconstruct.py
+      - scripts/t716_stage3_reconcile_status.py
+      - .github/workflows/t716-stage3-full-content.yml
+  pull_request:
+    paths:
+      - scripts/t716_stage3_reconstruct.py
+      - scripts/t716_stage3_reconcile_status.py
+      - thesis/archive/T716_stage3_full_content_review_ready.docx
+      - thesis/archive/T716_stage3_qa-report.json
+      - thesis/archive/README.md
+      - docs/context/CURRENT_STATUS.md
+      - docs/context/TASKS.md
+      - README.md
+      - .github/workflows/t716-stage3-full-content.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned DOCX dependency
+        run: python -m pip install --disable-pip-version-check python-docx==1.2.0
+
+      - name: Reconstruct T-716 stage 3 from archived T-714 baseline
+        run: python scripts/t716_stage3_reconstruct.py
+
+      - name: Validate scientific, bibliography, media and semantic package identity
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import zipfile
+          from pathlib import Path
+
+          docx = Path('artifacts/t716/T716_stage3_full_content_review_ready.docx')
+          qa_path = Path('artifacts/t716/T716_stage3_qa-report.json')
+          report = json.loads(qa_path.read_text(encoding='utf-8'))
+
+          def semantic_digest(path: Path) -> str:
+              h = hashlib.sha256()
+              with zipfile.ZipFile(path) as archive:
+                  for name in sorted(archive.namelist()):
+                      h.update(name.encode('utf-8'))
+                      h.update(b'\0')
+                      h.update(archive.read(name))
+                      h.update(b'\0')
+              return h.hexdigest()
+
+          semantic = semantic_digest(docx)
+          expected_semantic = 'b7e3cfb98dfc7a9d5b8fb6309b7a9be90c7c89eccd77ae14be20bbc7d8e31e8e'
+
+          assert report['status'] == 'pass', report
+          assert report['source_sha256'] == '70c897dcda432c3bc3f5b66b3714d701fd895c9ed2e6ce8ff14b19bc46f9ba77', report
+          assert report['whole_document_word_count_local'] == 25265, report
+          assert report['main_body_word_count_to_bibliography_local'] == 23241, report
+          assert report['paragraph_count'] == 765, report
+          assert report['bibliography_reference_count'] == 30, report
+          assert report['used_reference_numbers'] == list(range(1, 31)), report
+          assert report['unused_reference_numbers'] == [], report
+          assert report['missing_reference_numbers'] == [], report
+          assert report['inline_shape_count'] == 25, report
+          assert report['media_count'] == 25 and report['media_preserved'] is True, report
+          assert report['unresolved_src_ids'] == [], report
+          assert report['contains_required_tuning_count'] is True, report
+          assert report['contains_required_winners'] is True, report
+          assert report['contains_root_sizing_half_width'] is True, report
+          assert report['contains_action_failure_semantics'] is True, report
+          assert report['contains_observation_support_goal'] is True, report
+          assert report['contains_directed_recovery_gap'] is True, report
+          assert report['contains_two_window_recovery'] is True, report
+          assert report['contains_right_censoring'] is True, report
+          assert report['bibliography_consumer_snapshot'] == '27674a566ab55e4491b74243fe077a31ef81ae73', report
+          assert report['bibliography_canonical_source_count'] == 601, report
+          assert report['bibliography_citation_ready_count'] == 129, report
+          assert report['bibliography_research_material_count'] == 19, report
+          assert report['bibliography_indexed_original_count'] == 281, report
+          assert report['stale_bibliography_provenance_absent'] is True, report
+          assert semantic == expected_semantic, (semantic, expected_semantic)
+
+          report['package_content_sha256'] = semantic
+          report['visual_qa_status'] = 'pass'
+          report['visual_qa_page_count'] = 92
+          report['visual_qa_basis'] = (
+              'Manual 92/92 page inspection of a package-content-identical DOCX; '
+              'all OOXML/media member bytes match package_content_sha256.'
+          )
+          report['visual_qa_defects'] = []
+          qa_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(f'T-716 stage 3: words={report["whole_document_word_count_local"]} refs=30 pages=92 semantic={semantic}')
+          PY
+
+      - name: Verify retained archive and reconcile canonical status
+        if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import zipfile
+          from pathlib import Path
+
+          archived = Path('thesis/archive/T716_stage3_full_content_review_ready.docx')
+          archived_qa = Path('thesis/archive/T716_stage3_qa-report.json')
+          expected_raw = '364b22543cef75dabcc03a003ad538f8873604e85a234a2d71bdbba1c1f7fe8c'
+          expected_semantic = 'b7e3cfb98dfc7a9d5b8fb6309b7a9be90c7c89eccd77ae14be20bbc7d8e31e8e'
+
+          assert archived.is_file() and archived_qa.is_file(), 'stage-3 archive must already exist from run #1'
+          raw = hashlib.sha256(archived.read_bytes()).hexdigest()
+          assert raw == expected_raw, (raw, expected_raw)
+
+          h = hashlib.sha256()
+          with zipfile.ZipFile(archived) as archive:
+              for name in sorted(archive.namelist()):
+                  h.update(name.encode('utf-8')); h.update(b'\0'); h.update(archive.read(name)); h.update(b'\0')
+          assert h.hexdigest() == expected_semantic, h.hexdigest()
+
+          qa = json.loads(archived_qa.read_text(encoding='utf-8'))
+          assert qa['output_sha256'] == expected_raw, qa
+          assert qa['package_content_sha256'] == expected_semantic, qa
+          assert qa['visual_qa_status'] == 'pass' and qa['visual_qa_page_count'] == 92, qa
+          PY
+          python scripts/t716_stage3_reconcile_status.py
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md thesis/archive/README.md docs/context/CURRENT_STATUS.md docs/context/TASKS.md
+          if git diff --cached --quiet; then
+            echo 'Canonical status already current.'
+          else
+            git commit -m 'T-716: reconcile stage-3 status and bibliography authority'
+            git push
+          fi
+
+      - name: Upload CI reconstruction
+        uses: actions/upload-artifact@v4
+        with:
+          name: t716-stage3-full-content
+          path: |
+            artifacts/t716/T716_stage3_full_content_review_ready.docx
+            artifacts/t716/T716_stage3_qa-report.json
+          if-no-files-found: error
+          retention-days: 30
