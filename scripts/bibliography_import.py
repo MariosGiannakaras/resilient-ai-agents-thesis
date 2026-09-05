@@ -205,7 +205,11 @@ def _walk_files(
         except ValueError as exc:
             raise BibliographyImportError(f"Path escapes research corpus: {rel_posix}") from exc
         if path.is_dir():
-            if path.name.casefold() in FORBIDDEN_DIRECTORY_NAMES:
+            # The complete-corpus contract intentionally preserves reviewed author notes under
+            # notes/intake/. Keep raw/top-level intake directories forbidden; permit only this
+            # exact validated research-notes namespace.
+            allowed_notes_intake = relative.parts == ("notes", "intake")
+            if path.name.casefold() in FORBIDDEN_DIRECTORY_NAMES and not allowed_notes_intake:
                 raise BibliographyImportError(f"Forbidden directory in research corpus: {rel_posix}")
             continue
         if not path.is_file():
