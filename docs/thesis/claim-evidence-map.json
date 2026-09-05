@@ -93,20 +93,20 @@
       "chapter": "2,6",
       "type": "literature",
       "claim": "Non-stationarity includes multiple change processes and assumptions; abrupt persistent change, recurrent/Markov switching and continual task streams should not be conflated.",
-      "formal_sources": ["SRC-39696F490F", "SRC-8025C139CE", "SRC-660560956D", "SRC-F909CABDEB", "SRC-95C9DAEE68", "SRC-70772C0629", "SRC-0FD9BE81AC"],
+      "formal_sources": ["SRC-39696F490F", "SRC-8025C139CE", "SRC-660560956D", "SRC-F909CABDEB", "SRC-95C9DAEE68", "SRC-70772C0629", "SRC-0FD9BE81AC", "SRC-6F4F8BE003"],
       "context_sources": [],
-      "synthesis": "Use Khetarpal for continual-RL framing, Padakandla for dynamically varying/non-stationary RL taxonomy, the existing structured/change-process sources to delimit the thesis setting, and Liu 2025 only as a recent primary example of model-based continual RL with online world models and planning.",
-      "limits": "Structured SNS-MDP convergence does not imply rapid adaptation to the thesis's persistent remap; Liu 2025 studies a different shared-dynamics/task-switching regime and MPC/world-model method, so it neither replaces the broader taxonomies nor serves as Dyna-Q+ evidence."
+      "synthesis": "Use Khetarpal for continual-RL framing, Padakandla for dynamically varying/non-stationary RL taxonomy, the existing structured/change-process sources to delimit the thesis setting, Hamadanian 2025 as recent primary evidence for observed-context online non-stationarity/recurring-context adaptation, and Liu 2025 only as a recent primary example of model-based continual RL with online world models and planning.",
+      "limits": "Structured SNS-MDP convergence does not imply rapid adaptation to the thesis's persistent remap; Hamadanian 2025 supplies the current exogenous context to the policy and therefore differs from the hidden thesis remap; Liu 2025 studies a different shared-dynamics/task-switching regime and MPC/world-model method, so neither source serves as direct Dyna-Q+ or thesis-remap performance evidence."
     },
     {
       "id": "LIT-009",
       "chapter": "2,6",
       "type": "literature",
       "claim": "Long-horizon deep continual learning can suffer primacy/interference/plasticity degradation, so continued optimization does not guarantee indefinitely preserved adaptability.",
-      "formal_sources": ["SRC-4C34DF3E17", "SRC-46CF36BC1E", "SRC-F909CABDEB"],
+      "formal_sources": ["SRC-4C34DF3E17", "SRC-46CF36BC1E", "SRC-F909CABDEB", "SRC-6F4F8BE003"],
       "context_sources": [],
-      "synthesis": "Use plasticity/primacy as threats-to-validity and mechanism context, not predictions of thesis outcomes.",
-      "limits": "Tasks and timescales differ from the small GridWorld; do not claim these papers explain a specific observed failure without direct evidence."
+      "synthesis": "Use plasticity/primacy work as threats-to-validity and mechanism context; use Hamadanian 2025 as recent primary evidence that catastrophic forgetting and stability–plasticity are deployment concerns in an observed-context non-stationary online-RL setting, without treating that setting as equivalent to the thesis.",
+      "limits": "Tasks, information assumptions and timescales differ from the small GridWorld; Hamadanian supplies observed context, and none of these papers establishes that a specific DQN/PPO outcome in the thesis was caused by primacy, forgetting or plasticity loss."
     },
     {
       "id": "LIT-010",

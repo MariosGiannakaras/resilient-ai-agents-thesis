@@ -7,9 +7,13 @@ Version-controlled repository for the complete thesis lifecycle: research framin
 
 > `docs/context/TASKS.md` is the canonical task/dependency ledger. `docs/context/CURRENT_STATUS.md` is the compact current state. This README is the human-readable entry point.
 
+## Agent continuation
+
+No task prompt is required. A coding/repository agent must recover from `AGENTS.md`, `docs/context/WORK_STATE.json`, `TASKS.md`, `CURRENT_STATUS.md`, actual Git state and open PR/CI state. Saying **continue implementation** is sufficient: unfinished work is resumed before new work, and every material checkpoint updates `WORK_STATE.json`.
+
 ## Current state
 
-The scientific experiment/evidence chain is complete and frozen. The active academic task is **T-716**, a full-content thesis reconstruction/expansion after the T-715 reader-scoped version was rejected as too compressed. T-715 remains an auditable completed composition milestone, but **is not the final thesis**.
+The scientific experiment/evidence chain is complete and frozen. **T-716 is now COMPLETE as the review-ready full-content thesis task.** The accepted review milestone is the evidence-audited stage-4 DOCX (25,327 words, 31/31 governed citations, 92-page visual QA). T-712 remains externally gated on actual supervisor/reviewer feedback; T-713 remains the later final-submission freeze for official metadata, accepted feedback and final Word/submission checks.
 
 | Area | State |
 |---|---|
@@ -21,20 +25,20 @@ The scientific experiment/evidence chain is complete and frozen. The active acad
 | T-710 Greek manuscript | COMPLETE |
 | T-711/T-714 Word composition and full-content baseline | COMPLETE / archived |
 | T-715 reader-scope + audit hardening | COMPLETE as bounded task; superseded as final-thesis candidate |
-| **T-716 full-content evidence-aware thesis** | **IN_PROGRESS — stage-3 full-content milestone archived; final evidence/citation audit remains** |
+| **T-716 full-content evidence-aware thesis** | **COMPLETE — stage-4 evidence-audited review milestone accepted; 11/11 final acceptance gates PASS** |
 | T-712 supervisor/reviewer corrections | DEFERRED until real feedback exists |
-| T-713 final thesis freeze | DEFERRED until T-716 acceptance + T-712 + official finalization inputs |
+| T-713 final thesis freeze | DEFERRED until T-712 + official metadata/declaration + final Word/submission inputs |
 | Defense T-720/T-721/T-722 | DEFERRED downstream work |
 | Final audits/delivery T-800/T-801/T-802 | DEFERRED downstream work |
 | Standalone Windows package T-803 | DEFERRED post-thesis deliverable |
 
-The archived T-714 run #66 is the current full-content baseline (about 20.9k whole-document words). T-716 must restore and improve that coverage, integrate all validated T-715 scientific corrections, use the user-restored older drafts where still correct, and strengthen source support without filler or scientific recomputation.
+The accepted T-716 review authority is `thesis/archive/T716_stage4_evidence_audited_review_ready.docx`: 25,327 whole-document words, 23,273 main-body words to bibliography, 31/31 references used, 25/25 scientific media preserved byte-for-byte and 92-page visual QA. Its semantic OOXML package SHA-256 is `b01f853af794e596f0dfb491a3f5401365ca3f01fd7d410194e539f0b8a10cc1`. T-714 remains the historical full-content baseline and T-715 remains the scientific-correction overlay.
 
 ## Complete downstream lifecycle
 
 The project does **not** end when a review-ready thesis DOCX exists. The retained sequence is:
 
-1. **T-716 — Full-content thesis reconstruction and evidence-aware rewrite.** Reconcile T-714, useful older-draft material, T-715 corrections, frozen project evidence and the multi-source claim/evidence map. Produce and archive the exact reviewed DOCX + QA identity.
+1. **T-716 — Full-content thesis reconstruction and evidence-aware rewrite — COMPLETE.** Accepted review authority: stage-4 evidence-audited DOCX plus persisted 11/11-gate acceptance report. This review-ready milestone is not yet the T-713 final-submission candidate.
 2. **T-712 — Supervisor/reviewer corrections.** Starts only from actual external feedback; internal audits are not relabelled as supervisor feedback.
 3. **T-713 — Final thesis freeze.** Resolve official student/person/declaration metadata, final Word fields/cross-references/TOC/lists, final PDF/submission candidate and final thesis identity.
 4. **T-720 — Defense narrative and evidence map.** Recheck current defense-specific rules; derive the defense story strictly from the accepted final thesis/evidence.

@@ -20,6 +20,7 @@
 - [ ] Tests cover the changed behavior
 - [ ] Manual/visual check completed where relevant
 - [ ] Review findings addressed or explained
+- [ ] Project continuity validation passes
 
 Commands/checks:
 
@@ -41,8 +42,10 @@ Commands/checks:
 
 ## Risks, limitations and deferred work
 
-## Task, naming, documentation, and source-of-truth reconciliation
+## Task, work-state, naming, documentation, and source-of-truth reconciliation
 
+- [ ] `docs/context/WORK_STATE.json` was updated before this material work and after the latest validated checkpoint
+- [ ] `WORK_STATE.json` names the actual active task, branch/PR, last completed checkpoint, exact next action, blockers and pending substeps
 - [ ] `docs/context/TASKS.md` was reviewed for this PR
 - [ ] Started/completed/blocked/unblocked/discovered/superseded tasks and `Resume state` were updated where applicable
 - [ ] Any task marked `READY` has its required task dependencies complete
@@ -51,10 +54,10 @@ Commands/checks:
 - [ ] `docs/thesis/PRESENTATION_WORKFLOW.md` was reviewed when defense/presentation behavior or outputs changed
 - [ ] Names are descriptive and consistent
 - [ ] Comments explain reasoning rather than restating code
-- [ ] Every affected active context/status/decision/workflow/prompt file was reviewed
+- [ ] Every affected active context/status/decision/workflow file was reviewed
 - [ ] `CURRENT_STATUS.md`, `OPEN_QUESTIONS.md`, `DECISION_LOG.md`, and `CHANGELOG_CONTEXT.md` were updated when their claims changed
-- [ ] `docs/context/CODEX_EXECUTION_PROMPT.md` was reconciled only if bootstrap/resume/task-selection/checkpoint/stop/review/reporting behavior changed
-- [ ] Obsolete files were deleted or explicitly marked historical; no stale file remains as active guidance
+- [ ] `AGENTS.md`, `WORK_STATE.json`, `EXECUTION_WORKFLOW.md`, continuity validation and CI were reconciled when bootstrap/resume/task-selection/checkpoint/stop/review/reporting behavior changed
+- [ ] No tracked execution prompt is required; obsolete bootstrap/status files were deleted or explicitly marked historical
 - [ ] Documentation consistency validation passes
 
 ## Not changed

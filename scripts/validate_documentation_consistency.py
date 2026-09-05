@@ -16,6 +16,7 @@ REQUIRED_ACTIVE = (
     "CONTRIBUTING.md",
     ".github/pull_request_template.md",
     "docs/context/CURRENT_STATUS.md",
+    "docs/context/WORK_STATE.json",
     "docs/context/TASKS.md",
     "docs/context/PROJECT_CONTEXT.md",
     "docs/context/CONFIRMED_REQUIREMENTS.md",
@@ -27,7 +28,6 @@ REQUIRED_ACTIVE = (
     "docs/context/IMPLEMENTATION_ROADMAP.md",
     "docs/context/DEFINITION_OF_DONE.md",
     "docs/context/DOCUMENTATION_GOVERNANCE.md",
-    "docs/context/CODEX_EXECUTION_PROMPT.md",
     "docs/architecture/UI_INFORMATION_ARCHITECTURE.md",
     "docs/thesis/PRESENTATION_WORKFLOW.md",
     "docs/decisions/DECISION_LOG.md",
@@ -61,7 +61,6 @@ CURRENT_STATE_FILES = (
     "docs/context/EXECUTION_WORKFLOW.md",
     "docs/context/IMPLEMENTATION_ROADMAP.md",
     "docs/context/DEFINITION_OF_DONE.md",
-    "docs/context/CODEX_EXECUTION_PROMPT.md",
     "docs/architecture/UI_INFORMATION_ARCHITECTURE.md",
     "docs/thesis/PRESENTATION_WORKFLOW.md",
     "docs/university/SOURCE_REGISTER.md",
@@ -118,96 +117,21 @@ def main() -> int:
                 errors.append(f"stale resolved statement in {relative}: {fragment}")
 
     agents = read("AGENTS.md") if (ROOT / "AGENTS.md").is_file() else ""
-    if "src/resilient_agents/" not in agents:
-        errors.append("AGENTS.md must name the accepted src/resilient_agents/ core")
     for required in (
-        "docs/context/TASKS.md",
-        "docs/context/CURRENT_STATUS.md",
-        "UI_INFORMATION_ARCHITECTURE.md",
-        "DOCUMENTATION_GOVERNANCE.md",
-        "citation-ready/",
-        "PR CI is the canonical full-suite pre-merge check",
-        "Prefer targeted search",
+        "docs/context/WORK_STATE.json",
+        "continue implementation",
+        "Repository/Git/GitHub evidence overrides",
+        "before every material change",
+        "after every material validated checkpoint",
+        "open a draft PR",
+        "scripts/validate_project_continuity.py",
     ):
         if required.casefold() not in agents.casefold():
-            errors.append(f"AGENTS.md missing required compact routing/invariant: {required}")
-
-    agents_core_match = re.search(
-        r"Start every Codex session with exactly:\s*(?P<section>.*?)(?=\nThen read only)",
-        agents,
-        re.DOTALL,
-    )
-    if not agents_core_match:
-        errors.append("AGENTS.md missing explicit compact three-file session-start core")
-    else:
-        listed = tuple(
-            re.findall(r"^\d+\.\s+`([^`]+)`", agents_core_match.group("section"), re.MULTILINE)
-        )
-        if listed != SESSION_START_CORE:
-            errors.append(
-                "AGENTS.md session-start list must contain exactly: " + ", ".join(SESSION_START_CORE)
-            )
-
-    if len(agents.splitlines()) > 160:
-        errors.append("AGENTS.md exceeds the 160-line always-on context budget")
-    if len(agents.split()) > 1500:
-        errors.append("AGENTS.md exceeds the 1500-word always-on context budget")
-
-    prompt_path = ROOT / "docs/context/CODEX_EXECUTION_PROMPT.md"
-    if prompt_path.is_file():
-        prompt = prompt_path.read_text(encoding="utf-8")
-        for required in (
-            "AGENTS.md",
-            "docs/context/CURRENT_STATUS.md",
-            "docs/context/TASKS.md",
-            "/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.",
-            "Complete the canonical project task registry autonomously",
-            "routine Git, PR creation, CI",
-            "Startup / resume",
-            "IN_PROGRESS",
-            "one bounded scope",
-            "Do not submit an `APPROVE` review on your own PR.",
-            "own-PR squash merge",
-            "Project: X/Y",
-            "In-progress/failed work never counts as complete",
-            "Stop conditions",
-        ):
-            if required not in prompt:
-                errors.append(f"current Codex prompt missing required lean execution invariant: {required}")
-
-        if "copy its contents to" in prompt.casefold() or "CODEX_TASK.md" in prompt:
-            errors.append("current Codex prompt must be directly executable and must not require a copied task prompt")
-
-        prompt_core_match = re.search(
-            r"2\. Read only the session-start core:\n(?P<section>.*?)(?=\n3\.)",
-            prompt,
-            re.DOTALL,
-        )
-        if not prompt_core_match:
-            errors.append("current Codex prompt missing explicit three-file session-start core")
-        else:
-            listed = tuple(
-                re.findall(r"^[ \t]*- `([^`]+)`", prompt_core_match.group("section"), re.MULTILINE)
-            )
-            if listed != SESSION_START_CORE:
-                errors.append(
-                    "current Codex prompt session-start core must contain exactly: "
-                    + ", ".join(SESSION_START_CORE)
-                )
-
-        duplicate_policy_headings = (
-            "## Bibliography rules",
-            "## Scientific rules",
-            "## Architecture/UI rules",
-            "## Lifecycle handoff rules",
-            "## Proportional testing discipline",
-        )
-        for heading in duplicate_policy_headings:
-            if heading in prompt:
-                errors.append(f"current Codex prompt duplicates AGENTS.md domain policy section: {heading}")
-
-        if len(prompt.split()) > 1200:
-            errors.append("current Codex prompt exceeds the 1200-word lean execution budget")
+            errors.append(f"AGENTS.md missing required prompt-free continuity invariant: {required}")
+    if len(agents.splitlines()) > 180:
+        errors.append("AGENTS.md exceeds the 180-line always-on context budget")
+    if len(agents.split()) > 1700:
+        errors.append("AGENTS.md exceeds the 1700-word always-on context budget")
 
     current_status_path = ROOT / "docs/context/CURRENT_STATUS.md"
     if current_status_path.is_file():
@@ -238,7 +162,7 @@ def main() -> int:
             "Exact next action",
             "PRESENTATION_WORKFLOW.md",
             "T-008",
-            "three-file session-start core",
+            "WORK_STATE.json",
             "T-512",
             "self-explanatory UX",
         ):

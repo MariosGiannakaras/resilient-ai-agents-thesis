@@ -2,144 +2,88 @@
 
 ## Purpose
 
-Repository documentation is part of the thesis source of truth. A code, research, architecture, workflow, storage, protocol, task-state, lifecycle-handoff, UX, or delivery change is incomplete if related active documentation still describes the previous state.
+Repository documentation is part of the thesis source of truth. Material code/research/architecture/workflow/task/lifecycle/delivery changes are incomplete while active documentation or operational resume state describes an older reality.
 
-## Document classes
+## Authority classes
 
-### 1. Active source of truth
+### Active source of truth
 
-These files must describe the current repository state and must be reconciled in the same Pull Request as any material change that affects them:
+The following current-state surfaces must be reconciled when materially affected:
 
-- `AGENTS.md`
-- `README.md`
-- `app/README.md`
-- `docs/context/CURRENT_STATUS.md`
-- `docs/context/TASKS.md`
-- `docs/context/PROJECT_CONTEXT.md`
-- `docs/context/CONFIRMED_REQUIREMENTS.md`
-- `docs/context/USER_DECISIONS.md`
-- `docs/context/CONSTRAINTS.md`
-- `docs/context/OPEN_QUESTIONS.md`
-- `docs/context/CONTRADICTIONS.md`
-- `docs/context/EXECUTION_WORKFLOW.md`
-- `docs/context/IMPLEMENTATION_ROADMAP.md`
-- `docs/context/DEFINITION_OF_DONE.md`
-- `docs/decisions/DECISION_LOG.md`
-- `docs/context/CHANGELOG_CONTEXT.md`
-- `docs/context/CODEX_EXECUTION_PROMPT.md`
-- `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`
-- `docs/thesis/PRESENTATION_WORKFLOW.md`
-- active research/protocol/architecture/thesis workspaces relevant to the changed subject.
+- `AGENTS.md` — automatic cross-cutting agent instructions and recovery rules;
+- `docs/context/WORK_STATE.json` — active operational checkpoint/resume pointer;
+- `docs/context/TASKS.md` — canonical detailed task/dependency ledger;
+- `docs/context/CURRENT_STATUS.md` — compact accepted project state/external gates;
+- `README.md`, `app/README.md`;
+- `PROJECT_CONTEXT`, requirements/decisions/constraints/questions/contradictions;
+- `EXECUTION_WORKFLOW`, `IMPLEMENTATION_ROADMAP`, `DEFINITION_OF_DONE`;
+- decision log/context changelog;
+- active research/protocol/architecture/thesis/university documents relevant to the changed subject.
 
-`AGENTS.md` is the compact always-on Codex policy/routing map: it keeps only non-inferable cross-cutting invariants and points to deeper authorities rather than duplicating their full contracts. `CODEX_EXECUTION_PROMPT.md` is the lean execution bootstrap. `CURRENT_STATUS.md` is the shortest authoritative current-state summary. `TASKS.md` is the canonical concrete execution checklist/resume ledger. `IMPLEMENTATION_ROADMAP.md` explains phases, while `EXECUTION_WORKFLOW.md` records responsibilities and major handoffs. Task-domain files under `docs/research/`, `docs/experiments/`, `docs/architecture/`, and `docs/thesis/` own detailed contracts when their domain is active. None excuses stale statements in other active files.
+No tracked execution prompt is required. `AGENTS.md` is the prompt-free entrypoint.
 
-### 2. Accepted decision/history records
+### Accepted history
 
-Accepted decisions and useful historical records may preserve the state and reasoning that existed when they were written. They must not be silently rewritten to pretend they originally reflected later knowledge.
+Historical decisions/evidence may preserve what was true when written. They must be clearly historical/superseded when retained and must not masquerade as current guidance. Git history is sufficient for obsolete bootstrap/status snapshots with no remaining reasoning value.
 
-Keep a historical file in the current tree only when it still provides material audit/reasoning value that is not adequately preserved by Git history, decision records, or the context changelog. If retained, mark it prominently historical/superseded so it cannot masquerade as current guidance. Superseded bootstrap audit snapshots with no remaining operational value should be removed from the current tree; Git history remains the audit trail.
+### Generated or externally owned content
 
-Examples of retained history include:
-
-- `docs/research/PREIMPORT_*.md` when their research rationale remains useful;
-- accepted/superseded decision records whose rationale is still relevant.
-
-### 3. Generated or externally owned content
-
-Do not reconcile generated bibliography files by editing them manually. `research/bibliography/` is replaced only through the controlled bibliography synchronization workflow. Source-derived scientific text remains unchanged.
+Do not hand-edit generated bibliography content. `research/bibliography/` changes only through controlled immutable synchronization from `MariosGiannakaras/ThesisBibliography`.
 
 ## Task-registry governance
 
-`docs/context/TASKS.md` is the only canonical detailed task checklist. Do not create a competing permanent checklist elsewhere.
+`TASKS.md` is the only canonical detailed task checklist. Update it when work starts/completes/blocks/unblocks, dependencies/acceptance change, required work is discovered, or the exact next task changes.
 
-Every material PR must review the registry and update it when the PR:
+`READY` means dependencies and non-task readiness conditions are satisfied. Started unfinished work remains unchecked and `IN_PROGRESS`; completed work remains checked. Required work cannot live only in chat, TODO comments or PR prose.
 
-- starts or completes a task;
-- blocks or unblocks a task;
-- changes dependencies or acceptance conditions;
-- discovers required work;
-- supersedes/removes work;
-- changes the exact next action or active resume state.
+## Operational work-state governance
 
-`READY` has a strict meaning: all required task-ID dependencies are completed and any non-task precondition explicitly stated for readiness is satisfied. Do not label future dependency-blocked work `READY` merely because it belongs to the planned roadmap. The documentation validator checks task-ID dependencies mechanically.
+`WORK_STATE.json` is deliberately separate from `TASKS.md` because it solves a different failure mode: loss of in-flight work across chat/session/quota interruptions. It may repeat only the minimum identifiers needed to resume the active package.
 
-Started unfinished work must remain unchecked and be marked `IN_PROGRESS` with enough durable resume information to continue after a session/model-quota interruption. Completed tasks remain checked for auditability.
+It must be updated:
 
-Session/conversation memory may assist continuation, but durable repository state is the recovery authority. Do not encode task progress only in chat.
+- before every material implementation/document/research action;
+- after every material validated checkpoint;
+- when branch/PR/CI/blocker/next-action state changes;
+- before a long/risky operation or session/context boundary;
+- immediately after merge to normalize `main` to the next task/external gate.
 
-User-facing progress reporting must derive from this registry rather than becoming another status store. `X/Y` is shown only when the denominator is objectively defined; an active-task fraction may use a real finite local substep set, but that substep view must not become a competing permanent task ledger.
+A material PR must update `WORK_STATE.json` unless it is a narrowly automated generated-only transaction explicitly exempted by the continuity validator. Non-trivial work should be pushed and surfaced in an early draft PR so remote recovery does not depend on one local checkout.
 
-## Lifecycle-handoff governance
+## Prompt-free agent bootstrap
 
-Major boundaries (application -> final experiments, experiments -> evidence/analysis, analysis -> thesis, thesis -> defense, defense -> delivery) are controlled by DEC-026, the corresponding `TASKS.md` dependencies/acceptance conditions, `IMPLEMENTATION_ROADMAP.md`, and `EXECUTION_WORKFLOW.md`.
+The user may say only "continue implementation". The agent must recover from `AGENTS.md`, `WORK_STATE.json`, `TASKS.md`, `CURRENT_STATUS.md`, actual Git state and open GitHub PR/CI state. Repository/Git/GitHub evidence overrides model/session memory.
 
-Downstream thesis/presentation artifacts must never become an independent source of scientific truth. They inherit from frozen experiment evidence and citation-ready bibliography mappings.
+Further reading is task-specific and search-driven. Do not create or require a separate execution prompt, copied task file, or repeated domain-policy bundle.
 
-`docs/thesis/PRESENTATION_WORKFLOW.md` is the active deferred specification for the defense phase and must be reconciled if presentation tooling, output format, speaker-material requirements, evidence mapping, or rehearsal/delivery rules change.
+## Change-impact minimums
 
-## Dashboard UX governance
-
-DEC-027, `docs/architecture/UI_INFORMATION_ARCHITECTURE.md`, `app/README.md`, confirmed `REQ-UI-*` requirements, and the `T-510`/`T-512`/`T-511` task chain control the final dashboard UX baseline.
-
-The self-explanatory UX/onboarding baseline is a required application-completion condition, not an optional cosmetic enhancement. Exact palette values and other implementation-level styling details remain intentionally unfrozen until the real dashboard exists.
-
-Changes to dashboard wording, terminology, status semantics, contextual help, pre-run review, onboarding/help flow, or UI architecture must reconcile the relevant requirements/tasks and must not introduce a parallel manual/help system that can drift from implemented behavior.
-
-## Change-impact matrix
-
-| Change | Files that must be reviewed in the same PR |
+| Material change | Minimum current-state review |
 |---|---|
-| Any material task/work-package change | `TASKS`, resume state, affected active docs, PR metadata/tests |
-| Project phase/status/blocker resolved | `CURRENT_STATUS`, `TASKS`, `PROJECT_CONTEXT`, `OPEN_QUESTIONS`, `IMPLEMENTATION_ROADMAP`, `DEFINITION_OF_DONE`, Codex prompt, changelog |
-| User requirement/decision | `CONFIRMED_REQUIREMENTS`, `USER_DECISIONS`, `CONSTRAINTS`, `CONTRADICTIONS`, `TASKS` if execution changes, decision log/changelog, affected implementation docs |
-| Codex bootstrap/reading/task-execution policy | `AGENTS` when always-on policy/routing changes, Codex prompt, `TASKS` when task semantics change, `CURRENT_STATUS`, `EXECUTION_WORKFLOW`, documentation validator, decision log/changelog |
-| Architecture/stack/storage/runner | `AGENTS` only for cross-cutting always-on invariants/routing, `README`, architecture docs, `PROJECT_CONTEXT`, requirements/constraints, `TASKS`, decision log, Codex prompt only if execution semantics change, CI/tests |
-| GridWorld/environment | GridWorld research/spec/ADR, current status, `TASKS`, roadmap, open questions, requirements, tests; `AGENTS`/Codex prompt only if an always-on or execution invariant changes |
-| Models/metrics/protocol | corresponding research/protocol files, current status, `TASKS`, open questions, roadmap, decision log, tests; `AGENTS`/Codex prompt only if an always-on or execution invariant changes |
-| Bibliography contract/baseline | bibliography integration docs, README/context, current status, `TASKS` when research gates change, decision log/changelog, import validation/workflow; never hand-edit generated evidence |
-| Experiment/run data policy | run/provenance docs, constraints, requirements, `TASKS`, `.gitignore`/`.gitattributes`, publisher/tests, decision log/changelog; `AGENTS` only for cross-cutting provenance invariants |
-| Application/dashboard workflow or UX | `app/README`, `UI_INFORMATION_ARCHITECTURE`, requirements/user decisions/constraints, roadmap, workflow, current/project status, `TASKS`, definition of done, tests, decision log/changelog; update `AGENTS` only for cross-cutting always-on UX policy |
-| Final experiment/analysis -> writing handoff | `TASKS`, roadmap, workflow, experiment/analysis docs, thesis docs, requirements, current status, decision log/changelog |
-| Thesis/review workflow | thesis/university docs, requirements/user decisions, roadmap, workflow, current status, `TASKS`; Codex prompt only when execution semantics change |
-| Defense presentation workflow | `PRESENTATION_WORKFLOW`, requirements/user decisions, roadmap, workflow, definition of done, `TASKS`, source register, decision log/changelog |
-| Final delivery guidance | thesis/university/presentation docs, requirements, open questions, roadmap, current status, `TASKS`, definition of done |
+| Any implementation/task work | `WORK_STATE`, `TASKS`, `CURRENT_STATUS` if accepted state/next gate changes, affected docs/tests/workflows |
+| Agent/recovery/Git/CI policy | `AGENTS`, `WORK_STATE` schema/tooling, `EXECUTION_WORKFLOW`, this file, continuity/docs validators, CI, changelog |
+| Project phase/blocker resolution | `WORK_STATE`, `TASKS`, `CURRENT_STATUS`, project context/questions/roadmap/DoD/changelog |
+| User requirement/decision | requirements, user decisions, constraints/contradictions, task/status/work state when execution changes, decision/changelog |
+| Science/protocol/evidence | controlling research/protocol/decision records, tasks/status/work state, tests/validators; preserve immutable evidence boundaries |
+| Bibliography baseline/contract | bibliography integration/context/status/tasks when gates change, import validation/workflow; never hand-edit generated corpus |
+| Application/UX | app/UI architecture, requirements/decisions, tasks/status/work state, tests and lifecycle docs |
+| Thesis/review/defense/delivery | thesis/university/presentation workflow, tasks/status/work state, official-input questions and downstream consistency docs |
 
-The matrix is a minimum, not an exhaustive list. Review transitive dependencies when a statement is repeated elsewhere.
+Review transitive stale wording when a statement is repeated elsewhere.
 
-## Reconciliation procedure
+## Reconciliation procedure before merge
 
-Before merge:
-
-1. identify what changed semantically, not only which files changed;
-2. review `TASKS.md` for affected task state/dependencies/acceptance/resume information;
-3. review relevant roadmap/workflow handoffs when the changed subject crosses a major project boundary;
-4. search active documentation for the old assumption, phase, path, status, stack, count, or blocker;
-5. update all active occurrences;
-6. delete obsolete files that no longer serve a purpose;
-7. retain/mark historical records only when they still add useful rationale beyond Git history/decision records;
-8. update decisions/changelog when the change is material;
-9. run `scripts/validate_documentation_consistency.py` and the smallest directly affected local validators/tests needed for review readiness; when GitHub Actions is available, PR CI is the canonical full-suite pre-merge verification rather than an automatic duplicate local full-suite run.
-
-## Prompt and context rule
-
-There is only one tracked current Codex execution prompt: `docs/context/CODEX_EXECUTION_PROMPT.md`.
-
-It is the directly executable entrypoint after the repository is cloned or updated, but it must remain a **lean bootstrap**, not a second copy of project/domain policy. `AGENTS.md` is likewise not a domain encyclopedia: it is the small always-on control/routing layer for non-inferable cross-cutting invariants. Detailed scientific, bibliography, architecture, UI, experiment, lifecycle, and delivery contracts stay in their task-specific active authorities and are loaded through progressive disclosure.
-
-Every Codex session starts from exactly:
-
-1. `AGENTS.md`;
-2. `docs/context/TASKS.md`;
-3. `docs/context/CURRENT_STATUS.md`.
-
-Further reading is task-specific and search-driven. Do not add broad mandatory session-start reading merely because a file may be useful in some future phase. Do not paste task-domain policy sections into the prompt or `AGENTS.md`; route to the controlling authority instead.
-
-The prompt must remain state-driven, bounded, and interruption-resilient: available session memory is used, work can always be recovered from the registry and Git/repository state, only dependency-valid work is selected, and “execute it completely” never overrides task, review, external-machine, evidence, or frozen-protocol gates.
-
-Bootstrap/resume/task-selection/checkpoint/stop/reporting behavior belongs in the lean prompt and relevant workflow/status records. Update `AGENTS.md` only when a non-inferable always-on cross-cutting invariant/routing rule changes. Update detailed task-domain authorities directly instead of mirroring their content into always-read context.
-
-CI enforces bounded context budgets for `AGENTS.md`, `CODEX_EXECUTION_PROMPT.md`, and `CURRENT_STATUS.md` so repeated policy/history cannot silently accumulate in every future session.
+1. identify semantic changes and active task;
+2. verify `WORK_STATE.json` describes the branch/PR/checkpoint and exact next action;
+3. reconcile `TASKS.md` task state/dependencies/acceptance;
+4. reconcile `CURRENT_STATUS.md` when accepted state or external gate changes;
+5. search active docs for stale phase/path/status/count/blocker wording;
+6. update affected decisions/changelog when material;
+7. remove obsolete bootstrap/status files that can mislead future agents;
+8. run targeted validators/tests, including project continuity and documentation consistency;
+9. pass required PR CI and objective diff review;
+10. merge when permitted, then normalize `WORK_STATE.json` on `main` immediately.
 
 ## No silent stale-state policy
 
-Known obsolete statements must not remain in active documentation as a convenience. If old wording is still materially useful, keep it only in a clearly historical/decision record or Git history and point current readers to the active authority.
+Known obsolete current-state statements are defects. Current files must be corrected rather than left beside a newer overlay. Historical wording belongs only in clearly historical records or Git history.

@@ -9,7 +9,7 @@ This file records explicit **current** user decisions. Historical chats and supe
 - GridWorld is the common controlled experimental testbed and visualization surface; it is not the thesis subject.
 - The standalone application is an important experiment/control/analysis/demonstration deliverable, but not the main scientific contribution.
 - Simplify unnecessary architecture/features, not scientific completeness, usability or visual quality.
-- Research/protocol/application/evidence remain the current priority. Thesis Results/Discussion writing remains blocked until the explicit later approval gate.
+- Research/protocol/application/final evidence and review-ready thesis composition through T-716 are complete. The next academic change is T-712 only from actual supervisor/reviewer feedback; T-713 remains the later official final-submission freeze.
 
 ## Current scientific comparison
 
@@ -50,9 +50,9 @@ Historical F0/C0/D0, R0 and protocol-v1.1 choices remain auditable history only.
 - Pause/resume/stop/cancel/restart controls appear only when technically safe; unsupported controls are explicit rather than simulated.
 - Resource telemetry, if shown, remains lightweight and truthful rather than becoming an observability subsystem.
 
-## Clean UI restart — current explicit direction
+## Clean UI restart — completed historical direction
 
-- The previously paused UI implementation is considered incomplete/non-authoritative for continuation.
+- This direction was executed by the accepted T-534/T-535/T-536 rebuild and T-537 cleanup; the previously paused UI implementation remains non-authoritative history.
 - Restart implementation from a **fresh current `main`**, not from the paused branch/worktree or pre-v2.1 assumptions.
 - Before implementing, read `AGENTS.md`, `TASKS.md`, `CURRENT_STATUS.md`, DEC-059, DEC-060, DEC-061, `configs/protocols/protocol-v2.1-final.json` and `docs/research/RQ_EVIDENCE_TRACEABILITY.md`.
 - Rebuild the presentation layer from today's protocol-v2.1 and Study/evidence contracts.
@@ -115,7 +115,7 @@ Historical F0/C0/D0, R0 and protocol-v1.1 choices remain auditable history only.
 
 - Meaningful user-facing deliverable files must never exist only in `/mnt/data` or an expiring Actions artifact; the repository is the persistent source of truth.
 - Preserve surfaced thesis milestones under `thesis/archive/` even when superseded/rejected; reserve `thesis/final/` for genuinely accepted final/submission candidates.
-- The compressed T-715 reader-scoped DOCX is not the final thesis. Restore the fuller T-714-level academic coverage and integrate the validated T-715 scientific corrections; do not trade scientific/academic completeness for simplification and do not add filler merely to raise word count.
+- The compressed T-715 reader-scoped DOCX is historical, not the final review authority. T-716 restored/expanded full content, retained validated T-715 corrections and is accepted at semantic SHA-256 `b01f853af794e596f0dfb491a3f5401365ca3f01fd7d410194e539f0b8a10cc1`; do not regress to the compressed version without new evidence/feedback.
 - `TASKS.md` is the canonical resumable ledger; each implementation session starts by reading current repository authority and inspecting actual Git/PR/CI state.
 - Use one active implementation branch/PR for the clean UI rebuild.
 - Old merged/stale remote working branches may be deleted after confirming they contain no unique required work. Deliberate archive/provenance branches may remain.
@@ -128,7 +128,7 @@ Historical F0/C0/D0, R0 and protocol-v1.1 choices remain auditable history only.
 
 - Thesis main language is Greek and final thesis deliverable is Microsoft Word unless official guidance changes.
 - No verified final deadline or defense schedule is currently known.
-- Supervisor-specific corrections will be recorded only when actually received.
+- T-716 review-ready composition is complete; supervisor-specific T-712 corrections will be recorded only when actually received.
 - Official submission/template and defense requirements will be rechecked near delivery rather than invented now.
 - ChatGPT is preferred for later Greek drafting/review/narrative/placement guidance; repository/Codex work owns reproducible technical evidence/assets/checks.
 - Final defense deliverables remain later evidence-gated work.

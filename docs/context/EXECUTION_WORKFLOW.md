@@ -2,159 +2,90 @@
 
 ## Operating model
 
-The user provides goals, genuinely subjective academic/product choices, observed target-machine/application behavior, later supervisor/Department feedback and private material when actually required. Routine Git/CI/task bookkeeping should not be pushed back to the user when repository tooling can perform it.
+The repository is the durable execution authority. The user may simply say **continue implementation**. The agent recovers state, resumes unfinished work, executes the next dependency-valid scope, performs routine Git/PR/CI work, and stops only at a genuine external or explicit authorization gate.
 
-Codex executes bounded repository work from actual state, performs objective diff review, uses GitHub CI as the canonical full-suite implementation guard, fixes failures/findings and reconciles affected active docs. ChatGPT remains the preferred later Greek writing/review/narrative layer after the explicit writing gate.
+Conversation/model memory is advisory only. Repository/Git/GitHub evidence overrides it.
 
-Normal implementation flow:
+## Prompt-free session bootstrap
 
-> persistent goal -> recover current repository state -> bounded allowed scope -> implementation -> targeted checks -> PR CI/objective review -> corrections -> durable reconciliation -> next allowed scope
+1. Load `AGENTS.md`.
+2. Read `docs/context/WORK_STATE.json`.
+3. Read `docs/context/TASKS.md`.
+4. Read `docs/context/CURRENT_STATUS.md`.
+5. Inspect working-tree status, current branch, recent commits and unpushed/unmerged work.
+6. Inspect open PRs, CI/check status and relevant issues when GitHub access exists.
+7. Reconcile discrepancies before new implementation.
 
-## Session continuation
+No separate task prompt is required or authoritative.
 
-Every Codex session starts with exactly:
+## Recovery order
 
-1. `AGENTS.md`;
-2. `docs/context/TASKS.md`;
-3. `docs/context/CURRENT_STATUS.md`.
+Resume in this order:
 
-Before selecting work, inspect Git status/current branch/recent commits and PR/check state. Repository evidence wins over stale/truncated session memory. Never discard unique branch/uncommitted work without inspection.
+1. uncommitted working-tree changes;
+2. open implementation PRs with unfinished or ready-to-merge work;
+3. pushed unmerged branches with unique required work;
+4. valid `WORK_STATE.json` active package;
+5. `TASKS.md` `IN_PROGRESS` task;
+6. first dependency-valid `READY` task;
+7. exact `BLOCKED`/`DEFERRED` external gate.
 
-## Testing / CI discipline
+Do not start new work while recoverable unfinished work exists unless it is objectively blocked and the ledger explicitly permits an independent package.
 
-Validation is risk-based and proportional.
+## Durable checkpoint protocol
 
-- Use the smallest deterministic checks that protect the changed scientific/reliability boundary during implementation.
-- Add tests for known-answer behavior, information isolation, determinism/serialization, configuration validation, lifecycle truthfulness, provenance and concrete regressions.
-- Do not turn pilot/final experiment matrices into CI tests or pursue arbitrary coverage/fuzzing projects.
-- GitHub PR CI is the canonical complete repository check.
-- Required scientific/provenance/configuration state fails closed.
+`WORK_STATE.json` is the operational resume pointer and must never become a competing task ledger.
 
-## Bibliography flow
+Before every material change, update:
 
-All new source discovery/original PDFs/OCR/conversion/scientific source analysis belongs to `MariosGiannakaras/ThesisBibliography`. This repository consumes committed immutable generated corpus versions. Formal citation trust is limited to `research/bibliography/citation-ready/` unless upstream verification/promotion creates a new trusted snapshot.
+- active task/work package;
+- phase;
+- branch/PR identity when known;
+- last durable checkpoint;
+- exact next action;
+- blockers and pending substeps.
 
-## Current scientific workflow authority
+After every material validated checkpoint, update:
 
-Protocol-v2.1 is frozen pre-execution scientific authority under DEC-058 + DEC-060.
+- completed substep/checkpoint;
+- relevant validation result;
+- exact next action;
+- any changed blocker/PR/CI state.
 
-### Phase A — nominal learning
+Before long/risky operations, quota/context boundaries or session end, create a coherent Git checkpoint and push it when access permits. Substantial work must not exist only in a local working tree or conversation.
 
-Each retained method trains independently under the same semantic task/information/reward contract and principal actual-environment-interaction budget. Standardized no-learning probes remain separate from deployed online utility.
+Use `scripts/project_checkpoint.py` for structured updates when convenient.
 
-### Phase B — resilience/adaptation
+## Branch/PR lifecycle
 
-Each method/root/layout starts from its own exact successful Phase-A scientific checkpoint and exact branch point. The matched branches are FN, FD, AN and AD. Frozen learning state does not mutate; Adaptive learning follows the frozen method-native continuation contract.
+For non-trivial work:
 
-### Recovery/direct comparison
+1. create/recover one coherent branch;
+2. record the work package in `WORK_STATE.json` and `TASKS.md` before substantial implementation;
+3. commit/push an early coherent checkpoint;
+4. open a draft PR as soon as useful remote recovery state exists; convert to normal review when reviewable;
+5. continue implementation with checkpoint updates rather than waiting until the end to expose the branch;
+6. run targeted checks, then canonical PR CI;
+7. review the actual diff/review threads; never self-`APPROVE`;
+8. squash-merge when checks/review/repository policy permit;
+9. immediately reconcile `WORK_STATE.json` on `main` to the next dependency-valid task or exact external gate.
 
-Protocol-v2.1 additionally records passive 32-interaction reward windows across the unchanged 256-interaction Phase-B horizon. Recovery compares AN versus AD after equal layout reduction inside each root, with the frozen tolerance/stability/right-censoring semantics. Direct method contrasts are root-paired on common independent roots.
+## Task/document governance
 
-See `docs/research/RQ_EVIDENCE_TRACEABILITY.md` for final RQ/estimand/output mapping.
+`TASKS.md` is the canonical task/dependency ledger. Started work is `IN_PROGRESS`; completed work is checked; discovered required work receives a stable task ID. `CURRENT_STATUS.md` is compact accepted state. `WORK_STATE.json` is only the active checkpoint/resume pointer.
 
-Historical v1.0/v1.1/pilot evidence remains separate and is never pooled into protocol-v2.1 confirmatory estimates.
+Every material PR reviews and reconciles affected active docs, status, tasks, tests, workflows and decisions according to `DOCUMENTATION_GOVERNANCE.md`.
 
-## Study-first backend workflow
+## Validation discipline
 
-`Study`, not a UI screen or individual run, is the application-facing aggregate.
+Use the smallest relevant checks during implementation. GitHub PR CI is the canonical full-suite pre-merge guard. `scripts/validate_project_continuity.py` and `scripts/validate_documentation_consistency.py` are mandatory continuity/documentation guards for material work.
 
-The implemented chain is:
+Scientific matrices are not CI test matrices. Required scientific/provenance/configuration state fails closed.
 
-> immutable recipe -> deterministic study plan -> scientific jobs/checkpoints -> validation -> root-level analysis -> deterministic evidence export
+## Scientific/bibliography boundaries
 
-A lower-level `RunBundle` remains a provenance/checksum evidence unit. `StudyStore` records recipe/plan identity, job states, artifact lineage and finalization.
+Protocol-v2.1, frozen evidence, T-612 analysis, T-613 assets and accepted T-716 thesis lineage remain immutable except through their declared amendment/revision workflows. Bibliography lifecycle work remains upstream in `MariosGiannakaras/ThesisBibliography`; generated consumer files are never hand-edited.
 
-### Evidence classes
+## Current academic gate after T-010
 
-Every study/job/artifact has an explicit evidence class. DEVELOPMENT/custom output cannot be promoted to confirmatory evidence by UI action, filename changes or manual copying.
-
-### Failure semantics
-
-- **Scientific failure:** retained outcome; never replace with another favorable root.
-- **Infrastructure failure:** not a scientific outcome; retry only with the same scientific identity/provenance rules.
-- **Skipped downstream unit:** explicit when a required scientific producer is scientifically unavailable.
-
-### Stage barriers
-
-Later stages do not execute while an earlier stage remains unresolved. Phase-B matched sets require the exact successful Phase-A checkpoint producer.
-
-### Final-execution authorization
-
-The framework-neutral Study service denies confirmatory/final execution by default. The final protocol-v2.1 Study may run only after a separate explicit scientific authorization supplies the required execution token. UI code may not bypass or reimplement this guard.
-
-DEC-062 governs the current authorized recovery: the first attempt is immutable failed/incomplete history, and the same frozen recipe must restart from zero in a distinct execution instance created from one clean corrected merged commit. Execution-instance lineage prevents storage collision without changing scientific or statistical identity. The existing authorization token remains mandatory.
-
-## Clean application restart
-
-DEC-059 selects PySide6 / Qt 6 Widgets as the application architecture. Historical Streamlit/React/NiceGUI implementations are superseded.
-
-The current user direction is to restart UI implementation cleanly from current `main`, not continue the paused/pre-v2.1 presentation implementation.
-
-The workflow for the new UI branch is:
-
-1. create one fresh branch from current `main`;
-2. read DEC-059, DEC-060, protocol-v2.1 authority and RQ traceability before editing UI;
-3. classify existing `src/resilient_agents/desktop/` files;
-4. preserve UI-neutral read-model/evidence/provenance/execution-policy contracts;
-5. replace presentation windows/pages/widgets/styles from scratch where that produces a clearer implementation;
-6. validate with DEVELOPMENT/synthetic fixtures and stored evidence only;
-7. run targeted UI/backend contract checks and representative screenshot/render checks;
-8. reconcile active UI docs and squash-merge one coherent PR when green.
-
-The UI may request/observe backend state but must not construct scientific roots, branch IDs, checkpoint identities, recovery thresholds or analysis estimands itself.
-
-## Intended application workflow
-
-The confirmatory/frozen-study experience should remain conceptually simple and locked:
-
-> Review Thesis Study -> authorization/lock state -> Run/Monitor only when allowed -> Validate -> Results -> Export
-
-Before explicit final authorization, the confirmatory path is review/read-only and clearly explains why execution is locked.
-
-A separate DEVELOPMENT/Exploratory path may expose approved configurable choices:
-
-> Configure -> Review -> Create -> Run -> Live Monitor -> Results/Compare -> History/Artifacts/Export
-
-Development output remains visibly non-confirmatory.
-
-## Results and presentation boundary
-
-The UI reads validated stored evidence/read models. It does not:
-
-- recompute root reductions or scientific intervals from raw evidence;
-- decide recovery thresholds or stability rules;
-- convert censored roots to fake observed recovery times;
-- relabel historical schema-v1 evidence with v2.1 semantics;
-- fabricate live/provisional progress or trajectories.
-
-Technical provenance remains available with progressive disclosure.
-
-## Where final research executes
-
-Final stochastic scientific evidence remains on the protocol-approved thesis-machine execution path unless an explicit amendment validates another environment. GitHub-hosted Actions are suitable for repository checks, deterministic tests and allowed reproducible postprocessing, but are not automatically the final stochastic experiment machine.
-
-## Remaining scientific evidence flow
-
-The protocol/backend/pre-final readiness, T-610 execution, T-611 validation/freeze and T-612 predeclared analysis work are complete. Scientifically the remaining sequence is:
-
-1. generate final figures/tables/data and evidence handoff from the finalized T-612 package;
-2. obtain explicit user approval before Results/Discussion/WP7 writing.
-
-Completion of T-612 does not itself authorize T-613 or WP7.
-
-## Downstream handoff
-
-After explicit writing approval:
-
-- **Repository/Codex:** reproducible evidence maps, figures/tables, technical/citation/result consistency and traceable assets.
-- **ChatGPT:** Greek thesis drafting/restructuring/review, explanatory wording, slide narrative, speaker material and user-facing placement guidance.
-- **Microsoft Word:** authoritative final `.docx` composition/inspection.
-- **PowerPoint:** authoritative final `.pptx` inspection/rehearsal.
-- **Canva:** optional bounded visual polish only; never a scientific data source.
-- **User:** supervisor/private input, subjective academic review gates, selected real app media capture and final Word/PowerPoint/rehearsal inspection.
-
-Quantitative thesis/presentation assets derive from frozen repository evidence, never manually retyped from the UI.
-
-## Documentation rule
-
-Every material architecture/science/tool/ownership/task change reconciles affected active documents in the same branch checkpoint. Historical records remain when clearly historical/superseded. Generated bibliography content is never hand-edited for consistency.
+T-716 is COMPLETE. Unless actual supervisor/reviewer feedback has arrived, T-712 remains DEFERRED. T-713 remains downstream of actual feedback where applicable plus authoritative official metadata/declaration and final Word/submission checks. Do not manufacture work to bypass an external gate.

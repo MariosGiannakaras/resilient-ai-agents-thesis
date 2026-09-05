@@ -2,6 +2,21 @@
 
 Record only material changes to the project source of truth. Detailed commit-by-commit history remains in Git; accepted decisions remain indexed in `docs/decisions/DECISION_LOG.md`.
 
+## 2026-09-05 — T-010 prompt-free self-resuming workflow
+
+- Made `AGENTS.md` the automatic execution/recovery contract: the user can say only "continue implementation" and the agent must recover objective repository/Git/GitHub state before selecting work.
+- Added `docs/context/WORK_STATE.json` as a machine-readable operational resume pointer, plus checkpoint/continuity tooling and CI. Every material action/checkpoint must update it; `TASKS.md` remains the sole detailed task ledger.
+- Established deterministic recovery priority: working tree -> open PR -> unmerged pushed branch -> WORK_STATE -> TASKS IN_PROGRESS -> first READY task -> exact external gate.
+- Required early pushed checkpoints/draft PRs for non-trivial work and immediate post-merge main-state normalization so half-finished work cannot exist only in chat or one local checkout.
+- Retired the tracked `CODEX_EXECUTION_PROMPT.md` dependency; project continuation is now prompt-free and repository-authoritative.
+
+## 2026-09-05 — T-716 final acceptance and continuity reconciliation
+
+- Completed T-716 full-content restoration/expansion and evidence-aware review; `docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md` records 11/11 PASS for the archived stage-4 review DOCX, semantic SHA-256 `b01f853af794e596f0dfb491a3f5401365ca3f01fd7d410194e539f0b8a10cc1`.
+- Preserved frozen T-611/T-612/T-613 science/media and governed 31/31 formal references; no experiment, estimand, result or registered quantitative asset was changed.
+- Recovered the interrupted-session state: the final-acceptance branch had completed CI but had not yet been integrated. Reconciled stale active bootstrap/roadmap/workflow documents so future sessions cannot restart T-613, the UI rebuild, T-711 or the pre-WP7 gate.
+- Current academic gate is T-712 only on actual supervisor/reviewer feedback; T-713 remains downstream of real feedback where applicable plus authoritative official metadata/declaration and final Word/submission checks.
+
 ## 2026-09-03 — T-702 major-writing-gate bibliography refresh completed
 
 - Completed the dated final-writing literature freshness review in canonical `MariosGiannakaras/ThesisBibliography` without reopening frozen protocol-v2.1 science or accepted final evidence/results/assets.

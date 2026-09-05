@@ -1,7 +1,7 @@
 # T-716 full-content evidence-aware thesis plan
 
 **Date:** 2026-09-05  
-**Status:** controlled pre-composition contract
+**Status:** COMPLETE — all 11 acceptance gates passed on 2026-09-05; accepted review semantic SHA-256 `b01f853af794e596f0dfb491a3f5401365ca3f01fd7d410194e539f0b8a10cc1`
 
 ## Objective
 
