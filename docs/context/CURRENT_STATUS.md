@@ -9,7 +9,7 @@
 
 - `T-010` is **COMPLETE** and was squash-merged through PR #146 as `bac999ce0bd32220ddf7e5112978a2035759970b`. `AGENTS.md` is the prompt-free entrypoint and `docs/context/WORK_STATE.json` is the operational resume pointer.
 - Recovery order remains: working-tree work -> open PR -> unmerged pushed branch -> `WORK_STATE` -> `TASKS` `IN_PROGRESS` -> first dependency-valid `READY` task -> exact external gate.
-- `T-716` remains COMPLETE and immutable as the accepted review-ready thesis milestone. The current academic gate is `T-712`, intentionally DEFERRED until actual supervisor/reviewer feedback exists.
+- `T-716` remains COMPLETE as the accepted review-ready provenance milestone. **T-717 is IN_PROGRESS** as a bounded author-directed pre-freeze content refinement; `T-712` remains intentionally DEFERRED until actual supervisor/reviewer feedback exists.
 
 ## Current execution state
 
@@ -17,6 +17,7 @@
 - `T-610` through `T-613` are **COMPLETE**. The accepted DEC-062 replacement completed 603/603 jobs with 600 scientific bundles; T-611 evidence is frozen under manifest SHA-256 `20a88bf9eee2ba8c4f60064634004f3746a594460f91fcd2491beae5cb498858`; T-612 analysis under `dd467d1f282b183ccf767084639b5ad38cc02caa5e3b6ce521128d177bb3ee62`; T-613 thesis assets under `9457275306fb633cb58d9af2e402531ff7d56a0f1f0f5eadc176f4a05726abd8`.
 - `T-700`, `T-701`, `T-702`, `T-710`, `T-711`, `T-714` and `T-715` are **COMPLETE as their defined tasks**. T-715 is an auditable reader-scope/audit-hardening milestone, **not the final thesis**.
 - **T-716 is COMPLETE.** Final acceptance is recorded in `docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md`: all 11 rewrite-plan gates pass. The accepted review authority is `thesis/archive/T716_stage4_evidence_audited_review_ready.docx` with 25,327 whole-document words, 23,273 main-body words to bibliography, 766 paragraphs, 31/31 governed references used, 25/25 scientific media preserved and 92-page visual QA. Semantic package SHA-256 `b01f853af794e596f0dfb491a3f5401365ca3f01fd7d410194e539f0b8a10cc1`; CI archive raw SHA-256 `08992272e90b0cae6b457a3f4ce66511cc7c337aeea0b6d3645d632f8d66a7f7`. T-714 remains the historical full-content provenance baseline and T-715 the scientific-correction overlay.
+- **T-717 is IN_PROGRESS.** The approved refinement changes exposition/visual explanation only: AI-agent→RL-agent scope bridge; exact GridWorld/disturbance and authority/data-flow figures; explicit non-sweep severity and single-change/recurrent-disruption limitations; Robust-Gymnasium as governed reference [32]. No experiment, re-analysis or frozen quantitative result/asset change is permitted. The historical development Phase-B screenshot is intentionally excluded.
 - The T-715 corrections remain authoritative: 180 tuning units; selected configs `q-c06`, `sarsa-c06`, `dqn-c05`, `ppo-c06`, `dyna-c03`; 12 final roots with sizing max half-width 0.1428; exact action-remap semantics; action failure p=0.15 as no-op with ordinary step reward −0.1; observation corruption p=0.05 with the implemented support; RQ1/RQ2 definitions; and RQ3 32-interaction windows, directed tolerance 0.10, two-window stability and right-censoring at 256. No new experiment/reanalysis/post-hoc superiority family was introduced.
 - Permanent deliverable retention applies: meaningful user-facing thesis milestones are committed under `thesis/archive/` before handoff; only genuinely accepted submission candidates belong under `thesis/final/`.
 
@@ -49,4 +50,4 @@ The immutable bibliography writing-gate consumer snapshot is `27674a566ab55e4491
 
 ## Exact next action
 
-Wait for actual supervisor/reviewer feedback for `T-712`. Do not relabel internal audits as external feedback. When real feedback arrives, record it in the repository, move T-712 to IN_PROGRESS, incorporate the corrections and revalidate before T-713 finalization.
+Finish T-717 reproducible archival/CI integration on `thesis/t717-final-content-refinement`, merge only after all DOCX/claim/continuity/repository gates pass, then mark T-717 COMPLETE and restore T-712 DEFERRED as the operational external-feedback gate. Do not relabel T-717 as supervisor/reviewer feedback.

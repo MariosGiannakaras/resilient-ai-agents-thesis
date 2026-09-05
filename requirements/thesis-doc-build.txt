@@ -1,0 +1,4 @@
+# T-717 deterministic thesis-document reconstruction dependencies.
+# Intentionally separate from the frozen scientific/runtime uv lock.
+lxml==6.1.1
+matplotlib==3.10.8

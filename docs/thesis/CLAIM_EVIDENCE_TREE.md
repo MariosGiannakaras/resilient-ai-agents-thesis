@@ -1,6 +1,6 @@
-# T-716 claim → evidence tree
+# T-716/T-717 claim → evidence tree
 
-**Status:** accepted T-716 claim/evidence authority; reopen only for governed later revision  
+**Status:** accepted claim/evidence authority through governed T-717 pre-freeze refinement; later changes require another governed revision  
 **Date:** 2026-09-05  
 **Machine registry:** `docs/thesis/claim-evidence-map.json`  
 **Source-selection policy:** `docs/thesis/BIBLIOGRAPHY_SOURCE_SELECTION_POLICY.md`
@@ -143,6 +143,13 @@ No source in this tree is individually a “source of truth”. A formal source 
 ---
 
 ## Chapter 3 — Methodology and experimental design
+
+### 3.0 Perturbation axes and severity-sweep boundary — `LIT-018`
+
+**Formal:** `SRC-A3D907D882` (Robust-Gymnasium, ICLR 2025).  
+**Synthesis:** perturbation target/type, application mode, severity and temporal frequency are separate experimental axes; use this only to explain why thesis action-failure `p=.15` and observation-corruption `p=.05` are fixed frozen points rather than a severity-response sweep.  
+**Single-source exception:** this is the directly relevant peer-reviewed benchmark source for the narrow taxonomy claim; no algorithmic or numerical result is imported.  
+**Limit:** Robust-Gymnasium uses materially different tasks/algorithms; exact thesis probabilities, disturbance semantics and conclusions remain bounded by project protocol/evidence.
 
 ### 3.1 Common actual-interaction fairness — `PROJ-001`
 
