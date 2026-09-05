@@ -3,7 +3,8 @@ name: Claim evidence map
 on:
   push:
     paths:
-      - 'research/bibliography/claim-evidence-map.json'
+      - 'docs/thesis/claim-evidence-map.json'
+      - 'docs/thesis/BIBLIOGRAPHY_SOURCE_SELECTION_POLICY.md'
       - 'scripts/validate_claim_evidence_map.py'
       - 'research/bibliography/citation-ready/**'
       - 'research/bibliography/catalog/sources.csv'
@@ -11,7 +12,8 @@ on:
       - '.github/workflows/claim-evidence-map.yml'
   pull_request:
     paths:
-      - 'research/bibliography/claim-evidence-map.json'
+      - 'docs/thesis/claim-evidence-map.json'
+      - 'docs/thesis/BIBLIOGRAPHY_SOURCE_SELECTION_POLICY.md'
       - 'scripts/validate_claim_evidence_map.py'
       - 'research/bibliography/citation-ready/**'
       - 'research/bibliography/catalog/sources.csv'
