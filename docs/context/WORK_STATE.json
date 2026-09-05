@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T14:54:00Z",
+  "updated_at_utc": "2026-09-05T14:56:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-010",
   "task_status": "IN_PROGRESS",
@@ -9,8 +9,8 @@
   "base_branch": "main",
   "pull_request": 146,
   "phase": "CORRECTION",
-  "last_completed_checkpoint": "AGENTS.md is now prompt-free/self-resuming; generic checkpoint and continuity validator tooling exist. PR CI run 33973092035 failed fail-closed in the T-010 migration because the TASKS exact-next-action matcher was too strict.",
-  "next_action": "Relax the T-010 migration matcher against the actual TASKS.md line, rerun the migration/continuity/documentation/T-716 gates, and persist the resulting prompt-free workflow state.",
+  "last_completed_checkpoint": "PR CI exposed the migration root cause safely: regex_once used DOTALL, so the Current task line replacement consumed the remainder of TASKS.md in the ephemeral CI working tree; no destructive change was persisted.",
+  "next_action": "Patch the T-010 migration helper to use MULTILINE-only line replacements, rerun migration/continuity/documentation/T-716 gates, and persist the prompt-free workflow if green.",
   "blockers": [],
   "completed_substeps": [
     "Recovered unmerged T-716 final-acceptance branch state",
@@ -20,10 +20,11 @@
     "Added scripts/project_checkpoint.py",
     "Added scripts/validate_project_continuity.py",
     "Replaced AGENTS.md with prompt-free deterministic recovery/checkpoint instructions",
-    "Reworked the T-716 workflow to execute T-010 continuity installation before validation"
+    "Reworked the T-716 workflow to execute T-010 continuity installation before validation",
+    "Diagnosed CI failures 33973092035 and 33973184850 to the migration regex DOTALL bug"
   ],
   "pending_substeps": [
-    "Correct T-010 migration matcher from CI failure 33973092035",
+    "Patch T-010 migration regex helper to MULTILINE-only semantics",
     "Add T-010 to the canonical task registry through the migration",
     "Reconcile documentation governance and execution workflow through the migration",
     "Add project continuity CI workflow",
@@ -37,7 +38,8 @@
     "t716_final_acceptance": "PASS_BEFORE_T010_CHANGES",
     "documentation_consistency": "PASS_BEFORE_T010_CHANGES",
     "continuity_validator": "ADDED_NOT_YET_RUN",
-    "pr_ci_run_33973092035": "FAIL_MIGRATION_MATCHER",
+    "pr_ci_run_33973092035": "FAIL_MIGRATION_PRECURSOR",
+    "pr_ci_run_33973184850": "FAIL_MIGRATION_REGEX_DOTALL",
     "pr_ci": "FAILING_KNOWN_CORRECTABLE"
   },
   "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume this work package before selecting another task unless it is objectively blocked or already merged.",
