@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T14:56:00Z",
+  "updated_at_utc": "2026-09-05T14:58:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-010",
   "task_status": "IN_PROGRESS",
@@ -9,8 +9,8 @@
   "base_branch": "main",
   "pull_request": 146,
   "phase": "CORRECTION",
-  "last_completed_checkpoint": "PR CI exposed the migration root cause safely: regex_once used DOTALL, so the Current task line replacement consumed the remainder of TASKS.md in the ephemeral CI working tree; no destructive change was persisted.",
-  "next_action": "Patch the T-010 migration helper to use MULTILINE-only line replacements, rerun migration/continuity/documentation/T-716 gates, and persist the prompt-free workflow if green.",
+  "last_completed_checkpoint": "PR CI run 33973270773 proved the T-010 migration itself now succeeds and the T-716 11/11 acceptance audit still passes. The run stopped only because the legacy T-716 status validator requires T-716 to remain the current task.",
+  "next_action": "Remove the legacy T-716 current-task status validator from the active workflow, rely on the T-716 acceptance audit for T-716 completion and the generic continuity validator for current work state, then rerun and persist the migration.",
   "blockers": [],
   "completed_substeps": [
     "Recovered unmerged T-716 final-acceptance branch state",
@@ -21,25 +21,23 @@
     "Added scripts/validate_project_continuity.py",
     "Replaced AGENTS.md with prompt-free deterministic recovery/checkpoint instructions",
     "Reworked the T-716 workflow to execute T-010 continuity installation before validation",
-    "Diagnosed CI failures 33973092035 and 33973184850 to the migration regex DOTALL bug"
+    "Diagnosed and fixed the T-010 migration regex DOTALL defect",
+    "Confirmed T-010 migration and T-716 acceptance both pass in PR CI run 33973270773"
   ],
   "pending_substeps": [
-    "Patch T-010 migration regex helper to MULTILINE-only semantics",
-    "Add T-010 to the canonical task registry through the migration",
-    "Reconcile documentation governance and execution workflow through the migration",
+    "Retire legacy T-716 current-task status validation from the active workflow",
+    "Persist the successful T-010 migration outputs",
     "Add project continuity CI workflow",
-    "Retire CODEX_EXECUTION_PROMPT.md and obsolete T-716 continuity scripts",
-    "Update documentation consistency validator for prompt-free bootstrap",
-    "Run PR CI and objective diff review",
+    "Run generic continuity/documentation and repository PR checks",
+    "Objective diff/review-thread audit",
     "Squash-merge PR #146 if green",
-    "Reconcile main to idle/external-gate state after merge"
+    "Reconcile main to T-712 external-gate state after merge"
   ],
   "validation": {
-    "t716_final_acceptance": "PASS_BEFORE_T010_CHANGES",
-    "documentation_consistency": "PASS_BEFORE_T010_CHANGES",
-    "continuity_validator": "ADDED_NOT_YET_RUN",
-    "pr_ci_run_33973092035": "FAIL_MIGRATION_PRECURSOR",
-    "pr_ci_run_33973184850": "FAIL_MIGRATION_REGEX_DOTALL",
+    "t716_final_acceptance": "PASS_RUN_33973270773",
+    "t010_migration": "PASS_RUN_33973270773",
+    "legacy_t716_status_validator": "FAIL_STALE_CURRENT_TASK_ASSUMPTION",
+    "continuity_validator": "PENDING_AFTER_LEGACY_CHECK_REMOVAL",
     "pr_ci": "FAILING_KNOWN_CORRECTABLE"
   },
   "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume this work package before selecting another task unless it is objectively blocked or already merged.",
