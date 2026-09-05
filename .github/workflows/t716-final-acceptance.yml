@@ -6,16 +6,21 @@ on:
       - thesis/t716-final-acceptance
     paths:
       - scripts/t716_final_acceptance_audit.py
+      - scripts/t716_final_reconcile_claim_registry.py
       - .github/workflows/t716-final-acceptance.yml
   pull_request:
     paths:
       - scripts/t716_final_acceptance_audit.py
+      - scripts/t716_final_reconcile_claim_registry.py
+      - docs/thesis/claim-evidence-map.json
+      - docs/thesis/CLAIM_EVIDENCE_TREE.md
       - docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md
       - docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json
       - .github/workflows/t716-final-acceptance.yml
       - docs/context/TASKS.md
       - docs/context/CURRENT_STATUS.md
       - README.md
+      - thesis/archive/README.md
   workflow_dispatch:
 
 permissions:
@@ -37,6 +42,9 @@ jobs:
       - name: Install pinned DOCX dependency
         run: python -m pip install --disable-pip-version-check python-docx==1.2.0
 
+      - name: Reconcile final claim registry
+        run: python scripts/t716_final_reconcile_claim_registry.py
+
       - name: Validate claim-evidence registry
         run: python scripts/validate_claim_evidence_map.py
 
@@ -56,25 +64,28 @@ jobs:
           assert r['paragraph_count']==766 and r['page_count']==92, r
           assert r['reference_count']==31 and r['used_reference_numbers']==list(range(1,32)), r
           assert all(r['acceptance_gates'].values()), r
-          assert r['citation_resolution_failures']==[], r
+          assert r['missing_citation_ready_source_ids']==[], r
+          assert r['reference_identity_failures']==[], r
           assert r['registry_missing_source_ids']==[], r
           assert len(r['intentional_administrative_placeholders'])==3, r
           assert r['comments_present'] is False and r['tracked_changes_present'] is False, r
+          assert r['t715_stage3_qa_guards_preserved'] is True, r
+          assert r['t715_reader_sentinels_present'] is True, r
           print('T-716 final acceptance: PASS')
           PY
 
-      - name: Persist final acceptance report
+      - name: Persist final acceptance report and registry reconciliation
         if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
         run: |
           cp artifacts/t716/T716_FINAL_ACCEPTANCE_AUDIT.md docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md
           cp artifacts/t716/T716_final_acceptance_audit.json docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json
+          git add docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json docs/thesis/claim-evidence-map.json docs/thesis/CLAIM_EVIDENCE_TREE.md
           if git diff --cached --quiet; then
-            echo 'Acceptance report already current.'
+            echo 'Acceptance report and registry already current.'
           else
-            git commit -m 'T-716: persist final acceptance audit'
+            git commit -m 'T-716: persist final acceptance audit and registry reconciliation'
             git push
           fi
 
