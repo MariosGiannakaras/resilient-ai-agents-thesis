@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T17:40:00Z",
+  "updated_at_utc": "2026-09-05T18:18:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-717",
   "task_status": "IN_PROGRESS",
@@ -8,34 +8,46 @@
   "branch": "thesis/t717-final-content-refinement",
   "base_branch": "main",
   "pull_request": null,
-  "phase": "DOCX_CONTENT_AND_VISUAL_REFINEMENT",
-  "last_completed_checkpoint": "T-716 passed its prior 11/11 acceptance audit and T-010 continuity workflow is complete. A new user-requested whole-manuscript audit on 2026-09-05 identified a deliberately narrow pre-freeze refinement set; this is new internal author-directed work, not supervisor/reviewer feedback and therefore does not satisfy T-712.",
-  "next_action": "Apply the accepted T-717 refinement set to the current T-716 evidence-audited DOCX: replace the two redundant introductory diagrams with an exact GridWorld/disturbance composite and layered authority/data-flow figure; add a short AI-agent-to-RL-agent scope bridge; state fixed severity points are not a sweep; add one bounded Phase-B UI screenshot only if the deterministic validated asset can be recovered cleanly; add severity/frequency and single-change/recurrent-disruption limitations; add Robust-Gymnasium as the only new formal bibliography entry; render and visually inspect the complete DOCX before archival/PR.",
+  "phase": "REPRODUCIBLE_ARCHIVE_AND_EVIDENCE_RECONCILIATION",
+  "last_completed_checkpoint": "The T-717 DOCX candidate now contains the approved narrow refinement set. Full 94-page render QA passed with no clipping/overlap; the two new explanatory figures were also inspected at full resolution. Word-native fields were repaired and verified at 27 SEQ fields plus 3 TOC fields. Structural QA: 32/32 bibliography entries used, 25 inline images, 23/25 prior media byte-identical with only the two intended figure replacements changed, zero comments, zero tracked insertions/deletions, zero unresolved SRC residues, and accessibility audit 0 high/0 medium/0 low. The historical Phase-B UI fixture was rejected because it exposes condition_unavailable/not-executed presentation state and therefore is not suitable as a thesis illustration.",
+  "next_action": "Make the T-717 refinement reproducible in the repository: add/update claim-evidence governance for Robust-Gymnasium, add deterministic build/QA tooling and workflow that regenerates the candidate from the accepted T-716 archive, archive the generated T-717 DOCX plus QA report, then open a PR, run objective CI/diff review and merge only if all gates pass.",
   "blockers": [],
   "completed_substeps": [
     "Whole-manuscript content/visual/bibliography audit completed against the latest T-716 DOCX",
     "Rejected unnecessary additions: new result plots, code listings/pseudocode, aleatoric-epistemic subsection, duplicate change-detection theory, generic AI history, extra UI gallery",
-    "Accepted narrow change set and created branch thesis/t717-final-content-refinement"
+    "Created exact GridWorld/disturbance composite from frozen protocol values",
+    "Created layered scientific/execution/analysis/presentation authority figure",
+    "Rejected the recovered historical Phase-B screenshot as misleading development-fixture material",
+    "Added bounded AI-agent-to-RL-agent scope bridge",
+    "Added fixed-severity-not-sweep and single-change/recurrent-disruption limitations",
+    "Added Robust-Gymnasium as bibliography entry [32] for the perturbation-axis limitation only",
+    "Restored native Figure 1/Figure 2 SEQ captions and native List-of-Figures TOC field",
+    "Completed full 94-page visual QA and structural/accessibility checks"
   ],
   "pending_substeps": [
-    "Create exact GridWorld/disturbance composite from frozen protocol data",
-    "Create layered scientific/execution/analysis/presentation architecture figure",
-    "Recover and assess deterministic Phase-B Frozen-vs-Adaptive UI screenshot",
-    "Apply bounded text edits and add Robust-Gymnasium bibliography entry",
-    "Reconcile figure list/captions/alt text and bibliography numbering",
-    "Render full DOCX and inspect every page",
-    "Run structural/scientific/accessibility QA",
-    "Archive reproducible T-717 candidate, update task/status authorities, open PR and merge only if all gates pass"
+    "Reconcile claim-evidence map/tree with SRC-A3D907D882 and the new bounded literature claim",
+    "Add deterministic T-717 DOCX build/QA tooling and CI workflow",
+    "Persist the generated review-ready DOCX and QA report in thesis/archive",
+    "Re-run repository/continuity/scientific QA on the persisted artifact",
+    "Open PR, inspect exact diff/review/check state, and merge if fully green",
+    "Normalize main back to the real T-712 external-feedback gate after T-717 completion"
   ],
   "validation": {
     "t716_prior_acceptance": "PASS_11_OF_11",
     "t717_audit_decision": "NARROW_REFINEMENT_APPROVED_BY_USER_2026_09_05",
+    "t717_local_docx": "PASS_CONTENT_STRUCTURE_AND_94_PAGE_VISUAL_QA",
+    "word_fields": "PASS_27_SEQ_3_TOC_1_PAGE",
+    "references": "PASS_32_OF_32_USED",
+    "media_preservation": "PASS_23_OF_25_UNCHANGED_TWO_INTENTIONAL_REPLACEMENTS",
+    "comments_tracked_changes": "PASS_ZERO",
+    "accessibility": "PASS_0_HIGH_0_MEDIUM_0_LOW",
     "scientific_results_modified": "NO",
     "new_experiment_or_reanalysis": "NO"
   },
   "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume T-717 before T-712/T-713. T-717 is an author-directed pre-freeze refinement and must not be relabelled as external supervisor/reviewer feedback.",
   "notes": [
     "TASKS.md remains the canonical task/dependency ledger; this file is the operational resume pointer.",
-    "Frozen protocol/results remain immutable. Any visual must be generated from existing frozen project authorities or validated presentation assets, not from recomputed scientific outcomes."
+    "Frozen protocol/results remain immutable. The new figures explain existing frozen protocol/architecture facts and do not recompute scientific outcomes.",
+    "Do not add a UI screenshot unless a genuinely representative validated runtime state is available; the historical fixture is intentionally excluded."
   ]
 }
