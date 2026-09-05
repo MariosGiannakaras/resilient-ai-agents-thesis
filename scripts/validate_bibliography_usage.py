@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Validate SRC-* and MAT-* references according to document trust context."""
+"""Validate SRC-* and MAT-* references according to document trust context.
+
+Formal final/frozen thesis surfaces may use only citation-ready SRC-* records and may not
+cite MAT-* research materials. Internal research, audit, planning and evidence-mapping
+documents may reference any registered canonical source/material so they can compare,
+reject, qualify or promote candidates without pretending those records are final citations.
+Unknown identifiers always fail.
+"""
 from __future__ import annotations
 
 import argparse
@@ -19,6 +26,15 @@ SCAN_ROOTS = (ROOT / "docs", ROOT / "thesis", ROOT / "results" / "thesis-final")
 SCAN_FILES = (ROOT / "README.md", ROOT / "AGENTS.md")
 EXCLUDED_NAMES = {".git", ".venv", "venv", "node_modules", "__pycache__"}
 
+# Only actual manuscript/final-output trees are formal by location.  docs/thesis contains
+# requirements, plans, audits and evidence maps and is therefore internal unless the file
+# explicitly declares itself frozen/final in its header.
+FORMAL_PREFIXES = (
+    "thesis/chapters/",
+    "thesis/final/",
+    "results/thesis-final/",
+)
+
 
 @dataclass(frozen=True)
 class ReferenceUse:
@@ -30,10 +46,7 @@ class ReferenceUse:
 
 def _is_formal_path(root: Path, path: Path, text: str) -> bool:
     relative = path.relative_to(root).as_posix()
-    formal_prefixes = (
-        "thesis/chapters/", "thesis/final/", "docs/thesis/", "results/thesis-final/",
-    )
-    if relative.startswith(formal_prefixes):
+    if relative.startswith(FORMAL_PREFIXES):
         return True
     if relative.startswith("docs/experiments/"):
         name = path.stem.casefold()

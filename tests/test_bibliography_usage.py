@@ -62,15 +62,57 @@ class BibliographyUsageTests(unittest.TestCase):
             self.assertEqual(uses[0].trust, "rejected")
             self.assertEqual(uses[0].context, "internal")
 
-    def test_material_is_valid_in_internal_notes_but_not_formal_prose(self) -> None:
+    def test_docs_thesis_audit_and_mapping_are_internal(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             import_dir = self.setUpCorpus(root)
+            for relative in (
+                "docs/thesis/audits/full-corpus-audit.md",
+                "docs/thesis/CLAIM_EVIDENCE_TREE.md",
+                "docs/thesis/claim-evidence-map.json",
+                "docs/thesis/T716_REWRITE_PLAN.md",
+            ):
+                uses, errors = self.validate_text(root, import_dir, relative, REJECTED_ID)
+                self.assertFalse(errors, relative)
+                self.assertEqual(uses[0].context, "internal", relative)
+
+    def test_material_is_valid_internal_but_not_in_explicit_final_or_manuscript_prose(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            import_dir = self.setUpCorpus(root)
+
             uses, errors = self.validate_text(root, import_dir, "docs/research/material-notes.md", MATERIAL_ID)
             self.assertFalse(errors)
             self.assertEqual(uses[0].trust, "research-material")
-            _uses, errors = self.validate_text(root, import_dir, "docs/thesis/draft.md", MATERIAL_ID)
+            self.assertEqual(uses[0].context, "internal")
+
+            uses, errors = self.validate_text(root, import_dir, "docs/thesis/draft.md", MATERIAL_ID)
+            self.assertFalse(errors)
+            self.assertEqual(uses[0].context, "internal")
+
+            _uses, errors = self.validate_text(root, import_dir, "thesis/chapters/method.md", MATERIAL_ID)
             self.assertTrue(any("MAT-* is not a formal citation" in error for error in errors))
+
+            _uses, errors = self.validate_text(
+                root,
+                import_dir,
+                "docs/thesis/frozen-methodology.md",
+                f"Status: Frozen\n\n{MATERIAL_ID}",
+            )
+            self.assertTrue(any("MAT-* is not a formal citation" in error for error in errors))
+
+    def test_non_ready_source_rejected_in_explicit_final_docs_thesis_file(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            import_dir = self.setUpCorpus(root)
+            uses, errors = self.validate_text(
+                root,
+                import_dir,
+                "docs/thesis/submission-record.md",
+                f"Status: Final\n\n{REJECTED_ID}",
+            )
+            self.assertEqual(uses[0].context, "formal")
+            self.assertTrue(any("non-citation-ready" in error for error in errors))
 
     def test_unknown_identifiers_fail(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
