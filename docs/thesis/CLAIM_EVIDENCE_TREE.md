@@ -28,8 +28,8 @@ No source in this tree is individually a “source of truth”. A formal source 
 
 ### 1.1 RL as sequential decision-making — `LIT-001`
 
-**Formal evidence:** `SRC-701E163AC8`, `SRC-D52DF7B9A4`.  
-**Primary promotion candidate/context:** `SRC-AD8A2E9A85`.
+**Formal evidence:** `SRC-701E163AC8`, `SRC-D52DF7B9A4`, `SRC-AD8A2E9A85`.  
+**Ranking:** use the textbook for broad MDP/value/policy framing, focused TD material for mechanism detail and Watkins–Dayan as the primary Q-learning foundation.
 
 **Combined use:** define agent/state/action/reward/policy/value and the Q/SARSA family without overloading the Introduction with algorithm detail.  
 **Boundary:** convergence statements belong to their assumptions; stationary Q-learning theory is not evidence of recovery after the thesis changepoint.
@@ -60,10 +60,10 @@ No source in this tree is individually a “source of truth”. A formal source 
 
 ### 2.1 Q-Learning versus SARSA — `LIT-004`
 
-**Formal:** `SRC-701E163AC8`, `SRC-D52DF7B9A4`.  
-**Context/primary candidate:** `SRC-AD8A2E9A85`.  
+**Formal:** `SRC-AD8A2E9A85`, `SRC-701E163AC8`, `SRC-D52DF7B9A4`.  
+**Ranking:** Watkins–Dayan is the primary Q-learning source; broader textbook/TD sources supply the direct Q-Learning versus SARSA comparison context.  
 **Synthesis:** off-policy greedy target versus on-policy next-action target under exploratory behavior.  
-**Limit:** no intrinsic-resilience ranking follows from this mechanism difference.
+**Limit:** no intrinsic-resilience ranking follows from this mechanism difference; Q-learning convergence assumptions do not predict post-remap recovery speed.
 
 ### 2.2 DQN foundation, replay and value-estimation sensitivity — `LIT-005`
 
@@ -79,23 +79,23 @@ No source in this tree is individually a “source of truth”. A formal source 
 
 ### 2.4 Dyna and Dyna-Q+ — `LIT-007`
 
-**Formal:** `SRC-701E163AC8`, `SRC-D38364B32C`.  
-**Primary context candidate:** `SRC-F6BD3A6B18`.  
+**Formal:** `SRC-F6BD3A6B18`, `SRC-701E163AC8`, `SRC-D38364B32C`.  
+**Ranking:** Sutton 1990 is the primary Dyna foundation; the broader sources support mechanism and model-based-RL context.  
 **Synthesis:** direct learning + learned model + planning; under change, stale model information and directed re-exploration are distinct effects.  
 **Limit:** project results do not establish a universal model-based advantage.
 
 ### 2.5 What “non-stationary” can mean — `LIT-008`
 
-**Formal:** `SRC-660560956D`, `SRC-F909CABDEB`, `SRC-95C9DAEE68`, `SRC-70772C0629`.  
-**Additional analyzed context:** `SRC-39696F490F`, `SRC-8025C139CE`.  
-**Compare explicitly:** abrupt persistent changepoint; recurring/structured hidden regimes; continual task streams; re-exploration/forgetting assumptions.  
-**Limit:** the thesis implements a declared persistent-remap/noise family, not a generic model of all non-stationarity.
+**Formal:** `SRC-39696F490F`, `SRC-8025C139CE`, `SRC-660560956D`, `SRC-F909CABDEB`, `SRC-95C9DAEE68`, `SRC-70772C0629`, `SRC-0FD9BE81AC`.  
+**Ranking:** Khetarpal supplies the continual-RL framing; Padakandla supplies dynamically varying/non-stationary RL taxonomy; the existing structured-change sources delimit specific assumptions; Liu 2025 is a recent supporting primary example of model-based continual RL rather than a taxonomy replacement.  
+**Compare explicitly:** abrupt persistent changepoint; recurring/structured hidden regimes; continual task streams; re-exploration/forgetting assumptions; online world-model planning under task switches.  
+**Limit:** the thesis implements a declared persistent-remap/noise family, not a generic model of all non-stationarity. Liu 2025 uses a different shared-dynamics/task-switching regime and MPC/world-model method; it is not evidence about Dyna-Q+ or the thesis remap specifically.
 
 ### 2.6 Plasticity and primacy as threats to continued deep learning — `LIT-009`
 
 **Formal:** `SRC-4C34DF3E17`, `SRC-46CF36BC1E`, `SRC-F909CABDEB`.  
 **Synthesis:** continued learning can face interference/primacy/plasticity problems over long horizons.  
-**Limit:** these sources do not predict that DQN/PPO must fail in the thesis's small GridWorld.
+**Limit:** these sources do not predict that DQN/PPO must fail in the thesis's small GridWorld. Liu 2025 is intentionally not added here because its continual-RL retention framing does not directly establish primacy or plasticity degradation.
 
 ### 2.7 Action uncertainty — `LIT-010`
 
@@ -117,9 +117,9 @@ No source in this tree is individually a “source of truth”. A formal source 
 
 ### 2.10 Resilience as a temporal process — `LIT-013`
 
-**Formal:** `SRC-0A594EACC0`, `SRC-0F8A6588DC`, `SRC-4000D2B40A`.  
-**Synthesis:** reference/performance trajectories, degradation, recovery and diagnostic metrics should remain separate.  
-**Limit:** exact thesis recovery semantics come from project authority, not these formulas.
+**Formal:** `SRC-0A594EACC0`, `SRC-0F8A6588DC`, `SRC-4000D2B40A`, `SRC-327CD7B903`.  
+**Synthesis:** reference/performance trajectories, degradation, recovery and diagnostic metrics should remain separate. Cadet 2025 adds recent primary evidence that temporal granularity matters and whole-horizon aggregation can conceal different degradation/recovery profiles.  
+**Limit:** exact thesis recovery semantics come from project authority, not these formulas. Cadet's cyber-defense resilience metric, weights and evaluation horizon are not imported into the thesis.
 
 ### 2.11 Safety versus resilience — `LIT-014`
 
@@ -294,9 +294,9 @@ Exact project facts that must survive writing:
 
 ### 6.4 Plasticity/primacy — `LIT-009`
 
-**Formal:** `SRC-4C34DF3E17`, `SRC-46CF36BC1E`, continual-RL survey.  
+**Formal:** `SRC-4C34DF3E17`, `SRC-46CF36BC1E`, `SRC-F909CABDEB`.  
 **Use:** threat/interpretation framework.  
-**Limit:** different domains/timescales prevent direct causal attribution.
+**Limit:** different domains/timescales prevent direct causal attribution; Liu 2025 is not used as primacy/plasticity evidence.
 
 ### 6.5 External validity — `DISC-004`
 
@@ -349,20 +349,19 @@ The following evidence must remain visible when writing apparently simple claims
 | Observation robustness = dynamics adaptation | `SRC-01BBBA7EAB`, `SRC-09DD20BA85`, `SRC-19C2E91926` operate on different information/detection assumptions. |
 | Continued deep learning always adapts | `SRC-4C34DF3E17` and `SRC-46CF36BC1E` establish plasticity/primacy concerns, but do not predict this thesis outcome. |
 | Q-learning cannot handle any non-stationarity | `SRC-70772C0629` provides a structured switching setting with convergence under strong assumptions. |
-| One resilience number is sufficient | `SRC-0A594EACC0`, `SRC-0F8A6588DC`, `SRC-4000D2B40A` motivate decomposed temporal/diagnostic views. |
+| All continual RL settings are interchangeable | `SRC-39696F490F`, `SRC-8025C139CE` and `SRC-0FD9BE81AC` cover different taxonomic/experimental assumptions; Liu's world-model task-switching regime is not the thesis persistent remap. |
+| One resilience number is sufficient | `SRC-0A594EACC0`, `SRC-0F8A6588DC`, `SRC-4000D2B40A`, `SRC-327CD7B903` motivate decomposed temporal/diagnostic views and caution against aggregation that hides recovery structure. |
 | Safe adaptation is demonstrated here | `SRC-3A5E2C9E2C`, `SRC-0406E13B97` show that safety requires explicit constraints/costs not measured as a primary thesis outcome. |
 
-## Promotion/discovery queue
+## Remaining promotion/discovery queue
 
-The corpus audit identified important analyzed records that are not currently formal citation-ready sources. They should not be lost simply because the current citation layer excluded them:
+The four previously blocked foundational records are now citation-ready and formally ranked above: Watkins–Dayan (`SRC-AD8A2E9A85`), Sutton/Dyna (`SRC-F6BD3A6B18`), Khetarpal et al. (`SRC-39696F490F`) and Padakandla (`SRC-8025C139CE`). They are no longer promotion candidates.
 
-- `SRC-AD8A2E9A85` — Watkins & Dayan, primary Q-learning paper;
-- `SRC-F6BD3A6B18` — Sutton 1990 Dyna primary paper;
-- `SRC-39696F490F` — Khetarpal et al., continual-RL review;
-- `SRC-8025C139CE` — Padakandla, dynamically varying RL survey;
+The remaining identified external pointer is:
+
 - Ding & Lavaei AAAI 2023 non-stationary CMDP paper — verified externally and present as a cited work inside the synchronized survey record, but not yet an independently governed `SRC-*` formal record.
 
-If T-716 needs one of these for a formal claim, the correct action is upstream bibliography promotion/verification and a new immutable consumer sync — not a local workaround.
+If T-716 later needs that work for a distinct formal claim, the correct action is upstream bibliography intake/verification and a new immutable consumer sync — not a local workaround.
 
 ## Completion rule for T-716
 
