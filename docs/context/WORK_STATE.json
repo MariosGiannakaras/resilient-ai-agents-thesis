@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T14:44:00Z",
+  "updated_at_utc": "2026-09-05T14:49:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-010",
   "task_status": "IN_PROGRESS",
@@ -9,20 +9,24 @@
   "base_branch": "main",
   "pull_request": 146,
   "phase": "IMPLEMENTATION",
-  "last_completed_checkpoint": "Recovered and validated the interrupted T-716 final-acceptance work, reconciled stale active documentation, and opened PR #146 after branch CI passed.",
-  "next_action": "Install the generic self-resuming workflow: make AGENTS.md the prompt-free entrypoint, require WORK_STATE checkpoints, add continuity validation/CI, retire the tracked execution prompt, validate PR #146, then merge if all required checks pass.",
+  "last_completed_checkpoint": "Created the durable WORK_STATE resume pointer plus generic project_checkpoint and validate_project_continuity tooling on PR #146.",
+  "next_action": "Wire T-010 into TASKS/AGENTS/governance/workflow, retire the tracked execution prompt dependency, then run continuity and documentation CI.",
   "blockers": [],
   "completed_substeps": [
     "Recovered unmerged T-716 final-acceptance branch state",
     "Revalidated T-716 11/11 acceptance gates and documentation consistency",
-    "Opened PR #146 against main"
+    "Opened PR #146 against main",
+    "Added docs/context/WORK_STATE.json operational resume pointer",
+    "Added scripts/project_checkpoint.py",
+    "Added scripts/validate_project_continuity.py"
   ],
   "pending_substeps": [
     "Add T-010 to the canonical task registry",
     "Strengthen AGENTS.md with prompt-free deterministic recovery and checkpoint rules",
     "Reconcile documentation governance and execution workflow",
-    "Add machine validation and CI for WORK_STATE/resume consistency",
+    "Add project continuity CI workflow and update existing T-716 workflow integration",
     "Retire CODEX_EXECUTION_PROMPT.md as an active dependency",
+    "Update documentation consistency validator for prompt-free bootstrap",
     "Run PR CI and objective diff review",
     "Squash-merge PR #146 if green",
     "Reconcile main to idle/external-gate state after merge"
@@ -30,7 +34,8 @@
   "validation": {
     "t716_final_acceptance": "PASS",
     "documentation_consistency": "PASS_BEFORE_T010_CHANGES",
-    "branch_ci": "PASS",
+    "branch_ci": "PASS_BEFORE_T010_CHANGES",
+    "continuity_validator": "ADDED_NOT_YET_RUN",
     "pr_ci": "PENDING"
   },
   "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume this work package before selecting another task unless it is objectively blocked or already merged.",
