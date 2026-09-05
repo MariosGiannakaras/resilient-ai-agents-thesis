@@ -39,7 +39,7 @@ Checkout commit equality with either package source commit is not required. Gene
 
 ## Synchronization
 
-`.github/workflows/sync-bibliography.yml` accepts only an explicit immutable tag or full SHA. Historical `bibliography-integration-v2` and `bibliography-integration-v3` remain immutable prior integration identities. The current major-writing-gate synchronized baseline is full upstream SHA `ada0d1aec7511098fd12610ae9e5abe7aea875cd`, accepted through T-702 and thesis PR #130. Older immutable refs remain historical snapshots and are never moved.
+`.github/workflows/sync-bibliography.yml` accepts only an explicit immutable tag or full SHA. Historical `bibliography-integration-v2` and `bibliography-integration-v3` remain immutable prior integration identities. The current T-716 synchronized consumer baseline is full upstream SHA `27674a566ab55e4491b74243fe077a31ef81ae73`, accepted after governed source promotion/re-sync. The T-702 SHA `ada0d1aec7511098fd12610ae9e5abe7aea875cd` and older immutable refs remain historical snapshots and are never moved.
 
 The workflow:
 
@@ -53,7 +53,7 @@ The workflow:
 8. installs only `research/bibliography/`, runs consumer validation/tests, and opens a generated-only PR;
 9. never merges directly to `main` and never writes upstream.
 
-Current T-702 acceptance facts are 599 canonical sources, 123 citation-ready sources, 19 research materials, 281 indexed original PDFs, 1,634 integrity-covered corpus files, and upstream schema version 1. The accepted checkout is `ada0d1aec7511098fd12610ae9e5abe7aea875cd`; the complete-corpus source commit is `c999dbe272baa081d3666254655aeeec17549c1f`; the citation-ready source commit is `84d62ec3eb18e1d3565625bc02c289131282ea27`. Trust-aware consumer validation reports 40 thesis references: 38 citation-ready and 2 research-material. These values describe this immutable baseline only; synchronization logic reads and validates metadata dynamically for every later immutable ref. Earlier v2/v3 acceptance facts remain historical and are preserved in their decision/history records rather than treated as current state.
+Current T-716 consumer facts are 601 canonical sources, 129 citation-ready sources, 19 research materials and 281 indexed originals at immutable checkout `27674a566ab55e4491b74243fe077a31ef81ae73`. The T-702 checkout `ada0d1aec7511098fd12610ae9e5abe7aea875cd` (599 canonical / 123 citation-ready) remains historical writing-gate provenance. Synchronization logic reads and validates package metadata dynamically for every immutable ref; earlier acceptance counts/commits remain historical records rather than current state.
 
 ## Search and validation
 

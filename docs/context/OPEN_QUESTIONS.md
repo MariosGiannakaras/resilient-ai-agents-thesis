@@ -1,41 +1,23 @@
 # Open Questions
 
-This file contains only issues that are genuinely unresolved after current repository evidence and accepted decisions. Superseded historical questions are not carried forward as active uncertainty.
+This file contains only genuinely unresolved items after current repository evidence and accepted decisions. Concrete status/dependencies are in `TASKS.md`; `CURRENT_STATUS.md` is the compact current state.
 
 ## Resolved and no longer open
 
-The following are already decided or completed:
-
-- bibliography ownership/import/provenance boundary;
-- Python 3.12 + `uv`, project-owned Gymnasium GridWorld, deterministic RNG and evaluator/agent information boundary;
-- target-machine CPU baseline and protocol-v2 feasibility/tuning/sizing;
-- retained final methods: Q-Learning, SARSA, DQN, PPO and Dyna-Q+;
-- selected method-specific configurations and protocol-v2.1 final matrix dimensions;
-- final Phase-A budget/probe/checkpoint semantics;
-- final Phase-B matched FN/FD/AN/AD contract and 256-interaction horizon;
-- protocol-v2.1 RQ1/RQ2/RQ3 estimands, direct comparisons, recovery definition/censoring and actual-root Student-t interval policy;
-- application framework: PySide6 / Qt 6 Widgets under DEC-059;
-- framework-neutral Study backend and stored-evidence read-model boundary;
-- novice-first/self-explanatory UI requirements;
-- accepted protocol-v2.1 PySide6 visual composition through T-536;
-- final-reserve execution remains separately authorization-gated, and T-610 plus DEC-062 recovery are now authorized without weakening that gate;
-- T-611 replacement-evidence validation/freeze and predecessor exclusion;
-- standalone Windows packaging is intentionally deferred until after the thesis.
-
-Historical v1.0/v1.1/pilot evidence remains auditable history; resolving current questions never relabels old evidence.
+Scientific method/protocol design, final execution/recovery, T-611 evidence freeze, T-612 analysis, T-613 assets, PySide6 application architecture/acceptance, pre-WP7 approval, T-700/T-701/T-702, T-710/T-711/T-714/T-715 and T-716 review-ready thesis composition are complete. Historical v1.x and failed-attempt evidence remain auditable history rather than open design questions.
 
 ## Current open questions
 
-| ID | Open issue | Why open | Needed by | Blocks now? | Resolver / safe rule |
-|---|---|---|---|---|---|
-| OQ-ACA-001 | Are supervisor-specific corrections introduced later? | None currently exist. | When feedback arrives. | No. | User/supervisor; record as an explicit change when received. |
-| OQ-ACA-002 | What is the eventual submission/presentation schedule? | No verified date has been provided. | Delivery planning. | No. | User/Department; never invent dates. |
-| OQ-ACA-003 | Is there a current official Word template/submission package? | Not required for current implementation and may change. | Thesis composition/final QA. | No. | Recheck official sources near writing/submission. |
-| OQ-ACA-004 | What are the exact current defense duration/language/file/template/live-demo/submission rules? | They have not been verified for final delivery and may change. | Defense freeze. | No. | Recheck official guidance near defense; do not invent slide count/duration. |
-| OQ-PKG-001 | What exact post-thesis standalone Windows packaging recipe is finally delivered? | Packaging is intentionally deferred and should target the finally accepted rebuilt UI. | Post-thesis delivery. | No. | Resolve in issue #94 after thesis/UI freeze; validate on the actual Windows machine. |
-| OQ-AI-001 | Is any optional AI feature useful inside the application? | No demonstrated need. | Late UI only, if ever. | No. | Do not integrate unless a concrete measurable benefit appears. |
-| OQ-PRIV-001 | Are any additional privacy/licensing/copyright changes required before deliberate wider distribution? | Repository is public, but final distribution packaging has its own audit. | Final delivery. | No. | Run final secret/privacy/license/copyright audit before release packaging. |
+| ID | Open issue | Needed by | Blocks now? | Resolver / safe rule |
+|---|---|---|---|---|
+| OQ-ACA-001 | What actual supervisor/reviewer corrections, if any, will be requested? | T-712 | Yes for starting T-712; no work may be invented meanwhile. | Receive real feedback and record it explicitly. |
+| OQ-ACA-002 | What is the verified submission/defense schedule? | Delivery/rehearsal | No current task. | User/Department; never invent dates. |
+| OQ-ACA-003 | What exact current official Word template/submission package, person metadata and declaration wording apply? | T-713 | Yes when T-713 starts. | Recheck official sources and use authoritative supplied data only. |
+| OQ-ACA-004 | What are the exact current defense duration/language/file/template/live-demo rules? | T-720/T-722 | No current task. | Recheck ICE/UNIWA guidance near defense; do not borrow another department's rules. |
+| OQ-PKG-001 | What exact post-thesis standalone Windows packaging recipe is finally delivered? | T-803 / issue #94 | No. | Resolve after academic deliverable stability and validate on the intended Windows machine. |
+| OQ-AI-001 | Is any optional AI feature useful inside the application? | Optional future UI only | No. | Do not integrate without a concrete measurable benefit. |
+| OQ-PRIV-001 | Are additional privacy/licensing/copyright changes required before deliberate wider distribution? | T-801/T-803 | No current task. | Run final audit before release/distribution. |
 
 ## Current authority
 
-Concrete status/dependencies are in `TASKS.md`; compact current state is in `CURRENT_STATUS.md`. The final scientific experiment, DEC-062 recovery, T-611 validation/freeze and T-612 analysis are complete, not open design questions. T-613 is next and dependency-valid; WP7 remains blocked by its explicit approval gate.
+T-716 is complete. The next academic action is T-712 only when actual supervisor/reviewer feedback exists; T-713 remains downstream of real feedback where applicable plus authoritative official metadata/declaration and final Word/submission checks. Until those inputs arrive, preserve the accepted T-716 milestone rather than manufacturing progress.

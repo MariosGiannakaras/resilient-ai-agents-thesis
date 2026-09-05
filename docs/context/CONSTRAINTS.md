@@ -11,7 +11,7 @@
 
 - Scientific logic lives under `src/resilient_agents/` and remains usable without importing or launching the UI.
 - DEC-058 and `configs/protocols/protocol-v2.0-final.json` are immutable historical protocol-v2.0 freeze authority.
-- DEC-060 and `configs/protocols/protocol-v2.1-final.json` are the current pre-execution scientific authority.
+- DEC-060 and `configs/protocols/protocol-v2.1-final.json` are the accepted protocol-v2.1 scientific authority; final execution/evidence/analysis are already frozen through T-610/T-611/T-612.
 - The retained comparison methods are Q-Learning, SARSA, DQN, PPO and Dyna-Q+.
 - Final Phase-A and Phase-B dimensions, selected method-specific hyperparameters, roots, held-out layouts, conditions and budgets are frozen by protocol-v2.1 and are not UI choices.
 - Actual environment interactions are the principal fairness budget. Method-native hyperparameters/update mechanics remain method-appropriate.
@@ -44,7 +44,7 @@
 - DEC-059 is the current framework/runtime authority: Python-native PySide6 / Qt 6 Widgets over the framework-neutral Study backend.
 - DEC-061 is the current T-534 product/UX authority: the user-facing application is experiment-first with primary surfaces **Experiment / Run / Results / Evidence**.
 - Historical Streamlit/React/NiceGUI application implementations are superseded history, not current implementation guidance.
-- The current UI restart must begin from fresh `main` and may replace the presentation layer from scratch. Existing pre-restart widgets/layouts/styles/screenshots are reference/history only, not design authority.
+- The clean PySide6 UI restart is complete through T-537. Pre-restart widgets/layouts/styles/screenshots remain reference/history only; current presentation authority is the accepted Experiment / Run / Results / Evidence implementation.
 - Preserve UI-neutral Study backend, results/evidence read-model, execution-supervision/policy, live-observer and provenance contracts unless a concrete defect requires a bounded backend fix.
 - The final Thesis experiment always contains all five frozen methods; method selection is DEVELOPMENT-only where the backend supports it.
 - Frozen and Adaptive are matched Phase-B regimes of the same method, not algorithms or mutually exclusive UI choices.
@@ -101,4 +101,4 @@
 - Thesis main language is Greek and the final academic document is Microsoft Word unless later official guidance changes this.
 - No final deadline, defense schedule, exact defense duration or current official submission package is known; never invent them.
 - Current Word/template/submission and defense requirements are rechecked near delivery.
-- Thesis/presentation writing remains blocked until the evidence and explicit pre-WP7 approval gates are satisfied.
+- The evidence and pre-WP7 approval gates are satisfied and T-716 review-ready composition is complete. Further thesis revision is gated on real T-712 feedback; T-713/T-720+ retain their official-input/finalization gates.

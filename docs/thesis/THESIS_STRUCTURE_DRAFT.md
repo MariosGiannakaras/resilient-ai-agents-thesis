@@ -1,6 +1,6 @@
 # Draft Thesis Structure
 
-**Status:** Structure-only preparation. Chapter/section headings are aligned with DEC-060 RQ1/RQ2/RQ3, but WP7 writing remains BLOCKED until final evidence is accepted and the explicit pre-WP7 gate is approved. No result, discussion or conclusion content may be inferred from this outline. The structure must still be checked against current University/Department rules and any later supervisor/template guidance before final writing.
+**Status:** HISTORICAL/SUPERSEDED structure-only preparation. WP7/T-716 composition is complete; current thesis structure authority is `THESIS_STRUCTURE_AND_STYLE_GUIDE.md` plus the accepted T-716 DOCX. This outline remains only as pre-writing history and must not be used to reopen completed chapter architecture.
 
 Chapter boundaries may be merged during WP7 if the approved examples/template show that a less fragmented structure is preferable.
 

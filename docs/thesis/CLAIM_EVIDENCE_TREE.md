@@ -1,6 +1,6 @@
 # T-716 claim → evidence tree
 
-**Status:** living pre-writing authority  
+**Status:** accepted T-716 claim/evidence authority; reopen only for governed later revision  
 **Date:** 2026-09-05  
 **Machine registry:** `docs/thesis/claim-evidence-map.json`  
 **Source-selection policy:** `docs/thesis/BIBLIOGRAPHY_SOURCE_SELECTION_POLICY.md`

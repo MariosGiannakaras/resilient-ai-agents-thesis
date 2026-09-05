@@ -2,35 +2,41 @@
 
 ## User entrypoint
 
-Give Codex only:
+> `/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely.`
 
-> `/goal Read docs/context/CODEX_EXECUTION_PROMPT.md and execute it completely. Preserve both T-610 histories, resume only the next dependency-valid task, and honor all downstream gates.`
+Complete the canonical project task registry autonomously within repository permissions and the explicit scientific/external-input gates below.
 
 ## Startup / resume
 
-1. Inspect Git/local/remote/PR/CI state and preserve any partial Study/evidence before synchronization.
+1. Recover actual state first: inspect git status/current branch/recent commits, open PRs, CI, issues and any unmerged or `IN_PROGRESS` work. Preserve unique partial work; repository/Git/GitHub evidence wins over stale chat memory.
 2. Read only the session-start core:
    - `AGENTS.md`
    - `docs/context/TASKS.md`
    - `docs/context/CURRENT_STATUS.md`
-3. Confirm the committed protocol-v2.1 authority and backend guard are unchanged. Never edit the immutable gate fields or weaken/hard-code around the guard.
-4. Verify `protocol-v2.1-final--t610-recovery-01` remains the finalized 603/603 replacement from clean source commit `86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730`, verify the T-611 freeze manifest, and verify the finalized T-612 analysis package before any T-613 work.
-5. Verify `results/studies/protocol-v2.1-final` remains the exact immutable 216-job failed/incomplete attempt defined by DEC-062. Never retry, resume, finalize, copy or mix it.
+3. Read further authorities only for the selected task. Prefer targeted search and direct dependencies over broad repository rereads.
+4. Select one bounded scope that is dependency-valid. In-progress/failed work never counts as complete.
 
-## Execution discipline
+## Durable current state
 
-The persistent invariant is **Complete the canonical project task registry autonomously**, subject to dependency/approval gates and the explicit stop boundary of the active goal. Resume valid `IN_PROGRESS` work first and work on one bounded scope at a time.
+- T-610 final protocol-v2.1 execution, T-611 evidence freeze, T-612 predeclared analysis and T-613 scientific thesis/defense assets are COMPLETE. Preserve the failed 216-job predecessor and accepted 603/603 DEC-062 replacement as distinct immutable histories.
+- The accepted PySide6 **Experiment / Run / Results / Evidence** application is complete through T-537. T-538 is optional/deferred presentation polish, not a thesis blocker.
+- T-700, T-701, T-702, T-710, T-711, T-714, T-715 and T-716 are COMPLETE.
+- Accepted T-716 review authority: `thesis/archive/T716_stage4_evidence_audited_review_ready.docx`, semantic OOXML SHA-256 `b01f853af794e596f0dfb491a3f5401365ca3f01fd7d410194e539f0b8a10cc1`; 11/11 final acceptance gates PASS.
+- Current bibliography consumer authority: immutable upstream SHA `27674a566ab55e4491b74243fe077a31ef81ae73` (601 canonical / 129 citation-ready / 19 research-material records / 281 indexed originals).
+- The current task ID is T-712, but it is DEFERRED until actual supervisor/reviewer feedback exists. Internal review is never relabelled as external feedback.
+- T-713 remains DEFERRED until T-712 is resolved where applicable plus authoritative official person/declaration metadata and final Word/submission checks.
+- T-720/T-721/T-722 and T-800/T-801/T-802 are downstream of T-713. T-803 standalone Windows packaging remains post-thesis under issue #94.
 
-Use native Windows CPython 3.12, the locked `uv` environment, CPU execution, the frozen recipe loader, `StudyService`, default executors, sequential scheduler, durable `StudyStore`, and `PROTOCOL_V21_FINAL_EXECUTION_AUTHORIZATION` exactly as implemented.
+## Execution / Git / CI discipline
 
-Preserve scientific failures as outcomes. DEC-062 recovery, T-610 execution, T-611 replacement-evidence validation/freeze and T-612 predeclared analysis are complete; the predecessor is permanently ineligible. T-613 is next and may use only the finalized T-612 outputs. Never replace roots/seeds, alter protocol choices, delete failed evidence, or mix execution instances.
+Use targeted checks during implementation; PR CI is the canonical full-suite pre-merge check. Handle routine Git, PR creation, CI, objective diff review, correction and merge without pushing bookkeeping back to the user when tools permit it.
 
-Report only durable operational progress and evidence-backed results. Do not invent post-hoc estimands, thresholds, rankings, significance claims or conclusions.
+Do not submit an `APPROVE` review on your own PR. An own-PR squash merge is allowed only after required checks/objective review pass and repository rules permit it. Preserve unrelated changes and avoid destructive Git operations.
 
-The routine Git, PR creation, CI, objective review, corrections, and reconciliation flow remains autonomous. Do not submit an `APPROVE` review on your own PR. Perform a permitted own-PR squash merge when scope/evidence/checks are sound, but do not terminate healthy scientific execution merely to update documentation.
+At coherent checkpoints report objective progress only as `Project: X/Y` when `TASKS.md` defines a real denominator. In-progress/failed work never counts as complete.
 
-Report `Project: X/Y` only from a canonical finite denominator. In-progress/failed work never counts as complete.
+Scientific/bibliographic state fails closed: do not change frozen protocol choices, roots/seeds, estimands, evidence, final interpretation or registered quantitative assets; do not hand-edit generated bibliography content; do not invent official metadata, feedback, deadlines or defense rules.
 
 ## Stop conditions
 
-T-612 is complete and the T-612 execution stopped at its boundary. Preserve the original failed attempt, finalized replacement, frozen final-evidence package and finalized analysis package. T-613 is the next dependency-valid task; WP7 remains separately approval-gated.
+If T-712 has no actual supervisor/reviewer feedback, do not reopen T-716 or manufacture a correction cycle. Record the external-input gate and stop. Likewise do not start T-713/T-720+ until their explicit dependencies and official-input gates are satisfied.
