@@ -6,6 +6,7 @@ on:
       - audit/full-repo-thesis-corpus
     paths:
       - scripts/audit_thesis_docx_corpus.py
+      - scripts/mine_thesis_docx_content.py
       - .github/workflows/audit-thesis-docx-corpus.yml
       - thesis/drafts/**
       - thesis/archive/**
@@ -26,6 +27,8 @@ jobs:
           python-version: '3.12'
       - name: Audit all retained thesis DOCX files
         run: python scripts/audit_thesis_docx_corpus.py
+      - name: Mine cross-version thesis content
+        run: python scripts/mine_thesis_docx_content.py
       - name: Commit generated persistent audit extracts
         shell: bash
         run: |
