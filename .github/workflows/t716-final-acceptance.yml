@@ -50,18 +50,22 @@ jobs:
       - name: Install pinned DOCX dependency
         run: python -m pip install --disable-pip-version-check python-docx==1.2.0
 
-      - name: Harden one-time T-010 migration matcher
+      - name: Harden one-time T-010 migration helper
         run: |
           python - <<'PY'
           from pathlib import Path
           p = Path('scripts/t010_install_self_resuming_workflow.py')
           text = p.read_text(encoding='utf-8')
-          old = 'r"^- \\*\\*Exact next action:\\*\\*.*$"'
-          new = 'r"^- .*Exact next action.*$"'
-          if old in text:
-              p.write_text(text.replace(old, new, 1), encoding='utf-8')
-          elif new not in text:
-              raise SystemExit('T-010 exact-next migration pattern not found')
+          replacements = {
+              'r"^- \\*\\*Exact next action:\\*\\*.*$"': 'r"^- .*Exact next action.*$"',
+              'flags=re.DOTALL | re.MULTILINE)': 'flags=re.MULTILINE)',
+          }
+          for old, new in replacements.items():
+              if old in text:
+                  text = text.replace(old, new, 1)
+              elif new not in text:
+                  raise SystemExit(f'T-010 migration pattern not found: {old}')
+          p.write_text(text, encoding='utf-8')
           PY
 
       - name: Install prompt-free self-resuming workflow state
