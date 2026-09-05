@@ -1,0 +1,62 @@
+name: T-717 post-merge normalization
+
+on:
+  push:
+    branches:
+      - workflow/t717-post-merge-normalize
+    paths:
+      - "scripts/t717_post_merge_normalize.py"
+      - ".github/workflows/t717-post-merge-normalize.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  normalize-validate-persist:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact normalization branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Normalize T-717 completion and restore T-712 external gate
+        run: python scripts/t717_post_merge_normalize.py
+
+      - name: Verify normalizer idempotence
+        shell: bash
+        run: |
+          cp docs/context/TASKS.md /tmp/TASKS.md
+          cp docs/context/CURRENT_STATUS.md /tmp/CURRENT_STATUS.md
+          cp docs/context/WORK_STATE.json /tmp/WORK_STATE.json
+          python scripts/t717_post_merge_normalize.py
+          cmp docs/context/TASKS.md /tmp/TASKS.md
+          cmp docs/context/CURRENT_STATUS.md /tmp/CURRENT_STATUS.md
+          cmp docs/context/WORK_STATE.json /tmp/WORK_STATE.json
+          echo "Post-merge normalizer is idempotent."
+
+      - name: Validate prompt-free continuity and documentation
+        run: |
+          python scripts/validate_project_continuity.py
+          python scripts/validate_documentation_consistency.py
+
+      - name: Persist normalized authorities
+        if: github.actor != 'github-actions[bot]'
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/context/TASKS.md docs/context/CURRENT_STATUS.md docs/context/WORK_STATE.json
+          if git diff --cached --quiet; then
+            echo 'Authorities already normalized.'
+          else
+            git commit -m 'T-717: persist post-merge authority normalization'
+            git push origin HEAD:workflow/t717-post-merge-normalize
+          fi
