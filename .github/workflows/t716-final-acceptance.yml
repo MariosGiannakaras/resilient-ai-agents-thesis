@@ -1,0 +1,89 @@
+name: T-716 final acceptance
+
+on:
+  push:
+    branches:
+      - thesis/t716-final-acceptance
+    paths:
+      - scripts/t716_final_acceptance_audit.py
+      - .github/workflows/t716-final-acceptance.yml
+  pull_request:
+    paths:
+      - scripts/t716_final_acceptance_audit.py
+      - docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md
+      - docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json
+      - .github/workflows/t716-final-acceptance.yml
+      - docs/context/TASKS.md
+      - docs/context/CURRENT_STATUS.md
+      - README.md
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned DOCX dependency
+        run: python -m pip install --disable-pip-version-check python-docx==1.2.0
+
+      - name: Validate claim-evidence registry
+        run: python scripts/validate_claim_evidence_map.py
+
+      - name: Run final T-716 acceptance audit
+        run: python scripts/t716_final_acceptance_audit.py
+
+      - name: Verify audit result
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('artifacts/t716/T716_final_acceptance_audit.json')
+          r=json.loads(p.read_text(encoding='utf-8'))
+          assert r['status']=='pass' and r['t716_complete'] is True, r
+          assert r['package_content_sha256']=='b01f853af794e596f0dfb491a3f5401365ca3f01fd7d410194e539f0b8a10cc1', r
+          assert r['word_count']==25327 and r['main_body_word_count']==23273, r
+          assert r['paragraph_count']==766 and r['page_count']==92, r
+          assert r['reference_count']==31 and r['used_reference_numbers']==list(range(1,32)), r
+          assert all(r['acceptance_gates'].values()), r
+          assert r['citation_resolution_failures']==[], r
+          assert r['registry_missing_source_ids']==[], r
+          assert len(r['intentional_administrative_placeholders'])==3, r
+          assert r['comments_present'] is False and r['tracked_changes_present'] is False, r
+          print('T-716 final acceptance: PASS')
+          PY
+
+      - name: Persist final acceptance report
+        if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
+        run: |
+          cp artifacts/t716/T716_FINAL_ACCEPTANCE_AUDIT.md docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md
+          cp artifacts/t716/T716_final_acceptance_audit.json docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json
+          if git diff --cached --quiet; then
+            echo 'Acceptance report already current.'
+          else
+            git commit -m 'T-716: persist final acceptance audit'
+            git push
+          fi
+
+      - name: Upload final acceptance audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: t716-final-acceptance
+          path: |
+            artifacts/t716/T716_FINAL_ACCEPTANCE_AUDIT.md
+            artifacts/t716/T716_final_acceptance_audit.json
+          if-no-files-found: error
+          retention-days: 30
