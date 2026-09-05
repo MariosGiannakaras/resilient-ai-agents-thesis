@@ -2,7 +2,8 @@
 
 **Status:** living pre-writing authority  
 **Date:** 2026-09-05  
-**Machine registry:** `research/bibliography/claim-evidence-map.json`
+**Machine registry:** `docs/thesis/claim-evidence-map.json`  
+**Source-selection policy:** `docs/thesis/BIBLIOGRAPHY_SOURCE_SELECTION_POLICY.md`
 
 ## How to use this tree
 
@@ -11,12 +12,15 @@ The unit of writing is the **claim**, not the source. For each claim below:
 1. inspect every listed formal source analysis/evidence record;
 2. inspect relevant context-only or informal records for contradictory material and discovery leads;
 3. prefer primary evidence for exact algorithms/equations/results;
-4. combine only statements that are compatible in assumptions and scope;
-5. retain limitations and negative evidence;
-6. write the narrowest statement supported by the combined evidence;
-7. for protocol/result claims, use repository authority for the exact tested definition/value and literature only for motivation/context.
+4. compare scientific fitness, authority, methodological strength and depth before publication year;
+5. when materially comparable sources cover the same claim, prefer the more recent source by default;
+6. allow an older source to outrank a newer one when it is clearly stronger as primary/foundational evidence, authoritative scholarship, methodology or exact claim match, and record why;
+7. combine only statements that are compatible in assumptions and scope;
+8. retain limitations and negative evidence;
+9. write the narrowest statement supported by the combined evidence;
+10. for protocol/result claims, use repository authority for the exact tested definition/value and literature only for motivation/context.
 
-No source in this tree is individually a “source of truth”. A formal source can be correct about its own setting while still being insufficient for the thesis claim.
+No source in this tree is individually a “source of truth”. A formal source can be correct about its own setting while still being insufficient for the thesis claim. Recency is a default preference among comparably strong sources, never a substitute for scientific quality.
 
 ---
 
@@ -367,6 +371,7 @@ Before a T-716 DOCX can pass:
 - every substantive external claim must have a claim ID in the machine registry;
 - every formal `SRC-*` used by the prose must be citation-ready;
 - multi-source claims should retain all materially relevant support rather than arbitrarily selecting one source;
+- source selection must follow `BIBLIOGRAPHY_SOURCE_SELECTION_POLICY.md`: quality/relevance/authority first, recency among materially comparable sources, and explicit justification when an older overlapping source is preferred;
 - contradictions/limitations above must remain represented where relevant;
 - protocol/project/result facts must resolve to repository authorities;
 - bibliography count is not a quota; every listed reference must support at least one concrete final claim.
