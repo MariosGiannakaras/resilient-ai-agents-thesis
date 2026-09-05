@@ -1,38 +1,36 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T21:01:00Z",
+  "updated_at_utc": "2026-09-05T21:05:00Z",
   "authority": "repository-operational-resume-state",
-  "active_task": "T-717",
-  "task_status": "IN_PROGRESS",
-  "work_package": "Post-merge normalization after T-717 final pre-freeze content refinement",
-  "branch": "workflow/t717-post-merge-normalize",
+  "active_task": "T-712",
+  "task_status": "DEFERRED",
+  "work_package": "Supervisor/reviewer feedback incorporation and revalidation",
+  "branch": "main-after-merge",
   "base_branch": "main",
   "pull_request": 149,
-  "phase": "POST_MERGE_NORMALIZATION",
-  "last_completed_checkpoint": "PR #148 was marked ready only after the merge-ready head 33d48244ea2bab82ae8dfaa38e0a1aba1be3a00d passed Repository checks 33991594978, Project continuity 33991594984, Claim evidence map 33991595005 and T-716 stage-3 reconstruction 33991594992. It was then squash-merged into main as 84b9b1165a64fd9fbd79f25890473d3e624e12d1 with expected-head protection. Post-merge normalization is now isolated on draft PR #149; no thesis/scientific files are in scope.",
-  "next_action": "Normalize TASKS, CURRENT_STATUS and WORK_STATE so T-717 is COMPLETE and T-712 DEFERRED is again the active external-feedback gate; validate continuity/documentation on PR #149, remove temporary normalization machinery before merge, merge PR #149, and verify main green.",
-  "blockers": [],
+  "phase": "EXTERNAL_GATE",
+  "last_completed_checkpoint": "T-717 is objectively complete. PR #148 passed its final four CI gates and was squash-merged as 84b9b1165a64fd9fbd79f25890473d3e624e12d1. The deterministic review-ready DOCX is archived with canonical CI raw SHA-256 57d6de352eef6147fa24179f87a3f8e9ee39f65a90ad8b85777cac8f541f57c5; 32/32 references are used, 23/25 prior media are byte-identical, only the two intended explanatory figures changed, and no experiment, re-analysis, protocol, frozen result, T-612 analysis or T-613 quantitative asset was modified. PR #149 is the bounded post-merge authority normalization and contains no thesis/scientific change.",
+  "next_action": "Wait for actual supervisor/reviewer feedback for T-712. Do not fabricate or substitute internal review for external feedback. When real feedback arrives, record it durably, create or recover the T-712 implementation branch, move T-712 to IN_PROGRESS, incorporate the corrections and revalidate before T-713.",
+  "blockers": [
+    "Actual supervisor/reviewer feedback has not been provided."
+  ],
   "completed_substeps": [
-    "T-717 content/visual/bibliography refinement completed and fully QA-audited",
-    "T-717 deterministic builder and explicit document-build dependency contract persisted",
-    "LIT-018 Robust-Gymnasium bounded claim governance persisted",
-    "Canonical T-717 DOCX and QA archive persisted with CI raw SHA-256 57d6de352eef6147fa24179f87a3f8e9ee39f65a90ad8b85777cac8f541f57c5",
-    "PR #148 exact changed-file audit found no scientific/result spillover",
-    "PR #148 had zero comments and zero review threads",
-    "Final PR #148 head passed all four relevant CI gates",
-    "PR #148 squash-merged into main as 84b9b1165a64fd9fbd79f25890473d3e624e12d1",
-    "Draft post-merge normalization PR #149 opened from main merge head"
+    "T-716 accepted review-ready thesis milestone remains immutable and PASS 11/11",
+    "T-717 author-directed final pre-freeze refinement completed",
+    "T-717 deterministic DOCX/QA archive and permanent builder persisted",
+    "LIT-018 bounded Robust-Gymnasium claim governance persisted",
+    "PR #148 squash-merged as 84b9b1165a64fd9fbd79f25890473d3e624e12d1",
+    "T-717 changed no protocol, experiment, frozen result, T-612 analysis or T-613 quantitative asset",
+    "Post-merge authorities reconciled so T-712 is again the real external-feedback gate"
   ],
   "pending_substeps": [
-    "Mark T-717 COMPLETE in TASKS and restore T-712 DEFERRED as current task",
-    "Reconcile CURRENT_STATUS to the completed T-717 milestone and T-712 external gate",
-    "Set normalized WORK_STATE to T-712 DEFERRED main semantics",
-    "Validate project continuity and documentation consistency on PR #149",
-    "Remove temporary normalization machinery",
-    "Merge PR #149 and verify normalized main CI/prompt-free recovery state"
+    "Receive actual supervisor/reviewer feedback",
+    "Record the feedback durably and move T-712 to IN_PROGRESS",
+    "Incorporate only the actual corrections and revalidate before T-713"
   ],
   "validation": {
     "t716_prior_acceptance": "PASS_11_OF_11",
+    "t717_pr_148": "MERGED_84b9b1165a64fd9fbd79f25890473d3e624e12d1",
     "t717_canonical_ci_raw_sha256": "57d6de352eef6147fa24179f87a3f8e9ee39f65a90ad8b85777cac8f541f57c5",
     "t717_second_ci_build": "PASS_BYTE_IDENTICAL",
     "t717_references": "PASS_32_OF_32_USED",
@@ -41,15 +39,15 @@
     "t717_final_project_continuity": "PASS_33991594984",
     "t717_final_claim_evidence": "PASS_33991595005",
     "t717_final_t716_stage3": "PASS_33991594992",
-    "t717_pr_148": "MERGED_84b9b1165a64fd9fbd79f25890473d3e624e12d1",
-    "post_merge_pr": 149,
+    "post_merge_normalization_pr": 149,
     "scientific_results_modified": "NO",
     "new_experiment_or_reanalysis": "NO"
   },
-  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Finish PR #149 post-merge normalization before selecting new work. After normalization, T-712 remains DEFERRED until actual supervisor/reviewer feedback is provided; do not manufacture feedback.",
+  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. T-717 is complete. T-712 remains DEFERRED until actual supervisor/reviewer feedback is provided; do not manufacture feedback.",
   "notes": [
     "TASKS.md remains the canonical task/dependency ledger; this file is the operational resume pointer.",
-    "T-717 is author-directed pre-freeze refinement, not supervisor/reviewer feedback.",
-    "T-713 remains downstream of actual resolved feedback and final official metadata/declaration gates."
+    "T-717 was author-directed pre-freeze refinement, not supervisor/reviewer feedback.",
+    "T-713 remains downstream of resolved real feedback plus official metadata/declaration and final Word/submission gates.",
+    "branch=main-after-merge is the validator-supported transient value for PR #149; after merge WORK_STATE must be changed immediately to branch=main and pull_request=null."
   ]
 }
