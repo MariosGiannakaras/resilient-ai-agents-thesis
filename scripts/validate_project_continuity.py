@@ -45,7 +45,13 @@ def fail(errors: list[str], message: str) -> None:
 
 
 def changed_files(base: str) -> list[str]:
-    subprocess.run(["git", "fetch", "origin", base, "--depth=1"], cwd=ROOT, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run(
+        ["git", "fetch", "origin", base, "--depth=1"],
+        cwd=ROOT,
+        check=False,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
     result = subprocess.run(
         ["git", "diff", "--name-only", f"origin/{base}...HEAD"],
         cwd=ROOT,
@@ -58,12 +64,17 @@ def changed_files(base: str) -> list[str]:
     return [line.strip() for line in result.stdout.splitlines() if line.strip()]
 
 
+def task_id_pattern(task: str) -> str:
+    """Match a backticked task ID followed by whitespace or end-of-line."""
+    return rf"`{re.escape(task)}`(?=\s|$)"
+
+
 def main() -> int:
     errors: list[str] = []
 
-    for path in (STATE_PATH, TASKS_PATH, AGENTS_PATH, CURRENT_STATUS_PATH):
-        if not path.is_file():
-            fail(errors, f"missing required continuity authority: {path.relative_to(ROOT)}")
+    for required_path in (STATE_PATH, TASKS_PATH, AGENTS_PATH, CURRENT_STATUS_PATH):
+        if not required_path.is_file():
+            fail(errors, f"missing required continuity authority: {required_path.relative_to(ROOT)}")
     if LEGACY_PROMPT.exists():
         fail(errors, "legacy CODEX_EXECUTION_PROMPT.md must not be an active repository dependency")
 
@@ -106,17 +117,18 @@ def main() -> int:
         fail(errors, f"{status} WORK_STATE requires pending_substeps")
 
     tasks = TASKS_PATH.read_text(encoding="utf-8")
-    if task and f"`{task}`" not in tasks:
+    task_pattern = task_id_pattern(task)
+    if task and not re.search(task_pattern, tasks):
         fail(errors, f"WORK_STATE active_task {task} is absent from TASKS.md")
 
     if status in {"IN_PROGRESS", "READY_TO_MERGE"}:
-        if not re.search(rf"^- \[ \] IN_PROGRESS `{re.escape(task)}`\b", tasks, re.MULTILINE):
+        if not re.search(rf"^- \[ \] IN_PROGRESS {task_pattern}", tasks, re.MULTILINE):
             fail(errors, f"WORK_STATE {status} requires TASKS.md to mark {task} IN_PROGRESS")
     elif status == "COMPLETE":
-        if not re.search(rf"^- \[x\].*`{re.escape(task)}`\b", tasks, re.MULTILINE):
+        if not re.search(rf"^- \[x\].*{task_pattern}", tasks, re.MULTILINE):
             fail(errors, f"WORK_STATE COMPLETE requires {task} completed in TASKS.md")
     elif status in {"DEFERRED", "BLOCKED", "READY"}:
-        if not re.search(rf"^- \[ \] {status} `{re.escape(task)}`\b", tasks, re.MULTILINE):
+        if not re.search(rf"^- \[ \] {status} {task_pattern}", tasks, re.MULTILINE):
             fail(errors, f"WORK_STATE {status} requires matching {status} task line for {task}")
 
     agents = AGENTS_PATH.read_text(encoding="utf-8")
@@ -139,8 +151,8 @@ def main() -> int:
         pr_number = os.environ.get("PR_NUMBER") or os.environ.get("GITHUB_PR_NUMBER")
         files = changed_files(base)
         automated_generated_only = bool(files) and all(
-            path.startswith("research/bibliography/") or path == ".bibliography-sync-trigger"
-            for path in files
+            changed.startswith("research/bibliography/") or changed == ".bibliography-sync-trigger"
+            for changed in files
         )
         if not automated_generated_only and "docs/context/WORK_STATE.json" not in files:
             fail(errors, "every material PR must update docs/context/WORK_STATE.json")
