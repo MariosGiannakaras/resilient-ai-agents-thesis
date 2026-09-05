@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T21:10:00Z",
+  "updated_at_utc": "2026-09-05T21:12:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-712",
   "task_status": "DEFERRED",
   "work_package": "Supervisor/reviewer feedback incorporation and revalidation",
-  "branch": "main-after-merge",
+  "branch": "main",
   "base_branch": "main",
-  "pull_request": 149,
+  "pull_request": null,
   "phase": "EXTERNAL_GATE",
-  "last_completed_checkpoint": "T-717 is objectively complete and PR #149 post-merge normalization is merge-ready pending the final latest-head CI rerun. PR #148 passed its final four CI gates and was squash-merged as 84b9b1165a64fd9fbd79f25890473d3e624e12d1. The deterministic review-ready DOCX is archived with canonical CI raw SHA-256 57d6de352eef6147fa24179f87a3f8e9ee39f65a90ad8b85777cac8f541f57c5. The branch-only PR #149 normalizer run 33991820119 passed normalization, second-run idempotence, project continuity and documentation consistency and persisted commit 4876114c3e2b7d57dcb307deef20cf753af5db3f. Its temporary helper/workflow were removed. Exact PR #149 audit now contains only docs/context/WORK_STATE.json, docs/context/TASKS.md and docs/context/CURRENT_STATUS.md; comments and review threads are zero. On cleanup head 1e81fb28487482c3a51b5077165ccca56a3db43b, Repository checks 33991962045, Project continuity 33991962036 and path-triggered T-716 stage-3 reconstruction 33991962046 all passed. No thesis, protocol, experiment, result, claim map or scientific code file is changed by PR #149.",
-  "next_action": "Confirm the same PR #149 gates pass on this final WORK_STATE checkpoint, mark PR #149 ready, squash-merge it, then immediately set main WORK_STATE branch=main and pull_request=null and verify normalized main continuity/repository checks. After that, wait for actual supervisor/reviewer feedback for T-712; do not fabricate or substitute internal review for external feedback.",
+  "last_completed_checkpoint": "T-717 is objectively complete and main is normalized. PR #148 passed all final gates and was squash-merged as 84b9b1165a64fd9fbd79f25890473d3e624e12d1. The deterministic review-ready T-717 DOCX is archived with canonical CI raw SHA-256 57d6de352eef6147fa24179f87a3f8e9ee39f65a90ad8b85777cac8f541f57c5; 32/32 references are used, 23/25 prior media are byte-identical, only the two intended explanatory figures changed, and no experiment, re-analysis, protocol, frozen result, T-612 analysis or T-613 quantitative asset was modified. PR #149 normalized only WORK_STATE/TASKS/CURRENT_STATUS, had zero comments/review threads, and its final head 40ed8637d3fdc1ec3869e4227f0aaec2834751dd passed Repository checks 33992060526, Project continuity 33992060546 and T-716 stage-3 reconstruction 33992060528 before squash merge as d6c35c299c7685ba60360f1ea298b8f410420f95. Temporary normalization helper/workflow are absent. The operational pointer is now main with no active PR; T-712 DEFERRED is the real external-feedback gate.",
+  "next_action": "Wait for actual supervisor/reviewer feedback for T-712. Do not fabricate or substitute internal review for external feedback. When real feedback arrives, record it durably, create or recover the T-712 implementation branch, move T-712 to IN_PROGRESS, incorporate only the actual corrections and revalidate before T-713.",
   "blockers": [
     "Actual supervisor/reviewer feedback has not been provided."
   ],
@@ -19,20 +19,16 @@
     "T-717 author-directed final pre-freeze refinement completed",
     "T-717 deterministic DOCX/QA archive and permanent builder persisted",
     "LIT-018 bounded Robust-Gymnasium claim governance persisted",
-    "PR #148 squash-merged as 84b9b1165a64fd9fbd79f25890473d3e624e12d1",
+    "PR #148 squash-merged as 84b9b1165a64fd9fbd79f25890473d3e624e12d1 after all final gates passed",
     "T-717 changed no protocol, experiment, frozen result, T-612 analysis or T-613 quantitative asset",
-    "Post-merge authorities reconciled so T-712 is again the real external-feedback gate",
     "PR #149 branch-only normalizer passed idempotence, continuity and documentation validation",
     "Temporary PR #149 normalizer helper/workflow removed before merge",
-    "Exact PR #149 diff reduced to the three canonical authority files only",
-    "PR #149 comments and review threads verified empty",
-    "Repository checks, Project continuity and path-triggered T-716 stage-3 validation passed on cleanup head 1e81fb28487482c3a51b5077165ccca56a3db43b"
+    "Exact PR #149 diff was three canonical authority files only with zero comments/review threads",
+    "PR #149 final head passed Repository checks 33992060526, Project continuity 33992060546 and T-716 stage-3 reconstruction 33992060528",
+    "PR #149 squash-merged as d6c35c299c7685ba60360f1ea298b8f410420f95",
+    "Main operational pointer normalized to T-712 DEFERRED with branch=main and pull_request=null"
   ],
   "pending_substeps": [
-    "Confirm final latest-head PR #149 CI remains green after this checkpoint",
-    "Squash-merge PR #149",
-    "Set normalized main WORK_STATE branch to main and pull_request to null",
-    "Verify prompt-free continuity and repository checks on normalized main",
     "Receive actual supervisor/reviewer feedback",
     "Record the feedback durably and move T-712 to IN_PROGRESS",
     "Incorporate only the actual corrections and revalidate before T-713"
@@ -48,21 +44,20 @@
     "t717_final_project_continuity": "PASS_33991594984",
     "t717_final_claim_evidence": "PASS_33991595005",
     "t717_final_t716_stage3": "PASS_33991594992",
-    "post_merge_normalization_pr": 149,
     "post_merge_normalizer": "PASS_33991820119_IDEMPOTENT",
-    "post_merge_cleanup_diff": "PASS_3_AUTHORITY_FILES_ONLY",
-    "post_merge_cleanup_repository_checks": "PASS_33991962045",
-    "post_merge_cleanup_project_continuity": "PASS_33991962036",
-    "post_merge_cleanup_t716_stage3": "PASS_33991962046",
+    "post_merge_normalization_pr": "MERGED_d6c35c299c7685ba60360f1ea298b8f410420f95",
+    "post_merge_final_repository_checks": "PASS_33992060526",
+    "post_merge_final_project_continuity": "PASS_33992060546",
+    "post_merge_final_t716_stage3": "PASS_33992060528",
+    "post_merge_pr_diff": "PASS_3_AUTHORITY_FILES_ONLY",
     "post_merge_pr_comments_reviews": "PASS_ZERO",
     "scientific_results_modified": "NO",
     "new_experiment_or_reanalysis": "NO"
   },
-  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. T-717 is complete. Finish PR #149 and the immediate main pointer normalization before selecting new work. T-712 remains DEFERRED until actual supervisor/reviewer feedback is provided; do not manufacture feedback.",
+  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. T-717 is complete. T-712 remains DEFERRED until actual supervisor/reviewer feedback is provided; do not manufacture feedback.",
   "notes": [
     "TASKS.md remains the canonical task/dependency ledger; this file is the operational resume pointer.",
     "T-717 was author-directed pre-freeze refinement, not supervisor/reviewer feedback.",
-    "T-713 remains downstream of resolved real feedback plus official metadata/declaration and final Word/submission gates.",
-    "branch=main-after-merge is the validator-supported transient value for PR #149; after merge WORK_STATE must be changed immediately to branch=main and pull_request=null."
+    "T-713 remains downstream of resolved real feedback plus official metadata/declaration and final Word/submission gates."
   ]
 }
