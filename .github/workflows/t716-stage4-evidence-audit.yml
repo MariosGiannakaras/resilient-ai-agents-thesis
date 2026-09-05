@@ -1,0 +1,96 @@
+name: T-716 stage-4 evidence audit
+
+on:
+  push:
+    branches:
+      - thesis/t716-evidence-audit-stage4
+    paths:
+      - scripts/t716_stage4_evidence_audit.py
+      - .github/workflows/t716-stage4-evidence-audit.yml
+  pull_request:
+    paths:
+      - scripts/t716_stage4_evidence_audit.py
+      - thesis/archive/T716_stage4_evidence_audited_review_ready.docx
+      - thesis/archive/T716_stage4_qa-report.json
+      - .github/workflows/t716-stage4-evidence-audit.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned DOCX dependency
+        run: python -m pip install --disable-pip-version-check python-docx==1.2.0
+
+      - name: Apply stage-4 evidence audit
+        run: python scripts/t716_stage4_evidence_audit.py
+
+      - name: Validate evidence audit and semantic identity
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('artifacts/t716/T716_stage4_qa-report.json').read_text(encoding='utf-8'))
+          assert report['status']=='pass', report
+          assert report['source_package_content_sha256']=='b7e3cfb98dfc7a9d5b8fb6309b7a9be90c7c89eccd77ae14be20bbc7d8e31e8e', report
+          assert report['package_content_sha256']=='b01f853af794e596f0dfb491a3f5401365ca3f01fd7d410194e539f0b8a10cc1', report
+          assert report['whole_document_word_count_local']==25327, report
+          assert report['main_body_word_count_to_bibliography_local']==23273, report
+          assert report['paragraph_count']==766, report
+          assert report['bibliography_reference_count']==31, report
+          assert report['used_reference_numbers']==list(range(1,32)), report
+          assert report['unused_reference_numbers']==[], report
+          assert report['missing_reference_numbers']==[], report
+          assert report['replacement_count']==15, report
+          assert report['reference_31_present'] is True, report
+          assert report['reference_31_scope_limited'] is True, report
+          assert report['watkins_sarsa_attribution_fixed'] is True, report
+          assert report['dyna_primary_source_precedence'] is True, report
+          assert report['khetarpal_core_pairing_present'] is True, report
+          assert report['media_count']==25 and report['media_preserved'] is True, report
+          assert report['scientific_values_modified'] is False, report
+          assert report['registered_asset_bytes_modified'] is False, report
+          assert report['new_experiment_or_reanalysis'] is False, report
+          assert report['visual_qa_status']=='pass' and report['visual_qa_page_count']==92, report
+          assert report['visual_qa_changed_pages']==[22,24,25,28,29,30,31,32,64,66,72,78,81], report
+          assert report['visual_qa_unchanged_pages_pixel_identical']==79, report
+          assert report['visual_qa_defects']==[], report
+          print('T-716 stage 4 evidence audit validated')
+          PY
+
+      - name: Stage permanent evidence-audited milestone
+        if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
+        run: |
+          cp artifacts/t716/T716_stage4_evidence_audited_review_ready.docx thesis/archive/T716_stage4_evidence_audited_review_ready.docx
+          cp artifacts/t716/T716_stage4_qa-report.json thesis/archive/T716_stage4_qa-report.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add thesis/archive/T716_stage4_evidence_audited_review_ready.docx thesis/archive/T716_stage4_qa-report.json
+          if git diff --cached --quiet; then
+            echo 'Archive already current.'
+          else
+            git commit -m 'T-716: archive stage-4 evidence-audited milestone'
+            git push
+          fi
+
+      - name: Upload CI reconstruction
+        uses: actions/upload-artifact@v4
+        with:
+          name: t716-stage4-evidence-audited
+          path: |
+            artifacts/t716/T716_stage4_evidence_audited_review_ready.docx
+            artifacts/t716/T716_stage4_qa-report.json
+          if-no-files-found: error
+          retention-days: 30
