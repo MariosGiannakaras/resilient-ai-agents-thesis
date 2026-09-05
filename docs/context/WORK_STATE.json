@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T15:02:00Z",
+  "updated_at_utc": "2026-09-05T15:04:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-010",
   "task_status": "IN_PROGRESS",
@@ -9,8 +9,8 @@
   "base_branch": "main",
   "pull_request": 146,
   "phase": "CORRECTION",
-  "last_completed_checkpoint": "The T-010 migration now creates the canonical checklist record. The generic continuity validator still reports it missing because its task-line regex used a word boundary after the closing backtick, which can never match before whitespace.",
-  "next_action": "Fix validate_project_continuity.py to terminate task-ID matches with whitespace/end lookahead instead of a word boundary, then rerun continuity/documentation/T-716 gates and persist the migration outputs.",
+  "last_completed_checkpoint": "The generic continuity validator now passes. Documentation consistency is the next gate and currently fails only because the migrated TASKS bootstrap dropped the legacy-but-useful literal invariants 'session memory' and 'git status'.",
+  "next_action": "Keep the stronger prompt-free semantics while restoring explicit wording that session memory is advisory only and git status is an objective recovery input; rerun documentation/continuity/T-716 gates and persist the migration outputs.",
   "blockers": [],
   "completed_substeps": [
     "Recovered unmerged T-716 final-acceptance branch state",
@@ -24,10 +24,12 @@
     "Diagnosed and fixed the T-010 migration regex DOTALL defect",
     "Retired the stale T-716 current-task validator from active CI",
     "Fixed the T-010 migration checklist-entry existence test",
-    "Confirmed T-716 acceptance remains PASS throughout T-010 changes"
+    "Fixed generic continuity task-line matching",
+    "Generic project continuity validation PASS",
+    "T-716 acceptance remains PASS throughout T-010 changes"
   ],
   "pending_substeps": [
-    "Fix generic continuity task-line regex",
+    "Restore explicit session-memory advisory and git-status wording in migrated TASKS bootstrap",
     "Persist the successful T-010 migration outputs",
     "Add project continuity CI workflow",
     "Run generic continuity/documentation and repository PR checks",
@@ -36,9 +38,10 @@
     "Reconcile main to T-712 external-gate state after merge"
   ],
   "validation": {
-    "t716_final_acceptance": "PASS_RUN_33973488968",
-    "t010_migration": "PASS_WITH_CHECKLIST_ENTRY",
-    "continuity_validator": "FAIL_REGEX_BOUNDARY_DEFECT",
+    "t716_final_acceptance": "PASS_RUN_33973581911",
+    "t010_migration": "PASS",
+    "continuity_validator": "PASS_RUN_33973581911",
+    "documentation_consistency": "FAIL_MISSING_LITERAL_SESSION_MEMORY_AND_GIT_STATUS",
     "pr_ci": "FAILING_KNOWN_CORRECTABLE"
   },
   "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume this work package before selecting another task unless it is objectively blocked or already merged.",
