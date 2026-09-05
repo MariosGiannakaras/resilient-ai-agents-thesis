@@ -113,6 +113,9 @@ Historical F0/C0/D0, R0 and protocol-v1.1 choices remain auditable history only.
 
 ## Repository and continuity
 
+- Meaningful user-facing deliverable files must never exist only in `/mnt/data` or an expiring Actions artifact; the repository is the persistent source of truth.
+- Preserve surfaced thesis milestones under `thesis/archive/` even when superseded/rejected; reserve `thesis/final/` for genuinely accepted final/submission candidates.
+- The compressed T-715 reader-scoped DOCX is not the final thesis. Restore the fuller T-714-level academic coverage and integrate the validated T-715 scientific corrections; do not trade scientific/academic completeness for simplification and do not add filler merely to raise word count.
 - `TASKS.md` is the canonical resumable ledger; each implementation session starts by reading current repository authority and inspecting actual Git/PR/CI state.
 - Use one active implementation branch/PR for the clean UI rebuild.
 - Old merged/stale remote working branches may be deleted after confirming they contain no unique required work. Deliberate archive/provenance branches may remain.
