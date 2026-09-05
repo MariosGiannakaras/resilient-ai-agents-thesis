@@ -106,12 +106,15 @@ A citation-ready source is **not automatically a source of truth**. T-716 uses a
 - all relevant sources are attached to that claim, not only the first convenient source;
 - primary papers, independent replications/surveys and contradictory/limiting evidence are compared explicitly;
 - exact equations, algorithms and empirical findings prefer primary sources;
+- scientific quality, relevance, methodological strength and primary/foundational value outrank blind recency;
+- when materially comparable sources cover the same claim, the more recent source is preferred by default;
+- an older authoritative/foundational source may outrank a newer but weaker, derivative, informal or student source, with the reason kept explicit;
 - surveys/talks may guide synthesis/discovery but do not override primary evidence;
 - protocol-specific decisions are labelled as project decisions even when literature motivates them;
 - project/result claims point to frozen repository authorities, not to external papers;
 - conflicting sources remain visible and the final wording is bounded to the strongest common support.
 
-The human-readable mapping lives in `docs/thesis/CLAIM_EVIDENCE_TREE.md`; the machine-readable registry lives in `research/bibliography/claim-evidence-map.json`. Both are validated before T-716 can be accepted.
+The complete source-ranking rule is `docs/thesis/BIBLIOGRAPHY_SOURCE_SELECTION_POLICY.md`. The human-readable claim mapping lives in `docs/thesis/CLAIM_EVIDENCE_TREE.md`; the machine-readable registry lives in `docs/thesis/claim-evidence-map.json`. Both the registry and the selection-policy contract are validated before T-716 can be accepted. The synchronized `research/bibliography/` directory remains immutable and contains only the governed ThesisBibliography import.
 
 ## Repository map
 
@@ -165,8 +168,9 @@ Then consult, as relevant:
 - `results/analysis/protocol-v2.1-final/`
 - `results/thesis-assets/protocol-v2.1-final/`
 - `docs/thesis/T716_REWRITE_PLAN.md`
+- `docs/thesis/BIBLIOGRAPHY_SOURCE_SELECTION_POLICY.md`
 - `docs/thesis/CLAIM_EVIDENCE_TREE.md`
-- `research/bibliography/claim-evidence-map.json`
+- `docs/thesis/claim-evidence-map.json`
 - `docs/thesis/OFFICIAL_GUIDANCE_SNAPSHOT_2026-09-03.md`
 - `docs/thesis/THESIS_STRUCTURE_AND_STYLE_GUIDE.md`
 - `docs/thesis/WP7_WP8_TOOL_WORKFLOW.md`
