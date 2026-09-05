@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T15:06:00Z",
+  "updated_at_utc": "2026-09-05T15:09:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-010",
   "task_status": "IN_PROGRESS",
@@ -8,9 +8,9 @@
   "branch": "thesis/t716-final-acceptance",
   "base_branch": "main",
   "pull_request": 146,
-  "phase": "CORRECTION",
-  "last_completed_checkpoint": "Push CI run 33973670344 passed T-010 migration, T-716 11/11 acceptance, generic project continuity and documentation consistency. The only remaining failure is the second-run idempotence check: the migration still expects the pre-migration T-712 Current task line when T-010 is already canonical.",
-  "next_action": "Make the T-010 migration intrinsically idempotent and persist all previously runtime-hardened fixes into the migration source; then rerun the full gate and allow the workflow to commit the migrated repository state.",
+  "phase": "IMPLEMENTATION",
+  "last_completed_checkpoint": "Push CI run 33973833964 passed T-716 11/11 acceptance, claim-evidence validation, generic project continuity, documentation consistency and migration idempotence, then persisted the prompt-free self-resuming migration to branch head b7a7f04f6bf564b6b383d15b1ea1fbf9e7e4c57d. TASKS now contains T-010, and the legacy CODEX_EXECUTION_PROMPT.md is removed.",
+  "next_action": "Add a generic Project continuity GitHub Actions workflow that runs on every material PR and main push, then update the PR template to require WORK_STATE checkpoint reconciliation and run final PR checks/review.",
   "blockers": [],
   "completed_substeps": [
     "Recovered unmerged T-716 final-acceptance branch state",
@@ -20,29 +20,32 @@
     "Added scripts/project_checkpoint.py",
     "Added scripts/validate_project_continuity.py",
     "Replaced AGENTS.md with prompt-free deterministic recovery/checkpoint instructions",
-    "Reworked the T-716 workflow to execute T-010 continuity installation before validation",
-    "Fixed migration line-matching and checklist-entry defects",
-    "Retired stale T-716 current-task validation",
-    "Fixed generic continuity task-line matching",
+    "Added canonical T-010 task and prompt-free four-source recovery bootstrap",
+    "Reconciled EXECUTION_WORKFLOW and DOCUMENTATION_GOVERNANCE for durable checkpoints and early PR recovery",
+    "Retired CODEX_EXECUTION_PROMPT.md and obsolete one-shot T-716 continuity scripts",
+    "Updated documentation consistency validation for prompt-free bootstrap",
+    "Made T-010 migration idempotent",
     "Generic project continuity validation PASS",
     "Documentation consistency validation PASS",
-    "T-716 final acceptance remains 11/11 PASS"
+    "T-716 final acceptance remains 11/11 PASS",
+    "Persisted the migration outputs to the remote branch"
   ],
   "pending_substeps": [
-    "Make T-010 migration intrinsically idempotent and remove runtime hardening dependence",
-    "Persist the successful T-010 migration outputs",
     "Add generic project continuity CI workflow",
+    "Reconcile pull-request template with WORK_STATE checkpoint requirement",
     "Run final PR checks and objective diff/review-thread audit",
+    "Mark T-010 ready to merge after all required checks pass",
     "Squash-merge PR #146 if green",
-    "Reconcile main to T-712 external-gate state after merge"
+    "Reconcile main to T-712 external-gate state after merge and verify main continuity CI"
   ],
   "validation": {
-    "t716_final_acceptance": "PASS_RUN_33973670344",
-    "t010_migration": "PASS_FIRST_RUN",
-    "continuity_validator": "PASS_RUN_33973670344",
-    "documentation_consistency": "PASS_RUN_33973670344",
-    "idempotence": "FAIL_SECOND_RUN_CURRENT_TASK_EXPECTATION",
-    "pr_ci": "FAILING_ONLY_IDEMPOTENCE"
+    "t716_final_acceptance": "PASS_RUN_33973833964",
+    "t010_migration": "PASS_AND_PERSISTED",
+    "continuity_validator": "PASS_RUN_33973833964",
+    "documentation_consistency": "PASS_RUN_33973833964",
+    "idempotence": "PASS_RUN_33973833964",
+    "legacy_execution_prompt": "REMOVED",
+    "pr_ci": "PENDING_GENERIC_CONTINUITY_WORKFLOW"
   },
   "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume this work package before selecting another task unless it is objectively blocked or already merged.",
   "notes": [
