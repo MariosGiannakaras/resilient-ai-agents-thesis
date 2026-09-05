@@ -8,20 +8,36 @@ on:
       - scripts/t716_final_acceptance_audit.py
       - scripts/t716_final_reconcile_claim_registry.py
       - scripts/t716_final_reconcile_status.py
+      - scripts/t716_continuity_reconcile.py
       - .github/workflows/t716-final-acceptance.yml
   pull_request:
     paths:
       - scripts/t716_final_acceptance_audit.py
       - scripts/t716_final_reconcile_claim_registry.py
       - scripts/t716_final_reconcile_status.py
+      - scripts/t716_continuity_reconcile.py
       - docs/thesis/claim-evidence-map.json
       - docs/thesis/CLAIM_EVIDENCE_TREE.md
       - docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md
       - docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.json
       - docs/thesis/T716_REWRITE_PLAN.md
+      - docs/thesis/WP7_WP8_TOOL_WORKFLOW.md
+      - docs/thesis/PRESENTATION_WORKFLOW.md
+      - docs/thesis/THESIS_STRUCTURE_DRAFT.md
       - docs/context/TASKS.md
       - docs/context/CURRENT_STATUS.md
       - docs/context/POST_THESIS_LIFECYCLE.md
+      - docs/context/CODEX_EXECUTION_PROMPT.md
+      - docs/context/PROJECT_CONTEXT.md
+      - docs/context/OPEN_QUESTIONS.md
+      - docs/context/IMPLEMENTATION_ROADMAP.md
+      - docs/context/DEFINITION_OF_DONE.md
+      - docs/context/EXECUTION_WORKFLOW.md
+      - docs/context/USER_DECISIONS.md
+      - docs/context/CONSTRAINTS.md
+      - docs/context/CONTRADICTIONS.md
+      - docs/context/BIBLIOGRAPHY_INTEGRATION.md
+      - docs/context/CHANGELOG_CONTEXT.md
       - README.md
       - thesis/archive/README.md
       - .github/workflows/t716-final-acceptance.yml
@@ -48,6 +64,9 @@ jobs:
 
       - name: Reconcile final claim registry
         run: python scripts/t716_final_reconcile_claim_registry.py
+
+      - name: Reconcile interrupted-session continuity state
+        run: python scripts/t716_continuity_reconcile.py
 
       - name: Validate claim-evidence registry
         run: python scripts/validate_claim_evidence_map.py
@@ -78,10 +97,21 @@ jobs:
           print('T-716 final acceptance: PASS')
           PY
 
-      - name: Reconcile final canonical status
+      - name: Validate final canonical status
         run: python scripts/t716_final_reconcile_status.py
 
-      - name: Persist final acceptance and canonical status
+      - name: Validate documentation consistency
+        run: python scripts/validate_documentation_consistency.py
+
+      - name: Verify reconciliation is idempotent
+        run: |
+          git diff --exit-code
+          python scripts/t716_final_reconcile_claim_registry.py
+          python scripts/t716_continuity_reconcile.py
+          python scripts/t716_final_reconcile_status.py
+          git diff --exit-code
+
+      - name: Persist final acceptance and continuity state
         if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
         run: |
           cp artifacts/t716/T716_FINAL_ACCEPTANCE_AUDIT.md docs/thesis/T716_FINAL_ACCEPTANCE_AUDIT.md
@@ -94,15 +124,29 @@ jobs:
             docs/thesis/claim-evidence-map.json \
             docs/thesis/CLAIM_EVIDENCE_TREE.md \
             docs/thesis/T716_REWRITE_PLAN.md \
+            docs/thesis/WP7_WP8_TOOL_WORKFLOW.md \
+            docs/thesis/PRESENTATION_WORKFLOW.md \
+            docs/thesis/THESIS_STRUCTURE_DRAFT.md \
             docs/context/TASKS.md \
             docs/context/CURRENT_STATUS.md \
             docs/context/POST_THESIS_LIFECYCLE.md \
+            docs/context/CODEX_EXECUTION_PROMPT.md \
+            docs/context/PROJECT_CONTEXT.md \
+            docs/context/OPEN_QUESTIONS.md \
+            docs/context/IMPLEMENTATION_ROADMAP.md \
+            docs/context/DEFINITION_OF_DONE.md \
+            docs/context/EXECUTION_WORKFLOW.md \
+            docs/context/USER_DECISIONS.md \
+            docs/context/CONSTRAINTS.md \
+            docs/context/CONTRADICTIONS.md \
+            docs/context/BIBLIOGRAPHY_INTEGRATION.md \
+            docs/context/CHANGELOG_CONTEXT.md \
             README.md \
             thesis/archive/README.md
           if git diff --cached --quiet; then
-            echo 'Acceptance, registry and status already current.'
+            echo 'Acceptance, registry and continuity state already current.'
           else
-            git commit -m 'T-716: persist final acceptance and canonical completion state'
+            git commit -m 'T-716: persist final acceptance and continuity state'
             git push
           fi
 
