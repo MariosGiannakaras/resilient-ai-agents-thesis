@@ -41,16 +41,17 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install locked environment
+      - name: Install locked environment and pinned document-build dependencies
         run: |
           python -m pip install --disable-pip-version-check --quiet uv
           uv sync --locked --group gridworld-prototype --no-progress
+          python -m pip install --disable-pip-version-check --quiet lxml==6.1.1 matplotlib==3.10.8
 
       - name: Reconcile T-717 active authorities and claim governance
-        run: uv run python scripts/t717_branch_reconcile.py
+        run: python scripts/t717_branch_reconcile.py
 
       - name: Build and validate deterministic T-717 DOCX
-        run: uv run python scripts/t717_final_content_refinement.py
+        run: python scripts/t717_final_content_refinement.py
 
       - name: Validate claim registry
         run: uv run python scripts/validate_claim_evidence_map.py
@@ -62,7 +63,7 @@ jobs:
 
       - name: Verify persisted DOCX contract
         run: |
-          uv run python - <<'PY'
+          python - <<'PY'
           import json
           from pathlib import Path
           q = json.loads(Path('thesis/archive/T717_pre_freeze_content_refined_qa.json').read_text(encoding='utf-8'))
@@ -93,7 +94,7 @@ jobs:
         run: |
           rm -rf /tmp/t717-second
           mkdir -p /tmp/t717-second
-          uv run python scripts/t717_final_content_refinement.py \
+          python scripts/t717_final_content_refinement.py \
             --out /tmp/t717-second/T717.docx \
             --qa /tmp/t717-second/T717.json \
             --asset-dir /tmp/t717-second/assets
