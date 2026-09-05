@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T14:58:00Z",
+  "updated_at_utc": "2026-09-05T15:00:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-010",
   "task_status": "IN_PROGRESS",
@@ -9,8 +9,8 @@
   "base_branch": "main",
   "pull_request": 146,
   "phase": "CORRECTION",
-  "last_completed_checkpoint": "PR CI run 33973270773 proved the T-010 migration itself now succeeds and the T-716 11/11 acceptance audit still passes. The run stopped only because the legacy T-716 status validator requires T-716 to remain the current task.",
-  "next_action": "Remove the legacy T-716 current-task status validator from the active workflow, rely on the T-716 acceptance audit for T-716 completion and the generic continuity validator for current work state, then rerun and persist the migration.",
+  "last_completed_checkpoint": "The stale T-716 current-task validator was removed. Push CI then reached the generic continuity validator and correctly found that the migration had not created the T-010 checklist entry because its existence test matched the newly written Current task line instead of a checklist record.",
+  "next_action": "Patch the T-010 migration existence test to require the canonical IN_PROGRESS checklist entry, rerun push/PR CI, and persist the migration outputs if continuity and documentation validation pass.",
   "blockers": [],
   "completed_substeps": [
     "Recovered unmerged T-716 final-acceptance branch state",
@@ -22,10 +22,11 @@
     "Replaced AGENTS.md with prompt-free deterministic recovery/checkpoint instructions",
     "Reworked the T-716 workflow to execute T-010 continuity installation before validation",
     "Diagnosed and fixed the T-010 migration regex DOTALL defect",
-    "Confirmed T-010 migration and T-716 acceptance both pass in PR CI run 33973270773"
+    "Retired the stale T-716 current-task validator from active CI",
+    "Confirmed T-716 acceptance remains PASS after T-010 migration"
   ],
   "pending_substeps": [
-    "Retire legacy T-716 current-task status validation from the active workflow",
+    "Fix T-010 checklist-entry existence test",
     "Persist the successful T-010 migration outputs",
     "Add project continuity CI workflow",
     "Run generic continuity/documentation and repository PR checks",
@@ -34,10 +35,9 @@
     "Reconcile main to T-712 external-gate state after merge"
   ],
   "validation": {
-    "t716_final_acceptance": "PASS_RUN_33973270773",
-    "t010_migration": "PASS_RUN_33973270773",
-    "legacy_t716_status_validator": "FAIL_STALE_CURRENT_TASK_ASSUMPTION",
-    "continuity_validator": "PENDING_AFTER_LEGACY_CHECK_REMOVAL",
+    "t716_final_acceptance": "PASS_RUN_33973392969",
+    "t010_migration": "RUNS_BUT_MISSES_CHECKLIST_ENTRY",
+    "continuity_validator": "FAIL_MISSING_T010_CHECKLIST_ENTRY",
     "pr_ci": "FAILING_KNOWN_CORRECTABLE"
   },
   "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. Resume this work package before selecting another task unless it is objectively blocked or already merged.",
