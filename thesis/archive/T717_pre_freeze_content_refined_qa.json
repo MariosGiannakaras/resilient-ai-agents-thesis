@@ -1,0 +1,30 @@
+{
+  "status": "pass",
+  "base": "/home/runner/work/resilient-ai-agents-thesis/resilient-ai-agents-thesis/thesis/archive/T716_stage4_evidence_audited_review_ready.docx",
+  "output": "/home/runner/work/resilient-ai-agents-thesis/resilient-ai-agents-thesis/thesis/archive/T717_pre_freeze_content_refined_review_ready.docx",
+  "output_raw_sha256": "57d6de352eef6147fa24179f87a3f8e9ee39f65a90ad8b85777cac8f541f57c5",
+  "changed_ooxml_entries": [
+    "word/document.xml",
+    "word/media/image1.png",
+    "word/media/image2.png"
+  ],
+  "paragraph_count": 772,
+  "reference_count": 32,
+  "references_used": "32/32",
+  "media_count": 25,
+  "unchanged_prior_media": 23,
+  "seq_fields": 27,
+  "toc_fields": 3,
+  "page_fields": 1,
+  "comments_xml": 0,
+  "tracked_insertions": 0,
+  "tracked_deletions": 0,
+  "unresolved_src_residue": false,
+  "placeholder_count": 3,
+  "scientific_results_modified": false,
+  "new_experiment_or_reanalysis": false,
+  "ui_screenshot_added": false,
+  "ui_screenshot_disposition": "rejected historical development fixture; condition_unavailable/not-executed state is not representative scientific or implementation evidence",
+  "figure1_sha256": "2e0602fde9b2f69f666d9f774ec9096618326f48bfb2cf7154e3ef10f6d99ecd",
+  "figure2_sha256": "9449496a5de45697bf540323123829d78f4c002e90414029cd6eb3c0d1b92ce4"
+}
