@@ -1,0 +1,148 @@
+name: T-718 evidence-threshold thesis corrections
+
+on:
+  push:
+    branches:
+      - thesis/t718-evidence-threshold-corrections
+    paths:
+      - scripts/t718_evidence_threshold_corrections.py
+      - scripts/t718_normalize_inserted_paragraph_styles.py
+      - docs/thesis/T718_EVIDENCE_THRESHOLD_CORRECTION_PLAN.md
+      - .github/workflows/t718-evidence-threshold-corrections.yml
+  pull_request:
+    paths:
+      - scripts/t718_evidence_threshold_corrections.py
+      - scripts/t718_normalize_inserted_paragraph_styles.py
+      - docs/thesis/T718_EVIDENCE_THRESHOLD_CORRECTION_PLAN.md
+      - thesis/archive/T718_evidence_threshold_corrected_review_ready.docx
+      - thesis/archive/T718_qa-report.json
+      - thesis/archive/T718_structural_qa.json
+      - .github/workflows/t718-evidence-threshold-corrections.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install bounded document dependencies
+        run: python -m pip install --disable-pip-version-check lxml==6.0.1 matplotlib==3.10.6 python-docx==1.2.0
+
+      - name: Build T-718 candidate from canonical T-717
+        run: |
+          python scripts/t718_evidence_threshold_corrections.py
+          python scripts/t718_normalize_inserted_paragraph_styles.py
+
+      - name: Validate correction boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          q=json.loads(Path('artifacts/t718/T718_qa-report.json').read_text(encoding='utf-8'))
+          assert q['status']=='pass', q
+          assert q['base_raw_sha256']=='57d6de352eef6147fa24179f87a3f8e9ee39f65a90ad8b85777cac8f541f57c5', q
+          assert q['changed_ooxml_entries']==['word/document.xml','word/media/image1.png'], q
+          assert q['change_counts']=={
+            'C1_rq2_return_sum':1,
+            'C2_frozen_semantics':1,
+            'C3_final_layout_terms':10,
+            'C4_condition_scope':1,
+            'C5_ci_support_note':1,
+            'C6_execution_identity':1,
+          }, q
+          assert q['C6_body_style_normalized'] is True, q
+          assert q['media_count']==25 and q['unchanged_media_count']==24, q
+          assert q['image1_label_only_regeneration'] is True and q['image2_preserved'] is True, q
+          assert q['scientific_results_modified'] is False, q
+          assert q['new_experiment_or_reanalysis'] is False, q
+          assert q['protocol_or_estimand_modified'] is False, q
+          assert q['visual_removed'] is False, q
+          print('T-718 correction boundary validated')
+          PY
+
+      - name: Validate Word structure and exact reader-facing sentinels
+        run: |
+          python - <<'PY'
+          import json, zipfile
+          from pathlib import Path
+          from lxml import etree
+          doc=Path('artifacts/t718/T718_evidence_threshold_corrected_review_ready.docx')
+          W='http://schemas.openxmlformats.org/wordprocessingml/2006/main'; ns={'w':W}
+          prefix='Η accepted final scientific execution είναι η replacement Study protocol-v2.1-final--t610-recovery-01'
+          with zipfile.ZipFile(doc) as z:
+              names=z.namelist(); root=etree.fromstring(z.read('word/document.xml'))
+              ps=root.xpath('.//w:body/w:p',namespaces=ns)
+              text='\n'.join(''.join(p.xpath('.//w:t/text()',namespaces=ns)) for p in ps)
+              instr=root.xpath('.//w:instrText/text()',namespaces=ns)
+              assert sum('SEQ ' in x for x in instr)==27
+              assert sum('TOC ' in x for x in instr)==3
+              assert sum(1 for n in names if n.startswith('word/media/'))==25
+              assert 'word/comments.xml' not in names
+              assert not root.xpath('.//w:ins|.//w:del',namespaces=ns)
+              sentinels=[
+                  'μη προεξοφλημένο αθροιστικό task reward στις σταθερές 256 πραγματικές αλληλεπιδράσεις',
+                  'Το Frozen δεν σημαίνει ντετερμινιστική επιλογή ενέργειας',
+                  'Οι δύο final layouts κρατήθηκαν εκτός development/tuning μέχρι το άνοιγμα του final reserve',
+                  'Το αποτέλεσμα αυτό δεν γενικεύεται σε θόρυβο παρατήρησης ως κατηγορία.',
+                  'δεν είναι περιορισμένο από το φυσικό support 0–256 interactions',
+                  '86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730',
+              ]
+              for s in sentinels: assert text.count(s)==1, (s,text.count(s))
+              forbidden=[
+                  'disturbance-associated loss υπό σταθερή πολιτική',
+                  'δύο held-out διατάξεις',
+                  'two held-out layouts',
+                  'των δύο held-out layouts',
+                  'δύο held-out τελικές layouts',
+                  'δύο held-out layouts',
+                  'Τα δύο τελικά held-out 7×7 layouts',
+              ]
+              for s in forbidden: assert s not in text, s
+              c6=[p for p in ps if ''.join(p.xpath('.//w:t/text()',namespaces=ns)).startswith(prefix)]
+              assert len(c6)==1
+              pstyle=c6[0].xpath('./w:pPr/w:pStyle/@w:val',namespaces=ns)
+              assert not pstyle or pstyle[0] not in {'Heading1','Heading2','Heading3','1','2','3'}, pstyle
+              assert text.count('[Θέση για την ακριβή επίσημη δήλωση πριν από την τελική υποβολή]')==1
+              assert text.count('Student: [to be completed from the official form]')==1
+              assert text.count('Ονοματεπώνυμο φοιτητή: [να συμπληρωθεί από το επίσημο έντυπο]')==1
+          Path('artifacts/t718/T718_structural_qa.json').write_text(json.dumps({'status':'pass','seq_fields':27,'toc_fields':3,'media_count':25,'tracked_changes':0,'comments_xml':0,'sentinels':6,'C6_body_style':'pass'},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print('T-718 Word structure validated')
+          PY
+
+      - name: Archive permanent validated milestone
+        if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
+        run: |
+          cp artifacts/t718/T718_evidence_threshold_corrected_review_ready.docx thesis/archive/T718_evidence_threshold_corrected_review_ready.docx
+          cp artifacts/t718/T718_qa-report.json thesis/archive/T718_qa-report.json
+          cp artifacts/t718/T718_structural_qa.json thesis/archive/T718_structural_qa.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add thesis/archive/T718_evidence_threshold_corrected_review_ready.docx thesis/archive/T718_qa-report.json thesis/archive/T718_structural_qa.json
+          if git diff --cached --quiet; then
+            echo 'T-718 archive already current.'
+          else
+            git commit -m 'T-718: archive validated evidence-threshold milestone'
+            git push
+          fi
+
+      - name: Upload candidate for visual inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: t718-evidence-threshold-candidate
+          path: |
+            artifacts/t718/T718_evidence_threshold_corrected_review_ready.docx
+            artifacts/t718/T718_qa-report.json
+            artifacts/t718/T718_structural_qa.json
+          if-no-files-found: error
+          retention-days: 30
