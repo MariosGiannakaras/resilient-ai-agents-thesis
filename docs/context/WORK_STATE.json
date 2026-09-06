@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-05T21:12:00Z",
+  "updated_at_utc": "2026-09-06T10:21:30Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-712",
   "task_status": "DEFERRED",
   "work_package": "Supervisor/reviewer feedback incorporation and revalidation",
-  "branch": "main",
+  "branch": "thesis/t718-evidence-threshold-corrections",
   "base_branch": "main",
-  "pull_request": null,
+  "pull_request": 150,
   "phase": "EXTERNAL_GATE",
-  "last_completed_checkpoint": "T-717 is objectively complete and main is normalized. PR #148 passed all final gates and was squash-merged as 84b9b1165a64fd9fbd79f25890473d3e624e12d1. The deterministic review-ready T-717 DOCX is archived with canonical CI raw SHA-256 57d6de352eef6147fa24179f87a3f8e9ee39f65a90ad8b85777cac8f541f57c5; 32/32 references are used, 23/25 prior media are byte-identical, only the two intended explanatory figures changed, and no experiment, re-analysis, protocol, frozen result, T-612 analysis or T-613 quantitative asset was modified. PR #149 normalized only WORK_STATE/TASKS/CURRENT_STATUS, had zero comments/review threads, and its final head 40ed8637d3fdc1ec3869e4227f0aaec2834751dd passed Repository checks 33992060526, Project continuity 33992060546 and T-716 stage-3 reconstruction 33992060528 before squash merge as d6c35c299c7685ba60360f1ea298b8f410420f95. Temporary normalization helper/workflow are absent. The operational pointer is now main with no active PR; T-712 DEFERRED is the real external-feedback gate.",
-  "next_action": "Wait for actual supervisor/reviewer feedback for T-712. Do not fabricate or substitute internal review for external feedback. When real feedback arrives, record it durably, create or recover the T-712 implementation branch, move T-712 to IN_PROGRESS, incorporate only the actual corrections and revalidate before T-713.",
+  "last_completed_checkpoint": "T-718 internal author-directed evidence-threshold correction pass is complete and archived without reopening T-712. The accepted T-718 DOCX is thesis/archive/T718_evidence_threshold_corrected_review_ready.docx with raw SHA-256 60f92b1cb9994ff2964e551d09bf5a9ee14c7a37e30d49b92435bcea90c957de. Six reader-facing correction classes were applied: RQ2 return_sum definition, Frozen learning-state/action-selection clarification, final-layout terminology, observation-corruption scope, Student-t recovery-interval interpretation, and exact accepted execution identity. The scientific boundary is unchanged: no experiment, re-analysis, protocol, estimand, threshold, frozen result, T-612 analysis, or T-613 quantitative asset changed. All 25 visuals are preserved; 24/25 media are byte-identical and only the existing explanatory Figure 1 label layer changed. Full 95-page render QA passed after a C6 body-style correction; pages 1-93 were pixel-identical to the prior reviewed render and pages 94-95 were re-inspected at full resolution. PR #150 carries this bounded internal correction layer. T-712 remains DEFERRED pending actual supervisor/reviewer feedback.",
+  "next_action": "Complete PR #150 validation and merge T-718 if all repository checks pass. After merge, normalize WORK_STATE back to branch=main and pull_request=null while keeping T-712 DEFERRED. Then wait for actual supervisor/reviewer feedback for T-712; do not fabricate or substitute internal review for external feedback.",
   "blockers": [
     "Actual supervisor/reviewer feedback has not been provided."
   ],
@@ -26,9 +26,19 @@
     "Exact PR #149 diff was three canonical authority files only with zero comments/review threads",
     "PR #149 final head passed Repository checks 33992060526, Project continuity 33992060546 and T-716 stage-3 reconstruction 33992060528",
     "PR #149 squash-merged as d6c35c299c7685ba60360f1ea298b8f410420f95",
-    "Main operational pointer normalized to T-712 DEFERRED with branch=main and pull_request=null"
+    "Main operational pointer normalized to T-712 DEFERRED with branch=main and pull_request=null",
+    "T-718 evidence-threshold audit reduced to six justified reader-facing correction classes",
+    "T-718 canonical T-717 baseline and package-entry boundary validated",
+    "T-718 preserves all 25 visuals; 24/25 media byte-identical and no T-613 quantitative visual changed",
+    "T-718 full 95-page render QA passed after correcting C6 paragraph style inheritance",
+    "T-718 accepted archive raw SHA-256 60f92b1cb9994ff2964e551d09bf5a9ee14c7a37e30d49b92435bcea90c957de",
+    "T-718 permanent archive commit ff1aad57d75aca35c9666b54bd90f4289ec8d98c created by validated CI path",
+    "PR #150 opened for T-718 without treating it as supervisor/reviewer feedback"
   ],
   "pending_substeps": [
+    "Complete PR #150 repository and continuity validation",
+    "Merge PR #150 if all checks pass",
+    "Normalize the operational pointer back to main after merge",
     "Receive actual supervisor/reviewer feedback",
     "Record the feedback durably and move T-712 to IN_PROGRESS",
     "Incorporate only the actual corrections and revalidate before T-713"
@@ -51,13 +61,19 @@
     "post_merge_final_t716_stage3": "PASS_33992060528",
     "post_merge_pr_diff": "PASS_3_AUTHORITY_FILES_ONLY",
     "post_merge_pr_comments_reviews": "PASS_ZERO",
+    "t718_status": "COMPLETE_INTERNAL_AUTHOR_DIRECTED",
+    "t718_output_raw_sha256": "60f92b1cb9994ff2964e551d09bf5a9ee14c7a37e30d49b92435bcea90c957de",
+    "t718_media_preservation": "PASS_24_OF_25_BYTE_IDENTICAL_ONE_LABEL_ONLY_REGENERATION",
+    "t718_render_qa": "PASS_95_PAGES_FINAL",
+    "t718_scientific_boundary": "PASS_NO_PROTOCOL_RESULT_ESTIMAND_T612_T613_CHANGE",
+    "t718_pr": "OPEN_150",
     "scientific_results_modified": "NO",
     "new_experiment_or_reanalysis": "NO"
   },
-  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. T-717 is complete. T-712 remains DEFERRED until actual supervisor/reviewer feedback is provided; do not manufacture feedback.",
+  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. T-718 is a completed internal author-directed correction pass under PR #150; it is not external feedback. T-712 remains DEFERRED until actual supervisor/reviewer feedback is provided; do not manufacture feedback.",
   "notes": [
     "TASKS.md remains the canonical task/dependency ledger; this file is the operational resume pointer.",
-    "T-717 was author-directed pre-freeze refinement, not supervisor/reviewer feedback.",
+    "T-717 and T-718 were author-directed pre-freeze/internal correction work, not supervisor/reviewer feedback.",
     "T-713 remains downstream of resolved real feedback plus official metadata/declaration and final Word/submission gates."
   ]
 }
