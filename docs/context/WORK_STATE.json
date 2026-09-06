@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-06T22:38:00Z",
+  "updated_at_utc": "2026-09-06T22:48:01Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-712",
   "task_status": "DEFERRED",
   "work_package": "Supervisor/reviewer feedback incorporation and revalidation",
-  "branch": "main-after-merge",
+  "branch": "main",
   "base_branch": "main",
-  "pull_request": 154,
+  "pull_request": null,
   "phase": "EXTERNAL_GATE",
-  "last_completed_checkpoint": "T-719A bounded author-directed post-T-719 final-content pass is objectively complete and represented by PR #154. The accepted candidate is thesis/archive/T719A_targeted_final_pass_review_ready.docx with raw SHA-256 dfa4526ad9e63d2522e7dc4339d5da46177ec42ccda7c404a9f47d4ce78a6e20. It applies exactly three reader-facing clarifications on top of the exact accepted T-719 base: directed AN−AD Recovery glossary wording, explicit budget-matched-not-competence-matched fairness wording, and the RQ1 −0.100 shortest-path/reward-contract interpretation. The only pagination consequence is a natural §5.2.2 body reflow from page 57 to 58, with only that cached TOC page refreshed. No experiment, re-analysis, numerical result, protocol value, estimand, threshold, horizon, condition, root, layout, seed, budget, method configuration, bibliography identity/order, citation sequence or registered quantitative asset changed. All 25 media remain byte-identical. OOXML integrity checks found no tracked changes or comments; live navigation/SEQ/PAGE fields remain present; accessibility audit reports zero findings. Mechanical PDF QA passed with 139 heading targets and exactly the expected §5.2.2 57→58 reflow, 27/27 caption mappings unchanged, no missing/blank text pages, targeted text present and obsolete Recovery wording absent. Full visual QA passed on both renderers: 101/101 pages in the local canonical render and 102/102 pages in the exact CI LibreOffice 24.2.7 render, with no clipping, overlap, broken tables/figures, missing glyphs or header/footer defects. The 101-vs-102 renderer difference is baseline-preserving: CI renders both accepted T-719 and T-719A as 102 pages. A post-QA idempotence correction to the source-alignment builder passed a fresh full CI rerun; its 102 rendered PNG pages are pixel-identical to the previously inspected CI render. Cover numbering, Appendix B.3 pagination, Chacon-Chamorro manuscript identity, personal metadata and declaration text remain intentionally unchanged pending stronger authority. T-712 remains DEFERRED pending actual supervisor/reviewer feedback.",
-  "next_action": "Complete PR #154 integration, then resume from main with T-712 DEFERRED. Wait for actual supervisor/reviewer feedback; do not fabricate or substitute internal review for external feedback. When real feedback arrives, record it durably, create or recover the T-712 implementation branch, move T-712 to IN_PROGRESS, incorporate only the actual corrections and revalidate before T-713. T-713 must also resolve authoritative personal front-matter/declaration metadata and final Word/submission-format gates.",
+  "last_completed_checkpoint": "T-719A bounded author-directed post-T-719 final-content pass is objectively complete and squash-merged through PR #154 as 3374bc5156d1c8ec238bcb9eda83951ef19bc566 after exact-head CI passed T-719A validation, T-719 authority audit, Project continuity and Repository checks. The accepted artifact is thesis/archive/T719A_targeted_final_pass_review_ready.docx with raw SHA-256 dfa4526ad9e63d2522e7dc4339d5da46177ec42ccda7c404a9f47d4ce78a6e20. It applies exactly three reader-facing clarifications on top of the exact accepted T-719 base: directed AN−AD Recovery glossary wording, explicit budget-matched-not-competence-matched fairness wording, and the RQ1 −0.100 shortest-path/reward-contract interpretation. The only pagination consequence is a natural §5.2.2 body reflow from page 57 to 58, with only that cached TOC page refreshed. No experiment, re-analysis, numerical result, protocol value, estimand, threshold, horizon, condition, root, layout, seed, budget, method configuration, bibliography identity/order, citation sequence or registered quantitative asset changed. All 25 media remain byte-identical. OOXML integrity checks found no tracked changes or comments; live navigation/SEQ/PAGE fields remain present; accessibility audit reports zero findings. Mechanical PDF QA passed with 139 heading targets and exactly the expected §5.2.2 57→58 reflow, 27/27 caption mappings unchanged, no missing/blank text pages, targeted text present and obsolete Recovery wording absent. Full visual QA passed on both renderers: 101/101 pages in the local canonical render and 102/102 pages in the exact CI LibreOffice 24.2.7 render, with no clipping, overlap, broken tables/figures, missing glyphs or header/footer defects. The 101-vs-102 renderer difference is baseline-preserving: CI renders both accepted T-719 and T-719A as 102 pages. A post-QA idempotence correction to the source-alignment builder passed a fresh full CI rerun and reproduced all 102 inspected pages pixel-identically. Cover numbering, Appendix B.3 pagination, Chacon-Chamorro manuscript identity, personal metadata and declaration text remain intentionally unchanged pending stronger authority. T-712 is the restored active external gate and remains DEFERRED pending actual supervisor/reviewer feedback.",
+  "next_action": "Wait for actual supervisor/reviewer feedback for T-712; do not fabricate or substitute internal review for external feedback. When real feedback arrives, record it durably, create or recover the T-712 implementation branch, move T-712 to IN_PROGRESS, incorporate only the actual corrections and revalidate before T-713. T-713 must also resolve authoritative personal front-matter/declaration metadata and final Word/submission-format gates.",
   "blockers": [
     "Actual supervisor/reviewer feedback has not been provided.",
     "Authoritative personal front-matter metadata and exact final declaration text remain unresolved for T-713 submission freeze."
@@ -32,10 +32,10 @@
     "T-719A full exact-CI visual QA passed 102/102 pages",
     "T-719A idempotent source-alignment rerun passed full CI and reproduced all 102 inspected pages pixel-identically",
     "T-719A validated DOCX archived at raw SHA-256 dfa4526ad9e63d2522e7dc4339d5da46177ec42ccda7c404a9f47d4ce78a6e20",
-    "PR #154 opened as the T-719A integration record"
+    "PR #154 exact head d60e5d16e251cc1103b260121eee053ebdae0cf7 passed all four authoritative gates",
+    "PR #154 squash-merged to main as 3374bc5156d1c8ec238bcb9eda83951ef19bc566"
   ],
   "pending_substeps": [
-    "Merge PR #154 after exact-head PR validation is green",
     "Receive actual supervisor/reviewer feedback",
     "Record the feedback durably and move T-712 to IN_PROGRESS",
     "Incorporate only actual supervisor/reviewer corrections and revalidate before T-713",
@@ -62,9 +62,10 @@
     "t719a_local_visual_qa": "PASS_101_OF_101_PAGES",
     "t719a_ci_visual_qa": "PASS_102_OF_102_PAGES",
     "t719a_ci_reproducibility_rerun": "PASS_34064365971_102_OF_102_PIXEL_IDENTICAL",
-    "t719a_pr": "PR_154_INTEGRATION_RECORD"
+    "t719a_exact_head_ci": "PASS_T719A_T719_CONTINUITY_REPOSITORY",
+    "t719a_pr": "MERGED_3374bc5156d1c8ec238bcb9eda83951ef19bc566"
   },
-  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. T-719A is complete as a bounded internal author-directed pass and PR #154 is its integration record. After integration, T-712 remains DEFERRED until actual supervisor/reviewer feedback is provided; do not manufacture feedback.",
+  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. T-719A is complete and merged. T-712 remains DEFERRED until actual supervisor/reviewer feedback is provided; do not manufacture feedback.",
   "notes": [
     "TASKS.md remains the canonical task/dependency ledger; this file is the operational resume pointer.",
     "T-717, T-718, T-719 and T-719A are author-directed pre-freeze/internal audit work, not supervisor/reviewer feedback.",
