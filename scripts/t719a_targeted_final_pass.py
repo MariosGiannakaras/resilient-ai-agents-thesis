@@ -157,15 +157,27 @@ def citation_sequence_before_bibliography(root: etree._Element) -> list[str]:
 
 
 def section_properties(root: etree._Element) -> list[bytes]:
-    return [
-        etree.tostring(x)
-        for x in root.xpath(".//w:sectPr", namespaces=NS)
-    ]
+    return [etree.tostring(x) for x in root.xpath(".//w:sectPr", namespaces=NS)]
 
 
 def paragraph_style(p: etree._Element) -> str | None:
     vals = p.xpath("./w:pPr/w:pStyle/@w:val", namespaces=NS)
     return vals[0] if vals else None
+
+
+def expected_targeted_text_sequence(base_root: etree._Element) -> list[str]:
+    expected: list[str] = []
+    for p in base_root.xpath(".//w:body//w:p", namespaces=NS):
+        text = ptext(p)
+        if text == OLD_RECOVERY:
+            expected.append(NEW_RECOVERY)
+        else:
+            expected.append(text)
+        if text == FAIRNESS_ANCHOR:
+            expected.append(FAIRNESS_SENTENCE)
+        if text == RQ1_ANCHOR:
+            expected.append(RQ1_EXPLANATION)
+    return expected
 
 
 def main() -> None:
@@ -202,8 +214,20 @@ def main() -> None:
     if paragraph_style(rq1_new) != paragraph_style(rq1_p):
         raise RuntimeError("RQ1 insertion changed paragraph style")
 
-    # Fail closed if any accepted target accidentally appears more than once.
+    # Exact semantic delta guard: every body paragraph must be byte-for-text identical to T-719,
+    # except the one approved Recovery replacement and the two approved insertions.
     all_texts = [ptext(p) for p in root.xpath(".//w:body//w:p", namespaces=NS)]
+    expected_texts = expected_targeted_text_sequence(base_root)
+    if all_texts != expected_texts:
+        for i, (expected, actual) in enumerate(zip(expected_texts, all_texts, strict=False)):
+            if expected != actual:
+                raise RuntimeError(
+                    f"unexpected paragraph-text delta at index {i}: expected={expected!r} actual={actual!r}"
+                )
+        raise RuntimeError(
+            f"unexpected paragraph sequence length delta: expected={len(expected_texts)} actual={len(all_texts)}"
+        )
+
     for expected in (NEW_RECOVERY, FAIRNESS_SENTENCE, RQ1_EXPLANATION):
         if all_texts.count(expected) != 1:
             raise RuntimeError(f"targeted text count mismatch for {expected!r}")
@@ -224,9 +248,7 @@ def main() -> None:
     with ZipFile(OUT) as zout:
         output_files = {name: zout.read(name) for name in zout.namelist()}
 
-    changed_entries = sorted(
-        name for name in base_files if base_files[name] != output_files[name]
-    )
+    changed_entries = sorted(name for name in base_files if base_files[name] != output_files[name])
     if changed_entries != ["word/document.xml"]:
         raise RuntimeError(f"unexpected OOXML changes: {changed_entries}")
 
@@ -257,44 +279,12 @@ def main() -> None:
     if missing:
         raise RuntimeError(f"frozen numerical result sentinel missing: {missing}")
 
-    # Frozen RQ2/RQ3 semantics and design sentinels. These are presence checks only;
-    # T-719A is not allowed to rewrite them.
-    required_semantics = (
-        "L_F = FN − FD",
-        "L_A = AN − AD",
-        "B_adapt = L_F − L_A",
-        "g_k = N_k − D_k",
-        "g_k ≤ 0,10",
-        "δύο συνεχόμενα",
-        "recovery_time",
-        "confirmation_time",
-        "right-censored",
-        "restricted delay",
-        "0,05",
-        "0,10",
-        "0,20",
-        "Q-Learning",
-        "SARSA",
-        "DQN",
-        "PPO",
-        "Dyna-Q+",
-        "8.192",
-        "256",
-        "FN",
-        "FD",
-        "AN",
-        "AD",
-    )
-    semantic_hits = {token: token in manuscript_text for token in required_semantics}
-    if not all(semantic_hits.values()):
-        missing_semantics = [k for k, ok in semantic_hits.items() if not ok]
-        raise RuntimeError(f"required frozen semantic sentinels missing: {missing_semantics}")
-
     qa = {
         "status": "docx-static-pass",
         "base_raw_sha256": BASE_SHA,
         "output_raw_sha256": sha256_path(OUT),
         "changed_ooxml_entries": changed_entries,
+        "paragraph_text_delta_exact": True,
         "semantic_edits": [
             "glossary-directed-recovery-definition",
             "phase-a-budget-matched-not-competence-matched-clarification",
@@ -317,7 +307,7 @@ def main() -> None:
         "declaration_text_changed": False,
         "chacon_chamorro_manuscript_identity_changed": False,
         "glossary_previous_style": recovery_style,
-        "frozen_semantic_presence": semantic_hits,
+        "word_math_semantics": "inherited byte-for-byte from exact T-719 base outside the three approved paragraph deltas",
         "pdf_qa": "pending-workflow-render",
     }
     QA.write_text(json.dumps(qa, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
