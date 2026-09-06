@@ -74,7 +74,7 @@ Project-owned ελεγχόμενο πειραματικό και visualization t
 Interval που αφορά το συγκεκριμένο estimand/contrast. Τα reported 95% Student-t intervals δεν είναι simultaneous confidence bands και δεν συνοδεύονται από formal p-value family.
 
 ### Recovery
-Για το primary RQ3, stable προσέγγιση της Adaptive-Disturbed trajectory στην Adaptive-Nominal reference σύμφωνα με frozen tolerance και two-window stability rule.
+Για το primary RQ3, recovery είναι η σταθερή ικανοποίηση του προκαθορισμένου directed AN−AD performance-gap criterion για δύο συνεχόμενα passive windows.
 
 ### Recovery incidence / recovered proportion
 Το ποσοστό ή πλήθος independent roots που επιτυγχάνουν το frozen stable-recovery criterion μέσα στον Phase-B horizon.
