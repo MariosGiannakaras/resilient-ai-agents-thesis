@@ -1,13 +1,15 @@
 # T-719 Final Authority Audit Plan
 
-**Status:** IN_PROGRESS  
+**Status:** COMPLETE  
 **Date:** 2026-09-06  
 **Baseline:** `thesis/archive/T718_evidence_threshold_corrected_review_ready.docx`  
-**Baseline raw SHA-256:** `60f92b1cb9994ff2964e551d09bf5a9ee14c7a37e30d49b92435bcea90c957de`
+**Baseline raw SHA-256:** `60f92b1cb9994ff2964e551d09bf5a9ee14c7a37e30d49b92435bcea90c957de`  
+**Accepted output:** `thesis/archive/T719_final_authority_audited_review_ready.docx`  
+**Accepted raw SHA-256:** `1529f2b8a69594f164050544a54e1de115acb40a5a0eb6291156d3ecccf1afb9`
 
 ## Purpose
 
-T-719 is a second independent, author-directed pre-freeze audit of the accepted T-718 manuscript. The user's audit list is treated only as hypotheses to verify against stronger authority. T-719 is not supervisor/reviewer feedback and does not reopen T-712.
+T-719 is a second independent, author-directed pre-freeze audit of the accepted T-718 manuscript. The user's audit list was treated only as hypotheses to verify against stronger authority. T-719 is not supervisor/reviewer feedback and does not reopen T-712.
 
 ## Non-negotiable scientific boundary
 
@@ -19,50 +21,52 @@ All current T-718 visuals must remain present. No quantitative registered visual
 
 ## Confirmed corrections after independent re-check
 
-The following hypotheses have survived authority review and may be corrected with the smallest viable reader-facing change:
+The following hypotheses survived authority review and were corrected with the smallest viable reader-facing change:
 
-1. **RQ3 directed recovery wording consistency.** DEC-060 defines `AN-AD <= 0.10`; better-than-AN AD values qualify. Several broad prose phrases still read like symmetric distance/neighborhood language and must be tightened without changing the criterion.
-2. **RQ1 trapezoidal time-average definition.** The canonical T-718 Section 3.7 lacks the exact frozen equation. The final analysis uses `return_mean` and `trapezoidal_time_average` over the actual interaction axis.
-3. **Development root-sizing wording.** T527 sizing uses equal-layout trapezoidal time-average `terminated_rate` for Phase A and equal-layout adaptation benefit divided by the selected Phase-B horizon for Phase B; the selector is `maximum_half_width <= 0.20`. This must remain distinct from the final cumulative RQ2 `return_sum` estimand.
-4. **Primary recovery-tolerance rationale.** DEC-060 predeclares 0.10 from the task reward scale and uses an absolute task-scale tolerance to avoid unstable percentage denominators for signed returns. One concise methodology clarification is allowed.
-5. **Residual observation-corruption overgeneralization.** A small number of Chapter 5/6 statements remain broader than the tested `observation-corruption-0.05` mechanism and frozen RQ2 estimand.
-6. **RQ2 Table 1 caption.** The actual table caption remains generic and is not self-contained enough for the central RQ2 result table.
-7. **Repository locator.** Appendix D records exact commit/runtime identities but still refers only to 'the repository of the work' without naming the repository.
-8. **Official declaration.** The Department's official regulation and thesis-writing guidance provide the exact required declaration text; the T-718 placeholder may therefore be resolved without inventing personal metadata.
-9. **IEEE numeric citation ordering.** The Department permits IEEE 2006 and requires strict adherence to the selected referencing style. The manuscript uses IEEE-style numeric citations but current first appearance is not numeric order. Any correction must be a single deterministic global renumbering preserving source identity and claim fit.
-10. **TOC / List of Figures / List of Tables cached field results.** The DOCX contains three live TOC-family fields but the T-718 rendered result lacks page numbers/dot leaders. A field refresh proves this is stale cached field content. Any permanent fix must preserve live Word fields and registered media bytes.
+1. **RQ3 directed recovery wording consistency.** DEC-060 defines `AN-AD <= 0.10`; better-than-AN AD values qualify. Residual prose that could read as symmetric distance/neighborhood language was tightened without changing the criterion.
+2. **RQ1 trapezoidal time-average definition.** Section 3.7 now states the exact frozen interaction-axis trapezoidal equation used by final analysis for `return_mean`.
+3. **Development root-sizing wording.** The manuscript now distinguishes Phase-A equal-layout trapezoidal time-average `terminated_rate` and Phase-B adaptation benefit divided by the selected horizon from the final RQ1/RQ2 estimands, and records the actual selector `maximum_half_width <= 0.20`.
+4. **Primary recovery-tolerance rationale.** The text now states the pre-outcome task-reward-scale rationale for the absolute `0.10` reward/interaction tolerance without treating it as universal.
+5. **Residual observation-corruption overgeneralization.** Remaining broad Chapter 5/6/7 wording was narrowed to the tested `observation-corruption-0.05` mechanism and frozen RQ2 estimand.
+6. **RQ2 Table 1 caption.** The central RQ2 table now has a self-contained caption describing the estimand, sign, horizon, root count, layout reduction and pointwise interval convention.
+7. **Repository locator.** Appendix D now names `MariosGiannakaras/resilient-ai-agents-thesis` and its canonical GitHub URL.
+8. **Final-layout statistical terminology.** One residual Appendix sentence calling the two layouts “independent” was corrected to “distinct final layouts”; root remains the independent unit.
+9. **IEEE numeric citation ordering.** A single deterministic global renumbering now preserves all 32 source identities and claim-source relations while making first appearance sequential.
+10. **TOC / List of Figures / List of Tables cached field results.** The three live TOC-family fields were retained and their cached results were refreshed against the final 101-page pagination.
 
 ## Confirmed already-correct / no-change findings
 
 - Frozen does not mean deterministic action selection; T-718 is consistent with the Phase-B and probe implementations.
-- Final-layout terminology no longer implies statistical independence or unseen test-only layouts.
+- Final-layout wording no longer implies unseen test-only layouts; only the isolated statistical-independence phrase above required correction.
 - Right-censoring, observed recovery time versus restricted delay, and the small-n Student-t support explanation are already adequate.
 - T-610 failed-attempt provenance is already explicit and does not require expansion.
 - Figure 8 remains readable in the rendered A4 document; no registered T-613 asset change is justified.
 - The existing Chapter 4 architecture/provenance flow is adequate; no new diagram or pseudocode block is justified.
 - The awkward B.3 page break is presentation-only and not worth shrinking or altering the scientific figure.
-- Reference [9] has distinct citation-ready traceability as the verified Sutton & Barto Q-learning excerpt and is retained.
-- ThesisBibliography currently exposes a DOI locator for `SRC-0A594EACC0`, but its citation-ready checked identity remains the verified arXiv 2024 version. Thesis bibliography metadata will not be changed until upstream citation-ready authority is reconciled.
+- The focused Sutton & Barto Q-learning excerpt has distinct citation-ready traceability and is retained.
+- `ThesisBibliography` currently exposes a DOI locator for `SRC-0A594EACC0`, but its citation-ready checked identity remains the verified arXiv 2024 version. Thesis bibliography metadata is therefore not silently upgraded.
+- The declaration page remains an unresolved submission item: Department guidance requires the page, but T-719 did not establish a sufficiently authoritative department-specific exact wording to replace the placeholder safely.
 
 ## Optional but not approved as necessary edits
 
 - adding a `-0.100` shortest-path-return explanation to RQ1;
 - adding a competence-matched checkpoint caveat beyond the existing fairness/validity limits;
 - adding a new Chapter 4 operational-flow visual/table;
-- manual pagination surgery for Appendix B.3.
+- manual pagination surgery for Appendix B.3;
+- converting the readable RQ1 trapezoidal formula into a new equation-object style solely for presentation.
 
-These may be revisited only if the full post-patch audit exposes a concrete reader-facing error.
+These were not applied because the strict correction threshold was not met.
 
-## Final acceptance gates
+## Final acceptance gates — result
 
-T-719 is acceptable only if:
+1. **PASS** — exact T-718 baseline hash verified.
+2. **PASS** — every substantive correction uses fail-closed canonical Word-visible anchors.
+3. **PASS** — numerical results and frozen protocol values remain unchanged.
+4. **PASS** — all 25 existing media are present and byte-identical; no T-613 quantitative visual changed.
+5. **PASS** — bibliography renumbering preserves exactly the same 32 source identities and claim-source relationships.
+6. **PASS** — live TOC/LoF/LoT fields remain present; final cached page mappings validate at 139/139, 24/24 and 3/3 respectively.
+7. **PASS** — no declaration/personal metadata was invented; unresolved declaration text remains explicit.
+8. **PASS** — fresh scientific, numerical, citation and bibliography audit completed against protocol-v2.1, T-612, T-613, execution manifests and citation-ready bibliography authority.
+9. **PASS** — final DOCX rendered to 101 pages and every page visually inspected with no objective layout defect.
 
-1. the T-718 baseline hash is exact;
-2. every text correction is anchored fail-closed to canonical Word-visible content;
-3. all numerical results and frozen protocol values are byte/text identical where not explicitly reader-facing metadata;
-4. all 25 existing visuals remain present and all T-613 quantitative media remain byte-identical;
-5. bibliography renumbering preserves exactly the same 32 source identities and claim-to-source relationships;
-6. live TOC/LoF/LoT fields remain present and their cached results show correct page numbers after final pagination;
-7. official declaration text comes only from Department authority; unresolved personal metadata remains unresolved;
-8. a fresh full manuscript audit passes against protocol-v2.1, T-612, T-613, execution manifests and citation-ready bibliography authority;
-9. the final DOCX is rendered in full and every page is visually inspected before archival acceptance.
+Detailed findings and the requested fifteen-category audit report are recorded in `docs/thesis/T719_FINAL_AUTHORITY_AUDIT.md`.
