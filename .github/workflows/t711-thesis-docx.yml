@@ -37,10 +37,8 @@ on:
       - "src/resilient_agents/desktop/**"
       - "requirements/application-ui.txt"
       - "configs/protocols/protocol-v2.1-final.json"
-      - "docs/thesis/draft/**"
       - "research/bibliography/citation-ready/**"
       - "results/thesis-assets/protocol-v2.1-final/**"
-      - ".github/workflows/t711-thesis-docx.yml"
   workflow_dispatch:
 
 permissions:

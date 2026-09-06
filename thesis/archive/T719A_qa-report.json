@@ -1,0 +1,89 @@
+{
+  "status": "mechanical-pdf-pass",
+  "base_raw_sha256": "1529f2b8a69594f164050544a54e1de115acb40a5a0eb6291156d3ecccf1afb9",
+  "output_raw_sha256": "dfa4526ad9e63d2522e7dc4339d5da46177ec42ccda7c404a9f47d4ce78a6e20",
+  "changed_ooxml_entries": [
+    "word/document.xml"
+  ],
+  "paragraph_text_delta_exact": true,
+  "semantic_edits": [
+    "glossary-directed-recovery-definition",
+    "phase-a-budget-matched-not-competence-matched-clarification",
+    "rq1-minus-0.100-shortest-path-interpretation"
+  ],
+  "scientific_results_modified": false,
+  "protocol_or_estimand_modified": false,
+  "new_experiment_or_reanalysis": false,
+  "registered_quantitative_assets_modified": false,
+  "media_count": 25,
+  "unchanged_media_count": 25,
+  "bibliography_entry_count": 32,
+  "bibliography_unchanged": true,
+  "citation_sequence_unchanged": true,
+  "headers_footers_unchanged": true,
+  "section_page_numbering_properties_unchanged": true,
+  "cover_page_numbering_changed": false,
+  "appendix_b3_manual_pagination_change": false,
+  "front_matter_personal_metadata_changed": false,
+  "declaration_text_changed": false,
+  "chacon_chamorro_manuscript_identity_changed": false,
+  "glossary_previous_style": null,
+  "word_math_semantics": "inherited byte-for-byte from exact T-719 base outside the three approved paragraph deltas",
+  "pdf_qa": "mechanical-pass-pending-final-visual-inspection",
+  "pre_field_cache_sha256": "737362b450009d568f644eb637ebe67c2837e71579db17f4485d12d094de17cc",
+  "navigation_field_cache_updated": true,
+  "toc_cache_updates": {
+    "5.2.2 Αποτελεσματικότητα μάθησης κατά μήκος του διαθέσιμου προϋπολογισμού": {
+      "from": 57,
+      "to": 58
+    }
+  },
+  "toc_cache_update_reason": "natural reflow from the accepted RQ1 clarification moved only this body heading by one page",
+  "pdf_baseline_page_count": 102,
+  "pdf_candidate_page_count": 102,
+  "pdf_page_count_unchanged": true,
+  "pdf_heading_occurrence_map": {
+    "target_count": 139,
+    "unchanged_occurrence_map_count": 138,
+    "missing_in_baseline_count": 0,
+    "missing_in_candidate_count": 0,
+    "changed_occurrence_map_count": 1,
+    "missing_in_baseline_sample": [],
+    "missing_in_candidate_sample": [],
+    "changed_sample": [
+      {
+        "target": "5.2.2 Αποτελεσματικότητα μάθησης κατά μήκος του διαθέσιμου προϋπολογισμού",
+        "baseline_pages": [
+          9,
+          57
+        ],
+        "candidate_pages": [
+          9,
+          58
+        ]
+      }
+    ]
+  },
+  "pdf_expected_natural_reflow": {
+    "5.2.2 Αποτελεσματικότητα μάθησης κατά μήκος του διαθέσιμου προϋπολογισμού": {
+      "baseline_body_page": 57,
+      "candidate_body_page": 58
+    }
+  },
+  "pdf_caption_occurrence_map": {
+    "target_count": 27,
+    "unchanged_occurrence_map_count": 27,
+    "missing_in_baseline_count": 0,
+    "missing_in_candidate_count": 0,
+    "changed_occurrence_map_count": 0,
+    "missing_in_baseline_sample": [],
+    "missing_in_candidate_sample": [],
+    "changed_sample": []
+  },
+  "pdf_blank_text_pages_baseline": [],
+  "pdf_blank_text_pages_candidate": [],
+  "pdf_toc_cache_visible_page_58": true,
+  "pdf_new_targeted_text_present": true,
+  "pdf_obsolete_recovery_wording_absent": true,
+  "pdf_text_sentinel_check": "PASS"
+}
