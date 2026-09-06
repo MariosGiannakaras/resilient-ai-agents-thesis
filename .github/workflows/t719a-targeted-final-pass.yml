@@ -7,7 +7,9 @@ on:
     paths:
       - scripts/t719a_targeted_final_pass.py
       - scripts/t719a_compact_rq1.py
+      - scripts/t719a_finalize_fields.py
       - scripts/t719a_pdf_qa.py
+      - scripts/t719a_pdf_qa_final.py
       - docs/thesis/T719A_TARGETED_FINAL_PASS.md
       - docs/context/WORK_STATE.json
       - .github/workflows/t719a-targeted-final-pass.yml
@@ -15,7 +17,9 @@ on:
     paths:
       - scripts/t719a_targeted_final_pass.py
       - scripts/t719a_compact_rq1.py
+      - scripts/t719a_finalize_fields.py
       - scripts/t719a_pdf_qa.py
+      - scripts/t719a_pdf_qa_final.py
       - docs/thesis/T719A_TARGETED_FINAL_PASS.md
       - docs/thesis/draft/GLOSSARY_ACRONYMS.md
       - docs/thesis/draft/CHAPTER_03_METHODOLOGY.md
@@ -51,6 +55,9 @@ jobs:
       - name: Build exact targeted candidate from accepted T-719
         run: python scripts/t719a_compact_rq1.py
 
+      - name: Finalize only the affected cached TOC page after stable reflow
+        run: python scripts/t719a_finalize_fields.py
+
       - name: Render accepted T-719 baseline and T-719A candidate to PDF
         run: |
           mkdir -p artifacts/t719a/baseline-pdf artifacts/t719a/candidate-pdf
@@ -59,11 +66,12 @@ jobs:
           test -s artifacts/t719a/baseline-pdf/T719_final_authority_audited_review_ready.pdf
           test -s artifacts/t719a/candidate-pdf/T719A_targeted_final_pass_review_ready.pdf
 
-      - name: Validate exported PDF semantics and unchanged pagination targets
+      - name: Validate exported PDF, field cache, and bounded natural reflow
         run: |
-          python scripts/t719a_pdf_qa.py \
+          python scripts/t719a_pdf_qa_final.py \
             thesis/archive/T719_final_authority_audited_review_ready.docx \
             artifacts/t719a/baseline-pdf/T719_final_authority_audited_review_ready.pdf \
+            artifacts/t719a/T719A_targeted_final_pass_review_ready.docx \
             artifacts/t719a/candidate-pdf/T719A_targeted_final_pass_review_ready.pdf \
             artifacts/t719a/T719A_qa-report.json
           pdfinfo artifacts/t719a/candidate-pdf/T719A_targeted_final_pass_review_ready.pdf | grep '^Pages:'
