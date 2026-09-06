@@ -1,0 +1,20 @@
+name: T-718 anchor inspection
+on:
+  push:
+    branches: [thesis/t718-evidence-threshold-corrections]
+    paths:
+      - scripts/t718_inspect_baseline_text.py
+      - .github/workflows/t718-anchor-inspect.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check lxml==6.0.1
+      - run: python scripts/t718_inspect_baseline_text.py
