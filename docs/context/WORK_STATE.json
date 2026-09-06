@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
-  "updated_at_utc": "2026-09-06T17:25:30Z",
+  "updated_at_utc": "2026-09-06T17:28:00Z",
   "authority": "repository-operational-resume-state",
   "active_task": "T-712",
   "task_status": "DEFERRED",
   "work_package": "Supervisor/reviewer feedback incorporation and revalidation",
-  "branch": "thesis/t719-final-authority-audit",
+  "branch": "main-after-merge",
   "base_branch": "main",
-  "pull_request": 152,
+  "pull_request": null,
   "phase": "EXTERNAL_GATE",
-  "last_completed_checkpoint": "T-719 internal author-directed final-authority audit is complete, deterministically reconstructed, permanently archived and under PR #152 without reopening T-712. The accepted T-719 DOCX is thesis/archive/T719_final_authority_audited_review_ready.docx with raw SHA-256 1529f2b8a69594f164050544a54e1de115acb40a5a0eb6291156d3ecccf1afb9. It applies only independently verified reader-facing/submission corrections: directed RQ3 wording consistency, exact RQ1 trapezoidal time-average exposition, precise development sizing wording, pre-outcome 0.10 tolerance rationale, condition-specific observation-corruption wording, a self-contained RQ2 Table 1 caption, repository locator, deterministic IEEE citation renumbering, refreshed TOC/LoF/LoT cached field results, and one correction removing statistical-independence wording for layouts. No experiment, re-analysis, numerical result, protocol value, estimand, threshold, condition, root, layout, seed, budget, method configuration, T-612 output or T-613 quantitative asset changed. All 25 media are byte-identical to T-718. Full 101-page visual QA passed; 139/139 TOC, 24/24 figure-list and 3/3 table-list mappings match final pagination. The declaration/student metadata placeholders remain unresolved because authoritative exact personal/declaration data were not available.",
-  "next_action": "Allow PR #152 final Project continuity, T-719 reconstruction/validation and Repository checks to finish on the latest head. If all required checks pass and the head remains unchanged, merge PR #152 with an expected-head guard, then perform a branch-only post-merge normalization of WORK_STATE/TASKS/CURRENT_STATUS back to main with T-712 DEFERRED. Do not fabricate supervisor/reviewer feedback.",
+  "last_completed_checkpoint": "T-719 internal author-directed final-authority audit is objectively complete and merged. PR #152 passed final Project continuity, T-719 deterministic reconstruction/validation and Repository checks on exact head 7658c1ec5a33557429e6c2703d7bfdbc0ac82153, then squash-merged to main as d05b3eaab7209bb327c4d7a5372e54de2180a657. The accepted T-719 DOCX is thesis/archive/T719_final_authority_audited_review_ready.docx with raw SHA-256 1529f2b8a69594f164050544a54e1de115acb40a5a0eb6291156d3ecccf1afb9. It applies only authority-supported reader-facing/submission corrections: directed RQ3 wording consistency, exact RQ1 trapezoidal time-average exposition, precise development sizing wording, pre-outcome 0.10 tolerance rationale, condition-specific observation-corruption wording, a self-contained RQ2 Table 1 caption, repository locator, deterministic IEEE citation renumbering, refreshed TOC/LoF/LoT cached field results, and one correction removing statistical-independence wording for layouts. No experiment, re-analysis, numerical result, protocol value, estimand, threshold, condition, root, layout, seed, budget, method configuration, T-612 output or T-613 quantitative asset changed. All 25 media are byte-identical to T-718. Full 101-page visual QA passed; 139/139 TOC, 24/24 figure-list and 3/3 table-list mappings match final pagination. The declaration/student metadata placeholders remain unresolved pending authoritative input. T-712 remains DEFERRED pending actual supervisor/reviewer feedback.",
+  "next_action": "After this branch-only post-T-719 normalization is validated and merged, resume from main with T-712 DEFERRED. Wait for actual supervisor/reviewer feedback; do not fabricate or substitute internal review for external feedback. When real feedback arrives, record it durably, create or recover the T-712 implementation branch, move T-712 to IN_PROGRESS, incorporate only the actual corrections and revalidate before T-713. T-713 must also resolve authoritative personal front-matter/declaration metadata and final Word/submission-format gates.",
   "blockers": [
-    "Actual supervisor/reviewer feedback has not been provided; T-712 itself remains deferred.",
+    "Actual supervisor/reviewer feedback has not been provided.",
     "Authoritative personal front-matter metadata and exact final declaration text remain unresolved for T-713 submission freeze."
   ],
   "completed_substeps": [
@@ -20,20 +20,24 @@
     "T-717 author-directed final pre-freeze refinement completed and merged",
     "T-718 evidence-threshold correction pass completed, validated, archived and merged",
     "T-718 accepted archive raw SHA-256 60f92b1cb9994ff2964e551d09bf5a9ee14c7a37e30d49b92435bcea90c957de",
-    "T-719 hypothesis audit completed against canonical T-718, DEC/protocol/code authority, T-612/T-613 evidence, ThesisBibliography citation-ready authority and official Department instructions",
-    "T-719 accepted only authority-supported corrections and rejected optional/unnecessary changes",
+    "T-719 authority-first hypothesis audit completed against canonical T-718, DEC/protocol/code authority, T-612/T-613 evidence, ThesisBibliography citation-ready authority and official Department instructions",
+    "T-719 accepted only independently verified corrections and rejected optional or unsupported changes",
     "T-719 deterministic builder reproduced exact validated DOCX raw SHA-256 1529f2b8a69594f164050544a54e1de115acb40a5a0eb6291156d3ecccf1afb9",
     "T-719 preserves all 25 media byte-identically and changes only word/document.xml and word/styles.xml at OOXML package-entry level",
     "T-719 preserves 32/32 bibliography source identities and claim-to-source relationships while making numeric citations sequential by first appearance",
     "T-719 final field cache validates 139/139 TOC, 24/24 LoF and 3/3 LoT entries against the 101-page rendered document",
     "T-719 full 101-page visual QA passed with no clipping, overlap, broken table/caption, unreadable registered figure or overflow",
     "T-719 permanent archive created by validated CI path",
-    "T-719 final audit report records confirmed, rejected, optional and unresolved hypotheses"
+    "T-719 final audit report records confirmed, already-correct, rejected, optional and unresolved hypotheses",
+    "PR #152 exact head 7658c1ec5a33557429e6c2703d7bfdbc0ac82153 passed Project continuity 34048572686, T-719 validation 34048572687 and Repository checks 34048572734",
+    "PR #152 squash-merged as d05b3eaab7209bb327c4d7a5372e54de2180a657",
+    "T-719 remained explicitly separate from supervisor/reviewer feedback and did not reopen T-712"
   ],
   "pending_substeps": [
-    "Complete PR #152 CI on the final head and merge only if all required checks pass",
-    "Post-merge normalize WORK_STATE/TASKS/CURRENT_STATUS to main and retain T-712 DEFERRED",
-    "Receive actual supervisor/reviewer feedback for T-712",
+    "Merge this post-T-719 normalization change after continuity/repository validation",
+    "Receive actual supervisor/reviewer feedback",
+    "Record the feedback durably and move T-712 to IN_PROGRESS",
+    "Incorporate only actual supervisor/reviewer corrections and revalidate before T-713",
     "Resolve authoritative personal front-matter/declaration data and final Word/submission gates in T-713"
   ],
   "validation": {
@@ -42,22 +46,25 @@
     "t718_output_raw_sha256": "60f92b1cb9994ff2964e551d09bf5a9ee14c7a37e30d49b92435bcea90c957de",
     "t718_pr": "MERGED_d77e49595ddbd7f1e962615842b48023031034a2",
     "t718_post_merge_normalization": "MERGED_60ff7195f1397dd21ec147da1233f840ee2dca35",
-    "t719_status": "COMPLETE_INTERNAL_AUTHOR_DIRECTED_AUDIT_PENDING_PR_MERGE",
+    "t719_status": "COMPLETE_INTERNAL_AUTHOR_DIRECTED_AUDIT",
     "t719_baseline_sha256": "60f92b1cb9994ff2964e551d09bf5a9ee14c7a37e30d49b92435bcea90c957de",
     "t719_output_raw_sha256": "1529f2b8a69594f164050544a54e1de115acb40a5a0eb6291156d3ecccf1afb9",
-    "t719_pr": "OPEN_152",
     "t719_media_preservation": "PASS_25_OF_25_BYTE_IDENTICAL",
     "t719_bibliography_identity_preservation": "PASS_32_OF_32",
     "t719_field_page_mapping": "PASS_TOC_139_OF_139_LOF_24_OF_24_LOT_3_OF_3",
     "t719_render_qa": "PASS_101_PAGES",
     "t719_scientific_boundary": "PASS_NO_PROTOCOL_RESULT_ESTIMAND_T612_T613_CHANGE",
+    "t719_final_project_continuity": "PASS_34048572686",
+    "t719_final_reconstruction_validation": "PASS_34048572687",
+    "t719_final_repository_checks": "PASS_34048572734",
+    "t719_pr": "MERGED_d05b3eaab7209bb327c4d7a5372e54de2180a657",
     "scientific_results_modified": "NO",
     "new_experiment_or_reanalysis": "NO"
   },
-  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. T-719 is a completed internal author-directed audit awaiting PR #152 integration and is not supervisor/reviewer feedback. T-712 remains DEFERRED until actual supervisor/reviewer feedback is provided; do not manufacture feedback.",
+  "resume_rule": "Repository/Git/GitHub evidence overrides chat or model memory. T-719 is complete and merged. T-712 remains DEFERRED until actual supervisor/reviewer feedback is provided; do not manufacture feedback.",
   "notes": [
     "TASKS.md remains the canonical task/dependency ledger; this file is the operational resume pointer.",
-    "T-717, T-718 and T-719 are author-directed pre-freeze/internal audit work, not supervisor/reviewer feedback.",
-    "T-719 manuscript content is freeze-ready subject to PR integration, but final submission readiness still belongs to T-713 because authoritative personal/declaration metadata and final submission-format gates remain unresolved."
+    "T-717, T-718 and T-719 were author-directed pre-freeze/internal audit work, not supervisor/reviewer feedback.",
+    "The accepted T-719 manuscript content is final-content-freeze ready; final submission readiness still belongs to T-713 because authoritative personal/declaration metadata and final submission-format gates remain unresolved."
   ]
 }
