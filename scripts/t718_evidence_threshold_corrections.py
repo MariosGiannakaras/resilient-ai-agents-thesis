@@ -47,7 +47,6 @@ def replace_exact_count(root,old:str,new:str,expected:int)->int:
             if idx<0: break
             hits.append((nodes,idx,idx+len(old))); start=idx+len(old)
     if len(hits)!=expected: raise RuntimeError(f'expected {expected} Word-visible occurrence(s) of {old!r}; found {len(hits)}')
-    # Each approved target occurs in a distinct paragraph; enforce that to keep editing simple/fail-closed.
     if len({id(h[0]) for h in hits})!=len(hits): raise RuntimeError(f'multiple approved replacements in one paragraph for {old!r}')
     for nodes,start,end in hits:
         cursor=0; first=last=None; fo=lo=None
@@ -99,18 +98,16 @@ def patch_xml(raw:bytes)->tuple[bytes,dict]:
         'Το Frozen δεν σημαίνει ντετερμινιστική επιλογή ενέργειας: οι ενημερώσεις του learning state είναι απενεργοποιημένες, αλλά η method-native στοχαστικότητα της behavior/inference διαδικασίας και το αντίστοιχο RNG state μπορούν να συνεχίσουν να εξελίσσονται. Αντίθετα, τα standardized Phase-A no-learning probes αποτελούν ξεχωριστή deterministic/greedy επιφάνεια τεκμηρίωσης.')
     c['C2_frozen_semantics']=1
 
-    # C3 — only the two actual final layouts: reserved from development/tuning, then used in final campaign.
-    replace_exact_count(root,'δύο held-out διατάξεις','δύο τελικές διατάξεις',1)             # Greek summary
-    replace_exact_count(root,'two held-out layouts','two final layouts reserved from development/tuning',1) # English abstract
-    replace_exact_count(root,'των δύο held-out layouts','των δύο final layouts',1)          # glossary
-    replace_exact_count(root,'δύο held-out τελικές layouts','δύο τελικές layouts',1)         # scope
-    replace_exact_count(root,'δύο held-out layouts','δύο final layouts',2)                    # Results + external validity
+    # C3 — only reader-facing references to the two actual final layouts.
+    replace_exact_count(root,'δύο held-out διατάξεις','δύο τελικές διατάξεις',2)              # Summary + methodology
+    replace_exact_count(root,'two held-out layouts','two final layouts reserved from development/tuning',1) # Abstract
+    replace_exact_count(root,'των δύο held-out layouts','των δύο final layouts',1)           # Glossary
+    replace_exact_count(root,'δύο held-out τελικές layouts','δύο τελικές layouts',1)          # Scope
+    replace_exact_count(root,'δύο held-out layouts','δύο final layouts',2)                     # Results + external validity
     replace_exact_count(root,'Τα δύο τελικά held-out 7×7 layouts','Τα δύο τελικά 7×7 layouts',2) # LoF + caption
-    main_layout=find_one(root,prefix='Η τελική εργασία χρησιμοποιεί δύο held-out διατάξεις 7×7, τις gw-l1-final-a και gw-l1-final-b.')
-    replace_exact_count(root,
-        'Η τελική εργασία χρησιμοποιεί δύο held-out διατάξεις 7×7, τις gw-l1-final-a και gw-l1-final-b.',
-        'Η τελική εργασία χρησιμοποιεί δύο τελικές διατάξεις 7×7, τις gw-l1-final-a και gw-l1-final-b. Οι διατάξεις αυτές κρατήθηκαν εκτός development/tuning μέχρι το άνοιγμα του final reserve και στη συνέχεια χρησιμοποιήθηκαν στην τελική πειραματική καμπάνια.',1)
-    c['C3_final_layout_terms']=9
+    main_layout=find_one(root,prefix='Η τελική εργασία χρησιμοποιεί δύο τελικές διατάξεις 7×7, τις gw-l1-final-a και gw-l1-final-b.')
+    insert_after(main_layout,'Οι δύο final layouts κρατήθηκαν εκτός development/tuning μέχρι το άνοιγμα του final reserve και στη συνέχεια χρησιμοποιήθηκαν στην τελική πειραματική καμπάνια· δεν αποτελούν test-only unseen layouts.')
+    c['C3_final_layout_terms']=10
 
     # C4 — bind the conclusion to the actual tested mechanism and RQ2 estimand.
     replace_exact_count(root,
