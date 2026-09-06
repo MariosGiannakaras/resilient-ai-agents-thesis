@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "base_raw_sha256": "60f92b1cb9994ff2964e551d09bf5a9ee14c7a37e30d49b92435bcea90c957de",
+  "output_raw_sha256": "1529f2b8a69594f164050544a54e1de115acb40a5a0eb6291156d3ecccf1afb9",
+  "changed_ooxml_entries": [
+    "word/document.xml",
+    "word/styles.xml"
+  ],
+  "media_count": 25,
+  "unchanged_media_count": 25,
+  "scientific_results_modified": false,
+  "new_experiment_or_reanalysis": false,
+  "protocol_or_estimand_modified": false,
+  "bibliography_identity_count": 32,
+  "citation_first_appearance_sequential": true,
+  "toc_entry_count": 139,
+  "figure_list_entry_count": 24,
+  "table_list_entry_count": 3,
+  "rendered_page_count": 101,
+  "full_visual_qa": "PASS_101_PAGES",
+  "declaration_placeholder_preserved": true
+}
