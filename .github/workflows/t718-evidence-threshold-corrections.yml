@@ -51,7 +51,7 @@ jobs:
           assert q['change_counts']=={
             'C1_rq2_return_sum':1,
             'C2_frozen_semantics':1,
-            'C3_final_layout_first_use':1,
+            'C3_final_layout_terms':10,
             'C4_condition_scope':1,
             'C5_ci_support_note':1,
             'C6_execution_identity':1,
@@ -74,7 +74,7 @@ jobs:
           doc=Path('artifacts/t718/T718_evidence_threshold_corrected_review_ready.docx')
           W='http://schemas.openxmlformats.org/wordprocessingml/2006/main'; ns={'w':W}
           with zipfile.ZipFile(doc) as z:
-              names=z.namelist(); xml=z.read('word/document.xml'); root=etree.fromstring(xml)
+              names=z.namelist(); root=etree.fromstring(z.read('word/document.xml'))
               text='\n'.join(''.join(p.xpath('.//w:t/text()',namespaces=ns)) for p in root.xpath('.//w:body/w:p',namespaces=ns))
               instr=root.xpath('.//w:instrText/text()',namespaces=ns)
               assert sum('SEQ ' in x for x in instr)==27
@@ -84,15 +84,23 @@ jobs:
               assert not root.xpath('.//w:ins|.//w:del',namespaces=ns)
               sentinels=[
                   'μη προεξοφλημένο αθροιστικό task reward στις σταθερές 256 πραγματικές αλληλεπιδράσεις',
-                  'Το Frozen δεν σημαίνει deterministic action selection',
-                  'Οι διατάξεις αυτές κρατήθηκαν εκτός development/tuning μέχρι το άνοιγμα του final reserve',
+                  'Το Frozen δεν σημαίνει ντετερμινιστική επιλογή ενέργειας',
+                  'Οι δύο final layouts κρατήθηκαν εκτός development/tuning μέχρι το άνοιγμα του final reserve',
                   'Το αποτέλεσμα αυτό δεν γενικεύεται σε θόρυβο παρατήρησης ως κατηγορία.',
                   'δεν είναι περιορισμένο από το φυσικό support 0–256 interactions',
                   '86fb01a13fd77b98ea0b8d8fa6d5c5d6e2cbd730',
               ]
               for s in sentinels: assert text.count(s)==1, (s,text.count(s))
-              assert 'disturbance-associated loss υπό σταθερή πολιτική' not in text
-              assert 'δύο held-out διατάξεις 7×7, τις gw-l1-final-a και gw-l1-final-b' not in text
+              forbidden=[
+                  'disturbance-associated loss υπό σταθερή πολιτική',
+                  'δύο held-out διατάξεις',
+                  'two held-out layouts',
+                  'των δύο held-out layouts',
+                  'δύο held-out τελικές layouts',
+                  'δύο held-out layouts',
+                  'Τα δύο τελικά held-out 7×7 layouts',
+              ]
+              for s in forbidden: assert s not in text, s
               assert text.count('[Θέση για την ακριβή επίσημη δήλωση πριν από την τελική υποβολή]')==1
               assert text.count('Student: [to be completed from the official form]')==1
               assert text.count('Ονοματεπώνυμο φοιτητή: [να συμπληρωθεί από το επίσημο έντυπο]')==1
