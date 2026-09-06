@@ -1,0 +1,85 @@
+name: T-718 evidence-threshold thesis corrections
+
+on:
+  push:
+    branches:
+      - thesis/t718-evidence-threshold-corrections
+    paths:
+      - scripts/t718_evidence_threshold_corrections.py
+      - docs/thesis/T718_EVIDENCE_THRESHOLD_CORRECTION_PLAN.md
+      - .github/workflows/t718-evidence-threshold-corrections.yml
+  pull_request:
+    paths:
+      - scripts/t718_evidence_threshold_corrections.py
+      - docs/thesis/T718_EVIDENCE_THRESHOLD_CORRECTION_PLAN.md
+      - thesis/archive/T718_evidence_threshold_corrected_review_ready.docx
+      - thesis/archive/T718_qa-report.json
+      - .github/workflows/t718-evidence-threshold-corrections.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install bounded document dependencies
+        run: python -m pip install --disable-pip-version-check lxml==6.0.1 matplotlib==3.10.6 python-docx==1.2.0
+
+      - name: Build T-718 candidate from canonical T-717
+        run: python scripts/t718_evidence_threshold_corrections.py
+
+      - name: Validate correction boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          q=json.loads(Path('artifacts/t718/T718_qa-report.json').read_text(encoding='utf-8'))
+          assert q['status']=='pass', q
+          assert q['base_raw_sha256']=='57d6de352eef6147fa24179f87a3f8e9ee39f65a90ad8b85777cac8f541f57c5', q
+          assert q['changed_ooxml_entries']==['word/document.xml','word/media/image1.png'], q
+          assert q['change_counts']=={
+            'C1_rq2_return_sum':1,
+            'C2_frozen_semantics':1,
+            'C3_final_layout_first_use':1,
+            'C4_condition_scope':1,
+            'C5_ci_support_note':1,
+            'C6_execution_identity':1,
+          }, q
+          assert q['media_count']==25, q
+          assert q['unchanged_media_count']==24, q
+          assert q['image1_label_only_regeneration'] is True, q
+          assert q['image2_preserved'] is True, q
+          assert q['scientific_results_modified'] is False, q
+          assert q['new_experiment_or_reanalysis'] is False, q
+          assert q['protocol_or_estimand_modified'] is False, q
+          assert q['visual_removed'] is False, q
+          print('T-718 correction boundary validated')
+          PY
+
+      - name: Run structural DOCX QA
+        run: |
+          python scripts/t714_docx_structural_qa.py \
+            --docx artifacts/t718/T718_evidence_threshold_corrected_review_ready.docx \
+            --json artifacts/t718/T718_structural_qa.json
+
+      - name: Upload candidate for visual inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: t718-evidence-threshold-candidate
+          path: |
+            artifacts/t718/T718_evidence_threshold_corrected_review_ready.docx
+            artifacts/t718/T718_qa-report.json
+            artifacts/t718/T718_structural_qa.json
+          if-no-files-found: error
+          retention-days: 30
