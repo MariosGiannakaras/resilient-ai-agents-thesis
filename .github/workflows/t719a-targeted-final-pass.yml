@@ -79,9 +79,24 @@ jobs:
       - name: Archive validated candidate and source alignment
         if: github.event_name == 'push'
         run: |
-          cp artifacts/t719a/T719A_targeted_final_pass_review_ready.docx thesis/archive/T719A_targeted_final_pass_review_ready.docx
-          cp artifacts/t719a/candidate-pdf/T719A_targeted_final_pass_review_ready.pdf thesis/archive/T719A_targeted_final_pass_review_ready.pdf
+          CANDIDATE_DOCX=artifacts/t719a/T719A_targeted_final_pass_review_ready.docx
+          CANDIDATE_PDF=artifacts/t719a/candidate-pdf/T719A_targeted_final_pass_review_ready.pdf
+          ARCHIVE_DOCX=thesis/archive/T719A_targeted_final_pass_review_ready.docx
+          ARCHIVE_PDF=thesis/archive/T719A_targeted_final_pass_review_ready.pdf
+
+          docx_changed=1
+          if test -s "$ARCHIVE_DOCX" && cmp -s "$CANDIDATE_DOCX" "$ARCHIVE_DOCX"; then
+            docx_changed=0
+          fi
+
+          cp "$CANDIDATE_DOCX" "$ARCHIVE_DOCX"
+          if [ "$docx_changed" -eq 1 ] || ! test -s "$ARCHIVE_PDF"; then
+            cp "$CANDIDATE_PDF" "$ARCHIVE_PDF"
+          else
+            echo 'Validated DOCX is byte-identical to the archive; preserving the already-inspected PDF instead of replacing it for renderer metadata-only differences.'
+          fi
           cp artifacts/t719a/T719A_qa-report.json thesis/archive/T719A_qa-report.json
+
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add \
