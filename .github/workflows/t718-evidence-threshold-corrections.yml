@@ -6,11 +6,13 @@ on:
       - thesis/t718-evidence-threshold-corrections
     paths:
       - scripts/t718_evidence_threshold_corrections.py
+      - scripts/t718_normalize_inserted_paragraph_styles.py
       - docs/thesis/T718_EVIDENCE_THRESHOLD_CORRECTION_PLAN.md
       - .github/workflows/t718-evidence-threshold-corrections.yml
   pull_request:
     paths:
       - scripts/t718_evidence_threshold_corrections.py
+      - scripts/t718_normalize_inserted_paragraph_styles.py
       - docs/thesis/T718_EVIDENCE_THRESHOLD_CORRECTION_PLAN.md
       - thesis/archive/T718_evidence_threshold_corrected_review_ready.docx
       - thesis/archive/T718_qa-report.json
@@ -37,7 +39,9 @@ jobs:
         run: python -m pip install --disable-pip-version-check lxml==6.0.1 matplotlib==3.10.6 python-docx==1.2.0
 
       - name: Build T-718 candidate from canonical T-717
-        run: python scripts/t718_evidence_threshold_corrections.py
+        run: |
+          python scripts/t718_evidence_threshold_corrections.py
+          python scripts/t718_normalize_inserted_paragraph_styles.py
 
       - name: Validate correction boundary
         run: |
@@ -56,6 +60,7 @@ jobs:
             'C5_ci_support_note':1,
             'C6_execution_identity':1,
           }, q
+          assert q['C6_body_style_normalized'] is True, q
           assert q['media_count']==25 and q['unchanged_media_count']==24, q
           assert q['image1_label_only_regeneration'] is True and q['image2_preserved'] is True, q
           assert q['scientific_results_modified'] is False, q
@@ -73,9 +78,11 @@ jobs:
           from lxml import etree
           doc=Path('artifacts/t718/T718_evidence_threshold_corrected_review_ready.docx')
           W='http://schemas.openxmlformats.org/wordprocessingml/2006/main'; ns={'w':W}
+          prefix='Η accepted final scientific execution είναι η replacement Study protocol-v2.1-final--t610-recovery-01'
           with zipfile.ZipFile(doc) as z:
               names=z.namelist(); root=etree.fromstring(z.read('word/document.xml'))
-              text='\n'.join(''.join(p.xpath('.//w:t/text()',namespaces=ns)) for p in root.xpath('.//w:body/w:p',namespaces=ns))
+              ps=root.xpath('.//w:body/w:p',namespaces=ns)
+              text='\n'.join(''.join(p.xpath('.//w:t/text()',namespaces=ns)) for p in ps)
               instr=root.xpath('.//w:instrText/text()',namespaces=ns)
               assert sum('SEQ ' in x for x in instr)==27
               assert sum('TOC ' in x for x in instr)==3
@@ -101,10 +108,14 @@ jobs:
                   'Τα δύο τελικά held-out 7×7 layouts',
               ]
               for s in forbidden: assert s not in text, s
+              c6=[p for p in ps if ''.join(p.xpath('.//w:t/text()',namespaces=ns)).startswith(prefix)]
+              assert len(c6)==1
+              pstyle=c6[0].xpath('./w:pPr/w:pStyle/@w:val',namespaces=ns)
+              assert not pstyle or pstyle[0] not in {'Heading1','Heading2','Heading3','1','2','3'}, pstyle
               assert text.count('[Θέση για την ακριβή επίσημη δήλωση πριν από την τελική υποβολή]')==1
               assert text.count('Student: [to be completed from the official form]')==1
               assert text.count('Ονοματεπώνυμο φοιτητή: [να συμπληρωθεί από το επίσημο έντυπο]')==1
-          Path('artifacts/t718/T718_structural_qa.json').write_text(json.dumps({'status':'pass','seq_fields':27,'toc_fields':3,'media_count':25,'tracked_changes':0,'comments_xml':0,'sentinels':6},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          Path('artifacts/t718/T718_structural_qa.json').write_text(json.dumps({'status':'pass','seq_fields':27,'toc_fields':3,'media_count':25,'tracked_changes':0,'comments_xml':0,'sentinels':6,'C6_body_style':'pass'},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           print('T-718 Word structure validated')
           PY
 
