@@ -16,11 +16,12 @@ on:
       - docs/thesis/T718_EVIDENCE_THRESHOLD_CORRECTION_PLAN.md
       - thesis/archive/T718_evidence_threshold_corrected_review_ready.docx
       - thesis/archive/T718_qa-report.json
+      - thesis/archive/T718_structural_qa.json
       - .github/workflows/t718-evidence-threshold-corrections.yml
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-and-validate:
@@ -118,6 +119,22 @@ jobs:
           Path('artifacts/t718/T718_structural_qa.json').write_text(json.dumps({'status':'pass','seq_fields':27,'toc_fields':3,'media_count':25,'tracked_changes':0,'comments_xml':0,'sentinels':6,'C6_body_style':'pass'},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           print('T-718 Word structure validated')
           PY
+
+      - name: Archive permanent validated milestone
+        if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
+        run: |
+          cp artifacts/t718/T718_evidence_threshold_corrected_review_ready.docx thesis/archive/T718_evidence_threshold_corrected_review_ready.docx
+          cp artifacts/t718/T718_qa-report.json thesis/archive/T718_qa-report.json
+          cp artifacts/t718/T718_structural_qa.json thesis/archive/T718_structural_qa.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add thesis/archive/T718_evidence_threshold_corrected_review_ready.docx thesis/archive/T718_qa-report.json thesis/archive/T718_structural_qa.json
+          if git diff --cached --quiet; then
+            echo 'T-718 archive already current.'
+          else
+            git commit -m 'T-718: archive validated evidence-threshold milestone'
+            git push
+          fi
 
       - name: Upload candidate for visual inspection
         uses: actions/upload-artifact@v4
