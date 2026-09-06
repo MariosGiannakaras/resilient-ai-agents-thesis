@@ -1,0 +1,99 @@
+name: T-719A targeted final-content pass
+
+on:
+  push:
+    branches:
+      - thesis/t719a-targeted-final-pass
+    paths:
+      - scripts/t719a_targeted_final_pass.py
+      - scripts/t719a_pdf_qa.py
+      - docs/thesis/T719A_TARGETED_FINAL_PASS.md
+      - docs/context/WORK_STATE.json
+      - .github/workflows/t719a-targeted-final-pass.yml
+  pull_request:
+    paths:
+      - scripts/t719a_targeted_final_pass.py
+      - scripts/t719a_pdf_qa.py
+      - docs/thesis/T719A_TARGETED_FINAL_PASS.md
+      - docs/thesis/draft/GLOSSARY_ACRONYMS.md
+      - docs/thesis/draft/CHAPTER_03_METHODOLOGY.md
+      - docs/thesis/draft/CHAPTER_05_RESULTS.md
+      - docs/context/WORK_STATE.json
+      - thesis/archive/T719A_targeted_final_pass_review_ready.docx
+      - thesis/archive/T719A_targeted_final_pass_review_ready.pdf
+      - thesis/archive/T719A_qa-report.json
+      - .github/workflows/t719a-targeted-final-pass.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-render-validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install bounded document and PDF dependencies
+        run: |
+          python -m pip install --disable-pip-version-check lxml==6.0.1 pypdf==6.0.0
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libreoffice-writer poppler-utils fonts-liberation
+
+      - name: Build exact targeted candidate from accepted T-719
+        run: python scripts/t719a_targeted_final_pass.py
+
+      - name: Render accepted T-719 baseline and T-719A candidate to PDF
+        run: |
+          mkdir -p artifacts/t719a/baseline-pdf artifacts/t719a/candidate-pdf
+          libreoffice --headless --convert-to pdf --outdir artifacts/t719a/baseline-pdf thesis/archive/T719_final_authority_audited_review_ready.docx
+          libreoffice --headless --convert-to pdf --outdir artifacts/t719a/candidate-pdf artifacts/t719a/T719A_targeted_final_pass_review_ready.docx
+          test -s artifacts/t719a/baseline-pdf/T719_final_authority_audited_review_ready.pdf
+          test -s artifacts/t719a/candidate-pdf/T719A_targeted_final_pass_review_ready.pdf
+
+      - name: Validate exported PDF semantics and unchanged pagination targets
+        run: |
+          python scripts/t719a_pdf_qa.py \
+            thesis/archive/T719_final_authority_audited_review_ready.docx \
+            artifacts/t719a/baseline-pdf/T719_final_authority_audited_review_ready.pdf \
+            artifacts/t719a/candidate-pdf/T719A_targeted_final_pass_review_ready.pdf \
+            artifacts/t719a/T719A_qa-report.json
+          pdfinfo artifacts/t719a/candidate-pdf/T719A_targeted_final_pass_review_ready.pdf | grep '^Pages:'
+
+      - name: Archive validated candidate and source alignment
+        if: github.event_name == 'push'
+        run: |
+          cp artifacts/t719a/T719A_targeted_final_pass_review_ready.docx thesis/archive/T719A_targeted_final_pass_review_ready.docx
+          cp artifacts/t719a/candidate-pdf/T719A_targeted_final_pass_review_ready.pdf thesis/archive/T719A_targeted_final_pass_review_ready.pdf
+          cp artifacts/t719a/T719A_qa-report.json thesis/archive/T719A_qa-report.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            docs/thesis/draft/GLOSSARY_ACRONYMS.md \
+            docs/thesis/draft/CHAPTER_03_METHODOLOGY.md \
+            docs/thesis/draft/CHAPTER_05_RESULTS.md \
+            thesis/archive/T719A_targeted_final_pass_review_ready.docx \
+            thesis/archive/T719A_targeted_final_pass_review_ready.pdf \
+            thesis/archive/T719A_qa-report.json
+          if git diff --cached --quiet; then
+            echo 'T-719A archive and durable sources already current.'
+          else
+            git commit -m 'T-719A: archive validated targeted final-pass candidate'
+            git push
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: t719a-targeted-final-pass
+          path: |
+            artifacts/t719a/T719A_targeted_final_pass_review_ready.docx
+            artifacts/t719a/candidate-pdf/T719A_targeted_final_pass_review_ready.pdf
+            artifacts/t719a/T719A_qa-report.json
+          if-no-files-found: error
+          retention-days: 30
